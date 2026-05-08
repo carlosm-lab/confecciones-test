@@ -44,7 +44,13 @@
   --color-surface-container-high: #e7e8ea;
   --color-surface-container-highest: #e1e2e4;
 
+  /* Brand aliases (Stitch prototype compatibility) */
+  --color-brand-primary: #143067;
+  --color-brand-accent: #b43024;
+  --color-secondary-fixed: #dae2ff;
+
   /* Fonts */
+  --font-headline: "Noto Serif", serif;
   --font-serif: "Noto Serif", serif;
   --font-body: "Manrope", sans-serif;
   --font-label: "Manrope", sans-serif;
@@ -160,6 +166,18 @@
     scrollbar-width: none;
   }
 
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .font-headline {
+    font-family: var(--font-headline);
+  }
+
   .section-title {
     font-family: var(--font-serif);
     color: var(--color-primary);
@@ -202,5 +220,17 @@
 
   * {
     @apply border-border outline-ring/50;
+  }
+}
+
+/* WCAG 2.3.3: Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

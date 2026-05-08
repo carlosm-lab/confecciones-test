@@ -13,6 +13,7 @@ import { CoberturaNacional } from "@/components/seo/CoberturaNacional";
 import { ProfesionesMedicas } from "@/components/seo/ProfesionesMedicas";
 import { NapContacto } from "@/components/seo/NapContacto";
 import { KeywordsSeoFooter } from "@/components/seo/KeywordsSeoFooter";
+import { ProductCard } from "@/components/ui/ProductCard";
 
 export default function HomePage() {
   return (
@@ -101,7 +102,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ NOVEDADES (existing design) ═══ */}
+      {/* ═══ NOVEDADES (using shared ProductCard) ═══ */}
       <section className="bg-surface px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex items-end justify-between lg:pr-12">
@@ -112,111 +113,78 @@ export default function HomePage() {
           <div className="grid grid-cols-2 gap-4 md:gap-8 lg:grid-cols-4">
             {[
               {
-                cat: "UES",
-                name: "Uniformes de la UES",
-                price: "$39.50",
-                sizes: ["S", "M", "L", "XL", "XXL"],
-                img: "/images/uniformes/ues.webp",
-                alt: "Uniformes de la UES",
+                id: "scrub-ues",
+                categoria: "UES",
+                nombre: "Uniformes de la UES",
+                precio: 39.5,
+                tallas: ["S", "M", "L", "XL", "XXL"],
+                imagen: "/images/uniformes/ues.webp",
+                showBadge: true,
+                badgeText: "Nuevo",
               },
               {
-                cat: "IEPROES",
-                name: "Uniformes de IEPROES",
-                price: "$39.50",
-                sizes: ["S", "M", "L", "XL", "XXL"],
-                img: "/images/uniformes/ieproes.webp",
-                alt: "Uniformes de IEPROES",
+                id: "scrub-ieproes",
+                categoria: "IEPROES",
+                nombre: "Uniformes de IEPROES",
+                precio: 39.5,
+                tallas: ["S", "M", "L", "XL", "XXL"],
+                imagen: "/images/uniformes/ieproes.webp",
+                showBadge: true,
+                badgeText: "Nuevo",
               },
               {
-                cat: "UGB",
-                name: "Uniformes de la UGB",
-                price: "$39.50",
-                sizes: ["S", "M", "L", "XL", "XXL"],
-                img: "/images/uniformes/ugb.webp",
-                alt: "Uniformes de la UGB",
+                id: "scrub-ugb",
+                categoria: "UGB",
+                nombre: "Uniformes de la UGB",
+                precio: 39.5,
+                tallas: ["S", "M", "L", "XL", "XXL"],
+                imagen: "/images/uniformes/ugb.webp",
+                showBadge: true,
+                badgeText: "Nuevo",
               },
               {
-                cat: "UMA",
-                name: "Uniformes de la UMA",
-                price: "$39.50",
-                sizes: ["S", "M", "L", "XL", "XXL"],
-                img: "/images/uniformes/uma.webp",
-                alt: "Uniformes de la UMA",
+                id: "scrub-uma",
+                categoria: "UMA",
+                nombre: "Uniformes de la UMA",
+                precio: 39.5,
+                tallas: ["S", "M", "L", "XL", "XXL"],
+                imagen: "/images/uniformes/uma.webp",
+                showBadge: true,
+                badgeText: "Nuevo",
               },
               {
-                cat: "UNAB",
-                name: "Uniformes de la UNAB",
-                price: "$39.50",
-                sizes: ["S", "M", "L", "XL", "XXL"],
-                img: "/images/uniformes/unab.webp",
-                alt: "Uniformes de la UNAB",
+                id: "scrub-unab",
+                categoria: "UNAB",
+                nombre: "Uniformes de la UNAB",
+                precio: 39.5,
+                tallas: ["S", "M", "L", "XL", "XXL"],
+                imagen: "/images/uniformes/unab.webp",
+                showBadge: true,
+                badgeText: "Nuevo",
               },
               {
-                cat: "UNIVO",
-                name: "Uniformes de la UNIVO",
-                price: "$39.50",
-                sizes: ["S", "M", "L", "XL", "XXL"],
-                img: "/images/uniformes/univo.webp",
-                alt: "Uniformes de la UNIVO",
+                id: "scrub-univo",
+                categoria: "UNIVO",
+                nombre: "Uniformes de la UNIVO",
+                precio: 39.5,
+                tallas: ["S", "M", "L", "XL", "XXL"],
+                imagen: "/images/uniformes/univo.webp",
+                showBadge: true,
+                badgeText: "Nuevo",
               },
             ].map((p) => (
-              <div
-                key={p.name}
-                className="group ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white transition-transform duration-300 hover:-translate-y-1"
-              >
-                <div className="bg-surface-container relative flex aspect-square items-center justify-center p-6">
-                  <span className="bg-tertiary absolute top-4 left-4 rounded px-2 py-1 text-xs font-bold text-white">
-                    Nuevo
-                  </span>
-                  {p.img ? (
-                    <Image
-                      width={800}
-                      height={800}
-                      alt={p.alt ?? p.name}
-                      className="h-full w-full rounded object-contain"
-                      src={p.img}
-                    />
-                  ) : (
-                    <div className="bg-surface-container-low border-outline-variant/30 flex h-full w-full items-center justify-center rounded-xl border">
-                      <span className="material-symbols-outlined text-outline text-4xl">
-                        image
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-grow flex-col p-4 md:p-6">
-                  <span className="font-label text-secondary mb-2 text-xs tracking-wider uppercase">
-                    {p.cat}
-                  </span>
-                  <h3 className="text-on-surface mb-1 font-serif text-lg">
-                    {p.name}
-                  </h3>
-                  <p className="text-on-surface-variant font-body mb-4 font-semibold">
-                    {p.price}
-                  </p>
-                  <div className="mb-6 flex gap-2">
-                    {p.sizes.map((s) => (
-                      <span
-                        key={s}
-                        className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                  <a
-                    href="https://confeccionesliss.axkar.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-primary font-body mt-auto flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold text-white opacity-90 transition-opacity group-hover:opacity-100"
-                  >
-                    <span className="material-symbols-outlined text-sm">
-                      chat
-                    </span>{" "}
-                    Comprar
-                  </a>
-                </div>
-              </div>
+              <ProductCard
+                key={p.id}
+                id={p.id}
+                nombre={p.nombre}
+                precio={p.precio}
+                categoria={p.categoria}
+                imagen={p.imagen}
+                tallas={p.tallas}
+                showBadge={p.showBadge}
+                badgeText={p.badgeText}
+                showFavorite
+              />
             ))}
           </div>
         </div>
