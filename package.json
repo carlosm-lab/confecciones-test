@@ -1,5 +1,5 @@
 {
-  "name": "next-react-ai-template",
+  "name": "confecciones-liss",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -23,7 +23,9 @@
     "client-only": "^0.0.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
+    "isomorphic-dompurify": "^3.12.0",
     "lucide-react": "^1.7.0",
+    "material-symbols": "^0.44.5",
     "next": "16.2.3",
     "next-safe-action": "^8.4.0",
     "next-themes": "^0.4.6",

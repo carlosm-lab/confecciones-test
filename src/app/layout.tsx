@@ -54,13 +54,10 @@ export const metadata = {
 
     creator: siteConfig.twitterHandle,
   },
-  icons: {
-    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
-    apple: [{ url: "/logo.svg", type: "image/svg+xml" }],
-  },
 };
 
 export const viewport = {
+  themeColor: "#055e38",
   width: "device-width",
   initialScale: 1,
 };
@@ -75,16 +72,10 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${manrope.variable} ${notoSerif.variable} light`}
+      className={`${manrope.variable} ${notoSerif.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+      <head></head>
       <body className="flex min-h-screen flex-col antialiased">
         <Providers>{children}</Providers>
       </body>

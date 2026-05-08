@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { services } from "@/lib/seo-data";
+import DOMPurify from "isomorphic-dompurify";
 
 export function ServiciosPrincipales() {
   return (
@@ -47,7 +48,9 @@ export function ServiciosPrincipales() {
                 </h3>
                 <p
                   className="text-on-surface-variant mb-4 text-sm leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: s.description }}
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(s.description),
+                  }}
                 />
                 <ul className="text-secondary mb-6 space-y-1 text-xs">
                   {s.features.map((f) => (

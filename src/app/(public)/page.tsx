@@ -21,13 +21,13 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schemaLocalBusiness),
+          __html: JSON.stringify(schemaLocalBusiness).replace(/</g, "\\u003c"),
         }}
       />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schemaFAQ),
+          __html: JSON.stringify(schemaFAQ).replace(/</g, "\\u003c"),
         }}
       />
 
@@ -105,7 +105,9 @@ export default function HomePage() {
       <section className="bg-surface px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex items-end justify-between lg:pr-12">
-            <h2 className="text-primary font-serif text-4xl">Novedades</h2>
+            <h2 className="text-primary font-serif text-4xl">
+              Novedades en Uniformes y Scrubs
+            </h2>
           </div>
           <div className="grid grid-cols-2 gap-4 md:gap-8 lg:grid-cols-4">
             {[
@@ -262,7 +264,7 @@ export default function HomePage() {
       <section className="bg-primary px-5 py-14 text-white md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
-            <h2 className="section-title mb-4 !text-white">
+            <h2 className="section-title mb-4 text-white">
               ¿Cómo pedir tus uniformes en Confecciones Liss?
             </h2>
             <div className="bg-primary-container mt-2 mb-6 h-1 w-16 rounded-full"></div>
@@ -373,7 +375,7 @@ export default function HomePage() {
               tu sede. Clínicas privadas, hospitales, colegios, empresas y más.
             </p>
           </div>
-          <div className="justify-md-end flex md:w-1/3">
+          <div className="flex md:w-1/3 md:justify-end">
             <a
               href="https://confeccionesliss.axkar.com/"
               target="_blank"

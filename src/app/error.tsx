@@ -10,11 +10,17 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error(error);
+    if (process.env.NODE_ENV !== "production") {
+      console.error(error);
+    }
   }, [error]);
 
   return (
-    <div className="bg-background flex h-screen w-full flex-col items-center justify-center p-4 text-center">
+    <div
+      className="bg-background flex h-screen w-full flex-col items-center justify-center p-4 text-center"
+      role="alert"
+      aria-live="assertive"
+    >
       <h2 className="text-destructive mb-2 text-2xl font-bold">
         ¡Algo salió mal!
       </h2>

@@ -11,7 +11,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="Confecciones Liss Logo"
             width={180}
             height={180}

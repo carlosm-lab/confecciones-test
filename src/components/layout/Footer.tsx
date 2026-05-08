@@ -15,7 +15,7 @@ export function Footer() {
         <div>
           <div className="mb-6 flex items-center gap-2">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="Confecciones Liss"
               width={200}
               height={200}

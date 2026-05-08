@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "material-symbols/outlined.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -160,7 +161,7 @@
   }
 
   .section-title {
-    font-family: "Noto Serif", serif;
+    font-family: var(--font-serif);
     color: var(--color-primary);
     font-size: 1.375rem; /* 22px */
     font-weight: 700;
@@ -184,7 +185,7 @@
 
 @layer base {
   body {
-    font-family: "Manrope", sans-serif;
+    font-family: var(--font-body);
     background-color: var(--color-background);
     color: var(--color-on-surface);
   }
@@ -196,7 +197,7 @@
   h5,
   h6,
   .font-serif {
-    font-family: "Noto Serif", serif;
+    font-family: var(--font-serif);
   }
 
   * {
