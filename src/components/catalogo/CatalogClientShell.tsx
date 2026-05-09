@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { FilterSidebar } from "@/components/catalogo/FilterSidebar";
+import { FilterDrawer } from "@/components/catalogo/FilterDrawer";
 import type { Product, CategoryConfig } from "@/data/types";
 
 interface CatalogClientShellProps {
@@ -19,6 +20,7 @@ export function CatalogClientShell({
   const [sidebarFilters, setSidebarFilters] = useState<
     Record<string, string[]>
   >({});
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleFilterChange = useCallback(
     (groupLabel: string, values: string[]) => {
@@ -132,7 +134,7 @@ export function CatalogClientShell({
               role="tab"
               aria-selected={activeCategory === cat.label}
               onClick={() => setActiveCategory(cat.label)}
-              className={`focus-visible:ring-primary flex shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 ${
+              className={`focus-visible:ring-primary flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium focus-visible:ring-2 focus-visible:ring-offset-2 motion-safe:transition-all ${
                 activeCategory === cat.label
                   ? "border-primary bg-primary text-white"
                   : "hover:border-primary hover:text-primary border-gray-200 bg-white text-gray-600"
@@ -150,10 +152,20 @@ export function CatalogClientShell({
         </div>
       </section>
 
+      {/* Mobile Filter Drawer */}
+      <FilterDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        groups={config.filterGroups}
+        selected={sidebarFilters}
+        onFilterChange={handleFilterChange}
+        onClearAll={handleClearFilters}
+      />
+
       {/* Content with sidebar */}
       <section className="bg-surface px-5 py-10 md:px-8 md:py-16">
         <div className="mx-auto flex max-w-screen-xl gap-8">
-          {/* Sidebar (desktop only for now — FilterDrawer added in Phase C) */}
+          {/* Sidebar (desktop) */}
           <div className="hidden w-64 shrink-0 lg:block">
             <FilterSidebar
               groups={config.filterGroups}
@@ -168,10 +180,27 @@ export function CatalogClientShell({
               <h2 className="section-title text-xl">
                 Catálogo {config.subtitle}
               </h2>
-              <p className="text-sm text-gray-500" aria-live="polite">
-                {filteredProducts.length} producto
-                {filteredProducts.length !== 1 ? "s" : ""}
-              </p>
+              <div className="flex items-center gap-3">
+                {/* Mobile filter button */}
+                <button
+                  type="button"
+                  onClick={() => setIsDrawerOpen(true)}
+                  className="bg-primary/10 text-primary flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium lg:hidden"
+                  aria-label="Abrir filtros"
+                >
+                  <span
+                    className="material-symbols-outlined text-base"
+                    aria-hidden="true"
+                  >
+                    tune
+                  </span>
+                  Filtros
+                </button>
+                <p className="text-sm text-gray-500" aria-live="polite">
+                  {filteredProducts.length} producto
+                  {filteredProducts.length !== 1 ? "s" : ""}
+                </p>
+              </div>
             </div>
             {filteredProducts.length > 0 ? (
               <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
