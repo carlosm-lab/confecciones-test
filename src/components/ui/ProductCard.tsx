@@ -199,9 +199,11 @@ export function ProductCard({
         <button
           type="button"
           onClick={handleAddToCart}
+          aria-label={`Agregar al carrito: ${nombre}`}
           className="bg-primary focus-visible:ring-primary mt-auto w-full cursor-pointer rounded-lg py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-offset-2"
         >
           Agregar al carrito
+          <span className="sr-only">: {nombre}</span>
         </button>
       </div>
     </Link>

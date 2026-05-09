@@ -5,6 +5,8 @@ export const SECTOR_SLUGS: Sector[] = [
   "universitario",
   "escolar",
   "corporativo",
+  "deportivo",
+  "accesorios",
 ];
 
 export const CATEGORIES: Record<Sector, CategoryConfig> = {
@@ -40,11 +42,25 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       {
         label: "Tipo de Prenda",
         icon: "checkroom",
+        filterField: "tipo",
         options: [
           { value: "scrubs", label: "Scrubs" },
           { value: "gorros", label: "Gorros Quirúrgicos" },
           { value: "batas", label: "Batas" },
           { value: "chaquetas", label: "Chaquetas Clínicas" },
+        ],
+      },
+      {
+        label: "Tallas",
+        icon: "straighten",
+        filterField: "tallas",
+        options: [
+          { value: "XS", label: "XS" },
+          { value: "S", label: "S" },
+          { value: "M", label: "M" },
+          { value: "L", label: "L" },
+          { value: "XL", label: "XL" },
+          { value: "XXL", label: "XXL" },
         ],
       },
     ],
@@ -89,6 +105,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       {
         label: "Universidad",
         icon: "school",
+        filterField: "tipo",
         options: [
           { value: "UNIVO", label: "UNIVO" },
           { value: "UNAB", label: "UNAB" },
@@ -96,6 +113,18 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
           { value: "UMA", label: "UMA" },
           { value: "IEPROES", label: "IEPROES" },
           { value: "UES", label: "UES" },
+        ],
+      },
+      {
+        label: "Tallas",
+        icon: "straighten",
+        filterField: "tallas",
+        options: [
+          { value: "S", label: "S" },
+          { value: "M", label: "M" },
+          { value: "L", label: "L" },
+          { value: "XL", label: "XL" },
+          { value: "XXL", label: "XXL" },
         ],
       },
     ],
@@ -141,12 +170,27 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       {
         label: "Tipo de Prenda",
         icon: "checkroom",
+        filterField: "tipo",
         options: [
           { value: "camisas", label: "Camisas" },
           { value: "faldas", label: "Faldas" },
           { value: "pantalones", label: "Pantalones" },
           { value: "sueteres", label: "Suéteres" },
           { value: "corbatas", label: "Corbatas" },
+        ],
+      },
+      {
+        label: "Tallas",
+        icon: "straighten",
+        filterField: "tallas",
+        options: [
+          { value: "4", label: "4" },
+          { value: "6", label: "6" },
+          { value: "8", label: "8" },
+          { value: "10", label: "10" },
+          { value: "12", label: "12" },
+          { value: "14", label: "14" },
+          { value: "16", label: "16" },
         ],
       },
     ],
@@ -190,11 +234,24 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       {
         label: "Tipo de Prenda",
         icon: "checkroom",
+        filterField: "tipo",
         options: [
           { value: "camisas", label: "Camisas" },
           { value: "polos", label: "Polos" },
           { value: "gabachas", label: "Gabachas" },
           { value: "chalecos", label: "Chalecos" },
+        ],
+      },
+      {
+        label: "Tallas",
+        icon: "straighten",
+        filterField: "tallas",
+        options: [
+          { value: "S", label: "S" },
+          { value: "M", label: "M" },
+          { value: "L", label: "L" },
+          { value: "XL", label: "XL" },
+          { value: "XXL", label: "XXL" },
         ],
       },
     ],
@@ -206,54 +263,101 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       { label: "Chalecos", icon: "warm" },
     ],
   },
-  // Placeholders para futuras categorías
   deportivo: {
     sector: "deportivo",
     title: "Ropa Deportiva Personalizada",
     subtitle: "Deportivo",
     description:
-      "Uniformes deportivos con sublimación completa para equipos y academias.",
+      "Uniformes deportivos con sublimación completa para equipos, academias y ligas locales.",
     seoDescription:
       "Ropa deportiva personalizada con sublimación. Uniformes para equipos de fútbol, basketball y más. San Miguel, El Salvador.",
     icon: "sports",
-    heroGradient: "bg-orange-900 text-white",
+    heroGradient:
+      "bg-gradient-to-br from-orange-800 via-amber-900 to-red-900 text-white",
     heroFeatures: [
       { icon: "palette", text: "Sublimación total" },
       { icon: "sports", text: "Todas las disciplinas" },
       { icon: "groups", text: "Equipos completos" },
     ],
-    trustFeatures: [],
+    trustFeatures: [
+      { icon: "palette", text: "Diseño sublimado a full color" },
+      { icon: "sports", text: "Corte deportivo ergonómico" },
+      { icon: "local_shipping", text: "Envío a todo El Salvador" },
+      { icon: "groups", text: "Precios por equipo" },
+    ],
     ctaBanner: {
       title: "¿Uniformes para tu equipo?",
-      description: "Sublimación completa con diseño personalizado.",
+      description:
+        "Sublimación completa con diseño personalizado. Cotiza para tu liga o academia.",
       ctaText: "Cotizar uniformes deportivos",
       ctaHref: "https://confeccionesliss.axkar.com/",
     },
-    filterGroups: [],
-    categoryChips: [{ label: "Todo", icon: "grid_view" }],
+    filterGroups: [
+      {
+        label: "Tipo de Prenda",
+        icon: "checkroom",
+        filterField: "tipo",
+        options: [
+          { value: "camisetas", label: "Camisetas" },
+          { value: "shorts", label: "Shorts" },
+          { value: "conjuntos", label: "Conjuntos" },
+        ],
+      },
+    ],
+    categoryChips: [
+      { label: "Todo", icon: "grid_view" },
+      { label: "Camisetas", icon: "sports" },
+      { label: "Shorts", icon: "checkroom" },
+      { label: "Conjuntos", icon: "dry_cleaning" },
+    ],
   },
   accesorios: {
     sector: "accesorios",
     title: "Accesorios y Complementos",
     subtitle: "Accesorios",
     description:
-      "Gorros quirúrgicos, corbatas, cinturones y complementos para uniformes.",
+      "Gorros quirúrgicos, corbatas, llaveros, pines, artículos de enfermería y complementos para uniformes.",
     seoDescription:
-      "Accesorios para uniformes: gorros quirúrgicos, corbatas, y complementos. Confecciones Liss, San Miguel.",
+      "Accesorios para uniformes: gorros quirúrgicos, corbatas, llaveros, pines y detalles de enfermería. Confecciones Liss, San Miguel.",
     icon: "medical_services",
-    heroGradient: "bg-teal-900 text-white",
+    heroGradient:
+      "bg-gradient-to-br from-teal-800 via-teal-900 to-cyan-900 text-white",
     heroFeatures: [
       { icon: "checkroom", text: "Complementos" },
       { icon: "palette", text: "Personalización" },
+      { icon: "draw", text: "Bordado disponible" },
     ],
-    trustFeatures: [],
+    trustFeatures: [
+      { icon: "checkroom", text: "Complementos profesionales" },
+      { icon: "palette", text: "Personalización incluida" },
+      { icon: "local_shipping", text: "Envío a todo El Salvador" },
+      { icon: "payments", text: "Precios accesibles" },
+    ],
     ctaBanner: {
       title: "¿Necesitas complementos?",
-      description: "Todos los accesorios para completar tu uniforme.",
-      ctaText: "Ver accesorios",
+      description:
+        "Todos los accesorios para completar tu uniforme profesional o institucional.",
+      ctaText: "Ver accesorios disponibles",
       ctaHref: "https://confeccionesliss.axkar.com/",
     },
-    filterGroups: [],
-    categoryChips: [{ label: "Todo", icon: "grid_view" }],
+    filterGroups: [
+      {
+        label: "Tipo de Artículo",
+        icon: "checkroom",
+        filterField: "tipo",
+        options: [
+          { value: "gorros", label: "Gorros" },
+          { value: "llaveros", label: "Llaveros" },
+          { value: "pines", label: "Pines" },
+          { value: "detalles", label: "Detalles de Enfermería" },
+        ],
+      },
+    ],
+    categoryChips: [
+      { label: "Todo", icon: "grid_view" },
+      { label: "Gorros", icon: "checkroom" },
+      { label: "Llaveros", icon: "key" },
+      { label: "Pines", icon: "push_pin" },
+    ],
   },
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { FilterSidebar } from "./FilterSidebar";
 import type { FilterGroup } from "@/data/types";
 
@@ -13,6 +13,9 @@ interface FilterDrawerProps {
   onClearAll: () => void;
 }
 
+const FOCUSABLE_SELECTOR =
+  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export function FilterDrawer({
   isOpen,
   onClose,
@@ -22,10 +25,12 @@ export function FilterDrawer({
   onClearAll,
 }: FilterDrawerProps) {
   const drawerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   // Lock body scroll when drawer is open
   useEffect(() => {
     if (isOpen) {
+      triggerRef.current = document.activeElement as HTMLElement;
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -35,21 +40,61 @@ export function FilterDrawer({
     };
   }, [isOpen]);
 
-  // Focus trap: return focus on close
+  // Focus first focusable element when opening
   useEffect(() => {
     if (isOpen && drawerRef.current) {
-      drawerRef.current.focus();
+      const firstFocusable = drawerRef.current.querySelector(
+        FOCUSABLE_SELECTOR
+      ) as HTMLElement | null;
+      if (firstFocusable) {
+        firstFocusable.focus();
+      } else {
+        drawerRef.current.focus();
+      }
     }
   }, [isOpen]);
 
-  // Close on Escape
+  // Return focus on close
   useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape" && isOpen) onClose();
+    if (!isOpen && triggerRef.current) {
+      triggerRef.current.focus();
+      triggerRef.current = null;
     }
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen]);
+
+  // Focus trap + Escape to close
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (e.key !== "Tab" || !drawerRef.current) return;
+
+      const focusableElements = Array.from(
+        drawerRef.current.querySelectorAll(FOCUSABLE_SELECTOR)
+      ) as HTMLElement[];
+
+      if (focusableElements.length === 0) return;
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    },
+    [onClose]
+  );
 
   const totalActive = Object.values(selected).reduce(
     (sum, arr) => sum + arr.length,
@@ -70,12 +115,14 @@ export function FilterDrawer({
       />
 
       {/* Drawer panel */}
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         ref={drawerRef}
         role="dialog"
         aria-modal="true"
         aria-label="Filtros de productos"
         tabIndex={-1}
+        onKeyDown={handleKeyDown}
         className={`fixed inset-y-0 right-0 z-50 flex w-80 max-w-[85vw] flex-col bg-white shadow-xl transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}

@@ -46,21 +46,24 @@ export function CatalogClientShell({
       );
     }
 
-    // Sidebar filters
+    // Sidebar filters — AND between groups, OR within each group
     const activeFilterGroups = Object.entries(sidebarFilters).filter(
       ([, values]) => values.length > 0
     );
-    for (const [, values] of activeFilterGroups) {
-      result = result.filter(
-        (p) =>
-          values.some((v) => p.tipo.toLowerCase() === v.toLowerCase()) ||
-          values.some((v) => p.tallas.includes(v)) ||
-          values.some((v) => p.categoria.toLowerCase() === v.toLowerCase())
-      );
+    for (const [groupLabel, values] of activeFilterGroups) {
+      const group = config.filterGroups.find((g) => g.label === groupLabel);
+      const field = group?.filterField ?? "tipo";
+      result = result.filter((p) => {
+        if (field === "tallas") return values.some((v) => p.tallas.includes(v));
+        const productValue = String(
+          p[field as keyof typeof p] ?? ""
+        ).toLowerCase();
+        return values.some((v) => productValue === v.toLowerCase());
+      });
     }
 
     return result;
-  }, [products, activeCategory, sidebarFilters]);
+  }, [products, activeCategory, sidebarFilters, config.filterGroups]);
 
   const breadcrumbItems = [
     { label: "Inicio", href: "/" },
@@ -132,7 +135,9 @@ export function CatalogClientShell({
               key={cat.label}
               type="button"
               role="tab"
+              id={`chip-${cat.label.toLowerCase().replace(/\s+/g, "-")}`}
               aria-selected={activeCategory === cat.label}
+              aria-controls="product-grid-panel"
               onClick={() => setActiveCategory(cat.label)}
               className={`focus-visible:ring-primary flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium focus-visible:ring-2 focus-visible:ring-offset-2 motion-safe:transition-all ${
                 activeCategory === cat.label
@@ -175,7 +180,12 @@ export function CatalogClientShell({
             />
           </div>
           {/* Grid */}
-          <div className="flex-1">
+          <div
+            className="flex-1"
+            id="product-grid-panel"
+            role="tabpanel"
+            aria-labelledby={`chip-${activeCategory.toLowerCase().replace(/\s+/g, "-")}`}
+          >
             <div className="mb-6 flex items-center justify-between">
               <h2 className="section-title text-xl">
                 Catálogo {config.subtitle}

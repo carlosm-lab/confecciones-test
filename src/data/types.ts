@@ -74,6 +74,8 @@ export interface FilterOption {
 export interface FilterGroup {
   label: string;
   icon?: string;
+  /** Campo del producto contra el que se filtra */
+  filterField: "tipo" | "tallas" | "categoria" | "sector";
   options: FilterOption[];
 }
 
