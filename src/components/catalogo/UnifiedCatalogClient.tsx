@@ -15,7 +15,7 @@ import { useState } from "react";
 
 /* ─── Sector display config ─── */
 const SECTOR_LABELS: Record<string, { label: string; icon: string }> = {
-  salud: { label: "Salud", icon: "health_and_safety" },
+  scrubs: { label: "Scrubs", icon: "health_and_safety" },
   universitario: { label: "Universitario", icon: "school" },
   escolar: { label: "Escolar", icon: "domain" },
   corporativo: { label: "Corporativo", icon: "business_center" },

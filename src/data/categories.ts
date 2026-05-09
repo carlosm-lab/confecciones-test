@@ -1,7 +1,7 @@
 import type { CategoryConfig, Sector } from "./types";
 
 export const SECTOR_SLUGS: Sector[] = [
-  "salud",
+  "scrubs",
   "universitario",
   "escolar",
   "corporativo",
@@ -10,10 +10,10 @@ export const SECTOR_SLUGS: Sector[] = [
 ];
 
 export const CATEGORIES: Record<Sector, CategoryConfig> = {
-  salud: {
-    sector: "salud",
+  scrubs: {
+    sector: "scrubs",
     title: "Uniformes Médicos de Alta Calidad",
-    subtitle: "Sector Salud",
+    subtitle: "Scrubs",
     description:
       "Scrubs, batas, gorros quirúrgicos y chaquetas clínicas confeccionados con tela antimicrobiana Sincatex.",
     seoDescription:

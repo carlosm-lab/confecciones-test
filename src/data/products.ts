@@ -11,7 +11,7 @@ const SALUD_PRODUCTS: Product[] = [
     precioAnterior: 55.0,
     categoria: "Scrubs Médicos",
     tipo: "scrubs",
-    sector: "salud",
+    sector: "scrubs",
     imagen:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAHxaJ3wC7_Tyv2qoS2x-JxEIKirXQbF3Oa93ux9PxpkeDL7PxP9HgLzvuK4PXKFpUyQIEazDIMFGi-ippZhPkDRGzV0_DgjDlpq1lvYtUEKv6MM_9SCEIjG9hv1Kuj25-a2myQC0CLzn4fEvE0DFt2kbgC_jM_U-I-1a5mo6eKrFB-IUhmbhCp2sfLYyoGpdjIhZHsgiWX3J4kkrsjmCwv49dPUsoa-VXowlnCp231nVGXqhuBRF3wCeAivhPWKCJ4QLH2jr6oNBXo",
     tallas: ["XS", "S", "M", "L", "XL", "XXL"],
@@ -44,7 +44,7 @@ const SALUD_PRODUCTS: Product[] = [
     precioAnterior: null,
     categoria: "Scrubs Médicos",
     tipo: "scrubs",
-    sector: "salud",
+    sector: "scrubs",
     imagen:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAxSbIkuyWTJrw2EAiS4xEAWH3lyRMzEX1EAjDFnWMhZr_t4qHRlSJPcv8WPv7kTJnqf-L1g3_tlCuiFODPxSanZtyJmncxqhD_3enq-HKR27k_wuBOjgM4QrItW1W3d3YSx1YZpUUx-AEiSRGqPExOd-iJ1Na0rtckcedSu_qQkKuuVwW0DutZRRKmVzw_yq55U6NS70EP0KEwVkLzUt_Hwh3o_9AFbhaVeGczixKKq2Qpb10mpURGgV2HynW1g3MKlYs6n-yp8KKO",
     tallas: ["S", "M", "L", "XL"],
@@ -57,7 +57,7 @@ const SALUD_PRODUCTS: Product[] = [
     precioAnterior: null,
     categoria: "Gorros",
     tipo: "gorros",
-    sector: "salud",
+    sector: "scrubs",
     imagen:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCJrG7ywGURCgxGpPBAAxum4EmcC_Ho7DeJYfkcDI1HZLbfrOwjxr84oTYIAz6pJDmYCubgLMXEu2F6OidCmmzN5zFRZRxwQ222Y0aygqOfBOYVJahJFWuX1ePwZ70pzkqqTns9WnbaMFcG5KdIxznIxMA88-3K0vSoYKbvHDe4mMUaQL0c7sboJLYopKKEkMRVQKJkyE-lYKgm8CKMjDe4Hx0thfhqjjJQzYH7PffT9wI0yDesJPkDx8eTyFVeai0jSXh9nfgbPMTI",
     tallas: [],
@@ -70,7 +70,7 @@ const SALUD_PRODUCTS: Product[] = [
     precioAnterior: null,
     categoria: "Batas",
     tipo: "batas",
-    sector: "salud",
+    sector: "scrubs",
     imagen:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuC_YwV1ovoyjSwwiIBSXICjSK7t1NRCrORLAJ_WG-VlxLKegY62cdSW0kO4i3RxDxHeOqFaTkKljC8uUBjX8XSP244WgBQ8bv4mqN4XAi-Z3lze5iprsJy74iA97nN7xLG5T9DBh4P0VEV695KAJVFJrMjA6g4-7UnCczo95wFOeSaQEwmOur-gRTwnqJw5YmdyL-yRztA_ycYcCO6hlBmQgXtwurLLPdd7k6oBBIlTI68PQeL9OeeJZoTLCf6r-BJF1EXy2TeD_qa9",
     tallas: ["S", "M", "L", "XL"],
@@ -83,7 +83,7 @@ const SALUD_PRODUCTS: Product[] = [
     precioAnterior: null,
     categoria: "Scrubs Médicos",
     tipo: "scrubs",
-    sector: "salud",
+    sector: "scrubs",
     imagen:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDQepqZh7wWu3DuxMx5nRM9lm2JxllqopZA7uJqcHql4U8sgiQ24iDi_1JmHF5dnFzyaxD36dUIm-mvhvey04mWJa8fNceomHfzq8tY6aExELUPlX0NLLworw5HfUcwtc9eegWij8sFrVZurpOdpic-V2Y0pb83XvzL4Sud4ShRaIOwwwp8ZXxIhd1uxYeaNFfhNQlaas11n5dzAfEL-Q42eLJ67EwdnX2sbsJ0jbEFo_BGGtbUVSL8UMDmQvjR6p2yksuarMD2wCzV",
     tallas: ["XS", "S", "M", "L", "XL"],
@@ -97,7 +97,7 @@ const SALUD_PRODUCTS: Product[] = [
     precioAnterior: null,
     categoria: "Chaquetas",
     tipo: "chaquetas",
-    sector: "salud",
+    sector: "scrubs",
     imagen: null,
     tallas: ["M", "L", "XL"],
     showBadge: false,

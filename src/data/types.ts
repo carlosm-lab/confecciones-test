@@ -4,7 +4,7 @@
 
 /** Sectores/categorías del catálogo */
 export type Sector =
-  | "salud"
+  | "scrubs"
   | "universitario"
   | "escolar"
   | "corporativo"

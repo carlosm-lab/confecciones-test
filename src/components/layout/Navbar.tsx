@@ -27,7 +27,7 @@ const NAV_LINKS: NavLink[] = [
     mobileIcon: "storefront",
     children: [
       {
-        href: "/catalogo/salud",
+        href: "/catalogo/scrubs",
         label: "Scrubs Médicos",
         icon: "health_and_safety",
       },

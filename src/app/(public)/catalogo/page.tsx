@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Catálogo de Uniformes | Confecciones Liss",
     description:
-      "Encuentra uniformes para el sector salud, universidades, colegios y empresas. Bordado, sublimación y precios por volumen.",
+      "Encuentra uniformes y scrubs médicos a la medida para el sector salud, universidades, colegios y empresas. Bordado, sublimación y precios por volumen.",
     url: `${siteConfig.url}/catalogo`,
   },
   alternates: {
@@ -44,7 +44,7 @@ export default function CatalogoPage() {
               {
                 "@type": "CollectionPage",
                 name: "Scrubs Médicos",
-                url: `${siteConfig.url}/catalogo/salud`,
+                url: `${siteConfig.url}/catalogo/scrubs`,
               },
               {
                 "@type": "CollectionPage",

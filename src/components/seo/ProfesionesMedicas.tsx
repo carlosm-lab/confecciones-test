@@ -11,7 +11,7 @@ export function ProfesionesMedicas() {
           id="profesiones-heading"
           className="text-primary mb-4 text-center font-serif text-2xl"
         >
-          Uniformes para cada profesión del sector salud
+          Uniformes y scrubs para cada profesión del sector salud
         </h2>
         <p className="text-on-surface-variant mx-auto mb-10 w-full max-w-2xl text-left text-sm md:text-center">
           En Confecciones Liss fabricamos scrubs y uniformes especializados para
