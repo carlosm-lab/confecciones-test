@@ -16,5 +16,3 @@ export const siteConfig = {
     googleMaps: "https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7",
   },
 };
-
-export type SiteConfig = typeof siteConfig;

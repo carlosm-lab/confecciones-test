@@ -345,11 +345,6 @@ export function getProductsBySector(sector: Sector): Product[] {
   return ALL_PRODUCTS.filter((p) => p.sector === sector);
 }
 
-/** Buscar un producto por su slug (id) globalmente */
-export function getProductBySlug(slug: string): Product | undefined {
-  return ALL_PRODUCTS.find((p) => p.id === slug);
-}
-
 /** Buscar un producto por sector + slug */
 export function getProductBySectorAndSlug(
   sector: Sector,
