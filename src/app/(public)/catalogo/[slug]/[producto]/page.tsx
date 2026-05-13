@@ -2,34 +2,43 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ALL_PRODUCTS, getProductBySectorAndSlug } from "@/data/products";
-import { CATEGORIES, SECTOR_SLUGS } from "@/data/categories";
-import type { Sector } from "@/data/types";
+import { ALL_PRODUCTS } from "@/data/products";
+import { CATALOG_PAGES } from "@/data/catalog-pages";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 // ── SSG: pre-renderiza todas las rutas de productos ──
 export function generateStaticParams() {
-  return ALL_PRODUCTS.map((p) => ({
-    categoria: p.sector,
-    slug: p.id,
-  }));
+  const params: { slug: string; producto: string }[] = [];
+
+  CATALOG_PAGES.forEach((page) => {
+    const products = page.filterFn(ALL_PRODUCTS);
+    products.forEach((p) => {
+      params.push({ slug: page.slug, producto: p.id });
+    });
+  });
+
+  return params;
 }
 
 // ── Metadata dinámica ──
-type PageParams = { categoria: string; slug: string };
+type PageParams = { slug: string; producto: string };
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<PageParams>;
 }): Promise<Metadata> {
-  const { categoria, slug } = await params;
-  const product = getProductBySectorAndSlug(categoria as Sector, slug);
+  const { slug, producto } = await params;
+  const config = CATALOG_PAGES.find((p) => p.slug === slug);
+  if (!config) return {};
+
+  const products = config.filterFn(ALL_PRODUCTS);
+  const product = products.find((p) => p.id === producto);
+
   if (!product) return {};
 
-  const categoryConfig = CATEGORIES[categoria as Sector];
-  const title = `${product.nombre} | ${categoryConfig?.subtitle ?? "Catálogo"} — Confecciones Liss`;
+  const title = `${product.nombre} | ${config.title} — Confecciones Liss`;
   const description =
     product.descripcionCorta ??
     `${product.nombre} disponible desde $${product.precio.toFixed(2)}. Confeccionado a la medida en San Miguel, El Salvador.`;
@@ -37,12 +46,22 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: `/catalogo/${categoria}/${slug}` },
+    alternates: { canonical: `${siteConfig.url}/catalogo/${slug}/${producto}` },
     openGraph: {
       title,
       description,
-      url: `${siteConfig.url}/catalogo/${categoria}/${slug}`,
+      url: `${siteConfig.url}/catalogo/${slug}/${producto}`,
       type: "website",
+      siteName: siteConfig.name,
+      images: product.imagen
+        ? [
+            {
+              url: product.imagen.startsWith("/")
+                ? `${siteConfig.url}${product.imagen}`
+                : product.imagen,
+            },
+          ]
+        : undefined,
     },
   };
 }
@@ -53,21 +72,36 @@ export default async function ProductDetailPage({
 }: {
   params: Promise<PageParams>;
 }) {
-  const { categoria, slug } = await params;
+  const { slug, producto } = await params;
 
-  if (!SECTOR_SLUGS.includes(categoria as Sector)) notFound();
+  const config = CATALOG_PAGES.find((p) => p.slug === slug);
+  if (!config) notFound();
 
-  const product = getProductBySectorAndSlug(categoria as Sector, slug);
+  const products = config.filterFn(ALL_PRODUCTS);
+  const product = products.find((p) => p.id === producto);
+
   if (!product) notFound();
 
-  const categoryConfig = CATEGORIES[categoria as Sector];
-
-  const breadcrumbItems = [
+  const breadcrumbItems: { label: string; href?: string }[] = [
     { label: "Inicio", href: "/" },
     { label: "Catálogo", href: "/catalogo" },
-    { label: categoryConfig.subtitle, href: `/catalogo/${categoria}` },
-    { label: product.nombre },
   ];
+
+  if (config.parentSector && config.slug !== config.parentSector) {
+    const parentConfig = CATALOG_PAGES.find(
+      (p) => p.slug === config.parentSector
+    );
+    breadcrumbItems.push({
+      label: parentConfig?.navLabel || config.parentSector,
+      href: `/catalogo/${config.parentSector}`,
+    });
+  }
+
+  breadcrumbItems.push({
+    label: config.navLabel,
+    href: `/catalogo/${config.slug}`,
+  });
+  breadcrumbItems.push({ label: product.nombre });
 
   // JSON-LD Product Schema
   const productSchema = {
@@ -102,13 +136,15 @@ export default async function ProductDetailPage({
   const whatsappMessage = encodeURIComponent(
     `¡Hola! Me interesa el producto: ${product.nombre} ($${product.precio.toFixed(2)}). ¿Está disponible?`
   );
-  const whatsappHref = `https://wa.me/50373317181?text=${whatsappMessage}`;
+  const whatsappHref = `${siteConfig.links.whatsappDirect}?text=${whatsappMessage}`;
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productSchema).replace(/</g, "\\u003c"),
+        }}
       />
 
       <main className="mx-auto max-w-screen-xl px-4 py-8 md:px-8">
@@ -283,7 +319,7 @@ export default async function ProductDetailPage({
                 Pedir por WhatsApp
               </Link>
               <Link
-                href={`/catalogo/${categoria}`}
+                href={`/catalogo/${slug}`}
                 className="border-primary text-primary flex flex-1 items-center justify-center gap-2 rounded-xl border py-3 text-sm font-semibold transition-colors hover:bg-blue-50"
               >
                 <span
@@ -292,7 +328,7 @@ export default async function ProductDetailPage({
                 >
                   arrow_back
                 </span>
-                Ver más en {categoryConfig.subtitle}
+                Ver más en {config.navLabel}
               </Link>
             </div>
           </div>

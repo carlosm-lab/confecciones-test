@@ -1,4 +1,5 @@
 import { socialLinks } from "@/lib/seo-data";
+import { siteConfig } from "@/config/site";
 import {
   SiFacebook,
   SiGooglemaps,
@@ -68,19 +69,19 @@ export function NapContacto() {
               <p>
                 <strong className="text-on-surface">WhatsApp:</strong>{" "}
                 <a
-                  href="https://confeccionesliss.axkar.com/"
+                  href={siteConfig.links.whatsappDirect}
                   className="text-primary hover:underline"
                 >
-                  +503 7331-7181
+                  {siteConfig.phone}
                 </a>
               </p>
               <p>
                 <strong className="text-on-surface">Correo:</strong>{" "}
                 <a
-                  href="mailto:confeccionesliss.contacto@gmail.com"
+                  href={`mailto:${siteConfig.email}`}
                   className="text-primary text-xs hover:underline"
                 >
-                  confeccionesliss.contacto@gmail.com
+                  {siteConfig.email}
                 </a>
               </p>
               <p>

@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
+import { siteConfig } from "@/config/site";
 
 export function WhatsAppButton() {
   return (
     <Link
-      href="https://confeccionesliss.axkar.com/"
+      href={siteConfig.links.whatsappDirect}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"

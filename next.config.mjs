@@ -10,7 +10,15 @@ const nextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
-          { key: 'X-XSS-Protection', value: '1; mode=block' }
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          { 
+            key: 'Content-Security-Policy', 
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://lh3.googleusercontent.com; font-src 'self' data:; connect-src 'self' https://cvbdqsxjfrbwovzpydng.supabase.co https://cvbdqsxjfrbwovzpydng.supabase.in; frame-src 'self' https://challenges.cloudflare.com https://www.google.com;" 
+          },
+          { 
+            key: 'Permissions-Policy', 
+            value: 'camera=(), microphone=(), geolocation=(), interesting-features=()' 
+          }
         ],
       },
     ];
@@ -25,7 +33,12 @@ const nextConfig = {
       },
       {
         source: "/producto/:id",
-        destination: "/catalogo/salud/:id",
+        destination: "/catalogo/scrubs/:id",
+        permanent: true,
+      },
+      {
+        source: "/catalogo/salud/:path*",
+        destination: "/catalogo/scrubs/:path*",
         permanent: true,
       },
     ];

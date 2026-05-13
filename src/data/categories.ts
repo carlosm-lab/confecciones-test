@@ -1,13 +1,5 @@
 import type { CategoryConfig, Sector } from "./types";
-
-export const SECTOR_SLUGS: Sector[] = [
-  "scrubs",
-  "universitario",
-  "escolar",
-  "corporativo",
-  "deportivo",
-  "accesorios",
-];
+import { siteConfig } from "@/config/site";
 
 export const CATEGORIES: Record<Sector, CategoryConfig> = {
   scrubs: {
@@ -36,7 +28,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Ofrecemos precios especiales para hospitales, clínicas y grupos de estudiantes. Bordado de logo institucional incluido.",
       ctaText: "Solicitar Cotización Grupal",
-      ctaHref: "https://confeccionesliss.axkar.com/",
+      ctaHref: siteConfig.links.whatsappDirect,
     },
     filterGroups: [
       {
@@ -99,7 +91,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Ofrecemos precios especiales para grupos de más de 10 unidades. Incluye bordado de carrera.",
       ctaText: "Cotizar para mi grupo",
-      ctaHref: "https://confeccionesliss.axkar.com/",
+      ctaHref: siteConfig.links.whatsappDirect,
     },
     filterGroups: [
       {
@@ -164,7 +156,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Producimos uniformes en volumen para instituciones educativas con precios especiales y bordado incluido.",
       ctaText: "Solicitar cotización institucional",
-      ctaHref: "https://confeccionesliss.axkar.com/",
+      ctaHref: siteConfig.links.whatsappDirect,
     },
     filterGroups: [
       {
@@ -228,7 +220,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Cotiza uniformes con tu logo bordado. Precios especiales desde 10 unidades.",
       ctaText: "Solicitar cotización corporativa",
-      ctaHref: "https://confeccionesliss.axkar.com/",
+      ctaHref: siteConfig.links.whatsappDirect,
     },
     filterGroups: [
       {
@@ -290,7 +282,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Sublimación completa con diseño personalizado. Cotiza para tu liga o academia.",
       ctaText: "Cotizar uniformes deportivos",
-      ctaHref: "https://confeccionesliss.axkar.com/",
+      ctaHref: siteConfig.links.whatsappDirect,
     },
     filterGroups: [
       {
@@ -338,7 +330,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Todos los accesorios para completar tu uniforme profesional o institucional.",
       ctaText: "Ver accesorios disponibles",
-      ctaHref: "https://confeccionesliss.axkar.com/",
+      ctaHref: siteConfig.links.whatsappDirect,
     },
     filterGroups: [
       {

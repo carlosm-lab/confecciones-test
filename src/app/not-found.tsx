@@ -74,6 +74,7 @@ export default function NotFound() {
               className="bg-surface-variant border-primary-fixed-dim text-on-surface focus:border-secondary placeholder:text-on-surface-variant/60 w-full rounded-t-md border-b-2 px-12 py-4 transition-colors focus:ring-0 focus:outline-none"
               placeholder="¿Buscabas algún producto?"
               type="text"
+              aria-label="Buscar producto"
             />
           </div>
         </div>

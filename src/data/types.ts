@@ -55,6 +55,8 @@ export interface Product {
   caracteristicas?: string[];
   /** Material / tela */
   material?: string;
+  /** Sub-página a la que pertenece (opcional, para ruteo específico) */
+  subPageSlug?: string;
 }
 
 /** Chip de filtro rápido (sticky bar) */
@@ -113,4 +115,23 @@ export interface CategoryConfig {
   ctaBanner: CtaBanner;
   filterGroups: FilterGroup[];
   categoryChips: CategoryChip[];
+}
+
+/** Definición de sub-página independiente de catálogo */
+export interface CatalogSubPage {
+  slug: string;
+  parentSector?: Sector | null; // null para servicios que no pertenecen a un sector
+  navLabel: string;
+  navIcon: string;
+  title: string;
+  subtitle: string;
+  seoTitle: string;
+  seoDescription: string;
+  description: string;
+  heroGradient: string;
+  heroFeatures: HeroFeature[];
+  trustFeatures: TrustFeature[];
+  ctaBanner: CtaBanner;
+  filterFn: (products: Product[]) => Product[];
+  jsonLdType: "CollectionPage" | "Service";
 }

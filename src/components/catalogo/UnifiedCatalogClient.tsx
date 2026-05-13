@@ -10,6 +10,8 @@ import { FilterDrawer } from "@/components/catalogo/FilterDrawer";
 import { useFilterParams } from "@/hooks/useFilterParams";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import type { Product, FilterGroup } from "@/data/types";
+import { siteConfig } from "@/config/site";
+import { CatalogSubNav } from "@/components/catalogo/CatalogSubNav";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -293,56 +295,8 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
         </div>
       </section>
 
-      {/* Sector Quick Chips */}
-      <section
-        className="sticky top-[52px] z-40 border-b border-gray-200 bg-white/95 backdrop-blur-md"
-        aria-label="Filtro rápido por sector"
-      >
-        <div className="hide-scrollbar mx-auto flex max-w-screen-xl gap-2 overflow-x-auto px-5 py-3 md:px-8">
-          <button
-            type="button"
-            onClick={clearAll}
-            className={cn(
-              "flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-all",
-              !hasActiveFilters
-                ? "border-primary bg-primary text-white"
-                : "hover:border-primary hover:text-primary border-gray-200 bg-white text-gray-600"
-            )}
-          >
-            <span
-              className="material-symbols-outlined text-sm"
-              aria-hidden="true"
-            >
-              grid_view
-            </span>
-            Todos
-          </button>
-          {Object.entries(SECTOR_LABELS).map(([key, { label, icon }]) => {
-            const isActive = filters.sector?.includes(key) ?? false;
-            return (
-              <button
-                key={key}
-                type="button"
-                onClick={() => toggleFilter("sector", key)}
-                className={cn(
-                  "flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-all",
-                  isActive
-                    ? "border-primary bg-primary text-white"
-                    : "hover:border-primary hover:text-primary border-gray-200 bg-white text-gray-600"
-                )}
-              >
-                <span
-                  className="material-symbols-outlined text-sm"
-                  aria-hidden="true"
-                >
-                  {icon}
-                </span>
-                {label}
-              </button>
-            );
-          })}
-        </div>
-      </section>
+      {/* Sub-nav Sticky */}
+      <CatalogSubNav />
 
       {/* Mobile Filter Drawer */}
       <FilterDrawer
@@ -520,7 +474,7 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
             </p>
           </div>
           <a
-            href="https://confeccionesliss.axkar.com/"
+            href={siteConfig.links.whatsappDirect}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary shrink-0 rounded-lg bg-white px-8 py-3 font-semibold transition-colors hover:bg-gray-100"

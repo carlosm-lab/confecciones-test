@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { services } from "@/lib/seo-data";
 import DOMPurify from "isomorphic-dompurify";
+import { siteConfig } from "@/config/site";
 
 export function ServiciosPrincipales() {
   return (
@@ -58,7 +59,7 @@ export function ServiciosPrincipales() {
                   ))}
                 </ul>
                 <a
-                  href={`https://confeccionesliss.axkar.com/`}
+                  href={siteConfig.links.whatsappDirect}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-primary text-on-primary mt-auto rounded-md py-3 text-center text-sm font-semibold transition-opacity hover:opacity-90"

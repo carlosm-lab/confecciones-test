@@ -5,22 +5,28 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { FilterSidebar } from "@/components/catalogo/FilterSidebar";
 import { FilterDrawer } from "@/components/catalogo/FilterDrawer";
-import type { Product, CategoryConfig } from "@/data/types";
+import { CatalogSubNav } from "@/components/catalogo/CatalogSubNav";
+import { CATEGORIES } from "@/data/categories";
+import type { Product, CatalogSubPage } from "@/data/types";
 
-interface CatalogClientShellProps {
+interface CatalogSubPageClientProps {
   products: Product[];
-  config: CategoryConfig;
+  config: Omit<CatalogSubPage, "filterFn">;
 }
 
-export function CatalogClientShell({
+export function CatalogSubPageClient({
   products,
   config,
-}: CatalogClientShellProps) {
-  const [activeCategory, setActiveCategory] = useState("Todo");
+}: CatalogSubPageClientProps) {
   const [sidebarFilters, setSidebarFilters] = useState<
     Record<string, string[]>
   >({});
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const parentSectorConfig = config.parentSector
+    ? CATEGORIES[config.parentSector]
+    : null;
+  const filterGroups = parentSectorConfig?.filterGroups || [];
 
   const handleFilterChange = useCallback(
     (groupLabel: string, values: string[]) => {
@@ -30,28 +36,18 @@ export function CatalogClientShell({
   );
 
   const handleClearFilters = useCallback(() => {
-    setActiveCategory("Todo");
     setSidebarFilters({});
   }, []);
 
   const filteredProducts = useMemo(() => {
     let result = products;
 
-    // Chip filter
-    if (activeCategory !== "Todo") {
-      result = result.filter(
-        (p) =>
-          p.categoria.toLowerCase().includes(activeCategory.toLowerCase()) ||
-          p.tipo.toLowerCase().includes(activeCategory.toLowerCase())
-      );
-    }
-
     // Sidebar filters — AND between groups, OR within each group
     const activeFilterGroups = Object.entries(sidebarFilters).filter(
       ([, values]) => values.length > 0
     );
     for (const [groupLabel, values] of activeFilterGroups) {
-      const group = config.filterGroups.find((g) => g.label === groupLabel);
+      const group = filterGroups.find((g) => g.label === groupLabel);
       const field = group?.filterField ?? "tipo";
       result = result.filter((p) => {
         if (field === "tallas") return values.some((v) => p.tallas.includes(v));
@@ -63,16 +59,30 @@ export function CatalogClientShell({
     }
 
     return result;
-  }, [products, activeCategory, sidebarFilters, config.filterGroups]);
+  }, [products, sidebarFilters, filterGroups]);
 
   const breadcrumbItems = [
     { label: "Inicio", href: "/" },
     { label: "Catálogo", href: "/catalogo" },
-    { label: config.subtitle },
   ];
+
+  if (config.parentSector && config.slug !== config.parentSector) {
+    breadcrumbItems.push({
+      label: parentSectorConfig?.title || config.parentSector,
+      href: `/catalogo/${config.parentSector}`,
+    });
+  }
+
+  breadcrumbItems.push({
+    label: config.navLabel,
+    href: `/catalogo/${config.slug}`,
+  });
 
   return (
     <>
+      {/* Sub-nav Sticky */}
+      <CatalogSubNav />
+
       {/* Hero */}
       <section className={`${config.heroGradient} px-5 py-12 md:px-8 md:py-20`}>
         <div className="mx-auto max-w-screen-xl">
@@ -87,7 +97,7 @@ export function CatalogClientShell({
                   className="material-symbols-outlined text-2xl"
                   aria-hidden="true"
                 >
-                  {config.icon}
+                  {config.navIcon}
                 </span>
                 <span className="text-sm font-medium tracking-widest uppercase opacity-80">
                   {config.subtitle}
@@ -120,105 +130,70 @@ export function CatalogClientShell({
         </div>
       </section>
 
-      {/* Category Chips (sticky) */}
-      <section
-        className="sticky top-[52px] z-40 border-b border-gray-200 bg-white/95 backdrop-blur-md"
-        aria-label="Filtrar por categoría"
-      >
-        <div
-          role="tablist"
-          aria-label="Categorías de productos"
-          className="hide-scrollbar mx-auto flex max-w-screen-xl gap-2 overflow-x-auto px-5 py-3 md:px-8"
-        >
-          {config.categoryChips.map((cat) => (
-            <button
-              key={cat.label}
-              type="button"
-              role="tab"
-              id={`chip-${cat.label.toLowerCase().replace(/\s+/g, "-")}`}
-              aria-selected={activeCategory === cat.label}
-              aria-controls="product-grid-panel"
-              onClick={() => setActiveCategory(cat.label)}
-              className={`focus-visible:ring-primary flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium focus-visible:ring-2 focus-visible:ring-offset-2 motion-safe:transition-all ${
-                activeCategory === cat.label
-                  ? "border-primary bg-primary text-white"
-                  : "hover:border-primary hover:text-primary border-gray-200 bg-white text-gray-600"
-              }`}
-            >
-              <span
-                className="material-symbols-outlined text-sm"
-                aria-hidden="true"
-              >
-                {cat.icon}
-              </span>
-              {cat.label}
-            </button>
-          ))}
-        </div>
-      </section>
-
       {/* Mobile Filter Drawer */}
-      <FilterDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        groups={config.filterGroups}
-        selected={sidebarFilters}
-        onFilterChange={handleFilterChange}
-        onClearAll={handleClearFilters}
-      />
+      {filterGroups.length > 0 && (
+        <FilterDrawer
+          isOpen={isDrawerOpen}
+          onClose={() => setIsDrawerOpen(false)}
+          groups={filterGroups}
+          selected={sidebarFilters}
+          onFilterChange={handleFilterChange}
+          onClearAll={handleClearFilters}
+        />
+      )}
 
       {/* Content with sidebar */}
       <section className="bg-surface px-5 py-10 md:px-8 md:py-16">
         <div className="mx-auto flex max-w-screen-xl gap-8">
           {/* Sidebar (desktop) */}
-          <div className="hidden w-64 shrink-0 lg:block">
-            <FilterSidebar
-              groups={config.filterGroups}
-              selected={sidebarFilters}
-              onFilterChange={handleFilterChange}
-              onClearAll={handleClearFilters}
-            />
-          </div>
+          {filterGroups.length > 0 && (
+            <div className="hidden w-64 shrink-0 lg:block">
+              <FilterSidebar
+                groups={filterGroups}
+                selected={sidebarFilters}
+                onFilterChange={handleFilterChange}
+                onClearAll={handleClearFilters}
+              />
+            </div>
+          )}
+
           {/* Grid */}
-          <div
-            className="flex-1"
-            id="product-grid-panel"
-            role="tabpanel"
-            aria-labelledby={`chip-${activeCategory.toLowerCase().replace(/\s+/g, "-")}`}
-          >
+          <div className="flex-1">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="section-title text-xl">
-                Catálogo {config.subtitle}
-              </h2>
+              <h2 className="section-title text-xl">{config.title}</h2>
               <div className="flex items-center gap-3">
                 {/* Mobile filter button */}
-                <button
-                  type="button"
-                  onClick={() => setIsDrawerOpen(true)}
-                  className="bg-primary/10 text-primary flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium lg:hidden"
-                  aria-label="Abrir filtros"
-                >
-                  <span
-                    className="material-symbols-outlined text-base"
-                    aria-hidden="true"
+                {filterGroups.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setIsDrawerOpen(true)}
+                    className="bg-primary/10 text-primary flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium lg:hidden"
+                    aria-label="Abrir filtros"
                   >
-                    tune
-                  </span>
-                  Filtros
-                </button>
+                    <span
+                      className="material-symbols-outlined text-base"
+                      aria-hidden="true"
+                    >
+                      tune
+                    </span>
+                    Filtros
+                  </button>
+                )}
                 <p className="text-sm text-gray-500" aria-live="polite">
                   {filteredProducts.length} producto
                   {filteredProducts.length !== 1 ? "s" : ""}
                 </p>
               </div>
             </div>
+
             {filteredProducts.length > 0 ? (
               <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
                 {filteredProducts.map((p) => (
                   <ProductCard
                     key={p.id}
                     id={p.id}
-                    sector={config.sector}
+                    sector={config.parentSector || p.sector}
+                    catalogSlug={config.slug}
                     nombre={p.nombre}
                     precio={p.precio}
                     precioAnterior={p.precioAnterior ?? null}
@@ -238,21 +213,23 @@ export function CatalogClientShell({
                   className="material-symbols-outlined mb-4 text-5xl text-gray-300"
                   aria-hidden="true"
                 >
-                  search_off
+                  inventory_2
                 </span>
                 <h3 className="mb-2 text-lg font-semibold text-gray-700">
-                  No se encontraron productos
+                  Pronto agregaremos más productos
                 </h3>
                 <p className="mb-4 max-w-sm text-sm text-gray-500">
-                  Prueba ajustando los filtros o selecciona otra categoría.
+                  Actualmente no hay productos para mostrar con estos filtros.
                 </p>
-                <button
-                  type="button"
-                  onClick={handleClearFilters}
-                  className="bg-primary rounded-lg px-6 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                >
-                  Limpiar filtros
-                </button>
+                {Object.keys(sidebarFilters).length > 0 && (
+                  <button
+                    type="button"
+                    onClick={handleClearFilters}
+                    className="bg-primary rounded-lg px-6 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                  >
+                    Limpiar filtros
+                  </button>
+                )}
               </div>
             )}
           </div>

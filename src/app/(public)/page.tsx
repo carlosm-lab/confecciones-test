@@ -14,6 +14,7 @@ import { ProfesionesMedicas } from "@/components/seo/ProfesionesMedicas";
 import { NapContacto } from "@/components/seo/NapContacto";
 import { KeywordsSeoFooter } from "@/components/seo/KeywordsSeoFooter";
 import { ProductCard } from "@/components/ui/ProductCard";
+import { siteConfig } from "@/config/site";
 
 export default function HomePage() {
   return (
@@ -48,6 +49,22 @@ export default function HomePage() {
               <br className="hidden lg:inline" />
               <span className="text-secondary">en San Miguel</span>
             </h1>
+
+            {/* IMAGEN HERO - VERSIÓN MÓVIL (Intercalada después del título) */}
+            <div className="relative mb-8 w-full md:w-3/4 lg:hidden">
+              <div className="relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+                <div className="pointer-events-none absolute inset-3 z-20 rounded-xl border-[2px] border-dashed border-white/90" />
+                <Image
+                  width={800}
+                  height={800}
+                  alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
+                  className="h-full w-full object-cover object-center"
+                  src="/images/uniformes/portada.webp"
+                  priority
+                />
+              </div>
+            </div>
+
             <p className="text-on-surface-variant font-body mb-6 max-w-lg text-base leading-relaxed md:text-lg lg:mb-8 lg:text-xl">
               Confección profesional de scrubs médicos en tela Sincatex y Lino
               Oxford. Uniformes para UNIVO, UNAB, UGB, colegios y empresas.
@@ -69,7 +86,7 @@ export default function HomePage() {
             </div>
             <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
               <a
-                href="https://confeccionesliss.axkar.com/"
+                href={siteConfig.links.whatsappDirect}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-gradient font-body ambient-shadow flex-1 rounded-md py-4 text-center font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90"
@@ -86,14 +103,15 @@ export default function HomePage() {
               </a>
             </div>
           </div>
-          <div className="relative w-full lg:w-[45%]">
-            <div className="bg-primary-container absolute inset-0 translate-x-6 translate-y-6 transform rounded-tr-[100px] rounded-bl-[100px] opacity-20" />
-            <div className="ambient-shadow bg-surface-container-highest relative z-10 aspect-[4/5] overflow-hidden rounded-tl-xl rounded-br-xl">
+          {/* IMAGEN HERO - VERSIÓN DESKTOP */}
+          <div className="relative hidden w-full lg:block lg:w-[45%]">
+            <div className="relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_10px_40px_rgb(0,0,0,0.12)]">
+              <div className="pointer-events-none absolute inset-4 z-20 rounded-xl border-[2px] border-dashed border-white/90" />
               <Image
                 width={800}
                 height={800}
                 alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                className="h-full w-full object-contain object-center"
+                className="h-full w-full object-cover object-center"
                 src="/images/uniformes/portada.webp"
                 priority
               />
@@ -346,7 +364,7 @@ export default function HomePage() {
           </div>
           <div className="flex md:w-1/3 md:justify-end">
             <a
-              href="https://confeccionesliss.axkar.com/"
+              href={siteConfig.links.whatsappDirect}
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary font-body hover:bg-surface-container w-full rounded-md bg-white px-8 py-4 text-center font-bold transition-colors md:w-auto"

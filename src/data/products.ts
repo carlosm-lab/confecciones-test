@@ -1,9 +1,9 @@
 import type { Product } from "./types";
 
 // ═══════════════════════════════════════════════
-// SALUD — 6 productos
+// SCRUBS — 6 productos
 // ═══════════════════════════════════════════════
-const SALUD_PRODUCTS: Product[] = [
+const SCRUBS_PRODUCTS: Product[] = [
   {
     id: "scrub-san-miguel",
     nombre: "Scrub Médico Premium 'San Miguel'",
@@ -328,27 +328,88 @@ const UNIVERSITARIO_PRODUCTS: Product[] = [
 ];
 
 // ═══════════════════════════════════════════════
-// Exportación combinada y helpers
+// DEPORTIVO — Productos Placeholder
 // ═══════════════════════════════════════════════
+const DEPORTIVO_PRODUCTS: Product[] = [
+  {
+    id: "camiseta-deportiva-sublimada",
+    nombre: "Camiseta Deportiva Sublimada",
+    precio: 18.0,
+    categoria: "Camisetas",
+    tipo: "camisetas",
+    sector: "deportivo",
+    imagen: null,
+    tallas: ["S", "M", "L", "XL", "XXL"],
+    showBadge: true,
+    badgeText: "Personalizable",
+  },
+  {
+    id: "short-deportivo",
+    nombre: "Short Deportivo Microfibra",
+    precio: 12.0,
+    categoria: "Shorts",
+    tipo: "shorts",
+    sector: "deportivo",
+    imagen: null,
+    tallas: ["S", "M", "L", "XL", "XXL"],
+  },
+  {
+    id: "uniforme-futbol-completo",
+    nombre: "Uniforme Fútbol Completo (Pack)",
+    precio: 25.0,
+    categoria: "Conjuntos",
+    tipo: "conjuntos",
+    sector: "deportivo",
+    imagen: null,
+    tallas: ["S", "M", "L", "XL", "XXL"],
+    showBadge: true,
+    badgeText: "Promo",
+  },
+];
 
-import type { Sector } from "./types";
+// ═══════════════════════════════════════════════
+// ACCESORIOS — Productos Placeholder
+// ═══════════════════════════════════════════════
+const ACCESORIOS_PRODUCTS: Product[] = [
+  {
+    id: "llavero-medico-anatomico",
+    nombre: "Llavero Médico Anatómico",
+    precio: 5.0,
+    categoria: "Llaveros",
+    tipo: "llaveros",
+    sector: "accesorios",
+    imagen: null,
+    tallas: [],
+    showBadge: false,
+  },
+  {
+    id: "pin-metalico-enfermeria",
+    nombre: "Pin Metálico Enfermería",
+    precio: 3.5,
+    categoria: "Pines",
+    tipo: "pines",
+    sector: "accesorios",
+    imagen: null,
+    tallas: [],
+  },
+  {
+    id: "organizador-bolsillo-clinico",
+    nombre: "Organizador de Bolsillo Clínico",
+    precio: 8.0,
+    categoria: "Detalles",
+    tipo: "detalles",
+    sector: "accesorios",
+    imagen: null,
+    tallas: [],
+  },
+];
 
+// ═══════════════════════════════════════════════
 export const ALL_PRODUCTS: Product[] = [
-  ...SALUD_PRODUCTS,
+  ...SCRUBS_PRODUCTS,
   ...CORPORATIVO_PRODUCTS,
   ...ESCOLAR_PRODUCTS,
   ...UNIVERSITARIO_PRODUCTS,
+  ...DEPORTIVO_PRODUCTS,
+  ...ACCESORIOS_PRODUCTS,
 ];
-
-/** Obtener productos filtrados por sector */
-export function getProductsBySector(sector: Sector): Product[] {
-  return ALL_PRODUCTS.filter((p) => p.sector === sector);
-}
-
-/** Buscar un producto por sector + slug */
-export function getProductBySectorAndSlug(
-  sector: Sector,
-  slug: string
-): Product | undefined {
-  return ALL_PRODUCTS.find((p) => p.sector === sector && p.id === slug);
-}

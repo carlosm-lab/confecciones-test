@@ -3,6 +3,8 @@ import { ALL_PRODUCTS } from "@/data/products";
 import { UnifiedCatalogClient } from "@/components/catalogo/UnifiedCatalogClient";
 import { siteConfig } from "@/config/site";
 
+import { CATALOG_PAGES } from "@/data/catalog-pages";
+
 export const metadata: Metadata = {
   title: "Catálogo completo de uniformes y scrubs",
   description:
@@ -19,6 +21,12 @@ export const metadata: Metadata = {
 };
 
 export default function CatalogoPage() {
+  const collectionParts = CATALOG_PAGES.map((page) => ({
+    "@type": "CollectionPage",
+    name: page.title,
+    url: `${siteConfig.url}/catalogo/${page.slug}`,
+  }));
+
   return (
     <>
       <UnifiedCatalogClient products={ALL_PRODUCTS} />
@@ -40,28 +48,7 @@ export default function CatalogoPage() {
               name: siteConfig.name,
               url: siteConfig.url,
             },
-            hasPart: [
-              {
-                "@type": "CollectionPage",
-                name: "Scrubs Médicos",
-                url: `${siteConfig.url}/catalogo/scrubs`,
-              },
-              {
-                "@type": "CollectionPage",
-                name: "Uniformes Universitarios",
-                url: `${siteConfig.url}/catalogo/universitario`,
-              },
-              {
-                "@type": "CollectionPage",
-                name: "Uniformes Escolares",
-                url: `${siteConfig.url}/catalogo/escolar`,
-              },
-              {
-                "@type": "CollectionPage",
-                name: "Uniformes Corporativos",
-                url: `${siteConfig.url}/catalogo/corporativo`,
-              },
-            ],
+            hasPart: collectionParts,
           }).replace(/</g, "\\u003c"),
         }}
       />

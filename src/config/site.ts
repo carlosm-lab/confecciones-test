@@ -1,3 +1,5 @@
+import { env } from "@/env";
+
 export const siteConfig = {
   name: "Confecciones Liss",
   description:
@@ -10,8 +12,8 @@ export const siteConfig = {
 
   // Contacto
   phone: "+503 7331-7181",
-  phoneRaw: "50373317181",
-  email: "confeccionesliss.contacto@gmail.com",
+  phoneRaw: env.NEXT_PUBLIC_WHATSAPP_NUMBER,
+  email: env.NEXT_PUBLIC_CONTACT_EMAIL,
   address: {
     street: "5A Calle Poniente & 1A Avenida Sur",
     neighborhood: "Barrio La Merced",
@@ -25,7 +27,7 @@ export const siteConfig = {
   geo: { lat: 13.4783213, lng: -88.1770113 },
 
   links: {
-    whatsapp: "https://confeccionesliss.axkar.com/",
+    whatsapp: "https://wa.me/50373317181",
     whatsappDirect: "https://wa.me/50373317181",
     facebook: "https://www.facebook.com/confeccionliss/",
     instagram: "https://www.instagram.com/confeccionliss/",

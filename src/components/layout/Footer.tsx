@@ -90,8 +90,7 @@ export function Footer() {
               >
                 location_on
               </span>{" "}
-              Barrio La Merced, 5A Calle Poniente &amp; 1A Avenida Sur, San
-              Miguel, El Salvador
+              {siteConfig.address.full}
             </li>
             <li className="flex items-center gap-2">
               <span
@@ -101,10 +100,12 @@ export function Footer() {
                 phone
               </span>{" "}
               <a
-                href="https://confeccionesliss.axkar.com/"
+                href={siteConfig.links.whatsappDirect}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hover:underline"
               >
-                +503 7331-7181
+                {siteConfig.phone}
               </a>
             </li>
             <li className="flex items-center gap-2">
@@ -114,7 +115,7 @@ export function Footer() {
               >
                 mail
               </span>{" "}
-              confeccionesliss.contacto@gmail.com
+              {siteConfig.email}
             </li>
             <li className="flex items-center gap-2">
               <span
@@ -123,7 +124,7 @@ export function Footer() {
               >
                 schedule
               </span>{" "}
-              Lun–Sáb 8:00 AM – 5:00 PM
+              {siteConfig.schedule}
             </li>
           </ul>
         </div>

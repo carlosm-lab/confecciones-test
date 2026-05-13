@@ -16,6 +16,7 @@ const notoSerif = Noto_Serif({
 });
 
 import { siteConfig } from "@/config/site";
+import "@/env";
 
 export const metadata = {
   title: {

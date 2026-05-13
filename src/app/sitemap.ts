@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
-import { SECTOR_SLUGS } from "@/data/categories";
+import { CATALOG_PAGES } from "@/data/catalog-pages";
+import { SERVICE_PAGES } from "@/data/services";
 import { ALL_PRODUCTS } from "@/data/products";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -21,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${siteConfig.url}/servicios`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${siteConfig.url}/contacto`,
       lastModified: now,
       changeFrequency: "monthly",
@@ -28,21 +35,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // Páginas de categoría (dinámico)
-  const categoryPages: MetadataRoute.Sitemap = SECTOR_SLUGS.map((sector) => ({
-    url: `${siteConfig.url}/catalogo/${sector}`,
+  // Páginas de categoría del catálogo
+  const categoryPages: MetadataRoute.Sitemap = CATALOG_PAGES.map((page) => {
+    const priority = page.slug === page.parentSector ? 0.85 : 0.7;
+    return {
+      url: `${siteConfig.url}/catalogo/${page.slug}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority,
+    };
+  });
+
+  // Artículos de servicios (blog)
+  const servicePages: MetadataRoute.Sitemap = SERVICE_PAGES.map((page) => ({
+    url: `${siteConfig.url}/servicios/${page.slug}`,
     lastModified: now,
-    changeFrequency: "weekly" as const,
+    changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
-  // Páginas de producto (dinámico)
-  const productPages: MetadataRoute.Sitemap = ALL_PRODUCTS.map((product) => ({
-    url: `${siteConfig.url}/catalogo/${product.sector}/${product.id}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  // Páginas de producto bajo catálogo
+  const productPages: MetadataRoute.Sitemap = [];
 
-  return [...staticPages, ...categoryPages, ...productPages];
+  CATALOG_PAGES.forEach((page) => {
+    const products = page.filterFn(ALL_PRODUCTS);
+    products.forEach((product) => {
+      const url = `${siteConfig.url}/catalogo/${page.slug}/${product.id}`;
+      if (!productPages.some((p) => p.url === url)) {
+        productPages.push({
+          url,
+          lastModified: now,
+          changeFrequency: "monthly" as const,
+          priority: 0.6,
+        });
+      }
+    });
+  });
+
+  return [...staticPages, ...categoryPages, ...servicePages, ...productPages];
 }

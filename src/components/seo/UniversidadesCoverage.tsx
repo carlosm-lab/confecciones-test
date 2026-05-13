@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import { universities } from "@/lib/seo-data";
 
 export function UniversidadesCoverage() {
@@ -46,7 +47,7 @@ export function UniversidadesCoverage() {
             uniformes.
           </p>
           <a
-            href="https://confeccionesliss.axkar.com/"
+            href={siteConfig.links.whatsappDirect}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-primary text-on-primary inline-block rounded-md px-8 py-3 font-semibold transition-opacity hover:opacity-90"

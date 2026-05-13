@@ -23,12 +23,14 @@ interface ProductCardProps {
   isFavorited?: boolean;
   pricePrefix?: string;
   priceSuffix?: string;
+  /** Override the sector slug in the product URL (e.g., sub-page slug) */
+  catalogSlug?: string;
+  /** Base path for the product URL. Defaults to "/catalogo" */
+  basePath?: string;
   onAddToCart?: () => void;
   onToggleFavorite?: () => void;
   className?: string;
 }
-
-const WHATSAPP_BASE = siteConfig.links.whatsapp;
 
 export function ProductCard({
   id,
@@ -46,6 +48,8 @@ export function ProductCard({
   isFavorited = false,
   pricePrefix,
   priceSuffix,
+  catalogSlug,
+  basePath = "/catalogo",
   onAddToCart,
   onToggleFavorite,
   className,
@@ -61,7 +65,7 @@ export function ProductCard({
         `¡Hola! Me interesa el producto: ${nombre} ($${precio.toFixed(2)}). ¿Está disponible?`
       );
       window.open(
-        `https://wa.me/50373317181?text=${message}`,
+        `${siteConfig.links.whatsappDirect}?text=${message}`,
         "_blank",
         "noopener,noreferrer"
       );
@@ -76,7 +80,7 @@ export function ProductCard({
 
   return (
     <Link
-      href={`/catalogo/${sector}/${id}`}
+      href={`${basePath}/${catalogSlug || sector}/${id}`}
       className={cn(
         "group hover:border-primary/20 focus-visible:ring-primary relative flex h-full flex-col overflow-hidden rounded-xl border border-transparent bg-white shadow-sm transition-all hover:shadow-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
         className
