@@ -132,7 +132,7 @@ export default async function ServiceArticlePage({
 
       {/* Hero */}
       <section className={`${config.heroGradient} px-5 py-12 md:px-8 md:py-20`}>
-        <div className="mx-auto max-w-screen-xl">
+        <div className="mx-auto max-w-screen-2xl">
           <nav className="mb-6 text-sm text-white/70" aria-label="Breadcrumb">
             <ol className="flex items-center gap-1">
               <li>
@@ -237,7 +237,7 @@ export default async function ServiceArticlePage({
 
       {/* CTA Banner */}
       <section className="bg-primary px-5 py-10 text-white md:px-8">
-        <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-6 md:flex-row">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
           <div>
             <h2 className="font-headline text-xl font-bold md:text-2xl">
               {config.ctaBanner.title}
@@ -260,7 +260,7 @@ export default async function ServiceArticlePage({
 
       {/* Otros servicios */}
       <section className="bg-surface px-5 py-10 md:px-8">
-        <div className="mx-auto max-w-screen-xl">
+        <div className="mx-auto max-w-screen-2xl">
           <h2 className="text-on-surface mb-6 font-serif text-lg font-bold">
             Otros servicios que ofrecemos
           </h2>

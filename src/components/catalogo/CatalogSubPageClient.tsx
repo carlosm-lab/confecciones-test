@@ -85,7 +85,7 @@ export function CatalogSubPageClient({
 
       {/* Hero */}
       <section className={`${config.heroGradient} px-5 py-12 md:px-8 md:py-20`}>
-        <div className="mx-auto max-w-screen-xl">
+        <div className="mx-auto max-w-screen-2xl">
           <Breadcrumb
             items={breadcrumbItems}
             className="mb-6 text-white/70 [&_a]:text-white/70 [&_a:hover]:text-white [&_span]:text-white/90"
@@ -110,11 +110,11 @@ export function CatalogSubPageClient({
                 {config.description}
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 lg:gap-3">
               {config.heroFeatures.map((b) => (
                 <div
                   key={b.text}
-                  className="flex items-center gap-2 rounded-lg bg-white/10 p-3 backdrop-blur-sm"
+                  className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-sm backdrop-blur-sm"
                 >
                   <span
                     className="material-symbols-outlined text-white"
@@ -144,10 +144,10 @@ export function CatalogSubPageClient({
 
       {/* Content with sidebar */}
       <section className="bg-surface px-5 py-10 md:px-8 md:py-16">
-        <div className="mx-auto flex max-w-screen-xl gap-8">
+        <div className="mx-auto flex max-w-screen-2xl gap-6 xl:gap-8">
           {/* Sidebar (desktop) */}
           {filterGroups.length > 0 && (
-            <div className="hidden w-64 shrink-0 lg:block">
+            <div className="hidden w-56 shrink-0 xl:block xl:w-64">
               <FilterSidebar
                 groups={filterGroups}
                 selected={sidebarFilters}
@@ -167,7 +167,7 @@ export function CatalogSubPageClient({
                   <button
                     type="button"
                     onClick={() => setIsDrawerOpen(true)}
-                    className="bg-primary/10 text-primary flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium lg:hidden"
+                    className="bg-primary/10 text-primary flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium xl:hidden"
                     aria-label="Abrir filtros"
                   >
                     <span
@@ -187,7 +187,7 @@ export function CatalogSubPageClient({
             </div>
 
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
+              <div className="grid grid-cols-2 items-start gap-4 md:gap-6 lg:grid-cols-3">
                 {filteredProducts.map((p) => (
                   <ProductCard
                     key={p.id}
@@ -242,7 +242,7 @@ export function CatalogSubPageClient({
           className="bg-surface-container-low border-t border-gray-200 px-5 py-10 md:px-8"
           aria-label="Garantías del servicio"
         >
-          <div className="mx-auto grid max-w-screen-xl grid-cols-2 gap-6 md:grid-cols-4">
+          <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-6 md:grid-cols-4">
             {config.trustFeatures.map((item) => (
               <div
                 key={item.text}
@@ -263,7 +263,7 @@ export function CatalogSubPageClient({
 
       {/* CTA Banner */}
       <section className="bg-primary px-5 py-10 text-white md:px-8">
-        <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-6 md:flex-row">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
           <div>
             <h2 className="font-headline text-xl font-bold md:text-2xl">
               {config.ctaBanner.title}

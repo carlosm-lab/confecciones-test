@@ -19,7 +19,7 @@ export function CoberturaNacional() {
       aria-labelledby="cobertura-heading"
       className="bg-surface-container-low px-5 py-14 md:px-8 md:py-16"
     >
-      <div className="mx-auto max-w-screen-xl">
+      <div className="mx-auto max-w-screen-2xl">
         <h2
           id="cobertura-heading"
           className="text-primary mb-4 text-center font-serif text-2xl"
@@ -37,7 +37,7 @@ export function CoberturaNacional() {
           <h3 className="text-primary mb-4 font-serif text-xl font-semibold">
             🔵 Zona Oriental — Entrega rápida y recogida en taller
           </h3>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
             <div>
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 San Miguel (Oficina central)
@@ -76,7 +76,7 @@ export function CoberturaNacional() {
           <h3 className="text-primary mb-4 font-serif text-xl font-semibold">
             🟢 Todo El Salvador — Envío con pago al recibir
           </h3>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
             <div>
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 San Salvador

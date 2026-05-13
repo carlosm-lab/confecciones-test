@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { SearchDropdown } from "@/components/catalogo/SearchDropdown";
 
 interface NavLink {
   href: string;
@@ -29,7 +30,13 @@ const SEARCH_PHRASES = [
   "Mano de obra...",
 ];
 
-function TypewriterSearch({ className }: { className?: string }) {
+function TypewriterSearch({
+  className,
+  onMenuClose,
+}: {
+  className?: string;
+  onMenuClose?: () => void;
+}) {
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
@@ -37,12 +44,23 @@ function TypewriterSearch({ className }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  // Derived state: dropdown visibility based on input length + focus
+  const showDropdown = useMemo(
+    () => inputValue.length >= 2 && isFocused,
+    [inputValue, isFocused]
+  );
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
+  // Typewriter effect
   useEffect(() => {
     if (!mounted || isFocused || inputValue) return;
 
@@ -59,12 +77,12 @@ function TypewriterSearch({ className }: { className?: string }) {
       setTypingSpeed(isDeleting ? 30 : 60);
 
       if (!isDeleting && text === fullText) {
-        setTypingSpeed(2000); // Pausa larga al terminar de escribir
+        setTypingSpeed(2000);
         setIsDeleting(true);
       } else if (isDeleting && text === "") {
         setIsDeleting(false);
         setLoopNum((prev) => prev + 1);
-        setTypingSpeed(500); // Pausa corta antes de escribir la siguiente
+        setTypingSpeed(500);
       }
     };
 
@@ -72,16 +90,102 @@ function TypewriterSearch({ className }: { className?: string }) {
     return () => clearTimeout(timer);
   }, [text, isDeleting, loopNum, typingSpeed, mounted, isFocused, inputValue]);
 
+  // Click outside to close
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setIsFocused(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const closeDropdown = useCallback(() => {
+    setIsFocused(false);
+    setActiveIndex(-1);
+    onMenuClose?.();
+  }, [onMenuClose]);
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (!showDropdown) {
+        if (e.key === "Enter" && inputValue.trim()) {
+          e.preventDefault();
+          router.push(`/catalogo?q=${encodeURIComponent(inputValue.trim())}`);
+          closeDropdown();
+          inputRef.current?.blur();
+        }
+        return;
+      }
+
+      switch (e.key) {
+        case "ArrowDown":
+          e.preventDefault();
+          setActiveIndex((prev) => prev + 1);
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          setActiveIndex((prev) => Math.max(-1, prev - 1));
+          break;
+        case "Enter": {
+          e.preventDefault();
+          if (activeIndex >= 0) {
+            // Click the active item
+            const activeEl = document.getElementById(
+              `search-result-${activeIndex}`
+            );
+            if (activeEl) {
+              activeEl.click();
+            }
+          } else if (inputValue.trim()) {
+            router.push(`/catalogo?q=${encodeURIComponent(inputValue.trim())}`);
+          }
+          closeDropdown();
+          inputRef.current?.blur();
+          break;
+        }
+        case "Escape":
+          e.preventDefault();
+          closeDropdown();
+          inputRef.current?.blur();
+          break;
+      }
+    },
+    [showDropdown, activeIndex, inputValue, router, closeDropdown]
+  );
+
   return (
-    <div className={cn("relative flex items-center", className)}>
+    <div
+      className={cn("relative flex items-center", className)}
+      ref={containerRef}
+    >
       <input
+        ref={inputRef}
         type="search"
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          setActiveIndex(-1);
+        }}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onBlur={() => {
+          // Delay to allow click on dropdown items
+          setTimeout(() => setIsFocused(false), 200);
+        }}
+        onKeyDown={handleKeyDown}
         className="w-full bg-transparent text-sm text-gray-700 outline-none"
         aria-label="Buscar en el sitio"
+        role="combobox"
+        aria-expanded={showDropdown}
+        aria-controls="search-results-listbox"
+        aria-activedescendant={
+          activeIndex >= 0 ? `search-result-${activeIndex}` : undefined
+        }
+        aria-autocomplete="list"
       />
       {/* Custom Placeholder */}
       {!inputValue && (
@@ -95,6 +199,14 @@ function TypewriterSearch({ className }: { className?: string }) {
           )}
         </div>
       )}
+
+      {/* Search Dropdown */}
+      <SearchDropdown
+        query={inputValue}
+        isOpen={showDropdown}
+        onClose={closeDropdown}
+        activeIndex={activeIndex}
+      />
     </div>
   );
 }
@@ -129,19 +241,17 @@ export function Navbar() {
               </span>
               <span className="sr-only">Líder en tu diseño</span>
               <span
-                className="flex w-full justify-between text-[10px] font-medium text-gray-500 uppercase"
+                className="text-[10px] font-medium tracking-[0.35em] text-gray-500 uppercase"
                 aria-hidden="true"
               >
-                {"Líder en tu diseño".split("").map((char, i) => (
-                  <span key={i}>{char === " " ? "\u00A0" : char}</span>
-                ))}
+                LÍDER EN TU DISEÑO
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
           <nav
-            className="hidden items-center gap-1 md:flex"
+            className="hidden items-center gap-1 lg:flex"
             aria-label="Navegación principal"
           >
             {NAV_LINKS.map((link) => {
@@ -169,7 +279,7 @@ export function Navbar() {
         </div>
 
         {/* ── Right side: Actions ── */}
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           {/* Search bar */}
           <div className="border-primary/10 flex items-center gap-2.5 rounded-full border bg-white px-4 py-2 shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]">
             <span
@@ -178,7 +288,7 @@ export function Navbar() {
             >
               search
             </span>
-            <TypewriterSearch className="w-48 lg:w-56" />
+            <TypewriterSearch className="w-44 xl:w-56" />
           </div>
 
           {/* Favorites */}
@@ -226,7 +336,7 @@ export function Navbar() {
           type="button"
           aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={isMenuOpen}
-          className="text-primary flex items-center md:hidden"
+          className="text-primary flex items-center lg:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <span className="material-symbols-outlined" aria-hidden="true">
@@ -238,7 +348,7 @@ export function Navbar() {
       {/* Mobile menu */}
       {isMenuOpen && (
         <nav
-          className="border-t border-gray-100 bg-white px-5 py-4 md:hidden"
+          className="border-t border-gray-100 bg-white px-5 py-4 lg:hidden"
           aria-label="Navegación móvil"
         >
           {/* Search mobile */}
@@ -249,7 +359,7 @@ export function Navbar() {
             >
               search
             </span>
-            <TypewriterSearch className="w-full" />
+            <TypewriterSearch className="w-full" onMenuClose={closeMenu} />
           </div>
 
           <ul className="space-y-1">

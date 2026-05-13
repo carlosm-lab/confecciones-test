@@ -21,7 +21,7 @@ export default function NotFound() {
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 mx-auto flex w-full max-w-screen-xl flex-grow flex-col items-center justify-center px-6 pt-32 pb-24">
+      <main className="relative z-10 mx-auto flex w-full max-w-screen-2xl flex-grow flex-col items-center justify-center px-6 pt-32 pb-24">
         {/* Giant Decorative 404 */}
         <div
           aria-hidden="true"

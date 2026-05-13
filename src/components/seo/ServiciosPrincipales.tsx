@@ -34,7 +34,7 @@ export function ServiciosPrincipales() {
               key={s.title}
               className="bg-surface-container-lowest border-surface-variant ambient-shadow group flex flex-col overflow-hidden rounded-xl border"
             >
-              <div className="bg-primary/5 flex h-48 items-center justify-center">
+              <div className="bg-primary/5 relative h-44 sm:h-48">
                 <Image
                   width={800}
                   height={400}

@@ -63,6 +63,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       { label: "Batas", icon: "dry_cleaning" },
       { label: "Chaquetas", icon: "styler" },
     ],
+    hubImage: "/images/categorias/scrubs.webp",
+    hubTagline: "Scrubs, batas y gorros con tela antimicrobiana Sincatex",
   },
   universitario: {
     sector: "universitario",
@@ -129,6 +131,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       { label: "IEPROES", icon: "school" },
       { label: "UES", icon: "school" },
     ],
+    hubImage: "/images/categorias/universitarios.webp",
+    hubTagline: "Scrubs clínicos con colores oficiales de tu universidad",
   },
   escolar: {
     sector: "escolar",
@@ -193,6 +197,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       { label: "Pantalones", icon: "styler" },
       { label: "Suéteres", icon: "warm" },
     ],
+    hubImage: "/images/categorias/escolares.webp",
+    hubTagline: "Camisas, faldas, pantalones y suéteres para tu colegio",
   },
   corporativo: {
     sector: "corporativo",
@@ -254,6 +260,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       { label: "Gabachas", icon: "styler" },
       { label: "Chalecos", icon: "warm" },
     ],
+    hubImage: "/images/categorias/corporativo.webp",
+    hubTagline: "Camisas, polos y gabachas con bordado de logo empresarial",
   },
   deportivo: {
     sector: "deportivo",
@@ -302,6 +310,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       { label: "Shorts", icon: "checkroom" },
       { label: "Conjuntos", icon: "dry_cleaning" },
     ],
+    hubImage: "/images/categorias/deportivo.webp",
+    hubTagline: "Uniformes sublimados para equipos, academias y ligas",
   },
   accesorios: {
     sector: "accesorios",
@@ -351,5 +361,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       { label: "Llaveros", icon: "key" },
       { label: "Pines", icon: "push_pin" },
     ],
+    hubImage: "/images/categorias/accesorios.webp",
+    hubTagline: "Gorros quirúrgicos, llaveros, pines y detalles de enfermería",
   },
 };

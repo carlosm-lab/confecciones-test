@@ -87,7 +87,7 @@ export function ProductCard({
       )}
     >
       {/* Imagen */}
-      <div className="bg-surface-container-low relative aspect-square w-full overflow-hidden">
+      <div className="bg-surface-container-low relative aspect-square min-h-[140px] w-full overflow-hidden">
         {imagen ? (
           <Image
             src={imagen}
@@ -144,14 +144,14 @@ export function ProductCard({
       </div>
 
       {/* Contenido */}
-      <div className="flex flex-1 flex-col space-y-2 p-4">
+      <div className="flex flex-1 flex-col space-y-1.5 p-3 sm:space-y-2 sm:p-4">
         {/* Categoría */}
-        <span className="text-xs font-medium tracking-wide text-gray-500 uppercase">
+        <span className="text-[10px] font-medium tracking-wide text-gray-500 uppercase sm:text-xs">
           {categoria}
         </span>
 
         {/* Nombre */}
-        <h3 className="text-on-surface line-clamp-2 text-sm font-semibold">
+        <h3 className="text-on-surface line-clamp-2 text-xs font-semibold sm:text-sm">
           {nombre}
         </h3>
 
@@ -162,7 +162,7 @@ export function ProductCard({
               {pricePrefix}
             </span>
           )}
-          <span className="text-primary text-lg font-bold">
+          <span className="text-primary text-base font-bold sm:text-lg">
             ${precio.toFixed(2)}
           </span>
           {priceSuffix && (
@@ -188,7 +188,7 @@ export function ProductCard({
         {/* Tallas */}
         {tallas.length > 0 && (
           <div className="flex flex-wrap gap-1" aria-label="Tallas disponibles">
-            {tallas.slice(0, 6).map((talla) => (
+            {tallas.slice(0, 5).map((talla) => (
               <span
                 key={talla}
                 className="flex size-6 items-center justify-center rounded-full border border-gray-200 text-[9px] font-medium text-gray-500"
@@ -204,7 +204,7 @@ export function ProductCard({
           type="button"
           onClick={handleAddToCart}
           aria-label={`Agregar al carrito: ${nombre}`}
-          className="bg-primary focus-visible:ring-primary mt-auto w-full cursor-pointer rounded-lg py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-offset-2"
+          className="bg-primary focus-visible:ring-primary mt-auto w-full cursor-pointer rounded-lg py-2 text-xs font-medium text-white transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-offset-2 sm:py-2.5 sm:text-sm"
         >
           Agregar al carrito
           <span className="sr-only">: {nombre}</span>

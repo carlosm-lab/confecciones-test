@@ -115,6 +115,10 @@ export interface CategoryConfig {
   ctaBanner: CtaBanner;
   filterGroups: FilterGroup[];
   categoryChips: CategoryChip[];
+  /** Imagen representativa para la tarjeta del Category Hub */
+  hubImage: string;
+  /** Frase corta descriptiva para la tarjeta del Category Hub */
+  hubTagline: string;
 }
 
 /** Definición de sub-página independiente de catálogo */

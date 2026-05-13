@@ -23,7 +23,7 @@ export default function ServiciosPage() {
     <>
       {/* Hero */}
       <section className="bg-gradient-to-br from-indigo-900 via-purple-900 to-fuchsia-900 px-5 py-12 text-white md:px-8 md:py-20">
-        <div className="mx-auto max-w-screen-xl">
+        <div className="mx-auto max-w-screen-2xl">
           <nav className="mb-6 text-sm text-white/70" aria-label="Breadcrumb">
             <ol className="flex items-center gap-1">
               <li>
@@ -50,7 +50,7 @@ export default function ServiciosPage() {
 
       {/* Grid de servicios */}
       <section className="bg-surface px-5 py-10 md:px-8 md:py-16">
-        <div className="mx-auto grid max-w-screen-xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICE_PAGES.map((page) => (
             <Link
               key={page.slug}
@@ -112,7 +112,7 @@ export default function ServiciosPage() {
 
       {/* CTA Banner */}
       <section className="bg-primary px-5 py-10 text-white md:px-8">
-        <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-6 md:flex-row">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
           <div>
             <h2 className="font-headline text-xl font-bold md:text-2xl">
               ¿Tienes un proyecto especial?

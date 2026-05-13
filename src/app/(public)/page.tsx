@@ -35,15 +35,15 @@ export default function HomePage() {
 
       {/* ═══ HERO ═══ */}
       <section className="bg-surface-container-low relative overflow-hidden px-5 pt-5 pb-14 md:px-8 lg:pb-28">
-        <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 lg:flex-row lg:pr-24 lg:pl-12">
-          <div className="z-10 flex w-full flex-col items-start lg:w-[55%]">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-16">
+          <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
             <div className="bg-tertiary/10 text-tertiary mb-4 flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-6">
               <span className="material-symbols-outlined text-[16px]">
                 verified
               </span>
               Confección profesional a la medida
             </div>
-            <h1 className="text-primary mb-4 font-serif text-[2rem] leading-[1.15] tracking-tight md:text-5xl lg:mb-6 lg:text-7xl lg:leading-[1.1]">
+            <h1 className="text-primary mb-4 font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:text-5xl lg:mb-6 lg:text-5xl xl:text-6xl xl:leading-[1.1]">
               Scrubs y Uniformes
               <br className="hidden lg:inline" /> a la Medida{" "}
               <br className="hidden lg:inline" />
@@ -51,7 +51,7 @@ export default function HomePage() {
             </h1>
 
             {/* IMAGEN HERO - VERSIÓN MÓVIL (Intercalada después del título) */}
-            <div className="relative mb-8 w-full md:w-3/4 lg:hidden">
+            <div className="relative mb-8 w-full max-w-sm self-center lg:hidden">
               <div className="relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <div className="pointer-events-none absolute inset-3 z-20 rounded-xl border-[2px] border-dashed border-white/90" />
                 <Image
@@ -84,12 +84,12 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
+            <div className="flex w-full flex-col gap-3 sm:max-w-md sm:flex-row sm:gap-4 lg:max-w-none">
               <a
                 href={siteConfig.links.whatsappDirect}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-gradient font-body ambient-shadow flex-1 rounded-md py-4 text-center font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90"
+                className="btn-gradient font-body ambient-shadow w-full rounded-md px-8 py-4 text-center font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90 sm:w-auto"
               >
                 Comprar
               </a>
@@ -97,14 +97,14 @@ export default function HomePage() {
                 href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-outline text-primary hover:bg-surface-variant/50 flex-1 rounded-md border bg-transparent py-4 text-center font-serif font-medium whitespace-nowrap transition-colors"
+                className="border-outline text-primary hover:bg-surface-variant/50 w-full rounded-md border bg-transparent px-8 py-4 text-center font-serif font-medium whitespace-nowrap transition-colors sm:w-auto"
               >
                 Cómo llegar
               </a>
             </div>
           </div>
           {/* IMAGEN HERO - VERSIÓN DESKTOP */}
-          <div className="relative hidden w-full lg:block lg:w-[45%]">
+          <div className="relative hidden w-full lg:block lg:w-[40%]">
             <div className="relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_10px_40px_rgb(0,0,0,0.12)]">
               <div className="pointer-events-none absolute inset-4 z-20 rounded-xl border-[2px] border-dashed border-white/90" />
               <Image
@@ -128,7 +128,7 @@ export default function HomePage() {
               Novedades en Uniformes y Scrubs
             </h2>
           </div>
-          <div className="grid grid-cols-2 gap-4 md:gap-8 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
             {[
               {
                 id: "scrub-ues",
@@ -214,14 +214,14 @@ export default function HomePage() {
 
       {/* ═══ ¿POR QUÉ ELEGIRNOS? (updated content) ═══ */}
       <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-5 py-14 md:px-8 md:py-24">
-        <div className="mx-auto max-w-screen-xl">
+        <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
             <h2 className="section-title">
               ¿Por qué elegir Confecciones Liss en San Miguel?
             </h2>
             <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12 lg:grid-cols-4 lg:gap-8">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:gap-10 lg:grid-cols-4 lg:gap-6">
             {whyItems.map((w) => (
               <div
                 key={w.title}
@@ -267,7 +267,7 @@ export default function HomePage() {
                 key={s.n}
                 className="relative z-10 flex flex-row items-center gap-4 text-left md:flex-col md:gap-0 md:text-center"
               >
-                <div className="text-primary ambient-shadow flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white font-serif text-2xl font-bold md:mb-6 md:h-24 md:w-24 md:text-3xl">
+                <div className="text-primary ambient-shadow flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white font-serif text-xl font-bold md:mb-4 md:h-20 md:w-20 md:text-2xl">
                   {s.n}
                 </div>
                 <div>
@@ -348,7 +348,7 @@ export default function HomePage() {
         aria-labelledby="institucional-heading"
         className="bg-primary px-5 py-14 text-white md:px-8 md:py-20"
       >
-        <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-8 md:flex-row">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-8 md:flex-row">
           <div className="md:w-2/3">
             <h2
               id="institucional-heading"

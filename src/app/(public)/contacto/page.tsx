@@ -155,7 +155,7 @@ export default function ContactoPage() {
 
       {/* Hero */}
       <section className="bg-primary px-5 py-16 text-white md:px-8 md:py-24">
-        <div className="mx-auto max-w-screen-xl">
+        <div className="mx-auto max-w-screen-2xl">
           <nav aria-label="Breadcrumb" className="mb-6 text-sm text-white/60">
             <ol className="flex items-center gap-1.5">
               <li>
@@ -179,8 +179,8 @@ export default function ContactoPage() {
         </div>
       </section>
 
-      <main className="mx-auto max-w-screen-xl px-5 py-12 md:px-8 md:py-20">
-        <div className="grid gap-12 lg:grid-cols-5">
+      <main className="mx-auto max-w-screen-2xl px-5 py-12 md:px-8 md:py-20">
+        <div className="grid gap-10 md:gap-12 lg:grid-cols-5">
           {/* Left: Contact Info */}
           <div className="lg:col-span-2">
             <h2 className="text-primary mb-8 font-serif text-2xl font-bold">
@@ -232,7 +232,7 @@ export default function ContactoPage() {
               <h2 className="text-primary mb-4 font-serif text-lg font-bold">
                 Síguenos en redes
               </h2>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
                 {SOCIAL_LINKS.map((s) => (
                   <a
                     key={s.name}

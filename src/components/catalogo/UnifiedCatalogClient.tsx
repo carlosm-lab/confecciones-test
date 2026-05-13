@@ -250,8 +250,8 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-[#143067] via-[#1a3d7c] to-[#0d2147] px-5 py-12 text-white md:px-8 md:py-20">
-        <div className="mx-auto max-w-screen-xl">
+      <section className="bg-gradient-to-br from-[#143067] via-[#1a3d7c] to-[#0d2147] px-5 py-12 text-white md:px-8 md:py-16">
+        <div className="mx-auto max-w-screen-2xl">
           <Breadcrumb
             items={breadcrumbItems}
             className="mb-6 text-white/70 [&_a]:text-white/70 [&_a:hover]:text-white [&_span]:text-white/90"
@@ -310,9 +310,9 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
 
       {/* Content */}
       <section className="bg-surface px-5 py-10 md:px-8 md:py-16">
-        <div className="mx-auto flex max-w-screen-xl gap-8">
+        <div className="mx-auto flex max-w-screen-2xl gap-6 xl:gap-8">
           {/* Sidebar (desktop) */}
-          <div className="hidden w-64 shrink-0 lg:block">
+          <div className="hidden w-56 shrink-0 xl:block xl:w-64">
             <FilterSidebar
               groups={filterGroups}
               selected={sidebarSelected}
@@ -330,7 +330,7 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
                 <button
                   type="button"
                   onClick={() => setIsDrawerOpen(true)}
-                  className="bg-primary/10 text-primary flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium lg:hidden"
+                  className="bg-primary/10 text-primary flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium xl:hidden"
                   aria-label="Abrir filtros"
                 >
                   <span
@@ -406,7 +406,7 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
             {/* Product Grid */}
             {paginatedProducts.length > 0 ? (
               <>
-                <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
+                <div className="grid grid-cols-2 items-start gap-4 md:grid-cols-3 md:gap-6 xl:grid-cols-3">
                   {paginatedProducts.map((p) => (
                     <ProductCard
                       key={p.id}
@@ -463,7 +463,7 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
 
       {/* CTA Banner */}
       <section className="bg-primary px-5 py-10 text-white md:px-8">
-        <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-6 md:flex-row">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
           <div>
             <h2 className="font-headline text-xl font-bold md:text-2xl">
               ¿No encuentras lo que buscas?

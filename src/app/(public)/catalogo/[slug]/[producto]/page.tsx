@@ -147,7 +147,7 @@ export default async function ProductDetailPage({
         }}
       />
 
-      <main className="mx-auto max-w-screen-xl px-4 py-8 md:px-8">
+      <main className="mx-auto max-w-screen-2xl px-4 py-8 md:px-8">
         <Breadcrumb items={breadcrumbItems} />
 
         <div className="mt-8 grid gap-10 lg:grid-cols-2">

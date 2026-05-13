@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { ALL_PRODUCTS } from "@/data/products";
-import { UnifiedCatalogClient } from "@/components/catalogo/UnifiedCatalogClient";
+import { CategoryHubClient } from "@/components/catalogo/CategoryHubClient";
 import { siteConfig } from "@/config/site";
-
-import { CATALOG_PAGES } from "@/data/catalog-pages";
+import { CATEGORIES } from "@/data/categories";
+import type { Sector } from "@/data/types";
 
 export const metadata: Metadata = {
-  title: "Catálogo completo de uniformes y scrubs",
+  title: "Catálogo de Uniformes por Categoría",
   description:
-    "Explora nuestro catálogo completo: scrubs médicos Sincatex, uniformes universitarios UNIVO, UNAB, UGB, escolares y corporativos. Confección a la medida en San Miguel, El Salvador. Desde $35.",
+    "Explora nuestro catálogo de uniformes: Scrubs médicos, universitarios, escolares, corporativos, deportivos y accesorios. Confección a la medida en San Miguel, El Salvador. Desde $8.",
   openGraph: {
     title: "Catálogo de Uniformes | Confecciones Liss",
     description:
@@ -20,18 +20,46 @@ export const metadata: Metadata = {
   },
 };
 
+const SECTOR_ORDER: Sector[] = [
+  "scrubs",
+  "universitario",
+  "escolar",
+  "corporativo",
+  "deportivo",
+  "accesorios",
+];
+
 export default function CatalogoPage() {
-  const collectionParts = CATALOG_PAGES.map((page) => ({
-    "@type": "CollectionPage",
-    name: page.title,
-    url: `${siteConfig.url}/catalogo/${page.slug}`,
+  // Build ItemList JSON-LD for category hub
+  const categoryListItems = SECTOR_ORDER.map((sector, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: CATEGORIES[sector].subtitle,
+    url: `${siteConfig.url}/catalogo/${sector}`,
   }));
 
   return (
     <>
-      <UnifiedCatalogClient products={ALL_PRODUCTS} />
+      <CategoryHubClient />
 
-      {/* JSON-LD */}
+      {/* JSON-LD: ItemList of categories */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Catálogo de uniformes por categoría — Confecciones Liss",
+            description:
+              "Catálogo completo de uniformes médicos, universitarios, escolares, corporativos, deportivos y accesorios en San Miguel, El Salvador.",
+            url: `${siteConfig.url}/catalogo`,
+            numberOfItems: SECTOR_ORDER.length,
+            itemListElement: categoryListItems,
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
+
+      {/* JSON-LD: CollectionPage */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -48,7 +76,6 @@ export default function CatalogoPage() {
               name: siteConfig.name,
               url: siteConfig.url,
             },
-            hasPart: collectionParts,
           }).replace(/</g, "\\u003c"),
         }}
       />

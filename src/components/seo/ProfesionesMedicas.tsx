@@ -6,7 +6,7 @@ export function ProfesionesMedicas() {
       aria-labelledby="profesiones-heading"
       className="bg-surface px-5 py-14 md:px-8 md:py-16"
     >
-      <div className="mx-auto max-w-screen-xl">
+      <div className="mx-auto max-w-screen-2xl">
         <h2
           id="profesiones-heading"
           className="text-primary mb-4 text-center font-serif text-2xl"

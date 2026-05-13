@@ -143,3 +143,21 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Ruta:** `src/components/seo/ServiciosPrincipales.tsx`
 - **Descripción:** Componente que expone los servicios clave mediante Schema.org validado para SEO. Utiliza `isomorphic-dompurify` para inyectar JSON-LD de manera segura previniendo XSS.
 - **Props:** No recibe props.
+
+### CategoryHubClient
+
+- **Ruta:** `src/components/catalogo/CategoryHubClient.tsx`
+- **Descripción:** Página principal del catálogo estilo "Category Hub". Renderiza una cuadrícula visual de 6 tarjetas de categoría (Scrubs, Universitario, Escolar, Corporativo, Deportivo, Accesorios) con imágenes, taglines, conteo de productos y trust strip + CTA banner.
+- **Props:** No recibe props (consume `CATEGORIES` y `ALL_PRODUCTS` directamente).
+- **Ejemplo:** `<CategoryHubClient />`
+
+### SearchDropdown
+
+- **Ruta:** `src/components/catalogo/SearchDropdown.tsx`
+- **Descripción:** Dropdown de resultados de búsqueda inteligente. Muestra hasta 2 categorías y 5 productos que coinciden con la query del usuario. Integrado en el `TypewriterSearch` del Navbar.
+- **Props:**
+  - `query: string` — Texto de búsqueda actual.
+  - `isOpen: boolean` — Si el dropdown está visible.
+  - `onClose: () => void` — Callback para cerrar el dropdown.
+  - `activeIndex: number` — Índice del item activo para navegación con teclado.
+- **Ejemplo:** `<SearchDropdown query="scrub" isOpen={true} onClose={() => {}} activeIndex={-1} />`
