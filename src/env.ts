@@ -8,10 +8,16 @@ export const env = createEnv({
       .default("development"),
   },
   client: {
-    NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
-    NEXT_PUBLIC_WHATSAPP_NUMBER: z.string().min(1),
-    NEXT_PUBLIC_CONTACT_EMAIL: z.string().email(),
+    NEXT_PUBLIC_SUPABASE_URL: z
+      .string()
+      .url()
+      .default("https://placeholder.supabase.co"),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1).default("placeholder_key"),
+    NEXT_PUBLIC_WHATSAPP_NUMBER: z.string().min(1).default("50373317181"),
+    NEXT_PUBLIC_CONTACT_EMAIL: z
+      .string()
+      .email()
+      .default("contacto@confeccionesliss.com"),
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().optional(),
     NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
   },
@@ -23,4 +29,5 @@ export const env = createEnv({
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
   },
+  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });
