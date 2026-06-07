@@ -51,7 +51,7 @@ function CategoryCard({
       </div>
 
       {/* Information Panel - Sólido, altamente legible, contraste AAA */}
-      <div className="flex flex-1 flex-col justify-between p-5">
+      <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
         <div>
           {/* Badge & Product Count */}
           <div className="mb-2.5 flex items-center justify-between gap-2">
@@ -72,7 +72,7 @@ function CategoryCard({
           </div>
 
           {/* Title */}
-          <h2 className="text-primary group-hover:text-tertiary font-serif text-lg leading-tight font-bold transition-colors sm:text-xl">
+          <h2 className="text-primary group-hover:text-tertiary font-serif text-base leading-tight font-bold transition-colors sm:text-lg md:text-xl">
             {config.subtitle}
           </h2>
 
@@ -83,7 +83,7 @@ function CategoryCard({
         </div>
 
         {/* Action Button Link */}
-        <div className="text-primary group-hover:text-tertiary mt-5 flex items-center gap-1 text-xs font-bold tracking-wider uppercase transition-colors">
+        <div className="text-primary group-hover:text-tertiary mt-4 flex items-center gap-1 text-[11px] font-bold tracking-wider uppercase transition-colors sm:mt-5 sm:text-xs">
           <span>Explorar colección</span>
           <span
             className="material-symbols-outlined text-[14px] transition-transform duration-300 group-hover:translate-x-1"
@@ -121,8 +121,8 @@ export function CategoryHubClient() {
             </p>
           </div>
 
-          {/* Grid: 1 col mobile, 2 col tablet, 3 col desktop */}
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+          {/* Grid: 2 col mobile, 3 col tablet, 4 col desktop */}
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-8">
             {SECTOR_ORDER.map((sector) => (
               <CategoryCard
                 key={sector}
