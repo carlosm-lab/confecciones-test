@@ -121,8 +121,8 @@ export function CategoryHubClient() {
             </p>
           </div>
 
-          {/* Grid auto-responsivo con ancho mínimo de 280px */}
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6 lg:gap-8">
+          {/* Grid auto-responsivo con ancho acotado entre 280px y 340px, centrado horizontalmente */}
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,340px))] justify-center gap-6 lg:gap-8">
             {SECTOR_ORDER.map((sector) => (
               <CategoryCard
                 key={sector}
