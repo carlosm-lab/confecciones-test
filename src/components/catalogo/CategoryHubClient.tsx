@@ -55,38 +55,38 @@ function CategoryCard({
         <div>
           {/* Badge & Product Count */}
           <div className="mb-2.5 flex items-center justify-between gap-2">
-            <div className="text-secondary flex items-center gap-1.5">
+            <div className="text-secondary flex items-center gap-1">
               <span
-                className="material-symbols-outlined text-[16px]"
+                className="material-symbols-outlined text-[13px] sm:text-[16px]"
                 aria-hidden="true"
               >
                 {config.icon}
               </span>
-              <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
+              <span className="text-[9px] font-bold tracking-wider text-gray-400 uppercase sm:text-[10px]">
                 {config.subtitle}
               </span>
             </div>
-            <span className="bg-surface-container text-primary rounded-full px-2.5 py-0.5 text-[10px] font-semibold">
+            <span className="bg-surface-container text-primary rounded-full px-2 py-0.5 text-[9px] font-semibold sm:px-2.5 sm:text-[10px]">
               {productCount} {productCount === 1 ? "prenda" : "prendas"}
             </span>
           </div>
 
           {/* Title */}
-          <h2 className="text-primary group-hover:text-tertiary font-serif text-base leading-tight font-bold transition-colors sm:text-lg md:text-xl">
+          <h2 className="text-primary group-hover:text-tertiary xs:text-base font-serif text-sm leading-tight font-bold transition-colors sm:text-lg md:text-xl">
             {config.subtitle}
           </h2>
 
           {/* Description / Tagline */}
-          <p className="text-on-surface-variant mt-2 line-clamp-2 text-xs leading-relaxed sm:text-sm">
+          <p className="text-on-surface-variant mt-1.5 line-clamp-2 text-[11px] leading-snug transition-all sm:mt-2 sm:text-xs sm:leading-relaxed md:text-sm">
             {config.hubTagline}
           </p>
         </div>
 
         {/* Action Button Link */}
-        <div className="text-primary group-hover:text-tertiary mt-4 flex items-center gap-1 text-[11px] font-bold tracking-wider uppercase transition-colors sm:mt-5 sm:text-xs">
+        <div className="text-primary group-hover:text-tertiary mt-4 flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase transition-colors sm:mt-5 sm:text-xs">
           <span>Explorar colección</span>
           <span
-            className="material-symbols-outlined text-[14px] transition-transform duration-300 group-hover:translate-x-1"
+            className="material-symbols-outlined text-[12px] transition-transform duration-300 group-hover:translate-x-1 sm:text-[14px]"
             aria-hidden="true"
           >
             arrow_forward
