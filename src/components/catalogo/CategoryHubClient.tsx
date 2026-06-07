@@ -31,9 +31,9 @@ function CategoryCard({
     <Link
       href={`/catalogo/${sector}`}
       className={cn(
-        "group border-primary/35 flex flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-300",
-        "shadow-[0_8px_24px_-6px_rgba(20,48,103,0.18),0_4px_10px_-4px_rgba(20,48,103,0.12)]",
-        "hover:border-primary/55 hover:-translate-y-1 hover:shadow-[0_16px_36px_-8px_rgba(20,48,103,0.24),0_6px_16px_-4px_rgba(20,48,103,0.18)]",
+        "group flex flex-col overflow-hidden rounded-2xl bg-white transition-all duration-300",
+        "shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]",
+        "hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]",
         "focus-visible:ring-primary focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
       )}
       aria-label={`Ver catálogo de ${config.subtitle}: ${config.hubTagline}`}
