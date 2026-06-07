@@ -39,7 +39,7 @@ function CategoryCard({
       aria-label={`Ver catálogo de ${config.subtitle}: ${config.hubTagline}`}
     >
       {/* Category Image - Visual focus without text overlays */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-50">
+      <div className="relative aspect-[21/9] w-full overflow-hidden bg-gray-50 sm:aspect-[16/10]">
         <Image
           src={config.hubImage}
           alt={`Colección de ${config.subtitle}`}
@@ -51,7 +51,7 @@ function CategoryCard({
       </div>
 
       {/* Information Panel - Sólido, altamente legible, contraste AAA */}
-      <div className="flex flex-1 flex-col justify-between p-5">
+      <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
         <div>
           {/* Badge & Product Count */}
           <div className="mb-2.5 flex items-center justify-between gap-2">
@@ -72,21 +72,21 @@ function CategoryCard({
           </div>
 
           {/* Title */}
-          <h2 className="text-primary group-hover:text-tertiary font-serif text-lg leading-tight font-bold transition-colors sm:text-xl">
+          <h2 className="text-primary group-hover:text-tertiary font-serif text-base leading-tight font-bold transition-colors sm:text-lg md:text-xl">
             {config.subtitle}
           </h2>
 
           {/* Description / Tagline */}
-          <p className="text-on-surface-variant mt-2 line-clamp-2 text-xs leading-relaxed sm:text-sm">
+          <p className="text-on-surface-variant mt-1.5 line-clamp-1 text-[11px] leading-snug transition-all sm:mt-2 sm:line-clamp-2 sm:text-xs sm:leading-relaxed md:text-sm">
             {config.hubTagline}
           </p>
         </div>
 
         {/* Action Button Link */}
-        <div className="text-primary group-hover:text-tertiary mt-5 flex items-center gap-1 text-xs font-bold tracking-wider uppercase transition-colors">
+        <div className="text-primary group-hover:text-tertiary mt-3.5 flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase transition-colors sm:mt-5 sm:text-xs">
           <span>Explorar colección</span>
           <span
-            className="material-symbols-outlined text-[14px] transition-transform duration-300 group-hover:translate-x-1"
+            className="material-symbols-outlined text-[13px] transition-transform duration-300 group-hover:translate-x-1 sm:text-[14px]"
             aria-hidden="true"
           >
             arrow_forward
