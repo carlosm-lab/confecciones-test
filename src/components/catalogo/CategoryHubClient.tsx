@@ -31,7 +31,7 @@ function CategoryCard({
     <Link
       href={`/catalogo/${sector}`}
       className={cn(
-        "group border-primary/35 @container mx-auto flex w-full flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-300",
+        "group border-primary/35 @container mx-auto flex w-full max-w-[340px] flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-300 sm:max-w-none",
         "shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]",
         "hover:border-primary/55 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]",
         "focus-visible:ring-primary focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
@@ -121,8 +121,8 @@ export function CategoryHubClient() {
             </p>
           </div>
 
-          {/* Grid auto-responsivo con ancho acotado de 230px a 340px, alineado a los extremos (margen lateral 0) */}
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(230px,340px))] justify-between gap-5 lg:gap-8">
+          {/* Grid responsivo: 1 col móvil, 2 col tablet, 4 col desktop */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {SECTOR_ORDER.map((sector) => (
               <CategoryCard
                 key={sector}
