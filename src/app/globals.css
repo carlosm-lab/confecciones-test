@@ -261,3 +261,13 @@
 .animate-blink {
   animation: blink 1s step-end infinite;
 }
+
+/* 1.5px solid white text outline for float links contrast */
+.contrast-text-shadow {
+  text-shadow:
+    -1.5px -1.5px 0 #ffffff,
+    1.5px -1.5px 0 #ffffff,
+    -1.5px 1.5px 0 #ffffff,
+    1.5px 1.5px 0 #ffffff,
+    0px 2px 4px rgba(255, 255, 255, 0.95);
+}
