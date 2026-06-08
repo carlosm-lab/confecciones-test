@@ -108,11 +108,11 @@ export function CategoryHubClient() {
           {/* Section header */}
           <div className="mb-8 flex flex-col items-start text-left md:mb-12">
             <h1 className="section-title text-left">
-              ¿Qué deseas comprar hoy? 🥰
+              ¿Qué deseas comprar hoy?
             </h1>
             <p className="text-on-surface-variant mt-3 max-w-xl text-left text-sm leading-relaxed md:text-base">
               Selecciona la categoría que necesitas y explora productos
-              diseñados para tu profesión, institución o equipo.
+              diseñados para tu profesión, institución o equipo. 🥰
             </p>
           </div>
 
