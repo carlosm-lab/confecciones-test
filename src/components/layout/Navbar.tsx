@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { SearchModal } from "@/components/layout/SearchModal";
+import { env } from "@/env";
 
 interface NavLink {
   href: string;
@@ -90,6 +91,11 @@ export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
 
+  const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
+  const navLinks = isHomeOnly
+    ? NAV_LINKS.filter((link) => link.href === "/")
+    : NAV_LINKS;
+
   const closeMenu = () => setIsMenuOpen(false);
   const openSearch = () => {
     setIsSearchOpen(true);
@@ -131,106 +137,112 @@ export function Navbar() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav
-              className="hidden items-center gap-1 lg:flex"
-              aria-label="Navegación principal"
-            >
-              {NAV_LINKS.map((link) => {
-                const isActive =
-                  link.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(link.href);
+            {!isHomeOnly && (
+              <nav
+                className="hidden items-center gap-1 lg:flex"
+                aria-label="Navegación principal"
+              >
+                {navLinks.map((link) => {
+                  const isActive =
+                    link.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(link.href);
 
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={cn(
-                      "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                      isActive
-                        ? "bg-primary text-on-primary shadow-sm"
-                        : "hover:bg-primary/5 hover:text-primary text-gray-700"
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </nav>
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={cn(
+                        "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                        isActive
+                          ? "bg-primary text-on-primary shadow-sm"
+                          : "hover:bg-primary/5 hover:text-primary text-gray-700"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+            )}
           </div>
 
           {/* ── Right side: Actions ── */}
-          <div className="hidden items-center gap-3 lg:flex">
-            {/* Search bar trigger (visual button styled as search bar) */}
-            <button
-              type="button"
-              onClick={openSearch}
-              aria-label="Abrir buscador"
-              className="border-primary/10 flex cursor-pointer items-center gap-2.5 rounded-full border bg-white px-4 py-2 shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
-            >
-              <span
-                className="material-symbols-outlined text-primary text-[20px]"
-                aria-hidden="true"
+          {!isHomeOnly && (
+            <div className="hidden items-center gap-3 lg:flex">
+              {/* Search bar trigger (visual button styled as search bar) */}
+              <button
+                type="button"
+                onClick={openSearch}
+                aria-label="Abrir buscador"
+                className="border-primary/10 flex cursor-pointer items-center gap-2.5 rounded-full border bg-white px-4 py-2 shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
               >
-                search
-              </span>
-              <span className="w-44 xl:w-56">
-                <TypewriterPlaceholder />
-              </span>
-            </button>
+                <span
+                  className="material-symbols-outlined text-primary text-[20px]"
+                  aria-hidden="true"
+                >
+                  search
+                </span>
+                <span className="w-44 xl:w-56">
+                  <TypewriterPlaceholder />
+                </span>
+              </button>
 
-            {/* Favorites */}
-            <button
-              aria-label="Favoritos"
-              className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
-            >
-              <span
-                className="material-symbols-outlined text-[22px]"
-                aria-hidden="true"
+              {/* Favorites */}
+              <button
+                aria-label="Favoritos"
+                className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
               >
-                favorite_border
-              </span>
-            </button>
+                <span
+                  className="material-symbols-outlined text-[22px]"
+                  aria-hidden="true"
+                >
+                  favorite_border
+                </span>
+              </button>
 
-            {/* Cart */}
-            <button
-              aria-label="Carrito de compras"
-              className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
-            >
-              <span
-                className="material-symbols-outlined text-[22px]"
-                aria-hidden="true"
+              {/* Cart */}
+              <button
+                aria-label="Carrito de compras"
+                className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
               >
-                shopping_cart
-              </span>
-            </button>
+                <span
+                  className="material-symbols-outlined text-[22px]"
+                  aria-hidden="true"
+                >
+                  shopping_cart
+                </span>
+              </button>
 
-            {/* Avatar */}
-            <button
-              aria-label="Mi cuenta"
-              className="border-primary/10 flex size-10 items-center justify-center overflow-hidden rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
-            >
-              <span
-                className="material-symbols-outlined text-primary text-[24px]"
-                aria-hidden="true"
+              {/* Avatar */}
+              <button
+                aria-label="Mi cuenta"
+                className="border-primary/10 flex size-10 items-center justify-center overflow-hidden rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
               >
-                person
-              </span>
-            </button>
-          </div>
+                <span
+                  className="material-symbols-outlined text-primary text-[24px]"
+                  aria-hidden="true"
+                >
+                  person
+                </span>
+              </button>
+            </div>
+          )}
 
           {/* Mobile menu button */}
-          <button
-            type="button"
-            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-            aria-expanded={isMenuOpen}
-            className="text-primary flex items-center lg:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <span className="material-symbols-outlined" aria-hidden="true">
-              {isMenuOpen ? "close" : "menu"}
-            </span>
-          </button>
+          {!isHomeOnly && (
+            <button
+              type="button"
+              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={isMenuOpen}
+              className="text-primary flex items-center lg:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">
+                {isMenuOpen ? "close" : "menu"}
+              </span>
+            </button>
+          )}
         </div>
 
         {/* Mobile menu */}
