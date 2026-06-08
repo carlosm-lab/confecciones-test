@@ -48,11 +48,9 @@ function CategoryCard({
           className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-103"
           priority={sector === "scrubs" || sector === "universitario"}
         />
-        {/* Subtle top-right white gradient overlay for text contrast */}
-        <div className="pointer-events-none absolute top-0 right-0 z-10 h-14 w-36 bg-gradient-to-bl from-white/85 via-white/25 to-transparent" />
 
         {/* Floating Action Link (Text Only) */}
-        <div className="text-primary group-hover:text-tertiary contrast-text-shadow absolute top-3 right-3 z-20 flex items-center gap-1 text-[8px] font-bold tracking-wider uppercase transition-colors @[280px]:text-[9px] @[360px]:text-[10px]">
+        <div className="text-primary contrast-text-shadow group-hover:text-tertiary absolute top-3 right-3 z-20 flex items-center gap-1 text-[8px] font-bold tracking-wider uppercase transition-colors @[280px]:text-[9px] @[360px]:text-[10px]">
           <span className="hidden @[260px]:inline">Explorar colección</span>
           <span
             className="material-symbols-outlined text-[10px] transition-transform duration-300 group-hover:translate-x-1 @[280px]:text-[12px] @[320px]:text-[14px]"
