@@ -122,7 +122,7 @@ export function CategoryHubClient() {
           </div>
 
           {/* Grid responsivo: 1 col móvil, 2 col tablet vertical, 3 col tablet horizontal, 4 col desktop */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 xl:grid-cols-4 xl:gap-8">
             {SECTOR_ORDER.map((sector) => (
               <CategoryCard
                 key={sector}
