@@ -3,11 +3,24 @@ import { siteConfig } from "@/config/site";
 import { CATALOG_PAGES } from "@/data/catalog-pages";
 import { SERVICE_PAGES } from "@/data/services";
 import { ALL_PRODUCTS } from "@/data/products";
+import { env } from "@/env";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  // Páginas estáticas
+  // If in Home-Only mode (production initial deploy), the sitemap must ONLY contain the home page URL.
+  if (env.NEXT_PUBLIC_HOME_ONLY === "true") {
+    return [
+      {
+        url: siteConfig.url,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 1.0,
+      },
+    ];
+  }
+
+  // Páginas estáticas (para desarrollo/pruebas)
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: siteConfig.url,
@@ -54,23 +67,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // Páginas de producto bajo catálogo
-  const productPages: MetadataRoute.Sitemap = [];
-
-  CATALOG_PAGES.forEach((page) => {
-    const products = page.filterFn(ALL_PRODUCTS);
-    products.forEach((product) => {
-      const url = `${siteConfig.url}/catalogo/${page.slug}/${product.id}`;
-      if (!productPages.some((p) => p.url === url)) {
-        productPages.push({
-          url,
-          lastModified: now,
-          changeFrequency: "monthly" as const,
-          priority: 0.6,
-        });
-      }
-    });
-  });
+  // Páginas de producto bajo catálogo (únicas, usando el sector principal del producto para evitar duplicados)
+  const productPages: MetadataRoute.Sitemap = ALL_PRODUCTS.map((product) => ({
+    url: `${siteConfig.url}/catalogo/${product.sector}/${product.id}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
 
   return [...staticPages, ...categoryPages, ...servicePages, ...productPages];
 }
