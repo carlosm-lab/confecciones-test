@@ -68,16 +68,18 @@ export default function HomePage() {
             <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
               {/* IMAGEN HERO - VERSIÓN MÓVIL */}
               <div className="relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden">
-                <div className="border-primary/35 relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl border bg-white p-1 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-auto md:h-full">
-                  <div className="border-primary/60 pointer-events-none absolute inset-3 z-20 rounded-xl border-[2px] border-dashed" />
-                  <Image
-                    width={800}
-                    height={800}
-                    alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                    className="h-full w-full rounded-xl object-contain object-center"
-                    src="/images/uniformes/portada.webp"
-                    priority
-                  />
+                <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
+                  <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
+                    <Image
+                      fill
+                      alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
+                      className="rounded-xl object-cover object-center"
+                      src="/images/uniformes/portada.webp"
+                      sizes="(max-width:768px) 80vw, 40vw"
+                      priority
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -128,16 +130,15 @@ export default function HomePage() {
             </div>
           </div>
           {/* IMAGEN HERO - VERSIÓN DESKTOP */}
-          {/* Imagen desktop: h-full llena el alto del hero, object-contain preserva relación de aspecto */}
+          {/* Imagen desktop: h-full llena el alto del hero, aspect-ratio preservado */}
           <div className="hidden h-full lg:flex lg:w-[40%] lg:items-center">
-            <div className="border-primary/35 relative h-full w-full rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
-              <div className="border-primary/60 pointer-events-none absolute inset-4 z-20 rounded-xl border-[2px] border-dashed" />
-              {/* inset-1 = 4px de margen, rounded-xl = esquinas redondeadas en la imagen */}
-              <div className="absolute inset-1 overflow-hidden rounded-xl">
+            <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+              <div className="relative h-full w-full overflow-hidden rounded-xl">
                 <Image
                   fill
                   alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                  className="object-contain object-center"
+                  className="rounded-xl object-cover object-center"
                   src="/images/uniformes/portada.webp"
                   sizes="40vw"
                   priority
