@@ -6,7 +6,7 @@ export const siteConfig = {
     "Taller de confección en San Miguel El Salvador. Fabricamos scrubs médicos en Sincatex, uniformes universitarios para UNIVO, UNAB, UGB, UMA, IEPROES, uniformes escolares y corporativos. A la medida. Envíos a todo El Salvador. Pago al recibir. Desde $35. WhatsApp: 7331-7181.",
   url: "https://www.confeccionesliss.com",
 
-  twitterHandle: "@confeccion_liss",
+  twitterHandle: "@confeccionliss",
   keywords:
     "scrubs El Salvador, uniformes médicos San Miguel, confección a medida San Miguel, uniformes universitarios zona oriental, UNIVO uniformes, UGB uniformes, UNAB uniformes, scrubs Sincatex El Salvador, taller uniformes San Miguel",
 
@@ -29,13 +29,14 @@ export const siteConfig = {
   links: {
     whatsapp: "https://wa.me/50373317181",
     whatsappDirect: "https://wa.me/50373317181",
-    facebook: "https://www.facebook.com/confeccionliss/",
-    instagram: "https://www.instagram.com/confeccionliss/",
-    tiktok: "https://www.tiktok.com/@confeccionessliss",
+    facebook: "https://www.facebook.com/confeccionliss",
+    instagram: "https://www.instagram.com/confeccionliss",
+    tiktok: "https://www.tiktok.com/@confeccionliss",
     youtube: "https://www.youtube.com/@confeccionliss",
-    threads: "https://www.threads.com/@confeccioness.liss",
-    twitter: "https://x.com/confeccion_liss",
-    googleMaps:
-      "https://www.google.com/maps/place/Confecciones+Liss/@13.4783213,-88.1770113,861m",
+    threads: "https://www.threads.com/@confeccionliss",
+    twitter: "https://x.com/confeccionliss",
+    linkedin: "https://www.linkedin.com/company/confeccionliss",
+    pinterest: "https://www.pinterest.com/confeccionliss/",
+    googleMaps: "https://maps.app.goo.gl/8z27tCfvnoBeyoWz9",
   },
 };

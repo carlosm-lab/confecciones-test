@@ -21,14 +21,18 @@ import "@/env";
 export const metadata = {
   title: {
     default:
-      "Confecciones Liss | Scrubs y Uniformes a la Medida en San Miguel, El Salvador",
+      "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
   metadataBase: new URL(siteConfig.url),
+  alternates: {
+    canonical: "./",
+  },
   openGraph: {
-    title: "Confecciones Liss | Scrubs y Uniformes en San Miguel El Salvador",
+    title:
+      "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
     description:
       "Confección profesional a la medida en San Miguel. Scrubs, uniformes universitarios, escolares y corporativos a la medida. Pago al recibir.",
     url: siteConfig.url,
@@ -50,7 +54,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
+    title:
+      "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
     description: siteConfig.description,
 
     creator: siteConfig.twitterHandle,
@@ -76,7 +81,57 @@ export default function RootLayout({
       className={`${manrope.variable} ${notoSerif.variable}`}
       suppressHydrationWarning
     >
-      <head></head>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "TailoringShop",
+              name: siteConfig.name,
+              description: siteConfig.description,
+              url: siteConfig.url,
+              telephone: siteConfig.phone,
+              email: siteConfig.email,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: siteConfig.address.street,
+                addressLocality: siteConfig.address.city,
+                addressCountry: "SV",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: siteConfig.geo.lat,
+                longitude: siteConfig.geo.lng,
+              },
+              openingHoursSpecification: {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                ],
+                opens: "08:00",
+                closes: "17:00",
+              },
+              sameAs: [
+                siteConfig.links.facebook,
+                siteConfig.links.instagram,
+                siteConfig.links.tiktok,
+                siteConfig.links.youtube,
+                siteConfig.links.threads,
+                siteConfig.links.twitter,
+                siteConfig.links.linkedin,
+                siteConfig.links.pinterest,
+              ],
+              priceRange: "$$",
+            }),
+          }}
+        />
+      </head>
       <body className="flex min-h-screen flex-col antialiased">
         <Providers>{children}</Providers>
       </body>
