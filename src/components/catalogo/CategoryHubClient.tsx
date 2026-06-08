@@ -39,7 +39,7 @@ function CategoryCard({
       aria-label={`Ver catálogo de ${config.subtitle}: ${config.hubTagline}`}
     >
       {/* Category Image - Visual focus without text overlays */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-50">
+      <div className="relative aspect-[16/10] max-h-[200px] w-full overflow-hidden bg-gray-50 sm:max-h-none">
         <Image
           src={config.hubImage}
           alt={`Colección de ${config.subtitle}`}
@@ -121,8 +121,8 @@ export function CategoryHubClient() {
             </p>
           </div>
 
-          {/* Grid responsivo: fluido con auto-fill en móvil/tablet y 4 columnas en desktop */}
-          <div className="category-grid">
+          {/* Grid responsivo: 1 col móvil, 2 col tablet vertical, 3 col tablet horizontal, 4 col desktop */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-4">
             {SECTOR_ORDER.map((sector) => (
               <CategoryCard
                 key={sector}
