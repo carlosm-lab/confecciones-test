@@ -262,10 +262,17 @@
   animation: blink 1s step-end infinite;
 }
 
-/* Soft multi-layered white glow overlay for floating links readability */
+/* 8-way outline + multi-glow layers for maximum typography contrast over chaotic backgrounds */
 .contrast-text-shadow {
   text-shadow:
-    0 0 4px rgba(255, 255, 255, 1),
-    0 0 8px rgba(255, 255, 255, 0.95),
-    0 0 16px rgba(255, 255, 255, 0.9);
+    -1px -1px 0 #ffffff,
+    0px -1px 0 #ffffff,
+    1px -1px 0 #ffffff,
+    -1px 0px 0 #ffffff,
+    1px 0px 0 #ffffff,
+    -1px 1px 0 #ffffff,
+    0px 1px 0 #ffffff,
+    1px 1px 0 #ffffff,
+    0px 0px 4px #ffffff,
+    0px 0px 8px rgba(255, 255, 255, 0.95);
 }

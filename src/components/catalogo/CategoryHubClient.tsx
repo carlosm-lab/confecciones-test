@@ -50,10 +50,10 @@ function CategoryCard({
         />
 
         {/* Floating Action Link (Text Only) */}
-        <div className="text-primary contrast-text-shadow group-hover:text-tertiary absolute top-3 right-3 z-20 flex items-center gap-1 text-[8px] font-bold tracking-wider uppercase transition-colors @[280px]:text-[9px] @[360px]:text-[10px]">
+        <div className="text-primary contrast-text-shadow group-hover:text-tertiary absolute top-3 right-3 z-20 flex items-center gap-1 text-[10px] font-extrabold tracking-wider uppercase transition-colors @[280px]:text-[11px] @[360px]:text-[12px]">
           <span>Explorar colección</span>
           <span
-            className="material-symbols-outlined text-[10px] transition-transform duration-300 group-hover:translate-x-1 @[280px]:text-[12px] @[320px]:text-[14px]"
+            className="material-symbols-outlined text-[11px] transition-transform duration-300 group-hover:translate-x-1 @[280px]:text-[13px] @[320px]:text-[14px]"
             aria-hidden="true"
           >
             arrow_forward
