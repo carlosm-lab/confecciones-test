@@ -38,7 +38,7 @@ function CategoryCard({
       )}
       aria-label={`Ver catálogo de ${config.subtitle}: ${config.hubTagline}`}
     >
-      {/* Category Image - Visual focus without text overlays */}
+      {/* Category Image - Visual focus with floating action link */}
       <div className="relative aspect-[16/10] max-h-[200px] w-full overflow-hidden bg-gray-50 sm:max-h-none">
         <Image
           src={config.hubImage}
@@ -48,43 +48,9 @@ function CategoryCard({
           className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-103"
           priority={sector === "scrubs" || sector === "universitario"}
         />
-      </div>
-
-      {/* Information Panel - Sólido, altamente legible, contraste AAA */}
-      <div className="flex flex-1 flex-col justify-between p-3 @[280px]:p-3.5 @[320px]:p-4">
-        <div>
-          {/* Badge & Product Count */}
-          <div className="mb-1.5 flex items-center justify-between gap-2 @[280px]:mb-2">
-            <div className="text-secondary flex items-center gap-1">
-              <span
-                className="material-symbols-outlined text-[12px] @[280px]:text-[14px] @[320px]:text-[16px]"
-                aria-hidden="true"
-              >
-                {config.icon}
-              </span>
-              <span className="text-[8px] font-bold tracking-wider text-gray-400 uppercase @[280px]:text-[9px] @[320px]:text-[10px]">
-                {config.subtitle}
-              </span>
-            </div>
-            <span className="bg-surface-container text-primary rounded-full px-1.5 py-0.5 text-[8px] font-semibold @[280px]:px-2 @[280px]:text-[9px] @[320px]:text-[10px]">
-              {productCount} {productCount === 1 ? "prenda" : "prendas"}
-            </span>
-          </div>
-
-          {/* Title */}
-          <h2 className="text-primary group-hover:text-tertiary font-serif text-[13px] leading-tight font-bold transition-colors @[250px]:text-[14px] @[280px]:text-[15px] @[320px]:text-[17px] @[360px]:text-[19px]">
-            {config.subtitle}
-          </h2>
-
-          {/* Description / Tagline */}
-          <p className="text-on-surface-variant mt-0.5 line-clamp-1 text-[9px] leading-snug transition-all @[280px]:text-[10px] @[320px]:mt-1 @[320px]:line-clamp-2 @[320px]:text-[11px] @[360px]:text-[12px]">
-            {config.hubTagline}
-          </p>
-        </div>
-
-        {/* Action Button Link */}
-        <div className="text-primary group-hover:text-tertiary mt-2.5 flex items-center gap-1 text-[8px] font-bold tracking-wider uppercase transition-colors @[280px]:mt-3 @[320px]:mt-3.5 @[320px]:text-[9px] @[360px]:text-[10px]">
-          <span>Explorar colección</span>
+        {/* Floating Action Link (Text Only) */}
+        <div className="text-primary group-hover:text-tertiary absolute top-3 right-3 z-10 flex items-center gap-1 text-[8px] font-bold tracking-wider uppercase transition-colors @[280px]:text-[9px] @[360px]:text-[10px]">
+          <span className="hidden @[260px]:inline">Explorar colección</span>
           <span
             className="material-symbols-outlined text-[10px] transition-transform duration-300 group-hover:translate-x-1 @[280px]:text-[12px] @[320px]:text-[14px]"
             aria-hidden="true"
@@ -92,6 +58,37 @@ function CategoryCard({
             arrow_forward
           </span>
         </div>
+      </div>
+
+      {/* Information Panel - Sólido, altamente legible, contraste AAA */}
+      <div className="p-3 @[280px]:p-3.5 @[320px]:p-4">
+        {/* Badge & Product Count */}
+        <div className="mb-1.5 flex items-center justify-between gap-2 @[280px]:mb-2">
+          <div className="text-secondary flex items-center gap-1">
+            <span
+              className="material-symbols-outlined text-[12px] @[280px]:text-[14px] @[320px]:text-[16px]"
+              aria-hidden="true"
+            >
+              {config.icon}
+            </span>
+            <span className="text-[8px] font-bold tracking-wider text-gray-400 uppercase @[280px]:text-[9px] @[320px]:text-[10px]">
+              {config.subtitle}
+            </span>
+          </div>
+          <span className="bg-surface-container text-primary rounded-full px-1.5 py-0.5 text-[8px] font-semibold @[280px]:px-2 @[280px]:text-[9px] @[320px]:text-[10px]">
+            {productCount} {productCount === 1 ? "prenda" : "prendas"}
+          </span>
+        </div>
+
+        {/* Title */}
+        <h2 className="text-primary group-hover:text-tertiary font-serif text-[13px] leading-tight font-bold transition-colors @[250px]:text-[14px] @[280px]:text-[15px] @[320px]:text-[17px] @[360px]:text-[19px]">
+          {config.subtitle}
+        </h2>
+
+        {/* Description / Tagline */}
+        <p className="text-on-surface-variant mt-0.5 line-clamp-1 text-[9px] leading-snug transition-all @[280px]:text-[10px] @[320px]:mt-1 @[320px]:line-clamp-2 @[320px]:text-[11px] @[360px]:text-[12px]">
+          {config.hubTagline}
+        </p>
       </div>
     </Link>
   );
