@@ -357,7 +357,7 @@ export function Navbar() {
             </button>
 
             <ul className="space-y-1">
-              {NAV_LINKS.map((link) => {
+              {navLinks.map((link) => {
                 const isActive =
                   link.href === "/"
                     ? pathname === "/"
@@ -369,14 +369,14 @@ export function Navbar() {
                       href={link.href}
                       onClick={closeMenu}
                       className={cn(
-                        "flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold transition-colors",
+                        "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
                         isActive
                           ? "bg-primary text-on-primary shadow-sm"
-                          : "text-gray-700 hover:bg-gray-50"
+                          : "hover:bg-primary/5 hover:text-primary text-gray-700"
                       )}
                     >
                       <span
-                        className="material-symbols-outlined text-sm"
+                        className="material-symbols-outlined text-[18px]"
                         aria-hidden="true"
                       >
                         {link.mobileIcon}
@@ -386,6 +386,28 @@ export function Navbar() {
                   </li>
                 );
               })}
+              {/* Divider */}
+              <li className="my-2 border-t border-gray-100" />
+              {/* Links Page */}
+              <li>
+                <Link
+                  href="/links"
+                  onClick={closeMenu}
+                  className={cn(
+                    "hover:bg-primary/5 hover:text-primary flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition-all",
+                    pathname === "/links" &&
+                      "bg-primary text-on-primary shadow-sm"
+                  )}
+                >
+                  <span
+                    className="material-symbols-outlined text-[18px]"
+                    aria-hidden="true"
+                  >
+                    alternate_email
+                  </span>
+                  Mis Enlaces / Redes
+                </Link>
+              </li>
             </ul>
 
             {/* Mobile action row */}
