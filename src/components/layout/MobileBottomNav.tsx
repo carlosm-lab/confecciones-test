@@ -6,69 +6,36 @@ import { usePathname } from "next/navigation";
 import { env } from "@/env";
 
 /*
- * Geometry: exact port of CurvedBottomNavigationView.computeCurve()
- * from susonthapa/curved-bottom-navigation (Kotlin → SVG path).
- *
- * Source constants (dp, treated as px here):
- *   cbn_fab_size            = 56  → BUBBLE_D     = 56
- *   cbn_height              = 56  → BAR_H        = 56
- *   cbn_layout_height       = 80  → SVG_H        = 80
- *   cbn_fab_top_offset      = 8   → FAB_CSS_TOP  = 8
- *   cbn_bottom_curve_offset = 16  → NOTCH_Y = SVG_H - 16 = 64
- *
- * Derived (exact formulas from source):
- *   BAR_Y        = SVG_H - BAR_H = 24          ← y where bar begins
- *   BUBBLE_R     = BUBBLE_D / 2  = 28
- *   fabMargin    = 80-56-8-16    = 0
- *   CURVE_HALF_W = BUBBLE_R*2 + fabMargin = 56
- *   TOP_CTRL_X   = BUBBLE_R + BUBBLE_R/2  = 42  (topControlX)
- *   TOP_CTRL_Y   = BAR_Y + BUBBLE_R/6     ≈ 29  (absolute y, topControlY)
- *   BOT_CTRL_X   = BUBBLE_R + BUBBLE_R/2  = 42  (bottomControlX)
- *   BOT_CTRL_Y   = BUBBLE_R/4             = 7   (bottomControlY)
+ * Geometry: exact port of susonthapa/curved-bottom-navigation
+ * FAB_CSS_TOP raised to 12 so bubble sits slightly lower (center at y=40, 16px into bar)
  */
 const SVG_H = 80;
-const BAR_Y = 24; // SVG_H - BAR_H
+const BAR_Y = 24; // bar top in SVG coords (SVG_H - BAR_H)
 const BAR_H = 56;
 const BUBBLE_D = 56;
 const BUBBLE_R = 28;
-const FAB_CSS_TOP = 8; // CSS top of bubble span = fabTopOffset
-const NOTCH_Y = 64; // SVG_H - curveBottomOffset (16)
-const CURVE_HALF = 56; // fabRadius*2 + fabMargin(0)
+const FAB_CSS_TOP = 12; // +4 vs source → bubble center at y=40 (deeper in bar)
+const NOTCH_Y = 64; // SVG_H - curveBottomOffset(16)
+const CURVE_HALF = 56; // fabRadius * 2
 const TOP_CTRL_X = 42; // fabRadius * 1.5
-const TOP_CTRL_Y = BAR_Y + BUBBLE_R / 6; // ≈ 28.67 absolute y
+const TOP_CTRL_Y = BAR_Y + BUBBLE_R / 6; // ≈ 28.67 (absolute y)
 const BOT_CTRL_X = 42;
-const BOT_CTRL_Y = BUBBLE_R / 4; // = 7
+const BOT_CTRL_Y = BUBBLE_R / 4; // 7
 
 const NUM_TABS = 5;
 
-/**
- * Exact SVG path from computeCurve() in CurvedBottomNavigationView.kt
- *
- * firstCurveStart  = (cx - CURVE_HALF, BAR_Y)
- * firstCurveEnd    = (cx,               NOTCH_Y)   ← notch bottom
- * secondCurveStart = firstCurveEnd
- * secondCurveEnd   = (cx + CURVE_HALF,  BAR_Y)
- *
- * Control point formulas (verbatim from Kotlin):
- *   CP1 = (fcs.x + topControlX,  topControlY)
- *   CP2 = (fce.x - bottomControlX, fce.y - bottomControlY)
- *   CP3 = (scs.x + bottomControlX, scs.y - bottomControlY)
- *   CP4 = (sce.x - topControlX,  topControlY)
- */
+/** Exact computeCurve() path — active tab shows concave notch */
 function buildPath(w: number, cx: number): string {
-  const lx = cx - CURVE_HALF; // firstCurveStart.x
-  const rx = cx + CURVE_HALF; // secondCurveEnd.x
-
-  const cp1x = lx + TOP_CTRL_X; // fcs.x + topControlX
-  const cp1y = TOP_CTRL_Y; // topControlY (absolute)
-  const cp2x = cx - BOT_CTRL_X; // fce.x - bottomControlX
-  const cp2y = NOTCH_Y - BOT_CTRL_Y; // fce.y - bottomControlY = 57
-
-  const cp3x = cx + BOT_CTRL_X; // scs.x + bottomControlX
-  const cp3y = NOTCH_Y - BOT_CTRL_Y; // scs.y - bottomControlY = 57
-  const cp4x = rx - TOP_CTRL_X; // sce.x - topControlX
-  const cp4y = TOP_CTRL_Y; // topControlY (absolute)
-
+  const lx = cx - CURVE_HALF;
+  const rx = cx + CURVE_HALF;
+  const cp1x = lx + TOP_CTRL_X,
+    cp1y = TOP_CTRL_Y;
+  const cp2x = cx - BOT_CTRL_X,
+    cp2y = NOTCH_Y - BOT_CTRL_Y;
+  const cp3x = cx + BOT_CTRL_X,
+    cp3y = NOTCH_Y - BOT_CTRL_Y;
+  const cp4x = rx - TOP_CTRL_X,
+    cp4y = TOP_CTRL_Y;
   return [
     `M 0 ${SVG_H}`,
     `L 0 ${BAR_Y}`,
@@ -81,10 +48,22 @@ function buildPath(w: number, cx: number): string {
   ].join(" ");
 }
 
+/** Flat bar — used when no tab matches current route */
+function buildFlatPath(w: number): string {
+  return [
+    `M 0 ${SVG_H}`,
+    `L 0 ${BAR_Y}`,
+    `L ${w} ${BAR_Y}`,
+    `L ${w} ${SVG_H}`,
+    `Z`,
+  ].join(" ");
+}
+
+// Order: Catálogo, Carrito, Inicio, Contacto, Perfil (user-specified)
 const ITEMS = [
-  { href: "/", icon: "home", label: "Inicio" },
   { href: "/catalogo", icon: "storefront", label: "Catálogo" },
   { href: "/carrito", icon: "shopping_cart", label: "Carrito" },
+  { href: "/", icon: "home", label: "Inicio" },
   { href: "/contacto", icon: "mail", label: "Contacto" },
   { href: "/mi-cuenta", icon: "person", label: "Perfil" },
 ];
@@ -92,16 +71,38 @@ const ITEMS = [
 export function MobileBottomNav() {
   const pathname = usePathname();
   const containerRef = useRef<HTMLElement>(null);
-  const [navW, setNavW] = useState(0);
-  const [ready, setReady] = useState(false);
+
+  /*
+   * Initialize navW from window.innerWidth immediately (not waiting for ResizeObserver).
+   * This prevents the bar from disappearing after navigating through a 404 page
+   * (which unmounts and remounts the (public) layout).
+   */
+  const [navW, setNavW] = useState<number>(() =>
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
+  const [ready, setReady] = useState<boolean>(
+    () => typeof window !== "undefined" && window.innerWidth > 0
+  );
+
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+    // Re-read exact element width (may differ from window.innerWidth on some devices)
+    const w = el.getBoundingClientRect().width || window.innerWidth;
+    if (w > 0) {
+      window.requestAnimationFrame(() => {
+        setNavW(w);
+        setReady(true);
+      });
+    }
     const ro = new ResizeObserver(([entry]) => {
-      setNavW(entry.contentRect.width);
-      setReady(true);
+      const cw = entry.contentRect.width;
+      if (cw > 0) {
+        setNavW(cw);
+        setReady(true);
+      }
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -109,14 +110,23 @@ export function MobileBottomNav() {
 
   if (isHomeOnly) return null;
 
-  let activeIdx = ITEMS.findIndex((item) =>
+  /*
+   * Active tab detection.
+   * Returns -1 if the current pathname does NOT match any tab.
+   * When -1 → flat bar (no notch, no bubble). Fixes the "Inicio falsely active" bug.
+   */
+  const activeIdx = ITEMS.findIndex((item) =>
     item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
   );
-  if (activeIdx === -1) activeIdx = 0;
+  // activeIdx === -1 means current page is not in the bottom nav
 
   const tabW = navW / NUM_TABS;
-  const cx = (activeIdx + 0.5) * tabW;
-  const pathD = ready ? buildPath(navW, cx) : "";
+  const cx = activeIdx !== -1 ? (activeIdx + 0.5) * tabW : 0;
+  const pathD = ready
+    ? activeIdx !== -1
+      ? buildPath(navW, cx)
+      : buildFlatPath(navW)
+    : "";
   const bubbleLeft = cx - BUBBLE_R;
 
   return (
@@ -126,7 +136,7 @@ export function MobileBottomNav() {
       style={{ height: SVG_H, overflow: "visible" }}
       aria-label="Navegación principal móvil"
     >
-      {/* Bar with exact concave Bezier notch from Android source */}
+      {/* Bar with concave notch (or flat when no active tab) */}
       {ready && (
         <svg
           aria-hidden="true"
@@ -137,49 +147,45 @@ export function MobileBottomNav() {
           xmlns="http://www.w3.org/2000/svg"
           style={{
             filter:
-              "drop-shadow(0 -4px 16px rgba(20,48,103,0.22)) drop-shadow(0 -1px 5px rgba(20,48,103,0.12))",
+              "drop-shadow(0 -3px 12px rgba(20,48,103,0.20)) drop-shadow(0 -1px 4px rgba(20,48,103,0.10))",
           }}
         >
           <path
             d={pathD}
             fill="var(--color-primary)"
-            style={{
-              /* CSS d-property transition: Chrome ≥116, Firefox ≥117 */
-              transition: "d 0.38s cubic-bezier(0.4,0,0.2,1)",
-            }}
+            style={{ transition: "d 0.38s cubic-bezier(0.4,0,0.2,1)" }}
           />
         </svg>
       )}
 
-      {/* FAB bubble: WHITE circle, brand-colored icon. Slides on active tab change. */}
-      {ready && (
+      {/*
+       * FAB bubble — same color as bar (var(--color-primary)), no boxShadow border.
+       * Icon is white to contrast against the dark bar color.
+       * Only rendered when a tab is active (activeIdx !== -1).
+       */}
+      {ready && activeIdx !== -1 && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute flex items-center justify-center rounded-full bg-white"
+          className="pointer-events-none absolute flex items-center justify-center rounded-full"
           style={{
             width: BUBBLE_D,
             height: BUBBLE_D,
             top: FAB_CSS_TOP,
             left: bubbleLeft,
+            background: "var(--color-primary)",
             transition: "left 0.38s cubic-bezier(0.4,0,0.2,1)",
-            boxShadow:
-              "0 4px 16px rgba(20,48,103,0.35), 0 1px 4px rgba(20,48,103,0.20)",
           }}
         >
           <span
-            className="material-symbols-outlined"
-            style={{
-              fontSize: 24,
-              fontVariationSettings: "'FILL' 1",
-              color: "var(--color-primary)",
-            }}
+            className="material-symbols-outlined text-white"
+            style={{ fontSize: 24, fontVariationSettings: "'FILL' 1" }}
           >
             {ITEMS[activeIdx].icon}
           </span>
         </span>
       )}
 
-      {/* Clickable tab zones inside the bar area */}
+      {/* Clickable tab zones */}
       <ul
         className="absolute right-0 bottom-0 left-0 flex"
         style={{ height: BAR_H }}
