@@ -22,7 +22,7 @@ export default function PublicLayout({
         Saltar al contenido
       </a>
       <Navbar />
-      <main id="main-content" className="flex-grow pb-[64px] sm:pb-0">
+      <main id="main-content" className="flex-grow pb-14 sm:pb-0">
         {children}
       </main>
       <Footer />
