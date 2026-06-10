@@ -16,12 +16,6 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Descripción:** Pie de página principal que incluye información de contacto, logo optimizado, y enlaces a recursos legales.
 - **Props:** No recibe props.
 
-### WhatsAppButton
-
-- **Ruta:** `src/components/layout/WhatsAppButton.tsx`
-- **Descripción:** Botón flotante persistente con el logo de WhatsApp (usando `react-icons`) que dirige a los clientes a la página de contacto de WhatsApp.
-- **Props:** No recibe props.
-
 ## UI Components
 
 ### Breadcrumb
