@@ -75,12 +75,12 @@ function TypewriterPlaceholder() {
 
   return (
     <div
-      className="pointer-events-none flex items-center text-sm text-gray-400"
+      className="pointer-events-none flex min-w-0 items-center overflow-hidden text-sm whitespace-nowrap text-gray-400"
       aria-hidden="true"
     >
-      {mounted ? text : "Buscar producto..."}
+      <span className="truncate">{mounted ? text : "Buscar producto..."}</span>
       {mounted && (
-        <span className="bg-primary animate-blink ml-[2px] inline-block h-[18px] w-[1.5px]" />
+        <span className="bg-primary animate-blink ml-[2px] inline-block h-[18px] w-[1.5px] shrink-0" />
       )}
     </div>
   );
@@ -172,7 +172,7 @@ export function Navbar() {
                 >
                   search
                 </span>
-                <span className="w-36 lg:w-44 xl:w-56">
+                <span className="w-36 min-w-0 flex-1 overflow-hidden lg:w-44 xl:w-56">
                   <TypewriterPlaceholder />
                 </span>
               </button>
