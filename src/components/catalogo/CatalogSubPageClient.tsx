@@ -5,9 +5,10 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { FilterSidebar } from "@/components/catalogo/FilterSidebar";
 import { FilterDrawer } from "@/components/catalogo/FilterDrawer";
-import { CatalogSubNav } from "@/components/catalogo/CatalogSubNav";
 import { CATEGORIES } from "@/data/categories";
 import type { Product, CatalogSubPage } from "@/data/types";
+
+const EMPTY_ARRAY: any[] = [];
 
 interface CatalogSubPageClientProps {
   products: Product[];
@@ -26,7 +27,7 @@ export function CatalogSubPageClient({
   const parentSectorConfig = config.parentSector
     ? CATEGORIES[config.parentSector]
     : null;
-  const filterGroups = parentSectorConfig?.filterGroups || [];
+  const filterGroups = parentSectorConfig?.filterGroups || EMPTY_ARRAY;
 
   const handleFilterChange = useCallback(
     (groupLabel: string, values: string[]) => {
@@ -80,9 +81,6 @@ export function CatalogSubPageClient({
 
   return (
     <>
-      {/* Sub-nav Sticky */}
-      <CatalogSubNav />
-
       {/* Hero */}
       <section className={`${config.heroGradient} px-5 py-12 md:px-8 md:py-20`}>
         <div className="mx-auto max-w-screen-2xl">

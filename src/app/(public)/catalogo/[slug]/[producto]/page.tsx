@@ -304,7 +304,7 @@ export default async function ProductDetailPage({
 
             {/* CTA */}
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-              <Link
+              <a
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -317,7 +317,7 @@ export default async function ProductDetailPage({
                   shopping_cart
                 </span>
                 Pedir por WhatsApp
-              </Link>
+              </a>
               <Link
                 href={`/catalogo/${slug}`}
                 className="border-primary text-primary flex flex-1 items-center justify-center gap-2 rounded-xl border py-3 text-sm font-semibold transition-colors hover:bg-blue-50"

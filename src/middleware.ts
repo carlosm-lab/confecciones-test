@@ -7,8 +7,8 @@ export function middleware(request: NextRequest) {
   if (env.NEXT_PUBLIC_HOME_ONLY === "true") {
     const url = request.nextUrl.clone();
 
-    // Prevent infinite redirect loops if already at home
-    if (url.pathname !== "/") {
+    // Prevent infinite redirect loops if already at home, and allow access to /links
+    if (url.pathname !== "/" && url.pathname !== "/links") {
       url.pathname = "/";
       return NextResponse.redirect(url, 307);
     }

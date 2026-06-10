@@ -262,6 +262,43 @@
   animation: blink 1s step-end infinite;
 }
 
+/* Category card arrow sliding loop animation */
+@keyframes slide-arrow-loop {
+  0% {
+    transform: translate3d(-80px, 0, 0);
+    opacity: 0;
+  }
+  20% {
+    transform: translate3d(-60px, 0, 0);
+    opacity: 1;
+  }
+  80% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(20px, 0, 0);
+    opacity: 0;
+  }
+}
+
+.animate-slide-arrow {
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover .animate-slide-arrow {
+  animation: slide-arrow-loop 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .animate-slide-arrow {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+    animation: none !important;
+  }
+}
+
 /* 8-way outline + multi-glow layers for maximum typography contrast over chaotic backgrounds */
 .contrast-text-shadow {
   text-shadow:

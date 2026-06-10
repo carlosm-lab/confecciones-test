@@ -159,3 +159,10 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
   - `isOpen: boolean` — Si el modal está visible.
   - `onClose: () => void` — Callback para cerrar el modal.
 - **Ejemplo:** `<SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />`
+
+### LinksPageClient
+
+- **Ruta:** `src/app/(public)/links/LinksPageClient.tsx`
+- **Descripción:** Componente contenedor para la página de enlaces ("link in bio"). Muestra la información de perfil, avatar del logo y una lista responsiva de 13 botones que apuntan a WhatsApp y redes sociales. Está optimizado para evitar el crasheo por falta de memoria en dispositivos móviles al no poseer el atributo `target="_blank"`.
+- **Props:** No recibe props.
+- **Ejemplo:** `<LinksPageClient />`

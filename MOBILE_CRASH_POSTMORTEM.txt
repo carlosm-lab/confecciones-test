@@ -1,0 +1,273 @@
+================================================================================
+POSTMORTEM: CRASH "¡Oh, no!" EN CHROME MÓVIL — PÁGINA /links
+================================================================================
+Proyecto  : Confecciones Liss (Next.js 16 / App Router)
+Fecha     : 2026-06-09
+Síntoma   : El tab del navegador crasheaba con la pantalla "¡Oh, no!" de Chrome
+            al hacer clic en CUALQUIER enlace de la página /links en móvil.
+            En desktop el problema NO ocurría. Afectaba Chrome, Brave y cualquier
+            navegador Chromium en Android.
+Resolución: SOLUCIONADO — eliminando target="_blank" de todos los <a> tags.
+================================================================================
+
+
+────────────────────────────────────────────────────────────────────────────────
+1. DESCRIPCIÓN EXACTA DEL PROBLEMA
+────────────────────────────────────────────────────────────────────────────────
+
+Ruta afectada : /links (página de "link in bio" con redes sociales)
+Dispositivos  : Cualquier Android con Chrome/Brave u otro navegador Chromium
+Trigger       : Hacer clic en cualquier enlace de la página (Instagram, Facebook,
+                WhatsApp, TikTok, etc.)
+Comportamiento: El tab del browser mostraba la pantalla de error "¡Oh, no!" de
+                Chrome inmediatamente después del tap, crasheando el renderer del
+                proceso actual.
+En desktop    : Cero problemas — el crash era exclusivo de navegadores móviles.
+Nota          : El problema también existía en el archivo HTML estático de
+                referencia (linksocialdrop/prototypes/public_profile.html) que
+                usaba Tailwind CDN, confirmando que el bug no era exclusivo del
+                framework Next.js.
+
+
+────────────────────────────────────────────────────────────────────────────────
+2. CAUSA RAÍZ REAL (CONFIRMADA)
+────────────────────────────────────────────────────────────────────────────────
+
+CAUSA: target="_blank" en links hacia sitios pesados (Instagram, Facebook, etc.)
+
+Cuando un <a> tiene target="_blank" y el usuario hace clic:
+  1. Chrome en Android crea un NUEVO PROCESO renderer para la nueva pestaña.
+  2. Ese nuevo renderer intenta cargar instagram.com / facebook.com / etc.
+     Estos son sitios enormes (> 5MB de JS cada uno).
+  3. Android, al detectar presión de memoria, ejecuta el OOM Killer (Out Of
+     Memory Killer) que termina procesos de baja prioridad.
+  4. El renderer de la pestaña ORIGINAL (/links) — que ya no está en primer
+     plano — es candidato prioritario para ser matado.
+  5. Chrome detecta que su renderer fue matado y muestra "¡Oh, no!" en la
+     pestaña que estaba abierta.
+
+En desktop esto no ocurre porque hay mucha más RAM disponible y el OS no
+necesita matar procesos renderer.
+
+SIN target="_blank", el OS Android intercepta el link y lanza la APP NATIVA
+directamente (via App Links / Universal Links / Intent system), sin crear ningún
+proceso renderer adicional — el browser permanece intacto.
+
+
+────────────────────────────────────────────────────────────────────────────────
+3. SOLUCIONES INTENTADAS QUE NO FUNCIONARON
+────────────────────────────────────────────────────────────────────────────────
+
+INTENTO #1 — Aislar la ruta /links del Navbar global
+─────────────────────────────────────────────────────
+Qué se hizo:
+  Movió /links fuera del route group (public) para que no cargara el Navbar
+  que tenía animaciones de typewriter en bucle corriendo en cliente.
+Resultado   : NO solucionó el crash.
+Por qué falló: El crash no era causado por el Navbar ni sus animaciones.
+
+
+INTENTO #2 — Eliminar handlers JS de mouse (onMouseDown/onMouseUp)
+───────────────────────────────────────────────────────────────────
+Qué se hizo:
+  Reescribió LinksPageClient.tsx quitando los event handlers de hover que
+  hacían mutaciones directas del DOM (inline styles dinámicos), migrando
+  todo a clases de Tailwind estáticas.
+Resultado   : NO solucionó el crash.
+Por qué falló: El crash no era causado por los handlers de mouse.
+
+
+INTENTO #3 — Deshabilitar CSP en desarrollo
+─────────────────────────────────────────────
+Qué se hizo:
+  Modificó next.config.mjs para retornar [] en headers() cuando
+  NODE_ENV === "development", evitando que la CSP bloqueara HMR WebSockets
+  en red local (IP 192.168.x.x).
+Resultado   : NO solucionó el crash en móvil.
+Por qué falló: La CSP bloqueaba recursos de desarrollo pero no era el
+               causante del crash al hacer clic en links.
+
+
+INTENTO #4 — Android Intent URLs
+──────────────────────────────────
+Qué se hizo:
+  Agregó lógica JavaScript en el onClick para detectar Android y reemplazar
+  el href con URLs tipo:
+    intent://instagram.com/_u/confeccionliss/#Intent;package=com.instagram.android;scheme=https;end
+  para forzar apertura de la app nativa via Android Intent system.
+Resultado   : NO solucionó el crash (y en algunos casos empeoraba).
+Por qué falló: Los Intent URLs en Chrome móvil tienen comportamiento
+               inconsistente. Chrome puede ignorarlos y navegar al href
+               normal si la app no está instalada, causando el mismo problema.
+               Además, el target="_blank" original seguía presente.
+
+
+INTENTO #5 — ThemeProvider con enableSystem=false
+───────────────────────────────────────────────────
+Qué se hizo:
+  Cambió src/providers/index.tsx de:
+    <ThemeProvider defaultTheme="system" enableSystem>
+  a:
+    <ThemeProvider defaultTheme="light" enableSystem={false}>
+  Para eliminar el hydration mismatch que ocurría porque ThemeProvider
+  detectaba prefers-color-scheme en el cliente y modificaba el <html> después
+  de que el servidor lo renderizó, causando un re-render completo.
+Resultado   : Eliminó los hydration mismatch warnings pero NO solucionó el crash.
+Por qué falló: El hydration mismatch era un bug real (ahora corregido) pero
+               no era la causa del crash mobile.
+
+
+INTENTO #6 — Server Component puro (eliminar "use client")
+────────────────────────────────────────────────────────────
+Qué se hizo:
+  Reescribió LinksPageClient.tsx como Server Component puro eliminando:
+    - "use client"
+    - useState, useCallback
+    - Todos los event handlers
+    - Dependencia de react-icons (migrado a SVGs inline)
+  Verificado: el HTML servido tenía 0 tags <script>, 0 referencias a
+  react-icons, 0 __NEXT_DATA__.
+Resultado   : NO solucionó el crash.
+Por qué falló: El crash ocurría AL HACER CLIC, no al cargar la página.
+               El JavaScript del bundle de Next.js no era el causante.
+
+
+INTENTO #7 — Servir /links como HTML estático puro (sin Next.js)
+──────────────────────────────────────────────────────────────────
+Qué se hizo:
+  Creó public/links.html — un archivo HTML completamente estático con:
+    - CSS 100% inline (sin Tailwind, sin imports externos)
+    - SVG icons inline (sin react-icons, sin Material Symbols CDN)
+    - Sin ningún <script> tag
+    - Sin frameworks, sin React, sin hydration
+  Agregó rewrite en next.config.mjs:
+    beforeFiles: [{ source: "/links", destination: "/links.html" }]
+  Verificado: 0 scripts, 0 referencias a _next/static, 21KB total.
+Resultado   : NO solucionó el crash.
+Por qué falló: El crash seguía ocurriendo al hacer clic porque el problema
+               era target="_blank", no el JavaScript de la página.
+
+
+────────────────────────────────────────────────────────────────────────────────
+4. SOLUCIÓN DEFINITIVA QUE FUNCIONÓ
+────────────────────────────────────────────────────────────────────────────────
+
+SOLUCIÓN: Eliminar target="_blank" de todos los <a> tags en src/app/(public)/links/LinksPageClient.tsx
+
+Cambio exacto:
+  ANTES (cada link):
+    <a href="https://www.instagram.com/confeccionliss"
+       target="_blank"
+       rel="noopener noreferrer">
+
+  DESPUÉS (cada link):
+    <a href="https://www.instagram.com/confeccionliss">
+
+Por qué funciona:
+  Sin target="_blank", cuando el usuario toca un link en Android:
+    1. El sistema operativo Android intercepta la navegación.
+    2. Si la app correspondiente está instalada (Instagram, Facebook, etc.),
+       Android la lanza directamente via App Links / Intent system.
+    3. Si la app NO está instalada, el browser navega en la MISMA pestaña.
+    4. En ningún caso se crea un nuevo proceso renderer.
+    5. El OOM Killer de Android no tiene motivo para matar ningún renderer.
+    6. Resultado: CERO crash.
+
+Archivo modificado: src/app/(public)/links/LinksPageClient.tsx
+Archivos afectados por cambios adicionales (no causan el crash pero son mejoras):
+  - src/providers/index.tsx (enableSystem=false — corrección de hydration)
+  - src/app/(public)/links/page.tsx (Server Component, SEO y Datos Estructurados)
+
+
+────────────────────────────────────────────────────────────────────────────────
+5. DIAGNÓSTICO: CÓMO IDENTIFICAR ESTE BUG EN FUTUROS PROYECTOS
+────────────────────────────────────────────────────────────────────────────────
+
+Señales de que el crash es causado por target="_blank" + OOM:
+
+  ✓ El crash muestra "¡Oh, no!" de Chrome (renderer kill, NO error de JS)
+  ✓ Ocurre SOLO en móvil, NUNCA en desktop
+  ✓ Ocurre al HACER CLIC en un link, NO al cargar la página
+  ✓ Ocurre con CUALQUIER link de la página (no solo uno específico)
+  ✓ Links apuntan a sitios pesados (redes sociales, apps grandes)
+  ✓ Los links tienen target="_blank"
+  ✓ El dispositivo tiene poca RAM (< 3GB típicamente)
+  ✓ El crash ocurre en múltiples navegadores Chromium (Chrome, Brave, Samsung)
+
+Señales de que NO es este bug:
+  ✗ Si el crash ocurre al CARGAR la página (antes de tocar nada) → buscar
+    problemas de memoria en JS/CSS (Tailwind CDN runtime, bundless grandes)
+  ✗ Si ocurre solo en UN link específico → revisar ese URL en particular
+  ✗ Si ocurre en desktop → es un problema de código, no de RAM
+
+
+────────────────────────────────────────────────────────────────────────────────
+6. REGLAS PARA PÁGINAS "LINK IN BIO" Y LINKS MÓVILES
+────────────────────────────────────────────────────────────────────────────────
+
+REGLA #1: NUNCA usar target="_blank" en links hacia redes sociales en móvil.
+  Razón: Abre nuevo renderer → consume RAM → OOM Killer mata el tab original.
+  Excepción: Está bien en desktop o si el destino es contenido liviano.
+
+REGLA #2: Para páginas de "link in bio", usar HTML estático sin JS.
+  Razón: Elimina todos los bundles de framework que consumen RAM en móvil.
+  Implementación: public/links.html + rewrite en next.config.mjs
+
+REGLA #3: Si el OS debe abrir la app nativa, NO usar JavaScript ni Intents.
+  Razón: Android App Links funcionan automáticamente con <a href> simple.
+  El OS intercepta instagram.com, facebook.com, wa.me, etc. y abre la app.
+  Los Intent URLs de JavaScript son menos confiables y más complejos.
+
+REGLA #4: ThemeProvider de next-themes siempre con enableSystem=false en
+  proyectos donde el tema no es crítico.
+  Razón: enableSystem=true añade código cliente que detecta prefers-color-scheme
+  y modifica el DOM, causando hydration mismatches y re-renders innecesarios.
+
+REGLA #5: Para páginas de solo lectura/estáticas, eliminar Providers de React.
+  En Next.js App Router, los Providers se pueden aislar por Route Groups:
+    app/
+      (main)/layout.tsx    ← tiene ThemeProvider, QueryClientProvider
+        (public)/          ← rutas principales
+      links/               ← sin Providers (solo HTML estático)
+
+
+────────────────────────────────────────────────────────────────────────────────
+7. ARQUITECTURA FINAL DE /links EN ESTE PROYECTO
+────────────────────────────────────────────────────────────────────────────────
+
+  URL /links
+    ↓
+  Next.js App Router (Ruta pública global)
+    ├── src/app/(public)/links/page.tsx (Server Component, SEO y Datos Estructurados)
+    └── src/app/(public)/links/LinksPageClient.tsx (React Component, carga local)
+         ├── Integra el diseño original de Stitch
+         ├── Consume Navbar, Footer y WhatsAppButton globales de (public)/layout.tsx
+         ├── Icons locales via SVGs inline (sin FontAwesome CDN)
+         ├── Fuentes locales y optimizadas via next/font/google
+         └── CERO tags target="_blank" en links para evitar el crash OOM en móvil
+
+  El archivo public/links.html y el rewrite beforeFiles en next.config.mjs han sido eliminados por completo, regresando la página a la estructura nativa del framework con su Navbar y Footer correspondientes.
+
+
+────────────────────────────────────────────────────────────────────────────────
+8. REFERENCIAS Y LECTURAS ADICIONALES
+────────────────────────────────────────────────────────────────────────────────
+
+- Android OOM Killer y gestión de procesos Chrome:
+  https://developer.chrome.com/docs/android/
+
+- Android App Links (apertura de apps sin JS):
+  https://developer.android.com/training/app-links
+
+- Por qué target="_blank" puede ser peligroso (seguridad + rendimiento):
+  https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/noopener
+
+- Next.js rewrites beforeFiles (prioridad sobre App Router):
+  https://nextjs.org/docs/app/api-reference/config/next-config-js/rewrites
+
+- next-themes enableSystem y hydration:
+  https://github.com/pacocoursey/next-themes#avoid-hydration-mismatch
+
+================================================================================
+FIN DEL POSTMORTEM
+================================================================================

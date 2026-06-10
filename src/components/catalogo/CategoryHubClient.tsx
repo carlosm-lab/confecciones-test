@@ -55,10 +55,9 @@ function CategoryCard({
         />
 
         {/* Floating Action Link (Text Only) */}
-        <div className="text-primary contrast-text-shadow group-hover:text-tertiary absolute top-3 right-3 z-20 flex items-center gap-1 text-[10px] font-extrabold tracking-wider uppercase transition-colors @[280px]:text-[11px] @[360px]:text-[12px]">
-          <span>Explorar colección</span>
+        <div className="text-primary contrast-text-shadow group-hover:text-tertiary absolute top-3 right-3 z-20 flex items-center transition-colors">
           <span
-            className="material-symbols-outlined text-[11px] transition-transform duration-300 group-hover:translate-x-1 @[280px]:text-[13px] @[320px]:text-[14px]"
+            className="material-symbols-outlined animate-slide-arrow text-[14px] @[280px]:text-[16px] @[320px]:text-[18px]"
             aria-hidden="true"
           >
             arrow_forward

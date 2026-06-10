@@ -4,12 +4,12 @@ import { siteConfig } from "@/config/site";
 // Tipos para Servicios (Blog informativo)
 // ──────────────────────────────────────────────
 
-export interface ServiceSection {
+interface ServiceSection {
   heading: string;
   body: string;
 }
 
-export interface ServicePage {
+interface ServicePage {
   slug: string;
   navLabel: string;
   navIcon: string;

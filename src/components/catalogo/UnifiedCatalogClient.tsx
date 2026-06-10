@@ -9,9 +9,8 @@ import { FilterSidebar } from "@/components/catalogo/FilterSidebar";
 import { FilterDrawer } from "@/components/catalogo/FilterDrawer";
 import { useFilterParams } from "@/hooks/useFilterParams";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import type { Product, FilterGroup } from "@/data/types";
 import { siteConfig } from "@/config/site";
-import { CatalogSubNav } from "@/components/catalogo/CatalogSubNav";
+import type { Product, FilterGroup } from "@/data/types";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -294,9 +293,6 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
           </div>
         </div>
       </section>
-
-      {/* Sub-nav Sticky */}
-      <CatalogSubNav />
 
       {/* Mobile Filter Drawer */}
       <FilterDrawer
