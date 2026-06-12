@@ -52,7 +52,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     description:
       "Contamos con máquinas de bordado computarizado industrial de última generación. Logramos máxima fidelidad y detalles finos en escudos, logos corporativos y nombres. Bordamos sobre prendas armadas, camisas polo, gorras, mochilas y toallas.",
     cardDescription:
-      "Bordado computarizado industrial de alta precisión para escudos, logotipos y nombres sobre polos, gorras, mochilas y prendas armadas.",
+      "Bordado computarizado industrial de alta precisión para escudos, logotipos y nombres sobre polos, gorras, camisas y prendas armadas.",
     heroGradient: "bg-indigo-900 text-white",
     cardImage: "/images/servicios/bordados.png",
     heroFeatures: [
@@ -116,7 +116,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     description:
       "Servicio de impresión textil mediante calor. La técnica ideal para prendas de poliéster deportivas donde la tinta pasa a ser parte de la fibra, asegurando que nunca se cuartee ni pierda color. Ideal para diseños complejos o fotografías.",
     cardDescription:
-      "Impresión textil mediante calor para prendas deportivas. Tinta permanente de alta resolución que no se cuartea ni pierde color.",
+      "Impresión textil mediante calor para prendas deportivas. Tinta permanente de alta resolución que no se cuartea, ni perderá su color.",
     heroGradient: "bg-purple-900 text-white",
     cardImage: "/images/servicios/sublimacion.png",
     heroFeatures: [
@@ -179,7 +179,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     description:
       "Olvídate de comprar uniformes estándar que no te favorecen. Visita nuestro taller en Barrio La Merced; tomamos más de 12 medidas anatómicas para crear una prenda que se adapta perfectamente a tus curvas, altura y complexión, brindando un entalle profesional incomparable.",
     cardDescription:
-      "Confección a medida en nuestro taller. Tomamos 12 medidas anatómicas para crear una prenda con un entalle profesional incomparable.",
+      "Confección a medida en nuestro taller. Tomamos 12 medidas anatómicas para lograr una prenda con un entalle profesional incomparable.",
     heroGradient: "bg-pink-900 text-white",
     cardImage: "/images/servicios/confeccion.png",
     heroFeatures: [
@@ -242,7 +242,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     description:
       "¿Compraste una tela espectacular pero no sabes coserla? Trae tu material a nuestro taller. Aplicamos nuestra técnica y patrones comprobados para confeccionar tu prenda, cobrando exclusivamente el valor de la mano de obra. Una opción económica y flexible.",
     cardDescription:
-      "Trae tu propia tela y la confeccionamos con patrones profesionales, cobrando únicamente la mano de obra. Una opción económica y flexible.",
+      "Trae tu propia tela y la confeccionamos con patrones profesionales, cobrando solo mano de obra. Una opción muy económica y flexible.",
     heroGradient: "bg-amber-900 text-white",
     cardImage: "/images/servicios/mano-obra.png",
     heroFeatures: [
@@ -306,7 +306,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     description:
       "Además de uniformes corporativos, fabricamos moda casual y de fiesta a la medida. Tráenos una foto de Pinterest o Instagram del vestido, falda, enterizo o crop top que deseas, y nosotros lo replicamos ajustado perfectamente a tu silueta.",
     cardDescription:
-      "Confección de ropa casual y de fiesta a medida. Replicamos vestidos, faldas y conjuntos a partir de fotos de referencia.",
+      "Confección de toda tu ropa casual y de fiesta a medida. Replicamos vestidos, faldas y conjuntos a partir de tus fotos de referencia.",
     heroGradient: "bg-fuchsia-900 text-white",
     cardImage: "/images/servicios/ropa-general.png",
     heroFeatures: [

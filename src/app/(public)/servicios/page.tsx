@@ -125,7 +125,7 @@ export default function ServiciosPage() {
             <div className="flex flex-1 flex-col p-6">
               <p className="mb-6 flex-1 text-sm leading-relaxed text-gray-600">
                 Cuéntanos tu idea y te ayudamos a hacerla realidad. Confección,
-                bordados o sublimaciones a tu medida con cotización sin
+                bordados o sublimaciones a tu medida, con cotización sin
                 compromiso.
               </p>
 
