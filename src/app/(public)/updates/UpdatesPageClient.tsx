@@ -75,6 +75,90 @@ const ALL_CATEGORIES: ChangeCategory[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 const CHANGELOG: VersionGroup[] = [
   {
+    version: "v0.9",
+    label: "Página de Updates · Rediseño 404 · Refinamiento Servicios",
+    dateRange: "10 – 12 de junio de 2026",
+    entries: [
+      {
+        id: "e-100",
+        date: "2026-06-12",
+        category: "seo",
+        title: "Corrección de la página 404 para Google Search Console",
+        description:
+          "Se convirtió not-found.tsx de Client Component a Server Component para permitir la exportación de metadata SEO. Anteriormente, GSC reportaba que la página 404 no se encontraba porque Next.js emitía HTTP 200 (en vez de 404) y no incluía meta tags. Se agregó metadata con título y robots, se actualizaron canonicals autorreferenciadas en todas las páginas, y se bloquearon rutas inactivas en robots.txt y sitemap.",
+        commit: "pendiente",
+      },
+      {
+        id: "e-101",
+        date: "2026-06-10",
+        category: "feat",
+        title: "Página de Updates y componente ShareButton",
+        description:
+          "Se implementó la página pública /updates con un timeline interactivo que documenta todos los cambios del proyecto. Se creó el componente ShareButton reutilizable para compartir páginas por WhatsApp, copiar enlace, y redes sociales.",
+        commit: "4e41089",
+      },
+      {
+        id: "e-102",
+        date: "2026-06-10",
+        category: "fix",
+        title: "Homologación de breadcrumbs y estandarización de márgenes",
+        description:
+          "Se unificaron los breadcrumbs en todas las páginas con el mismo diseño y animación. Se estandarizaron los márgenes laterales a px-8 en desktop y se restauró el layout de la página de updates.",
+        commit: "2c4e630",
+        note: "Este commit agrupa correcciones de e23248c (márgenes) y 2c4e630 (breadcrumbs y animación ShareButton).",
+      },
+      {
+        id: "e-103",
+        date: "2026-06-11",
+        category: "style",
+        title: "Unificación visual de tarjetas de servicios con catálogo",
+        description:
+          "Las tarjetas de la página /servicios ahora comparten el mismo sistema de cuadrícula responsive que el catálogo: grid de 1 columna en móvil, 2 en ≥480px, 3 en tablet y 4 en desktop. Se añadió el indicador de navegación siempre visible y se cambió el fondo del banner a blanco.",
+        commit: "61d2676",
+        note: "Agrupa commits 61d2676, b86c90f y 00166da.",
+      },
+      {
+        id: "e-104",
+        date: "2026-06-11",
+        category: "style",
+        title: "Simplificación de tarjetas de servicios — menos es más",
+        description:
+          "Se eliminó la tarjeta CTA de proyecto especial, el botón de 'leer más' de cada tarjeta, y se ajustaron las descripciones a exactamente 132 caracteres. Se redujo el tamaño de las imágenes con aspect-ratio 2:1 y se comprimió la altura de la cabecera de las tarjetas.",
+        commit: "0535439",
+        note: "Agrupa commits 0535439, 14420d6, d3df668, 4a83c6b y ed93689.",
+      },
+      {
+        id: "e-105",
+        date: "2026-06-11",
+        category: "style",
+        title: "Actualización de fotos y bordes de contraste en servicios",
+        description:
+          "Se reemplazaron las fotos de las tarjetas de servicios con imágenes más representativas y se añadió un borde de contraste negro. El overlay de servicios se cambió a tono azul y se restauró el contorno decorativo del 404.",
+        commit: "1ee9bfc",
+        note: "Agrupa commits 1ee9bfc y ca96ad9.",
+      },
+      {
+        id: "e-106",
+        date: "2026-06-12",
+        category: "style",
+        title: "Rediseño completo de la página 404",
+        description:
+          "Se rediseñó la página 404 desde cero: números outline gigantes centrados con el título, layout responsivo side-by-side en desktop, eliminación del botón de inicio para un diseño minimalista, altura fija de 100dvh-56px y contraste mejorado. Se homologaron header y footer con el resto del sitio.",
+        commit: "fbe08cd",
+        note: "Agrupa commits fbe08cd, 40b5494, d967772, 244d423, 6ced7fb y 81ddb8b. Se iteraron 6 versiones del diseño.",
+      },
+      {
+        id: "e-107",
+        date: "2026-06-10",
+        category: "style",
+        title: "Indicador de navegación siempre visible en tarjetas",
+        description:
+          "Los indicadores visuales de navegación (flechas e íconos de enlace) en las tarjetas de catálogo y servicios ahora son siempre visibles en vez de aparecer solo al hacer hover, mejorando la affordance en móvil.",
+        commit: "b86c90f",
+      },
+    ],
+  },
+  {
     version: "v0.8",
     label: "Navegación móvil curva + contraste de tarjetas",
     dateRange: "10 de junio de 2026",

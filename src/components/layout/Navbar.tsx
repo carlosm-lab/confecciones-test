@@ -101,9 +101,13 @@ export function Navbar() {
   );
 
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
+
+  /* Routes blocked in production (middleware redirects these to /) */
+  const BLOCKED_ROUTES = ["/catalogo", "/servicios"];
+
   const navLinks = isHomeOnly
     ? NAV_LINKS.filter((link) => link.href === "/")
-    : NAV_LINKS;
+    : NAV_LINKS.filter((link) => !BLOCKED_ROUTES.includes(link.href));
 
   const closeMenu = () => setIsMenuOpen(false);
   const openSearch = () => {
@@ -384,6 +388,26 @@ export function Navbar() {
                           alternate_email
                         </span>
                         Mis Enlaces / Redes
+                      </Link>
+                    </li>
+                    {/* Updates Page */}
+                    <li>
+                      <Link
+                        href="/updates"
+                        onClick={closeMenu}
+                        className={cn(
+                          "hover:bg-primary/5 hover:text-primary flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition-all",
+                          pathname === "/updates" &&
+                            "bg-primary text-on-primary shadow-sm"
+                        )}
+                      >
+                        <span
+                          className="material-symbols-outlined text-[18px]"
+                          aria-hidden="true"
+                        >
+                          update
+                        </span>
+                        Updates
                       </Link>
                     </li>
                   </ul>

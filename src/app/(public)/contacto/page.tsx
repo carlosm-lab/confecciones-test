@@ -3,16 +3,40 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
+const PAGE_URL = `${siteConfig.url}/contacto`;
+const PAGE_TITLE = "Contacto | Confecciones Liss";
+const PAGE_DESCRIPTION =
+  "Contáctanos en San Miguel, El Salvador. WhatsApp +503 7331-7181, correo confeccionesliss.contacto@gmail.com. Lun–Sáb 8:00 AM – 5:00 PM. Barrio La Merced.";
+
 export const metadata: Metadata = {
-  title: "Contacto | Confecciones Liss",
-  description:
-    "Contáctanos en San Miguel, El Salvador. WhatsApp +503 7331-7181, correo confeccionesliss.contacto@gmail.com. Lun–Sáb 8:00 AM – 5:00 PM. Barrio La Merced.",
-  alternates: { canonical: "/contacto" },
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Contacto | Confecciones Liss",
+    title: PAGE_TITLE,
     description:
       "Ubícanos en Barrio La Merced, San Miguel. WhatsApp, correo y redes sociales. Atendemos pedidos individuales, grupales e institucionales.",
-    url: `${siteConfig.url}/contacto`,
+    url: PAGE_URL,
+    siteName: siteConfig.name,
+    locale: "es_SV",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    creator: siteConfig.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 

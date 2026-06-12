@@ -6,18 +6,40 @@ import { siteConfig } from "@/config/site";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
 
+const PAGE_URL = `${siteConfig.url}/catalogo`;
+const PAGE_TITLE = "Catálogo de Uniformes por Categoría";
+const PAGE_DESCRIPTION =
+  "Explora nuestro catálogo de uniformes: Scrubs médicos, universitarios, escolares, corporativos, deportivos y accesorios. Confección a la medida en San Miguel, El Salvador. Desde $8.";
+
 export const metadata: Metadata = {
-  title: "Catálogo de Uniformes por Categoría",
-  description:
-    "Explora nuestro catálogo de uniformes: Scrubs médicos, universitarios, escolares, corporativos, deportivos y accesorios. Confección a la medida en San Miguel, El Salvador. Desde $8.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Catálogo de Uniformes | Confecciones Liss",
     description:
       "Encuentra uniformes y scrubs médicos a la medida para el sector salud, universidades, colegios y empresas. Bordado, sublimación y precios por volumen.",
-    url: `${siteConfig.url}/catalogo`,
+    url: PAGE_URL,
+    siteName: siteConfig.name,
+    locale: "es_SV",
+    type: "website",
   },
-  alternates: {
-    canonical: `${siteConfig.url}/catalogo`,
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    creator: siteConfig.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 

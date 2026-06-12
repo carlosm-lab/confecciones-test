@@ -5,18 +5,41 @@ import { SERVICE_PAGES } from "@/data/services";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
+const PAGE_URL = `${siteConfig.url}/servicios`;
+const PAGE_TITLE =
+  "Servicios de Confección y Personalización | Confecciones Liss";
+const PAGE_DESCRIPTION =
+  "Bordado computarizado, sublimación textil, confección a medida, mano de obra y ropa casual. Servicios profesionales de confección en San Miguel, El Salvador.";
+
 export const metadata: Metadata = {
-  title: "Servicios de Confección y Personalización | Confecciones Liss",
-  description:
-    "Bordado computarizado, sublimación textil, confección a medida, mano de obra y ropa casual. Servicios profesionales de confección en San Miguel, El Salvador.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Servicios de Confección | Confecciones Liss",
     description:
       "Bordado, sublimación, confección a medida y más servicios profesionales de costura en San Miguel.",
-    url: `${siteConfig.url}/servicios`,
+    url: PAGE_URL,
+    siteName: siteConfig.name,
+    locale: "es_SV",
+    type: "website",
   },
-  alternates: {
-    canonical: `${siteConfig.url}/servicios`,
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    creator: siteConfig.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 

@@ -6,7 +6,9 @@ import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 export function generateStaticParams() {
-  return SERVICE_PAGES.map((page) => ({ slug: page.slug }));
+  return SERVICE_PAGES.filter(
+    (page) => page.slug !== "sublimacion-deportiva"
+  ).map((page) => ({ slug: page.slug }));
 }
 
 export async function generateMetadata({

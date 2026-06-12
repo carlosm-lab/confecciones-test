@@ -28,7 +28,7 @@ export const metadata = {
   keywords: siteConfig.keywords,
   metadataBase: new URL(siteConfig.url),
   alternates: {
-    canonical: "./",
+    canonical: siteConfig.url,
   },
   openGraph: {
     title:

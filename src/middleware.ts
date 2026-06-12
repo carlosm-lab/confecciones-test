@@ -2,16 +2,33 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { env } from "@/env";
 
-export function middleware(request: NextRequest) {
-  // If the Home-Only feature flag is enabled, redirect all sub-pages back to home
-  if (env.NEXT_PUBLIC_HOME_ONLY === "true") {
-    const url = request.nextUrl.clone();
+/**
+ * Routes that are blocked in production even when HOME_ONLY is disabled.
+ * These pages are not ready for public access yet.
+ * The middleware redirects them back to home.
+ */
+const BLOCKED_ROUTES = ["/catalogo", "/servicios"];
 
-    // Prevent infinite redirect loops if already at home, and allow access to /links
+export function middleware(request: NextRequest) {
+  const url = request.nextUrl.clone();
+
+  // ── HOME_ONLY mode: block everything except / and /links ──
+  if (env.NEXT_PUBLIC_HOME_ONLY === "true") {
     if (url.pathname !== "/" && url.pathname !== "/links") {
       url.pathname = "/";
       return NextResponse.redirect(url, 307);
     }
+    return NextResponse.next();
+  }
+
+  // ── Selective blocking: redirect BLOCKED_ROUTES to home ──
+  const isBlocked = BLOCKED_ROUTES.some(
+    (route) => url.pathname === route || url.pathname.startsWith(`${route}/`)
+  );
+
+  if (isBlocked) {
+    url.pathname = "/";
+    return NextResponse.redirect(url, 307);
   }
 
   return NextResponse.next();
