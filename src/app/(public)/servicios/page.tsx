@@ -102,45 +102,6 @@ export default function ServiciosPage() {
               </div>
             </Link>
           ))}
-
-          {/* Tarjeta de Proyecto Especial (Dashed Border CTA) */}
-          <div
-            className="group border-primary/45 animate-fade-in-up hover:border-primary/65 @container relative mx-auto flex h-full w-full max-w-md flex-col overflow-hidden rounded-2xl border-2 border-dashed bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] lg:max-w-none"
-            style={{ animationDelay: `${5 * 75 + 300}ms` }}
-          >
-            {/* Header: fondo suave, bordes punteados */}
-            <div className="bg-primary/5 border-primary/20 text-primary flex min-h-[5.5rem] items-center gap-3 border-b border-dashed px-6 py-5">
-              <span
-                className="material-symbols-outlined shrink-0 text-2xl"
-                aria-hidden="true"
-              >
-                design_services
-              </span>
-              <h2 className="pr-9 font-serif text-base leading-snug font-bold">
-                ¿Proyecto Especial?
-              </h2>
-            </div>
-
-            {/* Body */}
-            <div className="flex flex-1 flex-col p-6">
-              <p className="mb-6 flex-1 text-sm leading-relaxed text-gray-600">
-                Cuéntanos tu idea y te ayudamos a hacerla realidad. Confección,
-                bordados o sublimaciones a tu medida, con cotización sin
-                compromiso.
-              </p>
-
-              {/* Botón WhatsApp */}
-              <a
-                href={siteConfig.links.whatsappDirect}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-primary hover:bg-primary/95 mt-auto flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-sm transition-[transform,background-color] duration-200 active:scale-[0.97]"
-              >
-                Cotizar por WhatsApp
-                <span className="sr-only"> (se abre en nueva ventana)</span>
-              </a>
-            </div>
-          </div>
         </div>
       </section>
 
