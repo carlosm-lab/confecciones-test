@@ -273,10 +273,10 @@ export default function ContactoPage() {
 
         <div className="relative mx-auto max-w-screen-2xl">
           {/* ── Header ──────────────────────────────────────────── */}
-          <section className="flex flex-col items-center pt-6 pb-0 text-center md:items-start md:text-left">
+          <section className="flex flex-col items-start pt-6 pb-0 text-left">
             <Breadcrumb
               items={[{ label: "Inicio", href: "/" }, { label: "Contacto" }]}
-              className="animate-fade-in-up mb-6 justify-center md:justify-start"
+              className="animate-fade-in-up mb-6 justify-start"
             />
 
             <h1

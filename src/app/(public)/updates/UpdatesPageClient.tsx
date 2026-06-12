@@ -80,6 +80,15 @@ const CHANGELOG: VersionGroup[] = [
     dateRange: "10 – 12 de junio de 2026",
     entries: [
       {
+        id: "e-108",
+        date: "2026-06-12",
+        category: "chore",
+        title: "Lanzamiento oficial a producción (v0.9)",
+        description:
+          "Publicación oficial en el dominio principal de Confecciones Liss. Se habilitaron las páginas de Inicio, Contacto, Enlaces (/links) y la nueva sección de Novedades (/updates). Las páginas de Catálogo y Servicios se configuraron como inactivas (redirección a la Home) mediante el proxy middleware para esta fase.",
+        commit: "4a4d426",
+      },
+      {
         id: "e-100",
         date: "2026-06-12",
         category: "seo",
@@ -336,6 +345,15 @@ const CHANGELOG: VersionGroup[] = [
     label: "SEO avanzado, sitemap y middleware",
     dateRange: "7 – 8 de junio de 2026",
     entries: [
+      {
+        id: "e-033",
+        date: "2026-06-08",
+        category: "chore",
+        title: "Primer despliegue a producción (v0.6)",
+        description:
+          "Se realizó la puesta en producción inicial del sitio web en el dominio oficial con el modo HOME_ONLY_MODE activo, restringiendo el acceso de los usuarios a las sub-páginas en desarrollo y permitiendo solo la visualización de la landing de Inicio.",
+        commit: "db33241",
+      },
       {
         id: "e-018",
         date: "2026-06-08",
