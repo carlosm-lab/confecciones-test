@@ -1,16 +1,8 @@
 import Link from "next/link";
-import { siteConfig } from "@/config/site";
 
-/**
- * not-found.tsx dentro del route group (public) — se renderiza a través del
- * (public)/layout.tsx, por lo que incluye Navbar, Footer y MobileBottomNav.
- *
- * El root /app/not-found.tsx sigue activo para rutas completamente fuera del
- * grupo (ej: /api/*, /dashboard/*, etc.).
- */
 export default function PublicNotFound() {
   return (
-    <section className="relative flex min-h-[calc(100vh-5rem)] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
+    <section className="relative flex min-h-[calc(100vh-16rem)] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
       {/* Decorative background */}
       <div
         aria-hidden="true"
@@ -43,61 +35,14 @@ export default function PublicNotFound() {
       </p>
 
       {/* CTA buttons */}
-      <div className="mb-12 flex w-full max-w-xs flex-col gap-4 sm:max-w-sm sm:flex-row">
+      <div className="flex w-full flex-col justify-center gap-4 sm:w-auto sm:flex-row">
         <Link
           href="/"
-          className="from-primary to-primary-container text-on-primary flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-br px-6 py-3 text-sm font-semibold shadow-md transition-opacity hover:opacity-90"
+          className="bg-primary hover:bg-primary/95 rounded-xl px-8 py-3.5 text-center font-semibold text-white shadow-md transition-all duration-200 active:scale-[0.98]"
         >
-          <span
-            className="material-symbols-outlined text-[18px]"
-            aria-hidden="true"
-          >
-            home
-          </span>
-          Inicio
+          Volver al inicio
         </Link>
-        <a
-          href={siteConfig.links.whatsapp}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="border-primary text-primary hover:bg-primary/5 flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-6 py-3 text-sm font-semibold transition-colors"
-        >
-          <span
-            className="material-symbols-outlined text-[18px]"
-            aria-hidden="true"
-          >
-            chat
-          </span>
-          WhatsApp
-        </a>
       </div>
-
-      {/* Quick links */}
-      <nav aria-label="Páginas disponibles">
-        <ul className="flex flex-wrap justify-center gap-3">
-          {[
-            { href: "/catalogo", label: "Catálogo", icon: "storefront" },
-            { href: "/servicios", label: "Servicios", icon: "design_services" },
-            { href: "/contacto", label: "Contacto", icon: "mail" },
-            { href: "/mi-cuenta", label: "Mi cuenta", icon: "person" },
-          ].map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="bg-surface-container-lowest hover:bg-surface-container border-outline-variant/20 text-primary-container flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
-              >
-                <span
-                  className="material-symbols-outlined text-[16px]"
-                  aria-hidden="true"
-                >
-                  {item.icon}
-                </span>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
     </section>
   );
 }
