@@ -12,36 +12,37 @@ export default function NotFound() {
       {/* Main Content */}
       <main
         id="main-content"
-        className="relative z-10 mx-auto flex w-full max-w-screen-2xl flex-grow flex-col items-center justify-center px-6 pt-32 pb-24"
+        className="relative z-10 mx-auto flex w-full max-w-screen-2xl flex-grow flex-col items-center justify-center px-5 py-12 md:px-8 lg:py-24"
       >
-        {/* Giant Decorative 404 */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center overflow-hidden opacity-[0.15] select-none"
-        >
-          <span
-            className="text-[30vw] leading-none font-black tracking-tighter"
-            style={{ WebkitTextStroke: "2px #143067", color: "transparent" }}
-          >
-            404
-          </span>
-        </div>
+        <div className="flex w-full flex-col items-center gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+          {/* Left Side: Info */}
+          <div className="z-10 flex w-full flex-col items-center text-center lg:flex-1 lg:items-start lg:text-left">
+            {/* Icon */}
+            <div className="bg-primary/10 mb-6 flex h-16 w-16 items-center justify-center rounded-full">
+              <span className="material-symbols-outlined text-primary text-3xl">
+                content_cut
+              </span>
+            </div>
 
-        <div className="relative z-10 flex max-w-2xl flex-col items-center text-center">
-          {/* Icon */}
-          <div className="bg-primary/10 mb-8 flex h-20 w-20 items-center justify-center rounded-full">
-            <span className="material-symbols-outlined text-primary text-4xl">
-              content_cut
-            </span>
+            <h1 className="text-primary mb-4 text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl md:text-5xl">
+              ¡Esta página se perdió en el taller!
+            </h1>
+
+            <p className="text-on-surface-variant max-w-xl text-base leading-relaxed md:text-lg">
+              Lo sentimos, el enlace que seguiste podría estar roto, la página
+              ha sido eliminada o nunca existió. Si crees que esto es un error,
+              puedes utilizar la navegación superior para regresar a la página
+              principal y explorar nuestras categorías de scrubs y uniformes a
+              la medida.
+            </p>
           </div>
 
-          <h1 className="text-primary mb-4 text-4xl font-extrabold tracking-tight md:text-5xl">
-            ¡Esta página se perdió en el taller!
-          </h1>
-
-          <p className="text-on-surface-variant max-w-md text-lg leading-relaxed md:text-xl">
-            La página que buscas no existe o fue movida.
-          </p>
+          {/* Right Side: Giant 404 */}
+          <div className="flex w-full items-center justify-center select-none lg:flex-1">
+            <span className="text-primary font-serif text-[10rem] leading-none font-black tracking-tighter sm:text-[12rem] lg:text-[15rem]">
+              404
+            </span>
+          </div>
         </div>
       </main>
 
