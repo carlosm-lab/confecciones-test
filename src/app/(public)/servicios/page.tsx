@@ -80,8 +80,8 @@ export default function ServiciosPage() {
                 </h2>
               </div>
 
-              {/* Body: imagen de fondo + texto superpuesto */}
-              <div className="relative flex flex-1 flex-col overflow-hidden">
+              {/* Body: imagen de fondo */}
+              <div className="relative aspect-[2/1] w-full overflow-hidden">
                 {/* Imagen de fondo */}
                 <Image
                   src={page.cardImage}
@@ -90,18 +90,6 @@ export default function ServiciosPage() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-105"
                 />
-                {/* Filtro negro muy sutil */}
-                <div className="absolute inset-0 bg-black/20" />
-
-                {/* Texto encima de la imagen */}
-                <div className="relative z-10 flex flex-1 flex-col justify-end p-6">
-                  <p
-                    className="text-stroke-[2.5px] text-stroke-black text-sm leading-relaxed font-black text-white"
-                    style={{ paintOrder: "stroke fill" }}
-                  >
-                    {page.cardDescription}
-                  </p>
-                </div>
               </div>
             </Link>
           ))}
