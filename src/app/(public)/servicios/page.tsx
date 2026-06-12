@@ -68,7 +68,7 @@ export default function ServiciosPage() {
               </div>
 
               {/* Brand white header */}
-              <div className="text-primary flex min-h-[5.5rem] items-center gap-3 bg-white px-6 py-5 transition-colors duration-300">
+              <div className="text-primary flex min-h-[4.25rem] items-center gap-3 bg-white px-6 py-3.5 transition-colors duration-300">
                 <span
                   className="material-symbols-outlined shrink-0 text-2xl transition-transform duration-300 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-110"
                   aria-hidden="true"
