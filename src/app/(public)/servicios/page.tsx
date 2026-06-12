@@ -95,20 +95,9 @@ export default function ServiciosPage() {
 
                 {/* Texto encima de la imagen */}
                 <div className="relative z-10 flex flex-1 flex-col justify-end p-6">
-                  <p className="mb-2 flex-1 text-sm leading-relaxed text-white lg:mb-4">
+                  <p className="text-sm leading-relaxed text-white">
                     {page.cardDescription}
                   </p>
-
-                  {/* CTA */}
-                  <span className="mt-auto hidden items-center gap-1.5 text-sm font-semibold text-white transition-colors duration-300 lg:inline-flex">
-                    Leer más
-                    <span
-                      className="material-symbols-outlined text-sm transition-transform duration-300 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-x-1.5"
-                      aria-hidden="true"
-                    >
-                      arrow_forward
-                    </span>
-                  </span>
                 </div>
               </div>
             </Link>
