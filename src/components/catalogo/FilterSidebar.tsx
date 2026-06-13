@@ -93,6 +93,27 @@ export function FilterSidebar({
           </div>
 
           <div className="flex flex-col gap-[0.25rem]">
+            {/* Todos option */}
+            <button
+              type="button"
+              onClick={() => onFilterToggle(field, "all")}
+              className={cn(
+                "flex w-full items-center justify-start gap-3 rounded-lg px-3 py-2 text-left transition-all",
+                selected.length === 0
+                  ? "bg-primary font-semibold text-white"
+                  : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+              )}
+            >
+              <span
+                className="material-symbols-outlined shrink-0"
+                style={{ fontSize: "var(--icon-md)" }}
+                aria-hidden="true"
+              >
+                grid_view
+              </span>
+              <span className="leading-tight text-[var(--text-sm)]">Todos</span>
+            </button>
+
             {categoriesGroup.options.map((opt) => {
               const isActive = selected.includes(opt.value);
               const icon = getCategoryIcon(

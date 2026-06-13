@@ -213,6 +213,45 @@ export function MobileFilterDrawer({
             </div>
 
             <div className="flex flex-col gap-[0.25rem]">
+              {/* Todos option */}
+              <button
+                type="button"
+                onClick={() => onFilterToggle(field, "all")}
+                className={cn(
+                  "flex w-full items-center justify-between rounded-lg px-[var(--space-sm)] py-[var(--space-sm)] transition-all",
+                  selected.length === 0
+                    ? "bg-primary text-white"
+                    : "text-slate-700 hover:bg-slate-50"
+                )}
+              >
+                <div className="flex items-center gap-[var(--space-sm)]">
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "var(--icon-md)" }}
+                    aria-hidden="true"
+                  >
+                    grid_view
+                  </span>
+                  <span
+                    className={cn(
+                      "text-[var(--text-sm)]",
+                      selected.length === 0 ? "font-semibold" : "font-medium"
+                    )}
+                  >
+                    Todos
+                  </span>
+                </div>
+                {selected.length === 0 && (
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "var(--icon-sm)" }}
+                    aria-hidden="true"
+                  >
+                    check
+                  </span>
+                )}
+              </button>
+
               {categoriesGroup.options.map((opt) => {
                 const isActive = selected.includes(opt.value);
                 const icon = getCategoryIcon(

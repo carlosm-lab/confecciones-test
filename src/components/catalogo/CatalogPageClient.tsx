@@ -118,6 +118,9 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
   // Filter helpers
   function handleFilterToggle(field: string, value: string) {
     setActiveFilters((prev) => {
+      if (value === "all") {
+        return { ...prev, [field]: [] };
+      }
       const current = prev[field] ?? [];
       const next = isMultiSelect
         ? current.includes(value)
