@@ -103,15 +103,15 @@ export function ProductDetailClient({
       {/* ── Main product grid ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[45%_1fr] lg:gap-12">
         {/* ── Left column: Sticky image gallery ───────────────────────────── */}
-        <div className="flex w-full min-w-0 flex-row items-start gap-5 sm:gap-8 lg:sticky lg:top-24 lg:gap-10">
-          {/* Thumbnail strip: always on the left side */}
-          <div className="no-scrollbar flex max-h-[400px] w-20 shrink-0 flex-col gap-4 overflow-y-auto sm:max-h-[500px] sm:w-24 lg:max-h-[600px] lg:w-28">
+        <div className="flex w-full min-w-0 flex-col-reverse items-start gap-5 md:flex-row md:gap-8 lg:sticky lg:top-24 lg:gap-7">
+          {/* Thumbnail strip: below on mobile, left column on tablet/desktop */}
+          <div className="no-scrollbar flex w-full min-w-0 shrink-0 flex-row gap-4 overflow-x-auto pb-2 md:max-h-[500px] md:w-28 md:flex-col md:overflow-y-auto md:pb-0 lg:max-h-[600px] lg:w-24 lg:flex-col lg:overflow-y-auto lg:pb-0">
             {images.map((img, i) => (
               <button
                 key={`img-${i}`}
                 type="button"
                 onClick={() => setMainImg(img)}
-                className={`aspect-[4/5] w-full shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 bg-gray-50 transition-all ${
+                className={`aspect-[4/5] w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 bg-gray-50 transition-all md:w-full lg:w-24 ${
                   mainImg === img
                     ? "border-primary shadow-sm"
                     : "border-transparent opacity-60 hover:border-slate-300 hover:opacity-100"
@@ -131,7 +131,7 @@ export function ProductDetailClient({
             {Array.from({ length: placeholderCount }).map((_, i) => (
               <div
                 key={`empty-${i}`}
-                className="aspect-[4/5] w-full shrink-0 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50"
+                className="aspect-[4/5] w-20 shrink-0 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 md:w-full lg:w-24"
                 aria-hidden="true"
               />
             ))}
