@@ -21,6 +21,8 @@ interface FilterSidebarProps {
   onFilterToggle: (field: string, value: string) => void;
   onSaleOnly: boolean;
   setOnSaleOnly: (v: boolean) => void;
+  isMultiSelect: boolean;
+  setIsMultiSelect: (v: boolean) => void;
 }
 
 function getCategoryIcon(
@@ -44,6 +46,8 @@ export function FilterSidebar({
   onFilterToggle,
   onSaleOnly,
   setOnSaleOnly,
+  isMultiSelect,
+  setIsMultiSelect,
 }: FilterSidebarProps) {
   const field = categoriesGroup.filterField;
   const selected = activeFilters[field] ?? [];
@@ -59,6 +63,35 @@ export function FilterSidebar({
           <h3 className="mb-3 font-sans text-[11px] font-bold tracking-wider text-slate-800 uppercase">
             Categorías
           </h3>
+
+          {/* Seleccionar Varios Toggle */}
+          <div className="mb-4 border-b border-slate-100 pb-3">
+            <label className="group flex cursor-pointer items-center justify-between">
+              <span className="text-[12px] font-bold text-slate-700 transition-colors select-none">
+                Seleccionar Varios
+              </span>
+              <div
+                className={cn(
+                  "relative h-5 w-9 shrink-0 cursor-pointer rounded-full p-0.5 transition-colors duration-200 ease-in-out",
+                  isMultiSelect ? "bg-primary" : "bg-slate-200"
+                )}
+              >
+                <input
+                  type="checkbox"
+                  className="peer sr-only"
+                  checked={isMultiSelect}
+                  onChange={(e) => setIsMultiSelect(e.target.checked)}
+                />
+                <div
+                  className={cn(
+                    "h-4 w-4 transform rounded-full bg-white shadow-md transition-transform duration-200 ease-in-out",
+                    isMultiSelect ? "translate-x-4" : "translate-x-0"
+                  )}
+                />
+              </div>
+            </label>
+          </div>
+
           <div className="flex flex-col gap-[0.25rem]">
             {categoriesGroup.options.map((opt) => {
               const isActive = selected.includes(opt.value);
@@ -96,13 +129,13 @@ export function FilterSidebar({
           </div>
         </div>
 
-        {/* Promociones Card */}
-        <div className="relative z-30 rounded-2xl border border-slate-100 bg-slate-50/50 p-4">
+        {/* Filtros Especiales */}
+        <div className="relative z-30 border-t border-slate-100 pt-5">
           <h3 className="mb-3 font-sans text-[11px] font-bold tracking-wider text-slate-800 uppercase">
             Filtros Especiales
           </h3>
-          <label className="group hover:border-primary/30 flex cursor-pointer items-center justify-between rounded-xl border border-slate-200/60 bg-white p-3 shadow-sm transition-all active:scale-[0.98]">
-            <span className="group-hover:text-primary text-[13px] font-semibold text-slate-700 transition-colors select-none">
+          <label className="group flex cursor-pointer items-center justify-between px-1">
+            <span className="text-[12px] font-bold text-slate-700 transition-colors select-none">
               Solo Ofertas
             </span>
             <div

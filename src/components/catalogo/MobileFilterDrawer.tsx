@@ -38,6 +38,8 @@ interface MobileFilterDrawerProps {
   hasActiveFilters: boolean;
   onClearFilters: () => void;
   totalCount: number;
+  isMultiSelect: boolean;
+  setIsMultiSelect: (v: boolean) => void;
 }
 
 function getCategoryIcon(
@@ -68,6 +70,8 @@ export function MobileFilterDrawer({
   hasActiveFilters,
   onClearFilters,
   totalCount,
+  isMultiSelect,
+  setIsMultiSelect,
 }: MobileFilterDrawerProps) {
   // Lock body scroll when drawer is open
   useEffect(() => {
@@ -179,6 +183,35 @@ export function MobileFilterDrawer({
             <h3 className="mb-[var(--space-sm)] font-sans font-bold tracking-wider text-[var(--text-sm)] text-slate-900 uppercase">
               Categorías
             </h3>
+
+            {/* Seleccionar Varios Toggle */}
+            <div className="mb-3 border-b border-slate-100 pb-3">
+              <label className="group flex cursor-pointer items-center justify-between px-[var(--space-sm)]">
+                <span className="text-[13px] font-semibold text-slate-700 transition-colors select-none">
+                  Seleccionar Varios
+                </span>
+                <div
+                  className={cn(
+                    "relative h-5 w-9 shrink-0 cursor-pointer rounded-full p-0.5 transition-colors duration-200 ease-in-out",
+                    isMultiSelect ? "bg-primary" : "bg-slate-200"
+                  )}
+                >
+                  <input
+                    type="checkbox"
+                    className="peer sr-only"
+                    checked={isMultiSelect}
+                    onChange={(e) => setIsMultiSelect(e.target.checked)}
+                  />
+                  <div
+                    className={cn(
+                      "h-4 w-4 transform rounded-full bg-white shadow-md transition-transform duration-200 ease-in-out",
+                      isMultiSelect ? "translate-x-4" : "translate-x-0"
+                    )}
+                  />
+                </div>
+              </label>
+            </div>
+
             <div className="flex flex-col gap-[0.25rem]">
               {categoriesGroup.options.map((opt) => {
                 const isActive = selected.includes(opt.value);

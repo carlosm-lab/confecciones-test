@@ -98,12 +98,15 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Ruta:** `src/components/catalogo/FilterSidebar.tsx`
 - **Descripción:** Sidebar de filtros desktop, sticky, copia fiel del FilterSidebar de Padilla Store. Renderiza grupos de filtros dinámicos desde `CategoryConfig.filterGroups` y un checkbox "Solo Ofertas".
 - **Props:**
-  - `filterGroups: FilterGroup[]` — Grupos de filtros de la categoría.
+  - `categoriesGroup: FilterGroup` — Grupo de categorías de la sección.
+  - `categoryChips?: { label: string; icon: string }[]` — Chips de categorías con iconos.
   - `activeFilters: ActiveFilters` — Mapa `{ campo: string[] }` de filtros activos.
   - `onFilterToggle: (field, value) => void` — Toggle de un valor de filtro.
   - `onSaleOnly: boolean` — Estado del checkbox "Solo Ofertas".
   - `setOnSaleOnly: (v: boolean) => void` — Setter del checkbox.
-- **Ejemplo:** `<FilterSidebar filterGroups={config.filterGroups} activeFilters={{}} onFilterToggle={() => {}} onSaleOnly={false} setOnSaleOnly={() => {}} />`
+  - `isMultiSelect: boolean` — Si está activo el modo selección múltiple.
+  - `setIsMultiSelect: (v: boolean) => void` — Setter del modo selección múltiple.
+- **Ejemplo:** `<FilterSidebar categoriesGroup={config.filterGroups[0]} activeFilters={{}} onFilterToggle={() => {}} onSaleOnly={false} setOnSaleOnly={() => {}} isMultiSelect={false} setIsMultiSelect={() => {}} />`
 
 ### MobileFilterDrawer
 
@@ -112,7 +115,8 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Props:**
   - `isOpen: boolean` — Si el drawer está visible.
   - `onClose: () => void` — Callback para cerrar.
-  - `filterGroups: FilterGroup[]` — Grupos de filtros.
+  - `categoriesGroup: FilterGroup` — Grupo de categorías.
+  - `categoryChips?: { label: string; icon: string }[]` — Chips de categorías.
   - `activeFilters: ActiveFilters` — Filtros activos.
   - `onFilterToggle: (field, value) => void` — Toggle de filtro.
   - `onSaleOnly: boolean` — Estado "Solo Ofertas".
@@ -122,6 +126,8 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
   - `hasActiveFilters: boolean` — Si hay filtros activos (muestra "Limpiar todo").
   - `onClearFilters: () => void` — Limpiar todos los filtros.
   - `totalCount: number` — Total de prendas para el botón footer.
+  - `isMultiSelect: boolean` — Si está activo el modo selección múltiple.
+  - `setIsMultiSelect: (v: boolean) => void` — Setter del modo selección múltiple.
 
 ### CatalogProductCard
 

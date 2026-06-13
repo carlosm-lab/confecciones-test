@@ -48,6 +48,22 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
   const [activeFilters, setActiveFilters] = useState<ActiveFilters>({});
   const [onSaleOnly, setOnSaleOnly] = useState(false);
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [isMultiSelect, setIsMultiSelect] = useState(false);
+
+  function handleSetIsMultiSelect(multi: boolean) {
+    setIsMultiSelect(multi);
+    if (!multi) {
+      setActiveFilters((prev) => {
+        const next = { ...prev };
+        for (const [key, val] of Object.entries(next)) {
+          if (val && val.length > 1) {
+            next[key] = [val[0]];
+          }
+        }
+        return next;
+      });
+    }
+  }
 
   // Base products for this sector
   const sectorProducts = useMemo(
@@ -103,9 +119,13 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
   function handleFilterToggle(field: string, value: string) {
     setActiveFilters((prev) => {
       const current = prev[field] ?? [];
-      const next = current.includes(value)
-        ? current.filter((v) => v !== value)
-        : [...current, value];
+      const next = isMultiSelect
+        ? current.includes(value)
+          ? current.filter((v) => v !== value)
+          : [...current, value]
+        : current.includes(value)
+          ? []
+          : [value];
       return { ...prev, [field]: next };
     });
     setCurrentPage(1);
@@ -176,6 +196,8 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
             setOnSaleOnly(v);
             setCurrentPage(1);
           }}
+          isMultiSelect={isMultiSelect}
+          setIsMultiSelect={handleSetIsMultiSelect}
         />
 
         {/* Product area */}
@@ -379,6 +401,8 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
         hasActiveFilters={hasActiveFilters}
         onClearFilters={handleClearFilters}
         totalCount={totalCount}
+        isMultiSelect={isMultiSelect}
+        setIsMultiSelect={handleSetIsMultiSelect}
       />
     </div>
   );
