@@ -12,5 +12,6 @@
     "zustand",
     "@testing-library/react"
   ],
+  "ignore": [".agents/**"],
   "entry": ["src/app/**/*.{ts,tsx}", "src/mocks/handlers.ts"]
 }

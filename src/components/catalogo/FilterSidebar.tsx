@@ -1,0 +1,132 @@
+/**
+ * FilterSidebar — Confecciones Liss
+ * Rediseño premium del FilterSidebar:
+ * - Botones de categoría estilo píldora con micro-animaciones y sombras.
+ * - Compartimento de promociones estructurado en una tarjeta con interruptor estilo switch.
+ * - Banner promocional flotante al final (desktop-only) que redirige a WhatsApp y rellena el espacio vacío.
+ */
+
+import type { FilterGroup } from "@/data/types";
+import { cn } from "@/lib/utils";
+import { siteConfig } from "@/config/site";
+
+export interface ActiveFilters {
+  [field: string]: string[];
+}
+
+interface FilterSidebarProps {
+  categoriesGroup: FilterGroup;
+  categoryChips?: { label: string; icon: string }[];
+  activeFilters: ActiveFilters;
+  onFilterToggle: (field: string, value: string) => void;
+  onSaleOnly: boolean;
+  setOnSaleOnly: (v: boolean) => void;
+}
+
+function getCategoryIcon(
+  optionLabel: string,
+  categoryChips: { label: string; icon: string }[] = [],
+  fallbackIcon: string = "checkroom"
+): string {
+  const cleanLabel = optionLabel.toLowerCase();
+  const found = categoryChips.find(
+    (chip) =>
+      cleanLabel.includes(chip.label.toLowerCase()) ||
+      chip.label.toLowerCase().includes(cleanLabel)
+  );
+  return found ? found.icon : fallbackIcon;
+}
+
+export function FilterSidebar({
+  categoriesGroup,
+  categoryChips = [],
+  activeFilters,
+  onFilterToggle,
+  onSaleOnly,
+  setOnSaleOnly,
+}: FilterSidebarProps) {
+  const field = categoriesGroup.filterField;
+  const selected = activeFilters[field] ?? [];
+
+  return (
+    <aside className="sticky top-24 hidden min-w-[200px] flex-col gap-6 self-start pr-2 lg:mt-[44px] lg:flex lg:w-64 lg:shrink-0">
+      <div className="relative flex flex-col gap-6 rounded-2xl border border-[rgba(20,48,103,0.35)] bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),_0_0_10px_2px_rgba(20,48,103,0.1)]">
+        {/* Marco de bordes punteados (estilo /links) */}
+        <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed opacity-60" />
+
+        {/* Categories Section */}
+        <div className="relative z-30">
+          <h3 className="mb-3 font-sans text-[11px] font-bold tracking-wider text-slate-800 uppercase">
+            Categorías
+          </h3>
+          <div className="flex flex-col gap-[0.25rem]">
+            {categoriesGroup.options.map((opt) => {
+              const isActive = selected.includes(opt.value);
+              const icon = getCategoryIcon(
+                opt.label,
+                categoryChips,
+                categoriesGroup.icon ?? "checkroom"
+              );
+
+              return (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => onFilterToggle(field, opt.value)}
+                  className={cn(
+                    "flex w-full items-center justify-start gap-3 rounded-lg px-3 py-2 text-left transition-all",
+                    isActive
+                      ? "bg-primary font-semibold text-white"
+                      : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+                  )}
+                >
+                  <span
+                    className="material-symbols-outlined shrink-0"
+                    style={{ fontSize: "var(--icon-md)" }}
+                    aria-hidden="true"
+                  >
+                    {icon}
+                  </span>
+                  <span className="leading-tight text-[var(--text-sm)]">
+                    {opt.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Promociones Card */}
+        <div className="relative z-30 rounded-2xl border border-slate-100 bg-slate-50/50 p-4">
+          <h3 className="mb-3 font-sans text-[11px] font-bold tracking-wider text-slate-800 uppercase">
+            Filtros Especiales
+          </h3>
+          <label className="group hover:border-primary/30 flex cursor-pointer items-center justify-between rounded-xl border border-slate-200/60 bg-white p-3 shadow-sm transition-all active:scale-[0.98]">
+            <span className="group-hover:text-primary text-[13px] font-semibold text-slate-700 transition-colors select-none">
+              Solo Ofertas
+            </span>
+            <div
+              className={cn(
+                "relative h-5 w-9 shrink-0 cursor-pointer rounded-full p-0.5 transition-colors duration-200 ease-in-out",
+                onSaleOnly ? "bg-primary" : "bg-slate-200"
+              )}
+            >
+              <input
+                type="checkbox"
+                className="peer sr-only"
+                checked={onSaleOnly}
+                onChange={(e) => setOnSaleOnly(e.target.checked)}
+              />
+              <div
+                className={cn(
+                  "h-4 w-4 transform rounded-full bg-white shadow-md transition-transform duration-200 ease-in-out",
+                  onSaleOnly ? "translate-x-4" : "translate-x-0"
+                )}
+              />
+            </div>
+          </label>
+        </div>
+      </div>
+    </aside>
+  );
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Sector } from "@/data/types";
@@ -201,6 +202,13 @@ export function ProductCard({
           <span className="sr-only">: {nombre}</span>
         </button>
       </div>
+
+      {/* Link de la tarjeta completa para navegar al detalle de producto */}
+      <Link
+        href={`/catalogo/${sector}/${id}`}
+        className="absolute inset-0 z-[10]"
+        aria-label={`Ver detalles de ${nombre}`}
+      />
     </div>
   );
 }

@@ -130,6 +130,35 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* ── Padilla Store fluid design tokens (catalog components) ─────────── */
+  --navbar-height: clamp(3.5rem, 5vw, 4.5rem);
+
+  /* Fluid spacing scale */
+  --space-2xs: clamp(0.125rem, 0.25vw, 0.25rem);
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 1vw, 0.75rem);
+  --space-md: clamp(0.75rem, 2vw, 1.25rem);
+  --space-lg: clamp(1rem, 3vw, 2rem);
+  --space-xl: clamp(1.5rem, 4vw, 3rem);
+  --space-2xl: clamp(2rem, 5vw, 4rem);
+  --space-3xl: clamp(3rem, 6vw, 6rem);
+
+  /* Fluid typography scale */
+  --text-xs: clamp(0.625rem, 0.55rem + 0.25vw, 0.75rem);
+  --text-sm: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-base: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-lg: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+
+  /* Fluid icon sizes */
+  --icon-sm: clamp(0.875rem, 0.8rem + 0.3vw, 1.125rem);
+  --icon-md: clamp(1.125rem, 1rem + 0.4vw, 1.5rem);
+  --icon-lg: clamp(1.5rem, 1.3rem + 0.6vw, 2rem);
+
+  /* Fluid container padding */
+  --container-px: clamp(1.5rem, 5vw, 10rem);
 }
 
 @layer utilities {
@@ -381,4 +410,33 @@
   .nav-scroll-hidden-bottom {
     transform: translateY(100%) !important;
   }
+}
+
+/* ── Padilla Store utilities (catalog components, outside of layers to guarantee compiling) ── */
+.px-container {
+  padding-inline: var(--container-px) !important;
+}
+
+.elegant-scrollbar {
+  scrollbar-width: thin !important; /* Force thin scrollbar on Firefox */
+  scrollbar-color: #cbd5e1 transparent !important; /* Light-slate thumb, transparent track */
+}
+
+.elegant-scrollbar::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+  display: block !important;
+}
+
+.elegant-scrollbar::-webkit-scrollbar-track {
+  background: transparent !important; /* Transparent track for minimal layout impact */
+}
+
+.elegant-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1 !important; /* Elegant light-slate thumb */
+  border-radius: 3px !important;
+}
+
+.elegant-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8 !important; /* Medium slate on hover */
 }

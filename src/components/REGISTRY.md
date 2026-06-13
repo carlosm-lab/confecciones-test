@@ -93,6 +93,65 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 
 ## Catálogo Components
 
+### FilterSidebar
+
+- **Ruta:** `src/components/catalogo/FilterSidebar.tsx`
+- **Descripción:** Sidebar de filtros desktop, sticky, copia fiel del FilterSidebar de Padilla Store. Renderiza grupos de filtros dinámicos desde `CategoryConfig.filterGroups` y un checkbox "Solo Ofertas".
+- **Props:**
+  - `filterGroups: FilterGroup[]` — Grupos de filtros de la categoría.
+  - `activeFilters: ActiveFilters` — Mapa `{ campo: string[] }` de filtros activos.
+  - `onFilterToggle: (field, value) => void` — Toggle de un valor de filtro.
+  - `onSaleOnly: boolean` — Estado del checkbox "Solo Ofertas".
+  - `setOnSaleOnly: (v: boolean) => void` — Setter del checkbox.
+- **Ejemplo:** `<FilterSidebar filterGroups={config.filterGroups} activeFilters={{}} onFilterToggle={() => {}} onSaleOnly={false} setOnSaleOnly={() => {}} />`
+
+### MobileFilterDrawer
+
+- **Ruta:** `src/components/catalogo/MobileFilterDrawer.tsx`
+- **Descripción:** Drawer mobile de filtros, deslizable desde la derecha. Copia fiel del MobileFilterDrawer de Padilla Store. Incluye Sort, FilterGroups, Promociones y footer con "Limpiar todo" / "Ver N prendas". Bloquea el scroll del body cuando está abierto.
+- **Props:**
+  - `isOpen: boolean` — Si el drawer está visible.
+  - `onClose: () => void` — Callback para cerrar.
+  - `filterGroups: FilterGroup[]` — Grupos de filtros.
+  - `activeFilters: ActiveFilters` — Filtros activos.
+  - `onFilterToggle: (field, value) => void` — Toggle de filtro.
+  - `onSaleOnly: boolean` — Estado "Solo Ofertas".
+  - `setOnSaleOnly: (v: boolean) => void` — Setter.
+  - `sortBy: SortOption` — Orden activo.
+  - `setSortBy: (v: SortOption) => void` — Setter de orden.
+  - `hasActiveFilters: boolean` — Si hay filtros activos (muestra "Limpiar todo").
+  - `onClearFilters: () => void` — Limpiar todos los filtros.
+  - `totalCount: number` — Total de prendas para el botón footer.
+
+### CatalogProductCard
+
+- **Ruta:** `src/components/catalogo/CatalogProductCard.tsx`
+- **Descripción:** Tarjeta de producto estilo Padilla Store Tech Catalog: rounded-2xl, imagen aspect-square con object-contain, badges de oferta/estado, botón favorito overlay, precio + precio anterior tachado, botón CTA que abre WhatsApp.
+- **Props:**
+  - `product: Product` — Objeto producto completo.
+  - `isFavorited?: boolean` — Estado de favorito.
+  - `onToggleFavorite?: (id: string) => void` — Callback favorito.
+- **Ejemplo:** `<CatalogProductCard product={p} />`
+
+### CatalogPageClient
+
+- **Ruta:** `src/components/catalogo/CatalogPageClient.tsx`
+- **Descripción:** Orquestador del listado de catálogo. Layout 2 columnas (sidebar + grid), filtrado/paginación client-side sobre `ALL_PRODUCTS`, estado vacío elegante. Copia pixel a pixel el TechCatalogPage de Padilla Store.
+- **Props:**
+  - `sector: Sector` — Identificador del sector.
+  - `config: CategoryConfig` — Configuración de la categoría.
+- **Ejemplo:** `<CatalogPageClient sector="scrubs" config={CATEGORIES.scrubs} />`
+
+### ProductDetailClient
+
+- **Ruta:** `src/components/catalogo/ProductDetailClient.tsx`
+- **Descripción:** Vista de detalle de producto. Grid 45%/55% con galería sticky (thumbnails + imagen principal 1:1), lightbox modal, buy box con acordeón de personalización y CTA WhatsApp, y sección de productos relacionados 1→2→4 cols. Copia pixel a pixel el ProductDetailPage de Padilla Store.
+- **Props:**
+  - `product: Product` — Producto a mostrar.
+  - `config: CategoryConfig` — Configuración del sector.
+  - `relatedProducts: Product[]` — Productos relacionados (hasta 4).
+- **Ejemplo:** `<ProductDetailClient product={product} config={config} relatedProducts={related} />`
+
 ## SEO Components
 
 ### ServiciosPrincipales

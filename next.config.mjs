@@ -52,16 +52,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/catalogo/salud/:path*",
-        destination: "/catalogo",
-        permanent: true,
-      },
-      {
-        source: "/catalogo/:slug+",
-        destination: "/catalogo",
-        permanent: true,
-      },
-      {
         source: "/servicios/:slug+",
         destination: "/servicios",
         permanent: true,
