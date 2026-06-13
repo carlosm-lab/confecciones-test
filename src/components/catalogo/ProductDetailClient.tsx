@@ -71,7 +71,7 @@ export function ProductDetailClient({
                 key={`img-${i}`}
                 type="button"
                 onClick={() => setMainImg(img)}
-                className={`h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 bg-gray-50 transition-all lg:h-24 lg:w-24 ${
+                className={`aspect-[4/5] w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 bg-gray-50 transition-all lg:w-24 ${
                   mainImg === img
                     ? "border-primary shadow-sm"
                     : "border-transparent opacity-60 hover:border-slate-300 hover:opacity-100"
@@ -81,7 +81,7 @@ export function ProductDetailClient({
                   src={img}
                   alt={`${product.nombre} miniatura ${i + 1}`}
                   width={96}
-                  height={96}
+                  height={120}
                   className="h-full w-full object-contain object-center"
                 />
               </button>
@@ -91,7 +91,7 @@ export function ProductDetailClient({
             {Array.from({ length: placeholderCount }).map((_, i) => (
               <div
                 key={`empty-${i}`}
-                className="h-20 w-20 shrink-0 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 lg:h-24 lg:w-24"
+                className="aspect-[4/5] w-20 shrink-0 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 lg:w-24"
                 aria-hidden="true"
               />
             ))}
@@ -101,7 +101,7 @@ export function ProductDetailClient({
           <div className="mt-2 mb-2 hidden w-px shrink-0 self-stretch rounded-full bg-slate-200 lg:block" />
 
           {/* Main image */}
-          <div className="relative aspect-square w-full min-w-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 shadow-sm md:flex-1">
+          <div className="relative aspect-[4/5] w-full min-w-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 shadow-sm md:flex-1">
             <button
               type="button"
               onClick={() => setIsImageModalOpen(true)}
