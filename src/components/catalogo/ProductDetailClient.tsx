@@ -346,7 +346,7 @@ export function ProductDetailClient({
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="bg-primary hover:bg-primary/90 flex flex-1 items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98]"
+                className="bg-primary hover:bg-primary/90 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98]"
               >
                 <span className="material-symbols-outlined">shopping_bag</span>
                 Consultar por WhatsApp
@@ -354,7 +354,7 @@ export function ProductDetailClient({
               <button
                 type="button"
                 onClick={handleCopy}
-                className="flex w-14 flex-shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 dark:bg-transparent dark:text-slate-300 dark:hover:bg-white/10"
+                className="flex w-14 flex-shrink-0 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 dark:bg-transparent dark:text-slate-300 dark:hover:bg-white/10"
                 title="Compartir"
                 aria-label="Compartir este producto"
               >
