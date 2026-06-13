@@ -39,6 +39,7 @@ export function ProductDetailClient({
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [customNote, setCustomNote] = useState("");
   const [isFavorited, setIsFavorited] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const hasDiscount =
     product.precioAnterior != null && product.precioAnterior > product.precio;
@@ -54,6 +55,45 @@ export function ProductDetailClient({
       "noopener,noreferrer"
     );
   }
+
+  const handleCopy = async () => {
+    const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+
+    // Check if navigator.clipboard is available (blocked in insecure HTTP environments)
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 2500);
+        return;
+      } catch (err) {
+        console.error("Failed to copy link via clipboard API:", err);
+      }
+    }
+
+    // Fallback for insecure contexts (e.g. mobile testing on local network HTTP)
+    try {
+      const textArea = document.createElement("textarea");
+      textArea.value = shareUrl;
+      textArea.style.position = "fixed"; // avoid scrolling to bottom
+      textArea.style.left = "-9999px"; // hide off-screen
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      const successful = document.execCommand("copy");
+      document.body.removeChild(textArea);
+      if (successful) {
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 2500);
+      } else {
+        throw new Error("execCommand copy returned false");
+      }
+    } catch (fallbackErr) {
+      console.error("Fallback copy failed:", fallbackErr);
+    }
+  };
 
   // Placeholder thumbnails to keep 4-slot gallery consistent
   const placeholderCount = Math.max(0, 4 - images.length);
@@ -313,13 +353,7 @@ export function ProductDetailClient({
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  if (typeof window !== "undefined") {
-                    navigator.clipboard
-                      ?.writeText(window.location.href)
-                      .catch(() => {});
-                  }
-                }}
+                onClick={handleCopy}
                 className="flex w-14 flex-shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 dark:bg-transparent dark:text-slate-300 dark:hover:bg-white/10"
                 title="Compartir"
                 aria-label="Compartir este producto"
@@ -383,6 +417,62 @@ export function ProductDetailClient({
           </div>
         </div>
       )}
+
+      {/* Toast Notification */}
+      {showToast && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "2.5rem",
+            left: "50%",
+            transform: "translateX(-50%)",
+            backgroundColor: "#1e1e24",
+            color: "#ffffff",
+            padding: "0.75rem 1.5rem",
+            borderRadius: "9999px",
+            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            animation:
+              "toastFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+          }}
+        >
+          <span
+            className="material-symbols-outlined"
+            style={{
+              color: "#10b981",
+              fontSize: "1.25rem",
+              fontWeight: "bold",
+            }}
+          >
+            check_circle
+          </span>
+          <span>Enlace copiado</span>
+        </div>
+      )}
+
+      {/* CSS Animation injection */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes toastFadeIn {
+              from {
+                opacity: 0;
+                transform: translate(-50%, 16px);
+              }
+              to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+              }
+            }
+          `,
+        }}
+      />
     </div>
   );
 }
