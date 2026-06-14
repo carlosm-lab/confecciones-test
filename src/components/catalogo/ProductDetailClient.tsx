@@ -103,15 +103,15 @@ export function ProductDetailClient({
       {/* ── Main product grid ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[45%_1fr] lg:gap-12">
         {/* ── Left column: Sticky image gallery ───────────────────────────── */}
-        <div className="flex w-full min-w-0 flex-col-reverse items-start gap-5 md:flex-row md:gap-8 lg:sticky lg:top-24 lg:gap-7">
+        <div className="flex w-full min-w-0 flex-col-reverse items-start gap-5 md:grid md:grid-cols-[1fr_4.2fr] md:gap-8 lg:sticky lg:top-24 lg:grid-cols-[1fr_1px_4.3fr] lg:gap-7">
           {/* Thumbnail strip: below on mobile, left column on tablet/desktop */}
-          <div className="no-scrollbar flex w-full min-w-0 shrink-0 flex-row gap-4 overflow-x-auto pb-2 md:w-28 md:flex-col md:pb-0 lg:w-24">
+          <div className="no-scrollbar flex w-full min-w-0 shrink-0 flex-row gap-4 overflow-x-auto pb-2 md:w-full md:flex-col md:gap-3 md:pb-0 lg:gap-2">
             {images.map((img, i) => (
               <button
                 key={`img-${i}`}
                 type="button"
                 onClick={() => setMainImg(img)}
-                className={`aspect-[4/5] w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 bg-gray-50 transition-all md:w-full lg:w-24 ${
+                className={`aspect-[4/5] w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 bg-gray-50 transition-all md:w-full ${
                   mainImg === img
                     ? "border-primary shadow-sm"
                     : "border-transparent opacity-60 hover:border-slate-300 hover:opacity-100"
@@ -131,7 +131,7 @@ export function ProductDetailClient({
             {Array.from({ length: placeholderCount }).map((_, i) => (
               <div
                 key={`empty-${i}`}
-                className="aspect-[4/5] w-20 shrink-0 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 md:w-full lg:w-24"
+                className="aspect-[4/5] w-20 shrink-0 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 md:w-full"
                 aria-hidden="true"
               />
             ))}
@@ -141,7 +141,7 @@ export function ProductDetailClient({
           <div className="mt-2 mb-2 hidden w-px shrink-0 self-stretch rounded-full bg-slate-200 lg:block" />
 
           {/* Main image */}
-          <div className="relative aspect-[4/5] w-full min-w-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 shadow-sm md:flex-1">
+          <div className="relative aspect-[4/5] w-full min-w-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 shadow-sm md:w-full">
             <button
               type="button"
               onClick={() => setIsImageModalOpen(true)}
