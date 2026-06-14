@@ -26,14 +26,18 @@ export function NapContacto() {
       <div className="mx-auto max-w-screen-2xl">
         <h2
           id="contacto-heading"
-          className="text-primary mb-8 text-center font-serif text-2xl"
+          className="text-primary animate-fade-in-up mb-8 text-center font-serif text-2xl"
+          style={{ animationDelay: "100ms" }}
         >
           Visítanos o contáctanos — Confecciones Liss San Miguel
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {/* DIRECCIÓN */}
-          <div className="text-center">
-            <div className="bg-primary text-on-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+          <div
+            className="animate-fade-in-up text-center"
+            style={{ animationDelay: "150ms" }}
+          >
+            <div className="bg-primary text-on-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-transform active:scale-95">
               <span className="material-symbols-outlined">location_on</span>
             </div>
             <h3 className="text-primary mb-2 font-serif text-lg font-semibold">
@@ -58,8 +62,11 @@ export function NapContacto() {
           </div>
 
           {/* CONTACTO */}
-          <div className="text-center">
-            <div className="bg-primary text-on-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+          <div
+            className="animate-fade-in-up text-center"
+            style={{ animationDelay: "200ms" }}
+          >
+            <div className="bg-primary text-on-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-transform active:scale-95">
               <span className="material-symbols-outlined">phone</span>
             </div>
             <h3 className="text-primary mb-2 font-serif text-lg font-semibold">
@@ -70,7 +77,7 @@ export function NapContacto() {
                 <strong className="text-on-surface">WhatsApp:</strong>{" "}
                 <a
                   href={siteConfig.links.whatsappDirect}
-                  className="text-primary hover:underline"
+                  className="text-primary inline-block transition-transform hover:underline active:scale-[0.98]"
                 >
                   {siteConfig.phone}
                 </a>
@@ -79,7 +86,7 @@ export function NapContacto() {
                 <strong className="text-on-surface">Correo:</strong>{" "}
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  className="text-primary text-xs hover:underline"
+                  className="text-primary inline-block text-xs transition-transform hover:underline active:scale-[0.98]"
                 >
                   {siteConfig.email}
                 </a>
@@ -88,7 +95,7 @@ export function NapContacto() {
                 <strong className="text-on-surface">Web:</strong>{" "}
                 <a
                   href="https://www.confeccionesliss.com"
-                  className="text-primary hover:underline"
+                  className="text-primary inline-block transition-transform hover:underline active:scale-[0.98]"
                 >
                   www.confeccionesliss.com
                 </a>
@@ -97,8 +104,11 @@ export function NapContacto() {
           </div>
 
           {/* HORARIO */}
-          <div className="text-center">
-            <div className="bg-primary text-on-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+          <div
+            className="animate-fade-in-up text-center"
+            style={{ animationDelay: "250ms" }}
+          >
+            <div className="bg-primary text-on-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-transform active:scale-95">
               <span className="material-symbols-outlined">schedule</span>
             </div>
             <h3 className="text-primary mb-2 font-serif text-lg font-semibold">
@@ -119,12 +129,15 @@ export function NapContacto() {
         </div>
 
         {/* REDES SOCIALES */}
-        <div className="mt-12 text-center">
+        <div
+          className="animate-fade-in-up mt-12 text-center"
+          style={{ animationDelay: "300ms" }}
+        >
           <p className="text-on-surface-variant mb-4 text-sm">
             Síguenos en redes sociales para ver nuestros trabajos más recientes:
           </p>
           <div className="flex justify-center gap-4">
-            {socialLinks.map((s) => {
+            {socialLinks.map((s, index) => {
               const entry = socialIconMap[s.red];
               if (!entry) return null;
               const { Icon, color } = entry;
@@ -136,7 +149,7 @@ export function NapContacto() {
                   rel="noopener noreferrer"
                   aria-label={`Seguir Confecciones Liss en ${s.red}`}
                   title={`Confecciones Liss en ${s.red}`}
-                  className="flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-110"
+                  className="flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-110 active:scale-90"
                   style={{ color }}
                 >
                   <Icon className="text-2xl" aria-hidden="true" />

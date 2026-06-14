@@ -296,6 +296,14 @@
     opacity: 0;
     animation: fadeInUp 750ms var(--ease-out-expo) forwards;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in-up {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
 }
 
 @layer base {

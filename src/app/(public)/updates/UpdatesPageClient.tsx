@@ -75,6 +75,55 @@ const ALL_CATEGORIES: ChangeCategory[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 const CHANGELOG: VersionGroup[] = [
   {
+    version: "v1.0",
+    label:
+      "Integración de Animaciones · Grid de Novedades · Ajuste de Imágenes",
+    dateRange: "13 – 14 de junio de 2026",
+    entries: [
+      {
+        id: "e-109",
+        date: "2026-06-13",
+        category: "style",
+        title: "Integración de animaciones fadeInUp y retrasos de carga",
+        description:
+          "Se añadieron animaciones de entrada fadeInUp con retrasos progresivos en los elementos principales de las páginas de Inicio, Contacto, Carrito, Mi Cuenta, Enlaces y componentes SEO.",
+      },
+      {
+        id: "e-110",
+        date: "2026-06-13",
+        category: "style",
+        title: "Feedback táctil active:scale en botones y tarjetas",
+        description:
+          "Se añadieron clases CSS de active:scale-95 y active:scale-[0.97] para dar respuesta visual al presionar botones, enlaces y tarjetas de productos.",
+      },
+      {
+        id: "e-111",
+        date: "2026-06-13",
+        category: "style",
+        title: "Homologación del grid de novedades y unificación de tarjetas",
+        description:
+          "Se modificó la sección de Novedades de la página de Inicio para adoptar el mismo sistema de cuadrícula responsivo de 2 a 5 columnas y los mismos márgenes y espaciados que la sección de recomendados del detalle de producto. Se migró el listado para utilizar CatalogProductCard, eliminando la antigua versión redundante ProductCard.tsx.",
+      },
+      {
+        id: "e-112",
+        date: "2026-06-13",
+        category: "style",
+        title:
+          "Ajuste de imágenes a pantalla completa en tarjetas (object-cover)",
+        description:
+          "Se cambió el escalado de imagen de las tarjetas de productos de object-contain a object-cover a nivel global. De esta forma, las fotos llenan completamente el contenedor cuadrado disponible en cualquier vista o página, suprimiendo los márgenes y vacíos blancos laterales.",
+      },
+      {
+        id: "e-113",
+        date: "2026-06-13",
+        category: "fix",
+        title: "Resolución de error de compilación en la página de Contacto",
+        description:
+          "Se corrigió un fallo de tipo TypeScript ('Cannot find name ch') originado por una condición ternaria incorrecta en el mapeo de los canales de información en contacto/page.tsx.",
+      },
+    ],
+  },
+  {
     version: "v0.9",
     label: "Página de Updates · Rediseño 404 · Refinamiento Servicios",
     dateRange: "10 – 12 de junio de 2026",
@@ -196,7 +245,7 @@ const CHANGELOG: VersionGroup[] = [
         category: "feat",
         title: "Geometría Bézier exacta en la curva SVG del MobileBottomNav",
         description:
-          "Se portó la geometría precisa del proyecto de referencia 'susonthapa' para lograr una curva de notch perfectamente suave. Se añadió la burbuja blanca FAB y la página /mi-cuenta como destino.",
+          "Se portó la geometría de curva del notch del proyecto de referencia 'susonthapa'. Se añadió la burbuja blanca FAB y la página /mi-cuenta como destino.",
         commit: "894a7c6",
       },
       {
@@ -215,7 +264,7 @@ const CHANGELOG: VersionGroup[] = [
         title:
           "Barra de navegación inferior curva con notch y burbuja deslizante",
         description:
-          "Se implementó un MobileBottomNav con forma SVG curva en la parte inferior, notch central para el botón de acción flotante y una burbuja indicadora de pestaña activa que se desliza animadamente entre los tabs.",
+          "Se implementó un MobileBottomNav con forma SVG curva en la parte inferior, notch central para el botón de acción flotante y una burbuja indicadora de pestaña activa con animación de deslizamiento entre los tabs.",
         commit: "96de615",
         note: "Este commit consolida varios intentos de diseño previos (feat/nav redesign, floating bubble).",
       },
@@ -324,9 +373,9 @@ const CHANGELOG: VersionGroup[] = [
         id: "e-016",
         date: "2026-06-09",
         category: "feat",
-        title: "Botón de menú premium añadido a desktop y mobile",
+        title: "Botón de menú rediseñado en desktop y mobile",
         description:
-          "Se rediseñó el control de navegación con un botón de menú con estilo premium (icono + label animados) tanto en la versión móvil como desktop del Navbar.",
+          "Se rediseñó el control de navegación con animación en la transición de icono y etiqueta de texto en el Navbar.",
         commit: "6a4e4ae",
       },
       {
@@ -791,10 +840,11 @@ export function UpdatesPageClient() {
             <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:w-72 lg:self-start xl:w-80">
               {/* Stats Card */}
               <div
-                className="mb-6 rounded-2xl border p-5"
+                className="animate-fade-in-up mb-6 rounded-2xl border p-5"
                 style={{
                   background: "var(--color-surface-container-low)",
                   borderColor: "var(--color-outline-variant)",
+                  animationDelay: "300ms",
                 }}
               >
                 <h3
@@ -829,7 +879,7 @@ export function UpdatesPageClient() {
                   ].map((s) => (
                     <div
                       key={s.label}
-                      className="flex items-center gap-3 rounded-xl border border-gray-100 bg-white/60 p-3 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:bg-white"
+                      className="flex items-center gap-3 rounded-xl border border-gray-100 bg-white/60 p-3 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:bg-white active:scale-[0.98]"
                     >
                       <div
                         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
@@ -866,10 +916,11 @@ export function UpdatesPageClient() {
 
               {/* Filters Card */}
               <div
-                className="rounded-2xl border p-5"
+                className="animate-fade-in-up rounded-2xl border p-5"
                 style={{
                   background: "var(--color-surface-container-lowest)",
                   borderColor: "var(--color-outline-variant)",
+                  animationDelay: "400ms",
                 }}
               >
                 <h3

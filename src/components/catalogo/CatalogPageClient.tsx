@@ -190,7 +190,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
   return (
     <div className="relative flex min-h-[calc(100dvh-56px)] w-full flex-col">
       {/* Breadcrumbs full width above layout */}
-      <div className="mx-auto w-full max-w-screen-2xl px-5 pt-6 md:px-8 lg:absolute lg:top-0 lg:right-0 lg:left-0 lg:z-10">
+      <div className="animate-fade-in-up mx-auto w-full max-w-screen-2xl px-5 pt-6 md:px-8 lg:absolute lg:top-0 lg:right-0 lg:left-0 lg:z-10">
         <Breadcrumb
           items={[
             { label: "Inicio", href: "/" },
@@ -203,28 +203,39 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
       {/* ── Main catalog layout ─────────────────────────────────────────── */}
       <div className="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col gap-[var(--space-lg)] px-5 pt-6 pb-[var(--space-lg)] md:px-8 lg:flex-row lg:gap-12">
         {/* Desktop sidebar */}
-        <FilterSidebar
-          categoriesGroup={config.filterGroups[0]}
-          categoryChips={config.categoryChips}
-          activeFilters={activeFilters}
-          onFilterToggle={handleFilterToggle}
-          onSaleOnly={onSaleOnly}
-          setOnSaleOnly={(v) => {
-            setOnSaleOnly(v);
-            setCurrentPage(1);
-          }}
-          isMultiSelect={isMultiSelect}
-          setIsMultiSelect={handleSetIsMultiSelect}
-        />
+        <div
+          className="animate-fade-in-up w-full shrink-0 select-none lg:w-72 lg:self-start"
+          style={{ animationDelay: "150ms" }}
+        >
+          <FilterSidebar
+            categoriesGroup={config.filterGroups[0]}
+            categoryChips={config.categoryChips}
+            activeFilters={activeFilters}
+            onFilterToggle={handleFilterToggle}
+            onSaleOnly={onSaleOnly}
+            setOnSaleOnly={(v) => {
+              setOnSaleOnly(v);
+              setCurrentPage(1);
+            }}
+            isMultiSelect={isMultiSelect}
+            setIsMultiSelect={handleSetIsMultiSelect}
+          />
+        </div>
 
         {/* Product area */}
         <div className="w-full lg:flex-1">
-          <h1 className="mb-6 text-3xl font-extrabold tracking-tight text-slate-900">
+          <h1
+            className="animate-fade-in-up mb-6 text-3xl font-extrabold tracking-tight text-slate-900"
+            style={{ animationDelay: "200ms" }}
+          >
             {config.title}
           </h1>
 
           {/* Desktop sort bar */}
-          <div className="mb-[var(--space-lg)] hidden items-center justify-between lg:flex">
+          <div
+            className="animate-fade-in-up mb-[var(--space-lg)] hidden items-center justify-between lg:flex"
+            style={{ animationDelay: "250ms" }}
+          >
             <p className="font-medium text-[var(--text-sm)] text-slate-500">
               Mostrando {rangeStart}–{rangeEnd} de {totalCount}{" "}
               {totalCount === 1 ? "prenda" : "prendas"}
@@ -240,7 +251,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
                 <button
                   type="button"
                   onClick={() => setIsSortOpen((v) => !v)}
-                  className="group flex cursor-pointer items-center gap-1 font-bold text-[var(--color-primary)] text-[var(--text-sm)] outline-none"
+                  className="group flex cursor-pointer items-center gap-1 font-bold text-[var(--color-primary)] text-[var(--text-sm)] transition-transform outline-none active:scale-[0.97]"
                 >
                   <span>
                     {sortBy === "best-selling" && "Recomendados"}
@@ -266,7 +277,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
                         setSortBy("best-selling");
                         setIsSortOpen(false);
                       }}
-                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all ${
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all active:scale-[0.98] ${
                         sortBy === "best-selling"
                           ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
                           : "text-slate-700 hover:bg-slate-50"
@@ -285,7 +296,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
                         setSortBy("newest");
                         setIsSortOpen(false);
                       }}
-                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all ${
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all active:scale-[0.98] ${
                         sortBy === "newest"
                           ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
                           : "text-slate-700 hover:bg-slate-50"
@@ -304,7 +315,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
                         setSortBy("price-low");
                         setIsSortOpen(false);
                       }}
-                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all ${
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all active:scale-[0.98] ${
                         sortBy === "price-low"
                           ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
                           : "text-slate-700 hover:bg-slate-50"
@@ -323,7 +334,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
                         setSortBy("price-high");
                         setIsSortOpen(false);
                       }}
-                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all ${
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all active:scale-[0.98] ${
                         sortBy === "price-high"
                           ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
                           : "text-slate-700 hover:bg-slate-50"
@@ -343,14 +354,17 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
           </div>
 
           {/* Mobile top bar */}
-          <div className="mb-[var(--space-lg)] flex items-center justify-between lg:hidden">
+          <div
+            className="animate-fade-in-up mb-[var(--space-lg)] flex items-center justify-between lg:hidden"
+            style={{ animationDelay: "250ms" }}
+          >
             <p className="font-medium text-[var(--text-sm)] text-slate-500">
               {totalCount} prenda{totalCount !== 1 ? "s" : ""}
             </p>
             <button
               type="button"
               onClick={() => setIsFilterDrawerOpen(true)}
-              className="relative flex items-center gap-[var(--space-xs)] rounded-xl bg-slate-100 px-[var(--space-md)] py-[var(--space-sm)] font-medium text-[var(--text-sm)] text-slate-700 transition-colors hover:bg-slate-200"
+              className="relative flex items-center gap-[var(--space-xs)] rounded-xl bg-slate-100 px-[var(--space-md)] py-[var(--space-sm)] font-medium text-[var(--text-sm)] text-slate-700 transition active:scale-[0.97]"
             >
               <span
                 className="material-symbols-outlined"
@@ -372,8 +386,14 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
           {paginatedProducts.length > 0 ? (
             <>
               <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:gap-5 xl:grid-cols-4">
-                {paginatedProducts.map((p) => (
-                  <CatalogProductCard key={p.id} product={p} />
+                {paginatedProducts.map((p, index) => (
+                  <div
+                    key={p.id}
+                    className="animate-fade-in-up h-full w-full"
+                    style={{ animationDelay: `${index * 30 + 100}ms` }}
+                  >
+                    <CatalogProductCard product={p} />
+                  </div>
                 ))}
               </div>
 

@@ -97,6 +97,7 @@ export function ShareButton() {
             alignItems: "center",
             gap: "0.5rem",
             border: "1px solid rgba(255, 255, 255, 0.1)",
+            whiteSpace: "nowrap",
             animation:
               "toastFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards",
           }}

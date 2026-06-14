@@ -8,24 +8,31 @@ export function UniversidadesCoverage() {
       className="bg-surface px-5 py-14 md:px-8 md:py-20"
     >
       <div className="mx-auto max-w-screen-2xl">
-        <div className="mb-10 flex flex-col items-center">
+        <div
+          className="animate-fade-in-up mb-10 flex flex-col items-center"
+          style={{ animationDelay: "100ms" }}
+        >
           <h2 id="universidades-heading" className="section-title">
             Uniformes para todas las universidades de la zona oriental
           </h2>
           <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
         </div>
-        <p className="text-on-surface-variant mb-12 w-full max-w-2xl text-left text-base leading-relaxed md:mx-auto md:text-center">
+        <p
+          className="animate-fade-in-up text-on-surface-variant mb-12 w-full max-w-2xl text-left text-base leading-relaxed md:mx-auto md:text-center"
+          style={{ animationDelay: "150ms" }}
+        >
           Si estudias en alguna de estas instituciones, tenemos los uniformes de
           tu carrera. Trabajamos con las especificaciones exactas de cada
           universidad.
         </p>
 
         <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
-          {universities.map((u) => (
+          {universities.map((u, index) => (
             <article
               key={u.sigla}
               aria-label={`Uniformes ${u.sigla} ${u.nombre}`}
-              className="bg-surface-container-lowest ambient-shadow rounded-xl p-6 text-center"
+              className="animate-fade-in-up bg-surface-container-lowest ambient-shadow rounded-xl p-6 text-center"
+              style={{ animationDelay: `${index * 40 + 200}ms` }}
             >
               <div className="bg-primary text-on-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold">
                 {u.sigla.substring(0, 2)}
@@ -41,7 +48,10 @@ export function UniversidadesCoverage() {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
+        <div
+          className="animate-fade-in-up mt-8 text-center"
+          style={{ animationDelay: "450ms" }}
+        >
           <p className="text-on-surface-variant mb-4 text-sm">
             ¿Tu institución no aparece? Igualmente podemos confeccionar tus
             uniformes.
@@ -50,7 +60,7 @@ export function UniversidadesCoverage() {
             href={siteConfig.links.whatsappDirect}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary text-on-primary inline-block rounded-md px-8 py-3 font-semibold transition-opacity hover:opacity-90"
+            className="bg-primary text-on-primary inline-block rounded-md px-8 py-3 font-semibold transition hover:opacity-90 active:scale-[0.97]"
           >
             Consultar por mi universidad
           </a>

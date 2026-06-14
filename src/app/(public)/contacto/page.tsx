@@ -298,7 +298,10 @@ export default function ContactoPage() {
           {/* ── Main content grid ──────────────────────────────── */}
           <section className="mt-12 mb-6 grid gap-6 lg:grid-cols-5">
             {/* Contact info card */}
-            <div className="group border-primary/35 hover:border-primary/55 relative rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8 lg:col-span-2">
+            <div
+              className="animate-fade-in-up group border-primary/35 hover:border-primary/55 relative rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8 lg:col-span-2"
+              style={{ animationDelay: "300ms" }}
+            >
               <h2 className="text-primary mb-6 font-serif text-xl font-bold md:text-2xl">
                 Información de contacto
               </h2>
@@ -363,7 +366,10 @@ export default function ContactoPage() {
             </div>
 
             {/* Map with overlay card */}
-            <div className="relative lg:col-span-3">
+            <div
+              className="animate-fade-in-up relative lg:col-span-3"
+              style={{ animationDelay: "350ms" }}
+            >
               <div className="group border-primary/35 hover:border-primary/55 relative h-full min-h-[400px] overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]">
                 <iframe
                   title="Ubicación de Confecciones Liss en Google Maps"
@@ -383,7 +389,10 @@ export default function ContactoPage() {
           {/* ── Bottom: Social + How to get there ──────────────── */}
           <section className="grid gap-x-8 gap-y-6 lg:grid-cols-2 lg:gap-y-4">
             {/* Title */}
-            <div className="lg:col-start-1 lg:row-start-1">
+            <div
+              className="animate-fade-in-up lg:col-start-1 lg:row-start-1"
+              style={{ animationDelay: "400ms" }}
+            >
               <h2 className="text-primary mb-2 font-serif text-lg font-bold lg:mb-0">
                 Síguenos en redes
               </h2>
@@ -392,13 +401,14 @@ export default function ContactoPage() {
             {/* Social links grid */}
             <div className="lg:col-start-1 lg:row-start-2">
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-                {SOCIAL_LINKS.map((s) => (
+                {SOCIAL_LINKS.map((s, index) => (
                   <a
                     key={s.name}
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group border-primary/35 hover:border-primary/55 flex items-center gap-2.5 rounded-xl border bg-white px-3 py-2.5 text-sm shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
+                    className="animate-fade-in-up group border-primary/35 hover:border-primary/55 flex items-center gap-2.5 rounded-xl border bg-white px-3 py-2.5 text-sm shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition hover:-translate-y-1 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] active:scale-[0.97]"
+                    style={{ animationDelay: `${index * 50 + 450}ms` }}
                   >
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-50">
                       <svg
@@ -425,7 +435,10 @@ export default function ContactoPage() {
             </div>
 
             {/* How to get there */}
-            <div className="group border-primary/35 hover:border-primary/55 relative flex gap-4 self-start rounded-2xl border bg-blue-50/30 p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] lg:col-start-2 lg:row-start-2">
+            <div
+              className="animate-fade-in-up group border-primary/35 hover:border-primary/55 relative flex gap-4 self-start rounded-2xl border bg-blue-50/30 p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] lg:col-start-2 lg:row-start-2"
+              style={{ animationDelay: "500ms" }}
+            >
               <div className="text-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-50">
                 <span
                   className="material-symbols-outlined text-2xl"
@@ -448,7 +461,7 @@ export default function ContactoPage() {
                   href={siteConfig.links.googleMaps}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary mt-3 inline-flex items-center gap-1 text-sm font-medium hover:underline"
+                  className="text-primary mt-3 inline-flex items-center gap-1 text-sm font-medium transition-transform hover:underline active:scale-[0.98]"
                 >
                   <span
                     className="material-symbols-outlined text-base"

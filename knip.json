@@ -10,7 +10,8 @@
     "next-safe-action",
     "server-only",
     "zustand",
-    "@testing-library/react"
+    "@testing-library/react",
+    "lucide-react"
   ],
   "ignore": [".agents/**"],
   "entry": ["src/app/**/*.{ts,tsx}", "src/mocks/handlers.ts"]

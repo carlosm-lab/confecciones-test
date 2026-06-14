@@ -103,7 +103,10 @@ export function ProductDetailClient({
       {/* ── Main product grid ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[45%_1fr] lg:gap-12">
         {/* ── Left column: Sticky image gallery ───────────────────────────── */}
-        <div className="flex w-full min-w-0 flex-col-reverse items-start gap-5 md:grid md:grid-cols-[calc(20%-12.16px)_calc(80%-19.84px)] md:gap-8 lg:sticky lg:top-24 lg:grid-cols-[calc(20%-17.16px)_1px_calc(80%-39.84px)] lg:gap-7">
+        <div
+          className="animate-fade-in-up flex w-full min-w-0 flex-col-reverse items-start gap-5 md:grid md:grid-cols-[calc(20%-12.16px)_calc(80%-19.84px)] md:gap-8 lg:sticky lg:top-24 lg:grid-cols-[calc(20%-17.16px)_1px_calc(80%-39.84px)] lg:gap-7"
+          style={{ animationDelay: "100ms" }}
+        >
           {/* Thumbnail strip: below on mobile, left column on tablet/desktop */}
           <div className="no-scrollbar flex w-full min-w-0 shrink-0 flex-row gap-4 overflow-x-auto pb-2 md:w-full md:flex-col md:gap-3 md:pb-0">
             {images.map((img, i) => (
@@ -111,7 +114,7 @@ export function ProductDetailClient({
                 key={`img-${i}`}
                 type="button"
                 onClick={() => setMainImg(img)}
-                className={`aspect-[4/5] w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 bg-gray-50 transition-all md:w-full ${
+                className={`aspect-[4/5] w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 bg-gray-50 transition-all active:scale-[0.96] md:w-full ${
                   mainImg === img
                     ? "border-primary shadow-sm"
                     : "border-transparent opacity-60 hover:border-slate-300 hover:opacity-100"
@@ -177,7 +180,7 @@ export function ProductDetailClient({
             <button
               type="button"
               onClick={() => setIsFavorited((v) => !v)}
-              className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-md transition-all hover:scale-110"
+              className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-md transition-all hover:scale-110 active:scale-95"
               aria-label={
                 isFavorited ? "Quitar de favoritos" : "Añadir a favoritos"
               }
@@ -195,16 +198,24 @@ export function ProductDetailClient({
         {/* ── Right column: Product info ───────────────────────────────────── */}
         <div className="flex min-w-0 flex-col gap-6">
           {/* Breadcrumbs */}
-          <Breadcrumb
-            items={[
-              { label: "Inicio", href: "/" },
-              { label: "Catálogo", href: "/catalogo" },
-              { label: config.subtitle, href: `/catalogo/${product.sector}` },
-            ]}
-          />
+          <div
+            className="animate-fade-in-up"
+            style={{ animationDelay: "150ms" }}
+          >
+            <Breadcrumb
+              items={[
+                { label: "Inicio", href: "/" },
+                { label: "Catálogo", href: "/catalogo" },
+                { label: config.subtitle, href: `/catalogo/${product.sector}` },
+              ]}
+            />
+          </div>
 
           {/* Title + description */}
-          <div className="flex min-w-0 flex-col gap-4">
+          <div
+            className="animate-fade-in-up flex min-w-0 flex-col gap-4"
+            style={{ animationDelay: "200ms" }}
+          >
             <h1 className="min-w-0 text-xl font-extrabold tracking-tight break-words text-gray-900 md:text-2xl">
               {product.nombre}
             </h1>
@@ -289,7 +300,10 @@ export function ProductDetailClient({
           </div>
 
           {/* ── Buy Box ─────────────────────────────────────────────────────── */}
-          <div className="flex flex-col gap-5 rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <div
+            className="animate-fade-in-up flex flex-col gap-5 rounded-2xl bg-slate-50 p-5 shadow-sm"
+            style={{ animationDelay: "250ms" }}
+          >
             {/* Price */}
             <div className="flex flex-col gap-1">
               <div className="flex items-end gap-3">
@@ -346,7 +360,7 @@ export function ProductDetailClient({
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="bg-primary hover:bg-primary/90 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98]"
+                className="bg-primary hover:bg-primary/90 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition hover:shadow-lg active:scale-[0.97]"
               >
                 <span className="material-symbols-outlined">shopping_bag</span>
                 Consultar por WhatsApp
@@ -354,7 +368,7 @@ export function ProductDetailClient({
               <button
                 type="button"
                 onClick={handleCopy}
-                className="flex w-14 flex-shrink-0 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 dark:bg-transparent dark:text-slate-300 dark:hover:bg-white/10"
+                className="flex w-14 flex-shrink-0 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition hover:bg-slate-200 active:scale-[0.95] dark:bg-transparent dark:text-slate-300 dark:hover:bg-white/10"
                 title="Compartir"
                 aria-label="Compartir este producto"
               >
@@ -369,7 +383,10 @@ export function ProductDetailClient({
 
       {/* ── Related products ─────────────────────────────────────────────── */}
       {relatedProducts.length > 0 && (
-        <section className="mt-16">
+        <section
+          className="animate-fade-in-up mt-16"
+          style={{ animationDelay: "300ms" }}
+        >
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">
               También Te Puede Gustar
@@ -382,8 +399,14 @@ export function ProductDetailClient({
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-5">
-            {relatedProducts.map((p) => (
-              <CatalogProductCard key={p.id} product={p} />
+            {relatedProducts.map((p, index) => (
+              <div
+                key={p.id}
+                className="animate-fade-in-up h-full w-full"
+                style={{ animationDelay: `${index * 40 + 350}ms` }}
+              >
+                <CatalogProductCard product={p} />
+              </div>
             ))}
           </div>
         </section>
@@ -438,6 +461,7 @@ export function ProductDetailClient({
             alignItems: "center",
             gap: "0.5rem",
             border: "1px solid rgba(255, 255, 255, 0.1)",
+            whiteSpace: "nowrap",
             animation:
               "toastFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards",
           }}

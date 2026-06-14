@@ -217,6 +217,7 @@ export function LinksPageClient() {
         >
           {/* Avatar */}
           <div
+            className="animate-fade-in-up"
             style={{
               width: "8rem",
               height: "8rem",
@@ -226,6 +227,7 @@ export function LinksPageClient() {
               boxShadow: "0 8px 32px rgba(76,85,182,0.25)",
               marginBottom: "1.25rem",
               flexShrink: 0,
+              animationDelay: "100ms",
             }}
           >
             <div
@@ -258,12 +260,14 @@ export function LinksPageClient() {
           </div>
 
           <div
+            className="animate-fade-in-up"
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "0.625rem",
               marginBottom: "0.5rem",
+              animationDelay: "200ms",
             }}
           >
             <h1
@@ -281,6 +285,7 @@ export function LinksPageClient() {
             <ShareButton />
           </div>
           <p
+            className="animate-fade-in-up"
             style={{
               color: "#5f5e68",
               fontWeight: 500,
@@ -288,6 +293,7 @@ export function LinksPageClient() {
               maxWidth: "20rem",
               margin: 0,
               fontSize: "0.9rem",
+              animationDelay: "250ms",
             }}
           >
             Scrubs médicos y Uniformes universitarios en San Miguel &bull; Por
@@ -306,12 +312,13 @@ export function LinksPageClient() {
           }}
           aria-label="Canales y redes sociales"
         >
-          {socialLinks.map((link) => (
+          {socialLinks.map((link, index) => (
             <a
               key={link.id}
               id={`link-${link.id}`}
               href={link.href}
               aria-label={`${link.label} — ${link.sublabel}`}
+              className="animate-fade-in-up transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               style={{
                 display: "flex",
                 width: "100%",
@@ -326,6 +333,7 @@ export function LinksPageClient() {
                 textDecoration: "none",
                 color: "inherit",
                 boxSizing: "border-box",
+                animationDelay: `${index * 50 + 300}ms`,
               }}
             >
               <div

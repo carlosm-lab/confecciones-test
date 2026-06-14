@@ -135,12 +135,17 @@ export function CategoryHubClient() {
         <div className="mx-auto max-w-screen-2xl">
           {/* Grid responsivo: 1 col móvil, 2 col tablet vertical, 3 col tablet horizontal, 4 col desktop */}
           <div className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:grid-cols-3 md:gap-8 xl:grid-cols-4">
-            {SECTOR_ORDER.map((sector) => (
-              <CategoryCard
+            {SECTOR_ORDER.map((sector, index) => (
+              <div
                 key={sector}
-                sector={sector}
-                productCount={productCounts[sector] ?? 0}
-              />
+                className="animate-fade-in-up h-full w-full"
+                style={{ animationDelay: `${index * 50 + 300}ms` }}
+              >
+                <CategoryCard
+                  sector={sector}
+                  productCount={productCounts[sector] ?? 0}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -148,8 +153,9 @@ export function CategoryHubClient() {
 
       {/* Trust Strip */}
       <section
-        className="bg-surface-container-low border-t border-gray-200 px-5 pt-8 pb-20 md:px-8 md:pt-8"
+        className="animate-fade-in-up bg-surface-container-low border-t border-gray-200 px-5 pt-8 pb-20 md:px-8 md:pt-8"
         aria-label="Garantías del servicio"
+        style={{ animationDelay: "850ms" }}
       >
         <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-5 md:grid-cols-4">
           {[

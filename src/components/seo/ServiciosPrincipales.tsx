@@ -10,7 +10,7 @@ export function ServiciosPrincipales() {
       className="bg-surface px-5 py-14 md:px-8 md:py-20"
     >
       <div className="mx-auto max-w-screen-2xl">
-        <div className="mb-12 flex flex-col items-center">
+        <div className="animate-fade-in-up mb-12 flex flex-col items-center">
           <div className="mb-4">
             <span className="bg-primary/10 text-primary rounded-full px-4 py-1 text-xs font-bold tracking-widest uppercase">
               ¿Qué fabricamos?
@@ -21,7 +21,10 @@ export function ServiciosPrincipales() {
           </h2>
           <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
         </div>
-        <p className="text-on-surface-variant mb-10 max-w-2xl text-sm leading-relaxed md:mx-auto md:text-center md:text-base">
+        <p
+          className="animate-fade-in-up text-on-surface-variant mb-10 max-w-2xl text-sm leading-relaxed md:mx-auto md:text-center md:text-base"
+          style={{ animationDelay: "100ms" }}
+        >
           Somos el único taller de{" "}
           <strong>scrubs a la medida en la zona oriental</strong> de El
           Salvador. Atendemos médicos, enfermeras, estudiantes, empresas y
@@ -29,10 +32,11 @@ export function ServiciosPrincipales() {
         </p>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
+          {services.map((s, index) => (
             <article
               key={s.title}
-              className="bg-surface-container-lowest border-surface-variant ambient-shadow group flex flex-col overflow-hidden rounded-xl border"
+              className="animate-fade-in-up bg-surface-container-lowest border-surface-variant ambient-shadow group flex flex-col overflow-hidden rounded-xl border"
+              style={{ animationDelay: `${index * 75 + 200}ms` }}
             >
               <div className="bg-primary/5 relative h-44 sm:h-48">
                 <Image
