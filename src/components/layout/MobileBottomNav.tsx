@@ -22,8 +22,6 @@ const BUBBLE_REST_TOP = 4;
 const NOTCH_Y = 62;
 
 const NORMALISED_W = 1000;
-const NUM_TABS = 5;
-const NORM_TAB_W = NORMALISED_W / NUM_TABS; // 200
 
 // Geometric constants scaled from 390 px reference to 1 000-unit space
 const NORM_CURVE_HALF = 144; // 56 px × (1000/390) ≈ 144
@@ -95,7 +93,16 @@ export function MobileBottomNav() {
   const [isMounted, setIsMounted] = useState(false);
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
 
-  const activeIdx = ITEMS.findIndex((item) =>
+  /* In production, /catalogo and /servicios are blocked by middleware — hide from nav */
+  const PROD_BLOCKED = ["/catalogo", "/servicios"];
+  const visibleItems = ITEMS.filter(
+    (item) =>
+      process.env.NODE_ENV !== "production" || !PROD_BLOCKED.includes(item.href)
+  );
+  const numTabs = visibleItems.length;
+  const normTabW = NORMALISED_W / numTabs;
+
+  const activeIdx = visibleItems.findIndex((item) =>
     item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
   );
 
@@ -170,7 +177,7 @@ export function MobileBottomNav() {
   if (isHomeOnly) return null;
 
   // Notch centre in normalised X units
-  const normCx = activeIdx !== -1 ? (activeIdx + 0.5) * NORM_TAB_W : 0;
+  const normCx = activeIdx !== -1 ? (activeIdx + 0.5) * normTabW : 0;
 
   /*
    * Keep track of the last active index using React state (derived state) to prevent
@@ -181,7 +188,7 @@ export function MobileBottomNav() {
   }
 
   const displayIdx = activeIdx !== -1 ? activeIdx : lastActiveIdx;
-  const bubblePct = ((displayIdx + 0.5) / NUM_TABS) * 100;
+  const bubblePct = ((displayIdx + 0.5) / numTabs) * 100;
 
   // The active tab notch & bubble are client-side dynamic visual enhancements.
   // We only enable them after hydration (isMounted) to ensure a 100% flat mismatch-free initial paint.
@@ -290,7 +297,7 @@ export function MobileBottomNav() {
         className="absolute right-0 bottom-0 left-0 flex items-center justify-around px-2"
         style={{ height: BAR_H }}
       >
-        {ITEMS.map((item, idx) => {
+        {visibleItems.map((item, idx) => {
           const isActive = idx === activeIdx;
           return (
             <li
