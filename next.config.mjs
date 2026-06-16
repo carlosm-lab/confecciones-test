@@ -52,7 +52,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/servicios/:slug+",
+        source: "/servicios/:slug((?!opengraph-image|twitter-image)[^/]+)/:rest*",
         destination: "/servicios",
         permanent: true,
       },
