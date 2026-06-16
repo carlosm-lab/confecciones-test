@@ -24,12 +24,21 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     locale: "es_SV",
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/images/uniformes/portada.png`,
+        alt: "Historial de cambios — Confecciones Liss",
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     creator: siteConfig.twitterHandle,
+    images: [`${siteConfig.url}/images/uniformes/portada.png`],
   },
   robots: {
     index: true,
