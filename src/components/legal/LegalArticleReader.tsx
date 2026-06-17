@@ -212,7 +212,7 @@ export default function LegalArticleReader({
         if (e.key === "Escape") handleClose();
       }}
     >
-      {/* Paper — single scrollable container, NO structural header of any kind */}
+      {/* Paper — single scroll container, NO structural header of any kind */}
       <div
         role="article"
         className="mx-3 w-full bg-white"
@@ -230,109 +230,108 @@ export default function LegalArticleReader({
           scrollbarColor: "#CBD5E1 transparent",
         }}
       >
-        {/* ── CSS Grid two-column layout ───────────────────────────────────
-            Column 1 (1fr)  : all article content — breadcrumbs, header, body
-            Column 2 (64px) : close button, position:sticky
+        {/* ── Close button — zero-height sticky anchor ──────────────────────
+            height:0 + overflow:visible = anchor takes ZERO layout space.
+            No content is pushed down. No header bar appears.
 
-            The columns are separate grid tracks.
-            Text in column 1 can NEVER reach column 2 regardless of scroll.
-            position:sticky + top:12px on the button cell keeps the button
-            pinned exactly 12px from the paper's visible top at all times.
-            The cell stretches to the full row height (= content height),
-            so sticking persists throughout the entire document scroll.
-            No header bar. No structural overlay. No absolute positioning.  */}
+            position:sticky + top:12px → button always 12px from the paper's
+            visible top, regardless of scroll position.
+
+            A 0-height element's bottom edge is always WITHIN the scroll
+            container → the element NEVER un-sticks throughout the full
+            document scroll.
+
+            paddingRight:12px → button right edge is 12px from the paper's
+            right edge. top=12px = paddingRight=12px → symmetric. ✓
+
+            Content below has paddingRight:60px and paddingLeft:60px (equal).
+            60px > 12px(margin)+40px(button) = 52px → 8px gap between text
+            and button at all times. Text CANNOT reach the button. ✓          */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 64px",
+            position: "sticky",
+            top: "12px",
+            height: 0,
+            overflow: "visible",
+            display: "flex",
+            justifyContent: "flex-end",
+            paddingRight: "12px",
+            zIndex: 10,
           }}
         >
-          {/* ── Close button cell (column 2, sticky top:12px) ─────────────── */}
-          <div
-            style={{
-              gridColumn: "2 / 3",
-              gridRow: "1",
-              position: "sticky",
-              top: "12px",
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-start",
-              paddingRight: "12px",
-            }}
+          <button
+            onClick={handleClose}
+            aria-label="Cerrar y volver a documentos legales"
+            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
           >
-            <button
-              onClick={handleClose}
-              aria-label="Cerrar y volver a documentos legales"
-              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
-            >
-              <IconClose />
-            </button>
+            <IconClose />
+          </button>
+        </div>
+
+        {/* ── Article content — symmetric padding ──────────────────────────
+            paddingTop:12px  (= button's top margin → symmetric)
+            paddingLeft:60px (= paddingRight → symmetric left/right) ✓
+            paddingRight:60px ≥ 52px (button area) + 8px gap             */}
+        <div
+          style={{
+            paddingTop: "12px",
+            paddingRight: "60px",
+            paddingBottom: "60px",
+            paddingLeft: "60px",
+          }}
+        >
+          {/* Breadcrumbs */}
+          <div className="pt-3 pb-2">
+            <Breadcrumb items={breadcrumbItems} className="justify-start" />
           </div>
 
-          {/* ── Content cell (column 1) ──────────────────────────────────── */}
-          <div
-            style={{
-              gridColumn: "1 / 2",
-              gridRow: "1",
-              paddingTop: "20px",
-              paddingRight: "8px",
-              paddingBottom: "60px",
-              paddingLeft: "40px",
-            }}
-          >
-            {/* Breadcrumbs */}
-            <div className="pt-3 pb-2">
-              <Breadcrumb items={breadcrumbItems} className="justify-start" />
-            </div>
+          {/* Article header */}
+          <header className="mb-8 border-b border-slate-200 pt-3 pb-6 text-center">
+            <span className="mb-3 inline-block rounded-md bg-blue-50 px-3 py-1 text-[11px] font-bold tracking-widest text-blue-600 uppercase">
+              {category}
+            </span>
 
-            {/* Article header */}
-            <header className="mb-8 border-b border-slate-200 pt-3 pb-6 text-center">
-              <span className="mb-3 inline-block rounded-md bg-blue-50 px-3 py-1 text-[11px] font-bold tracking-widest text-blue-600 uppercase">
-                {category}
+            <h1
+              className="mb-4 text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              {title}
+            </h1>
+
+            <div className="flex items-center justify-center gap-5 text-sm text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <IconCal />
+                {date}
               </span>
-
-              <h1
-                className="mb-4 text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl"
-                style={{ fontFamily: "'Inter', sans-serif" }}
-              >
-                {title}
-              </h1>
-
-              <div className="flex items-center justify-center gap-5 text-sm text-slate-500">
-                <span className="flex items-center gap-1.5">
-                  <IconCal />
-                  {date}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <IconClock />
-                  {readingTime} min lectura
-                </span>
-              </div>
-            </header>
-
-            {/* Article content */}
-            <div
-              className="space-y-6 text-slate-600"
-              style={{
-                fontSize: "1.05rem",
-                lineHeight: 1.75,
-                fontFamily: "'Georgia', 'Times New Roman', serif",
-              }}
-            >
-              {children}
+              <span className="flex items-center gap-1.5">
+                <IconClock />
+                {readingTime} min lectura
+              </span>
             </div>
+          </header>
 
-            {/* Footer nav */}
-            <footer className="mt-12 border-t border-slate-100 pt-6 text-center">
-              <Link
-                href="/legal"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800"
-              >
-                <IconBack />
-                Volver a documentos legales
-              </Link>
-            </footer>
+          {/* Article content */}
+          <div
+            className="space-y-6 text-slate-600"
+            style={{
+              fontSize: "1.05rem",
+              lineHeight: 1.75,
+              fontFamily: "'Georgia', 'Times New Roman', serif",
+            }}
+          >
+            {children}
           </div>
+
+          {/* Footer nav */}
+          <footer className="mt-12 border-t border-slate-100 pt-6 text-center">
+            <Link
+              href="/legal"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800"
+            >
+              <IconBack />
+              Volver a documentos legales
+            </Link>
+          </footer>
         </div>
       </div>
     </div>
