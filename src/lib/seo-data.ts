@@ -37,13 +37,14 @@ export const services = [
       "UGB — Universidad Gerardo Barrios",
       "UMA — Universidad Modular Abierta",
       "IEPROES — Instituto Especializado",
+      "UES — Universidad de El Salvador",
       "UEES y más instituciones",
     ],
     cta: "Cotizar uniformes universitarios",
     waText: "Hola,%20necesito%20uniformes%20universitarios",
     imgSrc: "/images/categorias/universitarios.webp",
     imgAlt:
-      "Uniformes universitarios para UNIVO, UNAB, UGB, UMA, IEPROES en San Miguel El Salvador",
+      "Uniformes universitarios para UNIVO, UNAB, UGB, UMA, IEPROES, UES en San Miguel El Salvador",
   },
   {
     title: "Escolares, Corporativos y Bordados",
@@ -102,6 +103,11 @@ export const universities = [
     ciudad: "San Miguel",
   },
   {
+    sigla: "UES",
+    nombre: "Universidad de El Salvador",
+    ciudad: "El Salvador",
+  },
+  {
     sigla: "UEES",
     nombre: "Universidad Evangélica de El Salvador",
     ciudad: "El Salvador",
@@ -137,7 +143,7 @@ export const faqItems = [
     a: "En Confecciones Liss, ubicados en el Barrio La Merced, 5A Calle Poniente & 1A Avenida Sur, San Miguel — a la par del edificio anexo de la UNAB. Somos el único taller de scrubs a la medida en la zona oriental. Horario: lunes a sábado de 8:00 a.m. a 5:00 p.m. WhatsApp: 7331-7181.",
   },
   {
-    q: "¿Hacen uniformes para UNIVO, UNAB, UGB, UMA, IEPROES?",
+    q: "¿Hacen uniformes para UNIVO, UNAB, UGB, UMA, IEPROES y UES?",
     a: "Sí. Confeccionamos uniformes oficiales para todas las universidades de San Miguel y la zona oriental. Trabajamos con las especificaciones exactas de cada carrera y universidad. Precio especial para grupos de sección.",
   },
   {

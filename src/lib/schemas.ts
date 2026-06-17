@@ -5,7 +5,7 @@ export const schemaLocalBusiness = {
   name: "Confecciones Liss",
   alternateName: ["Confeccion Liss", "Confecciones Liss San Miguel"],
   description:
-    "Confección profesional a la medida de scrubs médicos, uniformes universitarios, escolares y corporativos en San Miguel, El Salvador. Bordados, sublimación y personalización. Envíos a todo El Salvador con pago al recibir.",
+    "Taller de confección a la medida en San Miguel, El Salvador. Fabricamos scrubs médicos en Sincatex y Lino Oxford, uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más, uniformes escolares y corporativos. Bordados, sublimación y personalización. Envíos a todo El Salvador con pago al recibir.",
   url: "https://www.confeccionesliss.com",
   logo: "https://www.confeccionesliss.com/logo.svg",
   image: "https://www.confeccionesliss.com/opengraph-image",
@@ -73,7 +73,7 @@ export const schemaLocalBusiness = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Uniformes universitarios para UNIVO, UNAB, UGB, UMA, IEPROES, UEES",
+          name: "Uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más",
         },
       },
       {
@@ -143,7 +143,7 @@ export const schemaFAQ = {
       name: "¿Hacen uniformes para la UNIVO en San Miguel?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Sí, en Confecciones Liss confeccionamos uniformes oficiales para estudiantes de la Universidad de Oriente (UNIVO), así como para UNAB, UGB, UMA, IEPROES y UEES. Trabajamos a la medida con las especificaciones de cada carrera.",
+        text: "Sí, en Confecciones Liss confeccionamos uniformes oficiales para estudiantes de la Universidad de Oriente (UNIVO), así como para UNAB, UGB, UMA, IEPROES, UES y más. Trabajamos a la medida con las especificaciones de cada carrera.",
       },
     },
     {

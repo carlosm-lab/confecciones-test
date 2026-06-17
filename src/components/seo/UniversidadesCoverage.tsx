@@ -26,7 +26,7 @@ export function UniversidadesCoverage() {
           universidad.
         </p>
 
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-7">
           {universities.map((u, index) => (
             <article
               key={u.sigla}

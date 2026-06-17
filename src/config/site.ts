@@ -8,7 +8,7 @@ export const siteConfig = {
 
   twitterHandle: "@confeccionliss",
   keywords:
-    "scrubs El Salvador, uniformes médicos San Miguel, confección a medida San Miguel, uniformes universitarios zona oriental, UNIVO uniformes, UGB uniformes, UNAB uniformes, scrubs Sincatex El Salvador, taller uniformes San Miguel",
+    "scrubs El Salvador, uniformes médicos San Miguel, confección a medida San Miguel, uniformes universitarios zona oriental, UNIVO uniformes, UGB uniformes, UNAB uniformes, IEPROES uniformes, UES uniformes, UMA uniformes, scrubs Sincatex El Salvador, taller uniformes San Miguel",
 
   // Contacto
   phone: "+503 7331-7181",

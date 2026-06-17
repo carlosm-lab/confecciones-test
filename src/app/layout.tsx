@@ -33,8 +33,7 @@ export const metadata = {
   openGraph: {
     title:
       "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
-    description:
-      "Confección profesional a la medida en San Miguel. Scrubs, uniformes universitarios, escolares y corporativos a la medida. Pago al recibir.",
+    description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
 
