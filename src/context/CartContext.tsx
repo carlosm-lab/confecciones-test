@@ -252,7 +252,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             ];
             const pRes = await supabase
               .from("products")
-              .select(PRODUCT_SELECT_COLUMNS)
+              .select(CART_SELECT_COLUMNS)
               .in("id", ids);
 
             if (pRes.data) {
