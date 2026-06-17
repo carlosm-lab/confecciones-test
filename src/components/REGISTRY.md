@@ -221,11 +221,11 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### CartDrawer
 
 - **Ruta:** `src/components/cart/CartDrawer.tsx`
-- **Descripción:** Drawer deslizante desde la derecha que muestra los items del carrito. Maneja 4 vistas: vacío, items, confirmación, pedido enviado. Revalida precios al abrirse. Integra `generate_whatsapp_message` RPC de Supabase para generar el mensaje de pedido de forma segura en el servidor. Usa `react-focus-lock` para accesibilidad.
+- **Descripción:** Drawer deslizante desde la derecha con flujo de checkout de 4 pasos: `cart` → `shipping` → `confirm` → `sent`. Revalida precios al abrirse. Integra selección de departamento/municipio de El Salvador con cálculo de costo de envío por zona. Genera mensaje de WhatsApp en párrafo natural mediante la RPC `generate_whatsapp_message` (SECURITY DEFINER, anti-tampering). Usa `react-focus-lock` para accesibilidad.
 - **Props:** No recibe props (todo el estado viene de `useCart()`).
-- **Estado interno:** `showConfirm`, `orderSent`, `isGeneratingMessage`
-- **Hooks usados:** `useCart`, `useBodyScrollLock`
-- **Dependencias:** `CartContext`, `whatsapp.ts`, `formatPrice`, `react-focus-lock`, `react-hot-toast`
+- **Estado interno:** `step: DrawerStep`, `isGeneratingMessage`, `selectedDept`, `selectedMunicipality`
+- **Hooks usados:** `useCart`, `useBodyScrollLock`, `useCallback`, `useMemo`
+- **Dependencias:** `CartContext`, `shipping.ts`, `whatsapp.ts`, `formatPrice`, `react-focus-lock`, `react-hot-toast`
 - **Ejemplo:** `<CartDrawer />` (montado en `GlobalModals`, se monta una sola vez por layout)
 
 ### FavoritesModal

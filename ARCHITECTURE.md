@@ -109,3 +109,29 @@ _ (Add new decisions below this line)_
   (3) El sitemap ahora es `async` — Next.js soporta esto nativamente. Si Supabase no está disponible en build time, el sitemap omite productos con un `console.warn` (no rompe el build).
   (4) Los datos de `aggregateRating` deben actualizarse manualmente si el número de reseñas crece significativamente. Referencia: `src/app/(public)/catalogo/[sector]/[id]/page.tsx` líneas `PRODUCT_AGGREGATE_RATING`.
   (5) Google puede tardar días o semanas en reindexar y mostrar los rich snippets tras el deploy.
+
+---
+
+**Date:** 2026-06-17
+**Decision:** Sistema de Precios Avanzados + Checkout por Pasos + WhatsApp RPC con Anti-Tampering
+
+**Context:**
+El usuario requirió precios especiales (ofertas, mayoreo, mano de obra), envíos regionalizados para El Salvador, y un mensaje de WhatsApp en lenguaje natural. La lógica de precios en el cliente era vulnerable a manipulación.
+
+**Decisions made:**
+
+1. **`src/lib/shipping.ts`** — Módulo puro que define `ShippingZone` ("LOCAL" | "ORIENTAL" | "NACIONAL"), los 14 departamentos con sus municipios, costos fijos por zona, y la función `getShippingInfo(dept, muni)` que retorna `ShippingInfo { zone, cost, label, department, municipality }`.
+
+2. **`CartContext.tsx`** — Agrega `shippingInfo: ShippingInfo | null` y `setShippingInfo` al contexto. El info de envío persiste en memoria durante la sesión pero se limpia al cerrar el drawer. **No** se persiste en `localStorage` para evitar datos desactualizados (si el usuario regresa días después con una ubicación seleccionada, debería reseleccionar).
+
+3. **`CartDrawer.tsx` — Flujo de 4 pasos:** El estado `DrawerStep` (`"cart" | "shipping" | "confirm" | "sent"`) reemplaza los booleans `showConfirm` y `orderSent` anteriores. El paso `"shipping"` es obligatorio — el usuario no puede ir a confirmar sin seleccionar departamento + municipio.
+
+4. **`generate_whatsapp_message` RPC (Supabase SECURITY DEFINER):** Toda la generación del mensaje ocurre en el servidor de Supabase. La función recibe el carrito del cliente, **revalida cada precio contra la base de datos** (anti-tampering), aplica precio mayoreo si aplica, y genera un párrafo natural en español. El cliente NO puede enviar precios manipulados porque la función los ignora y toma los precios reales de `products`.
+
+5. **`ProductModal.tsx` — 5 tipos de oferta:** `temporal`, `indefinida`, `nuevos_clientes`, `clientes_frecuentes`, `por_talla`. La validación garantiza: precio anterior > precio actual, precio mayoreo < precio regular, cantidad mínima mayoreo ≥ 2.
+
+**Consequences:**
+
+- Si la RPC falla (red, Supabase caído), el pedido NO se envía — se muestra toast de error. Esto es preferible a enviar un mensaje con precios potencialmente manipulados.
+- El costo de envío es estimado (se usa el costo fijo de la zona). Si en el futuro se integra con un API de courier, `getShippingInfo` es el único punto a cambiar.
+- `offer_type` se guarda en BD pero la lógica de visibilidad de la oferta (e.g., solo para nuevos clientes) **no está implementada en el front-end público todavía** — es un campo informativo para el admin y el mensaje de WhatsApp. La implementación de reglas de negocio por tipo de cliente queda pendiente para cuando exista un sistema de cuentas de usuario.
