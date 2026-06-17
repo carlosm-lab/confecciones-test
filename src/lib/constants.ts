@@ -12,13 +12,6 @@
 export const MAX_CART_QUANTITY = 50;
 export const MAX_TOTAL_ITEMS = 50;
 
-// ── Columnas SELECT de productos ─────────────────────────────
-// NUNCA usar .select('*') — superficie de ataque menor y menos
-// datos en el wire. Si se agrega una columna a products, hay
-// que ponerla aquí manualmente. Eso es intencional.
-export const PRODUCT_SELECT_COLUMNS =
-  "id, name, description, price, old_price, images, image_path, category, category_id, slug, is_active, offer_starts_at, offer_ends_at, tags, categories!products_category_id_fkey(name, icon, slug)";
-
 // ── Columnas SELECT para revalidación de precios del carrito ────
 // Solo lo mínimo necesario para actualizar CartItem.product.
 // No incluye el JOIN de categories — no se necesita para el carrito.
