@@ -18,7 +18,7 @@ interface TopFavoritesProps {
 export default function TopFavorites({ products, loading }: TopFavoritesProps) {
   if (loading) {
     return (
-      <div className="h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-sm dark:border-white/5 dark:bg-white/5">
+      <div className="border-primary/30 dark:border-primary/20 h-full rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
         <h3 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">
           Top Favoritos
         </h3>
@@ -38,7 +38,7 @@ export default function TopFavorites({ products, loading }: TopFavoritesProps) {
   }
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-6 shadow-sm dark:border-white/5 dark:bg-white/5">
+    <div className="border-primary/30 dark:border-primary/20 flex h-full flex-col rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
       <h3 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">
         Top Favoritos
       </h3>

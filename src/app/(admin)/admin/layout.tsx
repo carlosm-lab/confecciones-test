@@ -65,13 +65,13 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50 transition-colors dark:bg-slate-950">
+    <div className="flex h-screen overflow-hidden bg-slate-50 transition-colors dark:bg-slate-950">
       {/* Sidebar Desktop */}
       <AdminSidebar />
 
       {/* Main Content */}
       <main className="flex min-w-0 flex-1 flex-col">
-        <div className="flex-1 overflow-y-auto p-4 pb-20 md:p-6 md:pb-6">
+        <div className="custom-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto p-4 pb-20 md:p-6 md:pb-6">
           {children}
         </div>
       </main>

@@ -108,7 +108,7 @@ export default function AdminMessagesPage() {
   const unreadCount = messages.filter((m) => !m.is_read).length;
 
   return (
-    <div className="mx-auto flex h-full max-w-[1000px] flex-col">
+    <div className="flex h-full w-full max-w-[1400px] flex-col">
       {/* Toast */}
       {toast && (
         <div
@@ -152,44 +152,46 @@ export default function AdminMessagesPage() {
       </div>
 
       {/* Messages List */}
-      <div className="flex-1 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm dark:border-white/5 dark:bg-white/5">
-        {isLoading ? (
-          <div className="flex flex-col items-center justify-center p-12">
-            <div className="border-primary/20 border-t-primary mb-4 h-10 w-10 animate-spin rounded-full border-4"></div>
-            <p className="text-slate-500">Cargando mensajes...</p>
-          </div>
-        ) : messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center p-12 text-center">
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 text-slate-400 dark:bg-transparent">
-              <span className="material-symbols-outlined text-[32px]">
-                mark_email_read
-              </span>
+      <div className="flex-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md dark:border-white/10 dark:bg-white/5">
+        <div className="custom-scrollbar h-full overflow-y-auto">
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center p-12">
+              <div className="border-primary/20 border-t-primary mb-4 h-10 w-10 animate-spin rounded-full border-4"></div>
+              <p className="text-slate-500">Cargando mensajes...</p>
             </div>
-            <h3 className="mb-1 text-lg font-bold text-slate-900 dark:text-white">
-              ¡Bandeja vacía!
-            </h3>
-            <p className="text-slate-500">
-              No tienes{" "}
-              {filter === "unread"
-                ? "mensajes nuevos"
-                : filter === "read"
-                  ? "mensajes leídos"
-                  : "mensajes"}{" "}
-              en este momento.
-            </p>
-          </div>
-        ) : (
-          <div className="divide-y divide-slate-100 dark:divide-white/5">
-            {messages.map((message) => (
-              <MessageCard
-                key={message.id}
-                message={message}
-                onClick={() => handleSelectMessage(message)}
-                onDelete={deleteMessage}
-              />
-            ))}
-          </div>
-        )}
+          ) : messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center p-12 text-center">
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 text-slate-400 dark:bg-transparent">
+                <span className="material-symbols-outlined text-[32px]">
+                  mark_email_read
+                </span>
+              </div>
+              <h3 className="mb-1 text-lg font-bold text-slate-900 dark:text-white">
+                ¡Bandeja vacía!
+              </h3>
+              <p className="text-slate-500">
+                No tienes{" "}
+                {filter === "unread"
+                  ? "mensajes nuevos"
+                  : filter === "read"
+                    ? "mensajes leídos"
+                    : "mensajes"}{" "}
+                en este momento.
+              </p>
+            </div>
+          ) : (
+            <div className="divide-y divide-slate-100 dark:divide-white/5">
+              {messages.map((message) => (
+                <MessageCard
+                  key={message.id}
+                  message={message}
+                  onClick={() => handleSelectMessage(message)}
+                  onDelete={deleteMessage}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Message Detail Modal */}

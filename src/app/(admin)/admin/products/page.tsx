@@ -238,7 +238,7 @@ export default function AdminProductsPage() {
   };
 
   return (
-    <div className="mx-auto flex h-full max-w-[1400px] flex-col">
+    <div className="flex w-full max-w-[1400px] flex-col">
       {/* Toast */}
       {toast && (
         <div
@@ -271,11 +271,11 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Filters Bar */}
-      <div className="mb-6 flex flex-col flex-wrap gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm md:flex-row dark:border-white/5 dark:bg-white/5">
+      <div className="border-primary/30 dark:border-primary/20 mb-6 flex flex-col flex-wrap gap-3 rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] md:flex-row md:items-center dark:bg-white/5">
         {/* Search */}
-        <div className="relative min-w-[200px] flex-1">
-          <span className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400">
-            <span className="material-symbols-outlined text-[20px]">
+        <div className="relative min-w-[220px] flex-1">
+          <span className="pointer-events-none absolute top-1/2 left-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
+            <span className="material-symbols-outlined text-[20px] leading-[0]">
               search
             </span>
           </span>
@@ -284,14 +284,14 @@ export default function AdminProductsPage() {
             placeholder="Buscar por nombre..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="focus:ring-primary/20 w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pr-4 pl-10 text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-transparent dark:text-white"
+            className="focus:ring-primary/20 w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-4 pl-10 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
           />
         </div>
 
         {/* Catalog Filter */}
-        <div className="relative w-full md:w-48">
-          <span className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400">
-            <span className="material-symbols-outlined text-[20px]">
+        <div className="relative w-full md:w-56">
+          <span className="pointer-events-none absolute top-1/2 left-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
+            <span className="material-symbols-outlined text-[20px] leading-[0]">
               layers
             </span>
           </span>
@@ -299,9 +299,9 @@ export default function AdminProductsPage() {
             value={filterCatalog}
             onChange={(e) => {
               setFilterCatalog(e.target.value);
-              setFilterCategory(""); // reset subcategory on catalog change
+              setFilterCategory("");
             }}
-            className="focus:ring-primary/20 w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-slate-50 py-2 pr-4 pl-10 text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-transparent dark:text-white"
+            className="focus:ring-primary/20 w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-9 pl-10 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
           >
             <option value="">Todos los catálogos</option>
             {CATALOGS.map((c) => (
@@ -310,19 +310,24 @@ export default function AdminProductsPage() {
               </option>
             ))}
           </select>
+          <span className="pointer-events-none absolute top-1/2 right-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
+            <span className="material-symbols-outlined text-[18px] leading-[0]">
+              expand_more
+            </span>
+          </span>
         </div>
 
         {/* Category Filter */}
-        <div className="relative w-full md:w-56">
-          <span className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400">
-            <span className="material-symbols-outlined text-[20px]">
+        <div className="relative w-full md:w-64">
+          <span className="pointer-events-none absolute top-1/2 left-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
+            <span className="material-symbols-outlined text-[20px] leading-[0]">
               filter_list
             </span>
           </span>
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="focus:ring-primary/20 w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-slate-50 py-2 pr-4 pl-10 text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-transparent dark:text-white"
+            className="focus:ring-primary/20 w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-9 pl-10 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
           >
             <option value="">Todas las subcategorías</option>
             {filteredCategoryOptions.map((cat) => (
@@ -331,10 +336,15 @@ export default function AdminProductsPage() {
               </option>
             ))}
           </select>
+          <span className="pointer-events-none absolute top-1/2 right-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
+            <span className="material-symbols-outlined text-[18px] leading-[0]">
+              expand_more
+            </span>
+          </span>
         </div>
 
         {/* On Sale Filter */}
-        <div className="flex items-center gap-2 px-2 md:ml-auto">
+        <div className="flex shrink-0 items-center gap-2 px-1 md:ml-auto">
           <input
             type="checkbox"
             id="onSaleFilter"
@@ -344,7 +354,7 @@ export default function AdminProductsPage() {
           />
           <label
             htmlFor="onSaleFilter"
-            className="cursor-pointer text-sm font-medium text-slate-700 select-none dark:text-slate-300"
+            className="cursor-pointer text-sm font-medium whitespace-nowrap text-slate-700 select-none dark:text-slate-300"
           >
             Solo ofertas activas
           </label>

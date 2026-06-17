@@ -142,48 +142,50 @@ export default function AdminDashboardPage() {
   ];
 
   return (
-    <div className="space-y-6 pb-10 md:space-y-8">
-      <div>
-        <h1 className="mb-1 text-2xl font-bold text-slate-900 md:mb-2 md:text-3xl dark:text-white">
-          Panel de Control
-        </h1>
-        <p className="text-sm text-slate-500 md:text-base dark:text-slate-400">
-          Resumen y estadísticas de Confecciones Liss.
-        </p>
-      </div>
+    <div>
+      <div className="mx-auto max-w-[1400px] space-y-6 pb-10 md:space-y-8">
+        <div>
+          <h1 className="mb-1 text-2xl font-bold text-slate-900 md:mb-2 md:text-3xl dark:text-white">
+            Panel de Control
+          </h1>
+          <p className="text-sm text-slate-500 md:text-base dark:text-slate-400">
+            Resumen y estadísticas de Confecciones Liss.
+          </p>
+        </div>
 
-      <StatsCards
-        stats={statCardsData}
-        onCardClick={(id) => setSelectedModalType(id as ModalType)}
-      />
+        <StatsCards
+          stats={statCardsData}
+          onCardClick={(id) => setSelectedModalType(id as ModalType)}
+        />
 
-      <div className="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-        {/* Left - 2 cols on XL */}
-        <div className="space-y-6 md:space-y-8 xl:col-span-2">
-          <div className="h-[400px]">
-            <RecentProducts products={recentProducts} loading={loading} />
+        <div className="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+          {/* Left - 2 cols on XL */}
+          <div className="space-y-6 md:space-y-8 xl:col-span-2">
+            <div className="h-[400px]">
+              <RecentProducts products={recentProducts} loading={loading} />
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+              <div className="h-[350px]">
+                <CategoryChart data={categoryData} loading={loading} />
+              </div>
+              <div className="h-[350px]">
+                <TopFavorites products={topFavorites} loading={loading} />
+              </div>
+            </div>
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
-            <div className="h-[350px]">
-              <CategoryChart data={categoryData} loading={loading} />
-            </div>
-            <div className="h-[350px]">
-              <TopFavorites products={topFavorites} loading={loading} />
-            </div>
+
+          {/* Right - 1 col */}
+          <div className="h-[400px] xl:h-[782px]">
+            <RecentMessages messages={recentMessages} loading={loading} />
           </div>
         </div>
 
-        {/* Right - 1 col */}
-        <div className="h-[400px] xl:h-[782px]">
-          <RecentMessages messages={recentMessages} loading={loading} />
-        </div>
+        <StatDetailModal
+          isOpen={!!selectedModalType}
+          type={selectedModalType}
+          onClose={() => setSelectedModalType(null)}
+        />
       </div>
-
-      <StatDetailModal
-        isOpen={!!selectedModalType}
-        type={selectedModalType}
-        onClose={() => setSelectedModalType(null)}
-      />
     </div>
   );
 }

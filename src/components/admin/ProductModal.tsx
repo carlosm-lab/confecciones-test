@@ -17,6 +17,7 @@ import { logger } from "@/lib/logger";
 import { generateSlug } from "@/lib/slug";
 import type { Category } from "@/hooks/useCategories";
 import type { Product } from "@/lib/productUtils";
+import { CATALOGS } from "@/config/catalogs";
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -35,6 +36,8 @@ interface FormData {
   offer_hours: string;
   offer_minutes: string;
   offer_starts_at: string;
+  /** Catálogo al que pertenece el producto (scrubs, universitario, etc.) */
+  catalog: string;
   category: string;
   tags: string[];
   image_path: string;
@@ -75,6 +78,7 @@ export default function ProductModal({
     offer_hours: "",
     offer_minutes: "",
     offer_starts_at: "",
+    catalog: "",
     category: "",
     tags: [],
     image_path: "",
@@ -94,7 +98,15 @@ export default function ProductModal({
 
   useEffect(() => {
     setIsSubmitting(false);
+
     if (product) {
+      // Modo edición: derivar el catálogo desde la categoría actual del producto
+      const inferredCatalog =
+        product.catalog ||
+        (product.category
+          ? (categories.find((c) => c.slug === product.category)?.catalog ?? "")
+          : "");
+
       setFormData({
         name: product.name || "",
         description: product.description || "",
@@ -106,6 +118,7 @@ export default function ProductModal({
         offer_starts_at: product.offer_starts_at
           ? new Date(product.offer_starts_at).toISOString().slice(0, 16)
           : "",
+        catalog: inferredCatalog,
         category: product.category || "",
         tags: Array.isArray(product.tags) ? product.tags : [],
         image_path: Array.isArray(product.images)
@@ -121,7 +134,14 @@ export default function ProductModal({
       });
       setSlugManuallyEdited(!!product.slug);
     } else {
-      const defaultCategory = categories.length > 0 ? categories[0].slug : "";
+      // Modo nuevo: primer catálogo con categorías disponibles
+      const availableCatalogs = CATALOGS.filter((cat) =>
+        categories.some((c) => c.catalog === cat.value)
+      );
+      const defaultCatalog = availableCatalogs[0]?.value ?? "";
+      const defaultCategory =
+        categories.find((c) => c.catalog === defaultCatalog)?.slug ?? "";
+
       setFormData({
         name: "",
         description: "",
@@ -131,6 +151,7 @@ export default function ProductModal({
         offer_hours: "",
         offer_minutes: "",
         offer_starts_at: "",
+        catalog: defaultCatalog,
         category: defaultCategory,
         tags: [],
         image_path: "",
@@ -279,6 +300,7 @@ export default function ProductModal({
       description: formData.description || null,
       price: parsedPrice,
       old_price: parsedOldPrice,
+      catalog: formData.catalog || null,
       category: formData.category || null,
       tags: Array.isArray(formData.tags) ? formData.tags : [],
       image_path: formData.images[0] || formData.image_path || null,
@@ -532,8 +554,45 @@ export default function ProductModal({
                 </div>
               )}
 
-              {/* Category */}
-              <div className="md:col-span-2">
+              {/* Catálogo — filtra las categorías disponibles */}
+              <div>
+                <label
+                  htmlFor="product-catalog"
+                  className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  Catálogo
+                </label>
+                <select
+                  id="product-catalog"
+                  name="catalog"
+                  value={formData.catalog}
+                  onChange={(e) => {
+                    const nextCatalog = e.target.value;
+                    // Al cambiar catálogo, resetear la categoría para forzar selección consciente
+                    setFormData((prev) => ({
+                      ...prev,
+                      catalog: nextCatalog,
+                      category: "",
+                    }));
+                  }}
+                  required
+                  className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                >
+                  <option value="" disabled>
+                    Seleccionar catálogo...
+                  </option>
+                  {CATALOGS.filter((cat) =>
+                    categories.some((c) => c.catalog === cat.value)
+                  ).map((cat) => (
+                    <option key={cat.value} value={cat.value}>
+                      {cat.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Categoría — filtrada por el catálogo seleccionado */}
+              <div>
                 <label
                   htmlFor="product-category"
                   className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
@@ -546,16 +605,21 @@ export default function ProductModal({
                   value={formData.category}
                   onChange={handleChange}
                   required
-                  className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                  disabled={!formData.catalog}
+                  className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/5 dark:text-white"
                 >
                   <option value="" disabled>
-                    Seleccionar categoría...
+                    {formData.catalog
+                      ? "Seleccionar categoría..."
+                      : "Primero selecciona un catálogo"}
                   </option>
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.slug}>
-                      {cat.name}
-                    </option>
-                  ))}
+                  {categories
+                    .filter((cat) => cat.catalog === formData.catalog)
+                    .map((cat) => (
+                      <option key={cat.id} value={cat.slug}>
+                        {cat.name}
+                      </option>
+                    ))}
                 </select>
               </div>
 

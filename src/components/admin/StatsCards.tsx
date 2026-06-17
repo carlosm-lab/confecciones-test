@@ -26,7 +26,7 @@ export default function StatsCards({ stats, onCardClick }: StatsCardsProps) {
             aria-label={
               onCardClick ? `Ver detalles de ${stat.label}` : undefined
             }
-            className={`group focus:ring-primary flex w-full flex-col gap-3 overflow-hidden rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-300 hover:shadow-lg focus:ring-2 focus:outline-none md:gap-4 md:p-5 dark:border-white/5 dark:bg-white/5 ${onCardClick ? "cursor-pointer text-left" : ""}`}
+            className={`group focus:ring-primary border-primary/30 hover:border-primary/50 dark:border-primary/20 flex w-full flex-col gap-3 overflow-hidden rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] transition-all duration-300 hover:shadow-[0_0_35px_8px_rgba(20,48,103,0.18),0_0_15px_3px_rgba(20,48,103,0.12)] focus:ring-2 focus:outline-none md:gap-4 md:p-5 dark:bg-white/5 ${onCardClick ? "cursor-pointer text-left" : ""}`}
           >
             <div className="flex w-full items-center justify-between">
               <div

@@ -215,7 +215,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           cart_items: debouncedCartItems,
           updated_at: new Date().toISOString(),
         })
-        .then(({ error }) => {
+        .then(({ error }: { error: { message: string } | null }) => {
           if (error) {
             logger.error("Error syncing cart to DB:", error);
             toast.error("Error al guardar el carrito. Revise su conexión.");

@@ -163,7 +163,7 @@ export default function AdminCategoriesPage() {
   );
 
   return (
-    <div className="mx-auto flex h-full max-w-[1100px] flex-col">
+    <div className="flex h-full w-full max-w-[1400px] flex-col">
       {/* Toast */}
       {toast && (
         <div
@@ -176,8 +176,8 @@ export default function AdminCategoriesPage() {
         </div>
       )}
 
-      {/* Header */}
-      <div className="mb-6">
+      {/* Header — static */}
+      <div className="mb-6 shrink-0">
         <h1 className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
           Categorías
         </h1>
@@ -187,8 +187,8 @@ export default function AdminCategoriesPage() {
         </p>
       </div>
 
-      {/* Info Banner */}
-      <div className="bg-primary/5 border-primary/20 mb-6 flex gap-3 rounded-2xl border p-4">
+      {/* Info Banner — static */}
+      <div className="bg-primary/5 border-primary/20 mb-6 flex shrink-0 gap-3 rounded-2xl border p-4">
         <span className="material-symbols-outlined text-primary mt-0.5 shrink-0 text-[22px]">
           info
         </span>
@@ -210,128 +210,138 @@ export default function AdminCategoriesPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
-        {/* Form Column */}
-        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm md:sticky md:top-6 md:col-span-1 dark:border-white/5 dark:bg-white/5">
-          <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">
-            {isEditing ? "Editar Categoría" : "Nueva Categoría"}
-          </h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Catálogo */}
-            <div>
-              <label
-                htmlFor="cat-catalog"
-                className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Catálogo <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="cat-catalog"
-                required
-                value={currentCat.catalog || ""}
-                onChange={(e) =>
-                  setCurrentCat((prev) => ({
-                    ...prev,
-                    catalog: e.target.value || null,
-                  }))
-                }
-                className={inputClass}
-              >
-                <option value="" disabled>
-                  Seleccionar catálogo…
-                </option>
-                {CATALOGS.map((c) => (
-                  <option key={c.value} value={c.value}>
-                    {c.label}
-                  </option>
-                ))}
-              </select>
-              <p className="mt-1 text-xs text-slate-500">
-                Define en cuál sección del sitio aparece esta categoría.
-              </p>
-            </div>
-
-            {/* Nombre */}
-            <div>
-              <label
-                htmlFor="cat-name"
-                className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Nombre de la subcategoría
-              </label>
-              <input
-                id="cat-name"
-                type="text"
-                required
-                value={currentCat.name}
-                onChange={handleNameChange}
-                placeholder="Ej. Scrubs UNIVO Azul"
-                className={inputClass}
-              />
-            </div>
-
-            {/* Slug */}
-            <div>
-              <label
-                htmlFor="cat-slug"
-                className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Slug (URL amigable)
-              </label>
-              <input
-                id="cat-slug"
-                type="text"
-                required
-                value={currentCat.slug}
-                onChange={(e) =>
-                  setCurrentCat({ ...currentCat, slug: e.target.value })
-                }
-                placeholder="scrubs-univo-azul"
-                className={inputClass}
-              />
-              <p className="mt-1 text-xs text-slate-500">
-                Único. Minúsculas, números y guiones.
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-2 pt-2">
-              <button
-                type="submit"
-                disabled={isSaving}
-                className="bg-primary hover:bg-primary/90 flex w-full items-center justify-center gap-2 rounded-xl py-2 font-bold text-white shadow-sm transition-colors disabled:opacity-50"
-              >
-                {isSaving ? (
-                  <>
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white"></span>
-                    Guardando...
-                  </>
-                ) : isEditing ? (
-                  "Guardar Cambios"
-                ) : (
-                  "Crear Categoría"
-                )}
-              </button>
-              {isEditing && (
-                <button
-                  type="button"
-                  onClick={handleCancelEdit}
-                  className="w-full rounded-xl bg-slate-100 py-2 font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-white/10 dark:text-slate-200 dark:hover:bg-white/20"
+      {/* Body: form + list — fills remaining height */}
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 md:grid-cols-3">
+        {/* Form Column — full height, no spacer */}
+        <div className="flex min-h-0 flex-col md:col-span-1 md:h-full">
+          {/* Form Card — stretches to fill full column height */}
+          <div className="border-primary/30 dark:border-primary/20 flex flex-1 flex-col rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
+            <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">
+              {isEditing ? "Editar Categoría" : "Nueva Categoría"}
+            </h2>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-1 flex-col gap-4"
+            >
+              {/* Catálogo */}
+              <div>
+                <label
+                  htmlFor="cat-catalog"
+                  className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
-                  Cancelar
+                  Catálogo <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="cat-catalog"
+                  required
+                  value={currentCat.catalog || ""}
+                  onChange={(e) =>
+                    setCurrentCat((prev) => ({
+                      ...prev,
+                      catalog: e.target.value || null,
+                    }))
+                  }
+                  className={inputClass}
+                >
+                  <option value="" disabled>
+                    Seleccionar catálogo…
+                  </option>
+                  {CATALOGS.map((c) => (
+                    <option key={c.value} value={c.value}>
+                      {c.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="mt-1 text-xs text-slate-500">
+                  Define en cuál sección del sitio aparece esta categoría.
+                </p>
+              </div>
+
+              {/* Nombre */}
+              <div>
+                <label
+                  htmlFor="cat-name"
+                  className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  Nombre de la subcategoría
+                </label>
+                <input
+                  id="cat-name"
+                  type="text"
+                  required
+                  value={currentCat.name}
+                  onChange={handleNameChange}
+                  placeholder="Ej. Scrubs UNIVO Azul"
+                  className={inputClass}
+                />
+              </div>
+
+              {/* Slug */}
+              <div>
+                <label
+                  htmlFor="cat-slug"
+                  className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  Slug (URL amigable)
+                </label>
+                <input
+                  id="cat-slug"
+                  type="text"
+                  required
+                  value={currentCat.slug}
+                  onChange={(e) =>
+                    setCurrentCat({ ...currentCat, slug: e.target.value })
+                  }
+                  placeholder="scrubs-univo-azul"
+                  className={inputClass}
+                />
+                <p className="mt-1 text-xs text-slate-500">
+                  Único. Minúsculas, números y guiones.
+                </p>
+              </div>
+
+              {/* Spacer pushes button to bottom of card */}
+              <div className="flex-1" />
+
+              <div className="flex flex-col gap-2">
+                <button
+                  type="submit"
+                  disabled={isSaving}
+                  className="bg-primary hover:bg-primary/90 flex w-full items-center justify-center gap-2 rounded-xl py-2 font-bold text-white shadow-sm transition-colors disabled:opacity-50"
+                >
+                  {isSaving ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white"></span>
+                      Guardando...
+                    </>
+                  ) : isEditing ? (
+                    "Guardar Cambios"
+                  ) : (
+                    "Crear Categoría"
+                  )}
                 </button>
-              )}
-            </div>
-          </form>
+                {isEditing && (
+                  <button
+                    type="button"
+                    onClick={handleCancelEdit}
+                    className="w-full rounded-xl bg-slate-100 py-2 font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-white/10 dark:text-slate-200 dark:hover:bg-white/20"
+                  >
+                    Cancelar
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
 
-        {/* List Column */}
-        <div className="space-y-4 md:col-span-2">
-          {/* Catalog Filter Tabs */}
-          <div className="flex flex-wrap gap-2">
+        {/* List Column — flex-col: tabs static on top, list scrolls below */}
+        <div className="flex min-h-0 flex-col gap-4 md:col-span-2 md:h-full">
+          {/* Catalog Filter Tabs — static */}
+          <div className="flex shrink-0 flex-wrap gap-2">
             <button
               type="button"
               onClick={() => setFilterCatalog("")}
-              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition-colors ${!filterCatalog ? "bg-primary text-white shadow-sm" : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-white/10 dark:text-slate-300 dark:hover:bg-white/20"}`}
+              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition-colors ${!filterCatalog ? "bg-primary text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10"}`}
             >
               Todos ({categories.length})
             </button>
@@ -345,7 +355,7 @@ export default function AdminCategoriesPage() {
                     key={c.value}
                     type="button"
                     onClick={() => setFilterCatalog(c.value)}
-                    className={`rounded-xl px-3 py-1.5 text-xs font-bold transition-colors ${filterCatalog === c.value ? "bg-primary text-white shadow-sm" : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-white/10 dark:text-slate-300 dark:hover:bg-white/20"}`}
+                    className={`rounded-xl px-3 py-1.5 text-xs font-bold transition-colors ${filterCatalog === c.value ? "bg-primary text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10"}`}
                   >
                     {c.label} ({count})
                   </button>
@@ -363,8 +373,8 @@ export default function AdminCategoriesPage() {
             )}
           </div>
 
-          {/* Category List */}
-          <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm dark:border-white/5 dark:bg-white/5">
+          {/* Category List — only this section scrolls */}
+          <div className="custom-scrollbar border-primary/30 dark:border-primary/20 min-h-0 flex-1 overflow-y-auto rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
             {isLoading ? (
               <div className="flex justify-center p-8">
                 <div className="border-primary/20 border-t-primary h-8 w-8 animate-spin rounded-full border-4"></div>

@@ -37,7 +37,7 @@ export default function ProductTable({
 
   if (isLoading) {
     return (
-      <div className="flex w-full animate-pulse flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white p-8 shadow-sm dark:border-white/5 dark:bg-white/5">
+      <div className="border-primary/30 dark:border-primary/20 flex w-full animate-pulse flex-col items-center justify-center rounded-2xl border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
         <div className="border-primary/20 border-t-primary mb-4 h-12 w-12 animate-spin rounded-full border-4"></div>
         <p className="text-slate-500 dark:text-slate-400">
           Cargando productos...
@@ -48,7 +48,7 @@ export default function ProductTable({
 
   if (!products || products.length === 0) {
     return (
-      <div className="flex w-full flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white p-12 shadow-sm dark:border-white/5 dark:bg-white/5">
+      <div className="border-primary/30 dark:border-primary/20 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-12 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 text-slate-400 dark:bg-transparent">
           <span className="material-symbols-outlined text-[32px]">
             inventory_2
@@ -65,7 +65,7 @@ export default function ProductTable({
   }
 
   return (
-    <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm dark:border-white/5 dark:bg-white/5">
+    <div className="border-primary/30 dark:border-primary/20 flex w-full flex-col overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
       {selectedIds.length > 0 && (
         <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3 dark:border-white/5 dark:bg-white/5">
           <span className="text-primary text-sm font-medium">
