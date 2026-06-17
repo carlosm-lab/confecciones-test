@@ -119,39 +119,7 @@ export default function LegalArticleReader({
      ════════════════════════════════════════════════════════════════════════ */
   const mobileLayout = (
     <div className="lg:hidden">
-      {/* ── Document navigation bar ──────────────────────────────────────
-          Sticky below the site Navbar so users can always navigate back.
-          z-40 keeps it below the Navbar's z-50 when both are visible.     */}
-      <nav
-        aria-label="Navegación del documento legal"
-        className="sticky top-0 z-40 flex items-center gap-3 border-b border-slate-200 bg-white/95 px-4 py-3 shadow-sm backdrop-blur-sm"
-      >
-        <button
-          onClick={handleClose}
-          aria-label="Volver a la lista de documentos legales"
-          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-colors hover:bg-slate-50 hover:text-slate-800 active:scale-95"
-        >
-          <IconBack />
-        </button>
-
-        <p
-          className="min-w-0 flex-1 truncate text-sm font-semibold text-slate-700"
-          aria-label={`Documento actual: ${title}`}
-        >
-          {title}
-        </p>
-
-        <Link
-          href="/legal"
-          className="flex-shrink-0 rounded-md px-2.5 py-1 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-50 hover:text-blue-800 active:scale-95"
-          aria-label="Ver todos los documentos legales"
-        >
-          Ver todos
-        </Link>
-      </nav>
-
-      {/* ── Article content ──────────────────────────────────────────────
-          Uses semantic HTML: article > header + sections.
+      {/* Article content — uses semantic HTML: article > header + sections.
           <section> elements come from LegalContent.tsx Section component. */}
       <article
         itemScope
@@ -251,7 +219,10 @@ export default function LegalArticleReader({
         className="relative mx-3 w-full bg-white"
         style={{
           maxWidth: 850,
-          maxHeight: "92vh",
+          /* External vertical gap reduced 75 %:
+             Original maxHeight 92vh → gap = (100-92)/2 = 4vh each side.
+             New maxHeight 98vh → gap = (100-98)/2 = 1vh each side. */
+          maxHeight: "98vh",
           overflowY: "auto",
           overflowX: "hidden",
           overscrollBehavior: "contain",
@@ -261,8 +232,8 @@ export default function LegalArticleReader({
           borderBottom: "1px solid #E2E8F0",
           scrollbarWidth: "thin",
           scrollbarColor: "#CBD5E1 transparent",
-          /* Vertical padding reduced 75 %: 20px → 5px */
-          padding: "5px 40px",
+          /* Internal padding restored to original — only external gap was requested */
+          padding: "20px 40px",
         }}
       >
         {/* Close button — sticky top right */}
