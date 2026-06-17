@@ -43,6 +43,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
+    {
+      url: `${siteConfig.url}/legal`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${siteConfig.url}/legal/privacidad`,
+      lastModified: new Date("2025-06-15"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/terminos`,
+      lastModified: new Date("2025-06-15"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
   ];
 
   return staticPages;

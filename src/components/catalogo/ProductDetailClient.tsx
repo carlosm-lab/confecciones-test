@@ -114,18 +114,25 @@ export function ProductDetailClient({
                 key={`img-${i}`}
                 type="button"
                 onClick={() => setMainImg(img)}
-                className={`aspect-[4/5] w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 bg-gray-50 transition-all active:scale-[0.96] md:w-full ${
+                className="aspect-[4/5] w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-white transition-all duration-300 active:scale-[0.96] md:w-full"
+                style={
                   mainImg === img
-                    ? "border-primary shadow-sm"
-                    : "border-transparent opacity-60 hover:border-slate-300 hover:opacity-100"
-                }`}
+                    ? {
+                        border: "2px solid #143067",
+                        opacity: 1,
+                      }
+                    : {
+                        border: "2px dashed #cbd5e1",
+                        opacity: 0.7,
+                      }
+                }
               >
                 <Image
                   src={img}
                   alt={`${product.nombre} miniatura ${i + 1}`}
                   width={96}
                   height={120}
-                  className="h-full w-full object-contain object-center"
+                  className="h-full w-full object-cover object-center"
                 />
               </button>
             ))}
@@ -144,7 +151,14 @@ export function ProductDetailClient({
           <div className="mt-2 mb-2 hidden w-px shrink-0 self-stretch rounded-full bg-slate-200 lg:block" />
 
           {/* Main image */}
-          <div className="relative aspect-[4/5] w-full min-w-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 shadow-sm md:w-full">
+          <div
+            className="relative aspect-[4/5] w-full min-w-0 overflow-hidden rounded-xl bg-white transition-all duration-300 md:w-full"
+            style={{
+              border: "1px solid rgba(20,48,103,0.2)",
+              boxShadow:
+                "0 0 25px 6px rgba(20,48,103,0.15), 0 0 10px 2px rgba(20,48,103,0.1)",
+            }}
+          >
             <button
               type="button"
               onClick={() => setIsImageModalOpen(true)}
@@ -157,7 +171,7 @@ export function ProductDetailClient({
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, 45vw"
-                  className="rounded-xl object-contain object-center transition-transform duration-700 group-hover:scale-105"
+                  className="rounded-xl object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
               ) : (
                 <span

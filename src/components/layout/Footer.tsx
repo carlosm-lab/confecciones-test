@@ -1,5 +1,6 @@
 import { siteConfig } from "@/config/site";
 import Image from "next/image";
+import Link from "next/link";
 import {
   SiFacebook,
   SiGooglemaps,
@@ -11,7 +12,8 @@ import {
 export function Footer() {
   return (
     <footer className="bg-primary mt-auto font-sans text-white">
-      <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-8 px-5 py-10 md:grid-cols-2 md:gap-12 md:px-8 md:py-14">
+      <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-8 px-5 py-10 md:grid-cols-3 md:gap-12 md:px-8 md:py-14">
+        {/* Branding */}
         <div>
           <div className="mb-6 flex items-center gap-2">
             <Image
@@ -80,6 +82,7 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Contacto */}
         <div>
           <h4 className="mb-6 font-serif text-lg">Contacto</h4>
           <ul className="text-primary-container space-y-3 text-sm">
@@ -128,14 +131,77 @@ export function Footer() {
             </li>
           </ul>
         </div>
+
+        {/* Legal */}
+        <div>
+          <h4 className="mb-6 font-serif text-lg">Legal</h4>
+          <ul className="text-primary-container space-y-3 text-sm">
+            <li>
+              <Link
+                href="/legal"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Documentos Legales
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/privacidad"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Privacidad
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/terminos"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Términos y Condiciones
+              </Link>
+            </li>
+            <li className="pt-1 text-xs text-white/40">
+              Política de Cotizaciones <span className="italic">(próx.)</span>
+            </li>
+            <li className="text-xs text-white/40">
+              Política de Envíos <span className="italic">(próx.)</span>
+            </li>
+            <li className="text-xs text-white/40">
+              Política de Devoluciones <span className="italic">(próx.)</span>
+            </li>
+          </ul>
+        </div>
       </div>
 
+      {/* Copyright bar */}
       <div className="border-t border-white/10">
-        <div className="text-primary-container mx-auto flex w-full max-w-screen-2xl items-center justify-center px-8 py-6 text-xs">
+        <div className="text-primary-container mx-auto flex w-full max-w-screen-2xl flex-col items-center justify-between gap-3 px-8 py-5 text-xs sm:flex-row">
           <p>
             © {new Date().getFullYear()} Confecciones Liss. Todos los derechos
             reservados.
           </p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/legal/privacidad"
+              className="transition-colors hover:text-white hover:underline"
+            >
+              Privacidad
+            </Link>
+            <span className="opacity-30">·</span>
+            <Link
+              href="/legal/terminos"
+              className="transition-colors hover:text-white hover:underline"
+            >
+              Términos
+            </Link>
+            <span className="opacity-30">·</span>
+            <Link
+              href="/legal"
+              className="transition-colors hover:text-white hover:underline"
+            >
+              Legal
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

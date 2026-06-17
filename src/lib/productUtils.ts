@@ -1,0 +1,68 @@
+// ──────────────────────────────────────────────────────────────
+// UTILIDADES DE OFERTAS / PROMOCIONES
+// ──────────────────────────────────────────────────────────────
+import type { SupabaseClient } from "@supabase/supabase-js";
+
+export interface Product {
+  id?: string;
+  name?: string;
+  price?: number | string;
+  old_price?: number | string | null;
+  offer_starts_at?: string | null;
+  offer_ends_at?: string | null;
+  image_path?: string | null;
+  images?: string[];
+  category?: string | null;
+  category_id?: string | null;
+  catalog?: string | null;
+  tags?: string[];
+  description?: string | null;
+  is_active?: boolean;
+  slug?: string;
+  created_at?: string;
+  categories?: { name: string } | null;
+}
+
+/**
+ * Determina si un producto tiene una oferta activa AHORA.
+ */
+const isOfferActive = (product: Product): boolean => {
+  if (!product) return false;
+  const now = new Date();
+  const hasOffer =
+    product.old_price && Number(product.old_price) > Number(product.price);
+  if (!hasOffer) return false;
+
+  if (product.offer_starts_at && new Date(product.offer_starts_at) > now)
+    return false;
+  if (product.offer_ends_at && new Date(product.offer_ends_at) <= now)
+    return false;
+
+  return true;
+};
+
+/**
+ * Detecta ofertas programadas (futuras).
+ */
+const isOfferScheduled = (product: Product): boolean => {
+  if (!product) return false;
+  const now = new Date();
+  return Boolean(
+    product.old_price &&
+    Number(product.old_price) > Number(product.price) &&
+    product.offer_starts_at &&
+    new Date(product.offer_starts_at) > now
+  );
+};
+
+/**
+ * Aplica filtros de oferta activa a una query de Supabase.
+ */
+
+export const applyActiveOfferFilter = (query: any): any => {
+  const now = new Date().toISOString();
+  return query
+    .not("old_price", "is", null)
+    .or(`offer_starts_at.is.null,offer_starts_at.lte.${now}`)
+    .or(`offer_ends_at.is.null,offer_ends_at.gt.${now}`);
+};
