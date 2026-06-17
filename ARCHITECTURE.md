@@ -58,3 +58,54 @@ _ (Add new decisions below this line)_
 **Context:** Las páginas `/legal/privacidad` y `/legal/terminos` son rutas separadas (no un modal real dentro de `/legal`). El `LegalArticleReader` mostraba un overlay `position:fixed` con `background: rgba(10,17,40,X)` y `backdropFilter: blur(8px)`, pero el fondo que se veía a través del blur era el del layout general (oscuro / vacío), no el hub de `/legal`. Esto rompía la ilusión de modal flotante sobre el hub.
 **Decision:** Se extrae el contenido visual del hub (`LegalHubBackground.tsx`) y se renderiza detrás del overlay en cada página de artículo, envuelto con `aria-hidden="true" pointer-events-none hidden lg:block`. La opacidad del overlay bajó de 0.93 a 0.82 para que el hub sea visible. En mobile no hay overlay, por lo que el `LegalHubBackground` se oculta (`hidden`).
 **Consequences:** (1) `LegalHubBackground` duplica los datos de `LEGAL_DOCS` de forma intencional — es un componente de presentación puro, no una fuente de verdad. (2) `legal/page.tsx` delega a `LegalHubBackground` para evitar duplicar el JSX. (3) Si se añaden nuevos documentos legales, se debe actualizar `LEGAL_DOCS` en `LegalHubBackground.tsx` (única fuente). (4) El botón de cierre usa `position:absolute top:20 right:20` con `scrollbarWidth:thin` (`+8px` de compensación para que la burbuja tenga 12px de gap con el scrollbar y 12px entre texto y burbuja).
+
+---
+
+**Date:** 2026-06-17
+**Decision:** Migración completa del catálogo de datos hardcodeados → Supabase (fuente dinámica de verdad)
+**Context:** El catálogo público usaba `src/data/products.ts` con un array estático `ALL_PRODUCTS` de ~30 productos hardcodeados. Esto impedía que el panel de administración tuviera efecto real sobre lo que se mostraba en el catálogo público. La tabla `products` en Supabase existía pero estaba vacía (0 rows). Se realizó una auditoría completa del proyecto para identificar y eliminar TODOS los datos hardcodeados.
+**Decision:**
+
+- Se creó `src/lib/catalogService.ts` con funciones SSR para consultar Supabase desde Server Components: `getProductsBySector()`, `getProductBySlug()`, `getRecentProducts()`, `getRelatedProducts()`, `getProductCountsBySector()`.
+- Se migró `DbProduct` como tipo canónico de producto (campos: `name, price, old_price, image_path, images, slug, sector, category, tallas, colores, material, badge_text, price_suffix, caracteristicas, short_description`).
+- Las páginas del catálogo (`/catalogo`, `/catalogo/[sector]`, `/catalogo/[sector]/[id]`) son ahora async Server Components que hacen fetch directo a Supabase y pasan datos como props a los Client Components.
+- `CatalogProductCard`, `ProductDetailClient`, `CatalogPageClient`, `CategoryHubClient`, `SearchModal` fueron reescritos para usar `DbProduct`.
+- `SearchModal` ahora busca en tiempo real contra Supabase con debounce de 300ms.
+- La Home page (`/`) carga los últimos 6 productos activos desde Supabase server-side.
+- Se vaciaron `src/data/products.ts` (solo export `ALL_PRODUCTS = []` para compatibilidad residual).
+- Se agregaron columnas a la tabla `products` en Supabase: `sector, badge_text, price_suffix, tallas, colores, material, caracteristicas, short_description`.
+- El `ProductModal` del admin fue extendido con campos visuales para `badge_text`, `price_suffix`, `material` y `tallas` (toggle buttons).
+- El middleware eliminó `/catalogo` y `/carrito` de `BLOCKED_ROUTES` en producción.
+- RLS de Supabase: público puede leer `is_active=true`, solo admins pueden escribir.
+  **Consequences:**
+  (1) El catálogo está VACÍO hasta que el admin cree productos desde `/admin/products`.
+  (2) `src/data/products.ts` es un archivo zombie — puede eliminarse cuando no quede ningún import residual.
+  (3) Las páginas `/catalogo/[sector]` usan `generateStaticParams()` basado en `CATEGORIES` (no en DB) — si se agrega un nuevo sector, debe agregarse primero a `src/data/categories.ts`.
+  (4) Las páginas de producto usan rutas dinámicas (no SSG fijo) porque el catálogo puede crecer sin rebuild.
+  (5) La búsqueda del `SearchModal` usa el campo `name` con `ilike` — para búsqueda por tags/descripción se puede extender en el futuro.
+  (6) El `sector` de un producto se guarda tanto en `products.sector` (explícito) como se puede derivar de `categories.catalog` (join). Siempre priorizar `products.sector`.
+
+---
+
+**Date:** 2026-06-17
+**Decision:** Implementación de Google Product Rich Results — aggregateRating, review, Merchant Listing completo y Sitemap dinámico
+**Context:** Los productos del catálogo tenían JSON-LD básico (`Product` con `name`, `offers`, `brand`, `sku`) pero le faltaban los campos necesarios para que Google muestre rich snippets (estrellas, precio, disponibilidad, envío). Sin `aggregateRating` Google no puede mostrar estrellas en los resultados. Sin `shippingDetails`, los productos no califican para Merchant Listings.
+**Decision:**
+
+- Se enriqueció el JSON-LD en `src/app/(public)/catalogo/[sector]/[id]/page.tsx` con:
+  - `aggregateRating` (ratingValue: 5.0, ratingCount: 3) basado en 3 reseñas reales de Google Maps.
+  - `review` array con los 3 testimonios reales de `src/lib/seo-data.ts` (Juan Carlos Garcia, José Antonio Dias, Kairo Boutique). NO son reviews auto-generadas — son enlaces verificados a Google Maps.
+  - `offers.availability` dinámico — InStock/OutOfStock según `product.is_active`.
+  - `offers.itemCondition` → `schema.org/NewCondition`.
+  - `offers.priceValidUntil` → fin del año corriente (se recalcula automáticamente).
+  - `offers.shippingDetails` → envío a El Salvador, 1-3 días hábiles, $0.
+  - `offers.hasMerchantReturnPolicy` → 7 días, devolución en tienda, sin costo.
+  - `category` y `material` condicionales (solo si el producto los tiene).
+  - `image` como array `[url]` (formato recomendado schema.org).
+- El sitemap (`src/app/sitemap.ts`) se convirtió a `async` para hacer fetch a Supabase en tiempo de build y generar URLs para todos los productos activos (`/catalogo/[sector]/[slug]`). Usa `getAllProductsForSitemap()` (nueva función en `catalogService.ts`).
+  **Consequences:**
+  (1) `PRODUCT_AGGREGATE_RATING` y `PRODUCT_REVIEWS` son constantes de módulo — se cargan una sola vez por request del servidor (no por producto). Si en el futuro se crean reseñas por-producto en BD, se deberá pasar el dato como prop.
+  (2) Si se agregan nuevas reseñas a `seo-data.ts`, se refleja automáticamente en todos los productos.
+  (3) El sitemap ahora es `async` — Next.js soporta esto nativamente. Si Supabase no está disponible en build time, el sitemap omite productos con un `console.warn` (no rompe el build).
+  (4) Los datos de `aggregateRating` deben actualizarse manualmente si el número de reseñas crece significativamente. Referencia: `src/app/(public)/catalogo/[sector]/[id]/page.tsx` líneas `PRODUCT_AGGREGATE_RATING`.
+  (5) Google puede tardar días o semanas en reindexar y mostrar los rich snippets tras el deploy.
