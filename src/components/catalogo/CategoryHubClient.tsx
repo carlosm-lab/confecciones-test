@@ -111,7 +111,10 @@ export function CategoryHubClient() {
       <section className="bg-surface px-5 pt-6 pb-0 md:px-8">
         <div className="mx-auto max-w-screen-2xl">
           <Breadcrumb
-            items={[{ label: "Inicio", href: "/" }, { label: "Catálogo" }]}
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Catálogo", href: "/catalogo" },
+            ]}
             className="animate-fade-in-up mb-6"
           />
           <h1

@@ -236,7 +236,10 @@ export default function ContactoPage() {
           {/* ── Header ──────────────────────────────────────────── */}
           <section className="flex flex-col items-start pt-6 pb-0 text-left">
             <Breadcrumb
-              items={[{ label: "Inicio", href: "/" }, { label: "Contacto" }]}
+              items={[
+                { label: "Inicio", href: "/" },
+                { label: "Contacto", href: "/contacto" },
+              ]}
               className="animate-fade-in-up mb-6 justify-start"
             />
 

@@ -195,7 +195,10 @@ export function LinksPageClient() {
       <div className="px-5 pt-6 pb-2 md:px-8">
         <div className="relative mx-auto max-w-screen-2xl">
           <Breadcrumb
-            items={[{ label: "Inicio", href: "/" }, { label: "Enlaces" }]}
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Enlaces", href: "/links" },
+            ]}
             className="animate-fade-in-up mb-4"
           />
         </div>

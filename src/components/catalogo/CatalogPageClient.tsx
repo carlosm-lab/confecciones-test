@@ -195,7 +195,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
           items={[
             { label: "Inicio", href: "/" },
             { label: "Catálogo", href: "/catalogo" },
-            { label: config.subtitle },
+            { label: config.subtitle, href: `/catalogo/${sector}` },
           ]}
         />
       </div>

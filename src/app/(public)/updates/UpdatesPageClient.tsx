@@ -194,6 +194,28 @@ const CHANGELOG: VersionGroup[] = [
         commit: "pendiente",
         note: "Solución definitiva. Elimina 4 iteraciones previas de parches sobre el mismo bug.",
       },
+      {
+        id: "e-133",
+        date: "2026-06-17",
+        category: "fix",
+        title:
+          "Breadcrumbs: href obligatorio en todos los items de todas las páginas",
+        description:
+          "Root cause: los items de breadcrumb en todas las páginas públicas pasaban el último item sin href (ej: { label: 'Contacto' }), lo que hacía que el componente lo renderizara como <span> en lugar de <Link>. Fix aplicado en 7 páginas: contacto/page.tsx (href:/contacto), servicios/page.tsx (href:/servicios), links/LinksPageClient.tsx (href:/links), legal/page.tsx (href:/legal), updates/UpdatesPageClient.tsx (href:/updates), catalogo/CategoryHubClient.tsx (href:/catalogo), y CatalogPageClient.tsx (href:/catalogo/:sector). El componente Breadcrumb.tsx ya estaba corregido en e-131 para renderizar Link siempre que haya href.",
+        commit: "pendiente",
+        note: "Impacta 7 archivos. No modifica Breadcrumb.tsx ni ninguna otra lógica.",
+      },
+      {
+        id: "e-134",
+        date: "2026-06-17",
+        category: "fix",
+        title:
+          "Botón cerrar desktop: CSS Grid dos columnas + position:sticky (solución definitiva sin header)",
+        description:
+          "Root cause de todos los intentos previos: ningún approach de posicionamiento (float, sticky sobre overflow, absolute) puede garantizar margen persistente entre el botón y el texto durante el scroll, salvo que el botón y el texto estén en contenedores FÍSICAMENTE separados. Solución: CSS Grid de dos columnas dentro del paper scrolleable. Columna 1 (1fr): todo el contenido del artículo (breadcrumbs, header, body). Columna 2 (64px): el botón de cierre con position:sticky; top:12px. Las dos columnas son tracks separados del grid — el texto en la columna 1 NUNCA puede llegar a la columna 2 independientemente del scroll. El botón permanece a 12px del borde superior visible y a 12px del borde derecho (paddingRight:12px) en todo momento. La celda del botón se extiende al alto completo de la fila (= alto del contenido), por lo que el sticky se mantiene durante todo el scroll. Sin header, sin overlay, sin posicionamiento absoluto con riesgo de solapamiento.",
+        commit: "pendiente",
+        note: "Solución arquitectónica definitiva. Elimina el header bar. Solo afecta LegalArticleReader.tsx.",
+      },
     ],
   },
   {
@@ -984,7 +1006,10 @@ export function UpdatesPageClient() {
         <div className="mx-auto max-w-screen-2xl">
           {/* Breadcrumb */}
           <Breadcrumb
-            items={[{ label: "Inicio", href: "/" }, { label: "Updates" }]}
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Updates", href: "/updates" },
+            ]}
             className="animate-fade-in-up mb-6"
           />
 

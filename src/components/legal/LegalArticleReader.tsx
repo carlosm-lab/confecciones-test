@@ -212,100 +212,127 @@ export default function LegalArticleReader({
         if (e.key === "Escape") handleClose();
       }}
     >
-      {/* Wrapper — relative so the button can be absolute-positioned over the paper */}
+      {/* Paper — single scrollable container, NO structural header of any kind */}
       <div
-        className="relative mx-3 w-full"
-        style={{ maxWidth: 850, maxHeight: "98vh" }}
+        role="article"
+        className="mx-3 w-full bg-white"
+        style={{
+          maxWidth: 850,
+          maxHeight: "98vh",
+          overflowY: "auto",
+          overflowX: "hidden",
+          overscrollBehavior: "contain",
+          borderRadius: 4,
+          boxShadow: "0 25px 60px -12px rgba(0,0,0,0.55)",
+          borderTop: "1px solid #E2E8F0",
+          borderBottom: "1px solid #E2E8F0",
+          scrollbarWidth: "thin",
+          scrollbarColor: "#CBD5E1 transparent",
+        }}
       >
-        {/* ── Floating close button ─────────────────────────────────────────
-            position:absolute keeps it anchored to the paper corner without
-            scrolling and without any extra structural element (no white bar).
-            top:12px + right:12px = 12 px from both the top and right edges
-            of the paper → perfectly symmetric from the page border. */}
-        <button
-          onClick={handleClose}
-          aria-label="Cerrar y volver a documentos legales"
-          className="absolute z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
-          style={{ top: 12, right: 12 }}
-        >
-          <IconClose />
-        </button>
+        {/* ── CSS Grid two-column layout ───────────────────────────────────
+            Column 1 (1fr)  : all article content — breadcrumbs, header, body
+            Column 2 (64px) : close button, position:sticky
 
-        {/* ── Scrollable paper sheet ───────────────────────────────────────
-            paddingTop:64px = 12px (gap above btn) + 40px (btn height) + 12px
-            (breathing room) → first content always starts below the button. */}
+            The columns are separate grid tracks.
+            Text in column 1 can NEVER reach column 2 regardless of scroll.
+            position:sticky + top:12px on the button cell keeps the button
+            pinned exactly 12px from the paper's visible top at all times.
+            The cell stretches to the full row height (= content height),
+            so sticking persists throughout the entire document scroll.
+            No header bar. No structural overlay. No absolute positioning.  */}
         <div
-          role="article"
-          className="w-full bg-white"
           style={{
-            maxHeight: "98vh",
-            overflowY: "auto",
-            overflowX: "hidden",
-            overscrollBehavior: "contain",
-            borderRadius: 4,
-            boxShadow: "0 25px 60px -12px rgba(0,0,0,0.55)",
-            borderTop: "1px solid #E2E8F0",
-            borderBottom: "1px solid #E2E8F0",
-            scrollbarWidth: "thin",
-            scrollbarColor: "#CBD5E1 transparent",
-            paddingTop: "64px",
-            paddingRight: "40px",
-            paddingBottom: "60px",
-            paddingLeft: "40px",
+            display: "grid",
+            gridTemplateColumns: "1fr 64px",
           }}
         >
-          {/* Breadcrumbs */}
-          <div className="pb-2">
-            <Breadcrumb items={breadcrumbItems} className="justify-start" />
-          </div>
-
-          {/* Article header */}
-          <header className="mb-8 border-b border-slate-200 pt-3 pb-6 text-center">
-            <span className="mb-3 inline-block rounded-md bg-blue-50 px-3 py-1 text-[11px] font-bold tracking-widest text-blue-600 uppercase">
-              {category}
-            </span>
-
-            <h1
-              className="mb-4 text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
-              {title}
-            </h1>
-
-            <div className="flex items-center justify-center gap-5 text-sm text-slate-500">
-              <span className="flex items-center gap-1.5">
-                <IconCal />
-                {date}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <IconClock />
-                {readingTime} min lectura
-              </span>
-            </div>
-          </header>
-
-          {/* Article content */}
+          {/* ── Close button cell (column 2, sticky top:12px) ─────────────── */}
           <div
-            className="space-y-6 text-slate-600"
             style={{
-              fontSize: "1.05rem",
-              lineHeight: 1.75,
-              fontFamily: "'Georgia', 'Times New Roman', serif",
+              gridColumn: "2 / 3",
+              gridRow: "1",
+              position: "sticky",
+              top: "12px",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-start",
+              paddingRight: "12px",
             }}
           >
-            {children}
+            <button
+              onClick={handleClose}
+              aria-label="Cerrar y volver a documentos legales"
+              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
+            >
+              <IconClose />
+            </button>
           </div>
 
-          {/* Footer nav */}
-          <footer className="mt-12 border-t border-slate-100 pt-6 text-center">
-            <Link
-              href="/legal"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800"
+          {/* ── Content cell (column 1) ──────────────────────────────────── */}
+          <div
+            style={{
+              gridColumn: "1 / 2",
+              gridRow: "1",
+              paddingTop: "20px",
+              paddingRight: "8px",
+              paddingBottom: "60px",
+              paddingLeft: "40px",
+            }}
+          >
+            {/* Breadcrumbs */}
+            <div className="pt-3 pb-2">
+              <Breadcrumb items={breadcrumbItems} className="justify-start" />
+            </div>
+
+            {/* Article header */}
+            <header className="mb-8 border-b border-slate-200 pt-3 pb-6 text-center">
+              <span className="mb-3 inline-block rounded-md bg-blue-50 px-3 py-1 text-[11px] font-bold tracking-widest text-blue-600 uppercase">
+                {category}
+              </span>
+
+              <h1
+                className="mb-4 text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                {title}
+              </h1>
+
+              <div className="flex items-center justify-center gap-5 text-sm text-slate-500">
+                <span className="flex items-center gap-1.5">
+                  <IconCal />
+                  {date}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <IconClock />
+                  {readingTime} min lectura
+                </span>
+              </div>
+            </header>
+
+            {/* Article content */}
+            <div
+              className="space-y-6 text-slate-600"
+              style={{
+                fontSize: "1.05rem",
+                lineHeight: 1.75,
+                fontFamily: "'Georgia', 'Times New Roman', serif",
+              }}
             >
-              <IconBack />
-              Volver a documentos legales
-            </Link>
-          </footer>
+              {children}
+            </div>
+
+            {/* Footer nav */}
+            <footer className="mt-12 border-t border-slate-100 pt-6 text-center">
+              <Link
+                href="/legal"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800"
+              >
+                <IconBack />
+                Volver a documentos legales
+              </Link>
+            </footer>
+          </div>
         </div>
       </div>
     </div>
