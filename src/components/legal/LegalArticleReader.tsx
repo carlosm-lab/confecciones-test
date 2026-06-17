@@ -251,7 +251,13 @@ export default function LegalArticleReader({
         <button
           onClick={handleClose}
           aria-label="Cerrar y volver a documentos legales"
-          style={{ position: "absolute", top: 12, right: 12, zIndex: 20 }}
+          style={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            zIndex: 20,
+            cursor: "pointer",
+          }}
           className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
         >
           <IconClose />
@@ -279,7 +285,7 @@ export default function LegalArticleReader({
             paddingTop: "12px",
             paddingRight: "64px",
             paddingBottom: "60px",
-            paddingLeft: "64px",
+            paddingLeft: "12px",
           }}
         >
           {/* Breadcrumbs */}
