@@ -1,12 +1,17 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useState, useEffect, useRef, useMemo, useTransition } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ALL_PRODUCTS } from "@/data/products";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
 import { siteConfig } from "@/config/site";
+import { getSupabaseClient } from "@/lib/supabaseClient";
+import {
+  getProductMainImage,
+  getProductSector,
+  type DbProduct,
+} from "@/lib/catalogService";
 
 /* ─── Sector order for category chips ─── */
 const SECTOR_ORDER: Sector[] = [
@@ -25,19 +30,25 @@ interface SearchModalProps {
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<DbProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
+  const [, startTransition] = useTransition();
   const router = useRouter();
 
   /* ── Lock body scroll + auto-focus + reset query ── */
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setQuery("");
-      const timer = setTimeout(() => inputRef.current?.focus(), 50);
+      // Reset state asynchronously to avoid react-hooks/set-state-in-effect
+      const resetTimer = setTimeout(() => {
+        setQuery("");
+        setResults([]);
+      }, 0);
+      const focusTimer = setTimeout(() => inputRef.current?.focus(), 50);
       return () => {
-        clearTimeout(timer);
+        clearTimeout(resetTimer);
+        clearTimeout(focusTimer);
         document.body.style.overflow = "";
       };
     }
@@ -47,7 +58,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   /* ── Escape to close ── */
   useEffect(() => {
     if (!isOpen) return;
-
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
     }
@@ -55,78 +65,95 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
-  /* ── Close on backdrop click ── */
-  const handleBackdropMouseDown = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (e.target === backdropRef.current) onClose();
-    },
-    [onClose]
-  );
+  /* ── Close on backdrop click handled by button below ── */
 
-  /* ── Search logic ── */
-  const allMatches = useMemo(() => {
-    if (query.length < 2) return [];
-    const q = query.toLowerCase().trim();
-    return ALL_PRODUCTS.filter((p) => {
-      const searchables = [
-        p.nombre,
-        p.sector,
-        p.tipo,
-        p.categoria,
-        p.descripcionCorta ?? "",
-      ]
-        .join(" ")
-        .toLowerCase();
-      return searchables.includes(q);
-    });
+  /* ── Debounced search against Supabase ── */
+  useEffect(() => {
+    if (query.length < 2) {
+      // No setState directly — use a dedicated cleanup path
+      const timer = setTimeout(() => {
+        setResults([]);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+
+    const timer = setTimeout(() => {
+      startTransition(() => {
+        setIsLoading(true);
+        const supabase = getSupabaseClient();
+        supabase
+          .from("products")
+          .select(
+            `id, name, description, short_description, price, old_price,
+             image_path, images, slug, sector, category, badge_text,
+             categories(name, catalog)`
+          )
+          .eq("is_active", true)
+          .ilike("name", `%${query}%`)
+          .limit(8)
+          .then(
+            ({
+              data,
+              error,
+            }: {
+              data: unknown[] | null;
+              error: { message: string } | null;
+            }) => {
+              if (!error && data) {
+                setResults(data as unknown as DbProduct[]);
+              }
+              setIsLoading(false);
+            }
+          );
+      });
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [query]);
 
-  const visibleResults = allMatches.slice(0, 6);
-  const hasMoreResults = allMatches.length > 6;
+  const visibleResults = useMemo(() => results.slice(0, 6), [results]);
+  const hasMoreResults = results.length > 6;
   const isSearching = query.length >= 2;
-  const noResults = isSearching && allMatches.length === 0;
+  const noResults = isSearching && !isLoading && results.length === 0;
 
-  /* ── Navigation handlers ── */
-  const navigateToProduct = useCallback(
-    (product: (typeof ALL_PRODUCTS)[number]) => {
-      onClose();
-      const message = encodeURIComponent(
-        `¡Hola! Me interesa el producto: ${product.nombre} ($${product.precio.toFixed(2)}). ¿Está disponible?`
-      );
-      window.open(
-        `${siteConfig.links.whatsappDirect}?text=${message}`,
-        "_blank",
-        "noopener,noreferrer"
-      );
-    },
-    [onClose]
-  );
+  /* ── Navigate to product page ── */
+  function navigateToProduct(product: DbProduct) {
+    onClose();
+    const sector = getProductSector(product);
+    const slug = product.slug ?? product.id;
+    router.push(`/catalogo/${sector}/${slug}`);
+  }
 
-  const handleChipClick = useCallback((label: string) => {
-    setQuery(label);
-  }, []);
+  function handleChipClick(sector: Sector) {
+    onClose();
+    router.push(`/catalogo/${sector}`);
+  }
 
   if (!isOpen) return null;
 
   return (
-    /* Backdrop — uses onMouseDown on the ref'd div to avoid a11y issues with role="dialog" */
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <div
-      ref={backdropRef}
       className="fixed inset-0 z-[999] flex items-start justify-center bg-black/50 pt-[8vh] backdrop-blur-sm sm:pt-[12vh]"
       role="dialog"
       aria-modal="true"
       aria-label="Buscar productos"
-      onMouseDown={handleBackdropMouseDown}
     >
-      <div className="mx-4 flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+      {/* Invisible backdrop button for click-to-close */}
+      <button
+        type="button"
+        className="fixed inset-0 z-0 h-full w-full cursor-default"
+        onClick={onClose}
+        aria-label="Cerrar buscador"
+        tabIndex={-1}
+      />
+      <div className="relative z-10 mx-4 flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
         {/* ── Search Input Header ── */}
         <div className="flex items-center gap-3 border-b border-gray-100 px-5 py-4">
           <span
             className="material-symbols-outlined text-primary shrink-0 text-[22px]"
             aria-hidden="true"
           >
-            search
+            {isLoading ? "sync" : "search"}
           </span>
           <input
             ref={inputRef}
@@ -165,7 +192,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   return (
                     <button
                       key={sector}
-                      onClick={() => handleChipClick(config.subtitle)}
+                      onClick={() => handleChipClick(sector)}
                       className="border-primary/15 text-primary hover:bg-primary hover:text-on-primary flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-sm font-medium transition-colors"
                     >
                       <span
@@ -179,6 +206,18 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   );
                 })}
               </div>
+            </div>
+          )}
+
+          {/* State: Loading */}
+          {isLoading && (
+            <div className="flex items-center justify-center py-10">
+              <span
+                className="material-symbols-outlined text-primary animate-spin text-4xl"
+                aria-hidden="true"
+              >
+                progress_activity
+              </span>
             </div>
           )}
 
@@ -202,71 +241,102 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           )}
 
           {/* State: Results */}
-          {isSearching && allMatches.length > 0 && (
+          {isSearching && !isLoading && visibleResults.length > 0 && (
             <div>
               {/* Results header */}
               <div className="mb-3 flex items-center justify-between">
                 <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase">
-                  {allMatches.length}{" "}
-                  {allMatches.length === 1 ? "resultado" : "resultados"}
+                  {results.length}{" "}
+                  {results.length === 1 ? "resultado" : "resultados"}
+                  {hasMoreResults && " (mostrando 6)"}
                 </p>
               </div>
 
-              {/* Results grid */}
+              {/* Results list */}
               <div className="space-y-2">
-                {visibleResults.map((product) => (
-                  <button
-                    key={product.id}
-                    onClick={() => navigateToProduct(product)}
-                    className="group flex w-full items-center gap-3.5 rounded-xl px-2 py-2.5 text-left transition-colors hover:bg-gray-50"
-                  >
-                    {/* Thumbnail */}
-                    <div className="bg-surface-container-low relative size-14 shrink-0 overflow-hidden rounded-lg">
-                      {product.imagen ? (
-                        <Image
-                          src={product.imagen}
-                          alt={product.nombre}
-                          fill
-                          sizes="56px"
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center">
-                          <span
-                            className="material-symbols-outlined text-2xl text-gray-300"
-                            aria-hidden="true"
-                          >
-                            image
-                          </span>
-                        </div>
-                      )}
-                    </div>
+                {visibleResults.map((product) => {
+                  const imagen = getProductMainImage(product);
+                  const sector = getProductSector(product);
+                  const slug = product.slug ?? product.id;
+                  const categoryName =
+                    product.categories?.name ?? product.category ?? sector;
+                  const price = Number(product.price);
 
-                    {/* Info */}
-                    <div className="min-w-0 flex-1">
-                      <p className="text-on-surface truncate text-sm font-semibold">
-                        {product.nombre}
-                      </p>
-                      <p className="mt-0.5 truncate text-xs text-gray-500">
-                        {product.categoria} ·{" "}
-                        {CATEGORIES[product.sector as Sector]?.subtitle ??
-                          product.sector}
-                      </p>
-                      <p className="text-primary mt-0.5 text-sm font-bold">
-                        ${product.precio.toFixed(2)}
-                      </p>
-                    </div>
-
-                    {/* Arrow */}
-                    <span
-                      className="material-symbols-outlined shrink-0 text-lg text-gray-300 transition-all group-hover:translate-x-0.5 group-hover:text-gray-500"
-                      aria-hidden="true"
+                  return (
+                    <button
+                      key={product.id}
+                      onClick={() => navigateToProduct(product)}
+                      className="group flex w-full items-center gap-3.5 rounded-xl px-2 py-2.5 text-left transition-colors hover:bg-gray-50"
                     >
-                      arrow_forward_ios
-                    </span>
-                  </button>
-                ))}
+                      {/* Thumbnail */}
+                      <div className="bg-surface-container-low relative size-14 shrink-0 overflow-hidden rounded-lg">
+                        {imagen ? (
+                          <Image
+                            src={imagen}
+                            alt={product.name}
+                            fill
+                            sizes="56px"
+                            className="object-cover"
+                            unoptimized={
+                              imagen.startsWith("http") &&
+                              !imagen.includes("supabase.co")
+                            }
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center">
+                            <span
+                              className="material-symbols-outlined text-2xl text-gray-300"
+                              aria-hidden="true"
+                            >
+                              image
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Info */}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-on-surface truncate text-sm font-semibold">
+                          {product.name}
+                        </p>
+                        <p className="mt-0.5 truncate text-xs text-gray-500">
+                          {categoryName} ·{" "}
+                          {CATEGORIES[sector as Sector]?.subtitle ?? sector}
+                        </p>
+                        <p className="text-primary mt-0.5 text-sm font-bold">
+                          ${price.toFixed(2)}
+                          {product.price_suffix && (
+                            <span className="ml-0.5 text-xs font-normal text-slate-400">
+                              {product.price_suffix}
+                            </span>
+                          )}
+                        </p>
+                      </div>
+
+                      {/* Arrow */}
+                      <span
+                        className="material-symbols-outlined shrink-0 text-lg text-gray-300 transition-all group-hover:translate-x-0.5 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      >
+                        arrow_forward_ios
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
+
+              {/* See all results */}
+              {hasMoreResults && (
+                <button
+                  onClick={() => {
+                    onClose();
+                    window.location.href = `/catalogo`;
+                  }}
+                  className="text-primary mt-3 w-full rounded-xl py-2 text-center text-sm font-semibold hover:bg-gray-50"
+                >
+                  Ver todos los resultados →
+                </button>
+              )}
             </div>
           )}
         </div>

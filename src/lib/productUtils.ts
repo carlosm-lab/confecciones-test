@@ -3,6 +3,21 @@
 // ──────────────────────────────────────────────────────────────
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+export type OfferType =
+  | "temporal"
+  | "indefinida"
+  | "nuevos_usuarios"
+  | "frecuentes"
+  | "por_talla";
+
+export const OFFER_TYPE_LABELS: Record<OfferType, string> = {
+  temporal: "Temporal (con fecha límite)",
+  indefinida: "Indefinida (sin fecha límite)",
+  nuevos_usuarios: "Solo nuevos clientes",
+  frecuentes: "Solo clientes frecuentes",
+  por_talla: "Por talla específica",
+};
+
 export interface Product {
   id?: string;
   name?: string;
@@ -10,17 +25,37 @@ export interface Product {
   old_price?: number | string | null;
   offer_starts_at?: string | null;
   offer_ends_at?: string | null;
+  /** Tipo de oferta. 'temporal' por defecto. */
+  offer_type?: OfferType | null;
   image_path?: string | null;
   images?: string[];
   category?: string | null;
   category_id?: string | null;
+  /** Campo virtual (join con categories) — NO columna real en DB */
   catalog?: string | null;
   tags?: string[];
   description?: string | null;
+  short_description?: string | null;
   is_active?: boolean;
   slug?: string;
   created_at?: string;
-  categories?: { name: string } | null;
+  updated_at?: string;
+  categories?: { name: string; catalog?: string } | null;
+  // Campos del catálogo público
+  sector?: string | null;
+  badge_text?: string | null;
+  price_suffix?: string | null;
+  tallas?: string[] | null;
+  colores?: { name: string; hex: string }[] | null;
+  material?: string | null;
+  caracteristicas?: string[] | null;
+  // Precios avanzados
+  /** Precio por mayoreo (null = no aplica mayoreo) */
+  wholesale_price?: number | null;
+  /** Cantidad mínima para precio mayoreo (mínimo 2) */
+  wholesale_min_qty?: number | null;
+  /** Precio solo mano de obra (cliente trae la tela) */
+  labor_price?: number | null;
 }
 
 /**

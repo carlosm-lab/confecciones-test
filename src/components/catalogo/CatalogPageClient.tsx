@@ -2,47 +2,51 @@
 
 /**
  * CatalogPageClient — Confecciones Liss
- * Layout de catálogo pixel-fiel al TechCatalogPage de Padilla Store:
- * - Sidebar sticky desktop con FilterSidebar
- * - H1 + barra superior de ordenamiento
- * - Grid responsive 2→3→4 columnas
- * - Paginación con chevrons
- * - MobileFilterDrawer
- * - Estado vacío elegante
+ * Recibe productos iniciales del servidor (SSR) y permite
+ * filtrado/ordenamiento en el cliente sin hardcoding.
  */
 
 import { useState, useMemo, useRef, useEffect } from "react";
-import { ALL_PRODUCTS } from "@/data/products";
 import { FilterSidebar, type ActiveFilters } from "./FilterSidebar";
 import { MobileFilterDrawer, type SortOption } from "./MobileFilterDrawer";
 import { CatalogProductCard } from "./CatalogProductCard";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import type { CategoryConfig, Product, Sector } from "@/data/types";
+import type { CategoryConfig, Sector } from "@/data/types";
+import type { DbProduct } from "@/lib/catalogService";
+import { isProductOnSale } from "@/lib/catalogService";
 
 const ITEMS_PER_PAGE = 15;
 
 interface CatalogPageClientProps {
   sector: Sector;
   config: CategoryConfig;
+  initialProducts: DbProduct[];
 }
 
-function applySort(products: Product[], sortBy: SortOption): Product[] {
+function applySort(products: DbProduct[], sortBy: SortOption): DbProduct[] {
   const sorted = [...products];
   switch (sortBy) {
     case "price-low":
-      return sorted.sort((a, b) => a.precio - b.precio);
+      return sorted.sort((a, b) => Number(a.price) - Number(b.price));
     case "price-high":
-      return sorted.sort((a, b) => b.precio - a.precio);
+      return sorted.sort((a, b) => Number(b.price) - Number(a.price));
     case "newest":
-      // Without a date field we just reverse insertion order
-      return sorted.reverse();
+      return sorted.sort(
+        (a, b) =>
+          new Date(b.created_at ?? 0).getTime() -
+          new Date(a.created_at ?? 0).getTime()
+      );
     case "best-selling":
     default:
       return sorted;
   }
 }
 
-export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
+export function CatalogPageClient({
+  sector,
+  config,
+  initialProducts,
+}: CatalogPageClientProps) {
   const [sortBy, setSortBy] = useState<SortOption>("best-selling");
   const [currentPage, setCurrentPage] = useState(1);
   const [activeFilters, setActiveFilters] = useState<ActiveFilters>({});
@@ -79,47 +83,49 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
     }
   }
 
-  // Base products for this sector
-  const sectorProducts = useMemo(
-    () => ALL_PRODUCTS.filter((p) => p.sector === sector),
-    [sector]
-  );
-
-  // Apply filters
+  // Apply filters client-side against the SSR-loaded products
   const filteredProducts = useMemo(() => {
-    let result = sectorProducts;
+    let result = initialProducts;
 
-    // Filter by active filter groups
+    // Filter by active filter groups (tipo/categoria/tallas)
     for (const [field, values] of Object.entries(activeFilters)) {
       if (values.length === 0) continue;
       result = result.filter((p) => {
-        const productValue = (p as unknown as Record<string, unknown>)[field];
+        // Map legacy filter fields to DbProduct fields
+        const fieldMap: Record<string, keyof DbProduct> = {
+          tipo: "category",
+          tallas: "tallas",
+          categoria: "category",
+          sector: "sector",
+        };
+        const dbField = fieldMap[field] ?? (field as keyof DbProduct);
+        const productValue = p[dbField];
+
         if (Array.isArray(productValue)) {
-          // e.g. tallas: ["S", "M", "L"]
           return values.some((v) =>
-            (productValue as unknown[]).some(
-              (pv) =>
-                String(pv) === v ||
-                (typeof pv === "object" &&
-                  pv !== null &&
-                  "value" in pv &&
-                  (pv as { value: string }).value === v)
+            (productValue as string[]).some(
+              (pv) => String(pv).toLowerCase() === v.toLowerCase()
             )
           );
         }
-        return values.includes(String(productValue ?? ""));
+        return values.some(
+          (v) =>
+            String(productValue ?? "").toLowerCase() === v.toLowerCase() ||
+            // Support label-based matching (e.g. "UNIVO" matches category slug "univo")
+            String(productValue ?? "")
+              .toLowerCase()
+              .includes(v.toLowerCase())
+        );
       });
     }
 
     // Filter on-sale
     if (onSaleOnly) {
-      result = result.filter(
-        (p) => p.precioAnterior != null && p.precioAnterior > p.precio
-      );
+      result = result.filter((p) => isProductOnSale(p));
     }
 
     return applySort(result, sortBy);
-  }, [sectorProducts, activeFilters, onSaleOnly, sortBy]);
+  }, [initialProducts, activeFilters, onSaleOnly, sortBy]);
 
   const totalCount = filteredProducts.length;
   const totalPages = Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE));
@@ -189,7 +195,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
 
   return (
     <div className="relative flex min-h-[calc(100dvh-56px)] w-full flex-col">
-      {/* Breadcrumbs full width above layout */}
+      {/* Breadcrumbs */}
       <div className="animate-fade-in-up mx-auto w-full max-w-screen-2xl px-5 pt-6 md:px-8 lg:absolute lg:top-0 lg:right-0 lg:left-0 lg:z-10">
         <Breadcrumb
           items={[
@@ -200,7 +206,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
         />
       </div>
 
-      {/* ── Main catalog layout ─────────────────────────────────────────── */}
+      {/* Main catalog layout */}
       <div className="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col gap-[var(--space-lg)] px-5 pt-6 pb-[var(--space-lg)] md:px-8 lg:flex-row lg:gap-12">
         {/* Desktop sidebar */}
         <div
@@ -271,82 +277,35 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
 
                 {isSortOpen && (
                   <div className="animate-in fade-in slide-in-from-top-2 absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl border border-slate-100 bg-white p-1.5 shadow-[0_10px_25px_rgba(20,48,103,0.12)] ring-1 ring-black/5 duration-150">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSortBy("best-selling");
-                        setIsSortOpen(false);
-                      }}
-                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all active:scale-[0.98] ${
-                        sortBy === "best-selling"
-                          ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
-                          : "text-slate-700 hover:bg-slate-50"
-                      }`}
-                    >
-                      <span>Recomendados</span>
-                      {sortBy === "best-selling" && (
-                        <span className="material-symbols-outlined text-[16px]">
-                          check
-                        </span>
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSortBy("newest");
-                        setIsSortOpen(false);
-                      }}
-                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all active:scale-[0.98] ${
-                        sortBy === "newest"
-                          ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
-                          : "text-slate-700 hover:bg-slate-50"
-                      }`}
-                    >
-                      <span>Más Nuevos</span>
-                      {sortBy === "newest" && (
-                        <span className="material-symbols-outlined text-[16px]">
-                          check
-                        </span>
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSortBy("price-low");
-                        setIsSortOpen(false);
-                      }}
-                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all active:scale-[0.98] ${
-                        sortBy === "price-low"
-                          ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
-                          : "text-slate-700 hover:bg-slate-50"
-                      }`}
-                    >
-                      <span>Precio: Menor a Mayor</span>
-                      {sortBy === "price-low" && (
-                        <span className="material-symbols-outlined text-[16px]">
-                          check
-                        </span>
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSortBy("price-high");
-                        setIsSortOpen(false);
-                      }}
-                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all active:scale-[0.98] ${
-                        sortBy === "price-high"
-                          ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
-                          : "text-slate-700 hover:bg-slate-50"
-                      }`}
-                    >
-                      <span>Precio: Mayor a Menor</span>
-                      {sortBy === "price-high" && (
-                        <span className="material-symbols-outlined text-[16px]">
-                          check
-                        </span>
-                      )}
-                    </button>
+                    {(
+                      [
+                        { key: "best-selling", label: "Recomendados" },
+                        { key: "newest", label: "Más Nuevos" },
+                        { key: "price-low", label: "Precio: Menor a Mayor" },
+                        { key: "price-high", label: "Precio: Mayor a Menor" },
+                      ] as { key: SortOption; label: string }[]
+                    ).map(({ key, label }) => (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => {
+                          setSortBy(key);
+                          setIsSortOpen(false);
+                        }}
+                        className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all active:scale-[0.98] ${
+                          sortBy === key
+                            ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
+                            : "text-slate-700 hover:bg-slate-50"
+                        }`}
+                      >
+                        <span>{label}</span>
+                        {sortBy === key && (
+                          <span className="material-symbols-outlined text-[16px]">
+                            check
+                          </span>
+                        )}
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
@@ -400,7 +359,6 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
               {/* Pagination */}
               {totalPages > 1 && (
                 <div className="mt-[var(--space-xl)] flex items-center justify-center gap-[var(--space-xs)]">
-                  {/* Prev */}
                   {currentPage === 1 ? (
                     <span className="flex aspect-square min-h-[44px] w-11 min-w-[44px] items-center justify-center rounded-lg border border-slate-200 text-slate-600 opacity-30">
                       <span className="material-symbols-outlined">
@@ -420,7 +378,6 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
                     </button>
                   )}
 
-                  {/* Page numbers */}
                   {pageNumbers.map((page, index) => {
                     const prev = pageNumbers[index - 1];
                     return (
@@ -452,7 +409,6 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
                     );
                   })}
 
-                  {/* Next */}
                   {currentPage === totalPages ? (
                     <span className="flex aspect-square min-h-[44px] w-11 min-w-[44px] items-center justify-center rounded-lg border border-slate-200 text-slate-600 opacity-30">
                       <span className="material-symbols-outlined">

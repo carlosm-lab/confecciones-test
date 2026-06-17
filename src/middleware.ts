@@ -6,8 +6,11 @@ import { env } from "@/env";
  * Routes that are blocked in production even when HOME_ONLY is disabled.
  * These pages are not ready for public access yet.
  * The middleware redirects them back to home.
+ *
+ * NOTE: /catalogo and /carrito have been removed — the catalog is now
+ * fully dynamic (Supabase) and ready for production.
  */
-const BLOCKED_ROUTES = ["/servicios", "/catalogo", "/carrito", "/mi-cuenta"];
+const BLOCKED_ROUTES = ["/servicios", "/mi-cuenta"];
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();

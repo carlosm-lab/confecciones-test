@@ -3,10 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CATEGORIES } from "@/data/categories";
-import { ALL_PRODUCTS } from "@/data/products";
 import type { Sector } from "@/data/types";
 import { cn } from "@/lib/utils";
-import { useMemo } from "react";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 /** Ordered list of sectors for the hub grid */
@@ -44,7 +42,7 @@ function CategoryCard({
       )}
       aria-label={`Ver catálogo de ${config.subtitle}: ${config.hubTagline}`}
     >
-      {/* Category Image - Visual focus with floating action link */}
+      {/* Category Image */}
       <div className="relative aspect-[32/15] max-h-[150px] w-full overflow-hidden bg-gray-50 sm:max-h-none">
         <Image
           src={config.hubImage}
@@ -55,7 +53,6 @@ function CategoryCard({
           priority={sector === "scrubs" || sector === "universitario"}
         />
 
-        {/* Indicador visual de navegación (siempre visible) */}
         <div className="bg-primary absolute top-3 right-3 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300">
           <span
             className="material-symbols-outlined text-[15px] font-semibold @[280px]:text-[17px]"
@@ -66,9 +63,8 @@ function CategoryCard({
         </div>
       </div>
 
-      {/* Information Panel - Sólido, altamente legible, contraste AAA */}
+      {/* Information Panel */}
       <div className="p-3 @[280px]:p-3.5 @[320px]:p-4">
-        {/* Title, Icon & Product Count */}
         <div className="mb-2 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1.5">
             <span
@@ -86,7 +82,6 @@ function CategoryCard({
           </span>
         </div>
 
-        {/* Description / Tagline */}
         <p className="text-on-surface-variant mt-1 line-clamp-2 text-[9px] leading-snug transition-all @[280px]:text-[10px] @[320px]:text-[11px] @[360px]:text-[12px]">
           {config.hubTagline}
         </p>
@@ -95,19 +90,15 @@ function CategoryCard({
   );
 }
 
-export function CategoryHubClient() {
-  // Compute product counts per sector
-  const productCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    for (const sector of SECTOR_ORDER) {
-      counts[sector] = ALL_PRODUCTS.filter((p) => p.sector === sector).length;
-    }
-    return counts;
-  }, []);
+interface CategoryHubClientProps {
+  /** Conteo de productos activos por sector, obtenido del servidor */
+  productCounts: Record<string, number>;
+}
 
+export function CategoryHubClient({ productCounts }: CategoryHubClientProps) {
   return (
     <>
-      {/* Page header — breadcrumb + h1 + description */}
+      {/* Page header */}
       <section className="bg-surface px-5 pt-6 pb-0 md:px-8">
         <div className="mx-auto max-w-screen-2xl">
           <Breadcrumb
@@ -136,7 +127,6 @@ export function CategoryHubClient() {
       {/* Category Grid */}
       <section className="bg-surface px-5 pt-12 pb-16 md:px-8 md:pb-24">
         <div className="mx-auto max-w-screen-2xl">
-          {/* Grid responsivo: 1 col móvil, 2 col tablet vertical, 3 col tablet horizontal, 4 col desktop */}
           <div className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:grid-cols-3 md:gap-8 xl:grid-cols-4">
             {SECTOR_ORDER.map((sector, index) => (
               <div

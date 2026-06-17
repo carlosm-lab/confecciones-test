@@ -44,6 +44,7 @@ import {
   STORAGE_CART_TIMESTAMP_KEY,
   STORAGE_CART_EXPIRED_KEY,
 } from "@/lib/constants";
+import type { ShippingInfo } from "@/lib/shipping";
 
 // ── Tipos ─────────────────────────────────────────────────────
 
@@ -58,6 +59,10 @@ export interface CartProduct {
   offer_ends_at?: string | null;
   offer_starts_at?: string | null;
   is_active?: boolean;
+  /** Talla seleccionada por el usuario */
+  selectedSize?: string | null;
+  /** Modo de precio: 'normal' | 'wholesale' | 'labor' */
+  priceMode?: "normal" | "wholesale" | "labor";
 }
 
 export interface CartItem {
@@ -87,6 +92,9 @@ interface CartContextValue {
   isRefreshingPrices: boolean;
   arePricesStale: boolean;
   consecutiveRefreshFailures: number;
+  /** Información de envío seleccionada por el usuario */
+  shippingInfo: ShippingInfo | null;
+  setShippingInfo: (info: ShippingInfo | null) => void;
 }
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
@@ -148,6 +156,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [lastSuccessfulRefresh, setLastSuccessfulRefresh] = useState(
     Date.now()
   );
+  const [shippingInfo, setShippingInfo] = useState<ShippingInfo | null>(null);
 
   // Debounce de 1.5s para sincronización con DB
   const debouncedCartItems = useDebounce(cartItems, 1500);
@@ -526,6 +535,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         isRefreshingPrices,
         arePricesStale,
         consecutiveRefreshFailures,
+        shippingInfo,
+        setShippingInfo,
       }}
     >
       {children}

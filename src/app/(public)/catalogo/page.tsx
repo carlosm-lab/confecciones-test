@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { ALL_PRODUCTS } from "@/data/products";
 import { CategoryHubClient } from "@/components/catalogo/CategoryHubClient";
 import { siteConfig } from "@/config/site";
+import { getProductCountsBySector } from "@/lib/catalogService";
 
 const PAGE_URL = `${siteConfig.url}/catalogo`;
 const PAGE_TITLE = "Catálogo de Uniformes por Categoría";
@@ -28,15 +28,22 @@ export const metadata: Metadata = {
     creator: siteConfig.twitterHandle,
   },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 };
 
-export default function CatalogoPage() {
+export default async function CatalogoPage() {
+  // Fetch product counts from Supabase server-side
+  const productCounts = await getProductCountsBySector();
+  const totalProducts = Object.values(productCounts).reduce(
+    (sum, n) => sum + n,
+    0
+  );
+
   return (
     <>
-      <CategoryHubClient />
+      <CategoryHubClient productCounts={productCounts} />
 
       {/* JSON-LD: CollectionPage */}
       <script
@@ -49,7 +56,7 @@ export default function CatalogoPage() {
             description:
               "Catálogo completo de uniformes médicos, universitarios, escolares y corporativos en San Miguel, El Salvador.",
             url: `${siteConfig.url}/catalogo`,
-            numberOfItems: ALL_PRODUCTS.length,
+            numberOfItems: totalProducts,
             provider: {
               "@type": "LocalBusiness",
               name: siteConfig.name,

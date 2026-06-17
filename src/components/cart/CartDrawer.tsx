@@ -1,18 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import type { CartItem } from "@/context/CartContext";
 import { formatPrice } from "@/lib/formatPrice";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
-import { useModal } from "@/hooks/useModal";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
 import toast from "react-hot-toast";
 import FocusLock from "react-focus-lock";
+import { DEPARTMENTS, getShippingInfo } from "@/lib/shipping";
+
+// Pasos del checkout
+type DrawerStep = "cart" | "shipping" | "confirm" | "sent";
 
 export function CartDrawer() {
   const {
@@ -25,42 +27,79 @@ export function CartDrawer() {
     isRefreshingPrices,
     arePricesStale,
     refreshCartPrices,
+    shippingInfo,
+    setShippingInfo,
   } = useCart();
 
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [orderSent, setOrderSent] = useState(false);
+  const [step, setStep] = useState<DrawerStep>("cart");
   const [isGeneratingMessage, setIsGeneratingMessage] = useState(false);
+  const [selectedDept, setSelectedDept] = useState("");
+  const [selectedMunicipality, setSelectedMunicipality] = useState("");
 
-  // Auto-refresh precios al abrir el drawer
+  const municipalities = useMemo(() => {
+    const dept = DEPARTMENTS.find((d) => d.name === selectedDept);
+    return dept?.municipalities ?? [];
+  }, [selectedDept]);
+
+  useEffect(() => {
+    setSelectedMunicipality("");
+  }, [selectedDept]);
+
+  useEffect(() => {
+    if (!isCartOpen) {
+      setStep("cart");
+      setSelectedDept("");
+      setSelectedMunicipality("");
+    }
+  }, [isCartOpen]);
+
   useEffect(() => {
     if (isCartOpen) {
       refreshCartPrices();
     }
   }, [isCartOpen, refreshCartPrices]);
 
-  // Cerrar con tecla Escape
+  useBodyScrollLock(isCartOpen);
+
+  const closeDrawer = useCallback(() => {
+    setStep("cart");
+    setIsCartOpen(false);
+  }, [setIsCartOpen]);
+
   useEffect(() => {
     if (!isCartOpen) return;
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsCartOpen(false);
+      if (e.key === "Escape") closeDrawer();
     };
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
-  }, [isCartOpen, setIsCartOpen]);
+  }, [isCartOpen, closeDrawer]);
 
-  useBodyScrollLock(isCartOpen);
+  const subtotal = cartItems.reduce((total, item) => {
+    return total + (item.product.price || 0) * item.quantity;
+  }, 0);
 
-  const calculateTotal = () =>
-    cartItems.reduce((total, item) => {
-      const price = item.product.price || 0;
-      return total + price * item.quantity;
-    }, 0);
+  const shippingCost = shippingInfo?.cost ?? 0;
+  const grandTotal = subtotal + shippingCost;
+
+  const handleConfirmShipping = () => {
+    if (!selectedDept) {
+      toast.error("Por favor selecciona un departamento.");
+      return;
+    }
+    if (!selectedMunicipality) {
+      toast.error("Por favor selecciona un municipio.");
+      return;
+    }
+    const info = getShippingInfo(selectedDept, selectedMunicipality);
+    setShippingInfo(info);
+    setStep("confirm");
+  };
 
   const handleWhatsAppOrder = async () => {
     const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(
       navigator.userAgent
     );
-
     let whatsappWindow: Window | null = null;
     if (!isMobileDevice) {
       whatsappWindow = window.open("about:blank", "_blank");
@@ -76,6 +115,10 @@ export function CartDrawer() {
         {
           items: cartItems,
           store_domain: window.location.origin,
+          shipping_department: shippingInfo?.department ?? null,
+          shipping_municipality: shippingInfo?.municipality ?? null,
+          shipping_cost: shippingInfo?.cost ?? 0,
+          shipping_label: shippingInfo?.label ?? null,
         }
       );
 
@@ -83,7 +126,7 @@ export function CartDrawer() {
       rawMessage = serverMessage as string;
     } catch (err) {
       logger.error("Error generando mensaje seguro:", err);
-      toast.error("Error al generar el pedido. Intenta nuevamente por favor.", {
+      toast.error("Error al generar el pedido. Intenta nuevamente.", {
         duration: 5000,
       });
       if (whatsappWindow) whatsappWindow.close();
@@ -93,9 +136,7 @@ export function CartDrawer() {
     }
 
     if (!rawMessage) {
-      toast.error(
-        "Error al generar el mensaje. Tu carrito podría estar vacío o tener productos inválidos."
-      );
+      toast.error("Error al generar el mensaje. Verifica tu carrito.");
       if (whatsappWindow) whatsappWindow.close();
       return;
     }
@@ -109,22 +150,19 @@ export function CartDrawer() {
         rawMessage
       );
       url = safeUrl;
-
       if (usedFallback) {
-        toast.error(
-          "El pedido es muy extenso para WhatsApp, enviando resumen...",
-          { duration: 5000 }
-        );
+        toast.error("El pedido es muy extenso, enviando resumen...", {
+          duration: 5000,
+        });
       }
     } catch (err) {
-      logger.error("Error de configuración de WhatsApp:", err);
-      toast.error("Error de configuración: Número de vendedor inválido.");
+      logger.error("Error de configuracion de WhatsApp:", err);
+      toast.error("Error de configuracion: Numero de vendedor invalido.");
       if (whatsappWindow) whatsappWindow.close();
       return;
     }
 
-    setOrderSent(true);
-    setShowConfirm(false);
+    setStep("sent");
 
     setTimeout(() => {
       try {
@@ -139,22 +177,15 @@ export function CartDrawer() {
         }
       } catch (e) {
         logger.error("Error al redirigir a WhatsApp:", e);
-        toast(`Abre WhatsApp manualmente al ${rawPhoneNumber}`, {
-          icon: "📱",
-        });
+        toast(`Abre WhatsApp manualmente al ${rawPhoneNumber}`, { icon: "📱" });
       }
     }, 100);
   };
 
   const handleFinishAndClear = () => {
     clearCart();
-    setOrderSent(false);
-    setIsCartOpen(false);
-  };
-
-  const closeDrawer = () => {
-    setShowConfirm(false);
-    setOrderSent(false);
+    setShippingInfo(null);
+    setStep("cart");
     setIsCartOpen(false);
   };
 
@@ -192,7 +223,7 @@ export function CartDrawer() {
               >
                 shopping_cart
               </span>
-              Tu Carrito
+              {step === "shipping" ? "Datos de Entrega" : "Tu Carrito"}
             </h2>
             <button
               data-testid="close-cart"
@@ -206,9 +237,9 @@ export function CartDrawer() {
 
           {/* Content */}
           <div className="relative flex-1 overflow-y-auto p-[var(--space-lg)]">
-            {/* Order Sent View */}
-            {orderSent ? (
-              <div className="animate-in fade-in zoom-in-95 flex h-full flex-col items-center justify-center text-center duration-300">
+            {/* PASO: ENVIADO */}
+            {step === "sent" ? (
+              <div className="flex h-full flex-col items-center justify-center text-center">
                 <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-600">
                   <span
                     className="material-symbols-outlined"
@@ -224,7 +255,6 @@ export function CartDrawer() {
                   Te hemos redirigido a WhatsApp. ¿Pudiste enviar el mensaje
                   correctamente?
                 </p>
-
                 <button
                   onClick={handleFinishAndClear}
                   className="mb-3 w-full rounded-xl bg-slate-900 py-3 font-bold text-white transition-colors hover:bg-slate-800"
@@ -232,17 +262,17 @@ export function CartDrawer() {
                   Sí, ya hice mi pedido (Limpiar carrito)
                 </button>
                 <button
-                  onClick={() => setOrderSent(false)}
+                  onClick={() => setStep("confirm")}
                   className="w-full rounded-xl border border-slate-200 bg-white py-3 font-bold text-slate-600 transition-colors hover:bg-slate-50"
                 >
                   No, volver al carrito
                 </button>
               </div>
-            ) : showConfirm ? (
-              /* Confirm View */
-              <div className="animate-in fade-in slide-in-from-right-4 flex h-full flex-col duration-200">
+            ) : /* PASO: CONFIRMACIÓN */
+            step === "confirm" ? (
+              <div className="flex h-full flex-col">
                 <button
-                  onClick={() => setShowConfirm(false)}
+                  onClick={() => setStep("shipping")}
                   className="mb-6 flex w-max items-center gap-1 font-medium text-slate-500 transition-colors hover:text-slate-800"
                 >
                   <span
@@ -258,11 +288,11 @@ export function CartDrawer() {
                   Confirmar Pedido
                 </h3>
                 <div className="mb-6 rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
-                  <p className="border-primary mb-4 border-l-2 pl-3 text-sm leading-relaxed whitespace-pre-wrap text-slate-600">
-                    Serás redirigido a WhatsApp para enviar este mensaje
-                    preconfigurado.
+                  <p className="border-primary mb-4 border-l-2 pl-3 text-sm leading-relaxed text-slate-600">
+                    Serás redirigido a WhatsApp para enviar el pedido.
                   </p>
 
+                  {/* Productos */}
                   <div className="mb-4 space-y-2">
                     {cartItems.map((item) => (
                       <div
@@ -273,16 +303,48 @@ export function CartDrawer() {
                           {item.quantity}x {item.product.name}
                         </span>
                         <span className="shrink-0 font-medium text-slate-900">
-                          {formatPrice(item.product.price)}
+                          {formatPrice(item.product.price * item.quantity)}
                         </span>
                       </div>
                     ))}
                   </div>
-                  <div className="flex justify-between border-t border-slate-200 pt-3 font-bold">
-                    <span className="text-slate-900">Total Estimado</span>
-                    <span className="text-primary">
-                      {formatPrice(calculateTotal())}
-                    </span>
+
+                  {/* Info de envío */}
+                  {shippingInfo && (
+                    <div className="mb-3 flex items-start gap-2 rounded-lg bg-slate-50 p-3 text-xs text-slate-600">
+                      <span className="material-symbols-outlined mt-0.5 shrink-0 text-[16px] text-slate-400">
+                        local_shipping
+                      </span>
+                      <div>
+                        <p className="font-semibold text-slate-800">
+                          Entrega a {shippingInfo.municipality},{" "}
+                          {shippingInfo.department}
+                        </p>
+                        <p>{shippingInfo.label}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Totales */}
+                  <div className="space-y-1 border-t border-slate-200 pt-3">
+                    <div className="flex justify-between text-sm text-slate-600">
+                      <span>Subtotal productos</span>
+                      <span>{formatPrice(subtotal)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-slate-600">
+                      <span>Envío estimado</span>
+                      <span>
+                        {shippingCost === 0
+                          ? "Gratis"
+                          : formatPrice(shippingCost)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between pt-1 font-bold">
+                      <span className="text-slate-900">Total Estimado</span>
+                      <span className="text-primary">
+                        {formatPrice(grandTotal)}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -290,7 +352,7 @@ export function CartDrawer() {
                   <button
                     onClick={handleWhatsAppOrder}
                     disabled={isGeneratingMessage || cartItems.length === 0}
-                    className="flex w-full items-center justify-center gap-[var(--space-xs)] rounded-xl bg-[var(--color-whatsapp)] py-[var(--space-md)] font-bold text-white shadow-[var(--color-whatsapp)]/20 shadow-md transition-colors hover:bg-[var(--color-whatsapp-hover)] disabled:cursor-not-allowed disabled:opacity-70"
+                    className="flex w-full items-center justify-center gap-[var(--space-xs)] rounded-xl bg-[var(--color-whatsapp)] py-[var(--space-md)] font-bold text-white shadow-md transition-colors hover:bg-[var(--color-whatsapp-hover)] disabled:cursor-not-allowed disabled:opacity-70"
                   >
                     <span
                       className="material-symbols-outlined"
@@ -303,15 +365,136 @@ export function CartDrawer() {
                       : "Confirmar e Ir a WhatsApp"}
                   </button>
                   <button
-                    onClick={() => setShowConfirm(false)}
+                    onClick={() => setStep("shipping")}
                     className="w-full rounded-xl py-2 font-bold text-slate-600 transition-colors hover:text-slate-900"
                   >
                     Cancelar
                   </button>
                 </div>
               </div>
-            ) : cartItems.length === 0 ? (
-              /* Empty Cart View */
+            ) : /* PASO: ENVÍO */
+            step === "shipping" ? (
+              <div className="flex flex-col gap-4">
+                <button
+                  onClick={() => setStep("cart")}
+                  className="flex w-max items-center gap-1 font-medium text-slate-500 transition-colors hover:text-slate-800"
+                >
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "20px" }}
+                  >
+                    arrow_back
+                  </span>
+                  Atrás
+                </button>
+
+                <div>
+                  <h3 className="mb-1 text-xl font-bold text-slate-900">
+                    ¿A dónde enviamos?
+                  </h3>
+                  <p className="text-sm text-slate-500">
+                    Selecciona tu ubicación para calcular el costo de envío.
+                  </p>
+                </div>
+
+                {/* Referencia de zonas */}
+                <div className="grid grid-cols-1 gap-2 rounded-xl border border-slate-100 bg-slate-50 p-3 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-green-500" />
+                    <span className="text-slate-700">
+                      <strong>San Miguel</strong> — Gratis (punto de entrega)
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-amber-500" />
+                    <span className="text-slate-700">
+                      <strong>Zona Oriental</strong> (Usulután, La Unión,
+                      Morazán) — $1 a $3
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-blue-500" />
+                    <span className="text-slate-700">
+                      <strong>Resto del país</strong> — $3 a $5
+                    </span>
+                  </div>
+                </div>
+
+                {/* Selector departamento */}
+                <div className="flex flex-col gap-1">
+                  <label
+                    htmlFor="shipping-dept"
+                    className="text-sm font-semibold text-slate-700"
+                  >
+                    Departamento
+                  </label>
+                  <select
+                    id="shipping-dept"
+                    value={selectedDept}
+                    onChange={(e) => setSelectedDept(e.target.value)}
+                    className="focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm focus:outline-none"
+                  >
+                    <option value="">Selecciona tu departamento...</option>
+                    {DEPARTMENTS.map((d) => (
+                      <option key={d.name} value={d.name}>
+                        {d.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Selector municipio */}
+                {selectedDept && (
+                  <div className="flex flex-col gap-1">
+                    <label
+                      htmlFor="shipping-muni"
+                      className="text-sm font-semibold text-slate-700"
+                    >
+                      Municipio
+                    </label>
+                    <select
+                      id="shipping-muni"
+                      value={selectedMunicipality}
+                      onChange={(e) => setSelectedMunicipality(e.target.value)}
+                      className="focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm focus:outline-none"
+                    >
+                      <option value="">Selecciona tu municipio...</option>
+                      {municipalities.map((m) => (
+                        <option key={m} value={m}>
+                          {m}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                {/* Preview costo */}
+                {selectedDept && selectedMunicipality && (
+                  <div className="rounded-xl border border-green-200 bg-green-50 p-3 text-sm">
+                    <p className="font-semibold text-green-800">
+                      Costo estimado a {selectedMunicipality}:
+                    </p>
+                    <p className="text-green-700">
+                      {
+                        getShippingInfo(selectedDept, selectedMunicipality)
+                          .label
+                      }
+                    </p>
+                  </div>
+                )}
+
+                <div className="mt-auto pt-4">
+                  <button
+                    onClick={handleConfirmShipping}
+                    disabled={!selectedDept || !selectedMunicipality}
+                    className="w-full rounded-xl bg-slate-900 py-3 font-bold text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    Confirmar ubicación
+                  </button>
+                </div>
+              </div>
+            ) : /* CARRITO VACÍO */
+            cartItems.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center text-gray-500">
                 <span
                   className="material-symbols-outlined mb-[var(--space-md)] text-gray-200"
@@ -328,7 +511,7 @@ export function CartDrawer() {
                 </button>
               </div>
             ) : (
-              /* Cart Items View */
+              /* ITEMS DEL CARRITO */
               <div className="flex flex-col gap-[var(--space-lg)]">
                 {cartItems.map((item) => {
                   if (!item || !item.product) return null;
@@ -439,8 +622,8 @@ export function CartDrawer() {
             )}
           </div>
 
-          {/* Footer */}
-          {cartItems.length > 0 && !showConfirm && !orderSent && (
+          {/* Footer — solo en paso carrito con items */}
+          {step === "cart" && cartItems.length > 0 && (
             <div className="mt-auto border-t border-gray-100 bg-gray-50 p-[var(--space-lg)]">
               <div className="mb-[var(--space-md)] flex items-start gap-2 rounded-lg border border-orange-100 bg-orange-50 p-3 text-xs text-orange-800">
                 <span className="material-symbols-outlined mt-0.5 shrink-0 text-[16px]">
@@ -453,14 +636,14 @@ export function CartDrawer() {
               </div>
 
               {arePricesStale && (
-                <div className="animate-in fade-in zoom-in-95 mb-[var(--space-md)] flex flex-col gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-800 duration-300">
+                <div className="mb-[var(--space-md)] flex flex-col gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-800">
                   <div className="flex items-start gap-2">
                     <span className="material-symbols-outlined mt-0.5 shrink-0 text-[16px]">
                       error
                     </span>
                     <p>
                       <strong>Atención:</strong> No pudimos verificar los
-                      precios actualizados con el servidor.
+                      precios actualizados.
                     </p>
                   </div>
                   <button
@@ -476,18 +659,16 @@ export function CartDrawer() {
               )}
 
               <div className="mb-[var(--space-md)] flex items-end justify-between">
-                <span className="font-medium text-slate-500">
-                  Total a pagar:
-                </span>
+                <span className="font-medium text-slate-500">Subtotal:</span>
                 <span className="font-black text-[var(--text-2xl)] text-slate-900">
-                  {formatPrice(calculateTotal())}
+                  {formatPrice(subtotal)}
                 </span>
               </div>
               <button
                 data-testid="checkout-button"
-                onClick={() => setShowConfirm(true)}
+                onClick={() => setStep("shipping")}
                 disabled={isRefreshingPrices || arePricesStale}
-                className={`flex w-full items-center justify-center gap-[var(--space-xs)] rounded-xl bg-[var(--color-whatsapp)] py-[var(--space-md)] font-bold text-white shadow-[var(--color-whatsapp)]/20 shadow-md transition-colors hover:bg-[var(--color-whatsapp-hover)] ${
+                className={`flex w-full items-center justify-center gap-[var(--space-xs)] rounded-xl bg-[var(--color-whatsapp)] py-[var(--space-md)] font-bold text-white shadow-md transition-colors hover:bg-[var(--color-whatsapp-hover)] ${
                   isRefreshingPrices || arePricesStale
                     ? "cursor-not-allowed opacity-50"
                     : ""
@@ -496,14 +677,14 @@ export function CartDrawer() {
                 {isRefreshingPrices
                   ? "Actualizando precios..."
                   : arePricesStale
-                    ? "Conexión inestable"
-                    : "Pedir por WhatsApp"}
+                    ? "Conexion inestable"
+                    : "Continuar con el pedido"}
                 {!isRefreshingPrices && !arePricesStale && (
                   <span
                     className="material-symbols-outlined"
                     style={{ fontSize: "var(--icon-md)" }}
                   >
-                    chat
+                    arrow_forward
                   </span>
                 )}
               </button>

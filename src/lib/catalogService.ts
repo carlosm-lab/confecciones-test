@@ -17,6 +17,8 @@ export interface DbProduct {
   old_price: number | null;
   offer_ends_at: string | null;
   offer_starts_at: string | null;
+  /** Tipo de oferta: temporal, indefinida, nuevos_usuarios, frecuentes, por_talla */
+  offer_type: string | null;
   category: string | null; // slug de la categoría
   category_id: string | null;
   tags: string[] | null;
@@ -33,6 +35,10 @@ export interface DbProduct {
   caracteristicas: string[] | null;
   created_at: string | null;
   updated_at: string | null;
+  // Precios avanzados
+  wholesale_price: number | null;
+  wholesale_min_qty: number | null;
+  labor_price: number | null;
   // Join from categories table
   categories?: { name: string; catalog: string } | null;
 }

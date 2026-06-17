@@ -16,13 +16,20 @@ export type Sector =
   | "tops"
   | "limpiapipas";
 
-/** Color disponible para un producto */
+/**
+ * @deprecated Usar DbProduct de @/lib/catalogService en su lugar.
+ * Color disponible para un producto
+ */
 export interface ProductColor {
   name: string;
   hex: string;
 }
 
-/** Producto individual */
+/**
+ * @deprecated Usar DbProduct de @/lib/catalogService en su lugar.
+ * Este tipo corresponde al esquema hardcodeado antiguo (campos en español).
+ * Mantenido únicamente para evitar errores de compilación en imports residuales.
+ */
 export interface Product {
   /** Slug URL-safe, ej: "scrub-san-miguel" */
   id: string;

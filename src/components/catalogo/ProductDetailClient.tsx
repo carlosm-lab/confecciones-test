@@ -2,14 +2,8 @@
 
 /**
  * ProductDetailClient — Confecciones Liss
- * Vista de detalle pixel-fiel al ProductDetailPage de Padilla Store:
- * - Grid 45%/55%, gap-10/12
- * - Izquierda sticky: thumbnails laterales (desktop) / inferiores (mobile)
- *   + imagen principal 1:1 + zoom cursor + favorito overlay
- * - Lightbox fullscreen al clic
- * - Derecha: Breadcrumbs → H1 → descripción → Buy Box
- * - Buy Box: precio + personalización acordeón + CTA WhatsApp + compartir
- * - Sección productos relacionados 1→2→4 cols
+ * Vista de detalle usando DbProduct (schema de Supabase).
+ * Compatible con el catálogo dinámico.
  */
 
 import { useState } from "react";
@@ -22,12 +16,18 @@ import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { logger } from "@/lib/logger";
-import type { Product, CategoryConfig } from "@/data/types";
+import type { CategoryConfig } from "@/data/types";
+import {
+  getProductMainImage,
+  isProductOnSale,
+  getProductSector,
+  type DbProduct,
+} from "@/lib/catalogService";
 
 interface ProductDetailClientProps {
-  product: Product;
+  product: DbProduct;
   config: CategoryConfig;
-  relatedProducts: Product[];
+  relatedProducts: DbProduct[];
 }
 
 export function ProductDetailClient({
@@ -35,16 +35,29 @@ export function ProductDetailClient({
   config,
   relatedProducts,
 }: ProductDetailClientProps) {
-  const images: string[] = [...(product.imagen ? [product.imagen] : [])].filter(
-    Boolean
-  );
+  const allImages: string[] = [
+    ...(product.images && product.images.length > 0
+      ? product.images
+      : product.image_path
+        ? [product.image_path]
+        : []),
+  ].filter(Boolean);
 
-  const [mainImg, setMainImg] = useState<string>(images[0] ?? "");
+  const mainImageFallback = getProductMainImage(product);
+  const [mainImg, setMainImg] = useState<string>(
+    allImages[0] ?? mainImageFallback ?? ""
+  );
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [customNote, setCustomNote] = useState("");
   const [showToast, setShowToast] = useState(false);
 
-  // Contexts reales
+  const onSale = isProductOnSale(product);
+  const sector = getProductSector(product);
+  const slug = product.slug ?? product.id;
+  const price = Number(product.price);
+  const oldPrice = product.old_price ? Number(product.old_price) : null;
+
+  // Contexts
   const { isFavorite, toggleFavorite } = useFavorites();
   const { user, showAuthModal } = useAuth();
   const { addToCart, setIsCartOpen } = useCart();
@@ -58,20 +71,16 @@ export function ProductDetailClient({
     toggleFavorite(product.id);
   };
 
-  const hasDiscount =
-    product.precioAnterior != null && product.precioAnterior > product.precio;
-
   function handleAddToCart() {
     const noteText = customNote ? `\nNota: ${customNote}` : "";
-    // Agregar al carrito y abrir drawer
     addToCart(
       {
         id: product.id,
-        name: product.nombre,
-        price: product.precio,
-        old_price: product.precioAnterior ?? null,
-        image_path: product.imagen,
-        slug: `${product.sector}/${product.id}`,
+        name: product.name,
+        price: price,
+        old_price: oldPrice,
+        image_path: getProductMainImage(product),
+        slug: `${sector}/${slug}`,
       },
       1,
       null,
@@ -83,26 +92,22 @@ export function ProductDetailClient({
   const handleCopy = async () => {
     const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 
-    // Check if navigator.clipboard is available (blocked in insecure HTTP environments)
     if (navigator.clipboard && navigator.clipboard.writeText) {
       try {
         await navigator.clipboard.writeText(shareUrl);
         setShowToast(true);
-        setTimeout(() => {
-          setShowToast(false);
-        }, 2500);
+        setTimeout(() => setShowToast(false), 2500);
         return;
       } catch (err) {
         logger.error("Failed to copy link via clipboard API:", err);
       }
     }
 
-    // Fallback for insecure contexts (e.g. mobile testing on local network HTTP)
     try {
       const textArea = document.createElement("textarea");
       textArea.value = shareUrl;
-      textArea.style.position = "fixed"; // avoid scrolling to bottom
-      textArea.style.left = "-9999px"; // hide off-screen
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
       document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();
@@ -111,29 +116,37 @@ export function ProductDetailClient({
       if (successful) {
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2500);
-      } else {
-        throw new Error("execCommand copy returned false");
       }
     } catch (fallbackErr) {
       logger.error("Fallback copy failed:", fallbackErr);
     }
   };
 
-  // Placeholder thumbnails to keep 4-slot gallery consistent
-  const placeholderCount = Math.max(0, 4 - images.length);
+  const placeholderCount = Math.max(0, 4 - allImages.length);
+
+  // Parse tallas y colores desde los campos de DB
+  const tallas: string[] = Array.isArray(product.tallas) ? product.tallas : [];
+  const colores: { name: string; hex: string }[] = Array.isArray(
+    product.colores
+  )
+    ? product.colores
+    : [];
+  const caracteristicas: string[] = Array.isArray(product.caracteristicas)
+    ? product.caracteristicas
+    : [];
 
   return (
     <div className="mx-auto flex min-h-[calc(100dvh-56px)] w-full max-w-screen-2xl flex-1 flex-col px-5 py-[var(--space-lg)] md:px-8">
-      {/* ── Main product grid ─────────────────────────────────────────────── */}
+      {/* Main product grid */}
       <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[45%_1fr] lg:gap-12">
-        {/* ── Left column: Sticky image gallery ───────────────────────────── */}
+        {/* Left column: Sticky image gallery */}
         <div
           className="animate-fade-in-up flex w-full min-w-0 flex-col-reverse items-start gap-5 md:grid md:grid-cols-[calc(20%-12.16px)_calc(80%-19.84px)] md:gap-8 lg:sticky lg:top-24 lg:grid-cols-[calc(20%-17.16px)_1px_calc(80%-39.84px)] lg:gap-7"
           style={{ animationDelay: "100ms" }}
         >
-          {/* Thumbnail strip: below on mobile, left column on tablet/desktop */}
+          {/* Thumbnail strip */}
           <div className="no-scrollbar flex w-full min-w-0 shrink-0 flex-row gap-4 overflow-x-auto pb-2 md:w-full md:flex-col md:gap-3 md:pb-0">
-            {images.map((img, i) => (
+            {allImages.map((img, i) => (
               <button
                 key={`img-${i}`}
                 type="button"
@@ -141,27 +154,23 @@ export function ProductDetailClient({
                 className="aspect-[4/5] w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-white transition-all duration-300 active:scale-[0.96] md:w-full"
                 style={
                   mainImg === img
-                    ? {
-                        border: "2px solid #143067",
-                        opacity: 1,
-                      }
-                    : {
-                        border: "2px dashed #cbd5e1",
-                        opacity: 0.7,
-                      }
+                    ? { border: "2px solid #143067", opacity: 1 }
+                    : { border: "2px dashed #cbd5e1", opacity: 0.7 }
                 }
               >
                 <Image
                   src={img}
-                  alt={`${product.nombre} miniatura ${i + 1}`}
+                  alt={`${product.name} miniatura ${i + 1}`}
                   width={96}
                   height={120}
                   className="h-full w-full object-cover object-center"
+                  unoptimized={
+                    img.startsWith("http") && !img.includes("supabase.co")
+                  }
                 />
               </button>
             ))}
 
-            {/* Empty placeholder slots */}
             {Array.from({ length: placeholderCount }).map((_, i) => (
               <div
                 key={`empty-${i}`}
@@ -191,11 +200,15 @@ export function ProductDetailClient({
               {mainImg ? (
                 <Image
                   src={mainImg}
-                  alt={product.imageAlt ?? product.nombre}
+                  alt={product.name}
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, 45vw"
                   className="rounded-xl object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  unoptimized={
+                    mainImg.startsWith("http") &&
+                    !mainImg.includes("supabase.co")
+                  }
                 />
               ) : (
                 <span
@@ -214,7 +227,7 @@ export function ProductDetailClient({
               )}
             </button>
 
-            {/* Favorite button overlay */}
+            {/* Favorite button */}
             <button
               type="button"
               onClick={handleToggleFavorite}
@@ -233,7 +246,7 @@ export function ProductDetailClient({
           </div>
         </div>
 
-        {/* ── Right column: Product info ───────────────────────────────────── */}
+        {/* Right column: Product info */}
         <div className="flex min-w-0 flex-col gap-6">
           {/* Breadcrumbs */}
           <div
@@ -244,7 +257,10 @@ export function ProductDetailClient({
               items={[
                 { label: "Inicio", href: "/" },
                 { label: "Catálogo", href: "/catalogo" },
-                { label: config.subtitle, href: `/catalogo/${product.sector}` },
+                {
+                  label: config.subtitle,
+                  href: `/catalogo/${sector}`,
+                },
               ]}
             />
           </div>
@@ -255,13 +271,13 @@ export function ProductDetailClient({
             style={{ animationDelay: "200ms" }}
           >
             <h1 className="min-w-0 text-xl font-extrabold tracking-tight break-words text-gray-900 md:text-2xl">
-              {product.nombre}
+              {product.name}
             </h1>
 
             <div className="w-full min-w-0 overflow-hidden">
-              {product.descripcion ? (
+              {product.description ? (
                 <p className="text-base whitespace-pre-wrap text-slate-600">
-                  {product.descripcion}
+                  {product.description}
                 </p>
               ) : (
                 <p className="text-sm text-slate-500 italic">
@@ -271,13 +287,13 @@ export function ProductDetailClient({
             </div>
 
             {/* Available sizes */}
-            {product.tallas.length > 0 && (
+            {tallas.length > 0 && (
               <div>
                 <p className="mb-2 text-xs font-semibold tracking-wider text-slate-500 uppercase">
                   Tallas disponibles
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {product.tallas.map((talla) => (
+                  {tallas.map((talla) => (
                     <span
                       key={talla}
                       className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700"
@@ -290,13 +306,13 @@ export function ProductDetailClient({
             )}
 
             {/* Available colors */}
-            {product.colores && product.colores.length > 0 && (
+            {colores.length > 0 && (
               <div>
                 <p className="mb-2 text-xs font-semibold tracking-wider text-slate-500 uppercase">
                   Colores disponibles
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {product.colores.map((color) => (
+                  {colores.map((color) => (
                     <div
                       key={color.hex}
                       className="group flex items-center gap-1.5"
@@ -316,9 +332,9 @@ export function ProductDetailClient({
             )}
 
             {/* Characteristics */}
-            {product.caracteristicas && product.caracteristicas.length > 0 && (
+            {caracteristicas.length > 0 && (
               <ul className="flex flex-col gap-1.5">
-                {product.caracteristicas.map((item) => (
+                {caracteristicas.map((item) => (
                   <li
                     key={item}
                     className="flex items-start gap-2 text-sm text-slate-600"
@@ -337,7 +353,7 @@ export function ProductDetailClient({
             )}
           </div>
 
-          {/* ── Buy Box ─────────────────────────────────────────────────────── */}
+          {/* Buy Box */}
           <div
             className="animate-fade-in-up flex flex-col gap-5 rounded-2xl bg-slate-50 p-5 shadow-sm"
             style={{ animationDelay: "250ms" }}
@@ -346,16 +362,16 @@ export function ProductDetailClient({
             <div className="flex flex-col gap-1">
               <div className="flex items-end gap-3">
                 <p className="text-2xl font-bold text-gray-900">
-                  ${product.precio.toFixed(2)}
-                  {product.priceSuffix && (
+                  ${price.toFixed(2)}
+                  {product.price_suffix && (
                     <span className="ml-1 text-sm font-normal text-slate-500">
-                      {product.priceSuffix}
+                      {product.price_suffix}
                     </span>
                   )}
                 </p>
-                {hasDiscount && (
+                {onSale && oldPrice && (
                   <p className="text-lg font-medium text-slate-400 line-through">
-                    ${product.precioAnterior!.toFixed(2)}
+                    ${oldPrice.toFixed(2)}
                   </p>
                 )}
               </div>
@@ -419,7 +435,7 @@ export function ProductDetailClient({
         </div>
       </div>
 
-      {/* ── Related products ─────────────────────────────────────────────── */}
+      {/* Related products */}
       {relatedProducts.length > 0 && (
         <section
           className="animate-fade-in-up mt-16"
@@ -430,7 +446,7 @@ export function ProductDetailClient({
               También Te Puede Gustar
             </h2>
             <Link
-              href={`/catalogo/${product.sector}`}
+              href={`/catalogo/${sector}`}
               className="text-primary text-sm font-bold hover:underline"
             >
               Ver Todo
@@ -450,7 +466,7 @@ export function ProductDetailClient({
         </section>
       )}
 
-      {/* ── Lightbox modal ───────────────────────────────────────────────── */}
+      {/* Lightbox modal */}
       {isImageModalOpen && mainImg && (
         <div className="animate-in fade-in fixed inset-0 z-[100] flex items-center justify-center duration-200">
           <button
@@ -470,10 +486,13 @@ export function ProductDetailClient({
           <div className="relative z-10 max-h-[calc(100vh-2rem)] max-w-[calc(100vw-2rem)] sm:max-h-[calc(100vh-6rem)] sm:max-w-[calc(100vw-6rem)]">
             <Image
               src={mainImg}
-              alt={product.imageAlt ?? product.nombre}
+              alt={product.name}
               width={1200}
               height={1200}
               className="h-auto max-h-[calc(100vh-4rem)] w-auto max-w-full rounded-xl object-contain shadow-2xl"
+              unoptimized={
+                mainImg.startsWith("http") && !mainImg.includes("supabase.co")
+              }
             />
           </div>
         </div>
@@ -518,19 +537,12 @@ export function ProductDetailClient({
         </div>
       )}
 
-      {/* CSS Animation injection */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
             @keyframes toastFadeIn {
-              from {
-                opacity: 0;
-                transform: translate(-50%, 16px);
-              }
-              to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-              }
+              from { opacity: 0; transform: translate(-50%, 16px); }
+              to { opacity: 1; transform: translate(-50%, 0); }
             }
           `,
         }}

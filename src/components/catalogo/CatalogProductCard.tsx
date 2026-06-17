@@ -2,53 +2,42 @@
 
 /**
  * CatalogProductCard — Confecciones Liss
- * Copia EXACTA del ProductCard de Padilla Store:
- * - article relative overflow-hidden bg-white rounded-2xl border shadow-sm
- * - Link invisible inset-0 z-[1]
- * - Badges z-[2] pointer-events-none
- * - Favorite button z-[2] stopPropagation
- * - Imagen aspect-square object-contain bg-white
- * - Content: nombre, descripción, precio, botón carrito z-[2]
+ * Usa DbProduct (schema de Supabase) directamente.
+ * Compatible con el catálogo dinámico conectado a la BD.
  */
 
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { siteConfig } from "@/config/site";
 import { useCart } from "@/context/CartContext";
-import type { CartProduct } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
-import type { Product } from "@/data/types";
+import {
+  getProductMainImage,
+  isProductOnSale,
+  getProductSector,
+  type DbProduct,
+} from "@/lib/catalogService";
 
 interface CatalogProductCardProps {
-  product: Product;
-  // Props opcionales para compatibilidad hacia atrás (ahora se usan los contextos directamente)
-  isFavorited?: boolean;
-  onToggleFavorite?: (id: string) => void;
+  product: DbProduct;
 }
 
 export function CatalogProductCard({ product }: CatalogProductCardProps) {
-  const {
-    id,
-    nombre,
-    sector,
-    precio,
-    precioAnterior,
-    imagen,
-    imageAlt,
-    descripcion,
-    showBadge,
-    badgeText,
-    priceSuffix,
-  } = product;
+  const imagen = getProductMainImage(product);
+  const onSale = isProductOnSale(product);
+  const sector = getProductSector(product);
+  const slug = product.slug ?? product.id;
+
+  const price = Number(product.price);
+  const oldPrice = product.old_price ? Number(product.old_price) : null;
 
   // Contextos reales
   const { addToCart, setIsCartOpen } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
   const { user, showAuthModal } = useAuth();
 
-  const isFavorited = isFavorite(id);
+  const isFavorited = isFavorite(product.id);
 
   function handleToggleFavorite(e: React.MouseEvent) {
     e.preventDefault();
@@ -57,26 +46,22 @@ export function CatalogProductCard({ product }: CatalogProductCardProps) {
       showAuthModal("favorites");
       return;
     }
-    toggleFavorite(id);
+    toggleFavorite(product.id);
   }
 
   function handleAddToCart(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    // Construir un CartProduct desde el Product local
     addToCart({
-      id,
-      name: nombre,
-      price: precio,
-      old_price: precioAnterior ?? null,
+      id: product.id,
+      name: product.name,
+      price: price,
+      old_price: oldPrice,
       image_path: imagen,
-      slug: `${sector}/${id}`,
+      slug: `${sector}/${slug}`,
     });
-    // Abrir el drawer para que el usuario vea el item agregado
     setIsCartOpen(true);
   }
-
-  const hasDiscount = precioAnterior != null && precioAnterior > precio;
 
   return (
     <article
@@ -85,7 +70,7 @@ export function CatalogProductCard({ product }: CatalogProductCardProps) {
     >
       {/* Badges top-left */}
       <div className="pointer-events-none absolute top-[var(--space-md)] left-[var(--space-md)] z-[20] flex flex-col gap-[var(--space-xs)]">
-        {hasDiscount && (
+        {onSale && (
           <span
             className="bg-primary rounded-full px-[var(--space-xs)] py-[0.25rem] font-black tracking-widest text-white uppercase shadow-sm select-none sm:px-[var(--space-sm)]"
             style={{ fontSize: "clamp(0.5rem, 0.8vw, 0.625rem)" }}
@@ -93,17 +78,17 @@ export function CatalogProductCard({ product }: CatalogProductCardProps) {
             ¡Oferta!
           </span>
         )}
-        {showBadge && badgeText && !hasDiscount && (
+        {product.badge_text && !onSale && (
           <span
             className={cn(
               "rounded px-[var(--space-xs)] py-[0.25rem] font-black tracking-widest uppercase shadow-sm select-none",
-              badgeText === "Premium"
+              product.badge_text === "Premium"
                 ? "bg-slate-900 text-white"
                 : "bg-primary text-white"
             )}
             style={{ fontSize: "clamp(0.5rem, 0.8vw, 0.625rem)" }}
           >
-            {badgeText}
+            {product.badge_text}
           </span>
         )}
       </div>
@@ -128,15 +113,18 @@ export function CatalogProductCard({ product }: CatalogProductCardProps) {
         </span>
       </button>
 
-      {/* Image — bg-white prevents dark backgrounds showing through */}
+      {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-white">
         {imagen ? (
           <Image
             src={imagen}
-            alt={imageAlt ?? nombre}
+            alt={product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+            unoptimized={
+              imagen.startsWith("http") && !imagen.includes("supabase.co")
+            }
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gray-50">
@@ -153,27 +141,27 @@ export function CatalogProductCard({ product }: CatalogProductCardProps) {
       {/* Content */}
       <div className="flex flex-1 flex-col gap-1.5 p-4">
         <h3 className="group-hover:text-primary pointer-events-none truncate text-sm font-bold text-slate-900 transition-colors">
-          {nombre}
+          {product.name}
         </h3>
 
-        {descripcion && (
+        {product.short_description && (
           <p className="pointer-events-none line-clamp-1 text-[11px] text-slate-500">
-            {descripcion}
+            {product.short_description}
           </p>
         )}
 
         <div className="mt-auto flex flex-wrap items-center gap-1 pt-1 select-none">
           <span className="text-primary pointer-events-none text-base font-bold">
-            ${precio.toFixed(2)}
-            {priceSuffix && (
+            ${price.toFixed(2)}
+            {product.price_suffix && (
               <span className="ml-0.5 text-xs font-normal text-slate-500">
-                {priceSuffix}
+                {product.price_suffix}
               </span>
             )}
           </span>
-          {hasDiscount && (
+          {onSale && oldPrice && (
             <span className="pointer-events-none text-xs text-slate-400 line-through decoration-slate-400/50">
-              ${precioAnterior!.toFixed(2)}
+              ${oldPrice.toFixed(2)}
             </span>
           )}
           <button
@@ -188,11 +176,11 @@ export function CatalogProductCard({ product }: CatalogProductCardProps) {
         </div>
       </div>
 
-      {/* Full-card link — sits above image and text (default stacks) but below active buttons */}
+      {/* Full-card link */}
       <Link
-        href={`/catalogo/${sector}/${id}`}
+        href={`/catalogo/${sector}/${slug}`}
         className="absolute inset-0 z-[10]"
-        aria-label={`Ver detalles de ${nombre}`}
+        aria-label={`Ver detalles de ${product.name}`}
         prefetch={false}
       />
     </article>

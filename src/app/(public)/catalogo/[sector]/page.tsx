@@ -4,15 +4,16 @@ import { CATEGORIES } from "@/data/categories";
 import { CatalogPageClient } from "@/components/catalogo/CatalogPageClient";
 import { siteConfig } from "@/config/site";
 import type { Sector } from "@/data/types";
+import { getProductsBySector } from "@/lib/catalogService";
 
-// ── Static params: generate one page per sector ──────────────────────────────
+// ── Static params: genera una página por sector ───────────────────────────────
 export function generateStaticParams() {
   return (Object.keys(CATEGORIES) as Sector[]).map((sector) => ({
     sector,
   }));
 }
 
-// ── Dynamic metadata per sector ───────────────────────────────────────────────
+// ── Metadata dinámica por sector ──────────────────────────────────────────────
 export async function generateMetadata({
   params,
 }: {
@@ -46,13 +47,13 @@ export async function generateMetadata({
       creator: siteConfig.twitterHandle,
     },
     robots: {
-      index: false,
-      follow: false,
+      index: true,
+      follow: true,
     },
   };
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
+// ── Página ────────────────────────────────────────────────────────────────────
 export default async function SectorCatalogPage({
   params,
 }: {
@@ -65,11 +66,18 @@ export default async function SectorCatalogPage({
     notFound();
   }
 
+  // Fetch productos desde Supabase server-side
+  const products = await getProductsBySector(sector);
+
   const PAGE_URL = `${siteConfig.url}/catalogo/${sector}`;
 
   return (
     <>
-      <CatalogPageClient sector={sector as Sector} config={config} />
+      <CatalogPageClient
+        sector={sector as Sector}
+        config={config}
+        initialProducts={products}
+      />
 
       {/* JSON-LD: CollectionPage */}
       <script
@@ -81,6 +89,7 @@ export default async function SectorCatalogPage({
             name: config.title,
             description: config.seoDescription,
             url: PAGE_URL,
+            numberOfItems: products.length,
             provider: {
               "@type": "LocalBusiness",
               name: siteConfig.name,

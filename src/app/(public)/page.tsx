@@ -20,8 +20,11 @@ import { NapContacto } from "@/components/seo/NapContacto";
 import { KeywordsSeoFooter } from "@/components/seo/KeywordsSeoFooter";
 import { CatalogProductCard } from "@/components/catalogo/CatalogProductCard";
 import { siteConfig } from "@/config/site";
+import { getRecentProducts } from "@/lib/catalogService";
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Load recent products from Supabase (server-side, no hardcoding)
+  const recentProducts = await getRecentProducts(6);
   return (
     <>
       {/* ═══ JSON-LD STRUCTURED DATA ═══ */}
@@ -162,95 +165,35 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ NOVEDADES (using shared ProductCard) ═══ */}
-      <section className="bg-surface px-5 py-14 md:px-8 md:py-20">
-        <div className="mx-auto max-w-screen-2xl">
-          <div className="mb-12 flex items-end justify-between lg:pr-12">
-            <h2 className="animate-fade-in-up text-primary font-serif text-4xl">
-              Novedades en Uniformes y Scrubs
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-5">
-            {[
-              {
-                id: "scrub-ues",
-                categoria: "UES",
-                nombre: "Uniformes de la UES",
-                precio: 39.5,
-                tallas: ["S", "M", "L", "XL", "XXL"],
-                imagen: "/images/uniformes/ues.webp",
-                showBadge: true,
-                badgeText: "Nuevo",
-              },
-              {
-                id: "scrub-ieproes",
-                categoria: "IEPROES",
-                nombre: "Uniformes de IEPROES",
-                precio: 39.5,
-                tallas: ["S", "M", "L", "XL", "XXL"],
-                imagen: "/images/uniformes/ieproes.webp",
-                showBadge: true,
-                badgeText: "Nuevo",
-              },
-              {
-                id: "scrub-ugb",
-                categoria: "UGB",
-                nombre: "Uniformes de la UGB",
-                precio: 39.5,
-                tallas: ["S", "M", "L", "XL", "XXL"],
-                imagen: "/images/uniformes/ugb.webp",
-                showBadge: true,
-                badgeText: "Nuevo",
-              },
-              {
-                id: "scrub-uma",
-                categoria: "UMA",
-                nombre: "Uniformes de la UMA",
-                precio: 39.5,
-                tallas: ["S", "M", "L", "XL", "XXL"],
-                imagen: "/images/uniformes/uma.webp",
-                showBadge: true,
-                badgeText: "Nuevo",
-              },
-              {
-                id: "scrub-unab",
-                categoria: "UNAB",
-                nombre: "Uniformes de la UNAB",
-                precio: 39.5,
-                tallas: ["S", "M", "L", "XL", "XXL"],
-                imagen: "/images/uniformes/unab.webp",
-                showBadge: true,
-                badgeText: "Nuevo",
-              },
-              {
-                id: "scrub-univo",
-                categoria: "UNIVO",
-                nombre: "Uniformes de la UNIVO",
-                precio: 39.5,
-                tallas: ["S", "M", "L", "XL", "XXL"],
-                imagen: "/images/uniformes/univo.webp",
-                showBadge: true,
-                badgeText: "Nuevo",
-              },
-            ].map((p, index) => {
-              const productItem = {
-                ...p,
-                sector: "universitario" as const,
-                tipo: "scrubs",
-              };
-              return (
+      {/* ═══ NOVEDADES (productos reales desde Supabase) ═══ */}
+      {recentProducts.length > 0 && (
+        <section className="bg-surface px-5 py-14 md:px-8 md:py-20">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="mb-12 flex items-end justify-between lg:pr-12">
+              <h2 className="animate-fade-in-up text-primary font-serif text-4xl">
+                Novedades en Uniformes y Scrubs
+              </h2>
+              <Link
+                href="/catalogo"
+                className="text-primary hidden text-sm font-bold hover:underline lg:block"
+              >
+                Ver catálogo completo
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-5">
+              {recentProducts.map((product, index) => (
                 <div
-                  key={p.id}
+                  key={product.id}
                   className="animate-fade-in-up h-full w-full"
                   style={{ animationDelay: `${index * 50 + 150}ms` }}
                 >
-                  <CatalogProductCard product={productItem} />
+                  <CatalogProductCard product={product} />
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ═══ SERVICIOS PRINCIPALES (NEW) ═══ */}
       <ServiciosPrincipales />

@@ -17,6 +17,7 @@ import { logger } from "@/lib/logger";
 import { generateSlug } from "@/lib/slug";
 import type { Category } from "@/hooks/useCategories";
 import type { Product } from "@/lib/productUtils";
+import { OFFER_TYPE_LABELS, type OfferType } from "@/lib/productUtils";
 import { CATALOGS } from "@/config/catalogs";
 import { CustomSelect } from "@/components/ui/CustomSelect";
 
@@ -33,6 +34,10 @@ interface FormData {
   description: string;
   price: string;
   old_price: string;
+  /** Tipo de oferta */
+  offer_type: OfferType;
+  /** Si es true, la oferta no tiene fecha de vencimiento */
+  offer_indefinida: boolean;
   offer_days: string;
   offer_hours: string;
   offer_minutes: string;
@@ -45,6 +50,15 @@ interface FormData {
   images: string[];
   is_active: boolean;
   slug: string;
+  // Campos del catálogo público
+  badge_text: string;
+  price_suffix: string;
+  tallas: string[];
+  material: string;
+  // Precios avanzados
+  wholesale_price: string;
+  wholesale_min_qty: string;
+  labor_price: string;
 }
 
 export default function ProductModal({
@@ -75,6 +89,8 @@ export default function ProductModal({
     description: "",
     price: "",
     old_price: "",
+    offer_type: "temporal",
+    offer_indefinida: false,
     offer_days: "",
     offer_hours: "",
     offer_minutes: "",
@@ -86,6 +102,13 @@ export default function ProductModal({
     images: [],
     is_active: true,
     slug: "",
+    badge_text: "",
+    price_suffix: "",
+    tallas: [],
+    material: "",
+    wholesale_price: "",
+    wholesale_min_qty: "",
+    labor_price: "",
   });
   const [tagInput, setTagInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -113,6 +136,8 @@ export default function ProductModal({
         description: product.description || "",
         price: product.price?.toString() || "",
         old_price: product.old_price?.toString() || "",
+        offer_type: (product.offer_type as OfferType) || "temporal",
+        offer_indefinida: !product.offer_ends_at && !!product.old_price,
         offer_days: "",
         offer_hours: "",
         offer_minutes: "",
@@ -132,6 +157,13 @@ export default function ProductModal({
             : [],
         is_active: product.is_active ?? true,
         slug: product.slug || "",
+        badge_text: product.badge_text || "",
+        price_suffix: product.price_suffix || "",
+        tallas: Array.isArray(product.tallas) ? product.tallas : [],
+        material: product.material || "",
+        wholesale_price: product.wholesale_price?.toString() || "",
+        wholesale_min_qty: product.wholesale_min_qty?.toString() || "",
+        labor_price: product.labor_price?.toString() || "",
       });
       setSlugManuallyEdited(!!product.slug);
     } else {
@@ -148,6 +180,8 @@ export default function ProductModal({
         description: "",
         price: "",
         old_price: "",
+        offer_type: "temporal",
+        offer_indefinida: false,
         offer_days: "",
         offer_hours: "",
         offer_minutes: "",
@@ -159,6 +193,13 @@ export default function ProductModal({
         images: [],
         is_active: true,
         slug: "",
+        badge_text: "",
+        price_suffix: "",
+        tallas: [],
+        material: "",
+        wholesale_price: "",
+        wholesale_min_qty: "",
+        labor_price: "",
       });
       setSlugManuallyEdited(false);
     }
@@ -238,15 +279,23 @@ export default function ProductModal({
       return;
     }
 
-    if (
-      formData.old_price &&
-      parseFloat(formData.old_price) <= parseFloat(formData.price)
-    ) {
-      showToast(
-        'El precio "Antes" debe ser mayor al precio actual para ser una oferta válida.'
-      );
-      setIsSubmitting(false);
-      return;
+    // ── Validación de oferta ──────────────────────────────────
+    if (formData.old_price) {
+      const oldPriceNum = parseFloat(formData.old_price);
+      const priceNum = parseFloat(formData.price);
+
+      if (isNaN(oldPriceNum) || oldPriceNum <= 0) {
+        showToast('El precio anterior ("Antes") debe ser un número positivo.');
+        setIsSubmitting(false);
+        return;
+      }
+      if (oldPriceNum <= priceNum) {
+        showToast(
+          'El precio "Antes" debe ser MAYOR al precio actual para ser una oferta válida.'
+        );
+        setIsSubmitting(false);
+        return;
+      }
     }
 
     const finalSlug = formData.slug?.trim() || generateSlug(formData.name);
@@ -280,6 +329,48 @@ export default function ProductModal({
       return;
     }
 
+    // ── Validación precios avanzados ─────────────────────────
+    const parsedWholesale = formData.wholesale_price
+      ? parseFloat(formData.wholesale_price)
+      : null;
+    const parsedWholesaleMinQty = formData.wholesale_min_qty
+      ? parseInt(formData.wholesale_min_qty, 10)
+      : null;
+    const parsedLaborPrice = formData.labor_price
+      ? parseFloat(formData.labor_price)
+      : null;
+
+    if (parsedWholesale !== null) {
+      if (isNaN(parsedWholesale) || parsedWholesale <= 0) {
+        showToast("El precio de mayoreo debe ser un número positivo.");
+        setIsSubmitting(false);
+        return;
+      }
+      if (parsedWholesale >= parsedPrice) {
+        showToast(
+          "El precio de mayoreo debe ser MENOR al precio regular para que sea una ventaja."
+        );
+        setIsSubmitting(false);
+        return;
+      }
+      if (!parsedWholesaleMinQty || parsedWholesaleMinQty < 2) {
+        showToast(
+          "Para precio mayoreo debes indicar la cantidad mínima (mínimo 2 unidades)."
+        );
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
+    if (
+      parsedLaborPrice !== null &&
+      (isNaN(parsedLaborPrice) || parsedLaborPrice <= 0)
+    ) {
+      showToast("El precio de mano de obra debe ser un número positivo.");
+      setIsSubmitting(false);
+      return;
+    }
+
     let parsedOldPrice: number | null = null;
     let offerEndsAt: string | null =
       (product as Product & { offer_ends_at?: string })?.offer_ends_at || null;
@@ -289,20 +380,30 @@ export default function ProductModal({
 
     if (formData.old_price) {
       parsedOldPrice = parseFloat(formData.old_price);
-      const days = parseInt(formData.offer_days, 10) || 0;
-      const hours = parseInt(formData.offer_hours, 10) || 0;
-      const minutes = parseInt(formData.offer_minutes, 10) || 0;
-      const totalMinutes = days * 1440 + hours * 60 + minutes;
-      if (totalMinutes > 0) {
-        const baseDate = formData.offer_starts_at
-          ? new Date(formData.offer_starts_at)
-          : new Date();
-        baseDate.setMinutes(baseDate.getMinutes() + totalMinutes);
-        offerEndsAt = baseDate.toISOString();
+
+      if (formData.offer_indefinida) {
+        // Oferta indefinida: sin fecha de vencimiento
+        offerEndsAt = null;
+        offerStartsAt = formData.offer_starts_at
+          ? new Date(formData.offer_starts_at).toISOString()
+          : null;
+      } else {
+        // Oferta temporal: calcular duración
+        const days = parseInt(formData.offer_days, 10) || 0;
+        const hours = parseInt(formData.offer_hours, 10) || 0;
+        const minutes = parseInt(formData.offer_minutes, 10) || 0;
+        const totalMinutes = days * 1440 + hours * 60 + minutes;
+        if (totalMinutes > 0) {
+          const baseDate = formData.offer_starts_at
+            ? new Date(formData.offer_starts_at)
+            : new Date();
+          baseDate.setMinutes(baseDate.getMinutes() + totalMinutes);
+          offerEndsAt = baseDate.toISOString();
+        }
+        offerStartsAt = formData.offer_starts_at
+          ? new Date(formData.offer_starts_at).toISOString()
+          : null;
       }
-      offerStartsAt = formData.offer_starts_at
-        ? new Date(formData.offer_starts_at).toISOString()
-        : null;
     } else {
       offerEndsAt = null;
       offerStartsAt = null;
@@ -313,7 +414,9 @@ export default function ProductModal({
       description: formData.description || null,
       price: parsedPrice,
       old_price: parsedOldPrice,
-      catalog: formData.catalog || null,
+      offer_type: formData.old_price ? formData.offer_type : null,
+      // 'catalog' NO es columna real en la tabla — se guarda como 'sector'
+      sector: formData.catalog || null,
       category: formData.category || null,
       tags: Array.isArray(formData.tags) ? formData.tags : [],
       image_path: formData.images[0] || formData.image_path || null,
@@ -329,6 +432,15 @@ export default function ProductModal({
       offer_starts_at: offerStartsAt,
       category_id:
         categories.find((c) => c.slug === formData.category)?.id || null,
+      // Campos del catálogo público
+      badge_text: formData.badge_text || null,
+      price_suffix: formData.price_suffix || null,
+      tallas: formData.tallas.length > 0 ? formData.tallas : [],
+      material: formData.material || null,
+      // Precios avanzados
+      wholesale_price: parsedWholesale,
+      wholesale_min_qty: parsedWholesaleMinQty,
+      labor_price: parsedLaborPrice,
     };
 
     await onSave(payload);
@@ -491,51 +603,116 @@ export default function ProductModal({
                       className="material-symbols-outlined"
                       style={{ fontSize: "20px" }}
                     >
-                      timer
+                      local_offer
                     </span>
                     <h4 className="text-sm font-bold">
                       Configuración de Oferta
                     </h4>
                   </div>
+
+                  {/* Tipo de oferta */}
                   <div>
-                    <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
-                      Duración de la oferta
-                    </span>
-                    <div className="grid grid-cols-3 gap-2">
-                      {[
-                        { name: "offer_days", label: "Días", max: undefined },
-                        { name: "offer_hours", label: "Horas", max: 23 },
-                        { name: "offer_minutes", label: "Minutos", max: 59 },
-                      ].map((field) => (
-                        <div key={field.name}>
-                          <input
-                            type="number"
-                            name={field.name}
-                            value={
-                              (formData as unknown as Record<string, string>)[
-                                field.name
-                              ]
-                            }
-                            onChange={handleChange}
-                            min="0"
-                            max={field.max}
-                            placeholder="0"
-                            onWheel={(e) =>
-                              (e.target as HTMLInputElement).blur()
-                            }
-                            aria-label={`${field.label} de duración de oferta`}
-                            className="focus:ring-primary/20 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                          />
-                          <span className="mt-0.5 block text-center text-[10px] text-slate-500 dark:text-slate-400">
-                            {field.label}
-                          </span>
-                        </div>
+                    <p className="mb-1 text-xs font-medium text-slate-600 dark:text-slate-400">
+                      Tipo de oferta
+                    </p>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      {(
+                        Object.entries(OFFER_TYPE_LABELS) as [
+                          OfferType,
+                          string,
+                        ][]
+                      ).map(([key, label]) => (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              offer_type: key,
+                            }))
+                          }
+                          className={`rounded-lg border px-3 py-2 text-left text-xs font-medium transition-colors ${
+                            formData.offer_type === key
+                              ? "border-amber-500 bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300"
+                              : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-white/10 dark:bg-white/5"
+                          }`}
+                        >
+                          {label}
+                        </button>
                       ))}
                     </div>
-                    <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
-                      Si dejas todo en 0, la oferta no expirará automáticamente.
-                    </p>
                   </div>
+
+                  {/* Toggle oferta indefinida */}
+                  <label className="flex cursor-pointer items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={formData.offer_indefinida}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          offer_indefinida: e.target.checked,
+                        }))
+                      }
+                      className="h-4 w-4 rounded border-slate-300 accent-amber-600"
+                    />
+                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                      Oferta indefinida (sin fecha de vencimiento)
+                    </span>
+                  </label>
+
+                  {/* Duración — solo si no es indefinida */}
+                  {!formData.offer_indefinida && (
+                    <div>
+                      <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
+                        Duración de la oferta (desde el inicio)
+                      </span>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[
+                          {
+                            name: "offer_days",
+                            label: "Días",
+                            max: undefined,
+                          },
+                          { name: "offer_hours", label: "Horas", max: 23 },
+                          {
+                            name: "offer_minutes",
+                            label: "Minutos",
+                            max: 59,
+                          },
+                        ].map((field) => (
+                          <div key={field.name}>
+                            <input
+                              type="number"
+                              name={field.name}
+                              value={
+                                (formData as unknown as Record<string, string>)[
+                                  field.name
+                                ]
+                              }
+                              onChange={handleChange}
+                              min="0"
+                              max={field.max}
+                              placeholder="0"
+                              onWheel={(e) =>
+                                (e.target as HTMLInputElement).blur()
+                              }
+                              aria-label={`${field.label} de duración de oferta`}
+                              className="focus:ring-primary/20 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                            />
+                            <span className="mt-0.5 block text-center text-[10px] text-slate-500 dark:text-slate-400">
+                              {field.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
+                        Si dejas todo en 0, la oferta no expirará
+                        automáticamente.
+                      </p>
+                    </div>
+                  )}
+
                   <div>
                     <label
                       htmlFor="product-offer-starts-at"
@@ -566,6 +743,96 @@ export default function ProductModal({
                   </div>
                 </div>
               )}
+
+              {/* Precios Avanzados */}
+              <div className="space-y-4 rounded-xl border border-blue-200 bg-blue-50 p-4 md:col-span-2 dark:border-blue-500/20 dark:bg-blue-500/5">
+                <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "20px" }}
+                  >
+                    payments
+                  </span>
+                  <h4 className="text-sm font-bold">Precios Especiales</h4>
+                  <span className="ml-auto text-[10px] font-normal text-slate-400">
+                    Opcional
+                  </span>
+                </div>
+
+                {/* Precio mayoreo */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label
+                      htmlFor="product-wholesale-price"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                      Precio Mayoreo ($)
+                    </label>
+                    <input
+                      id="product-wholesale-price"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      name="wholesale_price"
+                      value={formData.wholesale_price}
+                      onChange={handleChange}
+                      placeholder="Ej: 8.00"
+                      onWheel={(e) => (e.target as HTMLInputElement).blur()}
+                      className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="product-wholesale-min-qty"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                      Cantidad mínima (unidades)
+                    </label>
+                    <input
+                      id="product-wholesale-min-qty"
+                      type="number"
+                      step="1"
+                      min="2"
+                      name="wholesale_min_qty"
+                      value={formData.wholesale_min_qty}
+                      onChange={handleChange}
+                      placeholder="Ej: 6"
+                      onWheel={(e) => (e.target as HTMLInputElement).blur()}
+                      className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                    />
+                  </div>
+                  <p className="col-span-2 text-[10px] text-slate-500 dark:text-slate-400">
+                    El precio de mayoreo debe ser menor al precio regular. Se
+                    aplica al pedir la cantidad mínima o más.
+                  </p>
+                </div>
+
+                {/* Precio mano de obra */}
+                <div>
+                  <label
+                    htmlFor="product-labor-price"
+                    className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                  >
+                    Precio Solo Mano de Obra ($)
+                  </label>
+                  <input
+                    id="product-labor-price"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    name="labor_price"
+                    value={formData.labor_price}
+                    onChange={handleChange}
+                    placeholder="Dejar vacío si no aplica"
+                    onWheel={(e) => (e.target as HTMLInputElement).blur()}
+                    className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                  />
+                  <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
+                    Para cuando el cliente trae su propia tela y solo paga la
+                    confección.
+                  </p>
+                </div>
+              </div>
 
               {/* Catálogo — filtra las categorías disponibles */}
               <div>
@@ -713,6 +980,100 @@ export default function ProductModal({
                     >
                       Agregar URL
                     </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Catalog display fields */}
+              <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 md:col-span-2 dark:border-white/5 dark:bg-white/5">
+                <p className="mb-3 text-xs font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
+                  Datos del Catálogo Público
+                </p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {/* Badge text */}
+                  <div>
+                    <label
+                      htmlFor="product-badge-text"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                      Badge / Etiqueta Visual
+                    </label>
+                    <input
+                      id="product-badge-text"
+                      name="badge_text"
+                      value={formData.badge_text}
+                      onChange={handleChange}
+                      placeholder="Ej: Nuevo, Popular, Premium"
+                      maxLength={30}
+                      className="focus:ring-primary/20 focus:border-primary w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                    />
+                  </div>
+                  {/* Price suffix */}
+                  <div>
+                    <label
+                      htmlFor="product-price-suffix"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                      Sufijo de Precio
+                    </label>
+                    <input
+                      id="product-price-suffix"
+                      name="price_suffix"
+                      value={formData.price_suffix}
+                      onChange={handleChange}
+                      placeholder="Ej: /unidad, /set, c/u"
+                      maxLength={20}
+                      className="focus:ring-primary/20 focus:border-primary w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                    />
+                  </div>
+                  {/* Material */}
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="product-material"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                      Material / Tela
+                    </label>
+                    <input
+                      id="product-material"
+                      name="material"
+                      value={formData.material}
+                      onChange={handleChange}
+                      placeholder="Ej: Sincatex, Lino Oxford, Poliéster..."
+                      maxLength={100}
+                      className="focus:ring-primary/20 focus:border-primary w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                    />
+                  </div>
+                  {/* Tallas */}
+                  <div className="sm:col-span-2">
+                    <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
+                      Tallas Disponibles
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {["XS", "S", "M", "L", "XL", "XXL", "3XL", "Única"].map(
+                        (talla) => (
+                          <button
+                            key={talla}
+                            type="button"
+                            onClick={() => {
+                              setFormData((prev) => ({
+                                ...prev,
+                                tallas: prev.tallas.includes(talla)
+                                  ? prev.tallas.filter((t) => t !== talla)
+                                  : [...prev.tallas, talla],
+                              }));
+                            }}
+                            className={`rounded-lg border px-3 py-1 text-xs font-semibold transition-colors ${
+                              formData.tallas.includes(talla)
+                                ? "bg-primary border-primary text-white"
+                                : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                            }`}
+                          >
+                            {talla}
+                          </button>
+                        )
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
