@@ -17,7 +17,13 @@ import { logger } from "@/lib/logger";
 import { generateSlug } from "@/lib/slug";
 import type { Category } from "@/hooks/useCategories";
 import type { Product } from "@/lib/productUtils";
-import { OFFER_TYPE_LABELS, type OfferType } from "@/lib/productUtils";
+import {
+  OFFER_TYPE_LABELS,
+  OFFER_TYPE_ORDER,
+  type OfferType,
+  type ProductOfferRule,
+} from "@/lib/productUtils";
+
 import { CATALOGS } from "@/config/catalogs";
 import { CustomSelect } from "@/components/ui/CustomSelect";
 
@@ -25,7 +31,10 @@ interface ProductModalProps {
   isOpen: boolean;
   onClose: () => void;
   product?: Product | null;
-  onSave: (payload: Partial<Product>) => Promise<void>;
+  onSave: (
+    payload: Partial<Product>,
+    offerRules: ProductOfferRule[]
+  ) => Promise<void>;
   categories: Category[];
 }
 
@@ -34,9 +43,7 @@ interface FormData {
   description: string;
   price: string;
   old_price: string;
-  /** Tipo de oferta */
-  offer_type: OfferType;
-  /** Si es true, la oferta no tiene fecha de vencimiento */
+  /** Duración de oferta temporal (en el precio base) */
   offer_indefinida: boolean;
   offer_days: string;
   offer_hours: string;
@@ -59,6 +66,18 @@ interface FormData {
   wholesale_price: string;
   wholesale_min_qty: string;
   labor_price: string;
+}
+
+/** Representación de una regla de oferta en el formulario */
+interface OfferRuleForm {
+  /** UUID de la regla existente (undefined = nueva) */
+  id?: string;
+  offer_type: OfferType;
+  /** Etiqueta personalizada solo cuando offer_type === 'personalizada' */
+  custom_label: string;
+  offer_price: string;
+  /** true = marcar para incluir en el guardado */
+  enabled: boolean;
 }
 
 export default function ProductModal({
@@ -89,7 +108,6 @@ export default function ProductModal({
     description: "",
     price: "",
     old_price: "",
-    offer_type: "temporal",
     offer_indefinida: false,
     offer_days: "",
     offer_hours: "",
@@ -110,6 +128,39 @@ export default function ProductModal({
     wholesale_min_qty: "",
     labor_price: "",
   });
+
+  /** Genera el estado inicial de reglas de oferta: una entrada por tipo estándar
+   *  más las personalizadas existentes */
+  const buildDefaultOfferRules = (
+    existingRules?: ProductOfferRule[]
+  ): OfferRuleForm[] => {
+    const standardTypes = OFFER_TYPE_ORDER.filter((t) => t !== "personalizada");
+    const standard: OfferRuleForm[] = standardTypes.map((type) => {
+      const existing = existingRules?.find((r) => r.offer_type === type);
+      return {
+        id: existing?.id,
+        offer_type: type,
+        custom_label: "",
+        offer_price: existing?.offer_price?.toString() ?? "",
+        enabled: !!existing,
+      };
+    });
+    const customs: OfferRuleForm[] =
+      existingRules
+        ?.filter((r) => r.offer_type === "personalizada")
+        .map((r) => ({
+          id: r.id,
+          offer_type: "personalizada" as OfferType,
+          custom_label: r.custom_label ?? "",
+          offer_price: r.offer_price?.toString() ?? "",
+          enabled: true,
+        })) ?? [];
+    return [...standard, ...customs];
+  };
+
+  const [offerRules, setOfferRules] = useState<OfferRuleForm[]>(
+    buildDefaultOfferRules()
+  );
   const [tagInput, setTagInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -136,7 +187,6 @@ export default function ProductModal({
         description: product.description || "",
         price: product.price?.toString() || "",
         old_price: product.old_price?.toString() || "",
-        offer_type: (product.offer_type as OfferType) || "temporal",
         offer_indefinida: !product.offer_ends_at && !!product.old_price,
         offer_days: "",
         offer_hours: "",
@@ -165,6 +215,7 @@ export default function ProductModal({
         wholesale_min_qty: product.wholesale_min_qty?.toString() || "",
         labor_price: product.labor_price?.toString() || "",
       });
+      setOfferRules(buildDefaultOfferRules(product.offer_rules));
       setSlugManuallyEdited(!!product.slug);
     } else {
       // Modo nuevo: primer catálogo con categorías disponibles
@@ -180,7 +231,6 @@ export default function ProductModal({
         description: "",
         price: "",
         old_price: "",
-        offer_type: "temporal",
         offer_indefinida: false,
         offer_days: "",
         offer_hours: "",
@@ -201,6 +251,7 @@ export default function ProductModal({
         wholesale_min_qty: "",
         labor_price: "",
       });
+      setOfferRules(buildDefaultOfferRules());
       setSlugManuallyEdited(false);
     }
     setTagInput("");
@@ -414,7 +465,7 @@ export default function ProductModal({
       description: formData.description || null,
       price: parsedPrice,
       old_price: parsedOldPrice,
-      offer_type: formData.old_price ? formData.offer_type : null,
+      offer_type: null, // Campo legacy — las reglas reales están en product_offer_rules
       // 'catalog' NO es columna real en la tabla — se guarda como 'sector'
       sector: formData.catalog || null,
       category: formData.category || null,
@@ -443,7 +494,26 @@ export default function ProductModal({
       labor_price: parsedLaborPrice,
     };
 
-    await onSave(payload);
+    // Construir reglas de oferta activas y válidas
+    const activeRules: ProductOfferRule[] = offerRules
+      .filter((r) => {
+        if (!r.enabled) return false;
+        const price = parseFloat(r.offer_price);
+        if (isNaN(price) || price <= 0) return false;
+        if (r.offer_type === "personalizada" && !r.custom_label.trim())
+          return false;
+        return true;
+      })
+      .map((r) => ({
+        id: r.id,
+        offer_type: r.offer_type,
+        custom_label:
+          r.offer_type === "personalizada" ? r.custom_label.trim() : null,
+        offer_price: parseFloat(r.offer_price),
+        is_active: true,
+      }));
+
+    await onSave(payload, activeRules);
     if (isMounted.current) setIsSubmitting(false);
   };
 
@@ -610,37 +680,193 @@ export default function ProductModal({
                     </h4>
                   </div>
 
-                  {/* Tipo de oferta */}
-                  <div>
-                    <p className="mb-1 text-xs font-medium text-slate-600 dark:text-slate-400">
-                      Tipo de oferta
+                  {/* Reglas de Oferta por Tipo — multi-selección con precio */}
+                  <div className="space-y-3">
+                    <p className="text-xs font-medium text-slate-600 dark:text-slate-400">
+                      Tipos de oferta con precio especial{" "}
+                      <span className="ml-1 font-normal text-slate-400">
+                        (activa los que apliquen y asigna el precio)
+                      </span>
                     </p>
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                      {(
-                        Object.entries(OFFER_TYPE_LABELS) as [
-                          OfferType,
-                          string,
-                        ][]
-                      ).map(([key, label]) => (
-                        <button
-                          key={key}
-                          type="button"
-                          onClick={() =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              offer_type: key,
-                            }))
-                          }
-                          className={`rounded-lg border px-3 py-2 text-left text-xs font-medium transition-colors ${
-                            formData.offer_type === key
-                              ? "border-amber-500 bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300"
-                              : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-white/10 dark:bg-white/5"
-                          }`}
-                        >
-                          {label}
-                        </button>
-                      ))}
+
+                    {/* Tipos estándar */}
+                    <div className="space-y-2">
+                      {offerRules
+                        .map((rule, globalIdx) => ({ rule, globalIdx }))
+                        .filter(
+                          ({ rule }) => rule.offer_type !== "personalizada"
+                        )
+                        .map(({ rule, globalIdx }) => (
+                          <div
+                            key={rule.offer_type}
+                            className={`flex items-center gap-3 rounded-lg border px-3 py-2.5 transition-colors ${
+                              rule.enabled
+                                ? "border-amber-300 bg-amber-50 dark:border-amber-500/30 dark:bg-amber-500/10"
+                                : "border-slate-200 bg-white dark:border-white/10 dark:bg-white/5"
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              id={`offer-rule-${rule.offer_type}`}
+                              checked={rule.enabled}
+                              onChange={(e) => {
+                                const checked = e.target.checked;
+                                setOfferRules((prev) =>
+                                  prev.map((r, i) =>
+                                    i === globalIdx
+                                      ? { ...r, enabled: checked }
+                                      : r
+                                  )
+                                );
+                              }}
+                              className="h-4 w-4 flex-shrink-0 rounded border-slate-300 accent-amber-600"
+                            />
+                            <label
+                              htmlFor={`offer-rule-${rule.offer_type}`}
+                              className="flex-1 cursor-pointer text-xs font-medium text-slate-700 dark:text-slate-300"
+                            >
+                              {OFFER_TYPE_LABELS[rule.offer_type]}
+                            </label>
+                            {rule.enabled && (
+                              <div className="flex items-center gap-1">
+                                <span className="text-xs text-slate-500">
+                                  $
+                                </span>
+                                <input
+                                  type="number"
+                                  step="0.01"
+                                  min="0.01"
+                                  placeholder="0.00"
+                                  value={rule.offer_price}
+                                  onChange={(e) => {
+                                    const val = e.target.value;
+                                    setOfferRules((prev) =>
+                                      prev.map((r, i) =>
+                                        i === globalIdx
+                                          ? { ...r, offer_price: val }
+                                          : r
+                                      )
+                                    );
+                                  }}
+                                  onWheel={(e) =>
+                                    (e.target as HTMLInputElement).blur()
+                                  }
+                                  aria-label={`Precio especial para ${OFFER_TYPE_LABELS[rule.offer_type]}`}
+                                  className="w-20 rounded border border-amber-300 bg-white px-2 py-1 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-amber-400/40 dark:border-amber-500/30 dark:bg-white/10 dark:text-white"
+                                />
+                              </div>
+                            )}
+                          </div>
+                        ))}
                     </div>
+
+                    {/* Tipos personalizados */}
+                    {offerRules.filter((r) => r.offer_type === "personalizada")
+                      .length > 0 && (
+                      <div className="space-y-2">
+                        <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                          Tipos personalizados
+                        </p>
+                        {offerRules
+                          .map((rule, globalIdx) => ({ rule, globalIdx }))
+                          .filter(
+                            ({ rule }) => rule.offer_type === "personalizada"
+                          )
+                          .map(({ rule, globalIdx }) => (
+                            <div
+                              key={globalIdx}
+                              className="flex items-center gap-2 rounded-lg border border-purple-200 bg-purple-50 px-3 py-2.5 dark:border-purple-500/20 dark:bg-purple-500/10"
+                            >
+                              <input
+                                type="text"
+                                placeholder="Nombre del tipo (ej: Solo docentes)"
+                                value={rule.custom_label}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  setOfferRules((prev) =>
+                                    prev.map((r, i) =>
+                                      i === globalIdx
+                                        ? { ...r, custom_label: val }
+                                        : r
+                                    )
+                                  );
+                                }}
+                                className="min-w-0 flex-1 rounded border border-purple-200 bg-white px-2 py-1 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-purple-400/40 dark:border-purple-500/30 dark:bg-white/10 dark:text-white"
+                                aria-label="Nombre del tipo de oferta personalizado"
+                              />
+                              <div className="flex items-center gap-1">
+                                <span className="text-xs text-slate-500">
+                                  $
+                                </span>
+                                <input
+                                  type="number"
+                                  step="0.01"
+                                  min="0.01"
+                                  placeholder="0.00"
+                                  value={rule.offer_price}
+                                  onChange={(e) => {
+                                    const val = e.target.value;
+                                    setOfferRules((prev) =>
+                                      prev.map((r, i) =>
+                                        i === globalIdx
+                                          ? { ...r, offer_price: val }
+                                          : r
+                                      )
+                                    );
+                                  }}
+                                  onWheel={(e) =>
+                                    (e.target as HTMLInputElement).blur()
+                                  }
+                                  aria-label="Precio especial del tipo personalizado"
+                                  className="w-20 rounded border border-purple-200 bg-white px-2 py-1 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-purple-400/40 dark:border-purple-500/30 dark:bg-white/10 dark:text-white"
+                                />
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setOfferRules((prev) =>
+                                    prev.filter((_, i) => i !== globalIdx)
+                                  )
+                                }
+                                aria-label="Eliminar tipo personalizado"
+                                className="flex-shrink-0 rounded p-1 text-red-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+                              >
+                                <span
+                                  className="material-symbols-outlined"
+                                  style={{ fontSize: "16px" }}
+                                >
+                                  close
+                                </span>
+                              </button>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+
+                    {/* Botón agregar personalizada */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOfferRules((prev) => [
+                          ...prev,
+                          {
+                            offer_type: "personalizada",
+                            custom_label: "",
+                            offer_price: "",
+                            enabled: true,
+                          },
+                        ])
+                      }
+                      className="flex items-center gap-1.5 rounded-lg border border-dashed border-purple-300 px-3 py-2 text-xs font-medium text-purple-600 transition-colors hover:border-purple-400 hover:bg-purple-50 dark:border-purple-500/30 dark:text-purple-400 dark:hover:bg-purple-500/10"
+                    >
+                      <span
+                        className="material-symbols-outlined"
+                        style={{ fontSize: "14px" }}
+                      >
+                        add
+                      </span>
+                      Agregar tipo personalizado
+                    </button>
                   </div>
 
                   {/* Toggle oferta indefinida */}

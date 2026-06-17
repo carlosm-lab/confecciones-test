@@ -3,20 +3,52 @@
 // ──────────────────────────────────────────────────────────────
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+/**
+ * Tipos de oferta disponibles.
+ * 'personalizada' puede tener N reglas, el resto máximo 1 por producto.
+ */
 export type OfferType =
-  | "temporal"
-  | "indefinida"
-  | "nuevos_usuarios"
-  | "frecuentes"
-  | "por_talla";
+  | "nuevos_clientes"
+  | "clientes_frecuentes"
+  | "por_talla"
+  | "solo_en_linea"
+  | "solo_en_taller"
+  | "transferencia"
+  | "personalizada";
 
 export const OFFER_TYPE_LABELS: Record<OfferType, string> = {
-  temporal: "Temporal (con fecha límite)",
-  indefinida: "Indefinida (sin fecha límite)",
-  nuevos_usuarios: "Solo nuevos clientes",
-  frecuentes: "Solo clientes frecuentes",
+  nuevos_clientes: "Solo nuevos clientes",
+  clientes_frecuentes: "Solo clientes frecuentes",
   por_talla: "Por talla específica",
+  solo_en_linea: "Solo compra en línea",
+  solo_en_taller: "Solo compra en taller",
+  transferencia: "Con pago por transferencia",
+  personalizada: "Tipo personalizado",
 };
+
+/** Orden de visualización en la UI */
+export const OFFER_TYPE_ORDER: OfferType[] = [
+  "nuevos_clientes",
+  "clientes_frecuentes",
+  "por_talla",
+  "solo_en_linea",
+  "solo_en_taller",
+  "transferencia",
+  "personalizada",
+];
+
+/** Mapa la tabla `product_offer_rules` de Supabase */
+export interface ProductOfferRule {
+  id?: string;
+  product_id?: string;
+  offer_type: OfferType;
+  /** Solo cuando offer_type === 'personalizada' */
+  custom_label?: string | null;
+  /** Precio especial de esta oferta */
+  offer_price: number;
+  is_active?: boolean;
+  created_at?: string;
+}
 
 export interface Product {
   id?: string;
@@ -25,8 +57,10 @@ export interface Product {
   old_price?: number | string | null;
   offer_starts_at?: string | null;
   offer_ends_at?: string | null;
-  /** Tipo de oferta. 'temporal' por defecto. */
+  /** Tipo de oferta (campo legacy — usar offer_rules para multi-tipo). */
   offer_type?: OfferType | null;
+  /** Reglas de oferta múltiples (tabla product_offer_rules) */
+  offer_rules?: ProductOfferRule[];
   image_path?: string | null;
   images?: string[];
   category?: string | null;

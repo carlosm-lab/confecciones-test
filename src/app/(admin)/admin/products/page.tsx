@@ -8,7 +8,8 @@ import { logger } from "@/lib/logger";
 import { applyActiveOfferFilter } from "@/lib/productUtils";
 import { useConfirm } from "@/context/ConfirmContext";
 import { collectProductImageFiles } from "@/lib/storageUtils";
-import type { Product } from "@/lib/productUtils";
+import type { Product, ProductOfferRule } from "@/lib/productUtils";
+
 import type { Category } from "@/hooks/useCategories";
 import { CATALOGS } from "@/config/catalogs";
 import { CustomSelect } from "@/components/ui/CustomSelect";
@@ -138,8 +139,25 @@ export default function AdminProductsPage() {
     fetchData(false);
   }, [fetchData]);
 
-  const handleOpenModal = (product: Product | null = null) => {
-    setEditingProduct(product);
+  const handleOpenModal = async (product: Product | null = null) => {
+    if (product?.id) {
+      // Cargar reglas de oferta existentes para este producto
+      try {
+        const supabase = getSupabaseClient();
+        const { data: rules } = await supabase
+          .from("product_offer_rules")
+          .select(
+            "id, offer_type, custom_label, offer_price, is_active, created_at"
+          )
+          .eq("product_id", product.id)
+          .eq("is_active", true);
+        setEditingProduct({ ...product, offer_rules: rules ?? [] });
+      } catch {
+        setEditingProduct(product);
+      }
+    } else {
+      setEditingProduct(product);
+    }
     setIsModalOpen(true);
   };
 
@@ -148,21 +166,62 @@ export default function AdminProductsPage() {
     setEditingProduct(null);
   };
 
-  const handleSaveProduct = async (productData: Partial<Product>) => {
+  const handleSaveProduct = async (
+    productData: Partial<Product>,
+    offerRules: ProductOfferRule[]
+  ) => {
     try {
       const supabase = getSupabaseClient();
+      let productId: string;
+
       if (editingProduct) {
         const { error } = await supabase
           .from("products")
           .update(productData)
           .eq("id", editingProduct.id!);
         if (error) throw error;
+        productId = editingProduct.id!;
         showToast("Producto actualizado correctamente.");
       } else {
-        const { error } = await supabase.from("products").insert([productData]);
+        const { data, error } = await supabase
+          .from("products")
+          .insert([productData])
+          .select("id")
+          .single();
         if (error) throw error;
+        productId = (data as { id: string }).id;
         showToast("Producto creado correctamente.");
       }
+
+      // Sincronizar reglas de oferta: delete all existing + insert new
+      const { error: deleteError } = await supabase
+        .from("product_offer_rules")
+        .delete()
+        .eq("product_id", productId);
+      if (deleteError) {
+        logger.error("Error deleting old offer rules:", deleteError);
+      }
+
+      if (offerRules.length > 0) {
+        const rulesToInsert = offerRules.map((r) => ({
+          product_id: productId,
+          offer_type: r.offer_type,
+          custom_label: r.custom_label ?? null,
+          offer_price: r.offer_price,
+          is_active: true,
+        }));
+        const { error: insertError } = await supabase
+          .from("product_offer_rules")
+          .insert(rulesToInsert);
+        if (insertError) {
+          logger.error("Error inserting offer rules:", insertError);
+          showToast(
+            `Producto guardado, pero hubo un error al guardar reglas de oferta: ${insertError.message}`,
+            false
+          );
+        }
+      }
+
       handleCloseModal();
       fetchData();
     } catch (error: unknown) {

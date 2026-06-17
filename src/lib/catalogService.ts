@@ -8,6 +8,9 @@
 import { createClient } from "@supabase/supabase-js";
 
 // ── Tipo de producto proveniente de la base de datos ─────────
+import type { ProductOfferRule } from "@/lib/productUtils";
+
+// ── Tipo de producto proveniente de la base de datos ─────────
 export interface DbProduct {
   id: string;
   name: string;
@@ -17,7 +20,7 @@ export interface DbProduct {
   old_price: number | null;
   offer_ends_at: string | null;
   offer_starts_at: string | null;
-  /** Tipo de oferta: temporal, indefinida, nuevos_usuarios, frecuentes, por_talla */
+  /** Tipo de oferta (campo legacy). Ver product_offer_rules para multi-tipo. */
   offer_type: string | null;
   category: string | null; // slug de la categoría
   category_id: string | null;
@@ -41,6 +44,8 @@ export interface DbProduct {
   labor_price: number | null;
   // Join from categories table
   categories?: { name: string; catalog: string } | null;
+  /** Join con product_offer_rules — incluido solo en getProductBySlug */
+  offer_rules?: ProductOfferRule[];
 }
 
 // ── Imagen principal resuelta ─────────────────────────────────
@@ -80,14 +85,23 @@ function createServerClient() {
   return createClient(url, key);
 }
 
-// ── Selects reutilizables ─────────────────────────────────────
+// ── Selects reutilizables ─────────────────────────────────
 const PRODUCT_SELECT = `
   id, name, description, short_description, price, old_price,
-  offer_ends_at, offer_starts_at, category, category_id, tags,
+  offer_ends_at, offer_starts_at, offer_type, category, category_id, tags,
   image_path, images, is_active, slug, sector, badge_text,
   price_suffix, tallas, colores, material, caracteristicas,
+  wholesale_price, wholesale_min_qty, labor_price,
   created_at, updated_at,
   categories(name, catalog)
+`;
+
+/** Select extendido para página de detalle — incluye reglas de oferta */
+const PRODUCT_DETAIL_SELECT = `
+  ${PRODUCT_SELECT.trimEnd()},
+  product_offer_rules(
+    id, offer_type, custom_label, offer_price, is_active, created_at
+  )
 `;
 
 // ── Obtener todos los productos activos de un sector ─────────
@@ -121,7 +135,7 @@ export async function getProductBySlug(
 
   const { data, error } = await supabase
     .from("products")
-    .select(PRODUCT_SELECT)
+    .select(PRODUCT_DETAIL_SELECT)
     .eq("slug", slug)
     .eq("is_active", true)
     .maybeSingle();
