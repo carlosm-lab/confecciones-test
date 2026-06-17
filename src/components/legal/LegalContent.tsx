@@ -4,6 +4,35 @@
  */
 import type { ReactNode } from "react";
 
+/* ── Roman numeral helper ─────────────────────────────────── */
+const ROMAN_MAP: [number, string][] = [
+  [1000, "M"],
+  [900, "CM"],
+  [500, "D"],
+  [400, "CD"],
+  [100, "C"],
+  [90, "XC"],
+  [50, "L"],
+  [40, "XL"],
+  [10, "X"],
+  [9, "IX"],
+  [5, "V"],
+  [4, "IV"],
+  [1, "I"],
+];
+
+function toRoman(n: number): string {
+  let result = "";
+  let rem = n;
+  for (const [val, sym] of ROMAN_MAP) {
+    while (rem >= val) {
+      result += sym;
+      rem -= val;
+    }
+  }
+  return result;
+}
+
 /* ── Section ──────────────────────────────────────────────── */
 interface SectionProps {
   n: number;
@@ -12,6 +41,7 @@ interface SectionProps {
 }
 
 export function Section({ n, title, children }: SectionProps) {
+  const roman = toRoman(n);
   return (
     <section style={{ marginBottom: "1.5rem" }}>
       <h2
@@ -27,24 +57,34 @@ export function Section({ n, title, children }: SectionProps) {
           lineHeight: 1.35,
         }}
       >
+        {/*
+          Badge height = h2 line-height (1.35em) so its center aligns
+          exactly with the centre of the first text line. flexShrink:0
+          + alignSelf implicit flex-start keeps it pinned to line 1
+          even when the title wraps to multiple lines.
+        */}
         <span
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "2rem",
-            height: "2rem",
-            borderRadius: "0.5rem",
+            minWidth: "2rem",
+            width: "auto",
+            height: "1.35em",
+            paddingLeft: "0.35rem",
+            paddingRight: "0.35rem",
+            borderRadius: "0.375rem",
             background: "#f1f5f9",
             border: "1px solid #e2e8f0",
             color: "#1e293b",
             fontWeight: 900,
-            fontSize: "0.85rem",
+            fontSize: "0.7rem",
+            letterSpacing: "0.02em",
             flexShrink: 0,
-            marginTop: "0.1rem",
           }}
+          aria-label={`Sección ${n}`}
         >
-          {n}
+          {roman}
         </span>
         {title}
       </h2>
