@@ -7,7 +7,7 @@ import { env } from "@/env";
  * These pages are not ready for public access yet.
  * The middleware redirects them back to home.
  */
-const BLOCKED_ROUTES = ["/servicios", "/catalogo"];
+const BLOCKED_ROUTES = ["/servicios", "/catalogo", "/carrito", "/mi-cuenta"];
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();

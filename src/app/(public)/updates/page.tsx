@@ -5,7 +5,7 @@ import { UpdatesPageClient } from "./UpdatesPageClient";
 const PAGE_URL = `${siteConfig.url}/updates`;
 const PAGE_TITLE = "Updates · Historial de cambios — Confecciones Liss";
 const PAGE_DESCRIPTION =
-  "Registro público de todas las mejoras, correcciones y nuevas funcionalidades que hemos lanzado en el sitio de Confecciones Liss. Transparencia total del proyecto.";
+  "Registro público de mejoras, correcciones y nuevas funcionalidades del sitio de Confecciones Liss. Transparencia total del proyecto.";
 
 export const metadata: Metadata = {
   title: {

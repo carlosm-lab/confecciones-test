@@ -284,6 +284,23 @@ export function LinksPageClient() {
             </h1>
             <ShareButton />
           </div>
+          {/* Intro paragraph — matches meta description so Google uses it as snippet */}
+          <p
+            className="animate-fade-in-up"
+            style={{
+              color: "#5f5e68",
+              fontWeight: 500,
+              lineHeight: 1.5,
+              maxWidth: "20rem",
+              margin: "0 0 0.25rem",
+              fontSize: "0.85rem",
+              animationDelay: "220ms",
+            }}
+          >
+            Síguenos en Instagram, Facebook, TikTok, YouTube, Threads y más.
+            Todos los perfiles y canales oficiales de Confecciones Liss en un
+            solo lugar.
+          </p>
           <p
             className="animate-fade-in-up"
             style={{

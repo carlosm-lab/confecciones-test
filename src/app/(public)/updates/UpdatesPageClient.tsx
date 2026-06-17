@@ -876,16 +876,20 @@ export function UpdatesPageClient() {
           >
             Historial de cambios
           </h1>
+          {/* Static intro — mirrors meta description so Google uses it as snippet */}
           <p
-            className="animate-fade-in-up max-w-2xl text-base leading-relaxed text-gray-500 md:text-lg"
+            className="animate-fade-in-up mb-1 max-w-2xl text-base leading-relaxed text-gray-500 md:text-lg"
+            style={{ animationDelay: "180ms" }}
+          >
+            Registro público de mejoras, correcciones y nuevas funcionalidades
+            del sitio de Confecciones Liss. Transparencia total del proyecto.
+          </p>
+          <p
+            className="animate-fade-in-up max-w-2xl text-sm leading-relaxed text-gray-400"
             style={{ animationDelay: "200ms" }}
           >
-            Registro público de todas las mejoras, correcciones y decisiones
-            técnicas del sitio.{" "}
-            <strong className="text-gray-800">
-              {totalEntries} cambios documentados
-            </strong>{" "}
-            desde el primer commit.
+            <strong className="text-gray-800">{totalEntries} cambios</strong>{" "}
+            documentados desde el primer commit.
           </p>
         </div>
       </section>

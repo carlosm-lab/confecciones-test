@@ -4,18 +4,18 @@ import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 const PAGE_URL = `${siteConfig.url}/contacto`;
-const PAGE_TITLE = "Taller y Contacto en San Miguel | Confecciones Liss";
+const PAGE_TITLE =
+  "Contacto y ubicación del taller en San Miguel | Confecciones Liss";
 const PAGE_DESCRIPTION =
-  "Visítanos en Barrio La Merced, San Miguel, El Salvador. WhatsApp +503 7331-7181 · correo confeccionesliss.contacto@gmail.com. Atención Lun–Sáb 8:00 AM – 5:00 PM.";
+  "Estamos listos para ayudarte con tu pedido. Escríbenos, llámanos o visítanos.";
 
 export const metadata: Metadata = {
-  title: PAGE_TITLE,
+  title: { absolute: PAGE_TITLE },
   description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: PAGE_TITLE,
-    description:
-      "Ubícanos en Barrio La Merced, San Miguel. WhatsApp, correo y redes sociales. Atendemos pedidos individuales, grupales e institucionales.",
+    description: PAGE_DESCRIPTION,
     url: PAGE_URL,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -283,15 +283,14 @@ export default function ContactoPage() {
               className="animate-fade-in-up text-primary font-serif text-3xl font-bold md:text-4xl lg:text-5xl"
               style={{ animationDelay: "100ms" }}
             >
-              Contáctanos
+              Contáctanos o visítanos
             </h1>
             <p
               className="animate-fade-in-up mt-4 max-w-xl text-base leading-relaxed text-gray-500 md:text-lg"
               style={{ animationDelay: "200ms" }}
             >
-              Estamos listos para ayudarte con tu pedido.
-              <br className="hidden sm:block" />
-              Escríbenos, llámanos o visítanos en nuestro taller en San Miguel.
+              Estamos listos para ayudarte con tu pedido. Escríbenos, llámanos o
+              visítanos en nuestro taller en San Miguel.
             </p>
           </section>
 

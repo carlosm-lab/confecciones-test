@@ -93,8 +93,8 @@ export function MobileBottomNav() {
   const [isMounted, setIsMounted] = useState(false);
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
 
-  /* In production, /catalogo and /servicios are blocked by middleware — hide from nav */
-  const PROD_BLOCKED = ["/catalogo", "/servicios"];
+  /* In production, these routes are blocked by middleware — hide from nav */
+  const PROD_BLOCKED = ["/catalogo", "/servicios", "/carrito", "/mi-cuenta"];
   const visibleItems = ITEMS.filter(
     (item) =>
       process.env.NODE_ENV !== "production" || !PROD_BLOCKED.includes(item.href)

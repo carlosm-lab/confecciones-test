@@ -103,7 +103,7 @@ export function Navbar() {
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
 
   /* Routes blocked in production (middleware redirects these to /) */
-  const BLOCKED_ROUTES = ["/servicios", "/catalogo"];
+  const BLOCKED_ROUTES = ["/servicios", "/catalogo", "/carrito", "/mi-cuenta"];
 
   const navLinks = isHomeOnly
     ? NAV_LINKS.filter((link) => link.href === "/")
