@@ -17,6 +17,33 @@ export const metadata: Metadata = {
   description:
     "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, responsabilidades y las reglas vigentes del servicio en línea.",
   alternates: { canonical: `${siteConfig.url}/legal/terminos` },
+  openGraph: {
+    title: "Términos y Condiciones | Confecciones Liss",
+    description:
+      "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, responsabilidades y las reglas vigentes del servicio en línea.",
+    url: `${siteConfig.url}/legal/terminos`,
+    siteName: siteConfig.name,
+    locale: "es_SV",
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Términos y Condiciones | Confecciones Liss",
+    description:
+      "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, responsabilidades y las reglas vigentes del servicio en línea.",
+    creator: siteConfig.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function TerminosPage() {

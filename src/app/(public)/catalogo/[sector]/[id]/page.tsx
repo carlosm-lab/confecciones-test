@@ -50,8 +50,8 @@ export async function generateMetadata({
       creator: siteConfig.twitterHandle,
     },
     robots: {
-      index: true,
-      follow: true,
+      index: false,
+      follow: false,
     },
   };
 }

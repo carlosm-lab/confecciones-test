@@ -31,15 +31,8 @@ export const metadata: Metadata = {
     creator: siteConfig.twitterHandle,
   },
   robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+    index: false,
+    follow: false,
   },
 };
 

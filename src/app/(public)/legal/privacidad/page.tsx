@@ -17,6 +17,33 @@ export const metadata: Metadata = {
   description:
     "Política de privacidad de Confecciones Liss. Cómo recopilamos, usamos y protegemos tus datos personales, incluido almacenamiento, derechos y seguridad.",
   alternates: { canonical: `${siteConfig.url}/legal/privacidad` },
+  openGraph: {
+    title: "Política de Privacidad | Confecciones Liss",
+    description:
+      "Política de privacidad de Confecciones Liss. Cómo recopilamos, usamos y protegemos tus datos personales, incluido almacenamiento, derechos y seguridad.",
+    url: `${siteConfig.url}/legal/privacidad`,
+    siteName: siteConfig.name,
+    locale: "es_SV",
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Política de Privacidad | Confecciones Liss",
+    description:
+      "Política de privacidad de Confecciones Liss. Cómo recopilamos, usamos y protegemos tus datos personales, incluido almacenamiento, derechos y seguridad.",
+    creator: siteConfig.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function PrivacidadPage() {

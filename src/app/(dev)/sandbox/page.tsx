@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+/** Sandbox de desarrollo — nunca debe aparecer en buscadores. */
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
+
 export default function SandboxPage() {
   return (
     <div className="py-10">
