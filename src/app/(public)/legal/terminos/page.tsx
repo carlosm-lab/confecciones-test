@@ -10,7 +10,7 @@ import {
 } from "@/components/legal/LegalContent";
 
 export const metadata: Metadata = {
-  title: "Términos y Condiciones | Confecciones Liss",
+  title: "Términos y Condiciones",
   description:
     "Términos y condiciones de uso de la plataforma Confecciones Liss. Información sobre precios, responsabilidades y derechos del usuario.",
 };

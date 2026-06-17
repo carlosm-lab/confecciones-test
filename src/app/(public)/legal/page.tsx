@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site";
 const PAGE_URL = `${siteConfig.url}/legal`;
 
 export const metadata: Metadata = {
-  title: "Documentos Legales | Confecciones Liss",
+  title: "Documentos Legales",
   description:
     "Centro de documentos legales de Confecciones Liss. Accede a nuestra política de privacidad, términos y condiciones, y demás documentos regulatorios.",
   alternates: { canonical: PAGE_URL },
@@ -172,6 +172,17 @@ function DocCard({ doc }: { doc: LegalDoc }) {
           </span>
         </div>
       )}
+
+      {/* Center icon — restored */}
+      <span
+        className={cn(
+          "material-symbols-outlined text-[48px] text-white/80 transition-transform duration-300",
+          doc.available && "group-hover:scale-110"
+        )}
+        aria-hidden="true"
+      >
+        {doc.icon}
+      </span>
     </div>
   );
 
