@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/schemas";
 import LegalArticleReader from "@/components/legal/LegalArticleReader";
+import LegalHubBackground from "@/components/legal/LegalHubBackground";
 import {
   Section,
   Hr,
@@ -52,6 +53,16 @@ export default function TerminosPage() {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
+      {/* Hub background — only shown on desktop where the blur overlay exists.
+          aria-hidden + pointer-events-none → invisible to screen readers and
+          mouse clicks; purely visual behind the LegalArticleReader modal.  */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none hidden select-none lg:block"
+      >
+        <LegalHubBackground />
+      </div>
+
       <LegalArticleReader
         title="Términos y Condiciones de Uso"
         date="15 Jun, 2025"

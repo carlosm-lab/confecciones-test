@@ -202,7 +202,7 @@ export default function LegalArticleReader({
       aria-label="Cerrar documento y volver a la lista"
       className="fixed inset-0 z-[9999] hidden items-center justify-center overflow-hidden lg:flex"
       style={{
-        background: "rgba(10, 17, 40, 0.93)",
+        background: "rgba(10, 17, 40, 0.82)",
         backdropFilter: "blur(8px)",
       }}
       onClick={(e) => {
@@ -253,7 +253,7 @@ export default function LegalArticleReader({
           aria-label="Cerrar y volver a documentos legales"
           style={{
             position: "absolute",
-            top: 12,
+            top: 20,
             right: 20,
             zIndex: 20,
             cursor: "pointer",
