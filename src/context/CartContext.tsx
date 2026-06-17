@@ -224,11 +224,26 @@ export function CartProvider({ children }: { children: ReactNode }) {
           cart_items: debouncedCartItems,
           updated_at: new Date().toISOString(),
         })
-        .then(({ error }: { error: { message: string } | null }) => {
+        .then(({ error }: { error: { message?: string } | null }) => {
           if (error) {
-            logger.error("Error syncing cart to DB:", error);
-            toast.error("Error al guardar el carrito. Revise su conexión.");
-            setCartItems(lastSyncedCartRef.current);
+            // Supabase devuelve {} (objeto vacío) cuando la tabla no existe,
+            // RLS bloquea la query, o hay un error de red sin respuesta.
+            // En ese caso NO hacemos rollback ni mostramos toast —
+            // el carrito se mantiene en localStorage correctamente.
+            const isEmptyError =
+              typeof error === "object" && Object.keys(error).length === 0;
+
+            if (isEmptyError) {
+              logger.warn(
+                "Cart sync silently blocked (RLS / missing table). Cart is local-only."
+              );
+              // Actualizar ref para evitar re-intentos en bucle
+              lastSyncedCartRef.current = debouncedCartItems;
+            } else {
+              logger.error("Error syncing cart to DB:", error);
+              toast.error("Error al guardar el carrito. Revise su conexión.");
+              setCartItems(lastSyncedCartRef.current);
+            }
           } else {
             lastSyncedCartRef.current = debouncedCartItems;
           }
