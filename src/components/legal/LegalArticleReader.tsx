@@ -264,14 +264,14 @@ export default function LegalArticleReader({
         </button>
 
         {/* ── Scrollable content ───────────────────────────────────────────
-            Scrollbar is hidden (scrollbarWidth:none + webkit class) because
-            it was appearing BETWEEN the button and the paper's right border,
-            making the button's right margin look like 0px. The user can still
-            scroll with mousewheel / trackpad / keyboard.
+            Scrollbar is hidden (scrollbarWidth:none + webkit class) so it
+            doesn't appear between the button and the paper's right border.
 
-            paddingLeft = paddingRight = 40px (original symmetric reading margins).
-            Gap between text right (40px from border) and button left (52px):
-            52 - 40 = 12px — matches button top:12 and right:12 margins. ✓   */}
+            paddingLeft:40px  = original reading margin (untouched) ✓
+            paddingRight:64px = 12(border→btn) + 40(btn width) + 12(gap) ✓
+              → text right edge at 64px from border,
+                button left edge at 52px from border,
+                gap = 64 - 52 = 12px (no overlap, clean gap).               */}
         <div
           className="[&::-webkit-scrollbar]:hidden"
           style={{
@@ -282,7 +282,7 @@ export default function LegalArticleReader({
             overscrollBehavior: "contain",
             scrollbarWidth: "none",
             paddingTop: "20px",
-            paddingRight: "40px",
+            paddingRight: "64px",
             paddingBottom: "60px",
             paddingLeft: "40px",
           }}
