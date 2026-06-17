@@ -372,7 +372,29 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setConsecutiveRefreshFailures(0);
       setLastSuccessfulRefresh(Date.now());
     } catch (err) {
-      logger.error("Error refreshing cart prices:", err);
+      // Supabase puede retornar {} cuando RLS bloquea la query,
+      // el proyecto está pausado, o hay un error de red sin respuesta.
+      // En ese caso no tiene sentido loguear como error (no hay nada que fixear
+      // desde el frontend) — usamos warn para evitar ruido rojo en consola.
+      const isEmptyError =
+        !err ||
+        (typeof err === "object" &&
+          Object.keys(err).length === 0 &&
+          !(err instanceof Error));
+
+      if (isEmptyError) {
+        logger.warn(
+          "Cart price refresh blocked (RLS/network). Using cached prices."
+        );
+      } else {
+        // Error con información real — log explicitamente para diagnóstico
+        logger.error("Error refreshing cart prices:", {
+          message: (err as Error)?.message ?? String(err),
+          code: (err as { code?: string })?.code,
+          details: (err as { details?: string })?.details,
+          hint: (err as { hint?: string })?.hint,
+        });
+      }
       setConsecutiveRefreshFailures((prev) => prev + 1);
     } finally {
       setIsRefreshingPrices(false);

@@ -104,6 +104,19 @@ export function Navbar() {
   const { favorites } = useFavorites();
   const { user, showAuthModal } = useAuth();
 
+  // Guard de hidratación: cartCount y favorites.length vienen de localStorage.
+  // En SSR el servidor renderiza con 0, el cliente con el valor real.
+  // Usar isMounted evita el mismatch de React hydration.
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
+
+  // Valores seguros para SSR (0 hasta que el cliente haya hidratado)
+  const safeCartCount = isMounted ? cartCount : 0;
+  const safeFavoritesCount = isMounted ? favorites.length : 0;
+
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
 
   /*
@@ -315,7 +328,7 @@ export function Navbar() {
 
               {/* Favorites — visible on all sizes */}
               <button
-                aria-label={`Favoritos${favorites.length > 0 ? ` (${favorites.length})` : ""}`}
+                aria-label={`Favoritos${safeFavoritesCount > 0 ? ` (${safeFavoritesCount})` : ""}`}
                 onClick={handleFavoritesClick}
                 className="border-primary/10 text-primary relative flex size-10 cursor-pointer items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
               >
@@ -324,21 +337,21 @@ export function Navbar() {
                   aria-hidden="true"
                   style={{
                     fontVariationSettings:
-                      favorites.length > 0 ? "'FILL' 1" : "'FILL' 0",
+                      safeFavoritesCount > 0 ? "'FILL' 1" : "'FILL' 0",
                   }}
                 >
                   favorite
                 </span>
-                {favorites.length > 0 && (
+                {safeFavoritesCount > 0 && (
                   <span className="bg-primary absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full px-[3px] text-[9px] font-black text-white">
-                    {favorites.length > 99 ? "99+" : favorites.length}
+                    {safeFavoritesCount > 99 ? "99+" : safeFavoritesCount}
                   </span>
                 )}
               </button>
 
               {/* Cart — hidden on mobile (bottom nav handles it) */}
               <button
-                aria-label={`Carrito de compras${cartCount > 0 ? ` (${cartCount})` : ""}`}
+                aria-label={`Carrito de compras${safeCartCount > 0 ? ` (${safeCartCount})` : ""}`}
                 onClick={handleCartClick}
                 className="border-primary/10 text-primary relative hidden size-10 cursor-pointer items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex"
               >
@@ -348,9 +361,9 @@ export function Navbar() {
                 >
                   shopping_cart
                 </span>
-                {cartCount > 0 && (
+                {safeCartCount > 0 && (
                   <span className="bg-primary absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full px-[3px] text-[9px] font-black text-white">
-                    {cartCount > 99 ? "99+" : cartCount}
+                    {safeCartCount > 99 ? "99+" : safeCartCount}
                   </span>
                 )}
               </button>
