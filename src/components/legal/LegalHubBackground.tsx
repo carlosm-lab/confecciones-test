@@ -67,15 +67,24 @@ const LEGAL_DOCS: LegalDoc[] = [
 /* ── LegalHubBackground ───────────────────────────────────────────────────── */
 /**
  * Pure-visual rendering of the /legal hub.
- * Used as a non-interactive background in article reader pages so that the
- * blur/dark overlay of LegalArticleReader shows the actual hub behind it,
- * creating the illusion of a modal floating over the hub.
  *
- * When used as background, wrap with aria-hidden="true" and
- * pointer-events-none so screen readers and interactions are unaffected.
+ * `animated` (default true): when false, all animate-fade-in-up classes and
+ * animationDelay styles are stripped so the hub renders instantly.
+ *
+ * Use cases where animated=false:
+ *  • As a non-interactive background in article reader pages (always static).
+ *  • When the user returns from reading an article (via LegalHubClient which
+ *    reads a sessionStorage flag set by LegalArticleReader.handleClose).
  */
-export default function LegalHubBackground() {
+export default function LegalHubBackground({
+  animated = true,
+}: {
+  animated?: boolean;
+}) {
   const available = LEGAL_DOCS.filter((d) => d.available).length;
+  /* Helper — returns animation class only when animated=true */
+  const anim = animated ? "animate-fade-in-up" : "";
+  const delay = (ms: string) => (animated ? { animationDelay: ms } : {});
 
   return (
     <>
@@ -87,17 +96,20 @@ export default function LegalHubBackground() {
               { label: "Inicio", href: "/" },
               { label: "Legal", href: "/legal" },
             ]}
-            className="animate-fade-in-up mb-6"
+            className={cn(anim, "mb-6")}
           />
           <h1
-            className="animate-fade-in-up section-title"
-            style={{ animationDelay: "100ms", textAlign: "left" }}
+            className={cn(anim, "section-title")}
+            style={{ ...delay("100ms"), textAlign: "left" }}
           >
             Documentos Legales
           </h1>
           <p
-            className="animate-fade-in-up text-on-surface-variant mt-4 max-w-xl text-left text-sm leading-relaxed md:text-base"
-            style={{ animationDelay: "200ms" }}
+            className={cn(
+              anim,
+              "text-on-surface-variant mt-4 max-w-xl text-left text-sm leading-relaxed md:text-base"
+            )}
+            style={delay("200ms")}
           >
             Transparencia y protección — accede a todas nuestras políticas y
             términos.{" "}
@@ -116,8 +128,8 @@ export default function LegalHubBackground() {
             {LEGAL_DOCS.map((doc, index) => (
               <div
                 key={doc.slug}
-                className="animate-fade-in-up h-full w-full"
-                style={{ animationDelay: `${index * 50 + 300}ms` }}
+                className={cn(anim, "h-full w-full")}
+                style={delay(`${index * 50 + 300}ms`)}
               >
                 <DocCard doc={doc} />
               </div>

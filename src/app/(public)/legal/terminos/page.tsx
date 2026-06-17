@@ -60,7 +60,7 @@ export default function TerminosPage() {
         aria-hidden="true"
         className="pointer-events-none hidden select-none lg:block"
       >
-        <LegalHubBackground />
+        <LegalHubBackground animated={false} />
       </div>
 
       <LegalArticleReader

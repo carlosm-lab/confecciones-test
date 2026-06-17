@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
-import LegalHubBackground from "@/components/legal/LegalHubBackground";
+import LegalHubClient from "@/components/legal/LegalHubClient";
 
 const PAGE_URL = `${siteConfig.url}/legal`;
 
@@ -12,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function LegalHubPage() {
-  return <LegalHubBackground />;
+  return <LegalHubClient />;
 }

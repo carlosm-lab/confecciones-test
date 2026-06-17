@@ -95,16 +95,29 @@ export default function LegalArticleReader({
 }: LegalArticleReaderProps) {
   const router = useRouter();
 
+  /**
+   * Mark that the user is intentionally returning to /legal so that
+   * LegalHubClient can skip the fade-in animations on the hub page
+   * (avoiding the illusion of a page reload).
+   */
+  const handleClose = () => {
+    try {
+      sessionStorage.setItem("liss_legal_return", "1");
+    } catch {
+      /* sessionStorage unavailable in some private-mode configurations */
+    }
+    router.push("/legal");
+  };
+
   /* ESC key → close modal (desktop) */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") router.push("/legal");
+      if (e.key === "Escape") handleClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [router]);
-
-  const handleClose = () => router.push("/legal");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const breadcrumbItems = [
     { label: "Inicio", href: "/" },
