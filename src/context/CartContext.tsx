@@ -37,7 +37,7 @@ import { useAuth } from "./AuthContext";
 import { logger } from "@/lib/logger";
 import { useDebounce } from "@/hooks/useDebounce";
 import {
-  PRODUCT_SELECT_COLUMNS,
+  CART_SELECT_COLUMNS,
   MAX_CART_QUANTITY,
   MAX_TOTAL_ITEMS,
   STORAGE_CART_KEY,
@@ -318,7 +318,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const idsChecked = [...new Set(currentCart.map((i) => i.product.id))];
       const { data, error } = await supabase
         .from("products")
-        .select(PRODUCT_SELECT_COLUMNS)
+        .select(CART_SELECT_COLUMNS)
         .in("id", idsChecked);
 
       if (error) throw error;

@@ -11,7 +11,7 @@ import { formatPrice } from "@/lib/formatPrice";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useModal } from "@/hooks/useModal";
 import { logger } from "@/lib/logger";
-import { PRODUCT_SELECT_COLUMNS } from "@/lib/constants";
+import { FAVORITES_SELECT_COLUMNS } from "@/lib/constants";
 import FocusLock from "react-focus-lock";
 
 interface FavoriteProduct {
@@ -55,7 +55,7 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
       const supabase = getSupabaseClient();
       const { data, error } = await supabase
         .from("products")
-        .select(PRODUCT_SELECT_COLUMNS)
+        .select(FAVORITES_SELECT_COLUMNS)
         .in("id", favorites)
         .eq("is_active", true);
 
@@ -79,12 +79,11 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
 
   return (
     <>
-      {/* Backdrop — al hacer click cierra el modal */}
-      <button
-        type="button"
+      {/* Backdrop — div con onClick para cerrar al hacer click fuera */}
+      <div
         className="animate-in fade-in fixed inset-0 z-[100] flex w-full cursor-default items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm duration-200"
         onClick={onClose}
-        aria-label="Cerrar favoritos"
+        aria-hidden="true"
       >
         {/* presentation div stops click propagation so clicking inside the dialog doesn't close it */}
         <div
@@ -216,7 +215,7 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
             </FocusLock>
           </div>
         </div>
-      </button>
+      </div>
     </>
   );
 }

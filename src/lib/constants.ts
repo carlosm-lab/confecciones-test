@@ -19,6 +19,18 @@ export const MAX_TOTAL_ITEMS = 50;
 export const PRODUCT_SELECT_COLUMNS =
   "id, name, description, price, old_price, images, image_path, category, category_id, slug, is_active, offer_starts_at, offer_ends_at, tags, categories!products_category_id_fkey(name, icon, slug)";
 
+// ── Columnas SELECT para revalidación de precios del carrito ────
+// Solo lo mínimo necesario para actualizar CartItem.product.
+// No incluye el JOIN de categories — no se necesita para el carrito.
+export const CART_SELECT_COLUMNS =
+  "id, name, price, old_price, images, image_path, slug, is_active, offer_starts_at, offer_ends_at";
+
+// ── Columnas SELECT para FavoritesModal ─────────────────────────
+// Coincide con la interfaz FavoriteProduct del modal.
+// Sin JOIN de categories — no se usa en la vista de favoritos.
+export const FAVORITES_SELECT_COLUMNS =
+  "id, name, price, images, image_path, slug, is_active, category_id";
+
 // ── Localización ─────────────────────────────────────────────
 export const LOCALE_CURRENCY = "USD";
 export const LOCALE_LANG = "es-SV";
