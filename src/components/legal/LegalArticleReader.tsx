@@ -282,10 +282,10 @@ export default function LegalArticleReader({
             overscrollBehavior: "contain",
             scrollbarWidth: "thin",
             scrollbarColor: "#CBD5E1 transparent",
-            paddingTop: "12px",
-            paddingRight: "64px",
+            paddingTop: "20px",
+            paddingRight: "40px",
             paddingBottom: "60px",
-            paddingLeft: "12px",
+            paddingLeft: "40px",
           }}
         >
           {/* Breadcrumbs */}
