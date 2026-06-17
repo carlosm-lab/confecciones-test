@@ -317,6 +317,14 @@
     color: var(--color-on-surface);
   }
 
+  /* Tailwind v4 preflight resetea cursor a default en <button>.
+     Esta regla restaura el comportamiento esperado por el usuario:
+     todos los botones habilitados muestran cursor:pointer.
+     Los deshabilitados conservan cursor:not-allowed via la clase disabled:cursor-not-allowed. */
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
   h1,
   h2,
   h3,
