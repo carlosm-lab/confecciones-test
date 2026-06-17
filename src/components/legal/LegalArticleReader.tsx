@@ -212,68 +212,70 @@ export default function LegalArticleReader({
         if (e.key === "Escape") handleClose();
       }}
     >
-      {/* Paper — single scroll container, NO structural header of any kind */}
+      {/* ── Paper — position:relative so the button is absolute-positioned
+          relative to the paper's BORDER BOX, not the scroll content area.
+          display:flex + flex-direction:column so the inner div can flex-grow.
+          overflow:hidden clips inner div + scrollbar at rounded corners.
+
+          ── Why this fixes the scrollbar margin problem ──────────────────
+          position:sticky measures right/padding from the CONTENT AREA
+          (i.e., INSIDE the scrollbar). So the "12px right margin" was
+          actually 12px from the scrollbar, not from the paper border —
+          the scrollbar appeared BETWEEN button and paper border.
+
+          position:absolute on the paper (position:relative) measures
+          top/right from the paper's actual BORDER BOX. The scrollbar is
+          inside the inner scrollable div and appears within the paper's
+          content area, but the button's right:12px is from the paper's
+          OUTER RIGHT BORDER, making all four margins exactly 12px. ✓   */}
       <div
         role="article"
         className="mx-3 w-full bg-white"
         style={{
           maxWidth: 850,
           maxHeight: "98vh",
-          overflowY: "auto",
-          overflowX: "hidden",
-          overscrollBehavior: "contain",
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
           borderRadius: 4,
           boxShadow: "0 25px 60px -12px rgba(0,0,0,0.55)",
-          borderTop: "1px solid #E2E8F0",
-          borderBottom: "1px solid #E2E8F0",
-          scrollbarWidth: "thin",
-          scrollbarColor: "#CBD5E1 transparent",
+          border: "1px solid #E2E8F0",
+          overflow: "hidden",
         }}
       >
-        {/* ── Close button — zero-height sticky anchor ──────────────────────
-            height:0 + overflow:visible = anchor takes ZERO layout space.
-            No content is pushed down. No header bar appears.
-
-            position:sticky + top:12px → button always 12px from the paper's
-            visible top, regardless of scroll position.
-
-            A 0-height element's bottom edge is always WITHIN the scroll
-            container → the element NEVER un-sticks throughout the full
-            document scroll.
-
-            paddingRight:12px → button right edge is 12px from the paper's
-            right edge. top=12px = paddingRight=12px → symmetric. ✓
-
-            Content below has paddingRight:60px and paddingLeft:60px (equal).
-            60px > 12px(margin)+40px(button) = 52px → 8px gap between text
-            and button at all times. Text CANNOT reach the button. ✓          */}
-        <div
-          style={{
-            position: "sticky",
-            top: "12px",
-            height: 0,
-            overflow: "visible",
-            display: "flex",
-            justifyContent: "flex-end",
-            paddingRight: "12px",
-            zIndex: 10,
-          }}
+        {/* ── Close button — absolute, measured from paper border ──────────
+            top:12px → 12px from paper's top border ✓
+            right:12px → 12px from paper's right border (past the scrollbar) ✓
+            z-index:20 → renders above the inner scrollable div and scrollbar ✓
+            Stays fixed as content scrolls inside the inner div.              */}
+        <button
+          onClick={handleClose}
+          aria-label="Cerrar y volver a documentos legales"
+          style={{ position: "absolute", top: 12, right: 12, zIndex: 20 }}
+          className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
         >
-          <button
-            onClick={handleClose}
-            aria-label="Cerrar y volver a documentos legales"
-            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
-          >
-            <IconClose />
-          </button>
-        </div>
+          <IconClose />
+        </button>
 
-        {/* ── Article content — symmetric padding ──────────────────────────
-            paddingTop:12px  (= button's top margin → symmetric)
-            paddingLeft:60px (= paddingRight → symmetric left/right) ✓
-            paddingRight:60px ≥ 52px (button area) + 8px gap             */}
+        {/* ── Scrollable content ───────────────────────────────────────────
+            flex:1 + minHeight:0 → fills the paper and allows overflow scroll.
+            Scrollbar appears at the inner div's right edge (= paper right),
+            but the button above it (z:20, absolute) sits on top of it.
+
+            SYMMETRIC MARGINS (all = 12px from paper border):
+            · paddingTop:12px = button top margin ✓
+            · paddingLeft:64px = paddingRight:64px → text is centered ✓
+              64px = 12(border→btn) + 40(btn width) + 12(btn→text gap) ✓
+            · bottom: 60px for comfortable footer clearance.               */}
         <div
           style={{
+            flex: 1,
+            minHeight: 0,
+            overflowY: "auto",
+            overflowX: "hidden",
+            overscrollBehavior: "contain",
+            scrollbarWidth: "thin",
+            scrollbarColor: "#CBD5E1 transparent",
             paddingTop: "12px",
             paddingRight: "64px",
             paddingBottom: "60px",
