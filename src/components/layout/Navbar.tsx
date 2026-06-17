@@ -162,15 +162,7 @@ export function Navbar() {
   };
 
   useEffect(() => {
-    // ── Hydration heartbeat ───────────────────────────────────────────────────
-    // Signals to the inline watchdog script in layout.tsx that React has mounted
-    // successfully. This prevents the watchdog from triggering a false-positive
-    // reload on a healthy page.
-    try {
-      sessionStorage.setItem("__liss_alive__", "1");
-      localStorage.setItem("__liss_was_alive__", "1");
-    } catch (_) {}
-
+    // Heartbeat movido a Providers — cubre admin y público por igual.
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
