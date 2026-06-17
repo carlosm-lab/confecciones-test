@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site";
 const PAGE_URL = `${siteConfig.url}/legal`;
 
 export const metadata: Metadata = {
-  title: "Documentos Legales",
+  title: "Documentos Legales: Privacidad y Términos",
   description:
     "Centro de documentos legales de Confecciones Liss. Accede a nuestra política de privacidad, términos y condiciones, y demás documentos regulatorios.",
   alternates: { canonical: PAGE_URL },
