@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 import LegalArticleReader from "@/components/legal/LegalArticleReader";
 import {
   Section,
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
   title: "Términos y Condiciones del Servicio en Línea",
   description:
     "Términos y condiciones de uso de la plataforma Confecciones Liss. Información sobre precios, responsabilidades y derechos del usuario.",
+  alternates: { canonical: `${siteConfig.url}/legal/terminos` },
 };
 
 export default function TerminosPage() {

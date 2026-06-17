@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 import LegalArticleReader from "@/components/legal/LegalArticleReader";
 import {
   Section,
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
   title: "Política de Privacidad y Protección de Datos",
   description:
     "Política de privacidad y manejo de datos personales de Confecciones Liss. Información sobre recopilación, uso, almacenamiento y protección de tu información.",
+  alternates: { canonical: `${siteConfig.url}/legal/privacidad` },
 };
 
 export default function PrivacidadPage() {
