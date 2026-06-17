@@ -245,7 +245,7 @@ export default function LegalArticleReader({
       >
         {/* ── Close button — absolute, measured from paper border ──────────
             top:12px → 12px from paper's top border ✓
-            right:12px → 12px from paper's right border (past the scrollbar) ✓
+            right:20px → 20px from paper's right border (scrollbar ~8px + 12px gap) ✓
             z-index:20 → renders above the inner scrollable div and scrollbar ✓
             Stays fixed as content scrolls inside the inner div.              */}
         <button
@@ -254,7 +254,7 @@ export default function LegalArticleReader({
           style={{
             position: "absolute",
             top: 12,
-            right: 12,
+            right: 20,
             zIndex: 20,
             cursor: "pointer",
           }}
@@ -264,24 +264,27 @@ export default function LegalArticleReader({
         </button>
 
         {/* ── Scrollable content ───────────────────────────────────────────
-            Scrollbar hidden so it doesn't appear between button and border.
-
-            paddingLeft  = 64px (= paddingRight) → symmetric page margins ✓
-            paddingRight = 64px = 12(border→btn) + 40(btn) + 12(gap) ✓
-              → text ends at 64px from border, btn starts at 52px → 12px gap  */}
+            Scrollbar restored (thin). Its width (~8px) is added to all
+            margins so the visual spacing stays consistent:
+            · paddingLeft  = 72px (64 + 8 scrollbar width) ✓
+            · paddingRight = 72px → text ends at 72px from border,
+              button left = 60px from border (right:20 + width:40)
+              gap text→button = 72 - 60 = 12px ✓
+            · Scrollbar appears between button-right and paper border,
+              adding its own ~8px visual weight to that side. ✓          */}
         <div
-          className="[&::-webkit-scrollbar]:hidden"
           style={{
             flex: 1,
             minHeight: 0,
             overflowY: "auto",
             overflowX: "hidden",
             overscrollBehavior: "contain",
-            scrollbarWidth: "none",
+            scrollbarWidth: "thin",
+            scrollbarColor: "#CBD5E1 transparent",
             paddingTop: "20px",
-            paddingRight: "64px",
+            paddingRight: "72px",
             paddingBottom: "60px",
-            paddingLeft: "64px",
+            paddingLeft: "72px",
           }}
         >
           {/* Breadcrumbs */}
