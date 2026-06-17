@@ -3,7 +3,7 @@ import { env } from "@/env";
 export const siteConfig = {
   name: "Confecciones Liss",
   description:
-    "Scrubs médicos y uniformes a la medida en San Miguel, El Salvador. Para UNIVO, UNAB, UGB y más instituciones. Tela Sincatex anti-fluidos. Desde $35, pago al recibir.",
+    "Scrubs médicos y uniformes a la medida en San Miguel, El Salvador. Para UNIVO, UNAB, UGB y más. Tela Sincatex anti-fluidos. Desde $35, pago al recibir.",
   url: "https://www.confeccionesliss.com",
 
   twitterHandle: "@confeccionliss",

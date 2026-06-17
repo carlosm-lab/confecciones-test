@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site";
 const PAGE_URL = `${siteConfig.url}/catalogo`;
 const PAGE_TITLE = "Catálogo de Uniformes por Categoría";
 const PAGE_DESCRIPTION =
-  "Catálogo de uniformes en Confecciones Liss: scrubs médicos, universitarios, escolares y corporativos. Confección a la medida desde $8, envíos a todo El Salvador.";
+  "Catálogo de uniformes en Confecciones Liss: scrubs médicos, universitarios, escolares y más. Confección a la medida desde $8, envíos a todo El Salvador.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

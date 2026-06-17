@@ -9,7 +9,7 @@ const PAGE_URL = `${siteConfig.url}/servicios`;
 const PAGE_TITLE =
   "Servicios de Confección y Personalización | Confecciones Liss";
 const PAGE_DESCRIPTION =
-  "Bordado computarizado, sublimación textil, confección a la medida y mano de obra en San Miguel, El Salvador. Servicios profesionales de costura y uniformes a tu medida.";
+  "Bordado computarizado, sublimación textil, confección a la medida y mano de obra en San Miguel. Servicios profesionales de costura y uniformes a medida.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

@@ -9,7 +9,7 @@ const PAGE_URL = `${siteConfig.url}/legal`;
 export const metadata: Metadata = {
   title: "Documentos Legales: Privacidad y Términos",
   description:
-    "Accede a todos los documentos legales de Confecciones Liss: política de privacidad, términos y condiciones de uso, y más documentos regulatorios vigentes en El Salvador.",
+    "Accede a todos los documentos legales de Confecciones Liss: política de privacidad, términos y condiciones de uso, y más documentos regulatorios vigentes.",
   alternates: { canonical: PAGE_URL },
 };
 
