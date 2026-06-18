@@ -48,7 +48,7 @@ import type { ShippingInfo } from "@/lib/shipping";
 
 // ── Tipos ─────────────────────────────────────────────────────
 
-export interface CartProduct {
+interface CartProduct {
   id: string;
   name: string;
   price: number;
@@ -65,7 +65,7 @@ export interface CartProduct {
   priceMode?: "normal" | "wholesale" | "labor";
 }
 
-export interface CartItem {
+interface CartItem {
   id: string; // UUID local de la línea del carrito
   product: CartProduct;
   quantity: number;
@@ -234,16 +234,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
             error: { message?: string; code?: string } | null;
           }) => {
             if (error) {
-              // Supabase devuelve {} (objeto vacío) cuando la tabla no existe,
-              // RLS bloquea la query, o hay un error de red sin respuesta.
-              // En ese caso NO hacemos rollback ni mostramos toast —
-              // el carrito se mantiene en localStorage correctamente.
               const isEmptyError =
                 typeof error === "object" && Object.keys(error).length === 0;
 
-              // Código 23505 = duplicate key. Sucede si onConflict no se
-              // resuelve a nivel de PostgREST (ej: falta un índice UNIQUE).
-              // No hacemos rollback — el carrito sigue en localStorage.
               const isDuplicateKeyError =
                 (error as { code?: string })?.code === "23505";
 
@@ -251,13 +244,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 logger.warn(
                   "Cart sync silently blocked (RLS / missing table / duplicate key). Cart is local-only."
                 );
-                // Actualizar ref para evitar re-intentos en bucle
-                lastSyncedCartRef.current = debouncedCartItems;
               } else {
+                // Error real de Supabase — logueamos pero NO hacemos rollback.
+                // El carrito en localStorage es la fuente de verdad.
+                // El usuario mantiene sus productos; se reintentará en el próximo debounce.
                 logger.error("Error syncing cart to DB:", error);
-                toast.error("Error al guardar el carrito. Revise su conexión.");
-                setCartItems(lastSyncedCartRef.current);
               }
+              // En todos los casos de error, actualizar ref para evitar re-intentos en bucle
+              lastSyncedCartRef.current = debouncedCartItems;
             } else {
               lastSyncedCartRef.current = debouncedCartItems;
             }
@@ -348,40 +342,73 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const refreshCartPrices = useCallback(async () => {
     if (document.hidden) return;
 
-    const currentCart = cartItemsRef.current;
-    if (currentCart.length === 0) return;
+    // Usamos cartItemsRef.current solo para saber si el carrito está vacío
+    // y para construir la lista de IDs a consultar en Supabase.
+    // El setCartItems usa FORMA FUNCIONAL para operar sobre el estado actual de React
+    // (no el ref, que puede estar stale si este effect corre antes de que el ref se actualice).
+    const snapshotCart = cartItemsRef.current;
+    if (snapshotCart.length === 0) return;
 
     setIsRefreshingPrices(true);
     try {
       const supabase = getSupabaseClient();
-      const idsChecked = [...new Set(currentCart.map((i) => i.product.id))];
+      const idsToCheck = [...new Set(snapshotCart.map((i) => i.product.id))];
       const { data, error } = await supabase
         .from("products")
         .select(CART_SELECT_COLUMNS)
-        .in("id", idsChecked);
+        .in("id", idsToCheck);
 
       if (error) throw error;
-      if (!data) return;
+
+      // GUARD: Supabase devolvió vacío → RLS bloqueó la lectura (guest sin permiso,
+      // proyecto pausado, etc.). NO modificar el carrito — mantener precios cacheados.
+      if (!data || data.length === 0) {
+        logger.warn(
+          "refreshCartPrices: Supabase returned empty — keeping cached cart. (RLS/network/guest)"
+        );
+        setConsecutiveRefreshFailures((prev) => prev + 1);
+        return;
+      }
 
       const productMap = Object.fromEntries(
         data.map((p: CartProduct) => [p.id, p])
       );
 
-      let itemsRemoved = false;
-      const nextCart = currentCart
-        .filter((item) => {
-          if (!idsChecked.includes(item.product.id)) return true;
-          const fresh = productMap[item.product.id];
-          if (!fresh || !fresh.is_active) {
-            itemsRemoved = true;
-            return false;
-          }
-          return true;
-        })
-        .map((item) => {
-          if (!idsChecked.includes(item.product.id)) return item;
-          const fresh = productMap[item.product.id];
-          if (fresh) {
+      // IMPORTANTE: usamos setCartItems con FORMA FUNCIONAL (prevCart) para operar
+      // sobre el estado ACTUAL de React, no sobre snapshotCart (que puede estar stale
+      // cuando este callback corre justo después de addToCart por la race condition
+      // de React effects: hijos antes que padres).
+      let itemsRemovedFlag = false;
+
+      setCartItems((prevCart) => {
+        let changed = false;
+        const nextCart = prevCart
+          .filter((item) => {
+            const fresh = productMap[item.product.id];
+            // Producto no devuelto por Supabase → conservar (guest RLS parcial,
+            // o producto recién añadido cuyo ID no estaba en snapshotCart)
+            if (!fresh) return true;
+            // Solo eliminar si Supabase confirma explícitamente que está inactivo
+            if (fresh.is_active === false) {
+              changed = true;
+              itemsRemovedFlag = true;
+              return false;
+            }
+            return true;
+          })
+          .map((item) => {
+            const fresh = productMap[item.product.id];
+            if (!fresh) return item; // Sin datos frescos → mantener precio cacheado
+            // Detectar si algún campo cambió para activar la flag
+            if (
+              fresh.name !== item.product.name ||
+              fresh.price !== item.product.price ||
+              fresh.old_price !== item.product.old_price ||
+              fresh.image_path !== item.product.image_path ||
+              fresh.slug !== item.product.slug
+            ) {
+              changed = true;
+            }
             return {
               ...item,
               product: {
@@ -396,25 +423,25 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 slug: fresh.slug,
               },
             };
-          }
-          return item;
-        });
+          });
 
-      if (itemsRemoved) {
+        // Si hay diferencias reales, devolver el nuevo array; si no, devolver prev
+        // para evitar re-renders innecesarios
+        return changed || nextCart.length !== prevCart.length
+          ? nextCart
+          : prevCart;
+      });
+
+      if (itemsRemovedFlag) {
         toast("Un producto en tu carrito se ha agotado o desactivado.", {
           icon: "⚠️",
           duration: 5000,
         });
       }
 
-      setCartItems(nextCart);
       setConsecutiveRefreshFailures(0);
       setLastSuccessfulRefresh(Date.now());
     } catch (err) {
-      // Supabase puede retornar {} cuando RLS bloquea la query,
-      // el proyecto está pausado, o hay un error de red sin respuesta.
-      // En ese caso no tiene sentido loguear como error (no hay nada que fixear
-      // desde el frontend) — usamos warn para evitar ruido rojo en consola.
       const isEmptyError =
         !err ||
         (typeof err === "object" &&
@@ -426,7 +453,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
           "Cart price refresh blocked (RLS/network). Using cached prices."
         );
       } else {
-        // Error con información real — log explicitamente para diagnóstico
         logger.error("Error refreshing cart prices:", {
           message: (err as Error)?.message ?? String(err),
           code: (err as { code?: string })?.code,
@@ -435,6 +461,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         });
       }
       setConsecutiveRefreshFailures((prev) => prev + 1);
+      // IMPORTANTE: NO modificar cartItems cuando hay error — mantener estado actual
     } finally {
       setIsRefreshingPrices(false);
     }
@@ -545,6 +572,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Precios se consideran stale si: 3+ fallos consecutivos
   // O más de 5 minutos sin refresh exitoso.
+  // NOTA: Solo se muestra como advertencia — NO bloquea el checkout.
+  // Los usuarios guest no pueden hacer refresh via Supabase (RLS), por eso
+  // no queremos bloquear su carrito solo porque no tienen auth.
   const arePricesStale =
     consecutiveRefreshFailures >= 3 ||
     Date.now() - lastSuccessfulRefresh > 5 * 60 * 1000;

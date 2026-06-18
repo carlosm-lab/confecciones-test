@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/formatPrice";
@@ -532,7 +533,7 @@ export function CartDrawer() {
                           !item.product.slug && "pointer-events-none opacity-80"
                         }`}
                       >
-                        <img
+                        <Image
                           loading="lazy"
                           src={
                             item.product.image_path ||
@@ -540,7 +541,10 @@ export function CartDrawer() {
                             "https://placehold.co/200x240?text=Sin+Imagen"
                           }
                           alt={item.product.name}
+                          width={80}
+                          height={96}
                           className="h-full w-full object-cover"
+                          unoptimized
                         />
                       </Link>
 
@@ -667,19 +671,15 @@ export function CartDrawer() {
               <button
                 data-testid="checkout-button"
                 onClick={() => setStep("shipping")}
-                disabled={isRefreshingPrices || arePricesStale}
+                disabled={isRefreshingPrices}
                 className={`flex w-full items-center justify-center gap-[var(--space-xs)] rounded-xl bg-[var(--color-whatsapp)] py-[var(--space-md)] font-bold text-white shadow-md transition-colors hover:bg-[var(--color-whatsapp-hover)] ${
-                  isRefreshingPrices || arePricesStale
-                    ? "cursor-not-allowed opacity-50"
-                    : ""
+                  isRefreshingPrices ? "cursor-not-allowed opacity-50" : ""
                 }`}
               >
                 {isRefreshingPrices
                   ? "Actualizando precios..."
-                  : arePricesStale
-                    ? "Conexion inestable"
-                    : "Continuar con el pedido"}
-                {!isRefreshingPrices && !arePricesStale && (
+                  : "Continuar con el pedido"}
+                {!isRefreshingPrices && (
                   <span
                     className="material-symbols-outlined"
                     style={{ fontSize: "var(--icon-md)" }}

@@ -113,9 +113,16 @@ export function MobileBottomNav() {
   );
 
   // Derived state initializer matches the current path on the first render to avoid hydration mismatch
-  const [lastActiveIdx, setLastActiveIdx] = useState<number>(() => {
-    return activeIdx !== -1 ? activeIdx : 0;
-  });
+  // Estado derivado: guarda el último activeIdx válido para que el bubble
+  // no salte de vuelta a 0 cuando activeIdx === -1 (ruta externa al nav).
+  // React permite setState durante render para estado derivado puro cuando
+  // la condición garantiza que no habrá loop infinito (activeIdx !== lastActiveIdx).
+  const [lastActiveIdx, setLastActiveIdx] = useState<number>(
+    activeIdx !== -1 ? activeIdx : 0
+  );
+  if (activeIdx !== -1 && activeIdx !== lastActiveIdx) {
+    setLastActiveIdx(activeIdx);
+  }
 
   // ── Scroll visibility & Hydration Mount ───────────────────────────────────────
   useEffect(() => {
@@ -184,14 +191,6 @@ export function MobileBottomNav() {
 
   // Notch centre in normalised X units
   const normCx = activeIdx !== -1 ? (activeIdx + 0.5) * normTabW : 0;
-
-  /*
-   * Keep track of the last active index using React state (derived state) to prevent
-   * the bubble from jumping back to the initial position (0%) when deactivated (activeIdx === -1).
-   */
-  if (activeIdx !== -1 && activeIdx !== lastActiveIdx) {
-    setLastActiveIdx(activeIdx);
-  }
 
   const displayIdx = activeIdx !== -1 ? activeIdx : lastActiveIdx;
   const bubblePct = ((displayIdx + 0.5) / numTabs) * 100;
