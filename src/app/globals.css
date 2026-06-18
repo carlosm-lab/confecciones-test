@@ -188,6 +188,20 @@
       0 20px 40px -10px rgba(25, 28, 30, 0.06);
   }
 
+  .elegant-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .elegant-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .elegant-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-outline-variant);
+    border-radius: 99px;
+  }
+  .elegant-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-outline);
+  }
+
   .btn-gradient {
     background: linear-gradient(
       135deg,

@@ -190,12 +190,28 @@ export function CartDrawer() {
     setIsCartOpen(false);
   };
 
+  /* ─── Shared back-link for multi-step ──────────────────── */
+  const BackLink = ({ onClick }: { onClick: () => void }) => (
+    <button
+      onClick={onClick}
+      className="group mb-6 flex w-max items-center gap-1 text-[13px] font-medium tracking-wide text-[var(--color-secondary)] uppercase transition-colors duration-200 hover:text-[var(--color-primary)]"
+    >
+      <span
+        className="material-symbols-outlined transition-transform duration-200 group-hover:-translate-x-0.5"
+        style={{ fontSize: "16px" }}
+      >
+        arrow_back
+      </span>
+      Atrás
+    </button>
+  );
+
   return (
     <>
-      {/* Backdrop */}
+      {/* Backdrop — soft scrim */}
       <button
         type="button"
-        className={`fixed inset-0 z-50 w-full cursor-default bg-[var(--color-scrim)]/40 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 w-full cursor-default bg-[var(--color-scrim)]/30 backdrop-blur-[2px] transition-opacity duration-300 ease-[var(--ease-out-expo)] ${
           isCartOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={closeDrawer}
@@ -203,120 +219,112 @@ export function CartDrawer() {
         tabIndex={isCartOpen ? 0 : -1}
       />
 
-      {/* Drawer */}
+      {/* Drawer — refined panel */}
       <div
         data-testid="cart-drawer"
-        className={`fixed top-0 right-0 z-50 flex h-[100dvh] w-full max-w-[26rem] flex-col bg-[var(--color-surface-container-lowest)] shadow-[−8px_0_30px_rgba(20,48,103,0.10)] transition-transform duration-300 ease-[var(--ease-out-expo)] ${
+        className={`fixed top-0 right-0 z-50 flex h-[100dvh] w-full max-w-[25rem] flex-col bg-white transition-transform duration-500 ease-[var(--ease-out-expo)] ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{
+          boxShadow: isCartOpen
+            ? "-20px 0 60px rgba(20, 48, 103, 0.08), -4px 0 20px rgba(20, 48, 103, 0.04)"
+            : "none",
+        }}
       >
         <FocusLock
           returnFocus
           disabled={!isCartOpen}
           className="flex h-[100dvh] w-full flex-col"
         >
-          {/* ─── Header ──────────────────────────────────────────── */}
-          <div className="flex items-center justify-between bg-[var(--color-primary)] px-5 py-4">
-            <h2 className="flex items-center gap-2 text-lg font-bold text-white">
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: "24px" }}
-              >
-                shopping_cart
-              </span>
-              {step === "shipping"
-                ? "Datos de entrega"
-                : step === "confirm"
-                  ? "Confirmar pedido"
-                  : step === "sent"
-                    ? "Pedido enviado"
-                    : "Tu carrito"}
+          {/* ─── Header — elegant serif, no heavy bar ────────── */}
+          <div className="flex items-center justify-between px-6 pt-6 pb-4">
+            <div className="flex items-baseline gap-2.5">
+              <h2 className="font-serif text-xl font-bold tracking-tight text-[var(--color-primary)]">
+                {step === "shipping"
+                  ? "Entrega"
+                  : step === "confirm"
+                    ? "Confirmar"
+                    : step === "sent"
+                      ? "Enviado"
+                      : "Tu carrito"}
+              </h2>
               {step === "cart" && cartItems.length > 0 && (
-                <span className="ml-1 flex h-6 w-6 items-center justify-center rounded-full bg-white/20 text-xs font-bold text-white">
-                  {cartItems.length}
+                <span className="text-[13px] font-medium text-[var(--color-secondary)]">
+                  {cartItems.length}{" "}
+                  {cartItems.length === 1 ? "artículo" : "artículos"}
                 </span>
               )}
-            </h2>
+            </div>
             <button
               data-testid="close-cart"
               onClick={closeDrawer}
-              className="rounded-full p-1.5 text-white/70 transition-all duration-200 hover:bg-white/10 hover:text-white active:scale-90"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--color-secondary)] transition-all duration-200 hover:bg-[var(--color-surface-container)] hover:text-[var(--color-on-surface)] active:scale-95"
               aria-label="Cerrar carrito"
             >
               <span
                 className="material-symbols-outlined"
-                style={{ fontSize: "22px" }}
+                style={{ fontSize: "20px" }}
               >
                 close
               </span>
             </button>
           </div>
+          {/* Hairline separator */}
+          <div className="mx-6 h-px bg-[var(--color-outline-variant)]/30" />
 
-          {/* ─── Content ─────────────────────────────────────────── */}
-          <div className="relative flex-1 overflow-y-auto bg-[var(--color-surface-container-low)] p-4">
+          {/* ─── Content ─────────────────────────────────────── */}
+          <div className="elegant-scrollbar relative flex-1 overflow-y-auto px-6 py-5">
             {/* PASO: ENVIADO */}
             {step === "sent" ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#25d366]/15 text-[var(--color-whatsapp)]">
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366]/10">
                   <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "32px" }}
+                    className="material-symbols-outlined text-[var(--color-whatsapp)]"
+                    style={{
+                      fontSize: "28px",
+                      fontVariationSettings: "'FILL' 1",
+                    }}
                   >
                     check_circle
                   </span>
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-[var(--color-on-surface)]">
+                <h3 className="mb-1.5 font-serif text-lg font-bold text-[var(--color-on-surface)]">
                   Pedido generado
                 </h3>
-                <p className="mb-8 max-w-[250px] text-sm text-[var(--color-on-surface-variant)]">
-                  Te hemos redirigido a WhatsApp. ¿Pudiste enviar el mensaje
-                  correctamente?
+                <p className="mb-8 max-w-[240px] text-[13px] leading-relaxed text-[var(--color-secondary)]">
+                  Te hemos redirigido a WhatsApp. ¿Pudiste enviar el mensaje?
                 </p>
                 <button
                   onClick={handleFinishAndClear}
-                  className="mb-3 w-full rounded-xl bg-[var(--color-primary)] py-3.5 font-bold text-white transition-all duration-200 hover:bg-[var(--color-on-primary-container)] active:scale-[0.98]"
+                  className="mb-3 w-full rounded-xl bg-[var(--color-primary)] py-3 text-[13px] font-bold tracking-wide text-white transition-all duration-200 hover:bg-[var(--color-on-primary-container)] active:scale-[0.98]"
                 >
-                  Sí, ya hice mi pedido
+                  Sí, pedido enviado
                 </button>
                 <button
                   onClick={() => setStep("confirm")}
-                  className="w-full rounded-xl border border-[var(--color-outline-variant)] bg-white py-3 text-sm font-semibold text-[var(--color-on-surface-variant)] transition-all duration-200 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] active:scale-[0.98]"
+                  className="w-full py-2.5 text-[13px] font-medium text-[var(--color-secondary)] transition-colors duration-200 hover:text-[var(--color-primary)]"
                 >
-                  No, volver al carrito
+                  Volver al carrito
                 </button>
               </div>
             ) : /* PASO: CONFIRMACIÓN */
             step === "confirm" ? (
               <div className="flex h-full flex-col">
-                <button
-                  onClick={() => setStep("shipping")}
-                  className="mb-5 flex w-max items-center gap-1 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:text-[var(--color-on-primary-container)]"
-                >
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "18px" }}
-                  >
-                    arrow_back
-                  </span>
-                  Atrás
-                </button>
+                <BackLink onClick={() => setStep("shipping")} />
 
-                <h3 className="mb-4 text-lg font-bold text-[var(--color-on-surface)]">
-                  Resumen del pedido
-                </h3>
-                <div className="mb-5 rounded-xl border border-[var(--color-primary-container)] bg-white p-4">
-                  <p className="mb-4 border-l-2 border-[var(--color-primary)] pl-3 text-sm leading-relaxed text-[var(--color-on-surface-variant)]">
+                <div className="mb-5 rounded-2xl bg-[var(--color-surface-container-low)] p-5">
+                  <p className="mb-4 text-[13px] leading-relaxed text-[var(--color-secondary)]">
                     Serás redirigido a WhatsApp para enviar el pedido.
                   </p>
 
                   {/* Productos */}
-                  <div className="mb-4 space-y-2">
+                  <div className="mb-4 space-y-2.5">
                     {cartItems.map((item) => (
                       <div
                         key={item.id}
-                        className="flex justify-between text-sm"
+                        className="flex justify-between text-[13px]"
                       >
-                        <span className="line-clamp-1 pr-2 text-[var(--color-on-surface-variant)]">
+                        <span className="line-clamp-1 pr-3 text-[var(--color-on-surface-variant)]">
                           {item.quantity}× {item.product.name}
                         </span>
                         <span className="shrink-0 font-semibold text-[var(--color-on-surface)] tabular-nums">
@@ -328,14 +336,16 @@ export function CartDrawer() {
 
                   {/* Info de envío */}
                   {shippingInfo && (
-                    <div className="mb-3 flex items-start gap-2 rounded-lg bg-[var(--color-surface-container-low)] p-3 text-xs text-[var(--color-on-surface-variant)]">
-                      <span className="material-symbols-outlined mt-0.5 shrink-0 text-[16px] text-[var(--color-primary)]">
+                    <div className="mb-4 flex items-start gap-2 text-[12px] text-[var(--color-secondary)]">
+                      <span
+                        className="material-symbols-outlined mt-0.5 shrink-0 text-[var(--color-primary)]"
+                        style={{ fontSize: "15px" }}
+                      >
                         local_shipping
                       </span>
                       <div>
                         <p className="font-semibold text-[var(--color-on-surface)]">
-                          Entrega a {shippingInfo.municipality},{" "}
-                          {shippingInfo.department}
+                          {shippingInfo.municipality}, {shippingInfo.department}
                         </p>
                         <p>{shippingInfo.label}</p>
                       </div>
@@ -343,24 +353,24 @@ export function CartDrawer() {
                   )}
 
                   {/* Totales */}
-                  <div className="space-y-1.5 border-t border-[var(--color-outline-variant)]/40 pt-3">
-                    <div className="flex justify-between text-sm text-[var(--color-on-surface-variant)]">
-                      <span>Subtotal productos</span>
+                  <div className="space-y-1.5 border-t border-[var(--color-outline-variant)]/20 pt-3 text-[13px]">
+                    <div className="flex justify-between text-[var(--color-secondary)]">
+                      <span>Subtotal</span>
                       <span className="tabular-nums">
                         {formatPrice(subtotal)}
                       </span>
                     </div>
-                    <div className="flex justify-between text-sm text-[var(--color-on-surface-variant)]">
-                      <span>Envío estimado</span>
+                    <div className="flex justify-between text-[var(--color-secondary)]">
+                      <span>Envío</span>
                       <span className="tabular-nums">
                         {shippingCost === 0
                           ? "Gratis"
                           : formatPrice(shippingCost)}
                       </span>
                     </div>
-                    <div className="flex justify-between pt-1 text-base font-bold">
+                    <div className="flex justify-between pt-1 font-bold">
                       <span className="text-[var(--color-on-surface)]">
-                        Total estimado
+                        Total
                       </span>
                       <span className="text-[var(--color-primary)] tabular-nums">
                         {formatPrice(grandTotal)}
@@ -369,15 +379,15 @@ export function CartDrawer() {
                   </div>
                 </div>
 
-                <div className="mt-auto space-y-2.5">
+                <div className="mt-auto space-y-2">
                   <button
                     onClick={handleWhatsAppOrder}
                     disabled={isGeneratingMessage || cartItems.length === 0}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-whatsapp)] py-3.5 font-bold text-white shadow-[0_4px_12px_rgba(37,211,102,0.25)] transition-all duration-200 hover:bg-[var(--color-whatsapp-hover)] hover:shadow-[0_6px_16px_rgba(37,211,102,0.35)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-whatsapp)] py-3.5 text-[13px] font-bold tracking-wide text-white shadow-[0_4px_14px_rgba(37,211,102,0.20)] transition-all duration-200 hover:bg-[var(--color-whatsapp-hover)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.30)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     <span
                       className="material-symbols-outlined"
-                      style={{ fontSize: "20px" }}
+                      style={{ fontSize: "18px" }}
                     >
                       {isGeneratingMessage ? "hourglass_top" : "chat"}
                     </span>
@@ -387,7 +397,7 @@ export function CartDrawer() {
                   </button>
                   <button
                     onClick={() => setStep("shipping")}
-                    className="w-full rounded-xl py-2.5 text-sm font-semibold text-[var(--color-on-surface-variant)] transition-all duration-200 hover:text-[var(--color-on-surface)] active:scale-[0.98]"
+                    className="w-full py-2 text-[13px] font-medium text-[var(--color-secondary)] transition-colors hover:text-[var(--color-on-surface)]"
                   >
                     Cancelar
                   </button>
@@ -395,55 +405,44 @@ export function CartDrawer() {
               </div>
             ) : /* PASO: ENVÍO */
             step === "shipping" ? (
-              <div className="flex flex-col gap-4">
-                <button
-                  onClick={() => setStep("cart")}
-                  className="flex w-max items-center gap-1 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:text-[var(--color-on-primary-container)]"
-                >
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "18px" }}
-                  >
-                    arrow_back
-                  </span>
-                  Atrás
-                </button>
+              <div className="flex flex-col gap-5">
+                <BackLink onClick={() => setStep("cart")} />
 
                 <div>
-                  <h3 className="mb-1 text-lg font-bold text-[var(--color-on-surface)]">
+                  <h3 className="mb-1 font-serif text-lg font-bold text-[var(--color-on-surface)]">
                     ¿A dónde enviamos?
                   </h3>
-                  <p className="text-sm text-[var(--color-on-surface-variant)]">
-                    Selecciona tu ubicación para calcular el costo de envío.
+                  <p className="text-[13px] text-[var(--color-secondary)]">
+                    Selecciona tu ubicación para calcular el envío.
                   </p>
                 </div>
 
                 {/* Referencia de zonas */}
-                <div className="grid grid-cols-1 gap-2 rounded-xl border border-[var(--color-primary-container)] bg-white p-3 text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-[var(--color-whatsapp)]" />
-                    <span className="text-[var(--color-on-surface-variant)]">
-                      <strong className="text-[var(--color-on-surface)]">
+                <div className="space-y-2 rounded-2xl bg-[var(--color-surface-container-low)] p-4 text-[12px]">
+                  <div className="flex items-center gap-2.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-whatsapp)]" />
+                    <span className="text-[var(--color-secondary)]">
+                      <span className="font-semibold text-[var(--color-on-surface)]">
                         San Miguel
-                      </strong>{" "}
-                      — Gratis (punto de entrega)
+                      </span>{" "}
+                      — Gratis
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-amber-500" />
-                    <span className="text-[var(--color-on-surface-variant)]">
-                      <strong className="text-[var(--color-on-surface)]">
+                  <div className="flex items-center gap-2.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                    <span className="text-[var(--color-secondary)]">
+                      <span className="font-semibold text-[var(--color-on-surface)]">
                         Zona Oriental
-                      </strong>{" "}
-                      (Usulután, La Unión, Morazán) — $1 a $3
+                      </span>{" "}
+                      — $1 a $3
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
-                    <span className="text-[var(--color-on-surface-variant)]">
-                      <strong className="text-[var(--color-on-surface)]">
+                  <div className="flex items-center gap-2.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)]" />
+                    <span className="text-[var(--color-secondary)]">
+                      <span className="font-semibold text-[var(--color-on-surface)]">
                         Resto del país
-                      </strong>{" "}
+                      </span>{" "}
                       — $3 a $5
                     </span>
                   </div>
@@ -453,7 +452,7 @@ export function CartDrawer() {
                 <div className="flex flex-col gap-1.5">
                   <label
                     htmlFor="shipping-dept"
-                    className="text-sm font-semibold text-[var(--color-on-surface)]"
+                    className="text-[12px] font-semibold tracking-wide text-[var(--color-secondary)] uppercase"
                   >
                     Departamento
                   </label>
@@ -461,9 +460,9 @@ export function CartDrawer() {
                     id="shipping-dept"
                     value={selectedDept}
                     onChange={(e) => setSelectedDept(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-outline-variant)] bg-white px-4 py-3 text-sm text-[var(--color-on-surface)] transition-colors focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-container)] focus:outline-none"
+                    className="w-full rounded-xl border border-[var(--color-outline-variant)]/40 bg-white px-4 py-3 text-[13px] text-[var(--color-on-surface)] transition-all duration-200 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-container)] focus:outline-none"
                   >
-                    <option value="">Selecciona tu departamento...</option>
+                    <option value="">Selecciona departamento</option>
                     {DEPARTMENTS.map((d) => (
                       <option key={d.name} value={d.name}>
                         {d.name}
@@ -477,7 +476,7 @@ export function CartDrawer() {
                   <div className="flex flex-col gap-1.5">
                     <label
                       htmlFor="shipping-muni"
-                      className="text-sm font-semibold text-[var(--color-on-surface)]"
+                      className="text-[12px] font-semibold tracking-wide text-[var(--color-secondary)] uppercase"
                     >
                       Municipio
                     </label>
@@ -485,9 +484,9 @@ export function CartDrawer() {
                       id="shipping-muni"
                       value={selectedMunicipality}
                       onChange={(e) => setSelectedMunicipality(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-outline-variant)] bg-white px-4 py-3 text-sm text-[var(--color-on-surface)] transition-colors focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-container)] focus:outline-none"
+                      className="w-full rounded-xl border border-[var(--color-outline-variant)]/40 bg-white px-4 py-3 text-[13px] text-[var(--color-on-surface)] transition-all duration-200 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-container)] focus:outline-none"
                     >
-                      <option value="">Selecciona tu municipio...</option>
+                      <option value="">Selecciona municipio</option>
                       {municipalities.map((m) => (
                         <option key={m} value={m}>
                           {m}
@@ -499,11 +498,11 @@ export function CartDrawer() {
 
                 {/* Preview costo */}
                 {selectedDept && selectedMunicipality && (
-                  <div className="rounded-xl border border-[#25d366]/30 bg-[#25d366]/5 p-3 text-sm">
+                  <div className="rounded-xl bg-[#25d366]/6 p-3.5 text-[13px]">
                     <p className="font-semibold text-[var(--color-on-surface)]">
-                      Costo estimado a {selectedMunicipality}:
+                      Envío a {selectedMunicipality}
                     </p>
-                    <p className="text-[var(--color-on-surface-variant)]">
+                    <p className="text-[var(--color-secondary)]">
                       {
                         getShippingInfo(selectedDept, selectedMunicipality)
                           .label
@@ -512,11 +511,11 @@ export function CartDrawer() {
                   </div>
                 )}
 
-                <div className="mt-auto pt-4">
+                <div className="mt-auto pt-2">
                   <button
                     onClick={handleConfirmShipping}
                     disabled={!selectedDept || !selectedMunicipality}
-                    className="w-full rounded-xl bg-[var(--color-primary)] py-3.5 font-bold text-white transition-all duration-200 hover:bg-[var(--color-on-primary-container)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+                    className="w-full rounded-xl bg-[var(--color-primary)] py-3.5 text-[13px] font-bold tracking-wide text-white transition-all duration-200 hover:bg-[var(--color-on-primary-container)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-35"
                   >
                     Confirmar ubicación
                   </button>
@@ -525,135 +524,144 @@ export function CartDrawer() {
             ) : /* CARRITO VACÍO */
             cartItems.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
-                <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-primary-container)]">
-                  <span
-                    className="material-symbols-outlined text-[var(--color-primary)]"
-                    style={{ fontSize: "40px" }}
-                  >
-                    shopping_cart
-                  </span>
-                </div>
-                <p className="mb-1 text-base font-semibold text-[var(--color-on-surface)]">
+                <span
+                  className="material-symbols-outlined mb-5 text-[var(--color-outline-variant)]"
+                  style={{ fontSize: "48px" }}
+                >
+                  shopping_bag
+                </span>
+                <p className="mb-1 font-serif text-base font-bold text-[var(--color-on-surface)]">
                   Tu carrito está vacío
                 </p>
-                <p className="mb-6 text-sm text-[var(--color-on-surface-variant)]">
-                  Explora nuestro catálogo y agrega productos
+                <p className="mb-6 text-[13px] text-[var(--color-secondary)]">
+                  Agrega productos desde nuestro catálogo
                 </p>
                 <button
                   onClick={closeDrawer}
-                  className="rounded-xl border border-[var(--color-primary)] bg-white px-8 py-3 text-sm font-bold text-[var(--color-primary)] transition-all duration-200 hover:bg-[var(--color-primary)] hover:text-white active:scale-[0.98]"
+                  className="rounded-full bg-[var(--color-primary)] px-8 py-2.5 text-[13px] font-semibold tracking-wide text-white transition-all duration-200 hover:bg-[var(--color-on-primary-container)] active:scale-[0.97]"
                 >
-                  Ver catálogo
+                  Explorar catálogo
                 </button>
               </div>
             ) : (
-              /* ITEMS DEL CARRITO */
-              <div className="flex flex-col gap-2.5">
-                {cartItems.map((item) => {
+              /* ITEMS DEL CARRITO — divider style, not card borders */
+              <div className="flex flex-col">
+                {cartItems.map((item, index) => {
                   if (!item || !item.product) return null;
                   return (
-                    <div
-                      data-testid="cart-item"
-                      key={item.id}
-                      className="flex gap-3 rounded-xl border border-[var(--color-primary-container)]/60 bg-white p-3 transition-all duration-200 hover:border-[var(--color-primary-container)] hover:shadow-[0_2px_8px_rgba(20,48,103,0.08)]"
-                    >
-                      <Link
-                        href={
-                          item.product.slug
-                            ? `/catalogo/${item.product.slug}`
-                            : "#"
-                        }
-                        onClick={closeDrawer}
-                        className={`aspect-[4/5] w-[4.5rem] shrink-0 overflow-hidden rounded-lg bg-[var(--color-surface-container)] ${
-                          !item.product.slug && "pointer-events-none opacity-80"
-                        }`}
+                    <div key={item.id}>
+                      <div
+                        data-testid="cart-item"
+                        className="group/item flex gap-4 py-4"
                       >
-                        <Image
-                          loading="lazy"
-                          src={
-                            item.product.image_path ||
-                            item.product.images?.[0] ||
-                            "https://placehold.co/200x240?text=Sin+Imagen"
+                        {/* Product image — subtle inner shadow for depth */}
+                        <Link
+                          href={
+                            item.product.slug
+                              ? `/catalogo/${item.product.slug}`
+                              : "#"
                           }
-                          alt={item.product.name}
-                          width={90}
-                          height={112}
-                          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                          unoptimized
-                        />
-                      </Link>
+                          onClick={closeDrawer}
+                          className={`aspect-[4/5] w-[5rem] shrink-0 overflow-hidden rounded-xl bg-[var(--color-surface-container-low)] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.04)] ${
+                            !item.product.slug &&
+                            "pointer-events-none opacity-80"
+                          }`}
+                        >
+                          <Image
+                            loading="lazy"
+                            src={
+                              item.product.image_path ||
+                              item.product.images?.[0] ||
+                              "https://placehold.co/200x240?text=Sin+Imagen"
+                            }
+                            alt={item.product.name}
+                            width={100}
+                            height={125}
+                            className="h-full w-full object-cover transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover/item:scale-105"
+                            unoptimized
+                          />
+                        </Link>
 
-                      <div className="flex flex-1 flex-col justify-between gap-1">
-                        <div>
-                          <div className="flex items-start justify-between gap-2">
-                            <h3 className="line-clamp-2 text-[13px] leading-snug font-bold text-[var(--color-on-surface)]">
-                              {item.product.name}
-                            </h3>
-                            <button
-                              onClick={() => removeFromCart(item.id)}
-                              aria-label="Eliminar producto"
-                              className="shrink-0 rounded-md p-1 text-[var(--color-outline)] transition-all duration-200 hover:bg-red-50 hover:text-[var(--color-tertiary)] active:scale-90"
-                            >
-                              <span
-                                className="material-symbols-outlined"
-                                style={{ fontSize: "18px" }}
+                        {/* Details */}
+                        <div className="flex flex-1 flex-col justify-between py-0.5">
+                          <div>
+                            <div className="flex items-start justify-between gap-3">
+                              <h3 className="line-clamp-2 text-[13px] leading-snug font-semibold text-[var(--color-on-surface)]">
+                                {item.product.name}
+                              </h3>
+                              <button
+                                onClick={() => removeFromCart(item.id)}
+                                aria-label="Eliminar producto"
+                                className="shrink-0 rounded-md p-0.5 text-[var(--color-outline-variant)] transition-all duration-200 hover:text-[var(--color-tertiary)] active:scale-90"
                               >
-                                delete
-                              </span>
-                            </button>
-                          </div>
-                          <p className="mt-0.5 text-[15px] font-extrabold text-[var(--color-primary)] tabular-nums">
-                            {formatPrice(item.product.price)}
-                          </p>
-                          {(item.color || item.note) && (
-                            <div className="mt-1 space-y-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
-                              {item.color && <p>Color: {item.color}</p>}
-                              {item.note && (
-                                <p className="line-clamp-1 italic">
-                                  {item.note}
-                                </p>
-                              )}
+                                <span
+                                  className="material-symbols-outlined"
+                                  style={{ fontSize: "16px" }}
+                                >
+                                  close
+                                </span>
+                              </button>
                             </div>
-                          )}
-                        </div>
+                            {(item.color || item.note) && (
+                              <div className="mt-1 space-y-0.5 text-[11px] text-[var(--color-secondary)]">
+                                {item.color && <p>Color: {item.color}</p>}
+                                {item.note && (
+                                  <p className="line-clamp-1 italic">
+                                    {item.note}
+                                  </p>
+                                )}
+                              </div>
+                            )}
+                          </div>
 
-                        <div className="mt-1 flex items-center">
-                          <div className="flex w-max items-center rounded-lg border border-[var(--color-outline-variant)]/60 bg-[var(--color-surface-container-lowest)]">
-                            <button
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity - 1)
-                              }
-                              aria-label="Disminuir cantidad"
-                              disabled={item.quantity <= 1}
-                              className="flex aspect-square w-8 items-center justify-center rounded-l-lg text-[var(--color-on-surface-variant)] transition-all duration-150 hover:bg-[var(--color-primary-container)]/40 hover:text-[var(--color-primary)] active:scale-90 disabled:opacity-25"
-                            >
-                              <span
-                                className="material-symbols-outlined"
-                                style={{ fontSize: "16px" }}
+                          <div className="mt-2 flex items-end justify-between">
+                            {/* Quantity — refined pill */}
+                            <div className="flex items-center rounded-full border border-[var(--color-outline-variant)]/30 bg-[var(--color-surface-container-lowest)]">
+                              <button
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity - 1)
+                                }
+                                aria-label="Disminuir cantidad"
+                                disabled={item.quantity <= 1}
+                                className="flex h-7 w-7 items-center justify-center rounded-full text-[var(--color-secondary)] transition-all duration-150 hover:text-[var(--color-primary)] active:scale-90 disabled:opacity-20"
                               >
-                                remove
+                                <span
+                                  className="material-symbols-outlined"
+                                  style={{ fontSize: "14px" }}
+                                >
+                                  remove
+                                </span>
+                              </button>
+                              <span className="w-6 text-center text-[12px] font-bold text-[var(--color-on-surface)] tabular-nums">
+                                {item.quantity}
                               </span>
-                            </button>
-                            <span className="w-8 text-center text-sm font-bold text-[var(--color-on-surface)] tabular-nums">
-                              {item.quantity}
-                            </span>
-                            <button
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity + 1)
-                              }
-                              aria-label="Aumentar cantidad"
-                              className="flex aspect-square w-8 items-center justify-center rounded-r-lg text-[var(--color-on-surface-variant)] transition-all duration-150 hover:bg-[var(--color-primary-container)]/40 hover:text-[var(--color-primary)] active:scale-90"
-                            >
-                              <span
-                                className="material-symbols-outlined"
-                                style={{ fontSize: "16px" }}
+                              <button
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity + 1)
+                                }
+                                aria-label="Aumentar cantidad"
+                                className="flex h-7 w-7 items-center justify-center rounded-full text-[var(--color-secondary)] transition-all duration-150 hover:text-[var(--color-primary)] active:scale-90"
                               >
-                                add
-                              </span>
-                            </button>
+                                <span
+                                  className="material-symbols-outlined"
+                                  style={{ fontSize: "14px" }}
+                                >
+                                  add
+                                </span>
+                              </button>
+                            </div>
+
+                            {/* Price — aligned right */}
+                            <p className="text-[15px] font-bold text-[var(--color-primary)] tabular-nums">
+                              {formatPrice(item.product.price)}
+                            </p>
                           </div>
                         </div>
                       </div>
+                      {/* Divider — not on last item */}
+                      {index < cartItems.length - 1 && (
+                        <div className="h-px bg-[var(--color-outline-variant)]/20" />
+                      )}
                     </div>
                   );
                 })}
@@ -661,68 +669,76 @@ export function CartDrawer() {
             )}
           </div>
 
-          {/* ─── Footer — solo en paso carrito con items ──────── */}
+          {/* ─── Footer — upward shadow for depth ────────────── */}
           {step === "cart" && cartItems.length > 0 && (
-            <div className="mt-auto border-t border-[var(--color-primary-container)] bg-white px-5 py-4">
-              <div className="mb-3 flex items-start gap-2 rounded-lg bg-[var(--color-primary-container)]/20 p-2.5 text-[11px] text-[var(--color-on-surface-variant)]">
-                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[14px] text-[var(--color-primary)]">
+            <div
+              className="mt-auto bg-white px-6 pt-4 pb-6"
+              style={{
+                boxShadow: "0 -8px 24px rgba(20, 48, 103, 0.04)",
+              }}
+            >
+              {/* Reservation notice */}
+              <div className="mb-3 flex items-center gap-2 text-[11px] text-[var(--color-secondary)]">
+                <span
+                  className="material-symbols-outlined text-[var(--color-outline-variant)]"
+                  style={{ fontSize: "14px" }}
+                >
                   schedule
                 </span>
                 <p>
-                  Reservado en este dispositivo por{" "}
-                  <strong className="text-[var(--color-on-surface)]">
+                  Reservado por{" "}
+                  <span className="font-semibold text-[var(--color-on-surface-variant)]">
                     7 días
-                  </strong>
-                  .
+                  </span>
                 </p>
               </div>
 
               {arePricesStale && (
-                <div className="mb-3 flex flex-col gap-1.5 rounded-lg border border-[var(--color-tertiary)]/20 bg-[var(--color-tertiary)]/5 p-2.5 text-xs text-[var(--color-tertiary)]">
-                  <div className="flex items-start gap-2">
-                    <span className="material-symbols-outlined mt-0.5 shrink-0 text-[14px]">
-                      error
-                    </span>
-                    <p>
-                      <strong>Atención:</strong> No pudimos verificar los
-                      precios actualizados.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => refreshCartPrices()}
-                    className="mt-0.5 flex items-center gap-1 self-start rounded-md bg-[var(--color-tertiary)]/10 px-2.5 py-1.5 text-[11px] font-bold text-[var(--color-tertiary)] transition-colors hover:bg-[var(--color-tertiary)]/20 active:scale-[0.97]"
+                <div className="mb-3 flex items-center gap-2 rounded-lg bg-[var(--color-tertiary)]/5 p-2.5 text-[11px] text-[var(--color-tertiary)]">
+                  <span
+                    className="material-symbols-outlined shrink-0"
+                    style={{ fontSize: "14px" }}
                   >
-                    <span className="material-symbols-outlined text-[12px]">
-                      refresh
-                    </span>
-                    Reintentar
-                  </button>
+                    error
+                  </span>
+                  <p>
+                    No pudimos verificar precios.{" "}
+                    <button
+                      onClick={() => refreshCartPrices()}
+                      className="font-bold underline decoration-[var(--color-tertiary)]/40 underline-offset-2 hover:decoration-[var(--color-tertiary)]"
+                    >
+                      Reintentar
+                    </button>
+                  </p>
                 </div>
               )}
 
-              <div className="mb-3 flex items-end justify-between">
-                <span className="text-sm text-[var(--color-on-surface-variant)]">
-                  Subtotal:
+              {/* Subtotal */}
+              <div className="mb-4 flex items-baseline justify-between">
+                <span className="text-[13px] text-[var(--color-secondary)]">
+                  Subtotal
                 </span>
-                <span className="text-xl font-black text-[var(--color-primary)] tabular-nums">
+                <span className="text-xl font-bold tracking-tight text-[var(--color-on-surface)] tabular-nums">
                   {formatPrice(subtotal)}
                 </span>
               </div>
+
+              {/* CTA */}
               <button
                 data-testid="checkout-button"
                 onClick={() => setStep("shipping")}
                 disabled={isRefreshingPrices}
-                className={`flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-whatsapp)] py-3.5 font-bold text-white shadow-[0_4px_12px_rgba(37,211,102,0.25)] transition-all duration-200 hover:bg-[var(--color-whatsapp-hover)] hover:shadow-[0_6px_16px_rgba(37,211,102,0.35)] active:scale-[0.98] ${
+                className={`group flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-whatsapp)] py-3.5 text-[13px] font-bold tracking-wide text-white shadow-[0_4px_14px_rgba(37,211,102,0.18)] transition-all duration-200 hover:bg-[var(--color-whatsapp-hover)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.28)] active:scale-[0.98] ${
                   isRefreshingPrices ? "cursor-not-allowed opacity-50" : ""
                 }`}
               >
                 {isRefreshingPrices
-                  ? "Actualizando precios..."
+                  ? "Actualizando..."
                   : "Continuar con el pedido"}
                 {!isRefreshingPrices && (
                   <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "20px" }}
+                    className="material-symbols-outlined transition-transform duration-200 group-hover:translate-x-0.5"
+                    style={{ fontSize: "18px" }}
                   >
                     arrow_forward
                   </span>
