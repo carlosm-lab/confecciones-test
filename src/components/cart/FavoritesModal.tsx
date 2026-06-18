@@ -116,10 +116,15 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
                 </h2>
                 <button
                   onClick={onClose}
-                  className="rounded-full p-2 transition-colors hover:bg-gray-100"
+                  className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
                   aria-label="Cerrar favoritos"
                 >
-                  <span className="material-symbols-outlined">close</span>
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "20px" }}
+                  >
+                    close
+                  </span>
                 </button>
               </div>
 
@@ -197,7 +202,7 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
                               }
                               toggleFavorite(product.id);
                             }}
-                            className="absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-sm backdrop-blur-sm transition-transform hover:scale-110"
+                            className="absolute top-1/2 right-4 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-sm backdrop-blur-sm transition-transform hover:scale-110 active:scale-95"
                             aria-label="Quitar de favoritos"
                           >
                             <span

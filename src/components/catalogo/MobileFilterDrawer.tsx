@@ -120,10 +120,15 @@ export function MobileFilterDrawer({
           <button
             type="button"
             onClick={onClose}
-            className="hover:text-primary rounded-lg p-[var(--space-xs)] text-slate-500 transition-colors"
+            className="hover:text-primary flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-slate-100"
             aria-label="Cerrar filtros"
           >
-            <span className="material-symbols-outlined">close</span>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: "20px" }}
+            >
+              close
+            </span>
           </button>
         </div>
 

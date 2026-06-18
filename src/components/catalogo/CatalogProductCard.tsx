@@ -71,13 +71,13 @@ export function CatalogProductCard({
   return (
     <article
       data-testid="product-card"
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_2px_8px_rgba(20,48,103,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(20,48,103,0.12)]"
+      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md"
     >
       {/* Badges top-left */}
-      <div className="pointer-events-none absolute top-[var(--space-sm)] left-[var(--space-sm)] z-[20] flex flex-col gap-[var(--space-xs)]">
+      <div className="pointer-events-none absolute top-[var(--space-md)] left-[var(--space-md)] z-[20] flex flex-col gap-[var(--space-xs)]">
         {onSale && (
           <span
-            className="rounded-full bg-[var(--color-tertiary)] px-2.5 py-1 font-black tracking-widest text-white uppercase shadow-sm select-none"
+            className="bg-primary rounded-full px-[var(--space-xs)] py-[0.25rem] font-black tracking-widest text-white uppercase shadow-sm select-none sm:px-[var(--space-sm)]"
             style={{ fontSize: "clamp(0.5rem, 0.8vw, 0.625rem)" }}
           >
             ¡Oferta!
@@ -86,7 +86,7 @@ export function CatalogProductCard({
         {product.badge_text && !onSale && (
           <span
             className={cn(
-              "rounded-full px-2.5 py-1 font-black tracking-widest uppercase shadow-sm select-none",
+              "rounded px-[var(--space-xs)] py-[0.25rem] font-black tracking-widest uppercase shadow-sm select-none",
               product.badge_text === "Premium"
                 ? "bg-slate-900 text-white"
                 : "bg-primary text-white"
@@ -101,15 +101,13 @@ export function CatalogProductCard({
       {/* Favorite button top-right */}
       <button
         onClick={handleToggleFavorite}
-        className="absolute top-[var(--space-sm)] right-[var(--space-sm)] z-[20] rounded-full bg-black/20 p-1.5 backdrop-blur-sm transition-all duration-300 hover:bg-black/30 active:scale-90"
+        className="absolute top-[var(--space-sm)] right-[var(--space-sm)] z-[20] flex h-9 w-9 items-center justify-center rounded-full bg-black/20 backdrop-blur-sm transition-all duration-300 hover:bg-black/30 active:scale-90"
         aria-label="Alternar Favorito"
       >
         <span
           className={cn(
-            "material-symbols-outlined drop-shadow-[0_0px_3px_rgba(0,0,0,0.6)] transition-colors",
-            isFavorited
-              ? "text-[var(--color-tertiary)]"
-              : "text-white hover:text-slate-100"
+            "material-symbols-outlined drop-shadow-[0_0px_4px_rgba(0,0,0,0.8)] transition-colors",
+            isFavorited ? "text-primary" : "text-white"
           )}
           style={{
             fontSize: "20px",
@@ -120,8 +118,8 @@ export function CatalogProductCard({
         </span>
       </button>
 
-      {/* Image — 4:5 ratio for compact vertical layout */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-[var(--color-surface-container-low)]">
+      {/* Image */}
+      <div className="relative aspect-square overflow-hidden bg-white">
         {imagen ? (
           <Image
             src={imagen}
@@ -135,9 +133,9 @@ export function CatalogProductCard({
             }
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[var(--color-surface-container)]">
+          <div className="flex h-full w-full items-center justify-center bg-gray-50">
             <span
-              className="material-symbols-outlined text-4xl text-[var(--color-outline-variant)]"
+              className="material-symbols-outlined text-4xl text-gray-300"
               aria-hidden="true"
             >
               checkroom
@@ -147,34 +145,34 @@ export function CatalogProductCard({
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col gap-1 p-3 sm:p-4">
-        <h3 className="group-hover:text-primary pointer-events-none truncate text-sm font-bold text-[var(--color-on-surface)] transition-colors">
+      <div className="flex flex-1 flex-col gap-1.5 p-4">
+        <h3 className="group-hover:text-primary pointer-events-none truncate text-sm font-bold text-slate-900 transition-colors">
           {product.name}
         </h3>
 
         {product.short_description && (
-          <p className="pointer-events-none line-clamp-1 text-[11px] text-[var(--color-on-surface-variant)]">
+          <p className="pointer-events-none line-clamp-1 text-[11px] text-slate-500">
             {product.short_description}
           </p>
         )}
 
-        <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-2 select-none">
-          <span className="text-primary pointer-events-none text-lg leading-tight font-extrabold">
+        <div className="mt-auto flex flex-wrap items-center gap-1 pt-1 select-none">
+          <span className="text-primary pointer-events-none text-base font-bold">
             ${price.toFixed(2)}
             {product.price_suffix && (
-              <span className="ml-0.5 text-[10px] font-normal text-[var(--color-on-surface-variant)]">
+              <span className="ml-0.5 text-xs font-normal text-slate-500">
                 {product.price_suffix}
               </span>
             )}
           </span>
           {onSale && oldPrice && (
-            <span className="pointer-events-none text-xs text-[var(--color-outline)] line-through decoration-[var(--color-outline)]/40">
+            <span className="pointer-events-none text-xs text-slate-400 line-through decoration-slate-400/50">
               ${oldPrice.toFixed(2)}
             </span>
           )}
           <button
             onClick={handleAddToCart}
-            className="btn-gradient relative z-[20] ml-auto rounded-xl p-2 text-white shadow-sm transition-all duration-200 hover:shadow-md active:scale-90"
+            className="hover:bg-primary text-primary relative z-[20] ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 transition-all hover:text-white active:scale-90"
             aria-label="Añadir al carrito"
           >
             <span className="material-symbols-outlined text-[18px]">
@@ -183,9 +181,6 @@ export function CatalogProductCard({
           </button>
         </div>
       </div>
-
-      {/* Brand accent line at bottom */}
-      <div className="h-[3px] w-full bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-primary-container)] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       {/* Full-card link */}
       <Link

@@ -16,6 +16,7 @@ import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { logger } from "@/lib/logger";
+import toast from "react-hot-toast";
 import type { CategoryConfig } from "@/data/types";
 import {
   getProductMainImage,
@@ -50,6 +51,7 @@ export function ProductDetailClient({
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [customNote, setCustomNote] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   const onSale = isProductOnSale(product);
   const sector = getProductSector(product);
@@ -71,8 +73,37 @@ export function ProductDetailClient({
     toggleFavorite(product.id);
   };
 
+  // Parse tallas y colores desde los campos de DB
+  // IMPORTANTE: deben declararse ANTES de handleAddToCart para evitar ReferenceError
+  const tallas: string[] = Array.isArray(product.tallas) ? product.tallas : [];
+  const colores: { name: string; hex: string }[] = Array.isArray(
+    product.colores
+  )
+    ? product.colores
+    : [];
+  const caracteristicas: string[] = Array.isArray(product.caracteristicas)
+    ? product.caracteristicas
+    : [];
+
+  const placeholderCount = Math.max(0, 4 - allImages.length);
+
   function handleAddToCart() {
-    const noteText = customNote ? `\nNota: ${customNote}` : "";
+    // Validar selección de talla si el producto tiene tallas
+    if (tallas.length > 0 && !selectedSize) {
+      toast.error(
+        "Por favor selecciona una talla antes de agregar al carrito.",
+        {
+          id: "no-size-toast",
+          duration: 3000,
+        }
+      );
+      return;
+    }
+
+    const sizePart = selectedSize ? `Talla: ${selectedSize}` : "";
+    const notePart = customNote ? `Nota: ${customNote}` : "";
+    const noteText = [sizePart, notePart].filter(Boolean).join(" · ");
+
     addToCart(
       {
         id: product.id,
@@ -122,26 +153,13 @@ export function ProductDetailClient({
     }
   };
 
-  const placeholderCount = Math.max(0, 4 - allImages.length);
-
-  // Parse tallas y colores desde los campos de DB
-  const tallas: string[] = Array.isArray(product.tallas) ? product.tallas : [];
-  const colores: { name: string; hex: string }[] = Array.isArray(
-    product.colores
-  )
-    ? product.colores
-    : [];
-  const caracteristicas: string[] = Array.isArray(product.caracteristicas)
-    ? product.caracteristicas
-    : [];
-
   return (
     <div className="mx-auto flex min-h-[calc(100dvh-56px)] w-full max-w-screen-2xl flex-1 flex-col px-5 py-[var(--space-lg)] md:px-8">
       {/* Main product grid */}
       <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[45%_1fr] lg:gap-12">
         {/* Left column: Sticky image gallery */}
         <div
-          className="animate-fade-in-up flex w-full min-w-0 flex-col-reverse items-start gap-5 md:grid md:grid-cols-[calc(20%-12.16px)_calc(80%-19.84px)] md:gap-8 lg:sticky lg:top-24 lg:grid-cols-[calc(20%-17.16px)_1px_calc(80%-39.84px)] lg:gap-7"
+          className="animate-fade-in-up isolate flex w-full min-w-0 flex-col-reverse items-start gap-5 md:grid md:grid-cols-[calc(20%-12.16px)_calc(80%-19.84px)] md:gap-8 lg:sticky lg:top-24 lg:grid-cols-[calc(20%-17.16px)_1px_calc(80%-39.84px)] lg:gap-7"
           style={{ animationDelay: "100ms" }}
         >
           {/* Thumbnail strip */}
@@ -286,20 +304,40 @@ export function ProductDetailClient({
               )}
             </div>
 
-            {/* Available sizes */}
+            {/* Available sizes — selector interactivo */}
             {tallas.length > 0 && (
               <div>
                 <p className="mb-2 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-                  Tallas disponibles
+                  Talla
+                  {selectedSize ? (
+                    <span className="text-primary ml-2 font-bold normal-case">
+                      seleccionada: {selectedSize}
+                    </span>
+                  ) : (
+                    <span className="ml-2 font-normal text-slate-400 normal-case">
+                      (elige una)
+                    </span>
+                  )}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {tallas.map((talla) => (
-                    <span
+                    <button
                       key={talla}
-                      className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700"
+                      type="button"
+                      onClick={() =>
+                        setSelectedSize((prev) =>
+                          prev === talla ? null : talla
+                        )
+                      }
+                      className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all active:scale-95 ${
+                        selectedSize === talla
+                          ? "bg-primary border-primary text-white shadow-sm"
+                          : "border-slate-200 bg-white text-slate-700 hover:border-slate-400"
+                      }`}
+                      aria-pressed={selectedSize === talla}
                     >
                       {talla}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -422,7 +460,7 @@ export function ProductDetailClient({
               <button
                 type="button"
                 onClick={handleCopy}
-                className="flex w-14 flex-shrink-0 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition hover:bg-slate-200 active:scale-[0.95] dark:bg-transparent dark:text-slate-300 dark:hover:bg-white/10"
+                className="flex w-14 flex-shrink-0 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-slate-200 active:scale-[0.95] dark:bg-transparent dark:text-slate-300 dark:hover:bg-white/10"
                 title="Compartir"
                 aria-label="Compartir este producto"
               >
