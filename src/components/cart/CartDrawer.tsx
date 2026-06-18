@@ -513,14 +513,14 @@ export function CartDrawer() {
               </div>
             ) : (
               /* ITEMS DEL CARRITO */
-              <div className="flex flex-col gap-[var(--space-lg)]">
+              <div className="flex flex-col gap-[var(--space-sm)]">
                 {cartItems.map((item) => {
                   if (!item || !item.product) return null;
                   return (
                     <div
                       data-testid="cart-item"
                       key={item.id}
-                      className="flex gap-[var(--space-md)] rounded-2xl border border-gray-100 bg-gray-50 p-[var(--space-md)]"
+                      className="flex gap-3 rounded-xl border border-[var(--color-primary-container)] bg-white p-3 shadow-[0_1px_3px_rgba(20,48,103,0.06)]"
                     >
                       <Link
                         href={
@@ -529,7 +529,7 @@ export function CartDrawer() {
                             : "#"
                         }
                         onClick={closeDrawer}
-                        className={`aspect-[5/6] w-[clamp(3.5rem,12vw,5rem)] shrink-0 overflow-hidden rounded-xl bg-white ${
+                        className={`aspect-[4/5] w-[clamp(4rem,14vw,5.5rem)] shrink-0 overflow-hidden rounded-lg bg-[var(--color-surface-container-low)] ${
                           !item.product.slug && "pointer-events-none opacity-80"
                         }`}
                       >
@@ -541,65 +541,65 @@ export function CartDrawer() {
                             "https://placehold.co/200x240?text=Sin+Imagen"
                           }
                           alt={item.product.name}
-                          width={80}
-                          height={96}
+                          width={88}
+                          height={110}
                           className="h-full w-full object-cover"
                           unoptimized
                         />
                       </Link>
 
-                      <div className="flex flex-1 flex-col justify-between">
+                      <div className="flex flex-1 flex-col justify-between gap-1">
                         <div>
-                          <div className="flex items-start justify-between">
-                            <h3 className="line-clamp-1 font-bold text-slate-900">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="line-clamp-2 text-sm font-bold text-[var(--color-on-surface)]">
                               {item.product.name}
                             </h3>
                             <button
                               onClick={() => removeFromCart(item.id)}
                               aria-label="Eliminar producto"
-                              className="text-gray-400 transition-colors hover:text-red-500"
+                              className="shrink-0 rounded-md p-1 text-[var(--color-outline)] transition-colors hover:bg-red-50 hover:text-[var(--color-tertiary)]"
                             >
                               <span
                                 className="material-symbols-outlined"
-                                style={{ fontSize: "var(--icon-sm)" }}
+                                style={{ fontSize: "18px" }}
                               >
                                 delete
                               </span>
                             </button>
                           </div>
-                          <p className="text-primary mt-1 font-bold text-[var(--text-sm)]">
+                          <p className="text-primary mt-0.5 text-base font-extrabold">
                             {formatPrice(item.product.price)}
                           </p>
                           {(item.color || item.note) && (
-                            <div className="mt-[var(--space-xs)] space-y-[0.25rem] text-[var(--text-xs)] text-gray-500">
+                            <div className="mt-1 space-y-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
                               {item.color && <p>Color: {item.color}</p>}
                               {item.note && (
                                 <p className="line-clamp-1 italic">
-                                  Nota: &ldquo;{item.note}&rdquo;
+                                  {item.note}
                                 </p>
                               )}
                             </div>
                           )}
                         </div>
 
-                        <div className="mt-[var(--space-sm)] flex items-center gap-[var(--space-sm)]">
-                          <div className="flex w-max items-center rounded-lg border border-gray-200 bg-white shadow-md">
+                        <div className="mt-1 flex items-center">
+                          <div className="flex w-max items-center rounded-lg border border-[var(--color-outline-variant)] bg-[var(--color-surface-container-lowest)]">
                             <button
                               onClick={() =>
                                 updateQuantity(item.id, item.quantity - 1)
                               }
                               aria-label="Disminuir cantidad"
                               disabled={item.quantity <= 1}
-                              className="hover:text-primary flex aspect-square w-[clamp(1.5rem,4vw,2rem)] items-center justify-center text-gray-500 transition-colors disabled:opacity-50"
+                              className="hover:text-primary flex aspect-square w-8 items-center justify-center text-[var(--color-on-surface-variant)] transition-colors disabled:opacity-30"
                             >
                               <span
                                 className="material-symbols-outlined"
-                                style={{ fontSize: "var(--icon-sm)" }}
+                                style={{ fontSize: "16px" }}
                               >
                                 remove
                               </span>
                             </button>
-                            <span className="w-[clamp(1.5rem,4vw,2rem)] text-center font-bold text-[var(--text-sm)] text-slate-900">
+                            <span className="w-8 text-center text-sm font-bold text-[var(--color-on-surface)]">
                               {item.quantity}
                             </span>
                             <button
@@ -607,11 +607,11 @@ export function CartDrawer() {
                                 updateQuantity(item.id, item.quantity + 1)
                               }
                               aria-label="Aumentar cantidad"
-                              className="hover:text-primary flex aspect-square w-[clamp(1.5rem,4vw,2rem)] items-center justify-center text-gray-500 transition-colors"
+                              className="hover:text-primary flex aspect-square w-8 items-center justify-center text-[var(--color-on-surface-variant)] transition-colors"
                             >
                               <span
                                 className="material-symbols-outlined"
-                                style={{ fontSize: "var(--icon-sm)" }}
+                                style={{ fontSize: "16px" }}
                               >
                                 add
                               </span>
@@ -628,14 +628,17 @@ export function CartDrawer() {
 
           {/* Footer — solo en paso carrito con items */}
           {step === "cart" && cartItems.length > 0 && (
-            <div className="mt-auto border-t border-gray-100 bg-gray-50 p-[var(--space-lg)]">
-              <div className="mb-[var(--space-md)] flex items-start gap-2 rounded-lg border border-orange-100 bg-orange-50 p-3 text-xs text-orange-800">
-                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[16px]">
+            <div className="mt-auto border-t-2 border-[var(--color-primary-container)] bg-white p-[var(--space-lg)]">
+              <div className="mb-[var(--space-md)] flex items-start gap-2 rounded-lg border border-[var(--color-primary-container)] bg-[var(--color-surface-container-low)] p-3 text-xs text-[var(--color-on-surface-variant)]">
+                <span className="material-symbols-outlined text-primary mt-0.5 shrink-0 text-[16px]">
                   schedule
                 </span>
                 <p>
                   Tus productos están reservados en este dispositivo por{" "}
-                  <strong>7 días</strong>.
+                  <strong className="text-[var(--color-on-surface)]">
+                    7 días
+                  </strong>
+                  .
                 </p>
               </div>
 
@@ -663,8 +666,10 @@ export function CartDrawer() {
               )}
 
               <div className="mb-[var(--space-md)] flex items-end justify-between">
-                <span className="font-medium text-slate-500">Subtotal:</span>
-                <span className="font-black text-[var(--text-2xl)] text-slate-900">
+                <span className="text-sm font-medium text-[var(--color-on-surface-variant)]">
+                  Subtotal:
+                </span>
+                <span className="text-primary font-black text-[var(--text-2xl)]">
                   {formatPrice(subtotal)}
                 </span>
               </div>
