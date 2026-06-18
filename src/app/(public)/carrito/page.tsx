@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { useCart } from "@/context/CartContext";
@@ -81,14 +82,17 @@ export default function CarritoPage() {
                 }
                 className="aspect-square w-16 shrink-0 overflow-hidden rounded-xl bg-gray-50"
               >
-                <img
+                <Image
                   src={
                     item.product.image_path ||
                     item.product.images?.[0] ||
                     "https://placehold.co/80x80?text=?"
                   }
                   alt={item.product.name}
+                  width={64}
+                  height={64}
                   className="h-full w-full object-cover"
+                  unoptimized
                 />
               </Link>
               <div className="flex flex-1 flex-col">

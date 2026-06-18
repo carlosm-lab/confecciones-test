@@ -32,6 +32,7 @@ export default function AdminLoginPage() {
               src="/icon.png"
               alt="Confecciones Liss"
               fill
+              sizes="64px"
               className="object-contain"
             />
           </div>

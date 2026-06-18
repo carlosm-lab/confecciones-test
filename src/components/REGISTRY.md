@@ -151,11 +151,13 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### ProductDetailClient
 
 - **Ruta:** `src/components/catalogo/ProductDetailClient.tsx`
-- **Descripción:** Vista de detalle de producto. Grid 45%/55% con galería sticky (thumbnails + imagen principal 1:1), lightbox modal, buy box con acordeón de personalización y CTA WhatsApp, y sección de productos relacionados 1→2→4 cols. Copia pixel a pixel el ProductDetailPage de Padilla Store.
+- **Descripción:** Vista de detalle de producto. Grid 45%/55% con galería sticky (thumbnails + imagen principal 4:5), lightbox modal, selector interactivo de tallas (botones con estado `selectedSize`), buy box con acordeón de personalización, y sección de productos relacionados. El contenedor izquierdo usa `isolate` para crear un nuevo stacking context y evitar conflictos de z-index con los botones del panel derecho.
+- **Estado interno:** `mainImg`, `isImageModalOpen`, `customNote`, `showToast`, `selectedSize: string | null`
+- **Validaciones:** Si el producto tiene tallas (`tallas.length > 0`), se requiere `selectedSize` antes de agregar al carrito (muestra toast de error si no).
 - **Props:**
-  - `product: Product` — Producto a mostrar.
+  - `product: DbProduct` — Producto a mostrar (schema de Supabase).
   - `config: CategoryConfig` — Configuración del sector.
-  - `relatedProducts: Product[]` — Productos relacionados (hasta 4).
+  - `relatedProducts: DbProduct[]` — Productos relacionados (hasta 5).
 - **Ejemplo:** `<ProductDetailClient product={product} config={config} relatedProducts={related} />`
 
 ## SEO Components

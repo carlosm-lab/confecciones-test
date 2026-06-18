@@ -8,6 +8,7 @@ const navItems = [
   { to: "/admin/products", icon: "inventory_2", label: "Productos" },
   { to: "/admin/categories", icon: "category", label: "Categorías" },
   { to: "/admin/messages", icon: "mail", label: "Mensajes" },
+  { to: "/admin/usuarios", icon: "group", label: "Usuarios" },
 ];
 
 export default function AdminFooterBar() {

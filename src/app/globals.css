@@ -51,8 +51,10 @@
   --color-secondary-fixed: #dae2ff;
 
   /* Third-party brand colors (no cambiar sin verificar con el proveedor) */
-  --color-whatsapp: #25d366; /* WhatsApp green — brand oficial */
-  --color-whatsapp-hover: #1da851; /* WhatsApp green hover — brand oficial */
+  --color-whatsapp: #25d366;
+  /* WhatsApp green — brand oficial */
+  --color-whatsapp-hover: #1da851;
+  /* WhatsApp green hover — brand oficial */
 
   /* Fonts */
   --font-headline: "Noto Serif", serif;
@@ -188,20 +190,6 @@
       0 20px 40px -10px rgba(25, 28, 30, 0.06);
   }
 
-  .elegant-scrollbar::-webkit-scrollbar {
-    width: 4px;
-  }
-  .elegant-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .elegant-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--color-outline-variant);
-    border-radius: 99px;
-  }
-  .elegant-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--color-outline);
-  }
-
   .btn-gradient {
     background: linear-gradient(
       135deg,
@@ -213,6 +201,7 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -221,6 +210,7 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -233,7 +223,8 @@
   .section-title {
     font-family: var(--font-serif);
     color: var(--color-primary);
-    font-size: 1.5rem; /* 24px mobile */
+    font-size: 1.5rem;
+    /* 24px mobile */
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.01em;
@@ -242,25 +233,29 @@
 
   @media (min-width: 640px) {
     .section-title {
-      font-size: 1.75rem; /* 28px sm */
+      font-size: 1.75rem;
+      /* 28px sm */
     }
   }
 
   @media (min-width: 768px) {
     .section-title {
-      font-size: 2rem; /* 32px md */
+      font-size: 2rem;
+      /* 32px md */
     }
   }
 
   @media (min-width: 1024px) {
     .section-title {
-      font-size: 2.375rem; /* 38px lg */
+      font-size: 2.375rem;
+      /* 38px lg */
     }
   }
 
   @media (min-width: 1280px) {
     .section-title {
-      font-size: 2.5rem; /* 40px xl */
+      font-size: 2.5rem;
+      /* 40px xl */
     }
   }
 
@@ -304,6 +299,7 @@
       opacity: 0;
       transform: translateY(16px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -372,6 +368,7 @@
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
@@ -387,14 +384,17 @@
     transform: translate3d(-80px, 0, 0);
     opacity: 0;
   }
+
   20% {
     transform: translate3d(-60px, 0, 0);
     opacity: 1;
   }
+
   80% {
     transform: translate3d(0, 0, 0);
     opacity: 1;
   }
+
   100% {
     transform: translate3d(20px, 0, 0);
     opacity: 0;
@@ -438,9 +438,11 @@
   .nav-scroll-hide {
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
+
   .nav-scroll-hidden-top {
     transform: translateY(-100%) !important;
   }
+
   .nav-scroll-hidden-bottom {
     transform: translateY(100%) !important;
   }
@@ -452,8 +454,10 @@
 }
 
 .elegant-scrollbar {
-  scrollbar-width: thin !important; /* Force thin scrollbar on Firefox */
-  scrollbar-color: #cbd5e1 transparent !important; /* Light-slate thumb, transparent track */
+  scrollbar-width: thin !important;
+  /* Force thin scrollbar on Firefox */
+  scrollbar-color: #cbd5e1 transparent !important;
+  /* Light-slate thumb, transparent track */
 }
 
 .elegant-scrollbar::-webkit-scrollbar {
@@ -463,16 +467,19 @@
 }
 
 .elegant-scrollbar::-webkit-scrollbar-track {
-  background: transparent !important; /* Transparent track for minimal layout impact */
+  background: transparent !important;
+  /* Transparent track for minimal layout impact */
 }
 
 .elegant-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1 !important; /* Elegant light-slate thumb */
+  background-color: #cbd5e1 !important;
+  /* Elegant light-slate thumb */
   border-radius: 3px !important;
 }
 
 .elegant-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8 !important; /* Medium slate on hover */
+  background-color: #94a3b8 !important;
+  /* Medium slate on hover */
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -484,17 +491,21 @@
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #cbd5e1;
   border-radius: 3px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #94a3b8;
 }
@@ -503,9 +514,11 @@
 .dark .custom-scrollbar {
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
+
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }

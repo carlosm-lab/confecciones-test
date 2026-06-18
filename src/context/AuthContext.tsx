@@ -11,7 +11,12 @@ import {
   useRef,
   ReactNode,
 } from "react";
-import type { User, Session, AuthChangeEvent } from "@supabase/supabase-js";
+import type {
+  User,
+  Session,
+  AuthChangeEvent,
+  AuthError,
+} from "@supabase/supabase-js";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
@@ -229,7 +234,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const {
           data: { session: currentSession },
+          error,
         } = await supabase.auth.getSession();
+
+        // Token inválido (expirado, borrado del servidor, o Supabase reiniciado).
+        // Limpiamos la sesión local silenciosamente para evitar el bucle de error.
+        if (error) {
+          const isInvalidToken =
+            error.message?.toLowerCase().includes("refresh token") ||
+            error.message?.toLowerCase().includes("invalid") ||
+            (error as AuthError & { status?: number }).status === 400;
+
+          if (isInvalidToken) {
+            logger.warn(
+              "Stale refresh token detected — clearing session silently."
+            );
+            await supabase.auth.signOut({ scope: "local" });
+          } else {
+            logger.error("Error getting initial session:", error);
+          }
+          if (mounted) {
+            setSession(null);
+            setUser(null);
+            setProfile(null);
+            setIsAdmin(false);
+            try {
+              sessionStorage.removeItem(PROFILE_CACHE_KEY);
+              sessionStorage.removeItem(CACHE_TIME_KEY);
+              sessionStorage.removeItem(USER_CACHE_KEY);
+            } catch {
+              /* ignore */
+            }
+          }
+          return;
+        }
+
         if (!mounted) return;
 
         if (currentSession?.user) {
@@ -253,7 +292,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           sessionStorage.removeItem(USER_CACHE_KEY);
         }
       } catch (err) {
-        logger.error("Error getting initial session:", err);
+        // AuthApiError lanzado por supabase-js cuando el refresh falla completamente
+        const msg = (err as Error)?.message ?? "";
+        const isTokenError =
+          msg.toLowerCase().includes("refresh token") ||
+          msg.toLowerCase().includes("invalid");
+
+        if (isTokenError) {
+          logger.warn(
+            "Caught stale refresh token exception — signing out locally."
+          );
+          try {
+            await supabase.auth.signOut({ scope: "local" });
+          } catch {
+            /* ignore */
+          }
+          if (mounted) {
+            setSession(null);
+            setUser(null);
+            setProfile(null);
+            setIsAdmin(false);
+            try {
+              sessionStorage.removeItem(PROFILE_CACHE_KEY);
+              sessionStorage.removeItem(CACHE_TIME_KEY);
+              sessionStorage.removeItem(USER_CACHE_KEY);
+            } catch {
+              /* ignore */
+            }
+          }
+        } else {
+          logger.error("Error getting initial session:", err);
+        }
       } finally {
         if (mounted) setLoading(false);
       }
@@ -267,7 +336,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       (event: AuthChangeEvent, currentSession: Session | null) => {
         if (!mounted) return;
 
-        if (event === "SIGNED_OUT") {
+        if (
+          event === "SIGNED_OUT" ||
+          (event === "TOKEN_REFRESHED" && !currentSession)
+        ) {
           setSession(null);
           setUser(null);
           setProfile(null);

@@ -80,6 +80,7 @@ export default function MiCuentaPageClient() {
                 src={avatarUrl}
                 alt="Avatar"
                 fill
+                sizes="80px"
                 className="object-cover"
                 referrerPolicy="no-referrer"
               />

@@ -363,12 +363,14 @@ export function Navbar() {
               {/* Avatar — hidden on mobile (profile moved to bottom nav) */}
               <button
                 aria-label={
-                  user ? `Mi cuenta (${user.email})` : "Iniciar sesión"
+                  isMounted && user
+                    ? `Mi cuenta (${user.email})`
+                    : "Iniciar sesión"
                 }
                 onClick={handleAvatarClick}
                 className="border-primary/10 hidden size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex"
               >
-                {user?.user_metadata?.avatar_url ? (
+                {isMounted && user?.user_metadata?.avatar_url ? (
                   <Image
                     src={user.user_metadata.avatar_url as string}
                     alt="Avatar"
@@ -383,7 +385,7 @@ export function Navbar() {
                     className="material-symbols-outlined text-primary text-[24px]"
                     aria-hidden="true"
                   >
-                    {user ? "account_circle" : "person"}
+                    {isMounted && user ? "account_circle" : "person"}
                   </span>
                 )}
               </button>

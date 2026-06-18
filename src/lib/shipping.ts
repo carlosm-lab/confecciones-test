@@ -27,26 +27,26 @@ export interface ShippingInfo {
 
 // ── Definición de departamentos ───────────────────────────────
 
-export interface Department {
+interface Department {
   name: string;
   zone: ShippingZone;
   municipalities: string[];
 }
 
 /** Costo representativo por zona (para el total estimado) */
-export const SHIPPING_ZONE_COST: Record<ShippingZone, number> = {
+const SHIPPING_ZONE_COST: Record<ShippingZone, number> = {
   LOCAL: 0,
   ORIENTAL: 2,
   NACIONAL: 4,
 };
 
-export const SHIPPING_ZONE_LABEL: Record<ShippingZone, string> = {
+const SHIPPING_ZONE_LABEL: Record<ShippingZone, string> = {
   LOCAL: "Gratis (entrega en San Miguel)",
   ORIENTAL: "$1 – $3 (Zona Oriental)",
   NACIONAL: "$3 – $5 (Envío nacional)",
 };
 
-export const SHIPPING_ZONE_METHOD: Record<ShippingZone, string> = {
+const SHIPPING_ZONE_METHOD: Record<ShippingZone, string> = {
   LOCAL: "Recogida en el taller o punto de entrega acordado en San Miguel",
   ORIENTAL: "Envío por agencia o transporte de confianza a la Zona Oriental",
   NACIONAL: "Envío nacional por empresa de paquetería (pago al recibir)",
