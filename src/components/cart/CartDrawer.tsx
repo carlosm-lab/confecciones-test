@@ -249,8 +249,8 @@ export function CartDrawer() {
                       : "Tu carrito"}
               </span>
               {step === "cart" && cartItems.length > 0 && (
-                <span className="text-xs font-medium text-[var(--color-on-surface-variant)]">
-                  ({cartItems.length})
+                <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[var(--color-primary)] px-1.5 text-xs font-bold text-[var(--color-on-primary)] tabular-nums">
+                  {cartItems.length}
                 </span>
               )}
             </h2>
