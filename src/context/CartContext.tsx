@@ -105,6 +105,40 @@ export const useCart = () => {
   return ctx;
 };
 
+/**
+ * Genera un UUID v4 compatible con todos los contextos de browser.
+ * crypto.randomUUID() requiere HTTPS o localhost — falla en móvil accediendo
+ * via IP de red local (192.168.x.x). crypto.getRandomValues() está disponible
+ * incluso sin HTTPS en navegadores modernos y es criptográficamente seguro.
+ */
+function generateId(): string {
+  // Preferir crypto.randomUUID si está disponible (contexto seguro: HTTPS / localhost)
+  if (
+    typeof crypto !== "undefined" &&
+    typeof crypto.randomUUID === "function"
+  ) {
+    return crypto.randomUUID();
+  }
+  // Fallback seguro: crypto.getRandomValues — disponible sin HTTPS en móviles modernos
+  if (
+    typeof crypto !== "undefined" &&
+    typeof crypto.getRandomValues === "function"
+  ) {
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    bytes[6] = (bytes[6] & 0x0f) | 0x40; // versión 4
+    bytes[8] = (bytes[8] & 0x3f) | 0x80; // variante RFC 4122
+    const hex = Array.from(bytes)
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+  }
+  // Sin Web Crypto API disponible — lanzar error explícito en lugar de fallar silenciosamente
+  throw new Error(
+    "Web Crypto API no disponible. Accede al sitio via HTTPS o localhost."
+  );
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
 
@@ -518,7 +552,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
 
       const newItem: CartItem = {
-        id: crypto.randomUUID(),
+        id: generateId(),
         product,
         quantity,
         color,
