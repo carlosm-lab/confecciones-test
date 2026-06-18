@@ -2,8 +2,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
+import { useConfirm } from "@/context/ConfirmContext";
+import { SUPER_ADMIN_EMAIL } from "@/config/site";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
+// ── Tipos ─────────────────────────────────────────────────────
 interface UserProfile {
   id: string;
   email: string;
@@ -13,18 +17,38 @@ interface UserProfile {
   created_at: string;
 }
 
+// ── Helpers ───────────────────────────────────────────────────
+function getInitials(name: string, email: string): string {
+  if (name) {
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return name.slice(0, 2).toUpperCase();
+  }
+  const localPart = email.split("@")[0] || "";
+  const emailParts = localPart.split(/[._-]/);
+  if (emailParts.length >= 2) {
+    return (emailParts[0][0] + emailParts[1][0]).toUpperCase();
+  }
+  return localPart.slice(0, 2).toUpperCase();
+}
+
+// ── Componente principal ──────────────────────────────────────
 export default function AdminUsuariosPage() {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<"all" | "admin" | "user">("all");
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const confirm = useConfirm();
 
+  // ── Fetch ────────────────────────────────────────────────────
   const fetchUsers = useCallback(async () => {
     setIsLoading(true);
     try {
       const supabase = getSupabaseClient();
       const { data, error } = await supabase.rpc("get_users_list");
-
       if (error) throw error;
       setUsers(
         ((data as UserProfile[]) || []).map((u) => ({
@@ -38,6 +62,7 @@ export default function AdminUsuariosPage() {
       );
     } catch (error) {
       logger.error("Error fetching users:", error);
+      toast.error("No se pudo cargar la lista de usuarios.");
     } finally {
       setIsLoading(false);
     }
@@ -47,7 +72,7 @@ export default function AdminUsuariosPage() {
     fetchUsers();
   }, [fetchUsers]);
 
-  // Filter by search and role
+  // ── Filtro ───────────────────────────────────────────────────
   const filteredUsers = users.filter((u) => {
     const matchesSearch =
       !searchTerm ||
@@ -60,31 +85,83 @@ export default function AdminUsuariosPage() {
   const adminCount = users.filter((u) => u.role === "admin").length;
   const userCount = users.filter((u) => u.role === "user").length;
 
-  /** Generate initials from name or email */
-  const getInitials = (name: string, email: string): string => {
-    if (name) {
-      const parts = name.trim().split(/\s+/);
-      if (parts.length >= 2) {
-        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-      }
-      return name.slice(0, 2).toUpperCase();
+  // ── Superadmin guard ─────────────────────────────────────────
+  const isSuperAdmin = (user: UserProfile) =>
+    user.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+
+  // ── Acción: cambiar rol ──────────────────────────────────────
+  const handleSetRole = async (
+    user: UserProfile,
+    newRole: "admin" | "user"
+  ) => {
+    if (isSuperAdmin(user)) return;
+
+    const action =
+      newRole === "admin"
+        ? "promover a administrador"
+        : "quitar privilegios de administrador";
+    const confirmed = await confirm({
+      title: newRole === "admin" ? "Promover a Admin" : "Degradar a Usuario",
+      message: `¿Seguro que deseas ${action} a ${user.full_name || user.email}? Esta acción afecta inmediatamente sus permisos en el panel.`,
+      confirmText: newRole === "admin" ? "Sí, promover" : "Sí, degradar",
+      type: newRole === "admin" ? "info" : "danger",
+    });
+    if (!confirmed) return;
+
+    setActionLoading(user.id + "-role");
+    try {
+      const supabase = getSupabaseClient();
+      const { error } = await supabase
+        .from("profiles")
+        .update({ role: newRole })
+        .eq("id", user.id);
+      if (error) throw error;
+      toast.success(
+        newRole === "admin"
+          ? `${user.full_name || user.email} ahora es administrador.`
+          : `${user.full_name || user.email} ya no es administrador.`
+      );
+      await fetchUsers();
+    } catch (err) {
+      logger.error("Error updating role:", err);
+      toast.error("No se pudo actualizar el rol. Intenta de nuevo.");
+    } finally {
+      setActionLoading(null);
     }
-    const localPart = email.split("@")[0] || "";
-    const emailParts = localPart.split(/[._-]/);
-    if (emailParts.length >= 2) {
-      return (emailParts[0][0] + emailParts[1][0]).toUpperCase();
-    }
-    return localPart.slice(0, 2).toUpperCase();
   };
 
-  /** Color palette for avatar backgrounds based on role */
-  const getAvatarStyles = (role: string) => {
-    if (role === "admin") {
-      return "bg-primary/15 text-primary dark:bg-primary/25";
+  // ── Acción: eliminar usuario ─────────────────────────────────
+  const handleDeleteUser = async (user: UserProfile) => {
+    if (isSuperAdmin(user)) return;
+
+    const confirmed = await confirm({
+      title: "Eliminar Usuario",
+      message: `¿Seguro que deseas eliminar permanentemente a ${user.full_name || user.email}? Esta acción no se puede deshacer y eliminará todos sus datos.`,
+      confirmText: "Sí, eliminar",
+      type: "danger",
+    });
+    if (!confirmed) return;
+
+    setActionLoading(user.id + "-delete");
+    try {
+      const supabase = getSupabaseClient();
+      const { error } = await supabase.rpc("admin_delete_user", {
+        target_user_id: user.id,
+      });
+      if (error) throw error;
+      toast.success(`Usuario ${user.email} eliminado.`);
+      setUsers((prev) => prev.filter((u) => u.id !== user.id));
+    } catch (err) {
+      logger.error("Error deleting user:", err);
+      toast.error(
+        "No se pudo eliminar el usuario. Verifica que la función admin_delete_user exista en Supabase."
+      );
+    } finally {
+      setActionLoading(null);
     }
-    return "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400";
   };
 
+  // ── Render ───────────────────────────────────────────────────
   return (
     <div className="flex h-full w-full max-w-[1400px] flex-col">
       {/* Header */}
@@ -99,69 +176,62 @@ export default function AdminUsuariosPage() {
             )}
           </h1>
           <p className="text-sm text-slate-500 md:text-base dark:text-slate-400">
-            Usuarios registrados en Confecciones Liss.
+            Gestiona usuarios y permisos de administrador.
           </p>
         </div>
       </div>
 
-      {/* Stats Summary */}
+      {/* Stats */}
       <div className="mb-6 grid grid-cols-3 gap-3 md:gap-4">
-        <div className="border-primary/30 dark:border-primary/20 rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary/10 text-primary dark:bg-primary/20 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
-              <span className="material-symbols-outlined text-[20px]">
-                group
-              </span>
-            </div>
-            <div>
-              <p className="text-xl font-black text-slate-900 md:text-2xl dark:text-white">
-                {isLoading ? "..." : users.length}
-              </p>
-              <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase md:text-xs dark:text-slate-400">
-                Total
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="border-primary/30 dark:border-primary/20 rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400">
-              <span className="material-symbols-outlined text-[20px]">
-                shield_person
-              </span>
-            </div>
-            <div>
-              <p className="text-xl font-black text-slate-900 md:text-2xl dark:text-white">
-                {isLoading ? "..." : adminCount}
-              </p>
-              <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase md:text-xs dark:text-slate-400">
-                Admins
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="border-primary/30 dark:border-primary/20 rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400">
-              <span className="material-symbols-outlined text-[20px]">
-                person
-              </span>
-            </div>
-            <div>
-              <p className="text-xl font-black text-slate-900 md:text-2xl dark:text-white">
-                {isLoading ? "..." : userCount}
-              </p>
-              <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase md:text-xs dark:text-slate-400">
-                Usuarios
-              </p>
+        {[
+          {
+            label: "Total",
+            value: users.length,
+            icon: "group",
+            color: "bg-primary/10 text-primary dark:bg-primary/20",
+          },
+          {
+            label: "Admins",
+            value: adminCount,
+            icon: "shield_person",
+            color:
+              "bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400",
+          },
+          {
+            label: "Usuarios",
+            value: userCount,
+            icon: "person",
+            color:
+              "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400",
+          },
+        ].map((stat) => (
+          <div
+            key={stat.label}
+            className="border-primary/30 dark:border-primary/20 rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5"
+          >
+            <div className="flex items-center gap-3">
+              <div
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${stat.color}`}
+              >
+                <span className="material-symbols-outlined text-[20px]">
+                  {stat.icon}
+                </span>
+              </div>
+              <div>
+                <p className="text-xl font-black text-slate-900 md:text-2xl dark:text-white">
+                  {isLoading ? "..." : stat.value}
+                </p>
+                <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase md:text-xs dark:text-slate-400">
+                  {stat.label}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
 
-      {/* Filters Bar */}
+      {/* Filters */}
       <div className="border-primary/30 dark:border-primary/20 mb-6 flex flex-col gap-3 rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] sm:flex-row sm:items-center dark:bg-white/5">
-        {/* Search */}
         <div className="relative min-w-[220px] flex-1">
           <span className="pointer-events-none absolute top-1/2 left-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
             <span className="material-symbols-outlined text-[20px] leading-[0]">
@@ -176,8 +246,6 @@ export default function AdminUsuariosPage() {
             className="focus:ring-primary/20 w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-4 pl-10 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
           />
         </div>
-
-        {/* Role Tabs */}
         <div className="flex w-full self-start rounded-xl bg-slate-100 p-1 sm:w-auto sm:self-auto dark:bg-white/5">
           {(["all", "admin", "user"] as const).map((f) => (
             <button
@@ -219,74 +287,229 @@ export default function AdminUsuariosPage() {
             </div>
           ) : (
             <div className="divide-y divide-slate-100 dark:divide-white/5">
-              {/* Table Header — hidden on mobile */}
-              <div className="hidden border-b border-slate-100 bg-slate-50/80 px-4 py-3 text-xs font-bold tracking-wider text-slate-500 uppercase sm:grid sm:grid-cols-[1fr_auto_auto] sm:gap-4 md:grid-cols-[1fr_120px_160px] dark:border-white/5 dark:bg-white/5">
+              {/* Table Header */}
+              <div className="hidden border-b border-slate-100 bg-slate-50/80 px-5 py-3 text-xs font-bold tracking-wider text-slate-500 uppercase sm:grid sm:grid-cols-[1fr_110px_120px_120px] sm:gap-4 dark:border-white/5 dark:bg-white/5">
                 <span>Usuario</span>
                 <span className="text-center">Rol</span>
-                <span className="text-right">Registrado</span>
+                <span className="text-center">Registrado</span>
+                <span className="text-right">Acciones</span>
               </div>
 
-              {filteredUsers.map((user) => (
-                <div
-                  key={user.id}
-                  className="flex flex-col gap-3 px-4 py-4 transition-colors hover:bg-slate-50 sm:grid sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-4 md:grid-cols-[1fr_120px_160px] dark:hover:bg-white/5"
-                >
-                  {/* User Info */}
-                  <div className="flex items-center gap-3">
-                    {/* Avatar */}
-                    <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full text-sm font-bold ${getAvatarStyles(user.role)}`}
-                    >
-                      {user.avatar_url ? (
-                        <Image
-                          src={user.avatar_url}
-                          alt={user.full_name || user.email}
-                          width={40}
-                          height={40}
-                          className="h-full w-full rounded-full object-cover"
-                        />
+              {filteredUsers.map((user) => {
+                const superAdmin = isSuperAdmin(user);
+                const isAdmin = user.role === "admin";
+                const isLoadingRole = actionLoading === user.id + "-role";
+                const isLoadingDelete = actionLoading === user.id + "-delete";
+                const isAnyLoading = isLoadingRole || isLoadingDelete;
+
+                return (
+                  <div
+                    key={user.id}
+                    className="flex flex-col gap-3 px-5 py-4 transition-colors hover:bg-slate-50 sm:grid sm:grid-cols-[1fr_110px_120px_120px] sm:items-center sm:gap-4 dark:hover:bg-white/5"
+                  >
+                    {/* User Info */}
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full text-sm font-bold ${
+                          isAdmin
+                            ? "bg-primary/15 text-primary dark:bg-primary/25"
+                            : "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
+                        }`}
+                      >
+                        {user.avatar_url ? (
+                          <Image
+                            src={user.avatar_url}
+                            alt={user.full_name || user.email}
+                            width={40}
+                            height={40}
+                            className="h-full w-full rounded-full object-cover"
+                          />
+                        ) : (
+                          getInitials(user.full_name, user.email)
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+                            {user.full_name || "Sin Nombre"}
+                          </p>
+                          {superAdmin && (
+                            <span className="inline-flex items-center gap-0.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 px-2 py-0.5 text-[10px] font-black text-white shadow-sm">
+                              <span
+                                className="material-symbols-outlined text-[10px]"
+                                style={{ fontVariationSettings: "'FILL' 1" }}
+                              >
+                                star
+                              </span>
+                              OWNER
+                            </span>
+                          )}
+                        </div>
+                        <p className="truncate text-xs text-slate-500">
+                          {user.email}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Role Badge */}
+                    <div className="flex items-center sm:justify-center">
+                      <span
+                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ${
+                          isAdmin
+                            ? "bg-primary/10 text-primary dark:bg-primary/20"
+                            : "bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300"
+                        }`}
+                      >
+                        <span className="material-symbols-outlined text-[13px]">
+                          {isAdmin ? "shield_person" : "person"}
+                        </span>
+                        {isAdmin ? "Admin" : "Usuario"}
+                      </span>
+                    </div>
+
+                    {/* Date */}
+                    <div className="text-xs text-slate-500 sm:text-center">
+                      {user.created_at
+                        ? new Date(user.created_at).toLocaleDateString(
+                            "es-ES",
+                            {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            }
+                          )
+                        : "—"}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center justify-end gap-2">
+                      {superAdmin ? (
+                        /* Superadmin — intocable, solo muestra el candado */
+                        <div
+                          className="flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-400"
+                          title="Esta cuenta no puede modificarse"
+                        >
+                          <span className="material-symbols-outlined text-[15px]">
+                            lock
+                          </span>
+                          <span className="hidden sm:inline">Protegida</span>
+                        </div>
                       ) : (
-                        getInitials(user.full_name, user.email)
+                        <>
+                          {/* Promote / Degrade */}
+                          {isAdmin ? (
+                            <button
+                              type="button"
+                              disabled={isAnyLoading}
+                              onClick={() => handleSetRole(user, "user")}
+                              title="Quitar admin"
+                              className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition hover:border-amber-300 hover:bg-amber-50 hover:text-amber-700 disabled:opacity-40 dark:border-white/10 dark:text-slate-300 dark:hover:bg-amber-500/10"
+                            >
+                              {isLoadingRole ? (
+                                <svg
+                                  className="h-3.5 w-3.5 animate-spin"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                >
+                                  <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                  />
+                                  <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                                  />
+                                </svg>
+                              ) : (
+                                <span className="material-symbols-outlined text-[14px]">
+                                  shield_minus
+                                </span>
+                              )}
+                              <span className="hidden sm:inline">Degradar</span>
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              disabled={isAnyLoading}
+                              onClick={() => handleSetRole(user, "admin")}
+                              title="Promover a admin"
+                              className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-40 dark:border-white/10 dark:text-slate-300 dark:hover:bg-blue-500/10"
+                            >
+                              {isLoadingRole ? (
+                                <svg
+                                  className="h-3.5 w-3.5 animate-spin"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                >
+                                  <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                  />
+                                  <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                                  />
+                                </svg>
+                              ) : (
+                                <span className="material-symbols-outlined text-[14px]">
+                                  shield_person
+                                </span>
+                              )}
+                              <span className="hidden sm:inline">Promover</span>
+                            </button>
+                          )}
+
+                          {/* Delete */}
+                          <button
+                            type="button"
+                            disabled={isAnyLoading}
+                            onClick={() => handleDeleteUser(user)}
+                            title="Eliminar usuario"
+                            className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600 disabled:opacity-40 dark:border-white/10 dark:text-slate-300 dark:hover:bg-red-500/10"
+                          >
+                            {isLoadingDelete ? (
+                              <svg
+                                className="h-3.5 w-3.5 animate-spin"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                              >
+                                <circle
+                                  className="opacity-25"
+                                  cx="12"
+                                  cy="12"
+                                  r="10"
+                                  stroke="currentColor"
+                                  strokeWidth="4"
+                                />
+                                <path
+                                  className="opacity-75"
+                                  fill="currentColor"
+                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                                />
+                              </svg>
+                            ) : (
+                              <span className="material-symbols-outlined text-[14px]">
+                                delete
+                              </span>
+                            )}
+                            <span className="hidden sm:inline">Eliminar</span>
+                          </button>
+                        </>
                       )}
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
-                        {user.full_name || "Sin Nombre"}
-                      </p>
-                      <p className="truncate text-xs text-slate-500">
-                        {user.email}
-                      </p>
-                    </div>
                   </div>
-
-                  {/* Role Badge */}
-                  <div className="flex items-center sm:justify-center">
-                    <span
-                      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ${
-                        user.role === "admin"
-                          ? "bg-primary/10 text-primary dark:bg-primary/20"
-                          : "bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300"
-                      }`}
-                    >
-                      <span className="material-symbols-outlined text-[14px]">
-                        {user.role === "admin" ? "shield_person" : "person"}
-                      </span>
-                      {user.role === "admin" ? "Admin" : "Usuario"}
-                    </span>
-                  </div>
-
-                  {/* Date */}
-                  <div className="text-xs text-slate-500 sm:text-right">
-                    {user.created_at
-                      ? new Date(user.created_at).toLocaleDateString("es-ES", {
-                          day: "2-digit",
-                          month: "short",
-                          year: "numeric",
-                        })
-                      : "—"}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

@@ -55,3 +55,116 @@ export function buildWhatsAppUrl(
 
   return { url, usedFallback, isMobile };
 }
+
+// ──────────────────────────────────────────────────────────────
+// GENERADOR DE MENSAJES DE COTIZACIÓN
+// Para el botón "Cotizar" en la vista de producto.
+// ──────────────────────────────────────────────────────────────
+
+interface QuoteMessageOptions {
+  /** Nombre del producto */
+  productName: string;
+  /** Sector/catálogo: scrubs | universitario | escolar | corporativo | etc. */
+  sector: string;
+  /** Categoría específica del producto (ej: "UNIVO" para universitario) */
+  category?: string | null;
+  /** Talla seleccionada por el usuario */
+  selectedSize?: string | null;
+  /** Nota de personalización ingresada por el usuario */
+  customNote?: string;
+  /** Departamento de envío seleccionado */
+  department?: string | null;
+  /** Municipio de envío seleccionado */
+  municipality?: string | null;
+  /** Tipo de entrega seleccionado */
+  deliveryType?: "taller" | "punto_medio" | "domicilio" | null;
+  /** URL completa del producto */
+  productUrl: string;
+}
+
+/**
+ * Genera un mensaje natural para cotizar un producto por WhatsApp.
+ * El mensaje varía según el catálogo y la información seleccionada.
+ */
+function buildQuoteMessage(opts: QuoteMessageOptions): string {
+  const {
+    productName,
+    sector,
+    category,
+    selectedSize,
+    customNote,
+    department,
+    municipality,
+    deliveryType,
+    productUrl,
+  } = opts;
+
+  // ── Saludo y cuerpo principal según catálogo ──────────────────
+  let intro = "";
+  if (sector === "universitario" && category) {
+    intro = `Hola, me gustaría pedir el uniforme de *${category}* — *${productName}*. ¿Me pueden dar más información?`;
+  } else if (sector === "universitario") {
+    intro = `Hola, me gustaría pedir este uniforme universitario — *${productName}*. ¿Me pueden dar más información?`;
+  } else if (sector === "scrubs") {
+    intro = `Hola, me gustaría pedir este uniforme médico — *${productName}*. ¿Me pueden dar más información?`;
+  } else if (sector === "escolar") {
+    intro = `Hola, me gustaría pedir este uniforme escolar — *${productName}*. ¿Me pueden dar más información?`;
+  } else if (sector === "corporativo") {
+    intro = `Hola, me gustaría pedir este uniforme corporativo — *${productName}*. ¿Me pueden dar más información?`;
+  } else {
+    intro = `Hola, me gustaría hacer un pedido — *${productName}*. ¿Me pueden dar más información?`;
+  }
+
+  const lines: string[] = [intro];
+
+  // ── Talla ────────────────────────────────────────────────────
+  if (selectedSize) {
+    if (selectedSize === "A la medida") {
+      lines.push(
+        "Me interesa que sea *a la medida*, así que luego les comparto mis medidas exactas."
+      );
+    } else {
+      lines.push(`La talla que me interesa es la *${selectedSize}*.`);
+    }
+  }
+
+  // ── Nota de personalización ──────────────────────────────────
+  if (customNote && customNote.trim()) {
+    lines.push(`Además, tengo esta nota especial: _"${customNote.trim()}"_`);
+  }
+
+  // ── Información de envío ─────────────────────────────────────
+  if (deliveryType === "taller") {
+    lines.push("Prefiero *recoger el pedido en el taller* en San Miguel.");
+  } else if (deliveryType === "punto_medio") {
+    lines.push(
+      "Me gustaría coordinar un *punto de entrega acordado* en San Miguel."
+    );
+  } else if (deliveryType === "domicilio" && department) {
+    const locationStr = municipality
+      ? `${municipality}, ${department}`
+      : department;
+    lines.push(`Necesito *envío a domicilio* a ${locationStr}.`);
+  }
+
+  // ── Enlace del producto ──────────────────────────────────────
+  lines.push(`\nAquí el enlace del producto:\n${productUrl}`);
+
+  return lines.join("\n\n");
+}
+
+/**
+ * Genera la URL de WhatsApp para cotizar un producto.
+ * Combina buildQuoteMessage + buildWhatsAppUrl.
+ */
+export function buildQuoteUrl(
+  opts: QuoteMessageOptions,
+  phone?: string
+): string {
+  const message = buildQuoteMessage(opts);
+  const { url } = buildWhatsAppUrl(
+    phone ?? env.NEXT_PUBLIC_WHATSAPP_NUMBER,
+    message
+  );
+  return url;
+}

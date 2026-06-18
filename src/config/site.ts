@@ -40,3 +40,18 @@ export const siteConfig = {
     googleMaps: "https://maps.app.goo.gl/8z27tCfvnoBeyoWz9",
   },
 };
+
+/**
+ * Email del superadmin — esta cuenta es INTOCABLE.
+ * Ninguna acción de promote/degrade/delete puede aplicarse a este email.
+ *
+ * Se compara case-insensitive contra el email de auth de Supabase.
+ * Para cambiarlo, actualiza NEXT_PUBLIC_CONTACT_EMAIL en el archivo .env.
+ *
+ * IMPORTANTE: el email aquí debe coincidir exactamente con el email
+ * con el que creaste tu cuenta en Supabase (tu email de autenticación).
+ */
+export const SUPER_ADMIN_EMAIL =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ??
+  env.NEXT_PUBLIC_CONTACT_EMAIL ??
+  "contacto@confeccionesliss.com";

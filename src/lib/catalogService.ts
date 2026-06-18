@@ -8,7 +8,6 @@
 import { createClient } from "@supabase/supabase-js";
 
 // ── Tipo de producto proveniente de la base de datos ─────────
-import type { ProductOfferRule } from "@/lib/productUtils";
 
 // ── Tipo de producto proveniente de la base de datos ─────────
 export interface DbProduct {
@@ -44,8 +43,8 @@ export interface DbProduct {
   labor_price: number | null;
   // Join from categories table
   categories?: { name: string; catalog: string } | null;
-  /** Join con product_offer_rules — incluido solo en getProductBySlug */
-  offer_rules?: ProductOfferRule[];
+  /** Términos de la oferta — texto libre para mostrar al cliente */
+  offer_terms?: string | null;
 }
 
 // ── Imagen principal resuelta ─────────────────────────────────
@@ -88,7 +87,7 @@ function createServerClient() {
 // ── Selects reutilizables ─────────────────────────────────
 const PRODUCT_SELECT = `
   id, name, description, short_description, price, old_price,
-  offer_ends_at, offer_starts_at, offer_type, category, category_id, tags,
+  offer_ends_at, offer_starts_at, offer_terms, category, category_id, tags,
   image_path, images, is_active, slug, sector, badge_text,
   price_suffix, tallas, colores, material, caracteristicas,
   wholesale_price, wholesale_min_qty, labor_price,
@@ -96,13 +95,8 @@ const PRODUCT_SELECT = `
   categories(name, catalog)
 `;
 
-/** Select extendido para página de detalle — incluye reglas de oferta */
-const PRODUCT_DETAIL_SELECT = `
-  ${PRODUCT_SELECT.trimEnd()},
-  product_offer_rules(
-    id, offer_type, custom_label, offer_price, is_active, created_at
-  )
-`;
+/** Select para página de detalle — igual al base, el offer_terms ya está incluido */
+const PRODUCT_DETAIL_SELECT = PRODUCT_SELECT;
 
 // ── Obtener todos los productos activos de un sector ─────────
 export async function getProductsBySector(

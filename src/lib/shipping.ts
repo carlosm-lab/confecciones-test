@@ -2,28 +2,48 @@
 // ZONAS DE ENVÍO — Confecciones Liss / El Salvador
 // ──────────────────────────────────────────────────────────────
 // Lógica de cálculo de costos de envío por zona geográfica.
-// El precio exacto depende del departamento; el municipio se
-// muestra solo para dar "sensación de control" al usuario.
 //
-// Zonas:
-//   LOCAL  → San Miguel (gratis en taller / $1 punto medio)
-//   ORIENTAL → Usulután, La Unión, Morazán ($1–3)
-//   NACIONAL → Resto del país ($3–5)
+// Zonas y precios actualizados:
+//   LOCAL    → San Miguel (gratis — taller o punto medio)
+//   ORIENTAL → Usulután, La Unión, Morazán ($3.00 fijo)
+//   NACIONAL → Resto del país ($5.00 fijo)
+//
+// Tipos de entrega disponibles:
+//   taller      → Recoger en el taller (solo LOCAL, gratis)
+//   punto_medio → Punto de entrega acordado en San Miguel (solo LOCAL, gratis)
+//   domicilio   → Envío a domicilio (ORIENTAL y NACIONAL)
 // ──────────────────────────────────────────────────────────────
 
 export type ShippingZone = "LOCAL" | "ORIENTAL" | "NACIONAL";
+
+/** Tipo de entrega que el cliente puede seleccionar */
+export type DeliveryType = "taller" | "punto_medio" | "domicilio";
 
 export interface ShippingInfo {
   department: string;
   municipality: string;
   zone: ShippingZone;
-  /** Costo estimado en USD (valor medio de la zona) */
+  /** Costo exacto en USD */
   cost: number;
-  /** Rango mostrado al usuario, ej: "$1 – $3" */
+  /** Texto de precio mostrado al usuario */
   label: string;
   /** Descripción del método de entrega */
   method: string;
 }
+
+/** Labels amigables para mostrar en la UI */
+export const DELIVERY_TYPE_LABEL: Record<DeliveryType, string> = {
+  taller: "Recoger en el taller (San Miguel)",
+  punto_medio: "Punto de entrega acordado (San Miguel)",
+  domicilio: "Envío a domicilio",
+};
+
+/** Tipos de entrega disponibles por zona */
+export const DELIVERY_TYPES_BY_ZONE: Record<ShippingZone, DeliveryType[]> = {
+  LOCAL: ["taller", "punto_medio"],
+  ORIENTAL: ["domicilio"],
+  NACIONAL: ["domicilio"],
+};
 
 // ── Definición de departamentos ───────────────────────────────
 
@@ -33,23 +53,23 @@ interface Department {
   municipalities: string[];
 }
 
-/** Costo representativo por zona (para el total estimado) */
+/** Costo exacto por zona en USD */
 const SHIPPING_ZONE_COST: Record<ShippingZone, number> = {
   LOCAL: 0,
-  ORIENTAL: 2,
-  NACIONAL: 4,
+  ORIENTAL: 3,
+  NACIONAL: 5,
 };
 
 const SHIPPING_ZONE_LABEL: Record<ShippingZone, string> = {
-  LOCAL: "Gratis (entrega en San Miguel)",
-  ORIENTAL: "$1 – $3 (Zona Oriental)",
-  NACIONAL: "$3 – $5 (Envío nacional)",
+  LOCAL: "Gratis",
+  ORIENTAL: "$3.00",
+  NACIONAL: "$5.00",
 };
 
 const SHIPPING_ZONE_METHOD: Record<ShippingZone, string> = {
-  LOCAL: "Recogida en el taller o punto de entrega acordado en San Miguel",
-  ORIENTAL: "Envío por agencia o transporte de confianza a la Zona Oriental",
-  NACIONAL: "Envío nacional por empresa de paquetería (pago al recibir)",
+  LOCAL: "Recoger en el taller o punto de entrega acordado en San Miguel",
+  ORIENTAL: "Envío a domicilio — Zona Oriental",
+  NACIONAL: "Envío a domicilio — Nacional",
 };
 
 export const DEPARTMENTS: Department[] = [
