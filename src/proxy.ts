@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 import { env } from "@/env";
 
 /**
@@ -12,7 +13,7 @@ import { env } from "@/env";
  */
 const BLOCKED_ROUTES = ["/servicios", "/mi-cuenta"];
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
 
   // ── HOME_ONLY mode: block everything except / and /links ──
@@ -34,6 +35,60 @@ export function proxy(request: NextRequest) {
       url.pathname = "/";
       return NextResponse.redirect(url, 307);
     }
+  }
+
+  // ── SEC-002: Protección de rutas /admin a nivel de servidor ──────────────
+  // Sin esta verificación, las rutas /admin solo estaban protegidas en el cliente.
+  // Patrón oficial: https://supabase.com/docs/guides/auth/server-side/nextjs
+  // La verificación de rol usa app_metadata.role del JWT — fuente de verdad
+  // inmutable por el propio usuario (solo modificable vía Service Role / Dashboard).
+  if (
+    request.nextUrl.pathname.startsWith("/admin") &&
+    !request.nextUrl.pathname.startsWith("/admin/login")
+  ) {
+    let response = NextResponse.next({ request });
+
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value }) =>
+              request.cookies.set(name, value)
+            );
+            response = NextResponse.next({ request });
+            cookiesToSet.forEach(({ name, value, options }) =>
+              response.cookies.set(name, value, options)
+            );
+          },
+        },
+      }
+    );
+
+    // getUser() valida el JWT contra Supabase Auth Server — no confía en cookies sin validar
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    // Sin sesión → redirigir al login
+    if (!user) {
+      const loginUrl = new URL("/admin/login", request.url);
+      loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    // Con sesión pero sin rol admin → redirigir al inicio
+    // Verificación via app_metadata.role del JWT — NO manipulable por el usuario
+    const userRole = user.app_metadata?.role;
+    if (userRole !== "admin") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    return response;
   }
 
   return NextResponse.next();
