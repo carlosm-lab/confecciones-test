@@ -75,6 +75,69 @@ const ALL_CATEGORIES: ChangeCategory[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 const CHANGELOG: VersionGroup[] = [
   {
+    version: "v1.2",
+    label:
+      "Gestión de Admins · Ofertas Simplificadas · Vista de Producto Mejorada",
+    dateRange: "18 de junio de 2026",
+    entries: [
+      {
+        id: "e-130",
+        date: "2026-06-18",
+        category: "feat",
+        title: "Gestión de administradores en panel de usuarios",
+        description:
+          "El panel de usuarios en /admin/usuarios ahora permite promover y degradar administradores, y eliminar cuentas. La cuenta principal (Owner) está protegida con un badge dorado y candado — ninguna acción destructiva puede aplicarse sobre ella. Cada acción muestra un spinner individual, diálogo de confirmación y toast de resultado.",
+        commit: "373e78e",
+      },
+      {
+        id: "e-131",
+        date: "2026-06-18",
+        category: "refactor",
+        title: "Sistema de ofertas simplificado: sin tipos, solo términos",
+        description:
+          "Se eliminó el complejo sistema de 'tipos de oferta' (OfferRules / product_offer_rules). En su lugar, el admin describe los términos de la oferta en un campo de texto libre. Validación: el precio anterior debe ser mayor al precio actual (si no, no es oferta válida). En la vista de producto se muestra un banner de advertencia con los términos cuando aplica.",
+        commit: "373e78e",
+      },
+      {
+        id: "e-132",
+        date: "2026-06-18",
+        category: "feat",
+        title: "Vista de producto: calculadora de envío y botón WhatsApp",
+        description:
+          "La vista de detalle de producto incluye ahora una calculadora de envío interactiva con zonas (LOCAL/gratis, ORIENTAL/$3, NACIONAL/$5) y selector de tipo de entrega. El botón 'Cotizar' abre WhatsApp con un mensaje pre-formateado incluyendo nombre, talla, nota personalizada y ubicación de envío.",
+        commit: "373e78e",
+      },
+      {
+        id: "e-133",
+        date: "2026-06-18",
+        category: "feat",
+        title: "Talla 'A la medida' disponible en productos",
+        description:
+          "Se agregó 'A la medida' como talla seleccionable en el modal de administración de productos. Cuando el cliente la selecciona al cotizar por WhatsApp, el mensaje indica automáticamente que se necesitan las medidas exactas.",
+        commit: "373e78e",
+      },
+      {
+        id: "e-134",
+        date: "2026-06-18",
+        category: "feat",
+        title: "Modal informativo para usuarios no autenticados",
+        description:
+          "Al intentar agregar al carrito sin estar logueado, se muestra un modal explicativo con opciones para iniciar sesión o cotizar directamente por WhatsApp sin necesidad de cuenta.",
+        commit: "373e78e",
+      },
+      {
+        id: "e-135",
+        date: "2026-06-18",
+        category: "a11y",
+        title:
+          "Etiquetas de formulario asociadas correctamente en calculadora de envío",
+        description:
+          "Se agregaron atributos htmlFor/id a los selectores de Departamento y Municipio en la calculadora de envío, corrigiendo errores de accesibilidad reportados por jsx-a11y.",
+        commit: "373e78e",
+      },
+    ],
+  },
+  {
     version: "v1.1",
     label: "SEO Avanzado · Consolidación de Schemas · Lector Legal Responsivo",
     dateRange: "17 de junio de 2026",
