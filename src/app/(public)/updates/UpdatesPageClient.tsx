@@ -72,6 +72,23 @@ const ALL_CATEGORIES: ChangeCategory[] = [
 // CHANGELOG DATA
 // Each group is a "version" ordered newest → oldest.
 // Entries within a group are ordered newest → oldest.
+//
+// ⚠ REGLA DE CONTENIDO — LEER ANTES DE AGREGAR ENTRADAS:
+// Este changelog es público, indexado por Google, y accesible para cualquier
+// visitante. Las siguientes categorías de información NUNCA deben documentarse
+// aquí bajo ninguna circunstancia:
+//
+//   — Estado, historial o existencia del killswitch del sistema
+//   — Cambios en políticas de seguridad, RLS, o funciones de base de datos
+//   — Incidentes de seguridad, activaciones de protocolos de emergencia,
+//     o cualquier evento registrado en security_events
+//   — Detalles de arquitectura de autenticación o autorización
+//   — Menciones a rutas, endpoints, o tablas de infraestructura interna
+//
+// Si ocurrió un incidente y se corrigió: documenta la corrección funcional
+// visible para el usuario. No documentes cómo ni por qué ocurrió el incidente.
+//
+// Los eventos de seguridad viven exclusivamente en /admin/settings.
 // ─────────────────────────────────────────────────────────────────────────────
 const CHANGELOG: VersionGroup[] = [
   {

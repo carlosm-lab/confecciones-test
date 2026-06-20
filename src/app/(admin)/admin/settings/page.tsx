@@ -1,11 +1,9 @@
 "use client";
 
 /**
- * /admin/settings — Panel de control de seguridad
+ * /admin/settings — Panel de Control del Sistema
  * ──────────────────────────────────────────────────
- * Permite al administrador:
- * 1. Activar/desactivar el killswitch del sitio (baja inmediata < 30s)
- * 2. Ver el log de eventos de seguridad (violaciones CSP, activaciones)
+ * Acceso restringido. Solo personal autorizado.
  */
 
 import { useState, useEffect, useCallback } from "react";
@@ -27,28 +25,28 @@ const EVENT_LABELS: Record<
   { label: string; color: string; icon: string }
 > = {
   csp_violation: {
-    label: "Violación CSP",
-    color: "text-red-600 bg-red-50 border-red-100",
+    label: "Violación de política de contenido",
+    color: "text-red-700 bg-red-50 border-red-200",
     icon: "security",
   },
   killswitch_activated: {
-    label: "Killswitch ACTIVADO",
-    color: "text-orange-600 bg-orange-50 border-orange-100",
+    label: "Protocolo de terminación ejecutado",
+    color: "text-red-900 bg-red-100 border-red-300",
     icon: "power_off",
   },
   killswitch_deactivated: {
-    label: "Killswitch desactivado",
-    color: "text-green-600 bg-green-50 border-green-100",
-    icon: "power",
+    label: "Servicio restaurado",
+    color: "text-emerald-800 bg-emerald-50 border-emerald-200",
+    icon: "check_circle",
   },
   rate_limit_exceeded: {
-    label: "Rate limit excedido",
-    color: "text-yellow-600 bg-yellow-50 border-yellow-100",
+    label: "Límite de solicitudes excedido",
+    color: "text-amber-800 bg-amber-50 border-amber-200",
     icon: "warning",
   },
   anomaly_detected: {
-    label: "Anomalía detectada",
-    color: "text-purple-600 bg-purple-50 border-purple-100",
+    label: "Comportamiento anómalo detectado",
+    color: "text-purple-800 bg-purple-50 border-purple-200",
     icon: "radar",
   },
 };
@@ -60,6 +58,7 @@ export default function AdminSettingsPage() {
   const [events, setEvents] = useState<SecurityEvent[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [confirmActive, setConfirmActive] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
   const [toast, setToast] = useState<{
     msg: string;
     type: "ok" | "error";
@@ -67,23 +66,20 @@ export default function AdminSettingsPage() {
 
   const showToast = (msg: string, type: "ok" | "error" = "ok") => {
     setToast({ msg, type });
-    setTimeout(() => setToast(null), 4000);
+    setTimeout(() => setToast(null), 5000);
   };
 
   // ── Cargar estado del killswitch ───────────────────────────
   const loadKillswitch = useCallback(async () => {
     try {
       const supabase = getSupabaseClient();
-      // Usa RPC SECURITY DEFINER — verifica admin dentro de la función DB.
-      // No se hace SELECT directo a site_config (requeriría GRANTs inseguros).
       const { data, error } = await supabase.rpc("get_killswitch_state");
-
       if (error) throw error;
       const result = data as { killswitch_active: boolean } | null;
       setKillswitchActive(result?.killswitch_active ?? false);
     } catch (err) {
       logger.error("Error loading killswitch state:", err);
-      showToast("Error al cargar el estado del killswitch", "error");
+      showToast("No se pudo verificar el estado del sistema", "error");
     } finally {
       setLoadingKS(false);
     }
@@ -93,12 +89,9 @@ export default function AdminSettingsPage() {
   const loadEvents = useCallback(async () => {
     try {
       const supabase = getSupabaseClient();
-      // Usa RPC SECURITY DEFINER — verifica admin dentro de la función DB.
-      // No se hace SELECT directo a security_events (requeriría GRANTs inseguros).
       const { data, error } = await supabase.rpc("get_security_events", {
         p_limit: 50,
       });
-
       if (error) throw error;
       setEvents((data ?? []) as SecurityEvent[]);
     } catch (err) {
@@ -113,183 +106,235 @@ export default function AdminSettingsPage() {
     loadEvents();
   }, [loadKillswitch, loadEvents]);
 
-  // ── Toggle killswitch ──────────────────────────────────────
+  // ── Ejecutar protocolo ─────────────────────────────────────
   const handleToggleKillswitch = async (activate: boolean) => {
     setConfirmActive(false);
+    setConfirmText("");
     setTogglingKS(true);
     try {
       const supabase = getSupabaseClient();
-      const { error } = await supabase.rpc("toggle_killswitch", {
-        activate,
-      });
+      const { error } = await supabase.rpc("toggle_killswitch", { activate });
       if (error) throw error;
 
       setKillswitchActive(activate);
       showToast(
         activate
-          ? "⚠️ Killswitch ACTIVADO — el sitio está en mantenimiento"
-          : "✅ Killswitch desactivado — el sitio volvió a funcionar",
+          ? "El servicio ha sido terminado. El sitio no responde a solicitudes externas."
+          : "Servicio restaurado. El sitio está operativo.",
         activate ? "error" : "ok"
       );
       loadEvents();
     } catch (err) {
       logger.error("Error toggling killswitch:", err);
-      showToast("Error al cambiar el estado del killswitch", "error");
+      showToast("Error al ejecutar la operación", "error");
     } finally {
       setTogglingKS(false);
     }
   };
+
+  // La frase de confirmación es deliberadamente técnica y larga
+  // para disuadir activaciones accidentales.
+  const CONFIRM_PHRASE = "CONFIRMAR TERMINACIÓN DEL SERVICIO";
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       {/* Toast */}
       {toast && (
         <div
-          className={`fixed top-4 left-1/2 z-50 -translate-x-1/2 rounded-2xl px-5 py-3 text-sm font-bold shadow-xl transition-all ${
+          className={`fixed top-4 left-1/2 z-50 -translate-x-1/2 rounded-xl px-5 py-3 text-sm font-semibold shadow-xl ${
             toast.type === "ok"
-              ? "bg-green-600 text-white"
-              : "bg-red-600 text-white"
+              ? "bg-emerald-800 text-white"
+              : "bg-red-950 text-red-200 ring-1 ring-red-800"
           }`}
         >
           {toast.msg}
         </div>
       )}
 
-      <h1 className="mb-8 text-2xl font-black text-slate-900 dark:text-white">
-        Panel de Seguridad
-      </h1>
+      {/* ── Header ─────────────────────────────────────────── */}
+      <div className="mb-10">
+        <p className="mb-1 text-[11px] font-semibold tracking-[0.2em] text-slate-400 uppercase">
+          Control del sistema
+        </p>
+        <h1 className="text-2xl font-black text-slate-900 dark:text-white">
+          Seguridad y disponibilidad
+        </h1>
+      </div>
 
-      {/* ── Killswitch Card ──────────────────────────────────── */}
-      <section className="mb-8">
+      {/* ── Killswitch Card ─────────────────────────────────── */}
+      <section className="mb-10">
         <div
-          className={`overflow-hidden rounded-2xl border shadow-sm transition-all ${
+          className={`rounded-2xl border transition-all duration-300 ${
             killswitchActive
-              ? "border-red-200 bg-red-50 dark:border-red-800/40 dark:bg-red-900/10"
+              ? "border-red-300 bg-red-950 dark:border-red-900"
               : "border-slate-200 bg-white dark:border-white/10 dark:bg-white/5"
           }`}
         >
-          {/* Header */}
-          <div className="flex items-center gap-4 border-b border-slate-100 px-6 py-4 dark:border-white/5">
-            <span
-              className={`flex h-10 w-10 items-center justify-center rounded-xl ${
-                killswitchActive
-                  ? "bg-red-100 dark:bg-red-900/30"
-                  : "bg-slate-100 dark:bg-white/10"
-              }`}
-            >
+          {/* Header de la card */}
+          <div
+            className={`flex items-center justify-between gap-4 border-b px-6 py-5 ${
+              killswitchActive
+                ? "border-red-900/60"
+                : "border-slate-100 dark:border-white/5"
+            }`}
+          >
+            <div className="flex items-center gap-4">
               <span
-                className={`material-symbols-outlined text-xl ${
+                className={`flex h-10 w-10 items-center justify-center rounded-xl ${
                   killswitchActive
-                    ? "text-red-600"
-                    : "text-slate-600 dark:text-slate-300"
+                    ? "bg-red-900"
+                    : "bg-slate-100 dark:bg-white/10"
                 }`}
               >
-                {killswitchActive ? "power_off" : "power"}
+                <span
+                  className={`material-symbols-outlined text-xl ${
+                    killswitchActive
+                      ? "text-red-400"
+                      : "text-slate-500 dark:text-slate-400"
+                  }`}
+                >
+                  {killswitchActive ? "power_off" : "shield_lock"}
+                </span>
               </span>
-            </span>
-            <div>
-              <h2 className="font-bold text-slate-900 dark:text-white">
-                Killswitch del Sitio
-              </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Activa para poner el sitio en modo mantenimiento en menos de 30
-                segundos
-              </p>
+              <div>
+                <h2
+                  className={`text-sm font-bold ${
+                    killswitchActive
+                      ? "text-red-200"
+                      : "text-slate-900 dark:text-white"
+                  }`}
+                >
+                  Terminación de servicio
+                </h2>
+                <p
+                  className={`text-xs ${
+                    killswitchActive
+                      ? "text-red-500"
+                      : "text-slate-500 dark:text-slate-400"
+                  }`}
+                >
+                  {killswitchActive
+                    ? "El sitio no está disponible para el público"
+                    : "Baja inmediata de todas las rutas públicas"}
+                </p>
+              </div>
             </div>
-            {/* Estado badge */}
+
+            {/* Estado */}
             <span
-              className={`ml-auto rounded-full px-3 py-1 text-xs font-bold ${
+              className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-bold tracking-wider uppercase ${
                 loadingKS
-                  ? "bg-slate-100 text-slate-500"
+                  ? "bg-slate-100 text-slate-400 dark:bg-white/10 dark:text-slate-500"
                   : killswitchActive
-                    ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"
-                    : "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
+                    ? "bg-red-900 text-red-300"
+                    : "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400"
               }`}
             >
-              {loadingKS
-                ? "Cargando..."
-                : killswitchActive
-                  ? "ACTIVO"
-                  : "Inactivo"}
+              {loadingKS ? "—" : killswitchActive ? "TERMINADO" : "Operativo"}
             </span>
           </div>
 
-          {/* Body */}
+          {/* Cuerpo */}
           <div className="px-6 py-5">
             {killswitchActive ? (
-              <div className="flex flex-col gap-4">
-                {/* Alerta activa */}
-                <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-100 p-4 dark:border-red-800/40 dark:bg-red-900/20">
-                  <span className="material-symbols-outlined mt-0.5 text-lg text-red-600">
-                    warning
-                  </span>
-                  <div>
-                    <p className="text-sm font-bold text-red-800 dark:text-red-400">
-                      El sitio está en modo mantenimiento
-                    </p>
-                    <p className="mt-1 text-xs text-red-700 dark:text-red-500">
-                      Todas las rutas excepto{" "}
-                      <code className="rounded bg-red-200/50 px-1">/</code>,{" "}
-                      <code className="rounded bg-red-200/50 px-1">/links</code>{" "}
-                      y{" "}
-                      <code className="rounded bg-red-200/50 px-1">
-                        /mantenimiento
-                      </code>{" "}
-                      están bloqueadas.
-                    </p>
-                  </div>
+              /* ── Estado activo ── */
+              <div className="flex flex-col gap-5">
+                <div className="rounded-xl border border-red-900/60 bg-red-900/30 p-4">
+                  <p className="text-xs leading-relaxed text-red-400">
+                    Todas las rutas públicas están bloqueadas y redirigidas a la
+                    página de mantenimiento. El panel de administración
+                    permanece operativo. La restauración del servicio es manual
+                    y exclusiva del administrador.
+                  </p>
+                  {/* Easter egg para futuros administradores — no indexado */}
+                  <p className="mt-3 border-t border-red-900/40 pt-3 text-[10px] text-red-900 italic select-none">
+                    &ldquo;Si la tierra no es nuestra, no es de nadie.&rdquo;
+                  </p>
                 </div>
+
+                {/* Solo el botón de restaurar — sin texto que indique que "es fácil" */}
                 <button
                   onClick={() => handleToggleKillswitch(false)}
                   disabled={togglingKS}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 py-3 font-bold text-white shadow-md transition hover:bg-green-700 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-800 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-40"
                 >
-                  <span className="material-symbols-outlined text-lg">
-                    power
+                  <span className="material-symbols-outlined text-base">
+                    check_circle
                   </span>
-                  {togglingKS
-                    ? "Desactivando..."
-                    : "Desactivar — Restaurar sitio"}
+                  {togglingKS ? "Restaurando..." : "Restaurar servicio"}
                 </button>
               </div>
             ) : (
-              <div className="flex flex-col gap-4">
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  El sitio está operando con normalidad. Activa el killswitch
-                  solo ante un incidente de seguridad confirmado.
-                </p>
+              /* ── Estado inactivo ── */
+              <div className="flex flex-col gap-5">
+                {/* Aviso de impacto — sobrio, sin drama */}
+                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-white/5">
+                  <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                    Al activar la terminación del servicio, el sitio dejará de
+                    responder a solicitudes externas en un máximo de 30
+                    segundos. No existe restauración automática. El servicio
+                    permanecerá inaccesible hasta que se revierta manualmente
+                    desde este panel.
+                  </p>
+                </div>
 
                 {!confirmActive ? (
                   <button
                     onClick={() => setConfirmActive(true)}
                     disabled={loadingKS || togglingKS}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white py-3 font-bold text-red-600 shadow-sm transition hover:border-red-300 hover:bg-red-50 disabled:opacity-50 dark:border-red-800/40 dark:bg-transparent dark:hover:bg-red-900/10"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white py-3 text-sm font-semibold text-red-700 transition hover:border-red-300 hover:bg-red-50 disabled:opacity-40 dark:border-red-900/40 dark:bg-transparent dark:text-red-500 dark:hover:bg-red-950/30"
                   >
-                    <span className="material-symbols-outlined text-lg">
+                    <span className="material-symbols-outlined text-base">
                       power_off
                     </span>
-                    Activar Killswitch
+                    Terminar servicio
                   </button>
                 ) : (
-                  <div className="flex flex-col gap-3 rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-800/40 dark:bg-red-900/10">
-                    <p className="text-sm font-bold text-red-700 dark:text-red-400">
-                      ¿Confirmas que quieres poner el sitio en mantenimiento?
-                    </p>
-                    <p className="text-xs text-red-600 dark:text-red-500">
-                      El sitio será inaccesible para todos los visitantes hasta
-                      que lo reactives.
-                    </p>
+                  /* ── Confirmación ── */
+                  <div className="flex flex-col gap-4 rounded-xl border border-red-200 bg-red-50 p-5 dark:border-red-900/40 dark:bg-red-950/30">
+                    <div>
+                      <p className="text-sm font-semibold text-red-900 dark:text-red-300">
+                        Confirmación requerida
+                      </p>
+                      <p className="mt-1 text-xs text-red-700 dark:text-red-500">
+                        Esta acción no tiene efecto diferido. El sitio cae en
+                        cuanto se confirma. No habrá advertencia a los
+                        visitantes activos.
+                      </p>
+                    </div>
+
+                    {/* Campo de confirmación */}
+                    <div>
+                      <label className="mb-1.5 block text-[11px] font-semibold tracking-widest text-red-800 uppercase dark:text-red-400">
+                        Escribe para confirmar:{" "}
+                        <span className="font-mono">{CONFIRM_PHRASE}</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={confirmText}
+                        onChange={(e) => setConfirmText(e.target.value)}
+                        placeholder={CONFIRM_PHRASE}
+                        className="w-full rounded-lg border border-red-300 bg-white px-4 py-2.5 font-mono text-sm text-red-900 placeholder-red-300 outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200 dark:placeholder-red-800 dark:focus:border-red-700"
+                      />
+                    </div>
+
                     <div className="flex gap-3">
                       <button
                         onClick={() => handleToggleKillswitch(true)}
-                        disabled={togglingKS}
-                        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-600 py-2.5 text-sm font-bold text-white transition hover:bg-red-700 disabled:opacity-50"
+                        disabled={togglingKS || confirmText !== CONFIRM_PHRASE}
+                        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-800 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-30"
                       >
-                        {togglingKS ? "Activando..." : "Sí, activar ahora"}
+                        <span className="material-symbols-outlined text-base">
+                          power_off
+                        </span>
+                        {togglingKS ? "Ejecutando..." : "Confirmar"}
                       </button>
                       <button
-                        onClick={() => setConfirmActive(false)}
-                        className="flex-1 rounded-xl border border-slate-200 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-50 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
+                        onClick={() => {
+                          setConfirmActive(false);
+                          setConfirmText("");
+                        }}
+                        className="flex-1 rounded-xl border border-slate-200 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:border-white/10 dark:text-slate-400 dark:hover:bg-white/5"
                       >
                         Cancelar
                       </button>
@@ -305,17 +350,22 @@ export default function AdminSettingsPage() {
       {/* ── Log de Eventos ───────────────────────────────────── */}
       <section>
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-            Registro de Eventos de Seguridad
-          </h2>
+          <div>
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">
+              Registro de eventos
+            </h2>
+            <p className="text-xs text-slate-400">
+              Últimas 50 entradas · Solo visible para administradores
+            </p>
+          </div>
           <button
             onClick={() => {
               setLoadingEvents(true);
               loadEvents();
             }}
-            className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-500 transition hover:bg-slate-100 dark:hover:bg-white/5"
+            className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-100 dark:hover:bg-white/5"
           >
-            <span className="material-symbols-outlined text-[16px]">
+            <span className="material-symbols-outlined text-[15px]">
               refresh
             </span>
             Actualizar
@@ -324,16 +374,14 @@ export default function AdminSettingsPage() {
 
         {loadingEvents ? (
           <div className="flex items-center justify-center py-16 text-slate-400">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-current border-t-transparent" />
+            <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
           </div>
         ) : events.length === 0 ? (
           <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50 py-16 dark:border-white/5 dark:bg-white/5">
-            <span className="material-symbols-outlined text-4xl text-slate-300">
-              shield
+            <span className="material-symbols-outlined text-3xl text-slate-300">
+              shield_lock
             </span>
-            <p className="text-sm font-medium text-slate-400">
-              Sin eventos de seguridad registrados
-            </p>
+            <p className="text-sm text-slate-400">Sin eventos registrados</p>
           </div>
         ) : (
           <div className="flex flex-col gap-2">
@@ -353,7 +401,7 @@ export default function AdminSettingsPage() {
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-bold">{meta.label}</span>
+                      <span className="font-semibold">{meta.label}</span>
                       <span className="shrink-0 text-[10px] opacity-60">
                         {new Date(event.created_at).toLocaleString("es-SV")}
                       </span>
@@ -361,14 +409,16 @@ export default function AdminSettingsPage() {
                     {event.payload && (
                       <div className="mt-1 truncate opacity-70">
                         {event.payload.blocked_uri
-                          ? `Bloqueado: ${event.payload.blocked_uri}`
+                          ? `Recurso bloqueado: ${event.payload.blocked_uri}`
                           : event.payload.violated_directive
                             ? `Directiva: ${event.payload.violated_directive}`
                             : JSON.stringify(event.payload).slice(0, 120)}
                       </div>
                     )}
                     {event.ip && (
-                      <div className="mt-0.5 opacity-50">IP: {event.ip}</div>
+                      <div className="mt-0.5 font-mono opacity-50">
+                        {event.ip}
+                      </div>
                     )}
                   </div>
                 </div>

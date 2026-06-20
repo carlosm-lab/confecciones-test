@@ -48,13 +48,12 @@ async function isKillswitchActive(): Promise<boolean> {
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
 
-    const { data } = await supabase
-      .from("site_config")
-      .select("value")
-      .eq("key", "killswitch_active")
-      .single();
+    // Usa RPC SECURITY DEFINER en vez de SELECT directo.
+    // site_config no tiene GRANT a anon — la función expone solo el boolean
+    // necesario para que el proxy decida si bloquear o no el tráfico.
+    const { data } = await supabase.rpc("get_killswitch_public");
 
-    const active = data?.value === "true";
+    const active = data === true;
     killswitchCache = { active, expiresAt: now + 30_000 };
     return active;
   } catch {
