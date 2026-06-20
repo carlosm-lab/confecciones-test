@@ -1,5 +1,18 @@
 /** @type {import('next').NextConfig} */
+// fileURLToPath + URL reemplazan __dirname en ESM (.mjs)
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const nextConfig = {
+  turbopack: {
+    // Fija el workspace root explícitamente para evitar que Turbopack
+    // detecte erróneamente .next/dev/ como root (los package.json que
+    // Next.js genera ahí confunden la detección automática).
+    // Documentación: https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory
+    root: __dirname,
+  },
   poweredByHeader: false,
   allowedDevOrigins: ["192.168.1.189"],
   async headers() {
