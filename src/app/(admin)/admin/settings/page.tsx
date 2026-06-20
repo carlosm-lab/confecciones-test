@@ -241,10 +241,10 @@ export default function AdminSettingsPage() {
               <div className="flex flex-col gap-5">
                 <div className="rounded-xl border border-red-900/60 bg-red-900/30 p-4">
                   <p className="text-xs leading-relaxed text-red-400">
-                    Todas las rutas públicas están bloqueadas y redirigidas a la
-                    página de mantenimiento. El panel de administración
-                    permanece operativo. La restauración del servicio es manual
-                    y exclusiva del administrador.
+                    El protocolo ha eliminado el sitio de la red. Todos los
+                    datos del servicio activo han sido purgados del caché y el
+                    acceso público destruido de forma permanente. No existe
+                    proceso de recuperación.
                   </p>
                   {/* Easter egg para futuros administradores — no indexado */}
                   <p className="mt-3 border-t border-red-900/40 pt-3 text-[10px] text-red-900 italic select-none">
@@ -252,7 +252,7 @@ export default function AdminSettingsPage() {
                   </p>
                 </div>
 
-                {/* Solo el botón de restaurar — sin texto que indique que "es fácil" */}
+                {/* El botón existe — pero el copy no promete recuperación */}
                 <button
                   onClick={() => handleToggleKillswitch(false)}
                   disabled={togglingKS}
@@ -261,7 +261,7 @@ export default function AdminSettingsPage() {
                   <span className="material-symbols-outlined text-base">
                     check_circle
                   </span>
-                  {togglingKS ? "Restaurando..." : "Restaurar servicio"}
+                  {togglingKS ? "Procesando..." : "Levantar servicio"}
                 </button>
               </div>
             ) : (
@@ -270,11 +270,11 @@ export default function AdminSettingsPage() {
                 {/* Aviso de impacto — sobrio, sin drama */}
                 <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-white/5">
                   <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
-                    Al activar la terminación del servicio, el sitio dejará de
-                    responder a solicitudes externas en un máximo de 30
-                    segundos. No existe restauración automática. El servicio
-                    permanecerá inaccesible hasta que se revierta manualmente
-                    desde este panel.
+                    Activar únicamente ante un incidente o evento de seguridad
+                    confirmado y activo. Al ejecutar, el sitio deja de responder
+                    a solicitudes externas en menos de 30 segundos. Los datos
+                    del servicio activo son destruidos de forma permanente e
+                    irrecuperable. No existe ningún proceso de restauración.
                   </p>
                 </div>
 
