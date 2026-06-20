@@ -37,6 +37,16 @@ export function CartDrawer() {
   const [selectedDept, setSelectedDept] = useState("");
   const [selectedMunicipality, setSelectedMunicipality] = useState("");
 
+  // Guard de hidratación: cartItems viene de localStorage (solo disponible en cliente).
+  // En SSR cartItems = [], en el cliente puede tener items.
+  // Renderizar el badge de conteo solo después de montar evita el mismatch de hidratación.
+  // Mismo patrón que Navbar.tsx (safeCartCount).
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  const safeCartItems = isMounted ? cartItems : [];
+
   const municipalities = useMemo(() => {
     const dept = DEPARTMENTS.find((d) => d.name === selectedDept);
     return dept?.municipalities ?? [];
@@ -76,7 +86,8 @@ export function CartDrawer() {
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isCartOpen, closeDrawer]);
 
-  const subtotal = cartItems.reduce((total, item) => {
+  // safeCartItems evita mismatch de hidratación: usa [] en SSR, el array real después de montar
+  const subtotal = safeCartItems.reduce((total, item) => {
     return total + (item.product.price || 0) * item.quantity;
   }, 0);
 
@@ -248,9 +259,9 @@ export function CartDrawer() {
                       ? "Pedido enviado"
                       : "Tu carrito"}
               </span>
-              {step === "cart" && cartItems.length > 0 && (
+              {step === "cart" && safeCartItems.length > 0 && (
                 <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[var(--color-primary)] px-1.5 text-xs font-bold text-[var(--color-on-primary)] tabular-nums">
-                  {cartItems.length}
+                  {safeCartItems.length}
                 </span>
               )}
             </h2>
@@ -319,7 +330,7 @@ export function CartDrawer() {
 
                   {/* Productos */}
                   <div className="mb-4 space-y-2">
-                    {cartItems.map((item) => (
+                    {safeCartItems.map((item) => (
                       <div
                         key={item.id}
                         className="flex justify-between text-sm"
@@ -522,7 +533,7 @@ export function CartDrawer() {
                 </div>
               </div>
             ) : /* ─ CARRITO VACÍO ─ */
-            cartItems.length === 0 ? (
+            safeCartItems.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-primary-container)]/40">
                   <span
@@ -548,7 +559,7 @@ export function CartDrawer() {
             ) : (
               /* ─ ITEMS DEL CARRITO ─ */
               <div className="flex flex-col">
-                {cartItems.map((item, index) => {
+                {safeCartItems.map((item, index) => {
                   if (!item || !item.product) return null;
                   return (
                     <div key={item.id}>
@@ -662,7 +673,7 @@ export function CartDrawer() {
                       </div>
 
                       {/* Divider between items */}
-                      {index < cartItems.length - 1 && (
+                      {index < safeCartItems.length - 1 && (
                         <div className="h-px bg-[var(--color-outline-variant)]/15" />
                       )}
                     </div>
@@ -673,7 +684,7 @@ export function CartDrawer() {
           </div>
 
           {/* ── Footer ──────────────────────────────────── */}
-          {step === "cart" && cartItems.length > 0 && (
+          {step === "cart" && safeCartItems.length > 0 && (
             <div
               className="mt-auto bg-[var(--color-surface)] px-5 pt-4 pb-5 sm:px-6"
               style={{ boxShadow: "0 -6px 20px rgba(20, 48, 103, 0.04)" }}

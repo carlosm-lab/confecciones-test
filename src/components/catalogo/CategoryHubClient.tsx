@@ -50,11 +50,17 @@ function CategoryCard({
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-103"
+          // loading="eager" evita que Next.js reporte LCP warning:
+          // estas imágenes están siempre above-the-fold en el hub de categorías.
+          // priority se aplica a los primeros 6 sectores (2 filas de 3 en desktop).
+          loading="eager"
           priority={
             sector === "scrubs" ||
             sector === "universitario" ||
             sector === "escolar" ||
-            sector === "corporativo"
+            sector === "corporativo" ||
+            sector === "deportivo" ||
+            sector === "accesorios"
           }
         />
 
