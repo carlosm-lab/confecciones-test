@@ -43,62 +43,52 @@ export function GuestBell() {
 
   return (
     <div className="relative">
-      {/* Wrapper — contiene los anillos de pulso y el botón */}
-      <div className="relative flex items-center justify-center">
-        {/* Anillo expansivo 1 — pulso rápido */}
-        {isActive && (
-          <span
-            className="bell-ring-1 pointer-events-none absolute size-10 rounded-full"
-            aria-hidden="true"
-          />
+      {/* Bell button */}
+      <button
+        ref={buttonRef}
+        type="button"
+        aria-label={
+          isActive
+            ? "Tienes 1 notificación sin leer"
+            : "Centro de notificaciones"
+        }
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((o) => !o)}
+        className={cn(
+          "relative flex size-10 cursor-pointer items-center justify-center rounded-full border transition-all",
+          isActive
+            ? "border-blue-200 bg-blue-50 text-blue-600 shadow-[0_2px_8px_-2px_rgba(59,130,246,0.25),0_1px_4px_-1px_rgba(59,130,246,0.15)] hover:-translate-y-0.5 hover:shadow-[0_4px_14px_-2px_rgba(59,130,246,0.35)]"
+            : "border-primary/10 text-primary bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
         )}
-        {/* Anillo expansivo 2 — pulso con delay */}
+      >
+        {/* Anillo de pulso ping — solo cuando hay notificación */}
         {isActive && (
           <span
-            className="bell-ring-2 pointer-events-none absolute size-10 rounded-full"
+            className="absolute inset-0 animate-ping rounded-full bg-blue-400/30"
             aria-hidden="true"
           />
         )}
 
-        {/* Bell button */}
-        <button
-          ref={buttonRef}
-          type="button"
-          aria-label={
-            isActive
-              ? "Notificaciones — tienes favoritos guardados"
-              : "Notificaciones"
-          }
-          aria-expanded={isOpen}
-          onClick={() => setIsOpen((o) => !o)}
-          className={cn(
-            "relative z-10 flex size-10 cursor-pointer items-center justify-center rounded-full border transition-colors",
-            isActive
-              ? "border-red-400 bg-red-50 text-red-600 shadow-[0_0_0_2px_rgba(239,68,68,0.2),0_2px_10px_rgba(239,68,68,0.3)]"
-              : "border-primary/10 text-primary bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12)] hover:-translate-y-0.5"
-          )}
+        <span
+          className="material-symbols-outlined relative z-10 text-[22px]"
+          aria-hidden="true"
+          style={{
+            fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0",
+          }}
         >
-          <span
-            className={cn(
-              "material-symbols-outlined text-[22px]",
-              isActive && "bell-icon-wiggle"
-            )}
-            aria-hidden="true"
-            style={{
-              fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0",
-            }}
-          >
-            notifications
-          </span>
+          notifications
+        </span>
 
-          {/* Badge rojo */}
-          {isActive && (
-            <span className="absolute -top-1.5 -right-1.5 z-20 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-black text-white ring-2 ring-white">
-              1
-            </span>
-          )}
-        </button>
-      </div>
+        {/* Badge de cantidad */}
+        {isActive && (
+          <span
+            className="absolute -top-1.5 -right-1.5 z-10 flex h-[18px] min-w-[18px] animate-[bounceIn_0.3s_ease-out] items-center justify-center rounded-full bg-blue-600 px-1 text-[9px] font-black tracking-tight text-white ring-2 ring-white"
+            aria-hidden="true"
+          >
+            1
+          </span>
+        )}
+      </button>
 
       {/* Dropdown panel */}
       {isOpen && (
@@ -112,7 +102,7 @@ export function GuestBell() {
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <span
-                  className="material-symbols-outlined text-[18px] text-red-500"
+                  className="material-symbols-outlined text-[18px] text-blue-600"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                   aria-hidden="true"
                 >
@@ -129,15 +119,15 @@ export function GuestBell() {
               <button
                 type="button"
                 onClick={handleLoginClick}
-                className="btn-gradient flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98]"
+                className="btn-gradient flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold tracking-wide text-white transition hover:opacity-90 active:scale-[0.98]"
               >
                 <span
-                  className="material-symbols-outlined text-[18px]"
+                  className="material-symbols-outlined text-[16px]"
                   aria-hidden="true"
                 >
                   login
                 </span>
-                Iniciar sesión
+                Iniciar sesión · Sincronizar entre dispositivos
               </button>
             </div>
           ) : (
