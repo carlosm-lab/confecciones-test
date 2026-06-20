@@ -9,6 +9,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { FavoritesProvider } from "@/context/FavoritesContext";
 import { ConfirmProvider } from "@/context/ConfirmContext";
+import { GuestNotificationProvider } from "@/context/GuestNotificationContext";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   // ── Hydration heartbeat ──────────────────────────────────────────────────────
@@ -43,10 +44,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
       >
         <AuthProvider>
           <CartProvider>
-            <FavoritesProvider>
-              <ConfirmProvider>
-                {children}
-                <Toaster
+            <GuestNotificationProvider>
+              <FavoritesProvider>
+                <ConfirmProvider>
+                  {children}
+                  <Toaster
                   position="bottom-center"
                   toastOptions={{
                     duration: 3000,
@@ -65,8 +67,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
                     },
                   }}
                 />
-              </ConfirmProvider>
-            </FavoritesProvider>
+                </ConfirmProvider>
+              </FavoritesProvider>
+            </GuestNotificationProvider>
           </CartProvider>
         </AuthProvider>
       </ThemeProvider>

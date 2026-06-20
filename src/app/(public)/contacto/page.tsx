@@ -3,6 +3,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/schemas";
+import { ContactForm } from "@/components/contacto/ContactForm";
 
 const PAGE_URL = `${siteConfig.url}/contacto`;
 const PAGE_TITLE =
@@ -436,6 +437,17 @@ export default function ContactoPage() {
                 </a>
               </div>
             </div>
+          </section>
+
+          {/* ── Formulario de contacto ─────────────────────────── */}
+          <section
+            className="animate-fade-in-up mt-10 max-w-2xl"
+            style={{ animationDelay: "550ms" }}
+          >
+            <h2 className="text-primary mb-6 font-serif text-2xl font-bold">
+              Envíanos un mensaje
+            </h2>
+            <ContactForm />
           </section>
         </div>
       </main>

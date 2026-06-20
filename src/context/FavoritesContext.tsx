@@ -19,9 +19,10 @@
 // toggleFavorite() actualiza la UI inmediatamente y luego
 // sincroniza con la DB. Si falla, hace rollback.
 //
-// toggleFavorite rechaza llamadas sin usuario autenticado.
-// Este bloqueo es "defense in depth" — los botones de UI ya
-// están protegidos por showAuthModal, pero esto es un segundo check.
+// GUEST MODE:
+// Guests pueden guardar favoritos en localStorage libremente.
+// Al hacerlo, se activa la GuestNotificationContext (campana).
+// Al iniciar sesión, los favoritos locales se fusionan con DB.
 // ──────────────────────────────────────────────────────────────
 import {
   createContext,
@@ -33,7 +34,9 @@ import {
   useMemo,
   ReactNode,
 } from "react";
+import toast from "react-hot-toast";
 import { useAuth } from "./AuthContext";
+import { useGuestNotification } from "./GuestNotificationContext";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
 import { STORAGE_FAVORITES_KEY } from "@/lib/constants";
@@ -60,6 +63,7 @@ export const useFavorites = () => {
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
+  const { activate: activateBell, dismiss: dismissBell } = useGuestNotification();
   const [favorites, setFavorites] = useState<string[]>([]);
   const favoritesRef = useRef<string[]>([]);
 
@@ -94,6 +98,9 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!user) return;
     let mounted = true;
+
+    // Al iniciar sesión: desactivar la campana de guest (favoritos ya se sincronizan)
+    dismissBell();
 
     const syncFavorites = async () => {
       try {
@@ -175,7 +182,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     return () => {
       mounted = false;
     };
-  }, [user]);
+  }, [user, dismissBell]);
 
   // Mantener localStorage sincronizado con el estado React
   useEffect(() => {
@@ -185,15 +192,25 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   // ── Toggle con update optimista ───────────────────────────────
   const toggleFavorite = useCallback(
     async (productId: string) => {
-      // Defense in depth: rechazar si no hay usuario
+      const isFav = favoritesRef.current.includes(productId);
+
+      // ── GUEST MODE: toggle local + notificación ───────────────
       if (!user) {
-        logger.warn(
-          "toggleFavorite called without authenticated user. Ignoring."
+        setFavorites((prev) =>
+          isFav ? prev.filter((id) => id !== productId) : [...prev, productId]
         );
+        // Solo notificar al agregar (no al quitar)
+        if (!isFav) {
+          activateBell();
+          toast("¡Guardado! Inicia sesión para sincronizarlo en otros dispositivos", {
+            icon: "🔔",
+            duration: 4000,
+          });
+        }
         return;
       }
 
-      const isFav = favoritesRef.current.includes(productId);
+      // ── USER MODE: update optimista + sync DB ─────────────────
 
       // Update optimista: la UI responde instantáneamente
       setFavorites((prev) =>
@@ -222,7 +239,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
         );
       }
     },
-    [user]
+    [user, activateBell]
   );
 
   // Set para O(1) lookups en isFavorite (en vez de .includes() que es O(n))

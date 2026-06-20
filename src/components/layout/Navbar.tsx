@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { SearchModal } from "@/components/layout/SearchModal";
 import { FavoritesModal } from "@/components/cart/FavoritesModal";
+import { GuestBell } from "@/components/ui/GuestBell";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
@@ -391,6 +392,9 @@ export function Navbar() {
               </button>
 
               {/* Menu Button — visible on all sizes */}
+              {/* GuestBell — solo para usuarios no autenticados */}
+              {isMounted && !user && <GuestBell />}
+
               <button
                 type="button"
                 aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
