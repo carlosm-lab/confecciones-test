@@ -431,7 +431,7 @@ export default function AdminUsuariosPage() {
                                 </svg>
                               ) : (
                                 <span className="material-symbols-outlined text-[14px]">
-                                  shield_minus
+                                  remove_moderator
                                 </span>
                               )}
                               <span className="hidden sm:inline">Degradar</span>
