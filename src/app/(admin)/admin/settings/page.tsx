@@ -74,14 +74,13 @@ export default function AdminSettingsPage() {
   const loadKillswitch = useCallback(async () => {
     try {
       const supabase = getSupabaseClient();
-      const { data, error } = await supabase
-        .from("site_config")
-        .select("value")
-        .eq("key", "killswitch_active")
-        .single();
+      // Usa RPC SECURITY DEFINER — verifica admin dentro de la función DB.
+      // No se hace SELECT directo a site_config (requeriría GRANTs inseguros).
+      const { data, error } = await supabase.rpc("get_killswitch_state");
 
       if (error) throw error;
-      setKillswitchActive(data?.value === "true");
+      const result = data as { killswitch_active: boolean } | null;
+      setKillswitchActive(result?.killswitch_active ?? false);
     } catch (err) {
       logger.error("Error loading killswitch state:", err);
       showToast("Error al cargar el estado del killswitch", "error");
@@ -94,11 +93,11 @@ export default function AdminSettingsPage() {
   const loadEvents = useCallback(async () => {
     try {
       const supabase = getSupabaseClient();
-      const { data, error } = await supabase
-        .from("security_events")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(50);
+      // Usa RPC SECURITY DEFINER — verifica admin dentro de la función DB.
+      // No se hace SELECT directo a security_events (requeriría GRANTs inseguros).
+      const { data, error } = await supabase.rpc("get_security_events", {
+        p_limit: 50,
+      });
 
       if (error) throw error;
       setEvents((data ?? []) as SecurityEvent[]);
