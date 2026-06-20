@@ -159,6 +159,9 @@ export default function AdminSettingsPage() {
         <h1 className="text-2xl font-black text-slate-900 dark:text-white">
           Seguridad y disponibilidad
         </h1>
+        <p className="mt-2 text-sm text-slate-500 italic dark:text-slate-400">
+          &ldquo;Si la tierra no es nuestra, no es de nadie.&rdquo;
+        </p>
       </div>
 
       {/* ── Killswitch Card ─────────────────────────────────── */}
