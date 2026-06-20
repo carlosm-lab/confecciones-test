@@ -1,20 +1,5 @@
 "use client";
 
-/**
- * GuestBell
- * ─────────────────────────────────────────────────────────────
- * Campana de notificaciones visible SOLO para usuarios guest.
- *
- * Estados:
- * - Inactiva: ícono estático sin badge, sin animación
- * - Activa: pulso continuo + badge "1" + panel al hacer clic
- *
- * Panel activo muestra:
- * - Mensaje de sincronización
- * - Botón "Iniciar sesión"
- * ─────────────────────────────────────────────────────────────
- */
-
 import { useState, useEffect, useRef } from "react";
 import { useGuestNotification } from "@/context/GuestNotificationContext";
 import { useAuth } from "@/context/AuthContext";
@@ -33,7 +18,6 @@ export function GuestBell() {
     setMounted(true);
   }, []);
 
-  // Cerrar panel al hacer clic fuera
   useEffect(() => {
     if (!isOpen) return;
     const handleClickOutside = (e: MouseEvent) => {
@@ -55,42 +39,66 @@ export function GuestBell() {
     showAuthModal("generic");
   };
 
-  // Evitar hidratación mismatch
   if (!mounted) return null;
 
   return (
     <div className="relative">
-      {/* Bell button */}
-      <button
-        ref={buttonRef}
-        type="button"
-        aria-label={
-          isActive
-            ? "Notificaciones — tienes favoritos guardados"
-            : "Notificaciones"
-        }
-        aria-expanded={isOpen}
-        onClick={() => setIsOpen((o) => !o)}
-        className={cn(
-          "border-primary/10 text-primary relative flex size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]",
-          isActive && "bell-active"
-        )}
-      >
-        <span
-          className="material-symbols-outlined text-[22px]"
-          aria-hidden="true"
-          style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
-        >
-          notifications
-        </span>
-
-        {/* Badge — solo visible cuando activa */}
+      {/* Wrapper — contiene los anillos de pulso y el botón */}
+      <div className="relative flex items-center justify-center">
+        {/* Anillo expansivo 1 — pulso rápido */}
         {isActive && (
-          <span className="bg-tertiary absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-black text-white ring-2 ring-white">
-            1
-          </span>
+          <span
+            className="bell-ring-1 pointer-events-none absolute size-10 rounded-full"
+            aria-hidden="true"
+          />
         )}
-      </button>
+        {/* Anillo expansivo 2 — pulso con delay */}
+        {isActive && (
+          <span
+            className="bell-ring-2 pointer-events-none absolute size-10 rounded-full"
+            aria-hidden="true"
+          />
+        )}
+
+        {/* Bell button */}
+        <button
+          ref={buttonRef}
+          type="button"
+          aria-label={
+            isActive
+              ? "Notificaciones — tienes favoritos guardados"
+              : "Notificaciones"
+          }
+          aria-expanded={isOpen}
+          onClick={() => setIsOpen((o) => !o)}
+          className={cn(
+            "relative z-10 flex size-10 cursor-pointer items-center justify-center rounded-full border transition-colors",
+            isActive
+              ? "border-red-400 bg-red-50 text-red-600 shadow-[0_0_0_2px_rgba(239,68,68,0.2),0_2px_10px_rgba(239,68,68,0.3)]"
+              : "border-primary/10 text-primary bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12)] hover:-translate-y-0.5"
+          )}
+        >
+          <span
+            className={cn(
+              "material-symbols-outlined text-[22px]",
+              isActive && "bell-icon-wiggle"
+            )}
+            aria-hidden="true"
+            style={{
+              fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0",
+            }}
+          >
+            notifications
+          </span>
+
+          {/* Badge rojo */}
+          {isActive && (
+            <span className="absolute -top-1.5 -right-1.5 z-20 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-black text-white ring-2 ring-white">
+              1
+            </span>
+          )}
+        </button>
+      </div>
 
       {/* Dropdown panel */}
       {isOpen && (
@@ -102,10 +110,9 @@ export function GuestBell() {
         >
           {isActive ? (
             <div className="space-y-3">
-              {/* Header */}
               <div className="flex items-center gap-2">
                 <span
-                  className="material-symbols-outlined text-primary text-[18px]"
+                  className="material-symbols-outlined text-[18px] text-red-500"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                   aria-hidden="true"
                 >
@@ -115,14 +122,10 @@ export function GuestBell() {
                   Tienes favoritos guardados
                 </p>
               </div>
-
-              {/* Message */}
               <p className="text-xs leading-relaxed text-gray-500">
                 Para sincronizar y guardar tus favoritos en todos tus
                 dispositivos, inicia sesión o crea una cuenta gratuita.
               </p>
-
-              {/* CTA */}
               <button
                 type="button"
                 onClick={handleLoginClick}

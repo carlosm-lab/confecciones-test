@@ -524,33 +524,96 @@
 }
 
 /* ──────────────────────────────────────────────────────────────
-   GUEST BELL — Pulse animation
-   Activa cuando el usuario guest tiene favoritos guardados.
+   GUEST BELL — Animaciones agresivas
+   Diseñadas para ser psicológicamente imposibles de ignorar.
    ────────────────────────────────────────────────────────────── */
-@keyframes bell-pulse-ring {
+
+/* Anillo 1 — se expande rápido y desaparece */
+@keyframes bell-ring-expand-1 {
   0% {
-    box-shadow:
-      0 0 0 0 rgba(180, 48, 36, 0.35),
-      0 2px 8px -2px rgba(20, 48, 103, 0.12);
-  }
-  70% {
-    box-shadow:
-      0 0 0 8px rgba(180, 48, 36, 0),
-      0 2px 8px -2px rgba(20, 48, 103, 0.12);
+    transform: scale(1);
+    opacity: 0.7;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
   }
   100% {
-    box-shadow:
-      0 0 0 0 rgba(180, 48, 36, 0),
-      0 2px 8px -2px rgba(20, 48, 103, 0.12);
+    transform: scale(2.2);
+    opacity: 0;
+    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
   }
 }
 
-.bell-active {
-  animation: bell-pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* Anillo 2 — igual pero con delay para el efecto doble */
+@keyframes bell-ring-expand-2 {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35);
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+    box-shadow: 0 0 0 16px rgba(239, 68, 68, 0);
+  }
+}
+
+/* Wiggle de campana — sacudida lateral persistente */
+@keyframes bell-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(-18deg);
+  }
+  20% {
+    transform: rotate(16deg);
+  }
+  30% {
+    transform: rotate(-14deg);
+  }
+  40% {
+    transform: rotate(12deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+  60% {
+    transform: rotate(6deg);
+  }
+  70% {
+    transform: rotate(-4deg);
+  }
+  80% {
+    transform: rotate(2deg);
+  }
+  90% {
+    transform: rotate(0deg);
+  }
+}
+
+.bell-ring-1 {
+  background: transparent;
+  animation: bell-ring-expand-1 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.bell-ring-2 {
+  background: transparent;
+  animation: bell-ring-expand-2 1.4s cubic-bezier(0, 0, 0.2, 1) 0.55s infinite;
+}
+
+.bell-icon-wiggle {
+  display: inline-block;
+  transform-origin: top center;
+  animation: bell-wiggle 2s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bell-active {
+  .bell-ring-1,
+  .bell-ring-2 {
+    animation: none;
+  }
+
+  .bell-icon-wiggle {
     animation: none;
   }
 }
