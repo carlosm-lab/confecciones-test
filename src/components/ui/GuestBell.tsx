@@ -121,8 +121,8 @@ const HINT_TYPES = [
   "auth_hint",
 ];
 
-// Tab type
-type Tab = "all" | "unread" | "read";
+// Tab type — simplified: Recibidas (unread) | Leídas (read)
+type Tab = "unread" | "read";
 
 // ── GuestBell ──────────────────────────────────────────────────
 
@@ -143,8 +143,8 @@ export function GuestBell() {
   const [mounted, setMounted] = useState(false);
   const [isSubscribing, setIsSubscribing] = useState(false);
 
-  // Tab state
-  const [activeTab, setActiveTab] = useState<Tab>("all");
+  // Tab state — default: Recibidas (no leídas)
+  const [activeTab, setActiveTab] = useState<Tab>("unread");
 
   // Expanded detail sub-panel
   const [expandedNotif, setExpandedNotif] = useState<AppNotification | null>(
@@ -163,11 +163,13 @@ export function GuestBell() {
   const touchStartY = useRef(0);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Unified close: resets all panel state
+  // Unified close: resets ALL panel + modal state
   const closePanel = useCallback(() => {
     setIsOpen(false);
     setExpandedNotif(null);
-    setActiveTab("all");
+    setActiveTab("unread");
+    setDeleteTarget(null);
+    setBlockMessage(null);
   }, []);
 
   const handleDragStart = (e: React.TouchEvent) => {
@@ -368,11 +370,10 @@ export function GuestBell() {
 
   // ── Filtered list ─────────────────────────────────────────────
 
-  const filteredNotifs = notifications.filter((n) => {
-    if (activeTab === "unread") return !n.read;
-    if (activeTab === "read") return n.read;
-    return true;
-  });
+  // Recibidas = no leídas | Leídas = leídas
+  const filteredNotifs = notifications.filter((n) =>
+    activeTab === "unread" ? !n.read : n.read
+  );
 
   const unreadTabCount = notifications.filter((n) => !n.read).length;
   const readTabCount = notifications.filter((n) => n.read).length;
@@ -507,13 +508,12 @@ export function GuestBell() {
               <div className="flex shrink-0 gap-1 border-b border-slate-100 px-4 py-2">
                 {(
                   [
-                    { key: "all", label: "Todas", count: notifications.length },
                     {
                       key: "unread",
-                      label: "No leídas",
+                      label: "Recibidas",
                       count: unreadTabCount,
                     },
-                    { key: "read", label: "Leídas", count: readTabCount },
+                    { key: "read", label: "Le\u00eddas", count: readTabCount },
                   ] as { key: Tab; label: string; count: number }[]
                 ).map((tab) => (
                   <button
@@ -567,18 +567,14 @@ export function GuestBell() {
                   </div>
                   <div className="space-y-1">
                     <p className="text-sm font-semibold text-slate-700">
-                      {activeTab === "all"
-                        ? "Sin notificaciones"
-                        : activeTab === "unread"
-                          ? "Todo al día"
-                          : "Nada leído aún"}
+                      {activeTab === "unread"
+                        ? "Todo al d\u00eda"
+                        : "Nada le\u00eddo a\u00fan"}
                     </p>
                     <p className="text-xs leading-relaxed text-slate-400">
-                      {activeTab === "all"
-                        ? "Te avisaremos cuando haya nuevos productos, ofertas o actualizaciones."
-                        : activeTab === "unread"
-                          ? "No tienes notificaciones pendientes."
-                          : "Las notificaciones que abras aparecerán aquí."}
+                      {activeTab === "unread"
+                        ? "No tienes notificaciones pendientes."
+                        : "Las notificaciones que abras aparecer\u00e1n aqu\u00ed."}
                     </p>
                   </div>
                 </div>

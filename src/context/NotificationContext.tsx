@@ -362,9 +362,10 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
     fetchDbNotifs();
 
-    // Suscripcion en tiempo real
+    // Suscripcion en tiempo real — se re-establece al cambiar auth
+    const channelName = `notifications_realtime_${user?.id ?? "guest"}`;
     const channel = supabase
-      .channel("notifications_realtime")
+      .channel(channelName)
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "notifications" },
@@ -379,7 +380,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [user?.id]); // Se re-sincroniza al iniciar/cerrar sesión
 
   // ── Marcar hints como leidas al iniciar sesion ────────────────
   useEffect(() => {
