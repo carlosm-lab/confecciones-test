@@ -179,21 +179,38 @@ export default function AdminProductsPage() {
         showToast("Producto creado correctamente.");
       }
 
-      // 📣 Publicar y notificar
+      // 📣 Publicar y notificar — prioridad: oferta > nuevo producto
       if (notifyFlag && savedProductId) {
         try {
-          const { data: notif } = await supabase
+          const hasOffer = !!productData.old_price;
+          const sector = productData.sector ?? "catalogo";
+          const slug = productData.slug ?? savedProductId;
+          const productUrl = `/catalogo/${sector}/${slug}`;
+
+          const notifPayload = hasOffer
+            ? {
+                type: "new_offer" as const,
+                title: `🏷️ Oferta: ${savedProductName}`,
+                message: `¡Aprovecha! Hay una oferta especial en "${savedProductName}". Entra y consulta el precio.`,
+                target_url: productUrl,
+                product_id: savedProductId,
+              }
+            : {
+                type: "new_product" as const,
+                title: `✨ Nuevo producto: ${savedProductName}`,
+                message:
+                  "Hay un nuevo producto disponible en nuestro catálogo. ¡Échale un vistazo!",
+                target_url: productUrl,
+                product_id: savedProductId,
+              };
+
+          const { data: notif, error: notifError } = await supabase
             .from("notifications")
-            .insert({
-              type: "new_product",
-              title: `✨ Nuevo producto: ${savedProductName}`,
-              message:
-                "Hay un nuevo producto disponible en nuestro catálogo. ¡Échale un vistazo!",
-              target_url: `/catalogo`,
-              product_id: savedProductId,
-            })
+            .insert(notifPayload)
             .select("id")
             .single();
+
+          if (notifError) throw notifError;
 
           if (notif?.id) {
             const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
@@ -206,7 +223,7 @@ export default function AdminProductsPage() {
               },
               body: JSON.stringify({ notification_id: notif.id }),
             }).catch(() => {
-              /* silencioso */
+              /* silencioso — push best-effort */
             });
           }
         } catch (notifErr) {

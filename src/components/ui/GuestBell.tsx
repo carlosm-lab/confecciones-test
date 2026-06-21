@@ -163,13 +163,17 @@ export function GuestBell() {
     return () => document.removeEventListener("keydown", handler);
   }, [isOpen]);
 
-  // Auto-marcar notificaciones informativas como leidas al abrir el panel
+  // Auto-marcar leidas al abrir el panel:
+  // — Solo las que NO tienen target_url (informativas puras)
+  // — Las que tienen target_url se marcan al hacer click y navegar
   useEffect(() => {
     if (!isOpen) return;
     notifications
       .filter(
         (n) =>
-          !n.read && !HINT_TYPES.includes(n.type as AppNotification["type"])
+          !n.read &&
+          !n.target_url &&
+          !HINT_TYPES.includes(n.type as AppNotification["type"])
       )
       .forEach((n) => markRead(n.id));
     // eslint-disable-next-line react-hooks/exhaustive-deps

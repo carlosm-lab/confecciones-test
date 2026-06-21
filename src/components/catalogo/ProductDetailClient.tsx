@@ -377,15 +377,14 @@ export function ProductDetailClient({
           className="animate-fade-in-up flex flex-col gap-6"
           style={{ animationDelay: "200ms" }}
         >
-          {/* Breadcrumb */}
+          {/* Breadcrumb — solo páginas anteriores, etiquetas de una sola palabra */}
           <Breadcrumb
             items={[
               { label: "Catálogo", href: "/catalogo" },
               {
-                label: config.title,
+                label: config.subtitle,
                 href: `/catalogo/${sector}`,
               },
-              { label: product.name ?? "Producto" },
             ]}
           />
 

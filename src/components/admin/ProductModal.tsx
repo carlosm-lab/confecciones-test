@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 /**
  * NOTA:
  * Este formulario NO incluye campo de stock intencionalmente.
@@ -212,7 +212,8 @@ export default function ProductModal({
       setSlugManuallyEdited(false);
     }
     setTagInput("");
-  }, [product, isOpen, categories]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.id, isOpen]);
 
   const handleAddImage = useCallback((url: string) => {
     setFormData((prev) => {
@@ -1161,6 +1162,35 @@ export default function ProductModal({
           >
             Cancelar
           </button>
+
+          {/* Notification toggle — visible for both create and edit */}
+          <label
+            className={`flex cursor-pointer items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
+              notifyOnSave
+                ? formData.old_price
+                  ? "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400"
+                  : "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
+                : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/10"
+            }`}
+          >
+            <input
+              type="checkbox"
+              checked={notifyOnSave}
+              onChange={(e) => setNotifyOnSave(e.target.checked)}
+              className="sr-only"
+              aria-label="Notificar a suscriptores"
+            />
+            <span
+              className="material-symbols-outlined text-[18px]"
+              aria-hidden="true"
+            >
+              {formData.old_price ? "local_offer" : "campaign"}
+            </span>
+            {formData.old_price
+              ? "Notificar como oferta"
+              : "Notificar a suscriptores"}
+          </label>
+
           <button
             type="submit"
             form="productForm"
