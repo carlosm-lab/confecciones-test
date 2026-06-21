@@ -64,6 +64,12 @@ interface FormData {
   labor_price: string;
   /** Términos de la oferta — texto libre */
   offer_terms: string;
+  // ── Campos SEO manuales ────────────────────────
+  seo_title: string;
+  seo_description: string;
+  seo_keywords: string;
+  seo_robots: string;
+  seo_publisher: string;
 }
 
 export default function ProductModal({
@@ -114,6 +120,12 @@ export default function ProductModal({
     wholesale_min_qty: "",
     labor_price: "",
     offer_terms: "",
+    // SEO
+    seo_title: "",
+    seo_description: "",
+    seo_keywords: "",
+    seo_robots: "",
+    seo_publisher: "",
   });
 
   const [tagInput, setTagInput] = useState("");
@@ -175,6 +187,12 @@ export default function ProductModal({
         labor_price: product.labor_price?.toString() || "",
         offer_terms:
           (product as { offer_terms?: string | null }).offer_terms || "",
+        // SEO
+        seo_title: product.seo_title || "",
+        seo_description: product.seo_description || "",
+        seo_keywords: product.seo_keywords || "",
+        seo_robots: product.seo_robots || "",
+        seo_publisher: product.seo_publisher || "",
       });
       setSlugManuallyEdited(!!product.slug);
     } else {
@@ -211,6 +229,12 @@ export default function ProductModal({
         wholesale_min_qty: "",
         labor_price: "",
         offer_terms: "",
+        // SEO
+        seo_title: "",
+        seo_description: "",
+        seo_keywords: "",
+        seo_robots: "",
+        seo_publisher: "",
       });
       setSlugManuallyEdited(false);
     }
@@ -454,6 +478,12 @@ export default function ProductModal({
       labor_price: parsedLaborPrice,
       // offer_terms: texto libre de términos de oferta
       offer_terms: formData.offer_terms?.trim() || null,
+      // ── Campos SEO manuales (null si vacíos, para preservar fallback automático) ──
+      seo_title: formData.seo_title?.trim() || null,
+      seo_description: formData.seo_description?.trim() || null,
+      seo_keywords: formData.seo_keywords?.trim() || null,
+      seo_robots: formData.seo_robots?.trim() || null,
+      seo_publisher: formData.seo_publisher?.trim() || null,
     } as Partial<Product> & { offer_terms?: string | null };
 
     await onSave(payload, [], notifyOnSave);
@@ -1149,6 +1179,165 @@ export default function ProductModal({
                     Producto Activo (Visible en catálogo)
                   </span>
                 </label>
+              </div>
+
+              {/* ─── SEO Manual ─────────────────────────────────────────── */}
+              <div className="space-y-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4 md:col-span-2 dark:border-emerald-500/20 dark:bg-emerald-500/5">
+                <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "20px" }}
+                  >
+                    manage_search
+                  </span>
+                  <h4 className="text-sm font-bold">SEO del Producto</h4>
+                  <span className="ml-auto text-[10px] font-normal text-slate-400">
+                    Opcional
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                  Si dejas un campo vacío, el sistema usará automáticamente el
+                  valor generado desde el nombre y descripción del producto.
+                </p>
+
+                {/* SEO Title */}
+                <div>
+                  <label
+                    htmlFor="product-seo-title"
+                    className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                  >
+                    Título SEO
+                  </label>
+                  <input
+                    id="product-seo-title"
+                    name="seo_title"
+                    value={formData.seo_title}
+                    onChange={handleChange}
+                    placeholder="Dejar vacío para usar el título automático"
+                    maxLength={70}
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition-all outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/40 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                  />
+                  <p className="mt-0.5 text-right text-[10px] text-slate-400">
+                    {(formData.seo_title || "").length}/70 caracteres
+                  </p>
+                </div>
+
+                {/* SEO Description */}
+                <div>
+                  <label
+                    htmlFor="product-seo-description"
+                    className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                  >
+                    Meta Descripción
+                  </label>
+                  <textarea
+                    id="product-seo-description"
+                    name="seo_description"
+                    value={formData.seo_description}
+                    onChange={handleChange}
+                    rows={2}
+                    maxLength={160}
+                    placeholder="Dejar vacío para usar la descripción corta del producto"
+                    className="w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition-all outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/40 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                  />
+                  <p className="mt-0.5 text-right text-[10px] text-slate-400">
+                    {(formData.seo_description || "").length}/160 caracteres
+                  </p>
+                </div>
+
+                {/* Keywords */}
+                <div>
+                  <label
+                    htmlFor="product-seo-keywords"
+                    className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                  >
+                    Palabras Clave{" "}
+                    <span className="font-normal text-slate-400">
+                      (separadas por coma)
+                    </span>
+                  </label>
+                  <input
+                    id="product-seo-keywords"
+                    name="seo_keywords"
+                    value={formData.seo_keywords}
+                    onChange={handleChange}
+                    placeholder="Dejar vacío si no aplica. Ej: scrubs médicos, uniformes San Miguel"
+                    maxLength={300}
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition-all outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/40 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                  />
+                </div>
+
+                {/* Publisher */}
+                <div>
+                  <label
+                    htmlFor="product-seo-publisher"
+                    className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                  >
+                    Publisher{" "}
+                    <span className="font-normal text-slate-400">
+                      (nombre de la marca/publicador)
+                    </span>
+                  </label>
+                  <input
+                    id="product-seo-publisher"
+                    name="seo_publisher"
+                    value={formData.seo_publisher}
+                    onChange={handleChange}
+                    placeholder="Dejar vacío para usar: Confecciones Liss"
+                    maxLength={100}
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition-all outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/40 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                  />
+                </div>
+
+                {/* X-Robots-Tag — botones seleccionables (mismo patrón que Tallas) */}
+                <div>
+                  <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
+                    Indexación (X-Robots-Tag){" "}
+                    <span className="font-normal text-slate-400">
+                      (por defecto: index, follow)
+                    </span>
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { value: "", label: "Auto (index, follow)" },
+                      { value: "index, follow", label: "index, follow" },
+                      {
+                        value: "noindex, follow",
+                        label: "noindex, follow",
+                      },
+                      {
+                        value: "index, nofollow",
+                        label: "index, nofollow",
+                      },
+                      {
+                        value: "noindex, nofollow",
+                        label: "noindex, nofollow",
+                      },
+                    ].map((opt) => (
+                      <button
+                        key={opt.value || "auto"}
+                        type="button"
+                        onClick={() =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            seo_robots: opt.value,
+                          }))
+                        }
+                        className={`rounded-lg border px-3 py-1 text-xs font-semibold transition-colors ${
+                          formData.seo_robots === opt.value
+                            ? "border-emerald-500 bg-emerald-600 text-white"
+                            : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-1 text-[10px] text-slate-400">
+                    &ldquo;Auto&rdquo; aplica el comportamiento predeterminado
+                    del sitio (index, follow).
+                  </p>
+                </div>
               </div>
             </div>
           </form>

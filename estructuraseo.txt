@@ -1,0 +1,326 @@
+# ORDEN MANDATARIA — IMPLEMENTACIÓN DE CAMPOS SEO MANUALES EN PRODUCTOS
+## Auditoría del 100% del código antes de tocar una sola línea. Cero alteraciones a lo existente.
+
+---
+
+> ## ⛔ EL ESTADO ACTUAL ES EL DISEÑO FINAL
+>
+> El formulario de "Nuevo Producto" del panel de admin (Nombre, URL/Slug, Descripción, Precio, Precio Anterior, Precios Especiales, Catálogo, Categoría, Imágenes, Datos del Catálogo Público, Etiquetas, Producto Activo) **no cambia en absolutamente nada**: ni su diseño visual, ni su orden de campos, ni sus estilos, ni su comportamiento actual. Tu única tarea es **agregar** una sección nueva de campos SEO, visualmente coherente con el resto del formulario, sin tocar ni reorganizar nada de lo que ya existe.
+>
+> Captura de referencia del formulario actual: `screencapture-localhost-3000-admin-products-2026-06-20-23_18_14.png`. Ese es el diseño que debes preservar exactamente, extendiéndolo únicamente con la sección nueva.
+
+---
+
+> ## ⛔ LA ANALOGÍA DE LA PUERTA
+>
+> Si vas a instalar una ventana nueva en una casa, no se trata solo de hacer el hueco en la pared donde quieres ponerla. Hay que revisar la estructura completa de esa pared, qué cables o tuberías pasan por ahí, cómo afecta a la habitación contigua, si el peso de la pared sigue siendo soportado correctamente, y si esa ventana nueva es compatible con el resto de ventanas de la casa en estilo y función. Instalar una ventana sin auditar la estructura completa puede verse bien el primer día y producir una grieta en la pared tres meses después.
+>
+> Agregar campos SEO al formulario de producto no es "agregar unos inputs". Implica: el modelo de datos del producto, el formulario de creación, el formulario de edición (si es distinto), el guardado en Supabase, el render del catálogo público (donde esos metadatos eventualmente se usan), cualquier generación automática de SEO que ya exista (Next.js `generateMetadata`, sitemap, structured data/JSON-LD), y cualquier configuración global de SEO que pueda entrar en conflicto con valores manuales por producto.
+>
+> **Si tu primer instinto es "solo agrego los inputs al modal y un campo a la tabla", eso es hacer el hueco en la pared sin revisar la estructura.** Audita todo el sistema de SEO existente antes de tocar nada.
+
+---
+
+> ## ⛔ PROHIBIDO INVENTAR. PROHIBIDO ASUMIR LA ESTRUCTURA DE DATOS
+>
+> No asumas cómo se llaman las columnas en Supabase, no asumas qué metadatos ya genera el proyecto automáticamente, no asumas que no hay conflicto entre SEO manual y SEO automático. Todo eso se verifica leyendo el código real y el schema real de la base de datos.
+>
+> Antes de implementar:
+> 1. Lee el código completo relacionado al producto y a cualquier generación de SEO existente, sin excepción.
+> 2. Consulta la documentación oficial de Next.js sobre `generateMetadata`, metadata API, y `robots` meta tags / `X-Robots-Tag` header, en la versión exacta del proyecto.
+> 3. Consulta la documentación oficial de Supabase sobre tipos de columna apropiados si vas a almacenar estos datos (por ejemplo, si conviene un campo `jsonb` para keywords o columnas separadas).
+> 4. Confirma que tu implementación sigue el patrón oficial recomendado, no un patrón genérico que recuerdas de otro proyecto.
+
+---
+
+## Campos SEO a implementar
+
+El usuario debe poder ingresar manualmente, por producto, los siguientes elementos. Para cada uno, durante la auditoría debes determinar si el proyecto ya tiene un mecanismo automático que lo genera, y resolver el conflicto antes de implementar (ver Fase 2):
+
+- **Title** (`<title>` / meta title) — el título SEO específico de esa página de producto.
+- **Description** (meta description) — la descripción que aparece en resultados de búsqueda.
+- **Keywords** (meta keywords) — lista de palabras clave asociadas al producto.
+- **X-Robots-Tag** — directivas de indexación (`index`/`noindex`, `follow`/`nofollow`, y combinaciones) específicas para esa página de producto.
+- **Publisher** — el meta tag `publisher` (o el equivalente que el proyecto use, por ejemplo Open Graph `og:site_name` si así corresponde — verifícalo durante la auditoría, no asumas el nombre exacto del campo).
+- **Campos adicionales relevantes de SEO por producto** que detectes como faltantes durante la auditoría y que sean coherentes con lo que el proyecto ya maneja a nivel global (por ejemplo: Open Graph title/description/image si el proyecto ya usa Open Graph en otras páginas, canonical URL si aplica, structured data específico del producto si el proyecto ya usa JSON-LD en otras páginas). **No agregues campos que el resto del proyecto no usa en ningún otro lugar** — mantén coherencia con lo que ya existe.
+
+> Estos campos son **opcionales por producto**. Si el admin no los completa, el sistema debe seguir comportándose exactamente igual que hoy (usando lo que sea que genere automáticamente, o el valor por defecto que ya existe).
+
+---
+
+## Fase 0 — Inventario total del proyecto
+
+```bash
+find . -type f | grep -v node_modules | grep -v .git | grep -v .next | sort
+```
+
+Esta lista es tu checklist de lectura para la Fase 1. No se omite nada.
+
+---
+
+## Fase 1 — Auditoría del 100% del código (no solo lo que vas a modificar)
+
+Lee **cada archivo** del inventario de la Fase 0, sin excepción, no solo los que "obviamente" tienen que ver con productos o SEO. La razón: un cambio en el modelo de datos de producto o en el formulario puede afectar componentes que no tienen nombre relacionado a "SEO" pero sí consumen el objeto producto completo.
+
+### Protocolo de lectura por archivo
+
+```
+ARCHIVO: [ruta completa]
+─────────────────────────────────────────────
+¿Toca el modelo/tipo de Producto?         [SÍ / NO]
+¿Toca el formulario de Nuevo/Editar producto? [SÍ / NO]
+¿Genera metadata, title, description, robots, OG tags, JSON-LD? [SÍ / NO]
+¿Consume el objeto Producto completo (spread, destructuring amplio)? [SÍ / NO]
+¿Tiene validación de tipos/schema del producto (Zod, TS interface, etc.)? [SÍ / NO]
+¿Hace queries a la tabla de productos en Supabase?  [SÍ / NO → copia la query]
+```
+
+### Bloques de lectura obligatorios, en este orden:
+
+**Bloque A — Modelo de datos del producto:**
+- Toda definición de tipo/interface de `Product` en TypeScript.
+- El schema real de la tabla de productos en Supabase (verifícalo en vivo vía MCP o Dashboard, no asumas desde el código):
+
+```sql
+select column_name, data_type, is_nullable, column_default
+from information_schema.columns
+where table_name = 'products'; -- o el nombre real de la tabla, confírmalo primero
+```
+
+- Cualquier schema de validación (Zod/Yup/similar) asociado a la creación/edición de producto.
+
+**Bloque B — El formulario completo de producto (creación y edición):**
+- El componente exacto que renderiza el modal de "Nuevo Producto" visible en la captura de referencia.
+- Verifica si el formulario de **edición** de producto es el mismo componente reutilizado o uno separado — si es separado, cualquier campo que agregues debe agregarse en ambos de forma consistente.
+- Lee el componente completo: cada estado local, cada handler, cómo se construye el payload que se envía a Supabase al guardar.
+- Identifica exactamente dónde, en el JSX, terminan las secciones actuales ("Datos del Catálogo Público", "Etiquetas", "Producto Activo") para saber dónde insertar la sección nueva sin reordenar nada existente.
+- Identifica los estilos/clases usadas en secciones similares ya existentes (por ejemplo la caja azul de "Precios Especiales" o la caja gris de "Datos del Catálogo Público") para que la sección SEO nueva sea visualmente coherente — **reutiliza esas clases, no inventes estilos nuevos.**
+
+**Bloque C — Generación de metadata actual (esto es crítico, léelo completo):**
+- Busca toda función `generateMetadata` en el proyecto:
+
+```bash
+grep -rn "generateMetadata" --include="*.ts" --include="*.tsx" . | grep -v node_modules
+```
+
+- Para cada una encontrada en una página de producto: ¿de dónde saca el title, description, etc. actualmente? ¿Hardcodeado, derivado del nombre/descripción del producto, o de alguna otra fuente?
+- Busca cualquier configuración de metadata por defecto a nivel de layout (`app/layout.tsx` u otro) que aplique como fallback.
+- Busca si existe algún archivo `robots.ts`, `sitemap.ts`, o configuración de robots a nivel de sitio completo que pueda entrar en conflicto con un `X-Robots-Tag` por producto.
+- Busca si existe ya algún uso de Open Graph (`og:title`, `og:description`, `og:image`) o Twitter Cards en cualquier página del sitio — esto determina si tiene sentido extender esos campos también para el producto, o si el proyecto no usa ese patrón en ningún lado.
+- Busca si existe ya JSON-LD / structured data (`application/ld+json`) en alguna página, especialmente en detalle de producto.
+
+**Bloque D — Página pública de detalle de producto:**
+- Lee el componente completo de la página de detalle de producto (la que consume el `slug` o `id`).
+- Confirma exactamente cómo y dónde debería conectarse, en el futuro render, el valor de los campos SEO nuevos (esto es solo para entender el punto de integración — la implementación de la Fase 4 se hace después del análisis de conflicto de la Fase 2).
+
+**Bloque E — Cualquier otro archivo que consuma el tipo Producto:**
+
+```bash
+grep -rln "Product\b" --include="*.ts" --include="*.tsx" . | grep -v node_modules
+```
+
+Lee cada resultado. Confirma si el tipo se usa con spread completo (`...product`) en algún lugar donde agregar campos nuevos al tipo podría requerir ajuste (por ejemplo, un componente que itera sobre `Object.keys(product)` para renderizar algo dinámicamente — si existe ese patrón, los campos SEO nuevos no deben filtrarse a un render donde no corresponden).
+
+---
+
+## Fase 2 — Análisis de conflicto: SEO manual vs. SEO automático existente
+
+Con la Fase 1 completa, responde explícitamente antes de diseñar la implementación:
+
+```
+¿EL PROYECTO YA GENERA METADATA AUTOMÁTICA PARA PRODUCTOS?
+  [SÍ/NO — si SÍ, copia el código exacto de generateMetadata actual]
+
+¿CÓMO DEBEN CONVIVIR EL VALOR MANUAL Y EL AUTOMÁTICO?
+  Regla a implementar: si el admin completó el campo SEO manual, ese valor tiene prioridad.
+  Si el campo SEO manual está vacío/null, el sistema usa exactamente el mismo fallback
+  automático que usa hoy (sin SEO manual). Confirma que esta regla es coherente con
+  el código real leído en el Bloque C.
+
+¿HAY UN robots.ts O CONFIGURACIÓN GLOBAL QUE EL X-Robots-Tag POR PRODUCTO PUEDA CONTRADECIR?
+  [SÍ/NO — si SÍ, documenta cómo se resolverá la precedencia sin romper la configuración global]
+
+¿EL FORMULARIO DE EDICIÓN ES EL MISMO COMPONENTE QUE EL DE CREACIÓN?
+  [SÍ/NO — si NO, ambos deben recibir los campos nuevos de forma consistente]
+
+¿HAY VALIDACIÓN DE SCHEMA (Zod/similar) QUE DEBA ACTUALIZARSE PARA ACEPTAR LOS CAMPOS NUEVOS
+COMO OPCIONALES SIN ROMPER LA VALIDACIÓN DE LO YA EXISTENTE?
+  [SÍ/NO — describe el ajuste exacto y mínimo necesario]
+```
+
+Si no puedes responder cada punto con evidencia de código real, vuelve a la Fase 1.
+
+---
+
+## Fase 3 — Diseño de la solución (sin escribir código todavía)
+
+### 3.A — Modelo de datos
+
+Define los campos nuevos a agregar a la tabla de productos en Supabase, todos **opcionales/nullable**, sin afectar ninguna columna existente:
+
+```
+COLUMNAS NUEVAS PROPUESTAS (todas nullable, sin default que altere productos existentes):
+  seo_title           [tipo]
+  seo_description     [tipo]
+  seo_keywords        [tipo — decide si texto separado por comas o jsonb array, según
+                        consistencia con cómo el proyecto ya maneja arrays en otros campos,
+                        por ejemplo cómo están guardadas las "Etiquetas" actuales — reutiliza
+                        ese mismo patrón si ya existe uno]
+  seo_robots           [tipo — ej. texto, con valores válidos tipo "index,follow" /
+                         "noindex,nofollow" / etc.]
+  seo_publisher         [tipo]
+  [cualquier campo adicional identificado como necesario en la Fase 1, Bloque C]
+```
+
+> Verifica el patrón de nombres de columnas ya existente en la tabla (¿usa `snake_case`? ¿tiene All ya un prefijo para campos de un grupo, como "Precios Especiales"?) y sigue exactamente esa convención para los campos nuevos.
+
+### 3.B — Migración
+
+Diseña la migración SQL como una operación puramente aditiva:
+
+```sql
+-- Ejemplo de estructura, ajustar nombres reales tras la Fase 1
+alter table products
+  add column if not exists seo_title text,
+  add column if not exists seo_description text,
+  add column if not exists seo_keywords text,
+  add column if not exists seo_robots text,
+  add column if not exists seo_publisher text;
+```
+
+- [ ] Confirma que `add column if not exists` con columnas nullable y sin default **no** dispara ningún trigger, RLS policy, o constraint que pueda romper inserts/updates existentes — verifica las policies de la tabla antes de aplicar la migración.
+- [ ] Confirma que esta migración no requiere bloquear la tabla de forma que afecte producción si el proyecto está en uso activo (en una tabla con 100+ productos esto normalmente es instantáneo para un `add column` nullable, pero verifícalo).
+
+### 3.C — Formulario (UI)
+
+- Inserta la sección SEO **después** de la última sección existente del modal (la que sigue a "Producto Activo" según la captura de referencia, o donde la Fase 1 Bloque B haya determinado que termina el formulario actual — no reordenes nada existente).
+- Usa el mismo patrón visual que la caja de "Precios Especiales" o "Datos del Catálogo Público" (encabezado con ícono, fondo diferenciado sutil, etiqueta "Opcional"), reutilizando las clases/estilos ya existentes en el proyecto para ese patrón — no crees una paleta o spacing nuevo.
+- Cada campo nuevo debe tener su placeholder explicativo, igual que el resto de campos opcionales del formulario (compara con "Dejar vacío si no hay oferta" o "Dejar vacío si no aplica").
+- El campo `X-Robots-Tag` debe presentarse de forma usable para un admin no técnico: idealmente checkboxes o un select con las combinaciones válidas (`index, follow` / `noindex, follow` / `index, nofollow` / `noindex, nofollow`) en lugar de un input de texto libre que el admin tenga que escribir a mano sin guía — pero confirma este patrón de UX contra cómo el proyecto ya resuelve selección de opciones en otros campos (por ejemplo cómo están implementadas las "Tallas Disponibles" como botones seleccionables) y reutiliza ese mismo patrón de componente si existe.
+
+### 3.D — Guardado
+
+- El payload que se envía a Supabase al crear/editar producto debe incluir los campos nuevos solo si tienen valor; si están vacíos, deben guardarse como `null`, nunca como string vacío, para que la Fase 2 (fallback automático) funcione de forma consistente con cómo el proyecto distingue "sin valor" en sus demás campos opcionales (confirma cómo lo hace hoy con "Precio Anterior" o "Precio Solo Mano de Obra", que ya son opcionales, y replica ese mismo patrón).
+
+### 3.E — Consumo en la página pública
+
+- Ajusta `generateMetadata` (o equivalente) en la página de detalle de producto para que: si el producto tiene `seo_title`/`seo_description`/etc., los use; si no, **se comporte exactamente igual que hoy** sin esos campos.
+- Si el proyecto usa `X-Robots-Tag` como header HTTP (no como meta tag), implementa según la documentación oficial de Next.js para setear headers de forma condicional por ruta dinámica — no satures el `<head>` con un meta tag duplicado si el proyecto no usa ese patrón en otro lado.
+
+---
+
+## Fase 4 — Verificación de impacto antes de implementar (checklist final pre-código)
+
+- [ ] ¿Esta implementación modifica visualmente alguna parte del formulario que no sea la sección SEO nueva? → Si SÍ: rediseña, no se permite.
+- [ ] ¿Esta implementación cambia el comportamiento de algún producto existente que no tenga los campos SEO completados? → Si SÍ: rediseña, deben comportarse exactamente igual que hoy.
+- [ ] ¿La migración de Supabase puede romper algún insert/update que el código actual ya hace? → Verifica contra el Bloque A de la Fase 1.
+- [ ] ¿Hay algún archivo de los listados en la Fase 1, Bloque E, que necesite ajuste por el nuevo campo en el tipo `Product`? → Lista cada uno y confirma el ajuste necesario, si alguno.
+- [ ] ¿El formulario de edición de producto (si es un componente distinto al de creación) fue actualizado también? → Confirma.
+
+---
+
+## Fase 5 — Implementación
+
+Implementa en este orden, verificando consola limpia después de cada paso antes de continuar al siguiente:
+
+1. Migración de Supabase (columnas nuevas).
+2. Tipo/interface de `Product` actualizado con los campos nuevos como opcionales.
+3. Schema de validación (si existe) actualizado para aceptar los campos nuevos como opcionales.
+4. Sección SEO en el formulario de creación de producto.
+5. Mismo agregado en el formulario de edición de producto (si es un componente separado).
+6. Lógica de guardado (payload a Supabase) incluyendo los campos nuevos con la regla de `null` si están vacíos.
+7. `generateMetadata` (o equivalente) en la página pública de detalle de producto, con el fallback automático preservado.
+
+No avances al siguiente paso de esta lista sin haber verificado que el paso anterior no rompió nada de lo existente.
+
+---
+
+## Fase 6 — Verificación final (con DevTools abierto en cada prueba)
+
+- [ ] Crea un producto nuevo **sin** completar ningún campo SEO → se guarda correctamente, igual que antes de esta implementación.
+- [ ] La página pública de ese producto muestra el mismo title/description/robots que mostraba cualquier producto antes de esta implementación (verifica con "Ver código fuente" o herramienta de inspección de metadata).
+- [ ] Crea un producto nuevo completando **todos** los campos SEO → se guarda correctamente.
+- [ ] La página pública de ese producto muestra el title/description/robots **manual** ingresado, no el automático.
+- [ ] Edita un producto existente (creado antes de esta implementación, sin campos SEO) y agrégale solo el campo `seo_title`, dejando los demás vacíos → verifica que solo el title cambia en la metadata pública, el resto sigue con el comportamiento automático/fallback.
+- [ ] Verifica el formulario visualmente contra la captura de referencia: cada sección anterior (Nombre, URL, Descripción, Precio, Precio Anterior, Precios Especiales, Catálogo, Categoría, Imágenes, Datos del Catálogo Público, Etiquetas, Producto Activo) se ve **exactamente igual**, sin ningún corrimiento, cambio de spacing, o alteración de estilo.
+- [ ] Recorre el catálogo público completo y verifica que los productos creados antes de esta implementación siguen renderizando igual que siempre, sin error en consola.
+- [ ] Chrome Console: cero errores, cero warnings nuevos.
+- [ ] Chrome Network: cero requests fallidos al crear/editar producto.
+- [ ] Terminal Next.js: cero errores.
+- [ ] `npx next build`: completa sin errores.
+- [ ] Supabase Logs: cero errores al insertar/actualizar productos con y sin campos SEO.
+
+Si cualquier punto falla, **no implementes más cambios encima** — vuelve a la fase correspondiente con la nueva información.
+
+---
+
+## Fase 7 — Registro y commit
+
+Genera `/updates/FEATURE_seo_productos_[fecha].md`:
+
+```markdown
+# Feature: campos SEO manuales por producto
+
+## Auditoría previa
+- Archivos leídos en la Fase 1: [conteo total, confirmando 100% del inventario]
+- Conflicto con SEO automático existente: [descripción del hallazgo de la Fase 2]
+- Regla de precedencia implementada: valor manual > fallback automático existente
+
+## Modelo de datos
+- Columnas agregadas a la tabla [nombre]: [lista con tipo de cada una]
+- Migración aplicada: [SQL exacto]
+
+## Archivos modificados
+- [ruta]: [descripción exacta del cambio]
+
+## Archivos verificados sin impacto (Fase 1, Bloque E)
+- [ruta]: [confirmación de que no requería cambio, o el ajuste menor aplicado]
+
+## Verificación de diseño preservado
+- Captura de referencia comparada: confirmado sin alteración visual de secciones existentes
+
+## Verificación funcional
+- Producto sin SEO manual: comportamiento idéntico al previo a esta feature ✓
+- Producto con SEO manual completo: metadata pública refleja los valores manuales ✓
+- Producto con SEO manual parcial: cada campo individual respeta su propio fallback ✓
+- Formulario de edición: actualizado de forma consistente con el de creación ✓
+
+## Consolas
+- Chrome Console: limpia ✓
+- Chrome Network: sin fallos ✓
+- Next.js terminal: sin errores ✓
+- Supabase Logs: sin errores ✓
+```
+
+Luego:
+
+```bash
+git add .
+git commit -m "feat: campos SEO manuales por producto (title, description, keywords, X-Robots-Tag, publisher)
+
+- Auditado el 100% del código antes de implementar
+- Campos opcionales, sin alterar comportamiento de productos existentes
+- Valor manual tiene precedencia sobre el fallback automático existente
+- Formulario extendido visualmente coherente con el diseño actual, sin alterar secciones existentes
+- Sin regresiones verificadas en catálogo público ni en consolas"
+
+git push origin desarrollo
+```
+
+---
+
+## Definición inamovible de "implementación completada"
+
+- [ ] Se auditó el 100% del código del proyecto, no solo los archivos directamente relacionados a SEO o productos
+- [ ] Se identificó y resolvió explícitamente cualquier conflicto con generación de metadata automática existente
+- [ ] Los campos SEO nuevos son completamente opcionales y no alteran el comportamiento de productos que no los usan
+- [ ] El diseño visual del formulario existente permanece exactamente igual, comparado contra la captura de referencia
+- [ ] La sección SEO nueva reutiliza los estilos y patrones visuales ya existentes en el formulario, sin introducir un sistema visual nuevo
+- [ ] El formulario de edición de producto recibió el mismo tratamiento que el de creación, si son componentes distintos
+- [ ] La migración de Supabase es puramente aditiva y no rompe ningún insert/update existente
+- [ ] Cero regresiones en el catálogo público, verificado con productos creados antes de esta implementación
+- [ ] Consolas (Chrome Console, Network, Next.js terminal, Supabase Logs) limpias
+- [ ] Registro completo en `/updates/`
+- [ ] Commit hecho en `desarrollo`
+
+**Si falta un solo punto: la implementación no está terminada. No declares éxito. Continúa.**

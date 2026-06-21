@@ -45,6 +45,17 @@ export interface DbProduct {
   categories?: { name: string; catalog: string } | null;
   /** Términos de la oferta — texto libre para mostrar al cliente */
   offer_terms?: string | null;
+  // ── Campos SEO manuales (opcionales por producto) ─────────────
+  /** Título SEO manual — si null, se usa el automático (product.name | subtitle) */
+  seo_title?: string | null;
+  /** Meta description manual — si null, se usa short_description ?? description */
+  seo_description?: string | null;
+  /** Keywords SEO — texto libre separado por comas */
+  seo_keywords?: string | null;
+  /** Directiva de indexación: 'index, follow' | 'noindex, follow' | 'index, nofollow' | 'noindex, nofollow' */
+  seo_robots?: string | null;
+  /** Publisher manual — si null, se usa siteConfig.name */
+  seo_publisher?: string | null;
 }
 
 // ── Imagen principal resuelta ─────────────────────────────────
@@ -91,6 +102,7 @@ const PRODUCT_SELECT = `
   image_path, images, is_active, slug, sector, badge_text,
   price_suffix, tallas, colores, material, caracteristicas,
   wholesale_price, wholesale_min_qty, labor_price,
+  seo_title, seo_description, seo_keywords, seo_robots, seo_publisher,
   created_at, updated_at,
   categories(name, catalog)
 `;

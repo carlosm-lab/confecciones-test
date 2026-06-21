@@ -93,7 +93,10 @@ export async function generateMetadata({
 
   const config = CATEGORIES[sector as Sector];
   const PAGE_URL = `${siteConfig.url}/catalogo/${sector}/${id}`;
-  const description =
+
+  // ── Valores automáticos (comportamiento pre-existente) ──
+  const autoTitle = `${product.name} | ${config?.subtitle ?? "Catálogo"}`;
+  const autoDescription =
     product.short_description ?? product.description ?? product.name;
   const imageUrl = getProductMainImage(product);
   const absoluteImage = imageUrl
@@ -102,15 +105,34 @@ export async function generateMetadata({
       : `${siteConfig.url}${imageUrl}`
     : undefined;
 
+  // ── Campos SEO manuales (prioridad sobre automático si no son null/empty) ──
+  const seoTitle = product.seo_title?.trim() || autoTitle;
+  const seoDescription = product.seo_description?.trim() || autoDescription;
+  const seoKeywords = product.seo_keywords?.trim() || undefined;
+  const seoPublisher = product.seo_publisher?.trim() || siteConfig.name;
+
+  // Parsear seo_robots ("noindex, nofollow" → { index: false, follow: false })
+  let robotsDirective: { index: boolean; follow: boolean } = {
+    index: true,
+    follow: true,
+  };
+  if (product.seo_robots?.trim()) {
+    robotsDirective = {
+      index: !product.seo_robots.includes("noindex"),
+      follow: !product.seo_robots.includes("nofollow"),
+    };
+  }
+
   return {
-    title: `${product.name} | ${config?.subtitle ?? "Catálogo"}`,
-    description,
+    title: seoTitle,
+    description: seoDescription,
+    ...(seoKeywords && { keywords: seoKeywords }),
     alternates: { canonical: PAGE_URL },
     openGraph: {
-      title: `${product.name} | Confecciones Liss`,
-      description: description ?? undefined,
+      title: `${product.seo_title?.trim() || product.name} | ${seoPublisher}`,
+      description: seoDescription ?? undefined,
       url: PAGE_URL,
-      siteName: siteConfig.name,
+      siteName: seoPublisher,
       locale: "es_SV",
       type: "website",
       ...(absoluteImage && {
@@ -121,14 +143,11 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: product.name,
-      description: description ?? undefined,
+      title: product.seo_title?.trim() || product.name,
+      description: seoDescription ?? undefined,
       creator: siteConfig.twitterHandle,
     },
-    robots: {
-      index: true,
-      follow: true,
-    },
+    robots: robotsDirective,
   };
 }
 

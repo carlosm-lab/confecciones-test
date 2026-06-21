@@ -327,3 +327,25 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
   - Notif con `target_url` → "Ver contenido" + router.push + markRead.
 - **Swipe-to-dismiss:** Solo mobile. Umbral 100px hacia abajo cierra el panel.
 - **Ejemplo:** `<GuestBell />` (montado en `Navbar.tsx`)
+
+---
+
+## Admin Components
+
+### ProductModal
+
+- **Ruta:** `src/components/admin/ProductModal.tsx`
+- **Descripción:** Modal único de creación y edición de productos (mismo componente, detecta modo por prop `product`). Contiene todas las secciones del formulario: Nombre, URL/Slug, Descripción, Precio, Precio Anterior, Configuración de Oferta, Precios Especiales, Catálogo, Categoría, Imágenes, Datos del Catálogo Público, Etiquetas, Producto Activo, **SEO del Producto** (ver abajo).
+- **Props:**
+  - `isOpen: boolean` — Controla visibilidad del modal.
+  - `onClose: () => void` — Callback para cerrar.
+  - `product?: Product | null` — Si se pasa, activa el modo edición con los valores pre-cargados.
+  - `onSave: (payload, offerRules, notify) => Promise<void>` — Callback de guardado.
+  - `categories: Category[]` — Lista de categorías disponibles para los selects.
+- **Sección SEO del Producto** (añadida 2026-06-21, puramente aditiva):
+  - Posición: última sección, después de "Producto Activo".
+  - Estilo: caja verde esmeralda (`border-emerald-200 bg-emerald-50`) — mismo patrón visual que las demás cajas de sección.
+  - Campos: `seo_title` (70 chars), `seo_description` (160 chars), `seo_keywords` (300 chars, texto libre separado por comas), `seo_publisher` (100 chars), `seo_robots` (botones seleccionables: Auto / index,follow / noindex,follow / index,nofollow / noindex,nofollow).
+  - Todos opcionales: si se dejan vacíos, `generateMetadata` usa el fallback automático existente sin cambio de comportamiento.
+  - Guardado: campos vacíos → `null` en Supabase (nunca string vacío), consistente con el patrón de `labor_price`, `badge_text`, etc.
+- **Ejemplo:** `<ProductModal isOpen={isOpen} onClose={handleClose} product={selectedProduct} onSave={handleSave} categories={categories} />`

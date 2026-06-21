@@ -55,6 +55,17 @@ export interface Product {
   wholesale_min_qty?: number | null;
   /** Precio solo mano de obra (cliente trae la tela) */
   labor_price?: number | null;
+  // ── Campos SEO manuales (opcionales por producto) ─────────────
+  /** Título SEO manual — si null, se usa el automático */
+  seo_title?: string | null;
+  /** Meta description manual — si null, se usa short_description ?? description */
+  seo_description?: string | null;
+  /** Keywords SEO — texto separado por comas */
+  seo_keywords?: string | null;
+  /** Directiva de indexación */
+  seo_robots?: string | null;
+  /** Publisher manual */
+  seo_publisher?: string | null;
 }
 
 /**
