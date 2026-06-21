@@ -207,13 +207,17 @@ export function GuestBell() {
   useEffect(() => {
     if (!isOpen) return;
     const handler = (e: MouseEvent) => {
+      // No cerrar el panel cuando hay un modal de confirmación activo.
+      // Esos modales se renderizan fuera del panelRef (portal propio),
+      // por lo que cualquier clic en ellos saldra de panelRef.contains().
+      if (deleteTarget || blockInfo) return;
       if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
         closePanel();
       }
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, [isOpen, closePanel]);
+  }, [isOpen, deleteTarget, blockInfo, closePanel]);
 
   // Close on Escape
   useEffect(() => {
@@ -631,35 +635,97 @@ export function GuestBell() {
                 </ul>
               )}
             </div>
-
-            {/* ── Confirmación de eliminación ────────────────── */}
-            {deleteTarget && (
-              <ConfirmModal
-                title="¿Eliminar notificación?"
-                message={`Se eliminará "${deleteTarget.title}" de forma permanente.`}
-                confirmLabel="Eliminar"
-                confirmClass="bg-red-500 hover:bg-red-600 text-white"
-                onConfirm={handleDeleteConfirm}
-                onCancel={() => setDeleteTarget(null)}
-              />
-            )}
-
-            {/* ── Modal de bloqueo (condición no cumplida) ─── */}
-            {blockInfo && (
-              <ConfirmModal
-                title="No puedes eliminar esto aún"
-                message={blockInfo.message}
-                confirmLabel={blockInfo.actionLabel}
-                confirmClass="bg-primary hover:bg-primary/90 text-white"
-                onConfirm={blockInfo.onAction}
-                onCancel={() => setBlockInfo(null)}
-              />
-            )}
           </div>
         </div>,
         document.body
       )
     : null;
+
+  // ── Portal independiente: modal de confirmación de eliminación (z-[300]) ──
+  const deleteModal =
+    isOpen && deleteTarget && mounted
+      ? createPortal(
+          <div
+            className="fixed inset-0 z-[300] flex items-center justify-center p-6"
+            role="alertdialog"
+            aria-modal="true"
+          >
+            <div
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              onClick={() => setDeleteTarget(null)}
+              aria-hidden="true"
+            />
+            <div className="relative z-10 w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-5 shadow-xl">
+              <h3 className="text-sm font-bold text-slate-900">
+                ¿Eliminar notificación?
+              </h3>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                Se eliminará &ldquo;{deleteTarget.title}&rdquo; de forma
+                permanente.
+              </p>
+              <div className="mt-4 flex gap-2">
+                <button
+                  onClick={() => setDeleteTarget(null)}
+                  className="flex-1 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={handleDeleteConfirm}
+                  className="flex-1 rounded-xl bg-red-500 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-red-600"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )
+      : null;
+
+  // ── Portal independiente: modal de bloqueo (condición no cumplida, z-[300]) ──
+  const blockModal =
+    isOpen && blockInfo && mounted
+      ? createPortal(
+          <div
+            className="fixed inset-0 z-[300] flex items-center justify-center p-6"
+            role="alertdialog"
+            aria-modal="true"
+          >
+            <div
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              onClick={() => setBlockInfo(null)}
+              aria-hidden="true"
+            />
+            <div className="relative z-10 w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-5 shadow-xl">
+              <h3 className="text-sm font-bold text-slate-900">
+                No puedes eliminar esto aún
+              </h3>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                {blockInfo.message}
+              </p>
+              <div className="mt-4 flex gap-2">
+                <button
+                  onClick={() => setBlockInfo(null)}
+                  className="flex-1 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={blockInfo.onAction}
+                  className={cn(
+                    "flex-1 rounded-xl px-4 py-2 text-sm font-bold transition-colors",
+                    "bg-primary hover:bg-primary/90 text-white"
+                  )}
+                >
+                  {blockInfo.actionLabel}
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )
+      : null;
 
   return (
     <>
@@ -700,6 +766,8 @@ export function GuestBell() {
       </button>
 
       {modal}
+      {deleteModal}
+      {blockModal}
     </>
   );
 }
