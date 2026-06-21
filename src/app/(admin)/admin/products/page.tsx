@@ -197,6 +197,7 @@ export default function AdminProductsPage() {
                 title: `🏷️ Oferta: ${savedProductName}`,
                 message: `¡Aprovecha! Hay una oferta especial en "${savedProductName}". Entra y consulta el precio.`,
                 target_url: productUrl,
+                cta_label: "Ver oferta",
                 product_id: savedProductId,
               }
             : {
@@ -205,6 +206,7 @@ export default function AdminProductsPage() {
                 message:
                   "Hay un nuevo producto disponible en nuestro catálogo. ¡Échale un vistazo!",
                 target_url: productUrl,
+                cta_label: "Ver producto",
                 product_id: savedProductId,
               };
 
