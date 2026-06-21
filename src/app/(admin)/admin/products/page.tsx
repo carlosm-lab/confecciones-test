@@ -9,6 +9,7 @@ import { applyActiveOfferFilter } from "@/lib/productUtils";
 import { useConfirm } from "@/context/ConfirmContext";
 import { collectProductImageFiles } from "@/lib/storageUtils";
 import type { Product } from "@/lib/productUtils";
+import { env } from "@/env";
 
 import type { Category } from "@/hooks/useCategories";
 import { CATALOGS } from "@/config/catalogs";
@@ -151,10 +152,13 @@ export default function AdminProductsPage() {
 
   const handleSaveProduct = async (
     productData: Partial<Product>,
-    _offerRules: unknown[]
+    _offerRules: unknown[],
+    notifyFlag = false
   ) => {
     try {
       const supabase = getSupabaseClient();
+      let savedProductId: string | null = null;
+      let savedProductName: string = productData.name ?? "Nuevo producto";
 
       if (editingProduct) {
         const { error } = await supabase
@@ -162,11 +166,52 @@ export default function AdminProductsPage() {
           .update(productData)
           .eq("id", editingProduct.id!);
         if (error) throw error;
+        savedProductId = editingProduct.id!;
         showToast("Producto actualizado correctamente.");
       } else {
-        const { error } = await supabase.from("products").insert([productData]);
+        const { data: inserted, error } = await supabase
+          .from("products")
+          .insert([productData])
+          .select("id")
+          .single();
         if (error) throw error;
+        savedProductId = inserted?.id ?? null;
         showToast("Producto creado correctamente.");
+      }
+
+      // 📣 Publicar y notificar
+      if (notifyFlag && savedProductId) {
+        try {
+          const { data: notif } = await supabase
+            .from("notifications")
+            .insert({
+              type: "new_product",
+              title: `✨ Nuevo producto: ${savedProductName}`,
+              message:
+                "Hay un nuevo producto disponible en nuestro catálogo. ¡Échale un vistazo!",
+              target_url: `/catalogo`,
+              product_id: savedProductId,
+            })
+            .select("id")
+            .single();
+
+          if (notif?.id) {
+            const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
+            const session = (await supabase.auth.getSession()).data.session;
+            fetch(`${supabaseUrl}/functions/v1/send-push`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${session?.access_token ?? ""}`,
+              },
+              body: JSON.stringify({ notification_id: notif.id }),
+            }).catch(() => {
+              /* silencioso */
+            });
+          }
+        } catch (notifErr) {
+          logger.error("Error creando notificación de producto:", notifErr);
+        }
       }
 
       handleCloseModal();

@@ -2,17 +2,14 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "ignoreDependencies": [
     "@base-ui/react",
-    "@supabase/ssr",
-    "@supabase/supabase-js",
     "class-variance-authority",
     "client-only",
-    "framer-motion",
     "next-safe-action",
     "server-only",
     "zustand",
     "@testing-library/react",
     "lucide-react"
   ],
-  "ignore": [".agents/**"],
+  "ignore": [".agents/**", "public/sw.js", "supabase/**"],
   "entry": ["src/app/**/*.{ts,tsx}", "src/mocks/handlers.ts"]
 }

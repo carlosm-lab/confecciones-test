@@ -80,7 +80,6 @@ export function ProductDetailClient({
   } | null>(null);
   const calcTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-
   const onSale = isProductOnSale(product);
   const sector = getProductSector(product);
   const slug = product.slug ?? product.id;

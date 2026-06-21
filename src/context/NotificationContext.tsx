@@ -1,0 +1,550 @@
+﻿"use client";
+
+/**
+ * NotificationContext
+ * ─────────────────────────────────────────────────────────────
+ * Sistema unificado de notificaciones:
+ *   - Notificaciones locales (hints para guest): favorites, cart, push_permission
+ *   - Notificaciones de BD (productos, ofertas, manuales)
+ *   - Web Push via Supabase Edge Function
+ *
+ * Reglas de lectura:
+ *   - HINT_TYPES solo se marcan leidas al iniciar sesion (nunca al hacer click)
+ *   - Notificaciones de oferta se marcan leidas al visitar el catalogo
+ *   - Las notificaciones nunca se eliminan del panel
+ * ─────────────────────────────────────────────────────────────
+ */
+
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  type ReactNode,
+} from "react";
+import { getSupabaseClient } from "@/lib/supabaseClient";
+import { useAuth } from "@/context/AuthContext";
+import { env } from "@/env";
+import { logger } from "@/lib/logger";
+import type { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
+import toast from "react-hot-toast";
+
+// ── Tipos ──────────────────────────────────────────────────────
+
+export type NotifType =
+  | "push_permission"
+  | "favorites_hint"
+  | "cart_hint"
+  | "auth_hint"
+  | "new_product"
+  | "new_offer"
+  | "manual"
+  | "info";
+
+export interface AppNotification {
+  id: string;
+  type: NotifType | string;
+  title: string;
+  message: string;
+  image_url: string | null;
+  target_url: string | null;
+  read: boolean;
+  created_at: string;
+}
+
+type PushPermissionStatus = "default" | "granted" | "denied" | "unsupported";
+
+// Tipos que SOLO se marcan leidos al hacer login, nunca al hacer click
+const HINT_TYPES: string[] = [
+  "push_permission",
+  "favorites_hint",
+  "cart_hint",
+  "auth_hint",
+];
+
+// ── Persistencia localStorage ──────────────────────────────────
+
+const LS_LOCAL_NOTIFS = "liss_local_notifs_v4";
+const LS_READ_IDS = "liss_notif_read_ids_v4";
+const LS_PUSH_DISMISSED = "liss_push_prompt_dismissed_v4";
+const LS_FIRST_VISIT_TS = "liss_first_visit_ts_v4";
+const MAX_LOCAL_NOTIFS = 30;
+
+function loadLocalNotifs(): AppNotification[] {
+  try {
+    const raw = localStorage.getItem(LS_LOCAL_NOTIFS);
+    return raw ? (JSON.parse(raw) as AppNotification[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function loadReadIds(): Set<string> {
+  try {
+    const raw = localStorage.getItem(LS_READ_IDS);
+    return raw ? new Set(JSON.parse(raw) as string[]) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function saveLocalNotifs(notifs: AppNotification[]): void {
+  try {
+    localStorage.setItem(LS_LOCAL_NOTIFS, JSON.stringify(notifs));
+  } catch {
+    /* silent */
+  }
+}
+
+function saveReadIds(ids: Set<string>): void {
+  try {
+    localStorage.setItem(LS_READ_IDS, JSON.stringify([...ids]));
+  } catch {
+    /* silent */
+  }
+}
+
+function urlBase64ToUint8Array(base64String: string): Uint8Array {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const rawData = atob(base64);
+  return Uint8Array.from([...rawData].map((c) => c.charCodeAt(0)));
+}
+
+// ── Contexto ───────────────────────────────────────────────────
+
+interface NotificationContextValue {
+  notifications: AppNotification[];
+  unreadCount: number;
+  markRead: (id: string) => void;
+  markAllHintsRead: () => void;
+  addLocalNotification: (
+    notif: Pick<AppNotification, "type" | "title" | "message" | "target_url">
+  ) => void;
+  subscribeToPush: () => Promise<boolean>;
+  pushPermissionStatus: PushPermissionStatus;
+  pushPromptDismissed: boolean;
+}
+
+const NotificationContext = createContext<NotificationContextValue | null>(
+  null
+);
+
+export function useNotifications(): NotificationContextValue {
+  const ctx = useContext(NotificationContext);
+  if (!ctx)
+    throw new Error("useNotifications must be inside NotificationProvider");
+  return ctx;
+}
+
+// ── Provider ───────────────────────────────────────────────────
+
+export function NotificationProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+
+  const [mounted, setMounted] = useState(false);
+  const [localNotifs, setLocalNotifs] = useState<AppNotification[]>([]);
+  const [dbNotifs, setDbNotifs] = useState<AppNotification[]>([]);
+  const [readIds, setReadIds] = useState<Set<string>>(new Set());
+  const [pushPermissionStatus, setPushPermissionStatus] =
+    useState<PushPermissionStatus>("default");
+  const [pushPromptDismissed, setPushPromptDismissed] = useState(false);
+
+  const realtimeRef = useRef<
+    ReturnType<typeof getSupabaseClient>["channel"] | null
+  >(null);
+  const prevUserIdRef = useRef<string | null>(null);
+  const subscribeToPushRef = useRef<() => Promise<boolean>>(() =>
+    Promise.resolve(false)
+  );
+
+  // ── Hidratacion ───────────────────────────────────────────────
+  useEffect(() => {
+    setLocalNotifs(loadLocalNotifs());
+    setReadIds(loadReadIds());
+    setPushPromptDismissed(!!localStorage.getItem(LS_PUSH_DISMISSED));
+
+    // Registrar primera visita
+    if (!localStorage.getItem(LS_FIRST_VISIT_TS)) {
+      localStorage.setItem(LS_FIRST_VISIT_TS, Date.now().toString());
+    }
+
+    // Estado actual del permiso de notificaciones
+    if (typeof Notification !== "undefined") {
+      const perm = Notification.permission;
+      if (perm === "granted") setPushPermissionStatus("granted");
+      if (perm === "denied") setPushPermissionStatus("denied");
+    } else {
+      setPushPermissionStatus("unsupported");
+    }
+
+    setMounted(true);
+  }, []);
+
+  // ── Notificacion de bienvenida (push_permission) ──────────────
+  // Se muestra ~3s despues de la PRIMERA visita, si no se ha pedido antes
+  useEffect(() => {
+    if (!mounted) return;
+    if (pushPromptDismissed) return;
+    if (
+      pushPermissionStatus === "granted" ||
+      pushPermissionStatus === "unsupported"
+    )
+      return;
+
+    const alreadyShown = localNotifs.some((n) => n.type === "push_permission");
+    if (alreadyShown) return;
+
+    const timer = setTimeout(() => {
+      addLocalNotification({
+        type: "push_permission",
+        title: "Se el primero en ver las ofertas!",
+        message:
+          "Activa las alertas y recibe notificaciones exclusivas de nuevas colecciones, descuentos y ofertas antes que nadie. No te pierdas nada!",
+        target_url: null,
+      });
+
+      // Toast visual proactivo con CTA
+      toast(
+        (t) => (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "12px",
+              maxWidth: "320px",
+            }}
+          >
+            <span
+              className="material-symbols-outlined"
+              style={{
+                fontSize: "22px",
+                color: "#143067",
+                flexShrink: 0,
+                marginTop: "2px",
+                fontVariationSettings: "'FILL' 1",
+              }}
+            >
+              notifications_active
+            </span>
+            <div style={{ flex: 1 }}>
+              <p
+                style={{
+                  margin: 0,
+                  fontWeight: 700,
+                  fontSize: "13px",
+                  color: "#0f172a",
+                }}
+              >
+                Ofertas exclusivas te esperan!
+              </p>
+              <p
+                style={{
+                  margin: "4px 0 10px",
+                  fontSize: "12px",
+                  color: "#64748b",
+                  lineHeight: 1.4,
+                }}
+              >
+                Activa las alertas y se el primero en saber de nuevas
+                colecciones y descuentos.
+              </p>
+              <div style={{ display: "flex", gap: "8px" }}>
+                <button
+                  onClick={async () => {
+                    toast.dismiss(t.id);
+                    await subscribeToPushRef.current();
+                  }}
+                  style={{
+                    flex: 1,
+                    background: "#143067",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "8px",
+                    padding: "6px 12px",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  Activar alertas
+                </button>
+                <button
+                  onClick={() => {
+                    toast.dismiss(t.id);
+                    localStorage.setItem(LS_PUSH_DISMISSED, "1");
+                    setPushPromptDismissed(true);
+                  }}
+                  style={{
+                    background: "transparent",
+                    color: "#94a3b8",
+                    border: "none",
+                    borderRadius: "8px",
+                    padding: "6px 8px",
+                    fontSize: "12px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Ahora no
+                </button>
+              </div>
+            </div>
+          </div>
+        ),
+        {
+          duration: 12000,
+          style: {
+            borderRadius: "16px",
+            background: "#ffffff",
+            color: "#0f172a",
+            border: "1px solid #e2e8f0",
+            boxShadow:
+              "0 20px 60px -12px rgba(0,0,0,0.18), 0 8px 24px -8px rgba(0,0,0,0.12)",
+            padding: "14px 16px",
+            maxWidth: "360px",
+          },
+          icon: null,
+          position: "bottom-right",
+        }
+      );
+    }, 3000);
+
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted]);
+
+  // ── Notificaciones DB en tiempo real ──────────────────────────
+  useEffect(() => {
+    const supabase = getSupabaseClient();
+
+    async function fetchDbNotifs() {
+      const { data, error } = await supabase
+        .from("notifications")
+        .select("id, type, title, message, image_url, target_url, created_at")
+        .order("created_at", { ascending: false })
+        .limit(50);
+
+      if (error) {
+        logger.error("Error cargando notificaciones:", error);
+        return;
+      }
+
+      setDbNotifs(
+        (data ?? []).map((n: Record<string, unknown>) => ({
+          ...n,
+          read: false,
+        })) as AppNotification[]
+      );
+    }
+
+    fetchDbNotifs();
+
+    // Suscripcion en tiempo real
+    const channel = supabase
+      .channel("notifications_realtime")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "notifications" },
+        (payload: RealtimePostgresInsertPayload<Record<string, unknown>>) => {
+          const newNotif = payload.new as unknown as AppNotification;
+          setDbNotifs((prev) => [{ ...newNotif, read: false }, ...prev]);
+        }
+      )
+      .subscribe();
+
+    realtimeRef.current = channel;
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  // ── Marcar hints como leidas al iniciar sesion ────────────────
+  useEffect(() => {
+    const currentUserId = user?.id ?? null;
+    const wasGuest = prevUserIdRef.current === null;
+    const isNowLoggedIn = currentUserId !== null;
+
+    if (wasGuest && isNowLoggedIn) {
+      // Marcar todas las hints como leidas
+      setLocalNotifs((prev) => {
+        const updated = prev.map((n) =>
+          HINT_TYPES.includes(n.type) ? { ...n, read: true } : n
+        );
+        saveLocalNotifs(updated);
+        return updated;
+      });
+
+      setReadIds((prev) => {
+        const hintIds = localNotifs
+          .filter((n) => HINT_TYPES.includes(n.type))
+          .map((n) => n.id);
+        const next = new Set([...prev, ...hintIds]);
+        saveReadIds(next);
+        return next;
+      });
+    }
+
+    prevUserIdRef.current = currentUserId;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  // ── addLocalNotification ──────────────────────────────────────
+  // Una sola notificacion por tipo: si ya existe, la mueve al tope
+  const addLocalNotification = useCallback(
+    (
+      notif: Pick<AppNotification, "type" | "title" | "message" | "target_url">
+    ) => {
+      setLocalNotifs((prev) => {
+        const existingIndex = prev.findIndex((n) => n.type === notif.type);
+        if (existingIndex !== -1) {
+          const updated = [
+            {
+              ...prev[existingIndex],
+              created_at: new Date().toISOString(),
+              read: false,
+            },
+            ...prev.filter((_, i) => i !== existingIndex),
+          ].slice(0, MAX_LOCAL_NOTIFS);
+          saveLocalNotifs(updated);
+          return updated;
+        }
+
+        const newNotif: AppNotification = {
+          ...notif,
+          id: "local_" + notif.type + "_" + Date.now(),
+          image_url: null,
+          read: false,
+          created_at: new Date().toISOString(),
+        };
+        const updated = [newNotif, ...prev].slice(0, MAX_LOCAL_NOTIFS);
+        saveLocalNotifs(updated);
+        return updated;
+      });
+    },
+    []
+  );
+
+  // ── markRead ──────────────────────────────────────────────────
+  const markRead = useCallback(
+    (id: string) => {
+      // Las hints solo se marcan leidas al hacer login, no aqui
+      const notif = [...localNotifs, ...dbNotifs].find(
+        (n: AppNotification) => n.id === id
+      );
+      if (notif && HINT_TYPES.includes(notif.type)) return;
+
+      setReadIds((prev) => {
+        const next = new Set([...prev, id]);
+        saveReadIds(next);
+        return next;
+      });
+      setLocalNotifs((prev) => {
+        const updated = prev.map((n) =>
+          n.id === id ? { ...n, read: true } : n
+        );
+        saveLocalNotifs(updated);
+        return updated;
+      });
+    },
+    [localNotifs, dbNotifs]
+  );
+
+  // ── markAllHintsRead (llamado al iniciar sesion) ──────────────
+  const markAllHintsRead = useCallback(() => {
+    setLocalNotifs((prev) => {
+      const updated = prev.map((n) =>
+        HINT_TYPES.includes(n.type) ? { ...n, read: true } : n
+      );
+      saveLocalNotifs(updated);
+      return updated;
+    });
+  }, []);
+
+  // ── subscribeToPush ───────────────────────────────────────────
+  const subscribeToPush = useCallback(async (): Promise<boolean> => {
+    if (
+      typeof window === "undefined" ||
+      !("serviceWorker" in navigator) ||
+      !("PushManager" in window)
+    ) {
+      return false;
+    }
+
+    try {
+      const permission = await Notification.requestPermission();
+      setPushPermissionStatus(permission === "granted" ? "granted" : "denied");
+      localStorage.setItem(LS_PUSH_DISMISSED, "1");
+      setPushPromptDismissed(true);
+
+      if (permission !== "granted") return false;
+
+      const reg = await navigator.serviceWorker.ready;
+      const vapidKey = urlBase64ToUint8Array(env.NEXT_PUBLIC_VAPID_PUBLIC_KEY);
+      const sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: vapidKey.buffer as ArrayBuffer,
+      });
+
+      const supabase = getSupabaseClient();
+      const { error } = await supabase.from("push_subscriptions").upsert(
+        {
+          endpoint: sub.endpoint,
+          p256dh: btoa(
+            String.fromCharCode(
+              ...new Uint8Array(sub.getKey("p256dh") as ArrayBuffer)
+            )
+          ),
+          auth: btoa(
+            String.fromCharCode(
+              ...new Uint8Array(sub.getKey("auth") as ArrayBuffer)
+            )
+          ),
+          user_id: user?.id ?? null,
+        },
+        { onConflict: "endpoint" }
+      );
+
+      if (error) logger.error("Error guardando suscripcion push:", error);
+      return true;
+    } catch (err) {
+      logger.error("Error suscribiendo a Web Push:", err);
+      return false;
+    }
+  }, [user]);
+
+  // Mantener ref actualizado para el toast (evitar closure stale)
+  subscribeToPushRef.current = subscribeToPush;
+
+  // ── Combinar notificaciones ───────────────────────────────────
+  // Local primero (hints), luego DB (productos/ofertas/manuales)
+  const allNotifications: AppNotification[] = mounted
+    ? [
+        ...localNotifs.map((n) => ({
+          ...n,
+          read: n.read || readIds.has(n.id),
+        })),
+        ...dbNotifs.map((n) => ({ ...n, read: n.read || readIds.has(n.id) })),
+      ]
+    : [];
+
+  const unreadCount = allNotifications.filter((n) => !n.read).length;
+
+  return (
+    <NotificationContext.Provider
+      value={{
+        notifications: allNotifications,
+        unreadCount,
+        markRead,
+        markAllHintsRead,
+        addLocalNotification,
+        subscribeToPush,
+        pushPermissionStatus,
+        pushPromptDismissed,
+      }}
+    >
+      {children}
+    </NotificationContext.Provider>
+  );
+}

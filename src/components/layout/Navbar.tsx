@@ -393,7 +393,7 @@ export function Navbar() {
 
               {/* Menu Button — visible on all sizes */}
               {/* GuestBell — solo para usuarios no autenticados */}
-              {isMounted && !user && <GuestBell />}
+              {isMounted && <GuestBell />}
 
               <button
                 type="button"

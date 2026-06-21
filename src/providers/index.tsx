@@ -9,9 +9,12 @@ import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { FavoritesProvider } from "@/context/FavoritesContext";
 import { ConfirmProvider } from "@/context/ConfirmContext";
-import { GuestNotificationProvider } from "@/context/GuestNotificationContext";
+import { NotificationProvider } from "@/context/NotificationContext";
+import { useServiceWorker } from "@/hooks/useServiceWorker";
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  useServiceWorker();
+
   // ── Hydration heartbeat ──────────────────────────────────────────────────────
   // Señaliza al watchdog inline de layout.tsx que React montó correctamente.
   // CRÍTICO: debe estar en Providers (no en Navbar) para cubrir también /admin,
@@ -43,34 +46,34 @@ export function Providers({ children }: { children: React.ReactNode }) {
         disableTransitionOnChange
       >
         <AuthProvider>
-          <CartProvider>
-            <GuestNotificationProvider>
+          <NotificationProvider>
+            <CartProvider>
               <FavoritesProvider>
                 <ConfirmProvider>
                   {children}
                   <Toaster
-                  position="bottom-center"
-                  toastOptions={{
-                    duration: 3000,
-                    style: {
-                      borderRadius: "12px",
-                      background: "#1e293b",
-                      color: "#f8fafc",
-                      fontSize: "14px",
-                      fontFamily: "var(--font-sans, Manrope, sans-serif)",
-                    },
-                    success: {
-                      iconTheme: {
-                        primary: "#143067",
-                        secondary: "#ffffff",
+                    position="bottom-center"
+                    toastOptions={{
+                      duration: 3000,
+                      style: {
+                        borderRadius: "12px",
+                        background: "#1e293b",
+                        color: "#f8fafc",
+                        fontSize: "14px",
+                        fontFamily: "var(--font-sans, Manrope, sans-serif)",
                       },
-                    },
-                  }}
-                />
+                      success: {
+                        iconTheme: {
+                          primary: "#143067",
+                          secondary: "#ffffff",
+                        },
+                      },
+                    }}
+                  />
                 </ConfirmProvider>
               </FavoritesProvider>
-            </GuestNotificationProvider>
-          </CartProvider>
+            </CartProvider>
+          </NotificationProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>

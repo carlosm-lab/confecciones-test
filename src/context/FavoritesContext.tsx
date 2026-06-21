@@ -36,7 +36,7 @@ import {
 } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "./AuthContext";
-import { useGuestNotification } from "./GuestNotificationContext";
+import { useNotifications } from "@/context/NotificationContext";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
 import { STORAGE_FAVORITES_KEY } from "@/lib/constants";
@@ -63,7 +63,7 @@ export const useFavorites = () => {
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
-  const { activate: activateBell, dismiss: dismissBell } = useGuestNotification();
+  const { addLocalNotification } = useNotifications();
   const [favorites, setFavorites] = useState<string[]>([]);
   const favoritesRef = useRef<string[]>([]);
 
@@ -99,8 +99,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     if (!user) return;
     let mounted = true;
 
-    // Al iniciar sesión: desactivar la campana de guest (favoritos ya se sincronizan)
-    dismissBell();
+    // Al iniciar sesion los hints se marcan leidos automaticamente en NotificationContext
 
     const syncFavorites = async () => {
       try {
@@ -182,7 +181,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     return () => {
       mounted = false;
     };
-  }, [user, dismissBell]);
+  }, [user]);
 
   // Mantener localStorage sincronizado con el estado React
   useEffect(() => {
@@ -201,11 +200,20 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
         );
         // Solo notificar al agregar (no al quitar)
         if (!isFav) {
-          activateBell();
-          toast("¡Guardado! Inicia sesión para sincronizarlo en otros dispositivos", {
-            icon: "🔔",
-            duration: 4000,
+          addLocalNotification({
+            type: "favorites_hint",
+            title: "Favoritos guardados",
+            message:
+              "Inicia sesion para sincronizarlos en todos tus dispositivos.",
+            target_url: null,
           });
+          toast(
+            "¡Guardado! Inicia sesión para sincronizarlo en otros dispositivos",
+            {
+              icon: "🔔",
+              duration: 4000,
+            }
+          );
         }
         return;
       }
@@ -239,7 +247,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
         );
       }
     },
-    [user, activateBell]
+    [user, addLocalNotification]
   );
 
   // Set para O(1) lookups en isFavorite (en vez de .includes() que es O(n))

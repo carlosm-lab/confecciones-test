@@ -6,6 +6,8 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    VAPID_PRIVATE_KEY: z.string().min(1).default("placeholder_vapid_private"),
+    VAPID_SUBJECT: z.string().default("mailto:contacto@confeccionesliss.com"),
   },
   client: {
     NEXT_PUBLIC_SUPABASE_URL: z
@@ -25,6 +27,10 @@ export const env = createEnv({
       .string()
       .min(1)
       .default("placeholder_client_id"),
+    NEXT_PUBLIC_VAPID_PUBLIC_KEY: z
+      .string()
+      .min(1)
+      .default("placeholder_vapid"),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -35,6 +41,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_HOME_ONLY: process.env.NEXT_PUBLIC_HOME_ONLY,
     NEXT_PUBLIC_GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+    NEXT_PUBLIC_VAPID_PUBLIC_KEY: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });

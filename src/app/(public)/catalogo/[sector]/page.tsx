@@ -5,6 +5,7 @@ import { CatalogPageClient } from "@/components/catalogo/CatalogPageClient";
 import { siteConfig } from "@/config/site";
 import type { Sector } from "@/data/types";
 import { getProductsBySector } from "@/lib/catalogService";
+import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 
 // ── Static params: genera una página por sector ───────────────────────────────
 export function generateStaticParams() {
@@ -73,6 +74,7 @@ export default async function SectorCatalogPage({
 
   return (
     <>
+      <OffersReadTracker />
       <CatalogPageClient
         sector={sector as Sector}
         config={config}

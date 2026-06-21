@@ -26,7 +26,11 @@ interface ProductModalProps {
   isOpen: boolean;
   onClose: () => void;
   product?: Product | null;
-  onSave: (payload: Partial<Product>, offerRules: unknown[]) => Promise<void>;
+  onSave: (
+    payload: Partial<Product>,
+    offerRules: unknown[],
+    notify: boolean
+  ) => Promise<void>;
   categories: Category[];
 }
 
@@ -114,6 +118,7 @@ export default function ProductModal({
 
   const [tagInput, setTagInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notifyOnSave, setNotifyOnSave] = useState(false);
 
   const showToast = (text: string, type: "error" | "info" = "error") => {
     setToastMsg({ text, type });
@@ -446,7 +451,7 @@ export default function ProductModal({
       offer_terms: formData.offer_terms?.trim() || null,
     } as Partial<Product> & { offer_terms?: string | null };
 
-    await onSave(payload, []);
+    await onSave(payload, [], notifyOnSave);
     if (isMounted.current) setIsSubmitting(false);
   };
 
@@ -1146,7 +1151,7 @@ export default function ProductModal({
 
         {/* Footer */}
         <div
-          className="flex shrink-0 justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4 dark:border-white/5 dark:bg-white/5"
+          className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4 dark:border-white/5 dark:bg-white/5"
           aria-live="polite"
         >
           <button

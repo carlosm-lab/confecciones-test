@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CategoryHubClient } from "@/components/catalogo/CategoryHubClient";
 import { siteConfig } from "@/config/site";
 import { getProductCountsBySector } from "@/lib/catalogService";
+import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 
 const PAGE_URL = `${siteConfig.url}/catalogo`;
 const PAGE_TITLE = "Catálogo de Uniformes por Categoría";
@@ -43,6 +44,7 @@ export default async function CatalogoPage() {
 
   return (
     <>
+      <OffersReadTracker />
       <CategoryHubClient productCounts={productCounts} />
 
       {/* JSON-LD: CollectionPage */}

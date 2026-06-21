@@ -6,7 +6,11 @@ import type { ContactFormData } from "@/schemas/contactSchema";
 
 type ActionResult =
   | { success: true }
-  | { success: false; error: string; fieldErrors?: Partial<Record<keyof ContactFormData, string>> };
+  | {
+      success: false;
+      error: string;
+      fieldErrors?: Partial<Record<keyof ContactFormData, string>>;
+    };
 
 export async function sendContactMessage(
   data: ContactFormData

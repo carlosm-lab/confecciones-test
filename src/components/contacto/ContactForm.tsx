@@ -74,9 +74,7 @@ export function ContactForm() {
     const parsed = contactSchema.safeParse(raw);
     if (!parsed.success) {
       const errs: FieldErrors = {};
-      for (const [k, v] of Object.entries(
-        parsed.error.flatten().fieldErrors
-      )) {
+      for (const [k, v] of Object.entries(parsed.error.flatten().fieldErrors)) {
         (errs as Record<string, string>)[k] = v?.[0] ?? "";
       }
       setFieldErrors(errs);
@@ -120,7 +118,7 @@ export function ContactForm() {
         <button
           type="button"
           onClick={() => setState("idle")}
-          className="mt-2 text-sm font-medium text-primary underline-offset-2 hover:underline"
+          className="text-primary mt-2 text-sm font-medium underline-offset-2 hover:underline"
         >
           Enviar otro mensaje
         </button>
@@ -138,14 +136,19 @@ export function ContactForm() {
       {/* Text fields */}
       <div className="grid gap-4 sm:grid-cols-2">
         {FIELDS.map((field) => (
-          <div key={field.id} className={field.id === "asunto" ? "sm:col-span-2" : ""}>
+          <div
+            key={field.id}
+            className={field.id === "asunto" ? "sm:col-span-2" : ""}
+          >
             <label
               htmlFor={field.id}
               className="mb-1.5 block text-xs font-semibold text-gray-700"
             >
               {field.label}
               {field.required && (
-                <span className="ml-0.5 text-red-500" aria-hidden="true">*</span>
+                <span className="ml-0.5 text-red-500" aria-hidden="true">
+                  *
+                </span>
               )}
             </label>
             <input
@@ -187,7 +190,9 @@ export function ContactForm() {
           className="mb-1.5 block text-xs font-semibold text-gray-700"
         >
           Mensaje
-          <span className="ml-0.5 text-red-500" aria-hidden="true">*</span>
+          <span className="ml-0.5 text-red-500" aria-hidden="true">
+            *
+          </span>
         </label>
         <textarea
           id="mensaje"
@@ -207,7 +212,11 @@ export function ContactForm() {
           )}
         />
         {fieldErrors.mensaje && (
-          <p id="mensaje-error" role="alert" className="mt-1 text-xs text-red-500">
+          <p
+            id="mensaje-error"
+            role="alert"
+            className="mt-1 text-xs text-red-500"
+          >
             {fieldErrors.mensaje}
           </p>
         )}
@@ -219,7 +228,10 @@ export function ContactForm() {
           role="alert"
           className="flex items-center gap-2 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700"
         >
-          <span className="material-symbols-outlined text-base" aria-hidden="true">
+          <span
+            className="material-symbols-outlined text-base"
+            aria-hidden="true"
+          >
             error
           </span>
           {serverError}
@@ -242,7 +254,10 @@ export function ContactForm() {
           </>
         ) : (
           <>
-            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+            <span
+              className="material-symbols-outlined text-[18px]"
+              aria-hidden="true"
+            >
               send
             </span>
             Enviar mensaje
