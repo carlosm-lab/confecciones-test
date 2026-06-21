@@ -178,13 +178,53 @@ export default function ProductTable({
                 <td className="px-6 py-4">
                   <div className="flex flex-col">
                     <span className="font-bold text-slate-900 dark:text-white">
-                      {formatPrice(product.price)}
+                      {(() => {
+                        const pbs = (
+                          product as {
+                            price_by_size?: Record<string, number> | null;
+                          }
+                        ).price_by_size;
+                        if (pbs && Object.keys(pbs).length > 0) {
+                          const min = Math.min(...Object.values(pbs));
+                          return (
+                            (Object.keys(pbs).length > 1 ? "Desde " : "") +
+                            formatPrice(min)
+                          );
+                        }
+                        return formatPrice(product.price);
+                      })()}
                     </span>
-                    {product.old_price && (
-                      <span className="text-xs text-slate-400 line-through">
-                        {formatPrice(product.old_price)}
-                      </span>
-                    )}
+                    {(() => {
+                      const obs = (
+                        product as {
+                          offer_by_size?: Record<string, number> | null;
+                        }
+                      ).offer_by_size;
+                      if (obs && Object.keys(obs).length > 0) {
+                        const pbs = (
+                          product as {
+                            price_by_size?: Record<string, number> | null;
+                          }
+                        ).price_by_size;
+                        const baseMin =
+                          pbs && Object.keys(pbs).length > 0
+                            ? Math.min(...Object.values(pbs))
+                            : product.price;
+                        return (
+                          <span className="text-xs text-slate-400 line-through">
+                            {formatPrice(baseMin)}
+                          </span>
+                        );
+                      }
+                      if (product.old_price) {
+                        return (
+                          <span className="text-xs text-slate-400 line-through">
+                            {formatPrice(product.old_price)}
+                          </span>
+                        );
+                      }
+                      return null;
+                    })()}
                   </div>
                 </td>
                 <td className="px-6 py-4">

@@ -36,13 +36,29 @@ export function CatalogProductCard({
   const priceBySize = (
     product as { price_by_size?: Record<string, number> | null }
   ).price_by_size;
-  const displayPrice =
+  const offerBySize = (
+    product as { offer_by_size?: Record<string, number> | null }
+  ).offer_by_size;
+
+  // Precio a mostrar en la card: precio de oferta mínimo (si hay oferta activa) o precio base mínimo
+  const minBasePrice =
     priceBySize && Object.keys(priceBySize).length > 0
       ? Math.min(...Object.values(priceBySize))
       : Number(product.price);
+  const minOfferPrice =
+    onSale && offerBySize && Object.keys(offerBySize).length > 0
+      ? Math.min(...Object.values(offerBySize))
+      : null;
+  const displayPrice = minOfferPrice !== null ? minOfferPrice : minBasePrice;
   const hasMultiplePrices = priceBySize && Object.keys(priceBySize).length > 1;
   const price = displayPrice;
-  const oldPrice = product.old_price ? Number(product.old_price) : null;
+  // Precio tachado: precio base mínimo si hay oferta por talla, sino old_price global (legacy)
+  const oldPrice =
+    minOfferPrice !== null
+      ? minBasePrice
+      : product.old_price
+        ? Number(product.old_price)
+        : null;
 
   // Contextos reales
   const { addToCart, setIsCartOpen } = useCart();

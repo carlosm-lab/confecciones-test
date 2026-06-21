@@ -39,8 +39,8 @@ interface FormData {
   description: string;
   /** Descripción corta — se muestra debajo del título en la vista de detalle */
   short_description: string;
-  price: string;
-  old_price: string;
+  /** Precio ($) — eliminado del formulario; se calcula del mínimo de price_by_size al guardar */
+  /** Precio Anterior (Oferta) global — eliminado; oferta ahora es por talla via offer_by_size */
   /** Duración de oferta temporal (en el precio base) */
   offer_indefinida: boolean;
   offer_days: string;
@@ -61,6 +61,8 @@ interface FormData {
   tallas: string[];
   /** Precio por talla — mapa { talla: precioString } editable en el admin */
   price_by_size: Record<string, string>;
+  /** Oferta por talla — mapa { talla: precioOfertaString } opcional, solo tallas con oferta */
+  offer_by_size: Record<string, string>;
   /** Colores disponibles — array de { name, hex } */
   colores: { name: string; hex: string }[];
   material: string;
@@ -109,8 +111,6 @@ export default function ProductModal({
     name: "",
     description: "",
     short_description: "",
-    price: "",
-    old_price: "",
     offer_indefinida: false,
     offer_days: "",
     offer_hours: "",
@@ -127,6 +127,7 @@ export default function ProductModal({
     price_suffix: "",
     tallas: [],
     price_by_size: {},
+    offer_by_size: {},
     colores: [],
     material: "",
     caracteristicas: [],
@@ -168,9 +169,19 @@ export default function ProductModal({
         name: product.name || "",
         description: product.description || "",
         short_description: product.short_description || "",
-        price: product.price?.toString() || "",
-        old_price: product.old_price?.toString() || "",
-        offer_indefinida: !product.offer_ends_at && !!product.old_price,
+        offer_indefinida:
+          !product.offer_ends_at &&
+          !!(
+            (
+              product as Product & {
+                offer_by_size?: Record<string, number> | null;
+              }
+            ).offer_by_size &&
+            Object.keys(
+              (product as { offer_by_size?: Record<string, number> | null })
+                .offer_by_size ?? {}
+            ).length > 0
+          ),
         offer_days: "",
         offer_hours: "",
         offer_minutes: "",
@@ -203,6 +214,16 @@ export default function ProductModal({
             Object.entries(pbs).map(([k, v]) => [k, String(v)])
           );
         })(),
+        // Convertir offer_by_size existente a mapa de strings para el form
+        offer_by_size: (() => {
+          const obs = (
+            product as { offer_by_size?: Record<string, number> | null }
+          ).offer_by_size;
+          if (!obs) return {};
+          return Object.fromEntries(
+            Object.entries(obs).map(([k, v]) => [k, String(v)])
+          );
+        })(),
         colores: Array.isArray(product.colores) ? product.colores : [],
         material: product.material || "",
         caracteristicas: Array.isArray(product.caracteristicas)
@@ -231,8 +252,6 @@ export default function ProductModal({
         name: "",
         description: "",
         short_description: "",
-        price: "",
-        old_price: "",
         offer_indefinida: false,
         offer_days: "",
         offer_hours: "",
@@ -249,6 +268,7 @@ export default function ProductModal({
         price_suffix: "",
         tallas: [],
         price_by_size: {},
+        offer_by_size: {},
         colores: [],
         material: "",
         caracteristicas: [],
@@ -343,25 +363,6 @@ export default function ProductModal({
       return;
     }
 
-    // ── Validación de oferta ──────────────────────────────────
-    if (formData.old_price) {
-      const oldPriceNum = parseFloat(formData.old_price);
-      const priceNum = parseFloat(formData.price);
-
-      if (isNaN(oldPriceNum) || oldPriceNum <= 0) {
-        showToast('El precio anterior ("Antes") debe ser un número positivo.');
-        setIsSubmitting(false);
-        return;
-      }
-      if (oldPriceNum <= priceNum) {
-        showToast(
-          'El precio "Antes" debe ser MAYOR al precio actual para ser una oferta válida.'
-        );
-        setIsSubmitting(false);
-        return;
-      }
-    }
-
     const finalSlug = formData.slug?.trim() || generateSlug(formData.name);
 
     try {
@@ -386,13 +387,6 @@ export default function ProductModal({
       return;
     }
 
-    const parsedPrice = formData.price === "" ? 0 : parseFloat(formData.price);
-    if (isNaN(parsedPrice) || parsedPrice < 0) {
-      showToast("Por favor, ingresa un precio válido.");
-      setIsSubmitting(false);
-      return;
-    }
-
     // Construir price_by_size: convertir los strings del form a números
     const parsedPriceBySize: Record<string, number> = {};
     for (const [talla, precioStr] of Object.entries(formData.price_by_size)) {
@@ -405,16 +399,47 @@ export default function ProductModal({
       }
     }
 
-    let parsedOldPrice: number | null = null;
+    // Construir offer_by_size: convertir los strings del form a números
+    // Solo incluir tallas donde la oferta sea válida y MENOR al precio base de esa talla
+    const parsedOfferBySize: Record<string, number> = {};
+    for (const [talla, ofertaStr] of Object.entries(formData.offer_by_size)) {
+      if (ofertaStr !== "" && !isNaN(parseFloat(ofertaStr))) {
+        const ofertaNum = parseFloat(ofertaStr);
+        const basePrice = parsedPriceBySize[talla];
+        if (
+          ofertaNum >= 0 &&
+          (basePrice === undefined || ofertaNum < basePrice)
+        ) {
+          parsedOfferBySize[talla] = ofertaNum;
+        } else if (basePrice !== undefined && ofertaNum >= basePrice) {
+          showToast(
+            `El precio de oferta de la talla "${talla}" debe ser menor al precio base de esa talla ($${basePrice}).`
+          );
+          setIsSubmitting(false);
+          return;
+        }
+      }
+    }
+
+    // Calcular price global: mínimo de price_by_size (para compatibilidad con campos legacy)
+    const priceValues = Object.values(parsedPriceBySize);
+    const calculatedPrice =
+      priceValues.length > 0 ? Math.min(...priceValues) : 0;
+
+    // Calcular old_price global: mínimo de offer_by_size (para compatibilidad con filtros legacy)
+    const offerValues = Object.values(parsedOfferBySize);
+    const calculatedOldPrice =
+      offerValues.length > 0 ? Math.min(...offerValues) : null;
+
+    // Calcular timestamps de oferta
+    const hasOffer = offerValues.length > 0;
     let offerEndsAt: string | null =
       (product as Product & { offer_ends_at?: string })?.offer_ends_at || null;
     let offerStartsAt: string | null =
-      (product as Product & { offer_ends_at?: string })?.offer_starts_at ||
+      (product as Product & { offer_starts_at?: string })?.offer_starts_at ||
       null;
 
-    if (formData.old_price) {
-      parsedOldPrice = parseFloat(formData.old_price);
-
+    if (hasOffer) {
       if (formData.offer_indefinida) {
         // Oferta indefinida: sin fecha de vencimiento
         offerEndsAt = null;
@@ -447,8 +472,9 @@ export default function ProductModal({
       name: formData.name,
       description: formData.description || null,
       short_description: formData.short_description?.trim() || null,
-      price: parsedPrice,
-      old_price: parsedOldPrice,
+      // price y old_price se calculan automáticamente de los mapas por talla
+      price: calculatedPrice,
+      old_price: calculatedOldPrice,
       // 'catalog' NO es columna real en la tabla — se guarda como 'sector'
       sector: formData.catalog || null,
       category: formData.category || null,
@@ -477,6 +503,9 @@ export default function ProductModal({
       // Precio por talla (jsonb) — null si no hay ninguna talla con precio
       price_by_size:
         Object.keys(parsedPriceBySize).length > 0 ? parsedPriceBySize : null,
+      // Oferta por talla (jsonb) — null si no hay ninguna talla con oferta
+      offer_by_size:
+        Object.keys(parsedOfferBySize).length > 0 ? parsedOfferBySize : null,
       // offer_terms: texto libre de términos de oferta
       offer_terms: formData.offer_terms?.trim() || null,
       // ── Campos SEO manuales (null si vacíos, para preservar fallback automático) ──
@@ -488,6 +517,7 @@ export default function ProductModal({
     } as Partial<Product> & {
       offer_terms?: string | null;
       price_by_size?: Record<string, number> | null;
+      offer_by_size?: Record<string, number> | null;
     };
 
     await onSave(payload, [], notifyOnSave);
@@ -624,49 +654,7 @@ export default function ProductModal({
                 </div>
               </div>
 
-              {/* Pricing */}
-              <div>
-                <label
-                  htmlFor="product-price"
-                  className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-                >
-                  Precio ($)
-                </label>
-                <input
-                  id="product-price"
-                  type="number"
-                  step="0.01"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChange}
-                  min="0"
-                  placeholder="0.00"
-                  onWheel={(e) => (e.target as HTMLInputElement).blur()}
-                  className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="product-old-price"
-                  className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-                >
-                  Precio Anterior (Oferta)
-                </label>
-                <input
-                  id="product-old-price"
-                  type="number"
-                  step="0.01"
-                  name="old_price"
-                  value={formData.old_price}
-                  onChange={handleChange}
-                  min="0"
-                  placeholder="Dejar vacío si no hay oferta"
-                  onWheel={(e) => (e.target as HTMLInputElement).blur()}
-                  className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                />
-              </div>
-
-              {formData.old_price && (
+              {Object.keys(formData.offer_by_size).length > 0 && (
                 <div className="space-y-4 rounded-xl border border-amber-200 bg-amber-50 p-4 md:col-span-2 dark:border-amber-500/20 dark:bg-amber-500/5">
                   <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
                     <span
@@ -804,9 +792,9 @@ export default function ProductModal({
                 </div>
               )}
 
-              {/* Precio por talla — aparece solo si hay tallas seleccionadas */}
+              {/* Precio por talla + oferta opcional por talla */}
               {formData.tallas.length > 0 && (
-                <div className="space-y-3 rounded-xl border border-indigo-200 bg-indigo-50 p-4 md:col-span-2 dark:border-indigo-500/20 dark:bg-indigo-500/5">
+                <div className="space-y-4 rounded-xl border border-indigo-200 bg-indigo-50 p-4 md:col-span-2 dark:border-indigo-500/20 dark:bg-indigo-500/5">
                   <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400">
                     <span
                       className="material-symbols-outlined"
@@ -820,21 +808,28 @@ export default function ProductModal({
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                    Asigna un precio a cada talla disponible. Las tallas sin
-                    precio mostrarán &ldquo;Cotizar&rdquo; en la vista pública.{" "}
+                    Asigna un precio a cada talla. En &ldquo;Oferta&rdquo;
+                    puedes ingresar un precio menor opcional — solo las tallas
+                    con oferta mostrarán precio tachado.{" "}
                     <strong>&ldquo;A la medida&rdquo;</strong> siempre se cotiza
-                    por WhatsApp y no tiene precio fijo.
+                    por WhatsApp.
                   </p>
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+
+                  {/* Cabecera de columnas */}
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-0 sm:grid-cols-3">
                     {formData.tallas
                       .filter((t) => t !== "A la medida")
                       .map((talla) => (
-                        <div key={talla}>
+                        <div key={talla} className="mb-3">
+                          <p className="mb-1 text-xs font-bold text-indigo-700 dark:text-indigo-400">
+                            Talla {talla}
+                          </p>
+                          {/* Precio base */}
                           <label
                             htmlFor={`price-size-${talla}`}
-                            className="mb-1 block text-xs font-semibold text-indigo-700 dark:text-indigo-400"
+                            className="mb-0.5 block text-[10px] font-medium text-slate-500"
                           >
-                            Talla {talla} ($)
+                            Precio base ($)
                           </label>
                           <input
                             id={`price-size-${talla}`}
@@ -857,9 +852,50 @@ export default function ProductModal({
                             }
                             className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
                           />
+                          {/* Oferta opcional */}
+                          <label
+                            htmlFor={`offer-size-${talla}`}
+                            className="mt-1 mb-0.5 flex items-center gap-1 text-[10px] font-medium text-amber-600 dark:text-amber-400"
+                          >
+                            <span
+                              className="material-symbols-outlined"
+                              style={{ fontSize: "11px" }}
+                            >
+                              local_offer
+                            </span>
+                            Precio oferta ($)
+                            <span className="font-normal text-slate-400">
+                              — opcional
+                            </span>
+                          </label>
+                          <input
+                            id={`offer-size-${talla}`}
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={formData.offer_by_size[talla] ?? ""}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setFormData((prev) => {
+                                const newObs = { ...prev.offer_by_size };
+                                if (val === "") {
+                                  delete newObs[talla];
+                                } else {
+                                  newObs[talla] = val;
+                                }
+                                return { ...prev, offer_by_size: newObs };
+                              });
+                            }}
+                            placeholder="Vacío = sin oferta"
+                            onWheel={(e) =>
+                              (e.target as HTMLInputElement).blur()
+                            }
+                            className="w-full rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-slate-900 transition-all outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 dark:border-amber-500/20 dark:bg-amber-500/5 dark:text-white"
+                          />
                         </div>
                       ))}
                   </div>
+
                   {formData.tallas.includes("A la medida") && (
                     <p className="flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400">
                       <span
@@ -1111,13 +1147,18 @@ export default function ProductModal({
                               const newTallas = isSelected
                                 ? prev.tallas.filter((t) => t !== talla)
                                 : [...prev.tallas, talla];
-                              // Si se deselecciona, limpiar su precio de price_by_size
+                              // Si se deselecciona, limpiar su precio de price_by_size y offer_by_size
                               const newPriceBySize = { ...prev.price_by_size };
-                              if (isSelected) delete newPriceBySize[talla];
+                              const newOfferBySize = { ...prev.offer_by_size };
+                              if (isSelected) {
+                                delete newPriceBySize[talla];
+                                delete newOfferBySize[talla];
+                              }
                               return {
                                 ...prev,
                                 tallas: newTallas,
                                 price_by_size: newPriceBySize,
+                                offer_by_size: newOfferBySize,
                               };
                             });
                           }}
@@ -1570,7 +1611,7 @@ export default function ProductModal({
           <label
             className={`flex cursor-pointer items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
               notifyOnSave
-                ? formData.old_price
+                ? Object.keys(formData.offer_by_size).length > 0
                   ? "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400"
                   : "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
                 : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/10"
@@ -1587,9 +1628,11 @@ export default function ProductModal({
               className="material-symbols-outlined text-[18px]"
               aria-hidden="true"
             >
-              {formData.old_price ? "local_offer" : "campaign"}
+              {Object.keys(formData.offer_by_size).length > 0
+                ? "local_offer"
+                : "campaign"}
             </span>
-            {formData.old_price
+            {Object.keys(formData.offer_by_size).length > 0
               ? "Notificar como oferta"
               : "Notificar a suscriptores"}
           </label>

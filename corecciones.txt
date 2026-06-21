@@ -1,52 +1,52 @@
-# ORDEN MANDATARIA — PRECIO POR TALLA, ELIMINACIÓN DE PRECIOS ESPECIALES Y CALCULAR ENVÍO
+# ORDEN MANDATARIA — CORRECCIÓN: PRECIO DUPLICADO Y OFERTA POR TALLA INDEPENDIENTE
 ## Auditoría del 100% del código antes de tocar una sola línea. Cero alteraciones a lo que no se pide cambiar.
 
 ---
 
-> ## ⛔ EL ESTADO ACTUAL ES EL DISEÑO FINAL, SALVO LO EXPLÍCITAMENTE PEDIDO AQUÍ
+> ## ⛔ CONTEXTO: ESTO ES UNA CORRECCIÓN SOBRE UNA IMPLEMENTACIÓN PREVIA INCOMPLETA
 >
-> Todo lo demás de la página de detalle de producto (galería de imágenes, breadcrumb, badge "Promos", título, descripción, colores disponibles, lista de bordados/incluye, badge "Oferta", precio tachado de oferta, contador de "Oferta válida hasta", aviso "Esta oferta tiene términos especiales", sección "¿Necesitas personalizar tu pedido?", botones "Agregar" / compartir / "Cotizar") **no cambia en absolutamente nada**: ni diseño visual, ni estilos, ni comportamiento, ni posición. Tu única tarea es la lista de cambios específicos de este prompt. Nada más.
+> Ya se implementó "Precio por Talla" (visible en la captura de referencia: `screencapture-localhost-3000-admin-products-2026-06-21-01_24_24.png`, bloque morado "Precio por Talla" con Talla XS, S, M, L, XL, XXL, 3XL). Esa implementación **quedó incompleta**: dejó vivo el campo viejo "Precio ($)" (visible junto a "Precio Anterior (Oferta)") sin eliminarlo, resultando en **dos fuentes de precio simultáneas y contradictorias** para el mismo producto. Además, "Precio Anterior (Oferta)" sigue siendo un único campo global, cuando el requisito real es que **cada talla pueda tener su propia oferta independiente**, activable solo en las tallas que correspondan.
 >
-> Captura de referencia del estado actual: `screencapture-localhost-3000-catalogo-universitario-uniforme-de-enfermeria-de-ieproes-2026-06-21-00_43_57.png`. Ese es el diseño base que debes preservar en todo lo que no esté explícitamente listado abajo.
+> Esta tarea corrige esos dos huecos. No es una implementación nueva desde cero — es terminar correctamente lo que quedó a medias, sin volver a tocar nada de lo que ya quedó bien hecho (el bloque "Precio por Talla" en sí, el comportamiento de "A la medida" sin precio, la eliminación de Precios Especiales, la eliminación de Calcular Envío, y la sección "SEO del Producto" que se ve correctamente implementada en la misma captura).
+
+---
+
+> ## ⛔ EL ESTADO ACTUAL ES EL DISEÑO FINAL, SALVO LO EXPLÍCITAMENTE LISTADO AQUÍ
+>
+> Todo lo visible en la captura de referencia que no esté en la lista de cambios de abajo permanece exactamente igual: Nombre, URL/Slug, Descripción, Descripción Corta, Configuración de Oferta (términos, duración, programar inicio — esto es la configuración general de la oferta, no el precio en sí, no se toca), Catálogo, Categoría, Imágenes, Datos del Catálogo Público completo (Badge, Sufijo de Precio, Material, Tallas Disponibles, Características, Colores), Etiquetas, Producto Activo, y la sección SEO del Producto completa. Ni diseño, ni estilos, ni posición, ni comportamiento de ninguna de esas secciones cambia.
 
 ---
 
 ## Lista exacta de cambios a implementar
 
-1. **Precio por talla en lugar de precio global.** Actualmente el precio (`$35.00` / `$39.50` tachado) es uno solo para todo el producto, sin importar la talla seleccionada. Debe pasar a ser un precio específico por cada talla disponible (XS, S, M, L, XL, XXL, 3XL, y cualquier otra que el catálogo maneje).
+1. **Eliminar el campo "Precio ($)" duplicado.** El campo individual de precio que aparece junto a "Precio Anterior (Oferta)" (el que hoy muestra `35`) debe eliminarse del formulario por completo. El único precio base de cada talla vive en el bloque "Precio por Talla". No debe quedar ningún campo de precio global suelto fuera de ese bloque.
 
-2. **Texto del selector de talla.** Donde hoy dice "TALLA seleccionada: 3XL" (o el texto equivalente antes de seleccionar nada), debe decir **"Selecciona una talla para ver el precio correspondiente."** mientras no haya ninguna talla seleccionada. Una vez seleccionada una talla, se muestra el precio correspondiente a esa talla.
+2. **Precio de oferta por talla, independiente.** "Precio Anterior (Oferta)" deja de ser un campo único global. Cada talla dentro del bloque "Precio por Talla" debe poder tener su **propio precio de oferta opcional**, independiente de las demás. Esto significa que el admin debe poder, por ejemplo, poner oferta solo en la talla M, dejando XS, S, L, XL, XXL y 3XL con su precio normal sin oferta, o poner ofertas distintas en distintas tallas si así lo decide.
 
-3. **Comportamiento de la opción "A la medida".** Si el usuario selecciona la talla/opción "A la medida", el precio debe **eliminarse de la vista** (no mostrar ningún precio, ni $0, ni placeholder numérico) porque ese caso se cotiza exclusivamente por WhatsApp. Debe quedar claro en la UI que ese caso no tiene precio fijo y se cotiza por ese medio (usa el botón "Cotizar" ya existente como el mecanismo, sin inventar uno nuevo).
-
-4. **Eliminación completa de "Precios Especiales" (mayoreo y solo mano de obra).** Esta sección debe eliminarse por completo, en los tres niveles:
-   - **Base de datos:** las columnas/campos relacionados (precio mayoreo, cantidad mínima de mayoreo, precio solo mano de obra) se eliminan del modelo de datos de producto en Supabase.
-   - **Formulario de admin:** el bloque "Precios Especiales" (Precio Mayoreo, Cantidad mínima, Precio Solo Mano de Obra) se elimina del modal de Nuevo/Editar Producto.
-   - **Vista pública de detalle de producto:** el bloque azul "Precios Especiales" con "Mayoreo: $30.00 c/u al pedir 12+ unidades", "Solo mano de obra: $20.00 (si traes tu propia tela)" y el link "Consulta disponibilidad por WhatsApp antes de hacer tu pedido" se elimina por completo de la página de detalle de producto.
-
-5. **Eliminación completa de "Calcular Envío".** La sección con el ícono de camión, el texto "CALCULAR ENVÍO" y el selector de "Departamento" se elimina por completo de la página de detalle de producto.
+> El campo "Precio Anterior (Oferta)" global que hoy existe junto al "Precio ($)" duplicado se elimina junto con el precio duplicado, ya que su función pasa a vivir dentro de cada talla del bloque "Precio por Talla".
 
 ---
 
-> ## ⛔ LA ANALOGÍA DE LA PUERTA
+> ## ⛔ LA ANALOGÍA DE LA PUERTA — POR QUÉ ESTO NO ES "BORRAR UN INPUT"
 >
-> Esto no es "borrar unos divs y cambiar un texto". Es: cambiar la forma en que se almacena y se calcula el precio de un producto (de un valor único a un valor por variante/talla), y eliminar dos features completas que pueden tener dependencias en otros lugares del sistema que no son obvios desde la captura de pantalla.
+> El precio duplicado que quedó vivo no es solo un campo visual de más: es muy probable que el código todavía **lea de esa columna vieja en algún lugar** — en la tarjeta de producto del catálogo, en el carrito, en el checkout, en cualquier cálculo de totales — mientras que otras partes ya leen de la estructura nueva de "Precio por Talla". Esa es exactamente la situación de una puerta con dos chapas distintas instaladas a la vez, donde cada una cierra un mecanismo diferente: parece que "ya se arregló" porque una de las dos funciona, pero la estructura real está rota por duplicidad y cualquier punto del sistema que siga usando la chapa vieja seguiro mostrando o calculando datos incorrectos o inconsistentes.
 >
-> Antes de tocar nada, hay que desmontar la estructura completa: ¿el carrito usa el precio del producto en algún cálculo que asuma "un solo precio"? ¿El checkout recalcula el precio en el servidor usando ese mismo modelo de un solo precio (y por tanto se rompería con precio por talla si no se actualiza también ahí)? ¿Algún reporte del admin, algún dashboard, alguna query de Supabase en otro lado del proyecto asume que existe la columna de precio único o las columnas de mayoreo/mano de obra que vas a eliminar? ¿El cálculo de envío, aunque se elimine de esta página, se usa en algún otro lugar (checkout, carrito) y depende de algo que esta página también usaba?
+> No basta con quitar el input del formulario. Hay que encontrar **cada lugar** que todavía lee el precio global viejo y migrarlo a leer el nuevo modelo por talla, y hay que confirmar que la columna vieja en Supabase se elimina (no se deja huérfana) una vez que nada la usa.
 >
-> **Si tu primer instinto es "elimino el JSX de la sección y ya", eso es quitar la puerta sin revisar la pared.** Audita el sistema completo de precios y de envío antes de eliminar o modificar nada.
+> Lo mismo aplica al precio de oferta: si "Precio Anterior (Oferta)" global todavía se usa en algún cálculo de descuento, badge de "Oferta", o en la vista pública para mostrar el precio tachado, ese cálculo debe migrar a leer la oferta específica de la talla seleccionada, no el valor global.
+>
+> **Si tu instinto es "quito el input del JSX y ya quedó", eso es quitar la chapa de adorno y dejar la chapa real rota por dentro.** Hay que auditar cada consumidor del precio antes de tocar nada.
 
 ---
 
-> ## ⛔ PROHIBIDO INVENTAR. PROHIBIDO ASUMIR LA ESTRUCTURA DE DATOS
+> ## ⛔ PROHIBIDO INVENTAR. PROHIBIDO ASUMIR
 >
-> No asumas cómo está modelado hoy el precio, ni cómo están guardadas las tallas, ni si las tallas son un array fijo de strings o una tabla relacional. No asumas que "calcular envío" no se usa en ningún otro lado. Todo eso se verifica leyendo el código real y el schema real de Supabase.
+> No asumas que el campo de precio global ya no se usa en ningún lado solo porque visualmente "se ve raro tener dos". Verifícalo leyendo el código real. No asumas cómo está estructurado hoy el bloque "Precio por Talla" en la base de datos (¿`jsonb`? ¿tabla relacional?) — léelo del schema real antes de diseñar cómo le agregas el campo de oferta por talla.
 >
 > Antes de implementar:
-> 1. Lee el código completo relacionado a precios, tallas, carrito, checkout y envío, sin excepción — y también el resto del proyecto, según el protocolo de la Fase 1.
-> 2. Consulta la documentación oficial de Supabase sobre el tipo de columna más apropiado para precio por variante (¿`jsonb` mapeando talla → precio? ¿una tabla relacional `product_sizes` con su propia columna de precio? — decide según lo que sea consistente con cómo el proyecto ya modela datos relacionados a variantes, si existe ese patrón).
-> 3. Si el proyecto usa algún ORM, query builder, o capa de validación (Zod/similar), consulta su documentación oficial para modelar el cambio de tipo correctamente.
-> 4. Confirma que tu implementación sigue el patrón ya existente en el proyecto para datos similares (por ejemplo cómo ya están modeladas las "Tallas Disponibles" como array, o cómo está modelado cualquier otro campo de variantes), no un patrón genérico inventado.
+> 1. Lee el código completo relacionado a precio, precio por talla, oferta, carrito, checkout y catálogo, sin excepción — y el resto del proyecto según el protocolo de la Fase 1.
+> 2. Verifica en vivo (MCP o Dashboard de Supabase) el schema real de la tabla de productos para confirmar exactamente cómo quedó estructurado "Precio por Talla" tras la implementación previa, y si la columna de precio global y la de "Precio Anterior (Oferta)" global siguen existiendo.
+> 3. Diseña la extensión del modelo de "Precio por Talla" para que cada talla pueda tener un precio de oferta opcional, siguiendo el mismo patrón de estructura de datos ya usado para el precio base por talla (consistencia: si el precio base es `jsonb` tipo `{"S": 35, "M": 35}`, la oferta por talla debería seguir un patrón equivalente y coherente, no una estructura completamente distinta).
 
 ---
 
@@ -56,173 +56,140 @@
 find . -type f | grep -v node_modules | grep -v .git | grep -v .next | sort
 ```
 
-Esta lista es tu checklist de lectura para la Fase 1. No se omite nada.
-
 ---
 
-## Fase 1 — Auditoría del 100% del código (no solo lo que vas a modificar)
+## Fase 1 — Auditoría del 100% del código
 
-Lee **cada archivo** del inventario, sin excepción. La razón: el precio de un producto y el cálculo de envío son datos que casi con certeza se consumen en más lugares de los que la captura de pantalla deja ver (carrito, checkout, totales, posiblemente notificaciones o emails de confirmación de orden).
+Lee **cada archivo** del inventario, sin excepción. El objetivo es encontrar cada consumidor del precio global viejo y del precio de oferta global viejo, en cualquier parte del sistema, no solo en el formulario de admin.
 
-### Protocolo de lectura por archivo
+### Bloques de lectura obligatorios
 
-```
-ARCHIVO: [ruta completa]
-─────────────────────────────────────────────
-¿Lee o calcula el precio de un producto?                    [SÍ / NO]
-¿Lee o escribe precio_mayoreo / cantidad_minima / precio_mano_obra (o sus nombres reales)? [SÍ / NO]
-¿Lee o calcula algo relacionado a envío/shipping/departamento?  [SÍ / NO]
-¿Consume el objeto Producto completo (spread, destructuring amplio)? [SÍ / NO]
-¿Hace queries a la tabla de productos en Supabase?              [SÍ / NO → copia la query]
-¿Tiene validación de tipos/schema del producto (Zod, TS interface, etc.)? [SÍ / NO]
-```
-
-### Bloques de lectura obligatorios, en este orden:
-
-**Bloque A — Modelo de datos actual del precio y las tallas:**
-
-Verifica en vivo el schema real (no asumas desde el código):
+**Bloque A — Schema real actual en Supabase (verificar en vivo, no asumir):**
 
 ```sql
 select column_name, data_type, is_nullable, column_default
 from information_schema.columns
-where table_name = 'products'; -- confirma el nombre real de la tabla primero
+where table_name = 'products';
 ```
 
-- ¿Cómo está modelado hoy el precio (`price`, `precio`)? ¿Una sola columna numérica?
-- ¿Cómo está modelado el precio anterior/oferta (`precio_anterior`)?
-- ¿Cómo están modeladas las "Tallas Disponibles"? ¿Array de strings en una columna, tabla relacional, `jsonb`?
-- ¿Existen ya las columnas de mayoreo y mano de obra? Documenta sus nombres exactos y tipos.
-- Toda definición de tipo/interface `Product` en TypeScript — documenta cada campo de precio y de talla.
+Documenta explícitamente:
+- ¿Sigue existiendo la columna de precio global (la que alimenta el campo "Precio ($)" duplicado)? Nombre exacto.
+- ¿Sigue existiendo la columna de "Precio Anterior (Oferta)" global? Nombre exacto.
+- ¿Cómo está estructurada exactamente la columna/estructura de "Precio por Talla" implementada previamente? Tipo de dato exacto, forma exacta del JSON si es `jsonb`.
 
-**Bloque B — Todo lugar que lee o calcula el precio:**
+**Bloque B — Cada lugar que lee el precio global viejo:**
 
 ```bash
 grep -rniE "\b(price|precio)\b" --include="*.ts" --include="*.tsx" . | grep -v node_modules
 ```
 
-Lee cada resultado completo. Para cada uno, documenta si asume "un precio único por producto" de forma que se rompería al pasar a precio por talla:
+Para cada resultado, documenta si lee la columna de precio global vieja o ya lee la estructura de "Precio por Talla":
 
-- Tarjeta de producto en el catálogo/listado — ¿qué precio muestra cuando no hay talla seleccionada todavía (porque el listado no tiene selector de talla)?
-- Carrito — ¿el ítem del carrito guarda el precio al momento de agregarlo, o lo vuelve a leer del producto? Si guarda el precio, ¿de qué talla, y cómo sabrá ahora qué precio de talla usar?
-- Checkout / cálculo de totales — ¿recalcula el precio en el servidor antes de confirmar una orden? Esto es crítico: si el servidor recalcula con el modelo viejo de precio único, hay que actualizarlo también o el checkout quedará roto o, peor, inseguro (un precio de talla manipulable sin validación server-side).
-- Cualquier reporte, dashboard de admin, o exportación que sume/muestre precios de productos.
-- Notificaciones (la sección "Notificaciones" del admin vista en el panel) — ¿algún mensaje de notificación incluye el precio del producto en su texto generado automáticamente?
+- Formulario de admin (creación y edición — confirma si son el mismo componente).
+- Tarjeta de producto en el catálogo/listado.
+- Carrito (al agregar un ítem, ¿de dónde toma el precio?).
+- Checkout / cálculo de totales en el servidor.
+- Cualquier reporte o dashboard de admin.
+- Notificaciones automáticas que mencionen el precio.
+- Tipo/interface `Product` en TypeScript — confirma si el campo de precio global sigue declarado ahí.
+- Cualquier schema de validación (Zod/similar).
 
-**Bloque C — Todo lugar que lee o escribe los campos de Precios Especiales (mayoreo/mano de obra):**
-
-```bash
-grep -rniE "(mayoreo|mano[_ ]?de[_ ]?obra|wholesale|labor[_ ]?price)" --include="*.ts" --include="*.tsx" . | grep -v node_modules
-```
-
-Lee cada resultado. Documenta cada archivo que toca estos campos: formulario de admin (creación y edición — confirma si son el mismo componente o distintos), vista de detalle de producto, cualquier validación de schema, cualquier tipo TypeScript.
-
-**Bloque D — Todo lugar que toca "Calcular Envío" / departamento / shipping:**
+**Bloque C — Cada lugar que lee "Precio Anterior (Oferta)" global viejo:**
 
 ```bash
-grep -rniE "(envio|shipping|departamento|calcular[_ ]?envio)" --include="*.ts" --include="*.tsx" . | grep -v node_modules
+grep -rniE "(precio[_ ]?anterior|previous[_ ]?price|original[_ ]?price|compare[_ ]?at)" --include="*.ts" --include="*.tsx" . | grep -v node_modules
 ```
 
-Lee cada resultado completo. Esto es crítico antes de eliminar nada: **¿este cálculo de envío se usa en algún otro lugar del sistema además de esta página** (por ejemplo, en el checkout real, donde sí sería necesario calcular el costo de envío para completar una compra)? Si el componente de "Calcular Envío" de la página de detalle de producto es el mismo componente reutilizado en el checkout, **no lo elimines del proyecto** — elimínalo únicamente de esta página de detalle de producto, dejándolo intacto donde sí se necesita. Si es un componente exclusivo de esta página sin uso en otro lado, ahí sí se elimina por completo, incluyendo el componente en sí si no tiene otro consumidor.
+Documenta cada uso: dónde se calcula el porcentaje de descuento mostrado, dónde se decide si se muestra el badge "Oferta", dónde se renderiza el precio tachado en la vista pública (la captura del producto público mostraba `$35.00` junto a `$39.50` tachado — identifica exactamente ese componente).
 
-**Bloque E — El formulario de admin completo (creación y edición de producto):**
+**Bloque D — El bloque "Precio por Talla" tal como quedó implementado:**
 
-- Lee el componente completo del modal de "Nuevo Producto" / "Editar Producto" visto en capturas previas.
-- Identifica exactamente dónde están los inputs de "Precio ($)", "Precio Anterior (Oferta)", y el bloque "Precios Especiales" en el JSX.
-- Identifica cómo está hoy el bloque de "Tallas Disponibles" (botones seleccionables XS/S/M/L/XL/XXL/3XL/Única/A la medida) — este es el patrón que debes extender para que cada talla tenga su propio campo de precio asociado.
+- Lee el componente completo del formulario de admin donde vive hoy el bloque "Precio por Talla".
+- Lee la lógica de guardado: ¿cómo arma el payload que se envía a Supabase para ese bloque?
+- Lee cómo la página pública de detalle de producto consume hoy ese precio por talla (esto ya debería estar andando correctamente según el pedido anterior — confírmalo, no lo reimplementes).
 
-**Bloque F — La página pública de detalle de producto completa:**
-
-- Lee el componente completo que renderiza lo visible en la captura de referencia.
-- Identifica el estado que controla la talla seleccionada y cómo se conecta hoy al precio mostrado.
-- Identifica el bloque exacto de "Precios Especiales" y el bloque exacto de "Calcular Envío" en el JSX, para poder eliminarlos quirúrgicamente sin afectar el resto del layout (la tarjeta blanca completa con el precio, el badge "Oferta", el contador, el aviso de términos especiales, la sección de personalización, y los botones deben mantenerse intactos en su disposición).
-
-**Bloque G — Cualquier otro archivo que consuma el tipo Producto:**
+**Bloque E — Cualquier otro consumidor del tipo Producto:**
 
 ```bash
 grep -rln "Product\b" --include="*.ts" --include="*.tsx" . | grep -v node_modules
 ```
 
-Lee cada resultado no cubierto ya en los bloques anteriores.
+Lee cada resultado no cubierto en los bloques anteriores.
 
 ---
 
-## Fase 2 — Diseño del nuevo modelo de precio por talla
+## Fase 2 — Diseño de la corrección
 
-Con la Fase 1 completa, define la estructura:
+Con la Fase 1 completa, define con precisión antes de escribir código:
 
 ```
-MODELO DE PRECIO POR TALLA ELEGIDO:
-  [Documenta la decisión: columna jsonb tipo { "S": 35.00, "M": 35.00, "L": 38.00, ... },
-   o tabla relacional product_sizes(product_id, talla, precio), o el patrón que sea
-   consistente con cómo el proyecto ya modela "Tallas Disponibles" — justifica la elección
-   con lo encontrado en la Fase 1, Bloque A.]
+¿LA COLUMNA DE PRECIO GLOBAL VIEJA TIENE ALGÚN CONSUMIDOR ACTIVO FUERA DEL FORMULARIO?
+  [Lista cada uno encontrado en el Bloque B. Cada uno debe migrarse para leer del
+   precio por talla en su lugar antes de poder eliminar la columna vieja con seguridad.]
 
-¿CÓMO SE REPRESENTA "A LA MEDIDA" EN ESTE MODELO?
-  [Debe quedar explícitamente sin precio asociado — null, ausente del mapa, o el
-   mecanismo que corresponda según el modelo elegido — nunca un 0 o un valor numérico.]
+¿LA COLUMNA DE OFERTA GLOBAL VIEJA TIENE ALGÚN CONSUMIDOR ACTIVO FUERA DEL FORMULARIO?
+  [Lista cada uno encontrado en el Bloque C. Mismo tratamiento.]
 
-¿QUÉ PASA CON EL "PRECIO ANTERIOR (OFERTA)" ACTUAL?
-  [El producto de la captura tiene precio de oferta ($35.00 tachando $39.50).
-   Esto NO fue pedido para eliminar — define cómo convive con precio por talla:
-   ¿cada talla tiene también su propio precio anterior/oferta, o el precio anterior
-   sigue siendo un valor global que se resta/aplica igual sobre el precio de cada
-   talla? Decide con base en lo mínimo necesario para no romper la funcionalidad de
-   oferta ya existente, y documenta la decisión explícitamente antes de implementar.]
+ESTRUCTURA DE DATOS ELEGIDA PARA OFERTA POR TALLA:
+  [Define la extensión exacta de la estructura de "Precio por Talla" para incluir
+   oferta opcional por talla. Ejemplo de patrón coherente si el precio base es
+   jsonb {"S": 35, "M": 35}: la oferta podría vivir en una estructura paralela
+   {"M": 30} donde solo aparecen las tallas que tienen oferta activa, o anidada
+   {"S": {"precio": 35, "oferta": null}, "M": {"precio": 35, "oferta": 30}} —
+   decide la que sea más simple de migrar desde la estructura actual real
+   encontrada en el Bloque A, y documenta la decisión con su razón.]
 
-¿CÓMO MUESTRA EL CATÁLOGO/LISTADO EL PRECIO DE UN PRODUCTO CON PRECIO POR TALLA,
-SI EN EL LISTADO NO HAY SELECTOR DE TALLA?
-  [Define el comportamiento: ¿muestra el precio más bajo disponible con un prefijo
-   "Desde $X.XX"? ¿Muestra un rango? Decide consultando cómo otros e-commerce con
-   patrón similar lo resuelven, y verifica que sea coherente con el espacio visual
-   disponible en la tarjeta de producto actual del catálogo — no agregues texto que
-   rompa el layout de la tarjeta existente.]
+¿CÓMO SE DETERMINA SI UNA TALLA ESPECÍFICA "TIENE OFERTA ACTIVA"
+EN LA VISTA PÚBLICA?
+  [Debe usar la misma "Configuración de Oferta" global ya existente (términos,
+   duración, programación) como el interruptor de SI hay oferta vigente en el
+   tiempo, combinado con SI esa talla específica tiene un precio de oferta
+   definido, para decidir si se muestra el precio tachado en esa talla. No
+   dupliques la lógica de fechas/duración de oferta — reutiliza la que ya
+   existe en "Configuración de Oferta", solo el monto del descuento pasa a
+   ser por talla.]
+
+¿QUÉ PASA CON LOS PRODUCTOS EXISTENTES QUE YA TENÍAN PRECIO POR TALLA
+IMPLEMENTADO PERO SIN OFERTA POR TALLA?
+  [Definir: al migrar, cada talla queda sin oferta (null) por defecto, y el
+   admin la asigna manualmente si quiere, talla por talla, desde ahora.]
 ```
-
-> No avances a la Fase 3 sin haber definido estos cuatro puntos con precisión.
 
 ---
 
 ## Fase 3 — Análisis de impacto antes de modificar (checklist obligatorio)
 
-- [ ] ¿El carrito guarda el precio al momento de agregar el ítem? Si SÍ: confirma que ahora va a guardar el precio correspondiente a la talla seleccionada en ese momento, no un precio global inexistente.
-- [ ] ¿El checkout recalcula el precio en el servidor? Si SÍ: el recálculo debe usar el nuevo modelo de precio por talla, validando que la talla enviada por el cliente sea una talla válida con precio definido (y rechazando explícitamente si la talla es "A la medida", ya que esa no tiene checkout directo — debe forzar el flujo de cotización por WhatsApp).
-- [ ] ¿"Calcular Envío" es un componente compartido con el checkout real? Si SÍ: no se elimina el componente, solo su uso en esta página.
-- [ ] ¿Eliminar las columnas de mayoreo/mano de obra de Supabase rompe alguna política RLS, trigger, o constraint? Verifica antes de migrar.
-- [ ] ¿Hay productos existentes en la base de datos con datos en las columnas de mayoreo/mano de obra? Si SÍ: decide y documenta si se descartan sin más (ya que la feature se elimina por completo) o si se requiere algún respaldo antes de borrar la columna — dado que la base de datos no es de producción según las reglas de este proyecto, proceder con la eliminación directa es válido, pero documéntalo.
-- [ ] ¿El tipo `Product` en TypeScript, al perder los campos de mayoreo/mano de obra y al cambiar el campo de precio de número a la nueva estructura, rompe la compilación de algún archivo no identificado en la Fase 1? Vuelve a correr una búsqueda de uso del tipo después de definir el nuevo tipo, antes de tocar el resto del código.
+- [ ] ¿Cada consumidor del precio global viejo, listado en la Fase 2, fue identificado con su archivo exacto y el cambio necesario para migrarlo a precio por talla?
+- [ ] ¿Cada consumidor de la oferta global vieja, listado en la Fase 2, fue identificado con su archivo exacto y el cambio necesario?
+- [ ] ¿El carrito guarda el precio (y la oferta, si aplica) al momento de agregar el ítem? Si SÍ: confirma que tomará el precio/oferta de la talla específica seleccionada en ese momento.
+- [ ] ¿El checkout recalcula el precio en el servidor? Si SÍ: el recálculo debe usar el precio (con oferta si corresponde) de la talla exacta que el cliente seleccionó, validado contra la estructura real en Supabase, no contra un valor enviado sin verificar por el cliente.
+- [ ] ¿Eliminar las columnas viejas de precio global y oferta global de Supabase rompe alguna política RLS, trigger, o constraint? Verifica antes de migrar.
+- [ ] ¿El tipo `Product` en TypeScript, al perder los campos de precio/oferta global y ganar la oferta por talla, rompe la compilación de algún archivo no identificado en la Fase 1? Vuelve a correr la búsqueda después de definir el tipo nuevo.
 
 ---
 
 ## Fase 4 — Implementación, en este orden, verificando consola limpia después de cada paso
 
 1. **Migración de Supabase:**
-   - Agregar la nueva estructura de precio por talla (columna/tabla según lo decidido en la Fase 2).
-   - Migrar los datos existentes: cada producto actual con precio único debe recibir, como valor inicial, ese mismo precio replicado para cada una de sus tallas disponibles (para no dejar productos sin precio tras la migración) — **excepto** para la opción "A la medida", que queda sin precio.
-   - Eliminar las columnas de mayoreo y mano de obra.
-   - Verifica con el MCP o SQL Editor que la migración corrió correctamente sobre los datos reales antes de continuar.
+   - Extender la estructura de "Precio por Talla" para incluir oferta opcional por talla, según lo decidido en la Fase 2.
+   - Migrar cualquier dato útil que aún viva en la columna de oferta global vieja, si corresponde según lo decidido (o confirmar que se descarta sin más, documentándolo).
+   - Eliminar la columna de precio global vieja.
+   - Eliminar la columna de "Precio Anterior (Oferta)" global vieja.
+   - Verificar con MCP o SQL Editor que la migración corrió correctamente sobre los datos reales.
 
-2. **Tipo/interface de `Product` actualizado:** nueva estructura de precio por talla, campos de mayoreo/mano de obra eliminados del tipo.
+2. **Tipo/interface de `Product` actualizado:** sin los campos de precio/oferta global, con la nueva estructura de oferta por talla añadida junto al precio por talla existente.
 
-3. **Schema de validación (si existe):** actualizado para el nuevo modelo de precio, validación eliminada para los campos de mayoreo/mano de obra.
+3. **Schema de validación (si existe):** actualizado en consecuencia.
 
 4. **Formulario de admin (creación):**
-   - Reemplaza el input único de "Precio ($)" por un precio asociado a cada talla seleccionada en "Tallas Disponibles" (al marcar una talla como disponible, aparece su campo de precio correspondiente).
-   - Elimina por completo el bloque "Precios Especiales" (Precio Mayoreo, Cantidad mínima, Precio Solo Mano de Obra).
-   - El campo "Precio Anterior (Oferta)" se mantiene, ajustado según lo decidido en la Fase 2.
+   - Elimina por completo el input "Precio ($)" duplicado.
+   - Elimina por completo el input "Precio Anterior (Oferta)" global.
+   - Dentro del bloque "Precio por Talla", agrega junto a cada input de precio de talla un campo opcional de "Precio Oferta" para esa misma talla, manteniendo el mismo patrón visual ya usado en ese bloque (igual estilo a "Talla XS ($)", por ejemplo "Talla XS Oferta ($) — opcional").
+   - Conserva intacta la nota informativa existente sobre "A la medida" sin precio fijo, ajustándola si es necesario para aclarar que tampoco aplica oferta a esa opción.
 
-5. **Formulario de admin (edición), si es un componente distinto:** mismo tratamiento que el paso 4, de forma consistente.
+5. **Formulario de admin (edición), si es un componente distinto:** mismo tratamiento, consistente con creación.
 
-6. **Página pública de detalle de producto:**
-   - El texto del selector de talla cambia a "Selecciona una talla para ver el precio correspondiente." cuando no hay talla seleccionada.
-   - Al seleccionar una talla, se muestra el precio de esa talla específica (y el precio anterior/oferta si aplica según lo decidido en la Fase 2).
-   - Al seleccionar "A la medida", el bloque de precio se oculta por completo (no se muestra precio ni placeholder numérico) — deja visible el botón "Cotizar" como vía para ese caso.
-   - Elimina por completo el bloque "Precios Especiales".
-   - Elimina por completo el bloque "Calcular Envío" (solo de esta página, preservando el componente si se usa en otro lado, según lo determinado en la Fase 1, Bloque D).
-
-7. **Catálogo / listado de productos:** ajusta el precio mostrado en cada tarjeta de producto según lo decidido en la Fase 2 (probablemente "Desde $X.XX" con el precio mínimo entre las tallas con precio definido).
-
-8. **Carrito y checkout:** ajusta según lo determinado en la Fase 3 para que sigan funcionando correctamente con el nuevo modelo, sin romper el flujo existente de agregar al carrito, ver el carrito, y completar el checkout para tallas que sí tienen precio.
+6. **Cada consumidor identificado en la Fase 2** (catálogo/listado, carrito, checkout, página pública de detalle de producto, cualquier reporte o notificación): migrado para leer el precio y la oferta desde la nueva estructura por talla, eliminando cualquier referencia a las columnas globales viejas.
 
 No avances al siguiente paso sin haber verificado que el anterior no rompió nada de lo existente.
 
@@ -230,26 +197,29 @@ No avances al siguiente paso sin haber verificado que el anterior no rompió nad
 
 ## Fase 5 — Verificación final (con DevTools abierto en cada prueba)
 
-- [ ] Producto existente (migrado): cada talla disponible muestra el precio correcto tras la migración (debe coincidir con el precio único que tenía antes, salvo que se haya editado deliberadamente después).
-- [ ] Al entrar a la página de detalle sin haber seleccionado talla: se ve el texto "Selecciona una talla para ver el precio correspondiente." y ningún precio numérico.
-- [ ] Al seleccionar una talla con precio definido: aparece el precio correcto de esa talla.
-- [ ] Al seleccionar otra talla con precio distinto: el precio mostrado cambia correctamente.
-- [ ] Al seleccionar "A la medida": el bloque de precio desaparece por completo, sin mostrar $0 ni placeholder.
-- [ ] El bloque "Precios Especiales" ya no aparece en ningún producto, sin importar sus datos previos.
-- [ ] El bloque "Calcular Envío" ya no aparece en la página de detalle de producto.
-- [ ] Si "Calcular Envío" se usaba también en el checkout: el checkout sigue funcionando con esa sección intacta ahí.
-- [ ] El formulario de admin de creación de producto: el campo de precio único fue reemplazado por precio por talla, y el bloque "Precios Especiales" ya no existe.
-- [ ] El formulario de admin de edición de producto: mismo comportamiento, consistente con creación.
-- [ ] El catálogo/listado de productos sigue mostrando un precio (o "Desde $X.XX") legible y sin romper el layout de la tarjeta, para productos con precio por talla.
-- [ ] Agregar al carrito una talla con precio: el carrito refleja el precio correcto de esa talla específica.
-- [ ] Completar (o simular) el checkout: el precio final corresponde al precio de la talla seleccionada, validado en el servidor si el proyecto ya hacía esa validación server-side antes de este cambio.
-- [ ] Intentar agregar al carrito la opción "A la medida" (si la UI lo permitiera de alguna forma): debe bloquearse o redirigir al flujo de cotización por WhatsApp, nunca permitir un checkout con precio indefinido.
-- [ ] El resto de la página (galería, descripción, colores, bordados, badge de oferta, contador, aviso de términos especiales, personalización, botones Agregar/compartir/Cotizar) se ve exactamente igual que en la captura de referencia.
+- [ ] El formulario de admin (creación y edición) ya no muestra ningún campo de precio fuera del bloque "Precio por Talla".
+- [ ] El formulario de admin ya no muestra el campo "Precio Anterior (Oferta)" global.
+- [ ] Dentro de "Precio por Talla", cada talla tiene su propio campo de precio y su propio campo de oferta opcional.
+- [ ] Asignar oferta solo a una talla específica (ejemplo: solo a M) y guardar: el producto se guarda correctamente.
+- [ ] En la vista pública: al seleccionar la talla M (con oferta asignada), se muestra el precio tachado y el precio de oferta correctos para esa talla.
+- [ ] En la vista pública: al seleccionar una talla sin oferta asignada (ejemplo: S), se muestra solo el precio normal de esa talla, sin precio tachado ni badge de oferta para esa talla específica.
+- [ ] El badge "Oferta" / "OFERTA" en la imagen del producto y en el catálogo: se comporta de forma coherente con que la oferta ahora es por talla (define y confirma con el admin real cómo debe verse cuando solo algunas tallas tienen oferta — como mínimo, no debe ser engañoso mostrando "Oferta" si la talla por defecto seleccionada no la tiene).
+- [ ] El contador "Oferta válida hasta..." sigue funcionando con la misma "Configuración de Oferta" general (fecha/duración), sin haberse duplicado ni roto.
+- [ ] El carrito: agregar al carrito una talla con oferta guarda el precio de oferta correcto; agregar una talla sin oferta guarda el precio normal correcto.
+- [ ] El checkout: el total calculado en el servidor corresponde al precio (con o sin oferta según la talla) correcto, sin posibilidad de que el cliente manipule el precio enviado.
+- [ ] El catálogo/listado de productos: el precio mostrado en cada tarjeta sigue siendo coherente (por ejemplo "Desde $X.XX") considerando que ahora puede haber tallas con y sin oferta simultáneamente.
+- [ ] No queda ninguna referencia en el código a las columnas de precio global o de oferta global eliminadas (confirma con un grep final que ya no aparecen):
+
+```bash
+grep -rniE "\b(price|precio)\b" --include="*.ts" --include="*.tsx" . | grep -v node_modules
+```
+
+- [ ] El resto del formulario de admin (Configuración de Oferta general, Catálogo, Categoría, Imágenes, Datos del Catálogo Público, Etiquetas, Producto Activo, SEO del Producto) se ve exactamente igual que en la captura de referencia, sin ninguna alteración.
 - [ ] Chrome Console: cero errores, cero warnings nuevos.
 - [ ] Chrome Network: cero requests fallidos.
 - [ ] Terminal Next.js: cero errores.
 - [ ] `npx next build`: sin errores.
-- [ ] Supabase Logs: cero errores en las operaciones de creación/edición/lectura de producto y en checkout.
+- [ ] Supabase Logs: cero errores en operaciones de creación/edición/lectura de producto y en checkout.
 
 Si cualquier punto falla, **no implementes más cambios encima** — vuelve a la fase correspondiente con la nueva información.
 
@@ -257,45 +227,39 @@ Si cualquier punto falla, **no implementes más cambios encima** — vuelve a la
 
 ## Fase 6 — Registro y commit
 
-Genera `/updates/FEATURE_precio_por_talla_[fecha].md`:
+Genera `/updates/FIX_precio_duplicado_oferta_por_talla_[fecha].md`:
 
 ```markdown
-# Feature: precio por talla, eliminación de Precios Especiales y Calcular Envío
+# Fix: precio duplicado eliminado, oferta independiente por talla
+
+## Contexto
+Corrección sobre la implementación previa de "Precio por Talla", que dejó vivo
+un campo de precio global duplicado y no permitía oferta independiente por talla.
 
 ## Auditoría previa
-- Archivos leídos en la Fase 1: [conteo total, confirmando 100% del inventario]
-- Modelo de precio por talla elegido: [descripción y justificación]
-- Decisión sobre "A la medida": sin precio, cotización exclusiva por WhatsApp
-- Decisión sobre Precio Anterior/Oferta: [descripción]
-- Decisión sobre el precio mostrado en catálogo/listado: [descripción]
+- Archivos leídos en la Fase 1: [conteo total]
+- Consumidores del precio global viejo encontrados: [lista]
+- Consumidores de la oferta global vieja encontrados: [lista]
 
 ## Modelo de datos
-- Estructura anterior de precio: [descripción]
-- Estructura nueva de precio: [descripción]
-- Migración aplicada: [SQL exacto, incluyendo migración de datos existentes]
-- Columnas eliminadas: [precio mayoreo, cantidad mínima, precio mano de obra — nombres reales]
-
-## Componente "Calcular Envío"
-- ¿Era compartido con el checkout?: [SÍ/NO]
-- Acción tomada: [eliminado solo de esta página / eliminado por completo del proyecto]
+- Estructura de "Precio por Talla" antes de esta corrección: [descripción]
+- Estructura nueva, con oferta por talla incluida: [descripción]
+- Migración aplicada: [SQL exacto]
+- Columnas eliminadas: precio global, precio anterior/oferta global [nombres reales]
 
 ## Archivos modificados
 - [ruta]: [descripción exacta del cambio]
 
-## Archivos verificados sin impacto adicional
-- [ruta]: [confirmación]
-
 ## Verificación de diseño preservado
-- Comparado contra la captura de referencia: confirmado sin alteración de las secciones no listadas para cambio
+- Comparado contra la captura de referencia: confirmado sin alteración de secciones no listadas
 
 ## Verificación funcional
-- Precio por talla mostrado correctamente: ✓
-- Texto "Selecciona una talla para ver el precio correspondiente.": ✓
-- "A la medida" sin precio mostrado: ✓
-- Precios Especiales eliminado de BD, admin, y vista pública: ✓
-- Calcular Envío eliminado de la página de producto: ✓
-- Carrito y checkout funcionando con el nuevo modelo: ✓
-- Catálogo/listado sin romper layout: ✓
+- Campo de precio duplicado eliminado: ✓
+- Campo de oferta global eliminado: ✓
+- Oferta asignable de forma independiente por talla: ✓
+- Vista pública refleja oferta solo en las tallas que la tienen: ✓
+- Carrito y checkout usan el precio/oferta correcto por talla: ✓
+- Grep final sin referencias a columnas eliminadas: ✓
 
 ## Consolas
 - Chrome Console: limpia ✓
@@ -308,35 +272,31 @@ Luego:
 
 ```bash
 git add .
-git commit -m "feat: precio por talla, elimina Precios Especiales y Calcular Envío
+git commit -m "fix: elimina precio duplicado, agrega oferta independiente por talla
 
 - Auditado el 100% del código antes de implementar
-- Migrado el modelo de precio único a precio por talla, con migración de datos existentes
-- 'A la medida' sin precio fijo, flujo dirigido a cotización por WhatsApp
-- Eliminadas columnas de mayoreo y mano de obra de Supabase, admin y vista pública
-- Eliminada sección Calcular Envío de la página de detalle de producto
-- Carrito y checkout actualizados para el nuevo modelo de precio
-- Sin regresiones verificadas en el resto de la página ni en consolas"
+- Eliminado el campo de precio global duplicado del formulario y de Supabase
+- Eliminado el campo de oferta global, reemplazado por oferta opcional por talla
+- Migrados todos los consumidores (catálogo, carrito, checkout, vista pública) al nuevo modelo
+- Sin regresiones verificadas en el resto del formulario ni en consolas"
 
 git push origin desarrollo
 ```
 
 ---
 
-## Definición inamovible de "implementación completada"
+## Definición inamovible de "corrección completada"
 
-- [ ] Se auditó el 100% del código del proyecto, no solo los archivos directamente relacionados a precio o envío
-- [ ] El modelo de precio por talla está implementado y migrado correctamente sobre los productos existentes
-- [ ] El texto del selector de talla muestra "Selecciona una talla para ver el precio correspondiente." antes de elegir talla
-- [ ] "A la medida" no muestra ningún precio
-- [ ] Precios Especiales (mayoreo y mano de obra) eliminado en los tres niveles: Supabase, formulario de admin, vista pública
-- [ ] Calcular Envío eliminado de la página de detalle de producto, preservado en el checkout si ahí sí se usaba
-- [ ] El carrito y el checkout funcionan correctamente con el nuevo modelo de precio por talla
-- [ ] El catálogo/listado de productos sigue mostrando un precio legible sin romper su layout
-- [ ] El resto del diseño visual de la página de detalle de producto permanece exactamente igual, comparado contra la captura de referencia
-- [ ] Cero regresiones en ningún flujo existente (catálogo, carrito, checkout, favoritos, admin)
+- [ ] Se auditó el 100% del código del proyecto, no solo el formulario de admin
+- [ ] El campo de precio global duplicado fue eliminado del formulario y de Supabase
+- [ ] El campo de oferta global fue eliminado del formulario y de Supabase
+- [ ] Cada talla en "Precio por Talla" puede tener su propio precio de oferta opcional e independiente
+- [ ] Es posible asignar oferta solo a tallas específicas, dejando otras sin oferta, y se guarda y muestra correctamente
+- [ ] Ningún consumidor del sistema (catálogo, carrito, checkout, vista pública, reportes) sigue leyendo de las columnas globales eliminadas — verificado con grep final
+- [ ] El resto del formulario y de la vista pública permanece exactamente igual al estado de la captura de referencia
+- [ ] Cero regresiones en ningún flujo existente
 - [ ] Consolas (Chrome Console, Network, Next.js terminal, Supabase Logs) limpias
 - [ ] Registro completo en `/updates/`
 - [ ] Commit hecho en `desarrollo`
 
-**Si falta un solo punto: la implementación no está terminada. No declares éxito. Continúa.**
+**Si falta un solo punto: la corrección no está terminada. No declares éxito. Continúa.** 

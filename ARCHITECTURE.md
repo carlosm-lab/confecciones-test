@@ -149,3 +149,29 @@ El usuario requirió precios especiales (ofertas, mayoreo, mano de obra), envío
 - Si la RPC falla (red, Supabase caído), el pedido NO se envía — se muestra toast de error. Esto es preferible a enviar un mensaje con precios potencialmente manipulados.
 - El costo de envío es estimado (se usa el costo fijo de la zona). Si en el futuro se integra con un API de courier, `getShippingInfo` es el único punto a cambiar.
 - `offer_type` se guarda en BD pero la lógica de visibilidad de la oferta (e.g., solo para nuevos clientes) **no está implementada en el front-end público todavía** — es un campo informativo para el admin y el mensaje de WhatsApp. La implementación de reglas de negocio por tipo de cliente queda pendiente para cuando exista un sistema de cuentas de usuario.
+
+---
+
+**Date:** 2026-06-21
+**Decision:** PRICE-002 — Migración de oferta global `old_price` a oferta por talla `offer_by_size` (jsonb)
+
+**Context:**
+El formulario de admin tenía dos campos globales: `Precio ($)` (`price`) y `Precio Anterior (Oferta)` (`old_price`). Con la introducción de `price_by_size` (precio distinto por talla), tener un precio de oferta global era inconsistente y confuso: la oferta aplica al producto entero, pero cada talla puede tener precio diferente. Ejemplo: talla M $35, talla XL $40 — con el modelo viejo, si la oferta era "$30", ¿a qué talla aplicaba?
+
+**Decision:**
+
+1. Se eliminan los inputs `Precio ($)` y `Precio Anterior (Oferta)` del formulario admin.
+2. Se agrega una columna `offer_by_size jsonb DEFAULT NULL` en la tabla `products` (migración: `20260621_offer_by_size.sql`).
+3. Estructura de `offer_by_size`: `{ "M": 30.00, "XL": 35.00 }` — solo aparecen las tallas con oferta activa. Si vacío/null → sin oferta.
+4. El campo `price` (global, legacy) se **recalcula automáticamente** al guardar: `min(price_by_size)`.
+5. El campo `old_price` (global, legacy) se **recalcula automáticamente** al guardar: `min(offer_by_size)` o `null`.
+6. Esto preserva la compatibilidad con: `CartContext` (usa `price` para revalidar), `StatDetailModal` (filtra por `old_price IS NOT NULL`), y filtros de "Solo ofertas activas".
+7. La temporalidad de la oferta (`offer_starts_at`, `offer_ends_at`) sigue siendo el interruptor global — aplica a todas las tallas que tienen oferta en `offer_by_size`.
+8. En vista de detalle: si la talla seleccionada tiene oferta en `offer_by_size`, se muestra su precio de oferta + precio base tachado. Si no → sin precio tachado para esa talla.
+
+**Consequences:**
+
+- Los productos existentes con `old_price` global siguen funcionando correctamente (CatalogProductCard, ProductDetailClient tienen fallback a `product.old_price`).
+- Al re-guardar un producto existente desde el admin, `old_price` global se sobreescribirá con `min(offer_by_size)` o `null`. Si se quiere preservar la oferta legacy, se debe ingresar manualmente en `offer_by_size`.
+- La migración SQL en `supabase/migrations/20260621_offer_by_size.sql` debe ejecutarse manualmente en el Dashboard de Supabase SQL Editor (el Service Role Key fue removido del `.env` por seguridad).
+- `isProductOnSale()` en `catalogService.ts` y `productUtils.ts` verifica ambos: `offer_by_size` (nuevo) y `old_price > price` (legacy fallback).

@@ -179,7 +179,17 @@ export default function AdminProductsPage() {
       // 📣 Publicar y notificar — prioridad: oferta > nuevo producto
       if (notifyFlag && savedProductId) {
         try {
-          const hasOffer = !!productData.old_price;
+          const hasOffer = !!(
+            (
+              productData as {
+                offer_by_size?: Record<string, number> | null;
+              }
+            ).offer_by_size &&
+            Object.keys(
+              (productData as { offer_by_size?: Record<string, number> | null })
+                .offer_by_size ?? {}
+            ).length > 0
+          );
           const sector = productData.sector ?? "catalogo";
           const slug = productData.slug ?? savedProductId;
           const productUrl = `/catalogo/${sector}/${slug}`;

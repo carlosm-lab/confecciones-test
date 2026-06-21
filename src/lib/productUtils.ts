@@ -50,6 +50,8 @@ export interface Product {
   caracteristicas?: string[] | null;
   // Precio por talla — mapa { talla: precio } (null si no aplica)
   price_by_size?: Record<string, number> | null;
+  // Oferta por talla — mapa { talla: precio_oferta } (null si no hay ofertas)
+  offer_by_size?: Record<string, number> | null;
   // ── Campos SEO manuales (opcionales por producto) ─────────────
   /** Título SEO manual — si null, se usa el automático */
   seo_title?: string | null;
@@ -69,9 +71,15 @@ export interface Product {
 const isOfferActive = (product: Product): boolean => {
   if (!product) return false;
   const now = new Date();
-  const hasOffer =
+
+  // Nuevo modelo: oferta por talla
+  const hasOfferBySize =
+    product.offer_by_size && Object.keys(product.offer_by_size).length > 0;
+  // Modelo legacy: old_price global
+  const hasGlobalOldPrice =
     product.old_price && Number(product.old_price) > Number(product.price);
-  if (!hasOffer) return false;
+
+  if (!hasOfferBySize && !hasGlobalOldPrice) return false;
 
   if (product.offer_starts_at && new Date(product.offer_starts_at) > now)
     return false;

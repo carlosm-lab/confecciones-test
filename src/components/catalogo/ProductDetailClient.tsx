@@ -64,7 +64,7 @@ export function ProductDetailClient({
   const onSale = isProductOnSale(product);
   const sector = getProductSector(product);
   const slug = product.slug ?? product.id;
-  const oldPrice = product.old_price ? Number(product.old_price) : null;
+  // oldPrice global eliminado — se usa displayOldPrice calculado desde offer_by_size
   const offerTerms = (product as { offer_terms?: string | null }).offer_terms;
   const offerEndsAt = (product as { offer_ends_at?: string | null })
     .offer_ends_at
@@ -87,13 +87,39 @@ export function ProductDetailClient({
     (product as { price_by_size?: Record<string, number> | null })
       .price_by_size ?? null;
 
+  // Oferta por talla
+  const offerBySize: Record<string, number> | null =
+    (product as { offer_by_size?: Record<string, number> | null })
+      .offer_by_size ?? null;
+
   // Precio a mostrar: depende de la talla seleccionada
   const isALaMedida = selectedSize === "A la medida";
-  const selectedSizePrice =
+  const selectedSizeBasePrice =
     selectedSize && priceBySize ? (priceBySize[selectedSize] ?? null) : null;
-  // Precio para el carrito (talla seleccionada o precio base de fallback)
-  const cartPrice =
-    selectedSizePrice !== null ? selectedSizePrice : Number(product.price);
+  // Precio de oferta de la talla seleccionada (si existe y la oferta está activa)
+  const selectedSizeOfferPrice =
+    onSale && selectedSize && offerBySize
+      ? (offerBySize[selectedSize] ?? null)
+      : null;
+  // Precio efectivo: precio de oferta si existe, si no precio base
+  const effectivePrice =
+    selectedSizeOfferPrice !== null
+      ? selectedSizeOfferPrice
+      : selectedSizeBasePrice !== null
+        ? selectedSizeBasePrice
+        : Number(product.price);
+  // Precio para el carrito
+  const cartPrice = effectivePrice;
+  // Precio anterior a mostrar tachado:
+  // - Si hay oferta por talla: mostrar el precio base de esa talla
+  // - Si hay old_price global (legacy): mostrar ese
+  // - Si no: null
+  const displayOldPrice: number | null =
+    selectedSizeOfferPrice !== null && selectedSizeBasePrice !== null
+      ? selectedSizeBasePrice
+      : product.old_price
+        ? Number(product.old_price)
+        : null;
 
   // Contexts
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -142,7 +168,8 @@ export function ProductDetailClient({
         id: product.id,
         name: product.name,
         price: cartPrice,
-        old_price: oldPrice,
+        // old_price: precio tachado al momento de agregar al carrito
+        old_price: displayOldPrice,
         image_path: getProductMainImage(product),
         slug: `${sector}/${slug}`,
       },
@@ -481,9 +508,9 @@ export function ProductDetailClient({
                 </div>
               ) : (
                 <div className="flex items-end gap-3">
-                  {selectedSizePrice !== null ? (
+                  {selectedSizeBasePrice !== null ? (
                     <p className="text-2xl font-bold text-gray-900">
-                      ${selectedSizePrice.toFixed(2)}
+                      ${effectivePrice.toFixed(2)}
                       {product.price_suffix && (
                         <span className="ml-1 text-sm font-normal text-slate-500">
                           {product.price_suffix}
@@ -518,9 +545,9 @@ export function ProductDetailClient({
                       )}
                     </p>
                   )}
-                  {onSale && oldPrice && (
+                  {onSale && displayOldPrice && (
                     <p className="text-lg font-medium text-slate-400 line-through">
-                      ${oldPrice.toFixed(2)}
+                      ${displayOldPrice.toFixed(2)}
                     </p>
                   )}
                 </div>

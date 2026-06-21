@@ -39,6 +39,8 @@ export interface DbProduct {
   updated_at: string | null;
   // Precio por talla — mapa { talla: precio } (null si no aplica)
   price_by_size: Record<string, number> | null;
+  // Oferta por talla — mapa { talla: precio_oferta } (null si no hay ofertas en ninguna talla)
+  offer_by_size: Record<string, number> | null;
   // Join from categories table
   categories?: { name: string; catalog: string } | null;
   /** Términos de la oferta — texto libre para mostrar al cliente */
@@ -63,8 +65,17 @@ export function getProductMainImage(product: DbProduct): string | null {
 }
 
 // ── Determinar si el producto tiene oferta activa ─────────────
+// Verifica si existe offer_by_size con al menos una talla, O el old_price global,
+// y que las fechas de oferta sean válidas (o indefinida).
 export function isProductOnSale(product: DbProduct): boolean {
-  if (!product.old_price || product.old_price <= product.price) return false;
+  // Verificar si hay oferta en alguna talla (nuevo modelo) o precio global (legacy)
+  const hasOfferBySize =
+    product.offer_by_size && Object.keys(product.offer_by_size).length > 0;
+  const hasGlobalOldPrice =
+    product.old_price && product.old_price > product.price;
+  if (!hasOfferBySize && !hasGlobalOldPrice) return false;
+
+  // Verificar vigencia temporal
   const now = new Date();
   if (product.offer_starts_at && new Date(product.offer_starts_at) > now)
     return false;
@@ -101,7 +112,7 @@ export const PRODUCT_SELECT = `
   offer_ends_at, offer_starts_at, offer_terms, category, category_id, tags,
   image_path, images, is_active, slug, sector, badge_text,
   price_suffix, tallas, colores, material, caracteristicas,
-  price_by_size,
+  price_by_size, offer_by_size,
   seo_title, seo_description, seo_keywords, seo_robots, seo_publisher,
   created_at, updated_at,
   categories(name, catalog)
