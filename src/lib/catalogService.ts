@@ -350,3 +350,37 @@ export async function getAllProductsForSitemap(): Promise<
     };
   });
 }
+
+// ── Categorías de un sector — alimenta los filtros dinámicos ──
+
+/** Categoría tal como viene de la tabla `categories` de Supabase */
+export interface DbCategory {
+  id: string;
+  name: string;
+  slug: string;
+  catalog: string | null;
+}
+
+/**
+ * Devuelve las categorías activas del catalog/sector desde Supabase.
+ * Úsalo en el servidor (RSC / page.tsx) para construir los filtros dinámicamente
+ * en lugar de depender del array hardcodeado en data/categories.ts.
+ */
+export async function getCategoriesForSector(
+  sector: string
+): Promise<DbCategory[]> {
+  const supabase = createServerClient();
+
+  const { data, error } = await supabase
+    .from("categories")
+    .select("id, name, slug, catalog")
+    .eq("catalog", sector)
+    .order("name");
+
+  if (error) {
+    console.error("[catalogService] getCategoriesForSector error:", error);
+    return [];
+  }
+
+  return (data ?? []) as DbCategory[];
+}

@@ -101,19 +101,16 @@ export function CatalogProductCard({
         </div>
       )}
 
-      {/* Favorito */}
+      {/* Favorito — idéntico a la vista de detalle */}
       <button
+        type="button"
         onClick={handleToggleFavorite}
-        className="absolute top-2 right-2 z-[20] flex h-8 w-8 items-center justify-center rounded-full bg-black/20 backdrop-blur-sm transition-all duration-300 hover:bg-black/30 active:scale-90"
-        aria-label="Alternar Favorito"
+        className="absolute top-2 right-2 z-[20] flex h-7 w-7 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition hover:scale-110 active:scale-95"
+        aria-label={isFavorited ? "Quitar de favoritos" : "Agregar a favoritos"}
       >
         <span
-          className={cn(
-            "material-symbols-outlined drop-shadow-[0_0px_3px_rgba(0,0,0,0.7)] transition-colors",
-            isFavorited ? "text-red-500" : "text-white"
-          )}
+          className="material-symbols-outlined text-[17px] text-red-500"
           style={{
-            fontSize: "clamp(16px, 3.2vw, 20px)",
             fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0",
           }}
         >

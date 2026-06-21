@@ -921,9 +921,10 @@ export default function ProductModal({
                 </label>
                 <CustomSelect
                   id="product-catalog"
-                  options={CATALOGS.filter((cat) =>
-                    categories.some((c) => c.catalog === cat.value)
-                  ).map((cat) => ({ value: cat.value, label: cat.label }))}
+                  options={CATALOGS.map((cat) => ({
+                    value: cat.value,
+                    label: cat.label,
+                  }))}
                   value={formData.catalog}
                   onChange={(nextCatalog) =>
                     setFormData((prev) => ({

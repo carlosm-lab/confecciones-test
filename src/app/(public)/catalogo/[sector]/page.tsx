@@ -4,7 +4,10 @@ import { CATEGORIES } from "@/data/categories";
 import { CatalogPageClient } from "@/components/catalogo/CatalogPageClient";
 import { siteConfig } from "@/config/site";
 import type { Sector } from "@/data/types";
-import { getProductsBySector } from "@/lib/catalogService";
+import {
+  getProductsBySector,
+  getCategoriesForSector,
+} from "@/lib/catalogService";
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 
 // ── Static params: genera una página por sector ───────────────────────────────
@@ -67,8 +70,37 @@ export default async function SectorCatalogPage({
     notFound();
   }
 
-  // Fetch productos desde Supabase server-side
-  const products = await getProductsBySector(sector);
+  // Fetch productos y categorías en paralelo desde Supabase (SSR)
+  const [products, dbCategories] = await Promise.all([
+    getProductsBySector(sector),
+    getCategoriesForSector(sector),
+  ]);
+
+  // Construir config dinámico — las categorías de DB reemplazan las hardcodeadas.
+  // Si la DB no devuelve categorías para este sector, se conservan las del archivo.
+  const resolvedConfig =
+    dbCategories.length > 0
+      ? {
+          ...config,
+          filterGroups: [
+            {
+              ...config.filterGroups[0],
+              options: dbCategories.map((cat) => ({
+                value: cat.slug,
+                label: cat.name,
+              })),
+            },
+            ...config.filterGroups.slice(1),
+          ],
+          categoryChips: [
+            { label: "Todo", icon: "grid_view" },
+            ...dbCategories.map((cat) => ({
+              label: cat.name,
+              icon: config.filterGroups[0]?.icon ?? config.icon ?? "checkroom",
+            })),
+          ],
+        }
+      : config;
 
   const PAGE_URL = `${siteConfig.url}/catalogo/${sector}`;
 
@@ -77,7 +109,7 @@ export default async function SectorCatalogPage({
       <OffersReadTracker />
       <CatalogPageClient
         sector={sector as Sector}
-        config={config}
+        config={resolvedConfig}
         initialProducts={products}
       />
 
