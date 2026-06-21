@@ -260,6 +260,14 @@ export function Navbar() {
 
   return (
     <>
+      {/* Backdrop blur — visible cuando el menu esta abierto */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/25 backdrop-blur-sm"
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+      )}
       <header
         data-nosnippet
         className={cn(
