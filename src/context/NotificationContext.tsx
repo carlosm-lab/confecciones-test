@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 /**
  * NotificationContext
@@ -68,6 +68,7 @@ const HINT_TYPES: string[] = [
 
 const LS_LOCAL_NOTIFS = "liss_local_notifs_v4";
 const LS_READ_IDS = "liss_notif_read_ids_v4";
+const LS_DISMISSED_IDS = "liss_notif_dismissed_ids_v4";
 const LS_PUSH_DISMISSED = "liss_push_prompt_dismissed_v4";
 const LS_FIRST_VISIT_TS = "liss_first_visit_ts_v4";
 const MAX_LOCAL_NOTIFS = 30;
@@ -87,6 +88,23 @@ function loadReadIds(): Set<string> {
     return raw ? new Set(JSON.parse(raw) as string[]) : new Set();
   } catch {
     return new Set();
+  }
+}
+
+function loadDismissedIds(): Set<string> {
+  try {
+    const raw = localStorage.getItem(LS_DISMISSED_IDS);
+    return raw ? new Set(JSON.parse(raw) as string[]) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function saveDismissedIds(ids: Set<string>): void {
+  try {
+    localStorage.setItem(LS_DISMISSED_IDS, JSON.stringify([...ids]));
+  } catch {
+    /* silent */
   }
 }
 
@@ -120,6 +138,7 @@ interface NotificationContextValue {
   unreadCount: number;
   markRead: (id: string) => void;
   markAllHintsRead: () => void;
+  dismissNotification: (id: string) => void;
   addLocalNotification: (
     notif: Pick<AppNotification, "type" | "title" | "message" | "target_url">
   ) => void;
@@ -148,6 +167,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const [localNotifs, setLocalNotifs] = useState<AppNotification[]>([]);
   const [dbNotifs, setDbNotifs] = useState<AppNotification[]>([]);
   const [readIds, setReadIds] = useState<Set<string>>(new Set());
+  const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
   const [pushPermissionStatus, setPushPermissionStatus] =
     useState<PushPermissionStatus>("default");
   const [pushPromptDismissed, setPushPromptDismissed] = useState(false);
@@ -164,6 +184,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setLocalNotifs(loadLocalNotifs());
     setReadIds(loadReadIds());
+    setDismissedIds(loadDismissedIds());
     setPushPromptDismissed(!!localStorage.getItem(LS_PUSH_DISMISSED));
 
     // Registrar primera visita
@@ -462,6 +483,25 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  // ── dismissNotification ───────────────────────────────────────
+  const dismissNotification = useCallback((id: string) => {
+    // Local notification: remove from array
+    if (id.startsWith("local_")) {
+      setLocalNotifs((prev) => {
+        const updated = prev.filter((n) => n.id !== id);
+        saveLocalNotifs(updated);
+        return updated;
+      });
+      return;
+    }
+    // DB notification: add to dismissedIds set
+    setDismissedIds((prev) => {
+      const next = new Set([...prev, id]);
+      saveDismissedIds(next);
+      return next;
+    });
+  }, []);
+
   // ── subscribeToPush ───────────────────────────────────────────
   const subscribeToPush = useCallback(async (): Promise<boolean> => {
     if (
@@ -517,16 +557,20 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   // Mantener ref actualizado para el toast (evitar closure stale)
   subscribeToPushRef.current = subscribeToPush;
 
-  // ── Combinar notificaciones ───────────────────────────────────
-  // Local primero (hints), luego DB (productos/ofertas/manuales)
+  // ── Combinar notificaciones — ordenadas por fecha desc ────────
   const allNotifications: AppNotification[] = mounted
     ? [
         ...localNotifs.map((n) => ({
           ...n,
           read: n.read || readIds.has(n.id),
         })),
-        ...dbNotifs.map((n) => ({ ...n, read: n.read || readIds.has(n.id) })),
-      ]
+        ...dbNotifs
+          .filter((n) => !dismissedIds.has(n.id))
+          .map((n) => ({ ...n, read: n.read || readIds.has(n.id) })),
+      ].sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      )
     : [];
 
   const unreadCount = allNotifications.filter((n) => !n.read).length;
@@ -538,6 +582,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         unreadCount,
         markRead,
         markAllHintsRead,
+        dismissNotification,
         addLocalNotification,
         subscribeToPush,
         pushPermissionStatus,

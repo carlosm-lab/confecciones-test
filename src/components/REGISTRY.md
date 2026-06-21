@@ -301,3 +301,29 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Ruta:** `src/app/api/csp-report/route.ts`
 - **Descripcion:** Receptor de violaciones CSP. Los navegadores lo invocan automaticamente cuando el CSP bloquea un recurso. Rate limiting en memoria (10 req/IP/min), ignora extensiones de navegador, persiste en `security_events` con tipo `csp_violation`.
 - **Metodo:** POST, no requiere auth. Responde siempre 204 No Content.
+
+---
+
+## Notification Components
+
+### GuestBell
+
+- **Ruta:** `src/components/ui/GuestBell.tsx`
+- **Descripción:** Centro de notificaciones completo montado en la Navbar. Renderiza mediante portal sobre `document.body`. Gestiona notificaciones locales (hints) y de BD en tiempo real. Arquitectura de 3 vistas: lista con tabs, detalle sub-panel, y modales de confirmación/bloqueo.
+- **Props:** No recibe props. Consume `useNotifications()`, `useAuth()`, `useRouter()`.
+- **Sub-componentes internos:**
+  - `NotifRow` — Fila de lista con ícono, title truncado, timestamp, dot unread y botón papelera.
+  - `DetailView` — Sub-panel de detalle con ícono grande, badge de tipo, fecha completa, mensaje completo y botón CTA.
+  - `ConfirmModal` — Modal de confirmación/explicación superpuesto al panel.
+- **Estado interno:** `isOpen`, `activeTab: "all"|"unread"|"read"`, `expandedNotif`, `deleteTarget`, `blockMessage`, `dragY/isDragging` (swipe mobile)
+- **Tabs:** Todas | No leídas | Leídas — filtran `notifications` del contexto.
+- **Click en fila:** Abre `DetailView`; marca notif como leída (excepto hint types).
+- **Papelera:**
+  - Hint sin condición cumplida → muestra `ConfirmModal` con explicación (no elimina).
+  - Hint con condición cumplida / DB notif → muestra confirmación → llama `dismissNotification(id)`.
+- **CTA en detalle:**
+  - `push_permission` → "Activar alertas" (si no granted/denied).
+  - `auth_hint|favorites_hint|cart_hint` sin login → "Iniciar sesión".
+  - Notif con `target_url` → "Ver contenido" + router.push + markRead.
+- **Swipe-to-dismiss:** Solo mobile. Umbral 100px hacia abajo cierra el panel.
+- **Ejemplo:** `<GuestBell />` (montado en `Navbar.tsx`)
