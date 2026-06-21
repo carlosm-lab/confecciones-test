@@ -151,11 +151,10 @@ export function GuestBell() {
     null
   );
 
-  // Delete modals
+  // Delete confirmation target
   const [deleteTarget, setDeleteTarget] = useState<AppNotification | null>(
     null
   );
-  const [blockMessage, setBlockMessage] = useState<string | null>(null);
 
   // Swipe-to-dismiss (mobile)
   const [dragY, setDragY] = useState(0);
@@ -169,7 +168,6 @@ export function GuestBell() {
     setExpandedNotif(null);
     setActiveTab("unread");
     setDeleteTarget(null);
-    setBlockMessage(null);
   }, []);
 
   const handleDragStart = (e: React.TouchEvent) => {
@@ -233,56 +231,13 @@ export function GuestBell() {
     setIsSubscribing(false);
   }, [subscribeToPush]);
 
-  /**
-   * Check if user can delete this notification.
-   * Returns { allowed, reason }
-   */
-  const canDelete = useCallback(
-    (notif: AppNotification): { allowed: boolean; reason?: string } => {
-      if (notif.type === "push_permission") {
-        if (
-          pushPermissionStatus === "default" ||
-          pushPermissionStatus === "unsupported"
-        ) {
-          return {
-            allowed: false,
-            reason:
-              "Esta notificación te recuerda activar las alertas de la tienda. Puedes eliminarla después de responder a la solicitud de permisos.",
-          };
-        }
-        return { allowed: true };
-      }
-      if (
-        notif.type === "auth_hint" ||
-        notif.type === "favorites_hint" ||
-        notif.type === "cart_hint"
-      ) {
-        if (!user) {
-          return {
-            allowed: false,
-            reason:
-              "Esta notificación te invita a iniciar sesión para disfrutar de todas las funciones. Puedes eliminarla una vez hayas iniciado sesión.",
-          };
-        }
-        return { allowed: true };
-      }
-      return { allowed: true };
-    },
-    [pushPermissionStatus, user]
-  );
-
-  /** Click on trash icon */
+  /** Click on trash icon — always shows confirmation modal */
   const handleTrashClick = useCallback(
     (e: React.MouseEvent | React.KeyboardEvent, notif: AppNotification) => {
       e.stopPropagation();
-      const { allowed, reason } = canDelete(notif);
-      if (!allowed) {
-        setBlockMessage(reason!);
-      } else {
-        setDeleteTarget(notif);
-      }
+      setDeleteTarget(notif);
     },
-    [canDelete]
+    []
   );
 
   /** Confirm deletion */
@@ -583,14 +538,12 @@ export function GuestBell() {
                 <ul className="flex flex-col gap-1 p-3">
                   {filteredNotifs.map((notif) => {
                     const cfg = NOTIF_CONFIG[notif.type] ?? FALLBACK_CONFIG;
-                    const { allowed: deletable } = canDelete(notif);
 
                     return (
                       <NotifRow
                         key={notif.id}
                         notif={notif}
                         cfg={cfg}
-                        deletable={deletable}
                         onOpen={handleNotifClick}
                         onTrash={handleTrashClick}
                       />
@@ -601,28 +554,15 @@ export function GuestBell() {
             </div>
           </div>
 
-          {/* ── Delete Confirmation Modal ─────────────────────── */}
+          {/* \u2500\u2500 Delete Confirmation Modal \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */}
           {deleteTarget && (
             <ConfirmModal
-              title="¿Eliminar notificación?"
-              message={`Se eliminará "${deleteTarget.title}" de forma permanente.`}
+              title="\u00bfEliminar notificaci\u00f3n?"
+              message={`Se eliminar\u00e1 "${deleteTarget.title}" de forma permanente.`}
               confirmLabel="Eliminar"
               confirmClass="bg-red-500 hover:bg-red-600 text-white"
               onConfirm={handleDeleteConfirm}
-              onCancel={() => setDeleteTarget(null)}
-            />
-          )}
-
-          {/* ── Blocked Delete Modal ──────────────────────────── */}
-          {blockMessage && (
-            <ConfirmModal
-              title="No puedes eliminar esto aún"
-              message={blockMessage}
-              confirmLabel="Entendido"
-              confirmClass="bg-primary hover:bg-primary/90 text-white"
-              onConfirm={() => setBlockMessage(null)}
-              onCancel={() => setBlockMessage(null)}
-              hideCancel
+              onCancel={closePanel}
             />
           )}
         </div>,
@@ -678,7 +618,6 @@ export function GuestBell() {
 interface NotifRowProps {
   notif: AppNotification;
   cfg: IconConfig;
-  deletable: boolean;
   onOpen: (notif: AppNotification) => void;
   onTrash: (
     e: React.MouseEvent | React.KeyboardEvent,
@@ -686,7 +625,7 @@ interface NotifRowProps {
   ) => void;
 }
 
-function NotifRow({ notif, cfg, deletable, onOpen, onTrash }: NotifRowProps) {
+function NotifRow({ notif, cfg, onOpen, onTrash }: NotifRowProps) {
   return (
     <li>
       <div
@@ -764,12 +703,7 @@ function NotifRow({ notif, cfg, deletable, onOpen, onTrash }: NotifRowProps) {
             onKeyDown={(e) =>
               (e.key === "Enter" || e.key === " ") && onTrash(e, notif)
             }
-            className={cn(
-              "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-slate-300 transition-colors",
-              deletable
-                ? "hover:bg-red-50 hover:text-red-400"
-                : "hover:bg-slate-100 hover:text-slate-400"
-            )}
+            className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-slate-300 transition-colors hover:bg-red-50 hover:text-red-400"
             aria-label="Eliminar notificación"
           >
             <span className="material-symbols-outlined text-[16px]">
