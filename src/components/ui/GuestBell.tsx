@@ -651,7 +651,7 @@ export function GuestBell() {
             aria-modal="true"
           >
             <div
-              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
               onClick={() => setDeleteTarget(null)}
               aria-hidden="true"
             />
@@ -693,7 +693,7 @@ export function GuestBell() {
             aria-modal="true"
           >
             <div
-              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
               onClick={() => setBlockInfo(null)}
               aria-hidden="true"
             />
