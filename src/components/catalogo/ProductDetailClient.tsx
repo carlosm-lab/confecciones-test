@@ -12,7 +12,7 @@
  * - Modal informativo para usuarios no logueados
  */
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
@@ -29,13 +29,6 @@ import {
   getProductSector,
   type DbProduct,
 } from "@/lib/catalogService";
-import {
-  DEPARTMENTS,
-  getShippingInfo,
-  type DeliveryType,
-  DELIVERY_TYPE_LABEL,
-  DELIVERY_TYPES_BY_ZONE,
-} from "@/lib/shipping";
 import { buildQuoteUrl } from "@/lib/whatsapp";
 
 interface ProductDetailClientProps {
@@ -66,24 +59,11 @@ export function ProductDetailClient({
   const [showToast, setShowToast] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
-  // Shipping state
-  const [selectedDept, setSelectedDept] = useState<string>("");
-  const [selectedMunicipality, setSelectedMunicipality] = useState<string>("");
-  const [selectedDelivery, setSelectedDelivery] = useState<DeliveryType | null>(
-    null
-  );
-  const [isCalculating, setIsCalculating] = useState(false);
-  const [shippingResult, setShippingResult] = useState<{
-    label: string;
-    method: string;
-    cost: number;
-  } | null>(null);
-  const calcTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Shipping state removed — la calculadora de envío fue eliminada (ver correcciones.txt)
 
   const onSale = isProductOnSale(product);
   const sector = getProductSector(product);
   const slug = product.slug ?? product.id;
-  const price = Number(product.price);
   const oldPrice = product.old_price ? Number(product.old_price) : null;
   const offerTerms = (product as { offer_terms?: string | null }).offer_terms;
   const offerEndsAt = (product as { offer_ends_at?: string | null })
@@ -101,11 +81,19 @@ export function ProductDetailClient({
     : null;
   const now = new Date();
   const isOfferScheduled = !!(offerStartsAt && offerStartsAt > now);
-  const wholesalePrice = (product as { wholesale_price?: number | null })
-    .wholesale_price;
-  const wholesaleMinQty = (product as { wholesale_min_qty?: number | null })
-    .wholesale_min_qty;
-  const laborPrice = (product as { labor_price?: number | null }).labor_price;
+
+  // Precio por talla
+  const priceBySize: Record<string, number> | null =
+    (product as { price_by_size?: Record<string, number> | null })
+      .price_by_size ?? null;
+
+  // Precio a mostrar: depende de la talla seleccionada
+  const isALaMedida = selectedSize === "A la medida";
+  const selectedSizePrice =
+    selectedSize && priceBySize ? (priceBySize[selectedSize] ?? null) : null;
+  // Precio para el carrito (talla seleccionada o precio base de fallback)
+  const cartPrice =
+    selectedSizePrice !== null ? selectedSizePrice : Number(product.price);
 
   // Contexts
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -130,78 +118,6 @@ export function ProductDetailClient({
 
   const placeholderCount = Math.max(0, 4 - allImages.length);
 
-  // Departamentos para el select
-  const departmentOptions = DEPARTMENTS.map((d) => ({
-    value: d.name,
-    label: d.name,
-  }));
-
-  // Municipios del departamento seleccionado
-  const municipalityOptions =
-    DEPARTMENTS.find((d) => d.name === selectedDept)?.municipalities.map(
-      (m) => ({ value: m, label: m })
-    ) ?? [];
-
-  // Zona del departamento seleccionado
-  const selectedZone =
-    DEPARTMENTS.find((d) => d.name === selectedDept)?.zone ?? null;
-
-  // Opciones de entrega para la zona seleccionada
-  const deliveryOptions = selectedZone
-    ? DELIVERY_TYPES_BY_ZONE[selectedZone]
-    : [];
-
-  // ── Cálculo de envío con animación ───────────────────────────
-  function triggerShippingCalculation(
-    dept: string,
-    municipality: string,
-    delivery: DeliveryType
-  ) {
-    if (calcTimerRef.current) clearTimeout(calcTimerRef.current);
-    setIsCalculating(true);
-    setShippingResult(null);
-
-    calcTimerRef.current = setTimeout(() => {
-      const info = getShippingInfo(dept, municipality || dept);
-      setShippingResult({
-        label: info.label,
-        method: info.method,
-        cost: info.cost,
-      });
-      setIsCalculating(false);
-    }, 1200);
-  }
-
-  useEffect(() => {
-    return () => {
-      if (calcTimerRef.current) clearTimeout(calcTimerRef.current);
-    };
-  }, []);
-
-  function handleDeptChange(value: string) {
-    setSelectedDept(value);
-    setSelectedMunicipality("");
-    setSelectedDelivery(null);
-    setShippingResult(null);
-    setIsCalculating(false);
-  }
-
-  function handleMunicipalityChange(value: string) {
-    setSelectedMunicipality(value);
-    if (selectedDelivery === "domicilio") {
-      triggerShippingCalculation(selectedDept, value, "domicilio");
-    }
-  }
-
-  function handleDeliveryChange(delivery: DeliveryType) {
-    setSelectedDelivery(delivery);
-    if (delivery === "taller" || delivery === "punto_medio") {
-      triggerShippingCalculation(selectedDept, selectedMunicipality, delivery);
-    } else if (delivery === "domicilio" && selectedDept) {
-      triggerShippingCalculation(selectedDept, selectedMunicipality, delivery);
-    }
-  }
-
   // ── Carrito ───────────────────────────────────────────────────
   function handleAddToCart() {
     if (tallas.length > 0 && !selectedSize) {
@@ -209,6 +125,11 @@ export function ProductDetailClient({
         "Por favor selecciona una talla antes de agregar al carrito.",
         { id: "no-size-toast", duration: 3000 }
       );
+      return;
+    }
+
+    if (isALaMedida) {
+      handleCotizar();
       return;
     }
 
@@ -220,7 +141,7 @@ export function ProductDetailClient({
       {
         id: product.id,
         name: product.name,
-        price: price,
+        price: cartPrice,
         old_price: oldPrice,
         image_path: getProductMainImage(product),
         slug: `${sector}/${slug}`,
@@ -277,9 +198,9 @@ export function ProductDetailClient({
       category: categoryName,
       selectedSize,
       customNote,
-      department: selectedDept || null,
-      municipality: selectedMunicipality || null,
-      deliveryType: selectedDelivery,
+      department: null,
+      municipality: null,
+      deliveryType: null,
       productUrl,
     });
 
@@ -449,7 +370,7 @@ export function ProductDetailClient({
                   </span>
                 ) : (
                   <span className="ml-2 font-normal text-slate-400 normal-case">
-                    (elige una)
+                    Selecciona una talla para ver el precio correspondiente
                   </span>
                 )}
               </p>
@@ -541,21 +462,69 @@ export function ProductDetailClient({
           >
             {/* Price */}
             <div className="flex flex-col gap-1">
-              <div className="flex items-end gap-3">
-                <p className="text-2xl font-bold text-gray-900">
-                  ${price.toFixed(2)}
-                  {product.price_suffix && (
-                    <span className="ml-1 text-sm font-normal text-slate-500">
-                      {product.price_suffix}
-                    </span>
+              {isALaMedida ? (
+                /* A la medida: sin precio fijo, deriva a WhatsApp */
+                <div className="flex items-center gap-2 rounded-xl border border-green-100 bg-green-50 px-3 py-2.5 text-xs font-medium text-green-700">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="h-4 w-4 shrink-0"
+                    aria-hidden="true"
+                  >
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                  <span>
+                    Esta talla se cotiza por WhatsApp. Usa el botón{" "}
+                    <strong>Cotizar</strong> para consultar.
+                  </span>
+                </div>
+              ) : (
+                <div className="flex items-end gap-3">
+                  {selectedSizePrice !== null ? (
+                    <p className="text-2xl font-bold text-gray-900">
+                      ${selectedSizePrice.toFixed(2)}
+                      {product.price_suffix && (
+                        <span className="ml-1 text-sm font-normal text-slate-500">
+                          {product.price_suffix}
+                        </span>
+                      )}
+                    </p>
+                  ) : tallas.length > 0 && !selectedSize ? (
+                    /* Aun no seleccionaron talla — mostrar rango "Desde" */
+                    <p className="text-2xl font-bold text-gray-900">
+                      {priceBySize && Object.keys(priceBySize).length > 0 ? (
+                        <>
+                          Desde $
+                          {Math.min(...Object.values(priceBySize)).toFixed(2)}
+                        </>
+                      ) : (
+                        `$${Number(product.price).toFixed(2)}`
+                      )}
+                      {product.price_suffix && (
+                        <span className="ml-1 text-sm font-normal text-slate-500">
+                          {product.price_suffix}
+                        </span>
+                      )}
+                    </p>
+                  ) : (
+                    /* Producto sin tallas — precio global */
+                    <p className="text-2xl font-bold text-gray-900">
+                      ${Number(product.price).toFixed(2)}
+                      {product.price_suffix && (
+                        <span className="ml-1 text-sm font-normal text-slate-500">
+                          {product.price_suffix}
+                        </span>
+                      )}
+                    </p>
                   )}
-                </p>
-                {onSale && oldPrice && (
-                  <p className="text-lg font-medium text-slate-400 line-through">
-                    ${oldPrice.toFixed(2)}
-                  </p>
-                )}
-              </div>
+                  {onSale && oldPrice && (
+                    <p className="text-lg font-medium text-slate-400 line-through">
+                      ${oldPrice.toFixed(2)}
+                    </p>
+                  )}
+                </div>
+              )}
               {product.material && (
                 <p className="text-xs text-slate-500">
                   Material:{" "}
@@ -610,36 +579,6 @@ export function ProductDetailClient({
               </div>
             )}
 
-            {/* Wholesale & labor price info */}
-            {(wholesalePrice || laborPrice) && (
-              <div className="flex flex-col gap-2 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-xs">
-                <p className="flex items-center gap-1.5 font-semibold text-blue-700">
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "15px" }}
-                  >
-                    payments
-                  </span>
-                  Precios Especiales
-                </p>
-                {wholesalePrice && wholesaleMinQty && (
-                  <p className="text-blue-800">
-                    Mayoreo: <strong>${wholesalePrice.toFixed(2)}</strong> c/u
-                    al pedir <strong>{wholesaleMinQty}+</strong> unidades
-                  </p>
-                )}
-                {laborPrice && (
-                  <p className="text-blue-800">
-                    Solo mano de obra: <strong>${laborPrice.toFixed(2)}</strong>{" "}
-                    (si traes tu propia tela)
-                  </p>
-                )}
-                <p className="text-[10px] text-blue-500">
-                  Consulta disponibilidad por WhatsApp antes de hacer tu pedido.
-                </p>
-              </div>
-            )}
-
             {/* Offer terms warning */}
             {offerTerms && (
               <details className="group rounded-xl border border-amber-200 bg-amber-50 p-3">
@@ -683,145 +622,6 @@ export function ProductDetailClient({
                 />
               </div>
             </details>
-
-            {/* Shipping calculator */}
-            <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4">
-              <p className="flex items-center gap-2 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-                <span className="material-symbols-outlined text-[16px]">
-                  local_shipping
-                </span>
-                Calcular envío
-              </p>
-
-              {/* Department selector */}
-              <div>
-                <label
-                  htmlFor="shipping-dept"
-                  className="mb-1 block text-xs font-medium text-slate-600"
-                >
-                  Departamento
-                </label>
-                <select
-                  id="shipping-dept"
-                  value={selectedDept}
-                  onChange={(e) => handleDeptChange(e.target.value)}
-                  className="focus:border-primary w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-1 focus:ring-blue-100"
-                >
-                  <option value="">Selecciona tu departamento</option>
-                  {departmentOptions.map((d) => (
-                    <option key={d.value} value={d.value}>
-                      {d.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Municipality selector (only for non-LOCAL zones) */}
-              {selectedDept && selectedZone !== "LOCAL" && (
-                <div>
-                  <label
-                    htmlFor="shipping-municipality"
-                    className="mb-1 block text-xs font-medium text-slate-600"
-                  >
-                    Municipio
-                  </label>
-                  <select
-                    id="shipping-municipality"
-                    value={selectedMunicipality}
-                    onChange={(e) => handleMunicipalityChange(e.target.value)}
-                    className="focus:border-primary w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-1 focus:ring-blue-100"
-                  >
-                    <option value="">Selecciona tu municipio</option>
-                    {municipalityOptions.map((m) => (
-                      <option key={m.value} value={m.value}>
-                        {m.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
-              {/* Delivery type options */}
-              {selectedDept && deliveryOptions.length > 0 && (
-                <div>
-                  <p className="mb-2 text-xs font-medium text-slate-600">
-                    Tipo de entrega
-                  </p>
-                  <div className="flex flex-col gap-2">
-                    {deliveryOptions.map((dt) => (
-                      <button
-                        key={dt}
-                        type="button"
-                        onClick={() => handleDeliveryChange(dt)}
-                        className={`flex items-center gap-3 rounded-lg border px-3 py-2 text-left text-xs font-medium transition-all ${
-                          selectedDelivery === dt
-                            ? "border-primary bg-primary/5 text-primary"
-                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
-                        }`}
-                      >
-                        <span
-                          className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
-                            selectedDelivery === dt
-                              ? "border-primary bg-primary"
-                              : "border-slate-300"
-                          }`}
-                        >
-                          {selectedDelivery === dt && (
-                            <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                          )}
-                        </span>
-                        {DELIVERY_TYPE_LABEL[dt]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Calculating animation */}
-              {isCalculating && (
-                <div className="flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2.5">
-                  <svg
-                    className="h-4 w-4 animate-spin text-slate-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
-                  </svg>
-                  <span className="text-xs text-slate-500">
-                    Calculando costo de envío...
-                  </span>
-                </div>
-              )}
-
-              {/* Shipping result */}
-              {!isCalculating && shippingResult && (
-                <div className="animate-fade-in-up rounded-lg border border-green-100 bg-green-50 px-3 py-2.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-green-800">
-                      {shippingResult.method}
-                    </span>
-                    <span className="text-sm font-black text-green-700">
-                      {shippingResult.cost === 0
-                        ? "Gratis"
-                        : `$${shippingResult.cost.toFixed(2)}`}
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
 
             {/* Actions — 3 buttons */}
             <div className="flex gap-3">

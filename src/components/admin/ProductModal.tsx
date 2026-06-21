@@ -59,15 +59,13 @@ interface FormData {
   badge_text: string;
   price_suffix: string;
   tallas: string[];
+  /** Precio por talla — mapa { talla: precioString } editable en el admin */
+  price_by_size: Record<string, string>;
   /** Colores disponibles — array de { name, hex } */
   colores: { name: string; hex: string }[];
   material: string;
   /** Características del producto — lista de strings para bullets con check */
   caracteristicas: string[];
-  // Precios avanzados
-  wholesale_price: string;
-  wholesale_min_qty: string;
-  labor_price: string;
   /** Términos de la oferta — texto libre */
   offer_terms: string;
   // ── Campos SEO manuales ────────────────────────
@@ -128,12 +126,10 @@ export default function ProductModal({
     badge_text: "",
     price_suffix: "",
     tallas: [],
+    price_by_size: {},
     colores: [],
     material: "",
     caracteristicas: [],
-    wholesale_price: "",
-    wholesale_min_qty: "",
-    labor_price: "",
     offer_terms: "",
     // SEO
     seo_title: "",
@@ -197,14 +193,21 @@ export default function ProductModal({
         badge_text: product.badge_text || "",
         price_suffix: product.price_suffix || "",
         tallas: Array.isArray(product.tallas) ? product.tallas : [],
+        // Convertir price_by_size existente a mapa de strings para el form
+        price_by_size: (() => {
+          const pbs = (
+            product as { price_by_size?: Record<string, number> | null }
+          ).price_by_size;
+          if (!pbs) return {};
+          return Object.fromEntries(
+            Object.entries(pbs).map(([k, v]) => [k, String(v)])
+          );
+        })(),
         colores: Array.isArray(product.colores) ? product.colores : [],
         material: product.material || "",
         caracteristicas: Array.isArray(product.caracteristicas)
           ? product.caracteristicas
           : [],
-        wholesale_price: product.wholesale_price?.toString() || "",
-        wholesale_min_qty: product.wholesale_min_qty?.toString() || "",
-        labor_price: product.labor_price?.toString() || "",
         offer_terms:
           (product as { offer_terms?: string | null }).offer_terms || "",
         // SEO
@@ -245,12 +248,10 @@ export default function ProductModal({
         badge_text: "",
         price_suffix: "",
         tallas: [],
+        price_by_size: {},
         colores: [],
         material: "",
         caracteristicas: [],
-        wholesale_price: "",
-        wholesale_min_qty: "",
-        labor_price: "",
         offer_terms: "",
         // SEO
         seo_title: "",
@@ -392,46 +393,16 @@ export default function ProductModal({
       return;
     }
 
-    // ── Validación precios avanzados ─────────────────────────
-    const parsedWholesale = formData.wholesale_price
-      ? parseFloat(formData.wholesale_price)
-      : null;
-    const parsedWholesaleMinQty = formData.wholesale_min_qty
-      ? parseInt(formData.wholesale_min_qty, 10)
-      : null;
-    const parsedLaborPrice = formData.labor_price
-      ? parseFloat(formData.labor_price)
-      : null;
-
-    if (parsedWholesale !== null) {
-      if (isNaN(parsedWholesale) || parsedWholesale <= 0) {
-        showToast("El precio de mayoreo debe ser un número positivo.");
-        setIsSubmitting(false);
-        return;
+    // Construir price_by_size: convertir los strings del form a números
+    const parsedPriceBySize: Record<string, number> = {};
+    for (const [talla, precioStr] of Object.entries(formData.price_by_size)) {
+      if (
+        precioStr !== "" &&
+        !isNaN(parseFloat(precioStr)) &&
+        parseFloat(precioStr) >= 0
+      ) {
+        parsedPriceBySize[talla] = parseFloat(precioStr);
       }
-      if (parsedWholesale >= parsedPrice) {
-        showToast(
-          "El precio de mayoreo debe ser MENOR al precio regular para que sea una ventaja."
-        );
-        setIsSubmitting(false);
-        return;
-      }
-      if (!parsedWholesaleMinQty || parsedWholesaleMinQty < 2) {
-        showToast(
-          "Para precio mayoreo debes indicar la cantidad mínima (mínimo 2 unidades)."
-        );
-        setIsSubmitting(false);
-        return;
-      }
-    }
-
-    if (
-      parsedLaborPrice !== null &&
-      (isNaN(parsedLaborPrice) || parsedLaborPrice <= 0)
-    ) {
-      showToast("El precio de mano de obra debe ser un número positivo.");
-      setIsSubmitting(false);
-      return;
     }
 
     let parsedOldPrice: number | null = null;
@@ -503,10 +474,9 @@ export default function ProductModal({
       material: formData.material || null,
       caracteristicas:
         formData.caracteristicas.length > 0 ? formData.caracteristicas : [],
-      // Precios avanzados
-      wholesale_price: parsedWholesale,
-      wholesale_min_qty: parsedWholesaleMinQty,
-      labor_price: parsedLaborPrice,
+      // Precio por talla (jsonb) — null si no hay ninguna talla con precio
+      price_by_size:
+        Object.keys(parsedPriceBySize).length > 0 ? parsedPriceBySize : null,
       // offer_terms: texto libre de términos de oferta
       offer_terms: formData.offer_terms?.trim() || null,
       // ── Campos SEO manuales (null si vacíos, para preservar fallback automático) ──
@@ -515,7 +485,10 @@ export default function ProductModal({
       seo_keywords: formData.seo_keywords?.trim() || null,
       seo_robots: formData.seo_robots?.trim() || null,
       seo_publisher: formData.seo_publisher?.trim() || null,
-    } as Partial<Product> & { offer_terms?: string | null };
+    } as Partial<Product> & {
+      offer_terms?: string | null;
+      price_by_size?: Record<string, number> | null;
+    };
 
     await onSave(payload, [], notifyOnSave);
     if (isMounted.current) setIsSubmitting(false);
@@ -831,95 +804,76 @@ export default function ProductModal({
                 </div>
               )}
 
-              {/* Precios Avanzados */}
-              <div className="space-y-4 rounded-xl border border-blue-200 bg-blue-50 p-4 md:col-span-2 dark:border-blue-500/20 dark:bg-blue-500/5">
-                <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "20px" }}
-                  >
-                    payments
-                  </span>
-                  <h4 className="text-sm font-bold">Precios Especiales</h4>
-                  <span className="ml-auto text-[10px] font-normal text-slate-400">
-                    Opcional
-                  </span>
-                </div>
-
-                {/* Precio mayoreo */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label
-                      htmlFor="product-wholesale-price"
-                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+              {/* Precio por talla — aparece solo si hay tallas seleccionadas */}
+              {formData.tallas.length > 0 && (
+                <div className="space-y-3 rounded-xl border border-indigo-200 bg-indigo-50 p-4 md:col-span-2 dark:border-indigo-500/20 dark:bg-indigo-500/5">
+                  <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400">
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontSize: "20px" }}
                     >
-                      Precio Mayoreo ($)
-                    </label>
-                    <input
-                      id="product-wholesale-price"
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      name="wholesale_price"
-                      value={formData.wholesale_price}
-                      onChange={handleChange}
-                      placeholder="Ej: 8.00"
-                      onWheel={(e) => (e.target as HTMLInputElement).blur()}
-                      className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                    />
+                      sell
+                    </span>
+                    <h4 className="text-sm font-bold">Precio por Talla</h4>
+                    <span className="ml-auto text-[10px] font-normal text-slate-400">
+                      Obligatorio (excepto A la medida)
+                    </span>
                   </div>
-                  <div>
-                    <label
-                      htmlFor="product-wholesale-min-qty"
-                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
-                    >
-                      Cantidad mínima (unidades)
-                    </label>
-                    <input
-                      id="product-wholesale-min-qty"
-                      type="number"
-                      step="1"
-                      min="2"
-                      name="wholesale_min_qty"
-                      value={formData.wholesale_min_qty}
-                      onChange={handleChange}
-                      placeholder="Ej: 6"
-                      onWheel={(e) => (e.target as HTMLInputElement).blur()}
-                      className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                    />
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Asigna un precio a cada talla disponible. Las tallas sin
+                    precio mostrarán &ldquo;Cotizar&rdquo; en la vista pública.{" "}
+                    <strong>&ldquo;A la medida&rdquo;</strong> siempre se cotiza
+                    por WhatsApp y no tiene precio fijo.
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                    {formData.tallas
+                      .filter((t) => t !== "A la medida")
+                      .map((talla) => (
+                        <div key={talla}>
+                          <label
+                            htmlFor={`price-size-${talla}`}
+                            className="mb-1 block text-xs font-semibold text-indigo-700 dark:text-indigo-400"
+                          >
+                            Talla {talla} ($)
+                          </label>
+                          <input
+                            id={`price-size-${talla}`}
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={formData.price_by_size[talla] ?? ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                price_by_size: {
+                                  ...prev.price_by_size,
+                                  [talla]: e.target.value,
+                                },
+                              }))
+                            }
+                            placeholder="0.00"
+                            onWheel={(e) =>
+                              (e.target as HTMLInputElement).blur()
+                            }
+                            className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                          />
+                        </div>
+                      ))}
                   </div>
-                  <p className="col-span-2 text-[10px] text-slate-500 dark:text-slate-400">
-                    El precio de mayoreo debe ser menor al precio regular. Se
-                    aplica al pedir la cantidad mínima o más.
-                  </p>
+                  {formData.tallas.includes("A la medida") && (
+                    <p className="flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400">
+                      <span
+                        className="material-symbols-outlined"
+                        style={{ fontSize: "14px" }}
+                      >
+                        info
+                      </span>
+                      &ldquo;A la medida&rdquo; no tiene precio fijo — se cotiza
+                      exclusivamente por WhatsApp.
+                    </p>
+                  )}
                 </div>
-
-                {/* Precio mano de obra */}
-                <div>
-                  <label
-                    htmlFor="product-labor-price"
-                    className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
-                  >
-                    Precio Solo Mano de Obra ($)
-                  </label>
-                  <input
-                    id="product-labor-price"
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    name="labor_price"
-                    value={formData.labor_price}
-                    onChange={handleChange}
-                    placeholder="Dejar vacío si no aplica"
-                    onWheel={(e) => (e.target as HTMLInputElement).blur()}
-                    className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                  />
-                  <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
-                    Para cuando el cliente trae su propia tela y solo paga la
-                    confección.
-                  </p>
-                </div>
-              </div>
+              )}
 
               {/* Catálogo — filtra las categorías disponibles */}
               <div>
@@ -1152,12 +1106,20 @@ export default function ProductModal({
                           key={talla}
                           type="button"
                           onClick={() => {
-                            setFormData((prev) => ({
-                              ...prev,
-                              tallas: prev.tallas.includes(talla)
+                            setFormData((prev) => {
+                              const isSelected = prev.tallas.includes(talla);
+                              const newTallas = isSelected
                                 ? prev.tallas.filter((t) => t !== talla)
-                                : [...prev.tallas, talla],
-                            }));
+                                : [...prev.tallas, talla];
+                              // Si se deselecciona, limpiar su precio de price_by_size
+                              const newPriceBySize = { ...prev.price_by_size };
+                              if (isSelected) delete newPriceBySize[talla];
+                              return {
+                                ...prev,
+                                tallas: newTallas,
+                                price_by_size: newPriceBySize,
+                              };
+                            });
                           }}
                           className={`rounded-lg border px-3 py-1 text-xs font-semibold transition-colors ${
                             formData.tallas.includes(talla)

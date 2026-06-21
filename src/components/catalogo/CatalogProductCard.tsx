@@ -33,7 +33,15 @@ export function CatalogProductCard({
   const sector = getProductSector(product);
   const slug = product.slug ?? product.id;
 
-  const price = Number(product.price);
+  const priceBySize = (
+    product as { price_by_size?: Record<string, number> | null }
+  ).price_by_size;
+  const displayPrice =
+    priceBySize && Object.keys(priceBySize).length > 0
+      ? Math.min(...Object.values(priceBySize))
+      : Number(product.price);
+  const hasMultiplePrices = priceBySize && Object.keys(priceBySize).length > 1;
+  const price = displayPrice;
   const oldPrice = product.old_price ? Number(product.old_price) : null;
 
   // Contextos reales
@@ -152,7 +160,7 @@ export function CatalogProductCard({
 
         <div className="mt-auto flex flex-wrap items-center gap-1 pt-1 select-none">
           <span className="text-primary pointer-events-none text-base font-bold">
-            ${price.toFixed(2)}
+            {hasMultiplePrices ? "Desde " : ""}${price.toFixed(2)}
             {product.price_suffix && (
               <span className="ml-0.5 text-xs font-normal text-slate-500">
                 {product.price_suffix}

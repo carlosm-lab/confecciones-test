@@ -37,10 +37,8 @@ export interface DbProduct {
   caracteristicas: string[] | null;
   created_at: string | null;
   updated_at: string | null;
-  // Precios avanzados
-  wholesale_price: number | null;
-  wholesale_min_qty: number | null;
-  labor_price: number | null;
+  // Precio por talla — mapa { talla: precio } (null si no aplica)
+  price_by_size: Record<string, number> | null;
   // Join from categories table
   categories?: { name: string; catalog: string } | null;
   /** Términos de la oferta — texto libre para mostrar al cliente */
@@ -103,7 +101,7 @@ export const PRODUCT_SELECT = `
   offer_ends_at, offer_starts_at, offer_terms, category, category_id, tags,
   image_path, images, is_active, slug, sector, badge_text,
   price_suffix, tallas, colores, material, caracteristicas,
-  wholesale_price, wholesale_min_qty, labor_price,
+  price_by_size,
   seo_title, seo_description, seo_keywords, seo_robots, seo_publisher,
   created_at, updated_at,
   categories(name, catalog)

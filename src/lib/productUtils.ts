@@ -48,13 +48,8 @@ export interface Product {
   colores?: { name: string; hex: string }[] | null;
   material?: string | null;
   caracteristicas?: string[] | null;
-  // Precios avanzados
-  /** Precio por mayoreo (null = no aplica mayoreo) */
-  wholesale_price?: number | null;
-  /** Cantidad mínima para precio mayoreo (mínimo 2) */
-  wholesale_min_qty?: number | null;
-  /** Precio solo mano de obra (cliente trae la tela) */
-  labor_price?: number | null;
+  // Precio por talla — mapa { talla: precio } (null si no aplica)
+  price_by_size?: Record<string, number> | null;
   // ── Campos SEO manuales (opcionales por producto) ─────────────
   /** Título SEO manual — si null, se usa el automático */
   seo_title?: string | null;
