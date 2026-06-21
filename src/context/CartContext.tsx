@@ -360,8 +360,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // Caso 2: Hay items locales → revalidar precios
-      if (cartItemsRef.current.length > 0 && isMounted) {
+      // Caso 2: Hay items locales Y usuario autenticado → revalidar precios
+      // Guests: omitir — el carrito vive en localStorage y RLS bloquea
+      // lecturas anon del cliente navegador en products. No es un error.
+      if (user && cartItemsRef.current.length > 0 && isMounted) {
         refreshCartPrices();
       }
     };
@@ -503,12 +505,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // ── Polling de revalidación cada 60s ─────────────────────────
+  // ── Polling de revalidación cada 60s (solo usuarios autenticados) ──
+  // Guests: el carrito es efímero (localStorage). RLS bloquea lecturas
+  // anon de productos desde el cliente navegador — evitamos la llamada.
   useEffect(() => {
     if (cartItems.length === 0) return;
+    if (!user) return;
     const interval = setInterval(refreshCartPrices, 60000);
     return () => clearInterval(interval);
-  }, [cartItems.length, refreshCartPrices]);
+  }, [cartItems.length, refreshCartPrices, user]);
 
   // ── API del carrito ───────────────────────────────────────────
   const addToCart = (

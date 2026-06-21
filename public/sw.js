@@ -1,6 +1,7 @@
 // ──────────────────────────────────────────────────────────────
 // Service Worker — Confecciones Liss
 // Maneja Web Push notifications nativas del navegador/dispositivo
+// v2 — 2026-06-21
 // ──────────────────────────────────────────────────────────────
 
 self.addEventListener("push", function (event) {
