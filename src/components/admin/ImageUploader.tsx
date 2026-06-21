@@ -30,7 +30,7 @@ export default function ImageUploader({
   }, []);
 
   const acceptedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-  const maxCompressedSize = 2 * 1024 * 1024; // 2MB post-compresión
+  const maxCompressedSize = 4 * 1024 * 1024; // 4MB post-compresión (calidad prioritaria)
 
   /**
    * Comprime la imagen y elimina metadata EXIF (privacidad).
@@ -63,9 +63,8 @@ export default function ImageUploader({
         const ctx = canvas.getContext("2d");
         ctx!.drawImage(img, 0, 0, width, height);
 
-        const sizeMB = file.size / (1024 * 1024);
-        let quality =
-          sizeMB > 8 ? 0.55 : sizeMB > 4 ? 0.65 : sizeMB > 2 ? 0.72 : 0.8;
+        // Calidad alta fija — el tamaño del archivo original no justifica degradar la imagen
+        const quality = 0.9;
 
         const tryCompress = (q: number): Promise<Blob | null> =>
           new Promise((res) =>
@@ -74,9 +73,14 @@ export default function ImageUploader({
 
         try {
           let blob = await tryCompress(quality);
-          while (blob && blob.size > maxCompressedSize && quality > 0.3) {
-            quality -= 0.1;
-            blob = await tryCompress(quality);
+          let currentQuality = quality;
+          while (
+            blob &&
+            blob.size > maxCompressedSize &&
+            currentQuality > 0.65
+          ) {
+            currentQuality -= 0.05;
+            blob = await tryCompress(currentQuality);
           }
           if (!blob) {
             reject(new Error("Canvas is empty"));

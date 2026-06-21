@@ -45,8 +45,7 @@ export function CatalogProductCard({
       ? Math.min(...Object.values(priceBySize))
       : Number(product.price);
 
-  // Precio de oferta mínimo — lee offer_by_size directamente, independiente de onSale
-  // Solo cuenta como oferta si el precio de oferta es MENOR al precio base de esa talla
+  // Precio de oferta mínimo — solo si es MENOR al base de esa talla
   const validOfferEntries =
     offerBySize && priceBySize
       ? Object.entries(offerBySize).filter(([talla, offerP]) => {
@@ -63,8 +62,7 @@ export function CatalogProductCard({
   const hasMultiplePrices = priceBySize && Object.keys(priceBySize).length > 1;
   const price = displayPrice;
 
-  // Precio tachado: el precio base mínimo cuando hay oferta válida
-  // GUARDIA: solo mostrar si es estrictamente MAYOR al precio mostrado
+  // Precio tachado: solo si es estrictamente MAYOR al precio mostrado
   const rawOldPrice =
     minOfferPrice !== null
       ? minBasePrice
@@ -74,9 +72,7 @@ export function CatalogProductCard({
   const oldPrice =
     rawOldPrice !== null && rawOldPrice > displayPrice ? rawOldPrice : null;
 
-  // Contextos reales
   const { isFavorite, toggleFavorite } = useFavorites();
-
   const isFavorited = isFavorite(product.id);
 
   function handleToggleFavorite(e: React.MouseEvent) {
@@ -90,48 +86,52 @@ export function CatalogProductCard({
       data-testid="product-card"
       className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md"
     >
-      {/* Badges top-left */}
-      <div className="pointer-events-none absolute top-[var(--space-md)] left-[var(--space-md)] z-[20] flex flex-col gap-[var(--space-xs)]">
-        {onSale && (
+      {/* Badge OFERTA */}
+      {onSale && (
+        <div className="pointer-events-none absolute top-2 left-2 z-[20]">
           <span
-            className="bg-primary rounded-full px-[var(--space-xs)] py-[0.25rem] font-black tracking-widest text-white uppercase shadow-sm select-none sm:px-[var(--space-sm)]"
-            style={{ fontSize: "clamp(0.5rem, 0.8vw, 0.625rem)" }}
+            className="rounded-full bg-red-500 px-2 py-0.5 font-bold text-white shadow-sm select-none"
+            style={{
+              fontSize: "clamp(0.45rem, 1.5vw, 0.6rem)",
+              letterSpacing: "0.05em",
+            }}
           >
-            ¡Oferta!
+            OFERTA
           </span>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* Favorite button top-right */}
+      {/* Favorito */}
       <button
         onClick={handleToggleFavorite}
-        className="absolute top-[var(--space-sm)] right-[var(--space-sm)] z-[20] flex h-9 w-9 items-center justify-center rounded-full bg-black/20 backdrop-blur-sm transition-all duration-300 hover:bg-black/30 active:scale-90"
+        className="absolute top-2 right-2 z-[20] flex h-8 w-8 items-center justify-center rounded-full bg-black/20 backdrop-blur-sm transition-all duration-300 hover:bg-black/30 active:scale-90"
         aria-label="Alternar Favorito"
       >
         <span
           className={cn(
-            "material-symbols-outlined drop-shadow-[0_0px_4px_rgba(0,0,0,0.8)] transition-colors",
-            isFavorited ? "text-primary" : "text-white"
+            "material-symbols-outlined drop-shadow-[0_0px_3px_rgba(0,0,0,0.7)] transition-colors",
+            isFavorited ? "text-red-500" : "text-white"
           )}
           style={{
-            fontSize: "20px",
-            fontVariationSettings: "'FILL' 1",
+            fontSize: "clamp(16px, 3.2vw, 20px)",
+            fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0",
           }}
         >
           favorite
         </span>
       </button>
 
-      {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-white">
+      {/* Imagen — aspect-ratio 4/5 para uniformes (retrato natural) */}
+      <div className="relative aspect-[4/5] overflow-hidden bg-white">
         {imagen ? (
           <Image
             src={imagen}
             alt={product.name}
             fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
+            sizes="(max-width: 480px) 50vw, (max-width: 768px) 40vw, (max-width: 1280px) 30vw, 320px"
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             priority={priority}
+            quality={90}
             unoptimized={
               imagen.startsWith("http") && !imagen.includes("supabase.co")
             }
@@ -148,19 +148,15 @@ export function CatalogProductCard({
         )}
       </div>
 
-      {/* Content */}
-      <div className="flex flex-1 flex-col gap-1.5 p-4">
-        <h3 className="group-hover:text-primary pointer-events-none truncate text-sm font-bold text-slate-900 transition-colors">
+      {/* Contenido — solo título y precio */}
+      <div className="flex flex-1 flex-col gap-2 p-3">
+        {/* Título completo, sin truncar, interlineado mínimo */}
+        <h3 className="group-hover:text-primary pointer-events-none text-sm leading-tight font-bold text-slate-900 transition-colors">
           {product.name}
         </h3>
 
-        {product.short_description && (
-          <p className="pointer-events-none line-clamp-1 text-[11px] text-slate-500">
-            {product.short_description}
-          </p>
-        )}
-
-        <div className="mt-auto flex flex-wrap items-center gap-1 pt-1 select-none">
+        {/* Precio: final a la izquierda, tachado a la derecha */}
+        <div className="mt-auto flex items-center justify-between gap-1 pt-0.5 select-none">
           <span className="text-primary pointer-events-none text-base font-bold">
             {hasMultiplePrices ? "Desde " : ""}${price.toFixed(2)}
           </span>
@@ -172,7 +168,7 @@ export function CatalogProductCard({
         </div>
       </div>
 
-      {/* Full-card link */}
+      {/* Link de toda la tarjeta */}
       <Link
         href={`/catalogo/${sector}/${slug}`}
         className="absolute inset-0 z-[10]"
