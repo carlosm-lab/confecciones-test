@@ -1,5 +1,6 @@
 import { Manrope, Noto_Serif } from "next/font/google";
 import "./globals.css";
+import "@aejkatappaja/phantom-ui/ssr.css";
 
 const manrope = Manrope({
   subsets: ["latin"],

@@ -376,3 +376,58 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
   - Campos: `seo_title` (70 chars), `seo_description` (160 chars), `seo_keywords` (300 chars), `seo_publisher` (100 chars), `seo_robots` (botones: Auto / index,follow / noindex,follow / index,nofollow / noindex,nofollow).
   - Todos opcionales: vacíos → fallback automático en `generateMetadata`.
 - **Ejemplo:** `<ProductModal isOpen={isOpen} onClose={handleClose} product={selectedProduct} onSave={handleSave} categories={categories} />`
+
+---
+
+## Skeleton Loaders (phantom-ui)
+
+> Implementado: 2026-06-22 — Librería: `@aejkatappaja/phantom-ui`
+
+### Patrón de inicialización phantom-ui
+
+Cada `loading.tsx` carga el Web Component directamente con `useEffect` al montarse en el cliente:
+
+```tsx
+"use client";
+import { useEffect } from "react";
+
+export default function MyLoading() {
+  useEffect(() => {
+    import("@aejkatappaja/phantom-ui");
+  }, []);
+  // ...
+}
+```
+
+### Sistema de Skeleton Loaders por ruta
+
+Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automáticamente durante la navegación (via `<Suspense>`). Todos son `"use client"` y cargan phantom-ui via `useEffect`.
+
+| Ruta                      | Archivo                                               |
+| ------------------------- | ----------------------------------------------------- |
+| `/` (home)                | `src/app/(public)/loading.tsx`                        |
+| `/catalogo`               | `src/app/(public)/catalogo/loading.tsx`               |
+| `/catalogo/[sector]`      | `src/app/(public)/catalogo/[sector]/loading.tsx`      |
+| `/catalogo/[sector]/[id]` | `src/app/(public)/catalogo/[sector]/[id]/loading.tsx` |
+| `/servicios`              | `src/app/(public)/servicios/loading.tsx`              |
+| `/contacto`               | `src/app/(public)/contacto/loading.tsx`               |
+| `/mi-cuenta`              | `src/app/(public)/mi-cuenta/loading.tsx`              |
+| `/links`                  | `src/app/(public)/links/loading.tsx`                  |
+| `/updates`                | `src/app/(public)/updates/loading.tsx`                |
+| `/legal`                  | `src/app/(public)/legal/loading.tsx`                  |
+| `/legal/privacidad`       | `src/app/(public)/legal/privacidad/loading.tsx`       |
+| `/legal/terminos`         | `src/app/(public)/legal/terminos/loading.tsx`         |
+| `/mantenimiento`          | `src/app/(public)/mantenimiento/loading.tsx`          |
+| `/admin`                  | `src/app/(admin)/admin/loading.tsx`                   |
+| `/admin/products`         | `src/app/(admin)/admin/products/loading.tsx`          |
+| `/admin/categories`       | `src/app/(admin)/admin/categories/loading.tsx`        |
+| `/admin/messages`         | `src/app/(admin)/admin/messages/loading.tsx`          |
+| `/admin/settings`         | `src/app/(admin)/admin/settings/loading.tsx`          |
+| `/admin/notificaciones`   | `src/app/(admin)/admin/notificaciones/loading.tsx`    |
+| `/admin/usuarios`         | `src/app/(admin)/admin/usuarios/loading.tsx`          |
+| `/admin/login`            | `src/app/(admin)/admin/login/loading.tsx`             |
+
+**Setup global:**
+
+- `@aejkatappaja/phantom-ui/ssr.css` importado en `src/app/layout.tsx` (evita flash pre-hidratación)
+- `src/phantom-ui.d.ts` declara los tipos JSX de `<phantom-ui>` para TypeScript
