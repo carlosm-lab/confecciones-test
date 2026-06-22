@@ -28,6 +28,7 @@ import { getSupabaseClient } from "@/lib/supabaseClient";
 import { useAuth } from "@/context/AuthContext";
 import { env } from "@/env";
 import { logger } from "@/lib/logger";
+import { STORAGE_FAVORITES_KEY, STORAGE_CART_KEY } from "@/lib/constants";
 import type { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
 
@@ -177,6 +178,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     ReturnType<typeof getSupabaseClient>["channel"] | null
   >(null);
   const prevUserIdRef = useRef<string | null>(null);
+  // Ref para detectar transición granted → otro estado (revocación de permisos)
+  const prevPushStatusRef = useRef<PushPermissionStatus>("default");
   const subscribeToPushRef = useRef<() => Promise<boolean>>(() =>
     Promise.resolve(false)
   );
@@ -342,13 +345,30 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const supabase = getSupabaseClient();
 
     async function fetchDbNotifs() {
-      const { data, error } = await supabase
+      // ─────────────────────────────────────────────────────────
+      // PROBLEMA 1: Usuarios nuevos no deben ver notificaciones
+      // históricas. Filtramos por la fecha de primera visita.
+      // LS_FIRST_VISIT_TS se establece síncronamente en el efecto
+      // de hidratación (que corre antes que este efecto async),
+      // por lo que al resolver esta promesa el valor ya existe.
+      // ─────────────────────────────────────────────────────────
+      const firstVisitTs = localStorage.getItem(LS_FIRST_VISIT_TS);
+
+      let query = supabase
         .from("notifications")
         .select(
           "id, type, title, message, image_url, target_url, cta_label, created_at"
         )
         .order("created_at", { ascending: false })
         .limit(50);
+
+      if (firstVisitTs) {
+        // Solo notificaciones creadas DESPUÉS de la primera visita del usuario
+        const isoTs = new Date(parseInt(firstVisitTs, 10)).toISOString();
+        query = query.gte("created_at", isoTs);
+      }
+
+      const { data, error } = await query;
 
       if (error) {
         logger.error("Error cargando notificaciones:", error);
@@ -366,6 +386,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     fetchDbNotifs();
 
     // Suscripcion en tiempo real — se re-establece al cambiar auth
+    // Los eventos INSERT son siempre posteriores a la primera visita ✓
     const channelName = `notifications_realtime_${user?.id ?? "guest"}`;
     const channel = supabase
       .channel(channelName)
@@ -415,8 +436,44 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
+  // ── Detectar revocación de permisos push ─────────────────────
+  // Si el usuario revocó permisos en config del navegador (granted → default),
+  // limpiamos pushPromptDismissed para que el hint reaparezca.
+  useEffect(() => {
+    if (
+      prevPushStatusRef.current === "granted" &&
+      pushPermissionStatus !== "granted"
+    ) {
+      try {
+        localStorage.removeItem(LS_PUSH_DISMISSED);
+      } catch {
+        /* silent */
+      }
+      setPushPromptDismissed(false);
+    }
+    prevPushStatusRef.current = pushPermissionStatus;
+  }, [pushPermissionStatus]);
+
+  // ── Re-checar permiso push al recuperar foco de pestaña ──────
+  // El navegador no emite eventos cuando el usuario cambia permisos
+  // en Ajustes; visibilitychange es el mejor hook disponible.
+  useEffect(() => {
+    if (!mounted) return;
+    const handleVisibility = () => {
+      if (document.visibilityState !== "visible") return;
+      if (typeof Notification === "undefined") return;
+      const perm = Notification.permission;
+      setPushPermissionStatus(perm as PushPermissionStatus);
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibility);
+  }, [mounted]);
+
   // ── addLocalNotification ──────────────────────────────────────
-  // Una sola notificacion por tipo: si ya existe, la mueve al tope
+  // Una sola notificacion por tipo: si ya existe, la mueve al tope.
+  // PROBLEMA 3c: Al re-activar un tipo existente generamos un NUEVO ID
+  // para que el caché de readIds no enmascare la notificación re-inyectada.
   const addLocalNotification = useCallback(
     (
       notif: Pick<AppNotification, "type" | "title" | "message" | "target_url">
@@ -427,6 +484,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
           const updated = [
             {
               ...prev[existingIndex],
+              // Nuevo ID → el readIds cacheado con el ID antiguo no afecta este hint
+              id: "local_" + notif.type + "_" + Date.now(),
               created_at: new Date().toISOString(),
               read: false,
             },
@@ -451,6 +510,85 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     },
     []
   );
+
+  // ── reevaluateConditionalHints ───────────────────────────────
+  // Re-inyecta hints condicionales cada vez que una condición
+  // vuelve a incumplirse. Garantiza que el panel refleje siempre
+  // el estado real del usuario (PROBLEMA 3).
+  const reevaluateConditionalHints = useCallback(() => {
+    if (typeof window === "undefined") return;
+
+    // Push permission: existe mientras no sea granted/denied y el usuario
+    // no haya descartado el prompt definitivamente
+    if (
+      pushPermissionStatus !== "granted" &&
+      pushPermissionStatus !== "denied" &&
+      pushPermissionStatus !== "unsupported" &&
+      !pushPromptDismissed
+    ) {
+      addLocalNotification({
+        type: "push_permission",
+        title: "\u00a1S\u00e9 el primero en ver las ofertas!",
+        message:
+          "Activa las alertas y recibe notificaciones exclusivas de nuevas colecciones, descuentos y ofertas antes que nadie. \u00a1No te pierdas nada!",
+        target_url: null,
+      });
+    }
+
+    // Auth hints: solo cuando el usuario NO est\u00e1 logueado
+    if (!user) {
+      try {
+        const rawFavs = localStorage.getItem(STORAGE_FAVORITES_KEY);
+        const hasFavs = rawFavs
+          ? (JSON.parse(rawFavs) as unknown[]).length > 0
+          : false;
+        if (hasFavs) {
+          addLocalNotification({
+            type: "favorites_hint",
+            title: "Favoritos guardados",
+            message:
+              "Inicia sesi\u00f3n para sincronizarlos en todos tus dispositivos.",
+            target_url: null,
+          });
+        }
+      } catch {
+        /* silent — localStorage puede estar bloqueado */
+      }
+
+      try {
+        const rawCart = localStorage.getItem(STORAGE_CART_KEY);
+        const hasCart = rawCart
+          ? (JSON.parse(rawCart) as unknown[]).length > 0
+          : false;
+        if (hasCart) {
+          addLocalNotification({
+            type: "cart_hint",
+            title: "Art\u00edculos en el carrito",
+            message:
+              "Inicia sesi\u00f3n para guardar tu carrito y acceder desde cualquier dispositivo.",
+            target_url: null,
+          });
+        }
+      } catch {
+        /* silent */
+      }
+    }
+  }, [pushPermissionStatus, pushPromptDismissed, user, addLocalNotification]);
+
+  // ── Re-evaluar hints cuando cambian las condiciones ──────────
+  // Corre en mount y cada vez que user, permiso push o dismissed cambian.
+  // Garantiza que hints desaparecidos reaparezcan si la condición
+  // vuelve a incumplirse (PROBLEMA 3).
+  useEffect(() => {
+    if (!mounted) return;
+    reevaluateConditionalHints();
+  }, [
+    user,
+    pushPermissionStatus,
+    pushPromptDismissed,
+    mounted,
+    reevaluateConditionalHints,
+  ]);
 
   // ── markRead ──────────────────────────────────────────────────
   const markRead = useCallback(
@@ -489,23 +627,40 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // ── dismissNotification ───────────────────────────────────────
-  const dismissNotification = useCallback((id: string) => {
-    // Local notification: remove from array
-    if (id.startsWith("local_")) {
-      setLocalNotifs((prev) => {
-        const updated = prev.filter((n) => n.id !== id);
-        saveLocalNotifs(updated);
-        return updated;
+  // PROBLEMA 2: Defensa en profundidad — guard de condición para HINT_TYPES.
+  // La UI (GuestBell.canDelete) ya bloquea esto, pero lo validamos aquí
+  // también para que la función sea correcta independientemente del caller.
+  const dismissNotification = useCallback(
+    (id: string) => {
+      // Guard: verificar que la condición del hint está cumplida antes de eliminar
+      const hint = localNotifs.find((n) => n.id === id);
+      if (hint && HINT_TYPES.includes(hint.type)) {
+        const conditionMet =
+          hint.type === "push_permission"
+            ? pushPermissionStatus === "granted" ||
+              pushPermissionStatus === "denied"
+            : !!user; // favorites_hint / cart_hint / auth_hint requieren usuario
+        if (!conditionMet) return; // Condición incumplida → no eliminar
+      }
+
+      // Local notification: remove from array
+      if (id.startsWith("local_")) {
+        setLocalNotifs((prev) => {
+          const updated = prev.filter((n) => n.id !== id);
+          saveLocalNotifs(updated);
+          return updated;
+        });
+        return;
+      }
+      // DB notification: add to dismissedIds set
+      setDismissedIds((prev) => {
+        const next = new Set([...prev, id]);
+        saveDismissedIds(next);
+        return next;
       });
-      return;
-    }
-    // DB notification: add to dismissedIds set
-    setDismissedIds((prev) => {
-      const next = new Set([...prev, id]);
-      saveDismissedIds(next);
-      return next;
-    });
-  }, []);
+    },
+    [localNotifs, pushPermissionStatus, user]
+  );
 
   // ── subscribeToPush ───────────────────────────────────────────
   const subscribeToPush = useCallback(async (): Promise<boolean> => {
