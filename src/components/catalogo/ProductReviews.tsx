@@ -1,12 +1,14 @@
 "use client";
 
 /**
- * ProductReviews — Confecciones Liss v4
- * Diseño premium con tarjetas bien construidas, sección con fondo propio,
- * avatar grande, tipografía con jerarquía real.
+ * ProductReviews — Confecciones Liss v5
+ * - Tarjetas con altura fija + modal al hacer clic para ver reseña completa
+ * - Modal con el mismo backdrop blur/transparencia que el lightbox existente
+ * - StatsPanel sin iconos de estrella por barra (solo número)
+ * - Grid: 1 col móvil, 2 tablet, 3 desktop
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { reviewSchema } from "@/schemas/reviewSchema";
@@ -66,7 +68,7 @@ function StatsPanel({
           "0 1px 3px rgba(20,48,103,0.07), 0 4px 14px rgba(20,48,103,0.05)",
       }}
     >
-      {/* Left: score block */}
+      {/* Left: score */}
       <div className="flex shrink-0 flex-col items-center gap-0.5 sm:min-w-[80px]">
         <span className="font-serif text-3xl leading-none font-bold text-slate-900">
           {avgRating.toFixed(1)}
@@ -80,22 +82,15 @@ function StatsPanel({
       {/* Separator */}
       <div className="hidden h-10 w-px bg-slate-100 sm:block" />
 
-      {/* Right: distribution bars */}
+      {/* Right: distribution bars — sin iconos de estrella por barra */}
       <div className="flex flex-1 flex-col gap-1.5">
         {[5, 4, 3, 2, 1].map((star) => {
           const count = reviews.filter((r) => r.rating === star).length;
           const pct = total > 0 ? (count / total) * 100 : 0;
           return (
-            <div key={star} className="flex items-center gap-1.5">
+            <div key={star} className="flex items-center gap-2">
               <span className="w-2 shrink-0 text-right text-[10px] font-medium text-slate-500">
                 {star}
-              </span>
-              <span
-                className="material-symbols-outlined shrink-0 text-[11px] text-amber-400"
-                style={{ fontVariationSettings: "'FILL' 1" }}
-                aria-hidden="true"
-              >
-                star
               </span>
               <div className="h-1 flex-1 overflow-hidden rounded-full bg-slate-100">
                 <div
@@ -111,6 +106,268 @@ function StatsPanel({
         })}
       </div>
     </div>
+  );
+}
+
+// ── Avatar ─────────────────────────────────────────────────────
+
+function Avatar({
+  src,
+  name,
+  size = 52,
+}: {
+  src: string | null;
+  name: string;
+  size?: number;
+}) {
+  const [failed, setFailed] = useState(false);
+
+  if (src && !failed) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt={name}
+        width={size}
+        height={size}
+        className="shrink-0 rounded-full object-cover"
+        style={{ width: size, height: size }}
+        onError={() => setFailed(true)}
+      />
+    );
+  }
+
+  return (
+    <div
+      className="bg-primary flex shrink-0 items-center justify-center rounded-full font-serif font-bold text-white"
+      style={{ width: size, height: size, fontSize: size * 0.38 }}
+    >
+      {name.charAt(0).toUpperCase()}
+    </div>
+  );
+}
+
+// ── Review modal ───────────────────────────────────────────────
+
+function ReviewModal({
+  review,
+  onClose,
+}: {
+  review: DbReview;
+  onClose: () => void;
+}) {
+  const date = new Date(review.created_at).toLocaleDateString("es-SV", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
+  // Bloquear scroll del body mientras el modal está abierto
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
+  // Cerrar con Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    /* Mismo patrón que LoginModal: bg-black/30 backdrop-blur-[2px] */
+    <div
+      className="animate-in fade-in fixed inset-0 z-[110] flex items-center justify-center p-4 duration-200"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Reseña completa"
+    >
+      {/* Backdrop — igual que LoginModal */}
+      <button
+        type="button"
+        className="absolute inset-0 w-full cursor-default bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
+        onClick={onClose}
+        aria-label="Cerrar reseña"
+      />
+
+      {/* Close button */}
+      <button
+        type="button"
+        onClick={onClose}
+        className="absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/10 text-slate-600 transition-all hover:bg-black/20 hover:text-slate-900 sm:top-6 sm:right-6"
+        aria-label="Cerrar"
+      >
+        <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
+          close
+        </span>
+      </button>
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
+        {/* Header */}
+        <div className="flex items-start gap-4 border-b border-slate-100 px-6 py-5">
+          <Avatar src={review.user_avatar} name={review.user_name} size={48} />
+          <div>
+            <p className="font-serif text-base font-bold text-slate-900">
+              {review.user_name}
+            </p>
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <Stars rating={review.rating} size={15} />
+              <span className="text-xs text-slate-400">{date}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Comment */}
+        <div className="max-h-[50dvh] overflow-y-auto px-6 py-5">
+          <p className="text-[15px] leading-relaxed text-slate-700">
+            {review.comment}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Review card ────────────────────────────────────────────────
+
+const CARD_MAX_LINES = 4; // líneas visibles antes del truncado
+
+function ReviewCard({
+  review,
+  currentUserId,
+  onEdit,
+  onDelete,
+  isDeleting,
+  index,
+}: {
+  review: DbReview;
+  currentUserId: string | null;
+  onEdit: (r: DbReview) => void;
+  onDelete: (id: string) => void;
+  isDeleting: boolean;
+  index: number;
+}) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const isOwner = currentUserId === review.user_id;
+  const date = new Date(review.created_at).toLocaleDateString("es-SV", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+
+  return (
+    <>
+      <article
+        className="animate-fade-in-up group relative flex flex-col rounded-2xl bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+        style={{
+          animationDelay: `${index * 70}ms`,
+          boxShadow:
+            "0 1px 4px rgba(20,48,103,0.06), 0 6px 20px rgba(20,48,103,0.06)",
+        }}
+      >
+        {/* Botón transparente que cubre la tarjeta — accesible y sin role en article */}
+        <button
+          type="button"
+          className="absolute inset-0 cursor-pointer rounded-2xl"
+          onClick={() => setModalOpen(true)}
+          aria-label={`Ver reseña completa de ${review.user_name}`}
+        />
+        {/* Decorative quote */}
+        <span
+          className="pointer-events-none absolute top-4 right-5 font-serif text-8xl leading-none text-slate-100 select-none"
+          aria-hidden="true"
+        >
+          &ldquo;
+        </span>
+
+        {/* Header: avatar + meta + actions */}
+        <div className="mb-4 flex items-start gap-3">
+          <Avatar src={review.user_avatar} name={review.user_name} size={44} />
+          <div className="flex min-w-0 flex-1 items-start justify-between gap-2">
+            <div>
+              <p className="font-serif text-sm leading-snug font-bold text-slate-900">
+                {review.user_name}
+              </p>
+              <div className="mt-1 flex flex-wrap items-center gap-2">
+                <Stars rating={review.rating} size={13} />
+                <span className="text-[11px] text-slate-400">{date}</span>
+              </div>
+            </div>
+
+            {/* Owner actions — z-10 so they sit above the transparent button overlay */}
+            {isOwner && (
+              <div className="relative z-10 flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit(review);
+                  }}
+                  className="hover:text-primary rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100"
+                  aria-label="Editar reseña"
+                  title="Editar"
+                >
+                  <span className="material-symbols-outlined text-[14px]">
+                    edit
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(review.id);
+                  }}
+                  disabled={isDeleting}
+                  className="rounded-lg p-1.5 text-slate-400 transition hover:bg-red-50 hover:text-red-500 disabled:opacity-40"
+                  aria-label="Eliminar reseña"
+                  title="Eliminar"
+                >
+                  {isDeleting ? (
+                    <span className="material-symbols-outlined animate-spin text-[14px]">
+                      progress_activity
+                    </span>
+                  ) : (
+                    <span className="material-symbols-outlined text-[14px]">
+                      delete
+                    </span>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Comment — altura fija, truncado */}
+        <p
+          className="flex-1 text-sm leading-relaxed text-slate-600"
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: CARD_MAX_LINES,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {review.comment}
+        </p>
+
+        {/* "Leer más" hint */}
+        <p className="text-primary/60 group-hover:text-primary relative z-10 mt-3 text-[11px] font-semibold transition-colors">
+          Leer más →
+        </p>
+      </article>
+
+      {/* Modal */}
+      {modalOpen && (
+        <ReviewModal review={review} onClose={() => setModalOpen(false)} />
+      )}
+    </>
   );
 }
 
@@ -167,146 +424,7 @@ function StarPicker({
   );
 }
 
-// ── Avatar ─────────────────────────────────────────────────────
-
-function Avatar({
-  src,
-  name,
-  size = 56,
-}: {
-  src: string | null;
-  name: string;
-  size?: number;
-}) {
-  const [failed, setFailed] = useState(false);
-
-  if (src && !failed) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={src}
-        alt={name}
-        width={size}
-        height={size}
-        className="shrink-0 rounded-full object-cover"
-        style={{ width: size, height: size }}
-        onError={() => setFailed(true)}
-      />
-    );
-  }
-
-  return (
-    <div
-      className="bg-primary flex shrink-0 items-center justify-center rounded-full font-serif font-bold text-white"
-      style={{ width: size, height: size, fontSize: size * 0.38 }}
-    >
-      {name.charAt(0).toUpperCase()}
-    </div>
-  );
-}
-
-// ── Review card ────────────────────────────────────────────────
-
-function ReviewCard({
-  review,
-  currentUserId,
-  onEdit,
-  onDelete,
-  isDeleting,
-  index,
-}: {
-  review: DbReview;
-  currentUserId: string | null;
-  onEdit: (r: DbReview) => void;
-  onDelete: (id: string) => void;
-  isDeleting: boolean;
-  index: number;
-}) {
-  const isOwner = currentUserId === review.user_id;
-  const date = new Date(review.created_at).toLocaleDateString("es-SV", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-
-  return (
-    <article
-      className="animate-fade-in-up group relative rounded-2xl bg-white p-6 transition-shadow duration-300 hover:shadow-lg"
-      style={{
-        animationDelay: `${index * 70}ms`,
-        boxShadow:
-          "0 1px 4px rgba(20,48,103,0.06), 0 6px 20px rgba(20,48,103,0.06)",
-      }}
-    >
-      {/* Decorative quote */}
-      <span
-        className="pointer-events-none absolute top-4 right-5 font-serif text-8xl leading-none text-slate-100 select-none"
-        aria-hidden="true"
-      >
-        &ldquo;
-      </span>
-
-      {/* Header: avatar + meta + actions */}
-      <div className="mb-4 flex items-start gap-4">
-        <Avatar src={review.user_avatar} name={review.user_name} size={52} />
-
-        <div className="flex min-w-0 flex-1 items-start justify-between gap-2">
-          <div>
-            <p className="font-serif text-base leading-snug font-bold text-slate-900">
-              {review.user_name}
-            </p>
-            <div className="mt-1.5 flex flex-wrap items-center gap-2">
-              <Stars rating={review.rating} size={15} />
-              <span className="text-xs text-slate-400">{date}</span>
-            </div>
-          </div>
-
-          {/* Owner actions — visible on hover */}
-          {isOwner && (
-            <div className="flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
-              <button
-                type="button"
-                onClick={() => onEdit(review)}
-                className="hover:text-primary rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100"
-                aria-label="Editar reseña"
-                title="Editar"
-              >
-                <span className="material-symbols-outlined text-[15px]">
-                  edit
-                </span>
-              </button>
-              <button
-                type="button"
-                onClick={() => onDelete(review.id)}
-                disabled={isDeleting}
-                className="rounded-lg p-1.5 text-slate-400 transition hover:bg-red-50 hover:text-red-500 disabled:opacity-40"
-                aria-label="Eliminar reseña"
-                title="Eliminar"
-              >
-                {isDeleting ? (
-                  <span className="material-symbols-outlined animate-spin text-[15px]">
-                    progress_activity
-                  </span>
-                ) : (
-                  <span className="material-symbols-outlined text-[15px]">
-                    delete
-                  </span>
-                )}
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Comment */}
-      <p className="text-[15px] leading-relaxed text-slate-600">
-        {review.comment}
-      </p>
-    </article>
-  );
-}
-
-// ── Form ───────────────────────────────────────────────────────
+// ── Review form ────────────────────────────────────────────────
 
 function ReviewForm({
   productId,
@@ -401,7 +519,6 @@ function ReviewForm({
           "0 1px 4px rgba(20,48,103,0.06), 0 6px 20px rgba(20,48,103,0.06)",
       }}
     >
-      {/* Title */}
       <div className="mb-5 flex items-center gap-3">
         <Avatar src={userInfo.avatar} name={userInfo.name} size={44} />
         <div>
@@ -467,7 +584,7 @@ function ReviewForm({
           <button
             type="submit"
             disabled={isPending}
-            className="bg-primary hover:bg-primary/90 flex items-center gap-1.5 rounded-xl px-6 py-2.5 text-sm font-bold text-white shadow-sm transition active:scale-[0.98] disabled:opacity-60"
+            className="bg-primary hover:bg-primary/90 flex items-center gap-1.5 rounded-xl px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:shadow-md active:scale-[0.98] disabled:opacity-60"
           >
             {isPending ? (
               <>
