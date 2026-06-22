@@ -758,10 +758,7 @@ export function ProductReviews({
             className="border-primary/25 text-primary hover:border-primary/40 flex w-full items-center justify-center gap-2 rounded-xl border bg-white px-4 py-2.5 text-sm font-semibold shadow-sm transition hover:shadow-md active:scale-[0.97] md:w-auto md:justify-start"
           >
             <span className="material-symbols-outlined text-[15px]">login</span>
-            <span className="md:hidden">Inicia sesión para calificar</span>
-            <span className="hidden md:inline">
-              Iniciar sesión para reseñar
-            </span>
+            Inicia sesión para calificar
           </button>
         )}
       </div>
@@ -842,7 +839,7 @@ export function ProductReviews({
                 <span className="material-symbols-outlined text-[14px]">
                   login
                 </span>
-                Iniciar sesión
+                Inicia sesión para calificar
               </button>
             )}
           </div>
