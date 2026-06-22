@@ -22,6 +22,9 @@ import { CatalogProductCard } from "@/components/catalogo/CatalogProductCard";
 import { siteConfig } from "@/config/site";
 import { getRecentProducts } from "@/lib/catalogService";
 
+// ── ISR: Re-genera cada hora para reflejar productos nuevos sin re-deploy ──
+export const revalidate = 3600;
+
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
   const recentProducts = await getRecentProducts(6);

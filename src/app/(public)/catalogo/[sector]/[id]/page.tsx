@@ -9,9 +9,37 @@ import {
   getRelatedProducts,
   getProductSector,
   getProductMainImage,
+  getAllProductsForSitemap,
 } from "@/lib/catalogService";
 import { getProductReviews } from "@/lib/reviewsService";
 import { testimonials } from "@/lib/seo-data";
+
+// ── ISR: Re-genera cada hora para reflejar cambios de producto sin re-deploy ──
+export const revalidate = 3600;
+
+// ── dynamicParams: true (default) — productos nuevos post-build se generan
+// on-demand la primera vez y luego se cachean como estáticos (SSG diferido) ──
+export const dynamicParams = true;
+
+// ── generateStaticParams: pre-genera TODAS las páginas de producto en build ──
+// Google recibe HTML pre-construido → SSG real, sin SSR on-demand
+export async function generateStaticParams(): Promise<
+  { sector: string; id: string }[]
+> {
+  try {
+    const products = await getAllProductsForSitemap();
+    return products
+      .filter((p) => p.slug && p.sector)
+      .map((p) => ({
+        sector: p.sector,
+        id: p.slug,
+      }));
+  } catch {
+    // Si Supabase no está disponible en build time, Next.js caerá en
+    // dynamicParams = true y generará on-demand (sin romper el build)
+    return [];
+  }
+}
 
 // ── Constantes de Schema para Google Rich Results ─────────────────────────────
 // Fuente: testimonios reales de Google Maps verificados (src/lib/seo-data.ts)

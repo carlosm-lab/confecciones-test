@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { UpdatesPageClient } from "./UpdatesPageClient";
+import { CHANGELOG } from "@/data/changelog";
 
 const PAGE_URL = `${siteConfig.url}/updates`;
 const PAGE_TITLE = "Updates · Historial de cambios — Confecciones Liss";
@@ -87,7 +88,7 @@ export default function UpdatesPage() {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <UpdatesPageClient />
+      <UpdatesPageClient changelog={CHANGELOG} />
     </>
   );
 }
