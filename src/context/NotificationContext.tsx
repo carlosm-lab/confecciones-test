@@ -437,28 +437,15 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   }, [user]);
 
   // ── Detectar revocación de permisos push ─────────────────────
-  // Si el usuario revocó permisos en config del navegador (granted → default),
-  // limpiamos pushPromptDismissed para que el hint reaparezca.
+  // Si el usuario cambia permisos en config del navegador, limpiamos
+  // pushPromptDismissed para que el hint y el toast reaparezcan.
   useEffect(() => {
-    // Cuando el permiso es "denied", auto-eliminar la notificación push_permission.
-    // Razón: el usuario bloqueó activamente y no puede resolverlo sin ir a
-    // ajustes del navegador. Limpiar automáticamente evita un estado atrapado.
-    // reevaluateConditionalHints no la re-crea para "denied", por lo que
-    // la limpieza es definitiva hasta que el usuario cambie los permisos.
-    if (pushPermissionStatus === "denied") {
-      setLocalNotifs((prev) => {
-        const filtered = prev.filter((n) => n.type !== "push_permission");
-        if (filtered.length !== prev.length) saveLocalNotifs(filtered);
-        return filtered;
-      });
-    }
-
-    // Detectar revocación (granted → otro estado): limpiar pushPromptDismissed
-    // para que el hint reaparezca si el usuario deshabilita desde ajustes.
-    if (
-      prevPushStatusRef.current === "granted" &&
-      pushPermissionStatus !== "granted"
-    ) {
+    // Detectar transición desde un estado terminal (granted o denied) a "default":
+    // el usuario re-habilitó la capacidad de conceder permisos desde ajustes.
+    const wasTerminal =
+      prevPushStatusRef.current === "granted" ||
+      prevPushStatusRef.current === "denied";
+    if (wasTerminal && pushPermissionStatus === "default") {
       try {
         localStorage.removeItem(LS_PUSH_DISMISSED);
       } catch {
@@ -533,19 +520,21 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const reevaluateConditionalHints = useCallback(() => {
     if (typeof window === "undefined") return;
 
-    // Push permission: la notificación del panel SIEMPRE existe mientras el permiso
-    // esté en estado 'default' (condición incumplida). pushPromptDismissed solo controla
-    // el TOAST popup, nunca la notificación del panel de la campana.
+    // Push permission: la notificación SIEMPRE existe mientras push no esté
+    // concedido (granted) o sea imposible (unsupported).
+    // Esto incluye 'default' (pendiente) Y 'denied' (bloqueado) — ambos son
+    // condición incumplida. El usuario debe activar push para eliminar el hint.
     if (
       pushPermissionStatus !== "granted" &&
-      pushPermissionStatus !== "denied" &&
       pushPermissionStatus !== "unsupported"
     ) {
       addLocalNotification({
         type: "push_permission",
         title: "\u00a1S\u00e9 el primero en ver las ofertas!",
         message:
-          "Activa las alertas y recibe notificaciones exclusivas de nuevas colecciones, descuentos y ofertas antes que nadie. \u00a1No te pierdas nada!",
+          pushPermissionStatus === "denied"
+            ? "Las notificaciones est\u00e1n bloqueadas en tu navegador. Ve a Ajustes del navegador \u2192 Privacidad \u2192 Notificaciones y permite este sitio para activar las alertas."
+            : "Activa las alertas y recibe notificaciones exclusivas de nuevas colecciones, descuentos y ofertas antes que nadie. \u00a1No te pierdas nada!",
         target_url: null,
       });
     }
@@ -647,7 +636,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       if (hint && HINT_TYPES.includes(hint.type)) {
         const conditionMet =
           hint.type === "push_permission"
-            ? pushPermissionStatus !== "default" // solo "default" bloquea (condición activamente pendiente)
+            ? pushPermissionStatus === "granted" ||
+              pushPermissionStatus === "unsupported" // única condición cumplida o irresoluble
             : !!user; // favorites_hint / cart_hint / auth_hint requieren usuario
         if (!conditionMet) return; // Condición incumplida → no eliminar
       }

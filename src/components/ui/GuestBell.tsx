@@ -265,7 +265,7 @@ export function GuestBell() {
           onAction: () => void;
         } => {
       if (notif.type === "push_permission") {
-        // pushPermissionStatus === "default": condición pendiente — no se puede eliminar
+        // "default": condición activamente pendiente → no se puede eliminar, mostrar acción
         if (pushPermissionStatus === "default") {
           return {
             allowed: false,
@@ -277,9 +277,20 @@ export function GuestBell() {
             },
           };
         }
-        // granted / denied / unsupported: condición resuelta (o imposible) → permitir eliminar
-        // Nota: "denied" es auto-eliminado por NotificationContext al detectar el estado,
-        // por lo que este branch es unreachable en la práctica (safety net).
+        // "denied": condición igualmente incumplida (push no habilitado).
+        // El usuario debe ir a Ajustes del navegador para desbloquear.
+        if (pushPermissionStatus === "denied") {
+          return {
+            allowed: false,
+            message:
+              "Tus notificaciones push están bloqueadas en el navegador. Para activarlas: abre Ajustes del navegador → Privacidad → Notificaciones y permite las notificaciones de este sitio.",
+            actionLabel: "Entendido",
+            onAction: () => {
+              setBlockInfo(null);
+            },
+          };
+        }
+        // "granted" o "unsupported": condición resuelta o irresoluble → permitir eliminar
         return { allowed: true };
       }
 
