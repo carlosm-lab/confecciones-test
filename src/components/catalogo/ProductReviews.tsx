@@ -63,13 +63,7 @@ function StatsPanel({
   if (total === 0) return null;
 
   return (
-    <div
-      className="mb-6 flex flex-col gap-4 overflow-hidden rounded-2xl bg-white px-5 py-4 sm:flex-row sm:items-center"
-      style={{
-        boxShadow:
-          "0 1px 3px rgba(20,48,103,0.07), 0 4px 14px rgba(20,48,103,0.05)",
-      }}
-    >
+    <div className="border-primary/35 mb-6 flex flex-col gap-4 overflow-hidden rounded-2xl border bg-white px-5 py-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] sm:flex-row sm:items-center">
       {/* Left: score */}
       <div className="flex shrink-0 flex-col items-center gap-0.5 sm:min-w-[80px]">
         <span className="font-serif text-3xl leading-none font-bold text-slate-900">
