@@ -735,7 +735,7 @@ export function ProductDetailClient({
                   <button
                     type="button"
                     onClick={handleAddToCart}
-                    className="bg-primary hover:bg-primary/90 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition hover:shadow-lg active:scale-[0.97]"
+                    className="bg-primary hover:bg-primary/90 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition hover:shadow-lg active:scale-[0.97] lg:py-2.5"
                   >
                     <span className="material-symbols-outlined">
                       shopping_cart
@@ -746,7 +746,7 @@ export function ProductDetailClient({
                   <button
                     type="button"
                     onClick={handlePedirAhora}
-                    className="border-primary text-primary hover:bg-primary/5 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border-2 bg-white py-3.5 font-bold transition active:scale-[0.97]"
+                    className="border-primary text-primary hover:bg-primary/5 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border-2 bg-white py-3.5 font-bold transition active:scale-[0.97] lg:py-2.5"
                     title="Pedir ahora por WhatsApp"
                   >
                     <svg
