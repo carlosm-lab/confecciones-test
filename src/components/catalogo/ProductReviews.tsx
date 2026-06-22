@@ -46,6 +46,72 @@ function Stars({ rating, size = 16 }: { rating: number; size?: number }) {
   );
 }
 
+// ── Stats panel ────────────────────────────────────────────────
+
+function StatsPanel({
+  reviews,
+  avgRating,
+}: {
+  reviews: DbReview[];
+  avgRating: number;
+}) {
+  const total = reviews.length;
+  if (total === 0) return null;
+
+  return (
+    <div
+      className="mb-6 flex flex-col gap-5 overflow-hidden rounded-2xl bg-white px-6 py-5 sm:flex-row sm:items-center"
+      style={{
+        boxShadow:
+          "0 1px 3px rgba(20,48,103,0.07), 0 4px 14px rgba(20,48,103,0.05)",
+      }}
+    >
+      {/* Left: score block */}
+      <div className="flex shrink-0 flex-col items-center gap-1 sm:min-w-[100px]">
+        <span className="font-serif text-5xl leading-none font-bold text-slate-900">
+          {avgRating.toFixed(1)}
+        </span>
+        <Stars rating={Math.round(avgRating)} size={18} />
+        <span className="mt-0.5 text-xs text-slate-400">de 5 estrellas</span>
+      </div>
+
+      {/* Separator */}
+      <div className="hidden h-16 w-px bg-slate-100 sm:block" />
+
+      {/* Right: distribution bars */}
+      <div className="flex flex-1 flex-col gap-2">
+        {[5, 4, 3, 2, 1].map((star) => {
+          const count = reviews.filter((r) => r.rating === star).length;
+          const pct = total > 0 ? (count / total) * 100 : 0;
+          return (
+            <div key={star} className="flex items-center gap-2">
+              <span className="w-2 shrink-0 text-right text-xs font-medium text-slate-500">
+                {star}
+              </span>
+              <span
+                className="material-symbols-outlined shrink-0 text-[13px] text-amber-400"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+                aria-hidden="true"
+              >
+                star
+              </span>
+              <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
+                <div
+                  className="h-full rounded-full bg-amber-400 transition-all duration-700"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+              <span className="w-4 shrink-0 text-right text-xs text-slate-400">
+                {count}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ── Star picker ────────────────────────────────────────────────
 
 function StarPicker({
@@ -580,6 +646,9 @@ export function ProductReviews({
           </button>
         )}
       </div>
+
+      {/* ── Stats panel ────────────────────────────────────── */}
+      <StatsPanel reviews={reviews} avgRating={aggRating} />
 
       {/* ── Form ──────────────────────────────────────────── */}
       <div id="review-form-anchor" />
