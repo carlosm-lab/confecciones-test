@@ -176,21 +176,29 @@ function ReviewCard({
         <div className="flex items-start gap-3">
           {/* Avatar */}
           {review.user_avatar ? (
-            <Image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
               src={review.user_avatar}
               alt={review.user_name}
               width={40}
               height={40}
               className="ring-primary/15 h-10 w-10 shrink-0 rounded-full object-cover ring-2"
-              unoptimized
+              onError={(e) => {
+                const t = e.currentTarget;
+                t.style.display = "none";
+                const fb = t.nextElementSibling as HTMLElement | null;
+                if (fb) fb.style.display = "flex";
+              }}
             />
-          ) : (
-            <div className="bg-primary/10 ring-primary/15 flex h-10 w-10 shrink-0 items-center justify-center rounded-full ring-2">
-              <span className="material-symbols-outlined text-primary text-[20px]">
-                person
-              </span>
-            </div>
-          )}
+          ) : null}
+          <div
+            className="bg-primary/10 ring-primary/15 flex h-10 w-10 shrink-0 items-center justify-center rounded-full ring-2"
+            style={{ display: review.user_avatar ? "none" : "flex" }}
+          >
+            <span className="material-symbols-outlined text-primary text-[20px]">
+              person
+            </span>
+          </div>
 
           {/* Name + meta */}
           <div className="min-w-0 flex-1">
