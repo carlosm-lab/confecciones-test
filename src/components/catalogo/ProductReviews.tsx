@@ -60,48 +60,50 @@ function StatsPanel({
 
   return (
     <div
-      className="mb-6 flex flex-col gap-5 overflow-hidden rounded-2xl bg-white px-6 py-5 sm:flex-row sm:items-center"
+      className="mb-6 flex flex-col gap-4 overflow-hidden rounded-2xl bg-white px-5 py-4 sm:flex-row sm:items-center"
       style={{
         boxShadow:
           "0 1px 3px rgba(20,48,103,0.07), 0 4px 14px rgba(20,48,103,0.05)",
       }}
     >
       {/* Left: score block */}
-      <div className="flex shrink-0 flex-col items-center gap-1 sm:min-w-[100px]">
-        <span className="font-serif text-5xl leading-none font-bold text-slate-900">
+      <div className="flex shrink-0 flex-col items-center gap-0.5 sm:min-w-[80px]">
+        <span className="font-serif text-3xl leading-none font-bold text-slate-900">
           {avgRating.toFixed(1)}
         </span>
-        <Stars rating={Math.round(avgRating)} size={18} />
-        <span className="mt-0.5 text-xs text-slate-400">de 5 estrellas</span>
+        <Stars rating={Math.round(avgRating)} size={14} />
+        <span className="mt-0.5 text-[10px] text-slate-400">
+          de 5 estrellas
+        </span>
       </div>
 
       {/* Separator */}
-      <div className="hidden h-16 w-px bg-slate-100 sm:block" />
+      <div className="hidden h-10 w-px bg-slate-100 sm:block" />
 
       {/* Right: distribution bars */}
-      <div className="flex flex-1 flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-1.5">
         {[5, 4, 3, 2, 1].map((star) => {
           const count = reviews.filter((r) => r.rating === star).length;
           const pct = total > 0 ? (count / total) * 100 : 0;
           return (
-            <div key={star} className="flex items-center gap-2">
-              <span className="w-2 shrink-0 text-right text-xs font-medium text-slate-500">
+            <div key={star} className="flex items-center gap-1.5">
+              <span className="w-2 shrink-0 text-right text-[10px] font-medium text-slate-500">
                 {star}
               </span>
               <span
-                className="material-symbols-outlined shrink-0 text-[13px] text-amber-400"
+                className="material-symbols-outlined shrink-0 text-[11px] text-amber-400"
                 style={{ fontVariationSettings: "'FILL' 1" }}
                 aria-hidden="true"
               >
                 star
               </span>
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
+              <div className="h-1 flex-1 overflow-hidden rounded-full bg-slate-100">
                 <div
                   className="h-full rounded-full bg-amber-400 transition-all duration-700"
                   style={{ width: `${pct}%` }}
                 />
               </div>
-              <span className="w-4 shrink-0 text-right text-xs text-slate-400">
+              <span className="w-3 shrink-0 text-right text-[10px] text-slate-400">
                 {count}
               </span>
             </div>
