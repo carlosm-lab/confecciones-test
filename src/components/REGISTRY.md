@@ -158,7 +158,32 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
   - `product: DbProduct` — Producto a mostrar (schema de Supabase).
   - `config: CategoryConfig` — Configuración del sector.
   - `relatedProducts: DbProduct[]` — Productos relacionados (hasta 5).
-- **Ejemplo:** `<ProductDetailClient product={product} config={config} relatedProducts={related} />`
+  - `initialReviews: DbReview[]` — Reseñas iniciales cargadas en servidor (SSR).
+  - `averageRating: number` — Promedio de calificaciones (0 si no hay reseñas).
+  - `totalCount: number` — Total de reseñas del producto.
+- **Ejemplo:** `<ProductDetailClient product={product} config={config} relatedProducts={related} initialReviews={reviews} averageRating={4.8} totalCount={5} />`
+
+### ProductReviews
+
+- **Ruta:** `src/components/catalogo/ProductReviews.tsx`
+- **Descripción:** Sección de reseñas de producto. Aparece debajo de "También te puede gustar". Permite a usuarios autenticados agregar, editar y eliminar UNA reseña por producto. Usuarios no autenticados ven un CTA de login. El estado local se actualiza optimistamente tras cada mutación (sin refetch). Las mutaciones van directamente a Supabase `product_reviews` usando `getSupabaseClient()`.
+- **Sub-componentes internos:**
+  - `StarDisplay` — Muestra estrellas en modo lectura con `fontVariationSettings` FILL.
+  - `StarInput` — Selector de estrellas interactivo con hover state.
+  - `ReviewCard` — Tarjeta de reseña con avatar, nombre, rating, fecha, comentario, y acciones edit/delete para el owner.
+  - `ReviewForm` — Formulario validado con Zod (`reviewSchema`) para crear/editar reseñas.
+- **Props:**
+  - `productId: string` — UUID del producto en Supabase.
+  - `initialReviews: DbReview[]` — Reseñas cargadas en servidor.
+  - `averageRating: number` — Rating promedio inicial.
+  - `totalCount: number` — Conteo inicial de reseñas.
+- **Comportamiento:**
+  - Un usuario puede tener máximo 1 reseña por producto (constraint `unique_user_product_review` en DB).
+  - Login con Google requerido para escribir reseñas.
+  - Eliminar: DELETE directo a Supabase + actualización optimista del estado.
+  - Editar: UPDATE con `eq("user_id", user.id)` para seguridad extra en cliente.
+- **Dependencias:** `AuthContext`, `getSupabaseClient`, `reviewSchema`, `DbReview` type, `react-hot-toast`, Material Symbols icons.
+- **Ejemplo:** `<ProductReviews productId={product.id} initialReviews={[]} averageRating={0} totalCount={0} />`
 
 ## SEO Components
 

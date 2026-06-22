@@ -17,6 +17,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { CatalogProductCard } from "./CatalogProductCard";
+import { ProductReviews } from "./ProductReviews";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
@@ -30,18 +31,28 @@ import {
   getProductSector,
   type DbProduct,
 } from "@/lib/catalogService";
+import type { DbReview } from "@/lib/reviewsService";
 import { buildQuoteUrl } from "@/lib/whatsapp";
 
 interface ProductDetailClientProps {
   product: DbProduct;
   config: CategoryConfig;
   relatedProducts: DbProduct[];
+  /** Reseñas iniciales cargadas en el servidor (SSR) */
+  initialReviews: DbReview[];
+  /** Promedio de calificaciones (0 si no hay reseñas) */
+  averageRating: number;
+  /** Total de reseñas */
+  totalCount: number;
 }
 
 export function ProductDetailClient({
   product,
   config,
   relatedProducts,
+  initialReviews,
+  averageRating,
+  totalCount,
 }: ProductDetailClientProps) {
   const allImages: string[] = [
     ...(product.images && product.images.length > 0
@@ -760,6 +771,14 @@ export function ProductDetailClient({
           </div>
         </section>
       )}
+
+      {/* Reviews section — debajo de "También te puede gustar" */}
+      <ProductReviews
+        productId={product.id}
+        initialReviews={initialReviews}
+        averageRating={averageRating}
+        totalCount={totalCount}
+      />
 
       {/* Copy toast */}
       {showToast && (

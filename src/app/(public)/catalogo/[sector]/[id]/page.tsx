@@ -10,6 +10,7 @@ import {
   getProductSector,
   getProductMainImage,
 } from "@/lib/catalogService";
+import { getProductReviews } from "@/lib/reviewsService";
 import { testimonials } from "@/lib/seo-data";
 
 // ── Constantes de Schema para Google Rich Results ─────────────────────────────
@@ -167,9 +168,12 @@ export default async function ProductDetailPage({
     notFound();
   }
 
-  // Related products: same sector, up to 5
+  // Fetch related products AND real reviews in parallel (no waterfall)
   const productSector = getProductSector(product);
-  const relatedProducts = await getRelatedProducts(productSector, id, 5);
+  const [relatedProducts, reviewData] = await Promise.all([
+    getRelatedProducts(productSector, id, 5),
+    getProductReviews(product.id),
+  ]);
 
   const PAGE_URL = `${siteConfig.url}/catalogo/${sector}/${id}`;
   const description =
@@ -181,12 +185,44 @@ export default async function ProductDetailPage({
       : `${siteConfig.url}${imageUrl}`
     : undefined;
 
+  // ── JSON-LD: Use real reviews when available, else fallback to testimonials
+  const hasRealReviews = reviewData.totalCount > 0;
+
+  const jsonLdAggregateRating = hasRealReviews
+    ? {
+        "@type": "AggregateRating",
+        ratingValue: reviewData.averageRating,
+        ratingCount: reviewData.totalCount,
+        reviewCount: reviewData.totalCount,
+        bestRating: 5,
+        worstRating: 1,
+      }
+    : PRODUCT_AGGREGATE_RATING;
+
+  const jsonLdReviews = hasRealReviews
+    ? reviewData.reviews.map((r) => ({
+        "@type": "Review",
+        author: { "@type": "Person", name: r.user_name },
+        reviewBody: r.comment,
+        reviewRating: {
+          "@type": "Rating",
+          ratingValue: r.rating,
+          bestRating: 5,
+          worstRating: 1,
+        },
+        datePublished: r.created_at.slice(0, 10),
+      }))
+    : PRODUCT_REVIEWS;
+
   return (
     <>
       <ProductDetailClient
         product={product}
         config={config}
         relatedProducts={relatedProducts}
+        initialReviews={reviewData.reviews}
+        averageRating={reviewData.averageRating}
+        totalCount={reviewData.totalCount}
       />
 
       {/* JSON-LD: Product — Rich Results (aggregateRating + review + Offer completo) */}
@@ -233,10 +269,10 @@ export default async function ProductDetailPage({
               // Política de devoluciones
               hasMerchantReturnPolicy: MERCHANT_RETURN_POLICY,
             },
-            // ⭐ Calificación agregada (reseñas reales de Google Maps)
-            aggregateRating: PRODUCT_AGGREGATE_RATING,
-            // ⭐ Reseñas individuales verificadas
-            review: PRODUCT_REVIEWS,
+            // ⭐ Calificación agregada — real si hay reseñas, fallback a testimonios
+            aggregateRating: jsonLdAggregateRating,
+            // ⭐ Reseñas — reales si existen, fallback a testimonios verificados
+            review: jsonLdReviews,
           }).replace(/</g, "\\u003c"),
         }}
       />
