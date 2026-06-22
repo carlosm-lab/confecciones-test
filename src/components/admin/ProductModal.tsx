@@ -284,8 +284,7 @@ export default function ProductModal({
     setTagInput("");
     setColorInput({ name: "", hex: "#000000" });
     setCaracteristicaInput("");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product?.id, isOpen]);
+  }, [product, isOpen, categories]);
 
   const handleAddImage = useCallback((url: string) => {
     setFormData((prev) => {

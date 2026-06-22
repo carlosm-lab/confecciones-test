@@ -12,5 +12,3 @@ export const reviewSchema = z.object({
     .min(10, "El comentario debe tener al menos 10 caracteres")
     .max(1000, "El comentario no puede superar los 1000 caracteres"),
 });
-
-export type ReviewFormData = z.infer<typeof reviewSchema>;

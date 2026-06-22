@@ -202,6 +202,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     cartItemsRef.current = cartItems;
   }, [cartItems]);
 
+  // Ref para llamar refreshCartPrices desde el sync effect sin añadirla a sus deps.
+  // Se actualiza en render (síncrono) para que el effect siempre vea el valor actual.
+  const refreshCartPricesRef = useRef<() => Promise<void>>(() =>
+    Promise.resolve()
+  );
+
   // ── Sync multi-pestaña ────────────────────────────────────────
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
@@ -363,7 +369,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       // Caso 2: Hay items locales → revalidar precios
       // (refreshCartPrices ya maneja internamente el guard de guest)
       if (cartItemsRef.current.length > 0 && isMounted) {
-        refreshCartPrices();
+        await refreshCartPricesRef.current();
       }
     };
 
@@ -372,7 +378,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return () => {
       isMounted = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   // ── Revalidación de precios ───────────────────────────────────
@@ -508,6 +513,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setIsRefreshingPrices(false);
     }
   }, [user]);
+
+  // Mantener ref actualizado en efecto para que el sync effect
+  // siempre use la última versión de refreshCartPrices.
+  useEffect(() => {
+    refreshCartPricesRef.current = refreshCartPrices;
+  }, [refreshCartPrices]);
 
   // ── Polling de revalidación cada 60s ─────────────────────────
   // refreshCartPrices incluye el guard de usuario en su interior;

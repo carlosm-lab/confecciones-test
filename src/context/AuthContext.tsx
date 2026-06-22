@@ -376,15 +376,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // Effect 2: Fetch perfil reactivo al cambio de user
+  // user?.id como dep: solo re-corre cuando el ID cambia (login/logout),
+  // no en cada refresco de token (que cambia el objeto user pero no el ID).
   useEffect(() => {
     if (user?.id) {
       fetchProfile(user.id);
-    } else if (user === null && !loading) {
+    } else if (!user?.id && !loading) {
       setProfile(null);
       setIsAdmin(false);
       setProfileLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, fetchProfile, loading]);
 
   const signInWithGoogle = async () => {

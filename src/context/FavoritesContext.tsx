@@ -36,7 +36,7 @@ import {
 } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "./AuthContext";
-import { useNotifications } from "@/context/NotificationContext";
+import { useNotificationsSafe } from "@/context/NotificationContext";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
 import { STORAGE_FAVORITES_KEY } from "@/lib/constants";
@@ -63,7 +63,8 @@ export const useFavorites = () => {
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
-  const { addLocalNotification } = useNotifications();
+  const notificationsCtx = useNotificationsSafe();
+  const addLocalNotification = notificationsCtx?.addLocalNotification;
   const [favorites, setFavorites] = useState<string[]>([]);
   const favoritesRef = useRef<string[]>([]);
 
@@ -200,7 +201,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
         );
         // Solo notificar al agregar (no al quitar)
         if (!isFav) {
-          addLocalNotification({
+          addLocalNotification?.({
             type: "favorites_hint",
             title: "Favoritos guardados",
             message:

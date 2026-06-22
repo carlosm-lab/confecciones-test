@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
@@ -44,10 +44,13 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
       return;
     }
 
-    // Solo mostrar spinner en la carga inicial (no cuando se borra un favorito)
-    if (products.length === 0) {
-      setLoading(true);
-    }
+    // Solo mostrar spinner en la carga inicial (no cuando se borra un favorito):
+    // usamos setProducts en forma funcional para leer el estado actual sin
+    // añadir `products` a las deps (evita el ciclo infinito).
+    setProducts((prev) => {
+      if (prev.length === 0) setLoading(true);
+      return prev;
+    });
 
     try {
       const supabase = getSupabaseClient();
@@ -65,13 +68,12 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
     } finally {
       setLoading(false);
     }
-  }, [favorites, products.length]);
+  }, [favorites]);
 
   useEffect(() => {
     if (!isOpen) return;
     fetchFavorites();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, favorites]);
+  }, [isOpen, favorites, fetchFavorites]);
 
   // Swipe-down-to-close (mobile bottom sheet)
   const [dragY, setDragY] = useState(0);

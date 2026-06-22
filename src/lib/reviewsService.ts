@@ -6,6 +6,7 @@
 // para mutaciones — usar getSupabaseClient() en el componente.
 // ──────────────────────────────────────────────────────────────
 import { createClient } from "@supabase/supabase-js";
+import { logger } from "@/lib/logger";
 
 // ── Tipo de reseña proveniente de la base de datos ─────────────
 export interface DbReview {
@@ -21,7 +22,7 @@ export interface DbReview {
 }
 
 // ── Datos de calificación agregada ────────────────────────────
-export interface ProductRatingData {
+interface ProductRatingData {
   reviews: DbReview[];
   /** Promedio redondeado a 1 decimal (ej: 4.7). 0 si no hay reseñas. */
   averageRating: number;
@@ -50,7 +51,7 @@ export async function getProductReviews(
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("[reviewsService] getProductReviews error:", error);
+    logger.error("[reviewsService] getProductReviews error:", error);
     return { reviews: [], averageRating: 0, totalCount: 0 };
   }
 

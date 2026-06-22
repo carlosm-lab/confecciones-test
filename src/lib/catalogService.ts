@@ -6,6 +6,7 @@
 // NO importar en Client Components — usar el hook useProducts.ts.
 // ──────────────────────────────────────────────────────────────
 import { createClient } from "@supabase/supabase-js";
+import { logger } from "@/lib/logger";
 
 // ── Tipo de producto proveniente de la base de datos ─────────
 
@@ -140,7 +141,7 @@ export async function getProductsBySector(
     .order("created_at", { ascending: false });
 
   if (err1) {
-    console.error("[catalogService] getProductsBySector (direct) error:", err1);
+    logger.error("[catalogService] getProductsBySector (direct) error:", err1);
   }
 
   // Query 2: obtener los category_ids del catalog que coincida
@@ -150,7 +151,7 @@ export async function getProductsBySector(
     .eq("catalog", sector);
 
   if (err2) {
-    console.error(
+    logger.error(
       "[catalogService] getProductsBySector (categories) error:",
       err2
     );
@@ -168,7 +169,7 @@ export async function getProductsBySector(
       .order("created_at", { ascending: false });
 
     if (err3) {
-      console.error(
+      logger.error(
         "[catalogService] getProductsBySector (by category) error:",
         err3
       );
@@ -201,7 +202,7 @@ export async function getProductBySlug(
     .maybeSingle();
 
   if (error) {
-    console.error("[catalogService] getProductBySlug error:", error);
+    logger.error("[catalogService] getProductBySlug error:", error);
     return null;
   }
 
@@ -220,7 +221,7 @@ export async function getRecentProducts(limit = 6): Promise<DbProduct[]> {
     .limit(limit);
 
   if (error) {
-    console.error("[catalogService] getRecentProducts error:", error);
+    logger.error("[catalogService] getRecentProducts error:", error);
     return [];
   }
 
@@ -239,7 +240,7 @@ export async function getProductCountsBySector(): Promise<
     .eq("is_active", true);
 
   if (error) {
-    console.error("[catalogService] getProductCountsBySector error:", error);
+    logger.error("[catalogService] getProductCountsBySector error:", error);
     return {};
   }
 
@@ -280,7 +281,7 @@ export async function getRelatedProducts(
     .limit(limit);
 
   if (err1) {
-    console.error("[catalogService] getRelatedProducts (direct) error:", err1);
+    logger.error("[catalogService] getRelatedProducts (direct) error:", err1);
   }
 
   const directList = (byDirect ?? []) as unknown as DbProduct[];
@@ -327,7 +328,7 @@ export async function getAllProductsForSitemap(): Promise<
     .not("slug", "is", null);
 
   if (error) {
-    console.error("[catalogService] getAllProductsForSitemap error:", error);
+    logger.error("[catalogService] getAllProductsForSitemap error:", error);
     return [];
   }
 
@@ -354,7 +355,7 @@ export async function getAllProductsForSitemap(): Promise<
 // ── Categorías de un sector — alimenta los filtros dinámicos ──
 
 /** Categoría tal como viene de la tabla `categories` de Supabase */
-export interface DbCategory {
+interface DbCategory {
   id: string;
   name: string;
   slug: string;
@@ -378,7 +379,7 @@ export async function getCategoriesForSector(
     .order("name");
 
   if (error) {
-    console.error("[catalogService] getCategoriesForSector error:", error);
+    logger.error("[catalogService] getCategoriesForSector error:", error);
     return [];
   }
 

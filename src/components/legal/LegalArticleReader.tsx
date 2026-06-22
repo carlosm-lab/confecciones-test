@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
@@ -100,14 +100,14 @@ export default function LegalArticleReader({
    * LegalHubClient can skip the fade-in animations on the hub page
    * (avoiding the illusion of a page reload).
    */
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     try {
       sessionStorage.setItem("liss_legal_return", "1");
     } catch {
       /* sessionStorage unavailable in some private-mode configurations */
     }
     router.push("/legal");
-  };
+  }, [router]);
 
   /* ESC key → close modal (desktop) */
   useEffect(() => {
@@ -116,8 +116,7 @@ export default function LegalArticleReader({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleClose]);
 
   const breadcrumbItems = [
     { label: "Inicio", href: "/" },

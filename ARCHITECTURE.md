@@ -175,3 +175,41 @@ El formulario de admin tenía dos campos globales: `Precio ($)` (`price`) y `Pre
 - Al re-guardar un producto existente desde el admin, `old_price` global se sobreescribirá con `min(offer_by_size)` o `null`. Si se quiere preservar la oferta legacy, se debe ingresar manualmente en `offer_by_size`.
 - La migración SQL en `supabase/migrations/20260621_offer_by_size.sql` debe ejecutarse manualmente en el Dashboard de Supabase SQL Editor (el Service Role Key fue removido del `.env` por seguridad).
 - `isProductOnSale()` en `catalogService.ts` y `productUtils.ts` verifica ambos: `offer_by_size` (nuevo) y `old_price > price` (legacy fallback).
+
+---
+
+## [2026-06-22] Sistema de Notificaciones � Refactoring de Seguridad y Consistencia
+
+**Archivo central**: `src/context/NotificationContext.tsx`
+
+### Modelo de datos
+
+Tres tipos de notificaciones:
+
+- **Condicionales (HINT_TYPES)**: `push_permission`, `favorites_hint`, `cart_hint`, `auth_hint` � locales, basadas en condici�n.
+- **Autom�ticas**: `new_product`, `new_offer` � BD, desde admin de productos.
+- **Manuales**: `manual`, `info` � BD, desde panel de notificaciones.
+
+### Decisiones arquitect�nicas
+
+**Filtro por primera visita (Problema 1)**
+
+- `fetchDbNotifs` agrega `.gte('created_at', primeraVisitaISO)` usando `LS_FIRST_VISIT_TS`.
+- Los INSERTs realtime no necesitan filtro (siempre son posteriores al load).
+
+**Re-evaluaci�n continua de condiciones (Problema 3)**
+
+- `reevaluateConditionalHints()` es la fuente de verdad para hints condicionales.
+- Se llama reactivamente en `useEffect([user, pushPermissionStatus, pushPromptDismissed, mounted])`.
+- Lee `STORAGE_FAVORITES_KEY` y `STORAGE_CART_KEY` de localStorage para saber si los hints de auth deben existir.
+- `addLocalNotification` genera NUEVO ID al re-activar un tipo existente ? evita que `readIds` enmascare la notificaci�n.
+
+**Detecci�n de revocaci�n de permisos push**
+
+- `visibilitychange` listener re-checa `Notification.permission` al recuperar foco.
+- `prevPushStatusRef` detecta transici�n `granted ? default` y limpia `pushPromptDismissed`.
+
+**Guard de condici�n en dismissNotification (Problema 2)**
+
+- Defensa en profundidad: si el caller intenta eliminar un HINT_TYPE con condici�n incumplida, la llamada es ignorada.
+- La UI (`GuestBell.canDelete`) ya lo bloqueaba; esto protege la funci�n base tambi�n.

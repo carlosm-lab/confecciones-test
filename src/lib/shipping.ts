@@ -17,7 +17,7 @@
 export type ShippingZone = "LOCAL" | "ORIENTAL" | "NACIONAL";
 
 /** Tipo de entrega que el cliente puede seleccionar */
-export type DeliveryType = "taller" | "punto_medio" | "domicilio";
+type DeliveryType = "taller" | "punto_medio" | "domicilio";
 
 export interface ShippingInfo {
   department: string;
@@ -32,14 +32,14 @@ export interface ShippingInfo {
 }
 
 /** Labels amigables para mostrar en la UI */
-export const DELIVERY_TYPE_LABEL: Record<DeliveryType, string> = {
+const DELIVERY_TYPE_LABEL: Record<DeliveryType, string> = {
   taller: "Recoger en el taller (San Miguel)",
   punto_medio: "Punto de entrega acordado (San Miguel)",
   domicilio: "Envío a domicilio",
 };
 
 /** Tipos de entrega disponibles por zona */
-export const DELIVERY_TYPES_BY_ZONE: Record<ShippingZone, DeliveryType[]> = {
+const DELIVERY_TYPES_BY_ZONE: Record<ShippingZone, DeliveryType[]> = {
   LOCAL: ["taller", "punto_medio"],
   ORIENTAL: ["domicilio"],
   NACIONAL: ["domicilio"],

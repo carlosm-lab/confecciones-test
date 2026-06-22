@@ -160,6 +160,15 @@ export function useNotifications(): NotificationContextValue {
   return ctx;
 }
 
+/**
+ * Versión null-safe de useNotifications.
+ * Devuelve null si el proveedor no está activo (ej: durante HMR recovery).
+ * Úsalo cuando el consumidor puede renderizarse fuera del árbol del proveedor.
+ */
+export function useNotificationsSafe(): NotificationContextValue | null {
+  return useContext(NotificationContext);
+}
+
 // ── Provider ───────────────────────────────────────────────────
 
 export function NotificationProvider({ children }: { children: ReactNode }) {
@@ -183,9 +192,24 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const subscribeToPushRef = useRef<() => Promise<boolean>>(() =>
     Promise.resolve(false)
   );
+  // Refs para leer valores sin añadirlos como deps en effects de una sola ejecución
+  const localNotifsRef = useRef<AppNotification[]>([]);
+  const pushStateCheckRef = useRef({
+    pushPromptDismissed: false,
+    pushPermissionStatus: "default" as PushPermissionStatus,
+    localNotifs: [] as AppNotification[],
+  });
+  const addLocalNotificationRef = useRef<
+    (
+      notif: Pick<AppNotification, "type" | "title" | "message" | "target_url">
+    ) => void
+  >(() => {});
 
   // ── Hidratacion ───────────────────────────────────────────────
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    // Patrón intencional: hidratación de estado desde localStorage.
+    // No existe otra forma de inicializar estado cliente-only en SSR.
     setLocalNotifs(loadLocalNotifs());
     setReadIds(loadReadIds());
     setDismissedIds(loadDismissedIds());
@@ -206,24 +230,41 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }
 
     setMounted(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
+  // ── Sincronizar refs de estado (no deben ser deps de effects mount-once) ──
+  useEffect(() => {
+    localNotifsRef.current = localNotifs;
+  }, [localNotifs]);
+
+  useEffect(() => {
+    pushStateCheckRef.current = {
+      pushPromptDismissed,
+      pushPermissionStatus,
+      localNotifs,
+    };
+  }, [pushPromptDismissed, pushPermissionStatus, localNotifs]);
+
   // ── Notificacion de bienvenida (push_permission) ──────────────
-  // Se muestra ~3s despues de la PRIMERA visita, si no se ha pedido antes
+  // Se muestra ~3s despues de la PRIMERA visita, si no se ha pedido antes.
+  // Los valores de estado se leen desde refs (pushStateCheckRef) para evitar
+  // closures stale sin añadir deps que dispararían el effect más de una vez.
   useEffect(() => {
     if (!mounted) return;
-    if (pushPromptDismissed) return;
-    if (
-      pushPermissionStatus === "granted" ||
-      pushPermissionStatus === "unsupported"
-    )
-      return;
-
-    const alreadyShown = localNotifs.some((n) => n.type === "push_permission");
-    if (alreadyShown) return;
 
     const timer = setTimeout(() => {
-      addLocalNotification({
+      const {
+        pushPromptDismissed: dismissed,
+        pushPermissionStatus: status,
+        localNotifs: notifs,
+      } = pushStateCheckRef.current;
+      if (dismissed) return;
+      if (status === "granted" || status === "unsupported") return;
+      const alreadyShown = notifs.some((n) => n.type === "push_permission");
+      if (alreadyShown) return;
+
+      addLocalNotificationRef.current({
         type: "push_permission",
         title: "Se el primero en ver las ofertas!",
         message:
@@ -337,7 +378,6 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }, 3000);
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mounted]);
 
   // ── Notificaciones DB en tiempo real ──────────────────────────
@@ -413,7 +453,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const isNowLoggedIn = currentUserId !== null;
 
     if (wasGuest && isNowLoggedIn) {
-      // Marcar todas las hints como leidas
+      /* eslint-disable react-hooks/set-state-in-effect */
+      // Sincronización intencional: transición guest→user, el estado externo cambió.
       setLocalNotifs((prev) => {
         const updated = prev.map((n) =>
           HINT_TYPES.includes(n.type) ? { ...n, read: true } : n
@@ -423,22 +464,20 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       });
 
       setReadIds((prev) => {
-        const hintIds = localNotifs
+        const hintIds = localNotifsRef.current
           .filter((n) => HINT_TYPES.includes(n.type))
           .map((n) => n.id);
         const next = new Set([...prev, ...hintIds]);
         saveReadIds(next);
         return next;
       });
+      /* eslint-enable react-hooks/set-state-in-effect */
     }
 
     prevUserIdRef.current = currentUserId;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   // ── Detectar revocación de permisos push ─────────────────────
-  // Si el usuario cambia permisos en config del navegador, limpiamos
-  // pushPromptDismissed para que el hint y el toast reaparezcan.
   useEffect(() => {
     // Detectar transición desde un estado terminal (granted o denied) a "default":
     // el usuario re-habilitó la capacidad de conceder permisos desde ajustes.
@@ -451,6 +490,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       } catch {
         /* silent */
       }
+      // Intencional: sincronizar estado React con el permiso del navegador (externo).
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPushPromptDismissed(false);
     }
     prevPushStatusRef.current = pushPermissionStatus;
@@ -512,6 +553,11 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     },
     []
   );
+
+  // Mantener ref actualizado para que el toast effect use la versión actual
+  useEffect(() => {
+    addLocalNotificationRef.current = addLocalNotification;
+  }, [addLocalNotification]);
 
   // ── reevaluateConditionalHints ───────────────────────────────
   // Re-inyecta hints condicionales cada vez que una condición
@@ -585,6 +631,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   // vuelve a incumplirse (PROBLEMA 3).
   useEffect(() => {
     if (!mounted) return;
+    // Intencional: re-evaluar condiciones condicionales e inyectar hints al panel.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     reevaluateConditionalHints();
     // pushPromptDismissed eliminado de deps: ya no condiciona el hint del panel
   }, [user, pushPermissionStatus, mounted, reevaluateConditionalHints]);
@@ -714,7 +762,9 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   }, [user]);
 
   // Mantener ref actualizado para el toast (evitar closure stale)
-  subscribeToPushRef.current = subscribeToPush;
+  useEffect(() => {
+    subscribeToPushRef.current = subscribeToPush;
+  }, [subscribeToPush]);
 
   // ── Combinar notificaciones — ordenadas por fecha desc ────────
   const allNotifications: AppNotification[] = mounted
