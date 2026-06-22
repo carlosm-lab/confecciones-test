@@ -337,7 +337,7 @@ export function ProductDetailClient({
           <div className="hidden h-full w-px bg-slate-100 lg:block" />
 
           {/* Main image */}
-          <div className="relative aspect-[4/5] w-full self-start overflow-hidden rounded-2xl bg-white">
+          <div className="border-primary/35 relative aspect-[4/5] w-full self-start overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
             <button
               type="button"
               className="relative block h-full w-full cursor-zoom-in"
