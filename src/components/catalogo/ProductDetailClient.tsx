@@ -452,13 +452,6 @@ export function ProductDetailClient({
             </p>
           )}
 
-          {/* 4b ── Descripción corta — MAYUSC + negrita, mismo tamaño/fuente */}
-          {product.short_description && (
-            <p className="text-sm font-bold tracking-wide text-slate-700 uppercase">
-              {product.short_description}
-            </p>
-          )}
-
           {/* ── TABLET 2-col split: md únicamente ─────────────────────────
               Left : características · colores · material
               Right: tallas · buybox
@@ -467,6 +460,13 @@ export function ProductDetailClient({
           <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-1">
             {/* ── Columna izquierda ── */}
             <div className="flex flex-col gap-6">
+              {/* 4b ── Descripción corta — alineada con encabezado TALLA en tablet */}
+              {product.short_description && (
+                <p className="text-sm font-bold tracking-wide text-slate-700 uppercase">
+                  {product.short_description}
+                </p>
+              )}
+
               {/* 5 ── Características */}
               {caracteristicas.length > 0 && (
                 <ul className="flex flex-col gap-1.5">
