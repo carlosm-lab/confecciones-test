@@ -9,6 +9,7 @@
  */
 
 import { useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useAuth } from "@/context/AuthContext";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { reviewSchema } from "@/schemas/reviewSchema";
@@ -237,7 +238,7 @@ function ReviewModal({
 
 // ── Review card ────────────────────────────────────────────────
 
-const CARD_MAX_LINES = 4; // líneas visibles antes del truncado
+const CARD_MAX_LINES = 4;
 
 function ReviewCard({
   review,
@@ -255,12 +256,18 @@ function ReviewCard({
   index: number;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const isOwner = currentUserId === review.user_id;
   const date = new Date(review.created_at).toLocaleDateString("es-SV", {
     day: "2-digit",
     month: "short",
     year: "numeric",
   });
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   return (
     <>
@@ -363,10 +370,14 @@ function ReviewCard({
         </p>
       </article>
 
-      {/* Modal */}
-      {modalOpen && (
-        <ReviewModal review={review} onClose={() => setModalOpen(false)} />
-      )}
+      {/* Modal — renderizado via createPortal en document.body para escapar
+           el stacking context del transform de animate-fade-in-up */}
+      {modalOpen &&
+        mounted &&
+        createPortal(
+          <ReviewModal review={review} onClose={() => setModalOpen(false)} />,
+          document.body
+        )}
     </>
   );
 }
