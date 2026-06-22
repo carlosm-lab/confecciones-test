@@ -84,7 +84,7 @@ export function CatalogProductCard({
   return (
     <article
       data-testid="product-card"
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md"
+      className="group border-primary/35 hover:border-primary/55 relative flex h-full w-full flex-col overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
     >
       {/* Badge OFERTA */}
       {onSale && (

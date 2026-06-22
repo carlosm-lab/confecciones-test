@@ -268,12 +268,8 @@ function ReviewCard({
   return (
     <>
       <article
-        className="animate-fade-in-up group relative flex flex-col rounded-2xl bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
-        style={{
-          animationDelay: `${index * 70}ms`,
-          boxShadow:
-            "0 1px 4px rgba(20,48,103,0.06), 0 6px 20px rgba(20,48,103,0.06)",
-        }}
+        className="animate-fade-in-up group border-primary/35 hover:border-primary/55 relative flex flex-col rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
+        style={{ animationDelay: `${index * 70}ms` }}
       >
         {/* Botón transparente que cubre la tarjeta — accesible y sin role en article */}
         <button
