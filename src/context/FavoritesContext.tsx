@@ -204,11 +204,13 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
             type: "favorites_hint",
             title: "Favoritos guardados",
             message:
-              "Inicia sesion para sincronizarlos en todos tus dispositivos.",
+              "Inicia sesión para sincronizarlos en todos tus dispositivos.",
+
             target_url: null,
           });
           toast(
             "¡Guardado! Inicia sesión para sincronizarlo en otros dispositivos",
+
             {
               icon: "🔔",
               duration: 4000,

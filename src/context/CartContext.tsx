@@ -581,7 +581,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         type: "cart_hint",
         title: "Articulos en el carrito",
         message:
-          "Inicia sesion para guardar tu carrito y acceder desde cualquier dispositivo.",
+          "Inicia sesión para guardar tu carrito y acceder desde cualquier dispositivo.",
+
         target_url: null,
       });
     }

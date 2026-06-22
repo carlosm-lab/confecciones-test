@@ -316,7 +316,7 @@ export function MobileBottomNav() {
               setIsCartOpen(true);
             } else if (isProfileTab && !user) {
               e.preventDefault();
-              showAuthModal("generic");
+              showAuthModal("account");
             }
           };
 

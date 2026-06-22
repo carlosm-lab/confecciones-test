@@ -287,6 +287,12 @@ export function GuestBell() {
         notif.type === "cart_hint"
       ) {
         if (!user) {
+          const hintContext =
+            notif.type === "favorites_hint"
+              ? "favorites"
+              : notif.type === "cart_hint"
+                ? "cart"
+                : "account";
           return {
             allowed: false,
             message:
@@ -294,7 +300,7 @@ export function GuestBell() {
             actionLabel: "Iniciar sesión",
             onAction: () => {
               closePanel();
-              showAuthModal("generic");
+              showAuthModal(hintContext);
             },
           };
         }
@@ -372,12 +378,18 @@ export function GuestBell() {
           notif.type === "cart_hint") &&
         !user
       ) {
+        const hintContext =
+          notif.type === "favorites_hint"
+            ? "favorites"
+            : notif.type === "cart_hint"
+              ? "cart"
+              : "account";
         return {
           label: "Iniciar sesión",
           icon: "login",
           action: () => {
             closePanel();
-            showAuthModal("generic");
+            showAuthModal(hintContext);
           },
         };
       }

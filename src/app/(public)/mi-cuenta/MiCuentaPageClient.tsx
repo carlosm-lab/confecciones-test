@@ -50,7 +50,7 @@ export default function MiCuentaPageClient() {
             tu historial de pedidos.
           </p>
           <button
-            onClick={() => showAuthModal("generic")}
+            onClick={() => showAuthModal("account")}
             className="animate-fade-in-up bg-primary text-on-primary rounded-xl px-8 py-3 font-semibold shadow-sm transition hover:opacity-90 active:scale-[0.97]"
             style={{ animationDelay: "300ms" }}
           >

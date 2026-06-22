@@ -181,7 +181,7 @@ export function Navbar() {
     if (user) {
       router.push("/mi-cuenta");
     } else {
-      showAuthModal("generic");
+      showAuthModal("account");
     }
   };
 

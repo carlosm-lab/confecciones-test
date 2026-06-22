@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useAuth } from "@/context/AuthContext";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
@@ -26,6 +26,24 @@ const contextMessages: Record<
     title: "Inicia sesión para continuar",
     message:
       "Inicia sesión para enviarnos un mensaje. Así podremos responderte más rápido.",
+  },
+  reviews: {
+    icon: "star",
+    title: "Inicia sesión para calificar",
+    message:
+      "Solo los clientes registrados pueden dejar reseñas. Inicia sesión para valorar este producto y ayudar a otros compradores.",
+  },
+  account: {
+    icon: "manage_accounts",
+    title: "Accede a tu cuenta",
+    message:
+      "Inicia sesión para ver tus pedidos, tu lista de favoritos y gestionar tu perfil.",
+  },
+  notifications: {
+    icon: "notifications",
+    title: "Inicia sesión para continuar",
+    message:
+      "Inicia sesión para gestionar tus notificaciones y activar alertas sobre tus pedidos.",
   },
   generic: {
     icon: "account_circle",
