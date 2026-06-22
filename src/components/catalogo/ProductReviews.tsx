@@ -177,22 +177,22 @@ function ReviewModal({
   }, [onClose]);
 
   return (
-    /* Mismo patrón que GuestBell/LoginModal */
+    /* Backdrop — aparece instantáneo */
     <div
-      className="animate-in fade-in fixed inset-0 z-[110] flex items-center justify-center p-4 duration-200"
+      className="fixed inset-0 z-[110] flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
       aria-label="Reseña completa"
     >
-      {/* Backdrop — clic fuera cierra */}
+      {/* Capa de blur/oscuridad — sin animación para que sea inmediata */}
       <div
         className="absolute inset-0 bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Card */}
-      <div className="relative z-10 w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
+      {/* Card — solo este tiene la animación de entrada */}
+      <div className="animate-in fade-in zoom-in-95 relative z-10 w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl duration-150">
         {/* Header: avatar + info + botón X dentro del card */}
         <div className="flex items-start gap-4 border-b border-slate-100 px-5 py-4">
           <Avatar src={review.user_avatar} name={review.user_name} size={44} />
