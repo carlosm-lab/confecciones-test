@@ -175,9 +175,10 @@ export default async function HomePage() {
               </h2>
               <Link
                 href="/catalogo"
-                className="text-primary hidden text-sm font-bold hover:underline lg:block"
+                className="text-primary text-sm font-bold hover:underline"
               >
-                Ver catálogo completo
+                <span className="hidden lg:inline">Ver catálogo completo</span>
+                <span className="sr-only">Ver catálogo completo</span>
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-5">

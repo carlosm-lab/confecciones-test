@@ -291,11 +291,14 @@ export function Navbar() {
                 className="h-12 w-auto"
                 priority
               />
-              <div className="hidden flex-col sm:flex">
+              {/* Texto del logo — siempre en DOM para SEO; visible en sm+ */}
+              <span className="sr-only">
+                Confecciones Liss — Uniformes y Scrubs a la medida
+              </span>
+              <div className="hidden flex-col sm:flex" aria-hidden="true">
                 <span className="text-primary font-serif text-base leading-tight font-bold sm:text-lg md:text-xl">
                   Confecciones Liss
                 </span>
-                <span className="sr-only">Líder en tu diseño</span>
                 <span
                   className="block w-full text-[8px] font-semibold text-gray-500 uppercase sm:text-[9px] md:text-[10px]"
                   style={{
@@ -303,7 +306,6 @@ export function Navbar() {
                     textAlignLast: "justify",
                     textJustify: "inter-character",
                   }}
-                  aria-hidden="true"
                 >
                   LÍDER EN TU DISEÑO
                 </span>
