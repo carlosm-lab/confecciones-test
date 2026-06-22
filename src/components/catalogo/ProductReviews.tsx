@@ -15,6 +15,7 @@ import { getSupabaseClient } from "@/lib/supabaseClient";
 import { reviewSchema } from "@/schemas/reviewSchema";
 import type { DbReview } from "@/lib/reviewsService";
 import { cn } from "@/lib/utils";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import toast from "react-hot-toast";
 
 interface ProductReviewsProps {
@@ -163,14 +164,8 @@ function ReviewModal({
     year: "numeric",
   });
 
-  // Bloquear scroll del body mientras el modal está abierto
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, []);
+  // Bloquea scroll + compensa scrollbar width (sin layout shift)
+  useBodyScrollLock(true);
 
   // Cerrar con Escape
   useEffect(() => {
@@ -182,51 +177,52 @@ function ReviewModal({
   }, [onClose]);
 
   return (
-    /* Mismo patrón que LoginModal: bg-black/30 backdrop-blur-[2px] */
+    /* Mismo patrón que GuestBell/LoginModal */
     <div
       className="animate-in fade-in fixed inset-0 z-[110] flex items-center justify-center p-4 duration-200"
       role="dialog"
       aria-modal="true"
       aria-label="Reseña completa"
     >
-      {/* Backdrop — igual que LoginModal */}
-      <button
-        type="button"
-        className="absolute inset-0 w-full cursor-default bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
+      {/* Backdrop — clic fuera cierra */}
+      <div
+        className="absolute inset-0 bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
         onClick={onClose}
-        aria-label="Cerrar reseña"
+        aria-hidden="true"
       />
 
-      {/* Close button */}
-      <button
-        type="button"
-        onClick={onClose}
-        className="absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/10 text-slate-600 transition-all hover:bg-black/20 hover:text-slate-900 sm:top-6 sm:right-6"
-        aria-label="Cerrar"
-      >
-        <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
-          close
-        </span>
-      </button>
-
-      {/* Content */}
+      {/* Card */}
       <div className="relative z-10 w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
-        {/* Header */}
-        <div className="flex items-start gap-4 border-b border-slate-100 px-6 py-5">
-          <Avatar src={review.user_avatar} name={review.user_name} size={48} />
-          <div>
+        {/* Header: avatar + info + botón X dentro del card */}
+        <div className="flex items-start gap-4 border-b border-slate-100 px-5 py-4">
+          <Avatar src={review.user_avatar} name={review.user_name} size={44} />
+          <div className="flex-1">
             <p className="font-serif text-base font-bold text-slate-900">
               {review.user_name}
             </p>
             <div className="mt-1 flex flex-wrap items-center gap-2">
-              <Stars rating={review.rating} size={15} />
+              <Stars rating={review.rating} size={14} />
               <span className="text-xs text-slate-400">{date}</span>
             </div>
           </div>
+          {/* X DENTRO del card, no flotando sobre el backdrop */}
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+            aria-label="Cerrar"
+          >
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 18 }}
+            >
+              close
+            </span>
+          </button>
         </div>
 
-        {/* Comment */}
-        <div className="max-h-[50dvh] overflow-y-auto px-6 py-5">
+        {/* Comment — scrollable si es largo */}
+        <div className="max-h-[55dvh] overflow-y-auto px-5 py-4">
           <p className="text-[15px] leading-relaxed text-slate-700">
             {review.comment}
           </p>
