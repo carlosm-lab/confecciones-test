@@ -325,9 +325,11 @@ const UNIVERSIDADES = [
 function UnivTile({
   univ,
   size,
+  className = "",
 }: {
   univ: (typeof UNIVERSIDADES)[number];
   size: "large" | "medium" | "small";
+  className?: string;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -350,7 +352,7 @@ function UnivTile({
       href={`/catalogo/universidades/${univ.slug}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`group relative flex flex-col justify-between overflow-hidden rounded-xl p-6 lg:p-8 ${heightClass} focus-visible:ring-2 focus-visible:ring-[#143067] focus-visible:ring-offset-2 focus-visible:outline-none`}
+      className={`group relative flex flex-col justify-between overflow-hidden rounded-xl p-6 lg:p-8 ${heightClass} ${className} focus-visible:ring-2 focus-visible:ring-[#143067] focus-visible:ring-offset-2 focus-visible:outline-none`}
       style={{
         backgroundColor: hovered ? "#f8f9fb" : "#ffffff",
         border: "1.5px dashed #cbd5e1",
@@ -1006,7 +1008,7 @@ export default function PruebaHubBlancoPage() {
       {/* ── GRID DE UNIVERSIDADES ─────────────────────────────────────────── */}
       <section
         ref={gridRef}
-        className="relative z-10 px-5 py-16 md:px-10 md:py-20 lg:px-16 lg:py-24"
+        className="relative z-10 px-5 py-16 md:px-8 md:py-20 lg:py-24"
         style={{
           backgroundColor: "#f8f9fb",
           boxShadow: "0 -1px 2px 0 rgb(0 0 0 / 0.05)",
@@ -1046,19 +1048,28 @@ export default function PruebaHubBlancoPage() {
           <div className="mb-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
             <UnivTile univ={UNIVERSIDADES[2]} size="medium" />
             <UnivTile univ={UNIVERSIDADES[3]} size="medium" />
-            <UnivTile univ={UNIVERSIDADES[4]} size="medium" />
+            {/* UES sube hasta topar con IEPROES con gap-2 = 8px entre ellas.
+                sm: (320-240)+8 - 8gap = 80px  →  -mt-[80px]  + !min-h-[320px]
+                lg: (380-280)+8 - 8gap = 100px →  -mt-[100px] + !min-h-[380px] */}
+            <div className="sm:-mt-[80px] lg:-mt-[100px]">
+              <UnivTile
+                univ={UNIVERSIDADES[4]}
+                size="medium"
+                className="sm:!min-h-[320px] lg:!min-h-[380px]"
+              />
+            </div>
           </div>
 
-          {/* Row 3: UMA + CTA slot */}
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-            <div className="sm:col-span-2">
+          {/* Row 3: UMA (1/2) + CTA slot (1/2) — ladrillo desfasado respecto al row anterior */}
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <div>
               <UnivTile univ={UNIVERSIDADES[5]} size="small" />
             </div>
             <Link
               href={siteConfig.links.whatsappDirect}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center gap-3 rounded-xl px-6 py-8 text-center transition-all duration-300"
+              className="group flex h-full flex-col items-center justify-center gap-3 rounded-xl px-6 py-8 text-center transition-all duration-300"
               style={{
                 border: "1.5px dashed #cbd5e1",
                 backgroundColor: "#ffffff",
@@ -1099,7 +1110,7 @@ export default function PruebaHubBlancoPage() {
 
       {/* ── STRIP DE GARANTÍAS ────────────────────────────────────────────── */}
       <section
-        className="border-t px-5 py-14 md:px-10 md:py-16 lg:px-16"
+        className="border-t px-5 py-14 md:px-8 md:py-16"
         style={{ backgroundColor: "#ffffff", borderColor: "#e2e8f0" }}
       >
         <div className="mx-auto max-w-screen-2xl">
@@ -1141,7 +1152,7 @@ export default function PruebaHubBlancoPage() {
 
       {/* ── CTA FINAL ──────────────────────────────────────────────────────── */}
       <section
-        className="px-5 py-16 md:px-10 md:py-20 lg:px-16"
+        className="px-5 py-16 md:px-8 md:py-20"
         style={{ backgroundColor: "#0d1a38" }}
       >
         <div className="mx-auto flex max-w-screen-2xl flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
