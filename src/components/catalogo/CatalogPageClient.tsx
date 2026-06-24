@@ -199,8 +199,8 @@ export function CatalogPageClient({
 
   return (
     <div className="relative flex min-h-[calc(100dvh-56px)] w-full flex-col">
-      {/* Breadcrumbs */}
-      <div className="animate-fade-in-up mx-auto w-full max-w-screen-2xl px-5 pt-6 md:px-8 lg:absolute lg:top-0 lg:right-0 lg:left-0 lg:z-10">
+      {/* Breadcrumbs — solo visible en mobile/tablet; en desktop aparece inline con el título */}
+      <div className="animate-fade-in-up mx-auto w-full max-w-screen-2xl px-5 pt-6 md:px-8 lg:hidden">
         <Breadcrumb
           items={[
             { label: "Inicio", href: "/" },
@@ -240,12 +240,31 @@ export function CatalogPageClient({
 
         {/* Product area */}
         <div className="w-full lg:flex-1">
-          <h1
-            className="animate-fade-in-up mb-6 text-3xl font-extrabold tracking-tight text-slate-900"
+          {/* En desktop: título + breadcrumb en la misma fila */}
+          <div
+            className="animate-fade-in-up mb-6 flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between"
             style={{ animationDelay: "200ms" }}
           >
-            {config.title}
-          </h1>
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+              {config.title}
+            </h1>
+            {/* Breadcrumb inline — solo desktop */}
+            <div className="hidden lg:block">
+              <Breadcrumb
+                items={[
+                  { label: "Inicio", href: "/" },
+                  { label: "Catálogo", href: "/catalogo" },
+                  ...(breadcrumbExtra ? [breadcrumbExtra] : []),
+                  {
+                    label: config.subtitle,
+                    href: breadcrumbExtra
+                      ? `${breadcrumbExtra.href}/${sector === "universitario" ? config.subtitle.toLowerCase() : sector}`
+                      : `/catalogo/${sector}`,
+                  },
+                ]}
+              />
+            </div>
+          </div>
 
           {/* Desktop sort bar */}
           <div
