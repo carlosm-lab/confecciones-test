@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { logger } from "@/lib/logger";
 
 export function ShareButton() {
   const [showToast, setShowToast] = useState(false);
@@ -21,7 +22,7 @@ export function ShareButton() {
         }, 2500);
         return;
       } catch (err) {
-        console.error("Failed to copy link via clipboard API:", err);
+        logger.error("Failed to copy link via clipboard API:", err);
       }
     }
 
@@ -43,7 +44,7 @@ export function ShareButton() {
         throw new Error("execCommand copy returned false");
       }
     } catch (fallbackErr) {
-      console.error("Fallback copy failed:", fallbackErr);
+      logger.error("Fallback copy failed:", fallbackErr);
     }
   };
 

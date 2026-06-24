@@ -17,6 +17,7 @@ import type { DbReview } from "@/lib/reviewsService";
 import { cn } from "@/lib/utils";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import toast from "react-hot-toast";
+import { logger } from "@/lib/logger";
 
 interface ProductReviewsProps {
   productId: string;
@@ -472,7 +473,7 @@ function ReviewForm({
           .select()
           .single();
         if (error) {
-          console.error("[ReviewForm] update:", error);
+          logger.error("[ReviewForm] update:", error);
           toast.error("No se pudo actualizar.");
           return;
         }
@@ -492,7 +493,7 @@ function ReviewForm({
           .select()
           .single();
         if (error) {
-          console.error("[ReviewForm] insert:", error);
+          logger.error("[ReviewForm] insert:", error);
           toast.error(
             error.code === "23505"
               ? "Ya tienes una reseña para este producto."

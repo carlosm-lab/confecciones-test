@@ -17,6 +17,7 @@ import { useAuth } from "@/context/AuthContext";
 import { toast } from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import { env } from "@/env";
+import { logger } from "@/lib/logger";
 
 interface Notification {
   id: string;
@@ -153,7 +154,7 @@ export default function NotificacionesAdminPage() {
       await fetchNotifications();
     } catch (err) {
       toast.error("Error creando notificación");
-      console.error(err);
+      logger.error("[notificaciones] Error creando notificación:", err);
     } finally {
       setSubmitting(false);
     }

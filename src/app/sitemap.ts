@@ -4,6 +4,7 @@ import { env } from "@/env";
 import { getAllProductsForSitemap } from "@/lib/catalogService";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
+import { logger } from "@/lib/logger";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -132,7 +133,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }));
   } catch {
     // Si Supabase no está disponible en build time, omitir productos del sitemap
-    console.warn("[sitemap] Could not fetch products for sitemap");
+    logger.warn("[sitemap] Could not fetch products for sitemap");
   }
 
   // Estas son las páginas de más alta intención SEO del proyecto:
