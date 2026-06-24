@@ -107,11 +107,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "weekly" as const,
         priority: 0.75,
       }));
-    // Productos universitarios — ruta: /catalogo/universidades/[category]/[slug]
+    // Productos universitarios — ruta: /catalogo/universidades/[universidad]/[slug]
+    // La categoría puede ser compuesta ("ieproes-enfermeria") → el primer segmento
+    // es la universidad que corresponde al dynamic param [universidad] de la ruta.
     universityProductPages = products
       .filter((p) => p.slug && p.sector === "universitario" && p.category)
       .map((p) => ({
-        url: `${siteConfig.url}/catalogo/universidades/${p.category}/${p.slug}`,
+        url: `${siteConfig.url}/catalogo/universidades/${p.category!.split("-")[0]}/${p.slug}`,
         lastModified: p.updated_at ? new Date(p.updated_at) : now,
         changeFrequency: "weekly" as const,
         priority: 0.8,

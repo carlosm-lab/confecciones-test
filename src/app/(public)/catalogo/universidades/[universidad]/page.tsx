@@ -168,8 +168,9 @@ export default async function UniversidadPage({
         ];
 
   const catalogConfig: CategoryConfig = {
-    // sector = "universitario" es CRÍTICO: los links a producto detail apuntan
-    // a /catalogo/universitario/[slug], que es la ruta existente de detalle.
+    // sector = "universitario" se pasa al CatalogPageClient y al CatalogProductCard:
+    // CatalogProductCard lo convierte en href = /catalogo/universidades/[univ]/[slug]
+    // usando category.split("-")[0] para derivar el slug de la universidad.
     sector: "universitario",
     title: `Uniformes ${univConfig.sigla}`,
     subtitle: univConfig.sigla,
