@@ -22,14 +22,14 @@ const nextConfig = {
     // El alias apunta directamente a los builds de producción, saltando la
     // resolución de export conditions. Fix real, no supresión.
     resolveAlias: {
-      '@lit/reactive-element': path.resolve(
-        __dirname,
-        'node_modules/@lit/reactive-element/reactive-element.js'
-      ),
-      'lit-html': path.resolve(
-        __dirname,
-        'node_modules/lit-html/lit-html.js'
-      ),
+      // '@lit/reactive-element/reactive-element.js' y 'lit-html/lit-html.js'
+      // no están en los exports maps de sus paquetes, por lo que Turbopack
+      // los resuelve via acceso directo al archivo (sin exports condition).
+      // El archivo raíz .js es el build de producción (sin DEV_MODE = true).
+      // Nota: NO usar path.resolve() — Turbopack en Windows no acepta rutas
+      // absolutas con backslash ("windows imports are not implemented yet").
+      '@lit/reactive-element': '@lit/reactive-element/reactive-element.js',
+      'lit-html': 'lit-html/lit-html.js',
     },
   },
   poweredByHeader: false,
