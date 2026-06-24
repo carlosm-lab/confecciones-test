@@ -242,7 +242,7 @@ export function CatalogPageClient({
         <div className="w-full lg:flex-1">
           {/* En desktop: título + breadcrumb en la misma fila */}
           <div
-            className="animate-fade-in-up mb-6 flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between"
+            className="animate-fade-in-up mb-6 flex flex-col gap-1 lg:flex-row lg:items-start lg:justify-between"
             style={{ animationDelay: "200ms" }}
           >
             <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
