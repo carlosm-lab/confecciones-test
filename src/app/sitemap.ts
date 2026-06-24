@@ -92,8 +92,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     }));
 
+  // ── Hub universitario y páginas SSG por universidad ────────────────────────
+  // Definido ANTES de los productos para poder usarlo en la validación de URLs.
+  const UNIVERSITY_SLUGS = ["univo", "ieproes", "ugb", "unab", "ues", "uma"];
+  const UNIVERSITY_SLUGS_SET = new Set(UNIVERSITY_SLUGS);
+
   // Páginas de productos individuales (desde Supabase)
-  // Los productos universitarios (sector = "universitario") van a /universidades/[category]/[slug]
+  // Los productos universitarios (sector = "universitario") van a /universidades/[universidad]/[slug]
   // El resto va a /catalogo/[sector]/[slug]
   let productPages: MetadataRoute.Sitemap = [];
   let universityProductPages: MetadataRoute.Sitemap = [];
@@ -107,11 +112,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "weekly" as const,
         priority: 0.75,
       }));
+
     // Productos universitarios — ruta: /catalogo/universidades/[universidad]/[slug]
-    // La categoría puede ser compuesta ("ieproes-enfermeria") → el primer segmento
-    // es la universidad que corresponde al dynamic param [universidad] de la ruta.
+    // CRÍTICO SEO: solo incluir si category sigue el formato "universidad-carrera".
+    // Si category es null, vacío, o el prefijo no es una universidad conocida,
+    // el producto se EXCLUYE del sitemap (mejor sin URL que con URL incorrecta).
     universityProductPages = products
-      .filter((p) => p.slug && p.sector === "universitario" && p.category)
+      .filter((p) => {
+        if (!p.slug || p.sector !== "universitario" || !p.category)
+          return false;
+        const universitySlug = p.category.split("-")[0];
+        return UNIVERSITY_SLUGS_SET.has(universitySlug);
+      })
       .map((p) => ({
         url: `${siteConfig.url}/catalogo/universidades/${p.category!.split("-")[0]}/${p.slug}`,
         lastModified: p.updated_at ? new Date(p.updated_at) : now,
@@ -123,10 +135,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.warn("[sitemap] Could not fetch products for sitemap");
   }
 
-  // ── Hub universitario y páginas SSG por universidad ────────────────────────
   // Estas son las páginas de más alta intención SEO del proyecto:
   // "uniformes UNIVO San Miguel", "scrubs IEPROES El Salvador", etc.
-  const UNIVERSITY_SLUGS = ["univo", "ieproes", "ugb", "unab", "ues", "uma"];
   const universidadesPages: MetadataRoute.Sitemap = [
     {
       url: `${siteConfig.url}/catalogo/universidades`,
