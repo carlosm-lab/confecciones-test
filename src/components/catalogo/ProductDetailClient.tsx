@@ -413,14 +413,33 @@ export function ProductDetailClient({
           {/* 1 ── Breadcrumb + Compartir */}
           <div className="flex items-center justify-between">
             <Breadcrumb
-              items={[
-                { label: "Inicio", href: "/" },
-                { label: "Catálogo", href: "/catalogo" },
-                {
-                  label: config.subtitle,
-                  href: `/catalogo/${sector}`,
-                },
-              ]}
+              items={
+                sector === "universitario"
+                  ? [
+                      { label: "Inicio", href: "/" },
+                      { label: "Catálogo", href: "/catalogo" },
+                      {
+                        label: "Universidades",
+                        href: "/catalogo/universidades",
+                      },
+                      {
+                        label: config.subtitle,
+                        href: `/catalogo/universidades/${
+                          typeof product.category === "string"
+                            ? product.category.split("-")[0]
+                            : sector
+                        }`,
+                      },
+                    ]
+                  : [
+                      { label: "Inicio", href: "/" },
+                      { label: "Catálogo", href: "/catalogo" },
+                      {
+                        label: config.subtitle,
+                        href: `/catalogo/${sector}`,
+                      },
+                    ]
+              }
             />
             <button
               type="button"
@@ -780,7 +799,15 @@ export function ProductDetailClient({
               También Te Puede Gustar
             </h2>
             <Link
-              href={`/catalogo/${sector}`}
+              href={
+                sector === "universitario"
+                  ? `/catalogo/universidades/${
+                      typeof product.category === "string"
+                        ? product.category.split("-")[0]
+                        : ""
+                    }`
+                  : `/catalogo/${sector}`
+              }
               className="text-primary text-sm font-bold hover:underline"
             >
               Ver Todo
