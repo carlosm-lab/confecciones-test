@@ -160,14 +160,125 @@ export function Footer() {
                 Términos y Condiciones
               </Link>
             </li>
-            <li className="pt-1 text-xs text-white/40">
-              Política de Cotizaciones <span className="italic">(próx.)</span>
+            <li>
+              <Link
+                href="/legal/cotizaciones"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Cotizaciones
+              </Link>
             </li>
-            <li className="text-xs text-white/40">
-              Política de Envíos <span className="italic">(próx.)</span>
+            <li>
+              <Link
+                href="/legal/envios"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Envíos
+              </Link>
             </li>
-            <li className="text-xs text-white/40">
-              Política de Devoluciones <span className="italic">(próx.)</span>
+            <li>
+              <Link
+                href="/legal/devoluciones"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Devoluciones
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/confeccion"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Confección
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/promociones"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Promociones
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/referidos"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Programa de Referidos
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/ia"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de IA
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/deberes"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Deberes
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/derechos"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Derechos
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/terceros"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Logos Institucionales
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/cookies"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Cookies
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/ugc"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de UGC
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/comunicaciones"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Comunicaciones
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/accesibilidad"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Accesibilidad
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/legal/mayoreo"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Política de Mayoreo
+              </Link>
             </li>
           </ul>
         </div>

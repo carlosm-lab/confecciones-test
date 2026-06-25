@@ -1,0 +1,651 @@
+═══════════════════════════════════════════════════════════════════════════════
+              POLÍTICA DE USO DE INTELIGENCIA ARTIFICIAL EN
+              CONTENIDOS VISUALES Y COMERCIALES
+              CONFECCIONES LISS
+              Versión vigente — Sujeta a actualización sin previo aviso
+
+═══════════════════════════════════════════════════════════════════════════════
+
+El presente documento regula de manera integral, exhaustiva y vinculante el
+uso de tecnologías de inteligencia artificial (en adelante "IA") por parte de
+Confecciones Liss (en adelante "el Taller") en la producción, edición y
+publicación de contenido visual de carácter comercial, incluyendo fotografías
+de productos, imágenes de catálogo, materiales publicitarios y cualquier otro
+contenido difundido a través de la plataforma web https://www.confeccionesliss.com/
+(en adelante "la Plataforma"), así como en todas las redes sociales y canales
+de comunicación oficiales del Taller.
+
+Cualquier persona natural que acceda, navegue, visualice o interactúe con el
+contenido del Taller en cualquiera de sus canales digitales (en adelante "el
+Usuario"), declara haber leído, comprendido y aceptado de forma libre,
+voluntaria e informada la totalidad de los términos aquí establecidos. El
+desconocimiento de esta Política no exime al Usuario de su cumplimiento, no
+le otorga derechos adicionales a los expresamente reconocidos en este
+documento, y no constituye fundamento válido para reclamación alguna.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 1 — DECLARACIÓN DE TRANSPARENCIA Y PROPÓSITO
+───────────────────────────────────────────────────────────────────────────────
+
+1.1  Confecciones Liss adopta la presente Política con el propósito de
+     comunicar de forma transparente, clara e inequívoca el uso de herramientas
+     de inteligencia artificial en la producción de contenido visual comercial,
+     a fin de garantizar que el Usuario disponga de información suficiente para
+     interpretar correctamente los materiales publicados por el Taller.
+
+1.2  El uso de IA por parte del Taller responde exclusivamente a finalidades
+     de mejora estética, optimización visual y presentación comercial de
+     productos reales y tangibles. En ningún caso el Taller utiliza IA para
+     crear, inventar ni publicitar productos que no pueda confeccionar o que
+     no existan en su repertorio de fabricación.
+
+1.3  Confecciones Liss opera bajo el principio de que la realidad antecede
+     a la representación: todo producto que aparece en el catálogo digital,
+     redes sociales o cualquier material comercial del Taller tiene como
+     origen un artículo físico real, confeccionado o confeccionable por el
+     Taller, cuya existencia material precede en todos los casos a cualquier
+     tratamiento o edición mediante IA.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 2 — DEFINICIONES
+───────────────────────────────────────────────────────────────────────────────
+
+2.1  A los efectos de la presente Política, se entenderá por:
+
+     a) "Inteligencia Artificial" o "IA": cualquier sistema, herramienta,
+        software o algoritmo de aprendizaje automático o generación asistida
+        por computadora utilizado por el Taller para la edición, mejora,
+        recreación o generación de elementos visuales en imágenes, fotografías
+        o contenido multimedia de carácter comercial.
+
+     b) "Modelo IA" o "Liam Alejandro": personaje masculino de naturaleza
+        artística y origen irreal, que responde al nombre de Liam Alejandro,
+        creado íntegramente mediante herramientas de inteligencia artificial,
+        utilizado como soporte visual para la presentación de prendas del
+        Taller. El Modelo IA no corresponde a ninguna persona natural real,
+        identificable o existente; ha sido generado de cero mediante tecnología
+        computacional y no constituye la representación digitalizada de ningún
+        ser humano. No obstante lo anterior, Liam Alejandro posee una ficha
+        de identidad propia, con rasgos, denominación y carácter definidos,
+        y cuenta con presencia oficial en Facebook bajo el perfil:
+            https://www.facebook.com/confeccionliss.admin
+        donde se le atribuye el rol de modelo comercial del Taller. La
+        gestión de dicho perfil, al igual que la de todos los Canales
+        Oficiales del Taller listados en https://www.confeccionesliss.com/links,
+        está a cargo exclusivo del Encargado de Comunicaciones Carlos José Molina Villacorta. En ningún
+        momento el Taller ha ocultado el origen artístico e irreal de
+        Liam Alejandro; su naturaleza sintética es pública, declarada y de
+        conocimiento general a través de la presente Política.
+
+     c) "Modelo Femenino Humano": persona natural real que ha participado
+        en sesiones fotográficas para el Catálogo Digital del Taller,
+        portando las prendas de la colección. Las imágenes del Modelo
+        Femenino Humano pueden haber sido sometidas a edición con IA
+        con fines de mejora estética (iluminación, fondo, detalles), pero
+        la persona fotografiada es en todos los casos un ser humano real
+        que otorgó su consentimiento para la sesión y cuya identidad no
+        se oculta. El Modelo Femenino Humano no es una construcción
+        computacional ni una figura generada artificialmente.
+
+     d) "Encargado de Comunicaciones": Carlos José Molina Villacorta,
+        persona natural responsable de la gestión de todos los Canales
+        Oficiales del Taller. El Encargado de Comunicaciones ha realizado
+        apariciones en el Catálogo Digital del Taller en calidad de
+        colaborador visual, cuyas imágenes han sido editadas con IA
+        conforme a los procedimientos establecidos en la presente Política.
+        Dichas apariciones son de conocimiento público y no constituyen
+        uso no autorizado de imagen ni infracción de derecho alguno.
+
+     e) "Prenda Real": todo artículo textil confeccionado o confeccionable
+        por el Taller, cuya existencia material, física y verificable es
+        previa e independiente de cualquier tratamiento con IA. Una Prenda
+        Real puede tocarse, medirse, fotografiarse y entregarse físicamente.
+
+     f) "Imagen Editada con IA": toda fotografía, render o composición visual
+        en la que la IA ha intervenido para mejorar aspectos tales como
+        iluminación, textura, color, fondo, presentación del producto,
+        montaje sobre el Modelo IA u otros elementos estéticos, partiendo
+        siempre de una Prenda Real como insumo base.
+
+     g) "Imagen Real sin Edición": toda fotografía publicada por el Taller
+        en la que la prenda o el producto aparece en su estado visual
+        original, sin intervención de herramientas de IA. El Taller publica
+        este tipo de imágenes de forma periódica y reconoce el derecho del
+        Usuario a recibirlas como referencia directa del producto físico.
+
+     h) "Catálogo Digital": el conjunto de imágenes, fichas y descripciones
+        de productos publicadas en la Plataforma y en los canales oficiales
+        del Taller, disponibles en https://www.confeccionesliss.com/links
+
+     i) "Canales Oficiales": la Plataforma web, las páginas y perfiles de
+        redes sociales del Taller (Facebook, Instagram, TikTok y cualquier
+        otra plataforma en la que el Taller tenga presencia oficial verificada),
+        todos gestionados por el Encargado de Comunicaciones.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 3 — NATURALEZA Y ALCANCE DEL USO DE IA EN CONTENIDO VISUAL
+───────────────────────────────────────────────────────────────────────────────
+
+3.1  TIPOLOGÍA DE MODELOS UTILIZADOS EN EL CATÁLOGO DIGITAL. El Taller
+     emplea dos categorías distintas de soporte visual humano para la
+     presentación de sus prendas, cuya naturaleza difiere sustancialmente
+     y se declara de forma expresa en la presente Política:
+
+     A) MODELO IA — LIAM ALEJANDRO — PERSONAJE ARTÍSTICO SINTÉTICO.
+
+        Liam Alejandro, definido en el Artículo 2.1(b), es un personaje
+        masculino de origen completamente irreal, creado mediante IA. El
+        Usuario reconoce y acepta expresamente que:
+
+        a) Liam Alejandro es una construcción computacional completa. No es
+           la imagen de ninguna persona natural real, ningún individuo
+           identificable, ningún modelo fotográfico ni ninguna persona cuya
+           identidad haya sido digitalizada, modificada o alterada.
+
+        b) Liam Alejandro ha sido creado de cero mediante tecnología de
+           generación por IA, sin partir de la fotografía, imagen, rostro,
+           cuerpo ni identidad de ningún ser humano existente.
+
+        c) A pesar de su origen irreal, Liam Alejandro posee rasgos
+           visuales consistentes, una identidad artística propia y presencia
+           en redes sociales. Esta construcción de identidad responde a una
+           decisión artística y comercial del Taller. En ningún momento el
+           Taller ha presentado a Liam Alejandro como una persona humana real,
+           y su naturaleza irreal ha sido siempre pública y declarada.
+
+        d) Cualquier semejanza visual de Liam Alejandro con personas naturales
+           reales es puramente incidental, fortuita e involuntaria, y no
+           implica representación, endorsement, autorización ni vinculación
+           de ningún tipo con persona real alguna.
+
+        e) Liam Alejandro no reemplaza, desplaza ni está vinculado a ninguna
+           persona natural que haya prestado sus derechos de imagen al Taller.
+
+     B) MODELO FEMENINO HUMANO — PERSONA NATURAL REAL.
+
+        El Catálogo Digital del Taller incluye asimismo imágenes de una
+        persona natural real, definida en el Artículo 2.1(c) como "Modelo
+        Femenino Humano". El Usuario reconoce y acepta expresamente que:
+
+        a) El Modelo Femenino Humano es una persona real cuya participación
+           en las sesiones fotográficas del Taller fue libre, voluntaria y
+           consentida. No es una figura generada por IA ni una simulación
+           computacional de ningún tipo.
+
+        b) Las imágenes del Modelo Femenino Humano pueden haber sido
+           sometidas a edición con IA con fines exclusivamente estéticos
+           (mejora de iluminación, ajuste de fondo, nitidez de detalles
+           del producto), pero la persona fotografiada es en todos los casos
+           un ser humano real. La edición no altera la identidad ni la
+           naturaleza humana del sujeto fotografiado.
+
+        c) El hecho de que las imágenes del Modelo Femenino Humano sean
+           editadas con IA no convierte a dicho modelo en una figura
+           sintética ni elimina su condición de persona natural real. La
+           edición es un tratamiento de la imagen, no una sustitución
+           del sujeto.
+
+        d) El Usuario no podrá reclamar engaño ni falta de transparencia
+           con base en la coexistencia de ambas categorías de modelo en el
+           Catálogo Digital, dado que ambas quedan expresamente definidas
+           y distinguidas en la presente Política.
+
+3.2  USO DE IA EN LA PRESENTACIÓN DE PRENDAS E IMÁGENES SIN EDICIÓN.
+     El Taller aplica herramientas de inteligencia artificial sobre imágenes
+     de sus Prendas Reales con el exclusivo propósito de mejorar su
+     presentación visual comercial. Adicionalmente, el Taller publica de
+     forma periódica Imágenes Reales sin Edición, conforme a lo definido
+     en el Artículo 2.1(g). El Usuario reconoce y acepta expresamente que:
+
+     a) El punto de partida de toda imagen publicada en el Catálogo Digital
+        es siempre una Prenda Real. La IA no crea la prenda; recrea su
+        presentación visual a partir del artículo físico existente.
+
+     b) Las intervenciones de IA sobre la imagen de una prenda pueden incluir,
+        sin limitarse a ello: mejora de iluminación, ajuste de color y tono,
+        mejora de textura y acabado visual, eliminación o sustitución de fondo,
+        montaje o composición de la prenda sobre el Modelo IA, corrección
+        de perspectiva o pliegues, y cualquier otro tratamiento estético que
+        optimice la presentación comercial del producto.
+
+     c) Ninguna de las intervenciones descritas en el literal anterior altera
+        la naturaleza esencial de la prenda publicada, sus características
+        funcionales, su composición de materiales, su método de confección
+        ni su disponibilidad real para fabricación y entrega.
+
+     d) Las mejoras visuales aplicadas mediante IA pueden generar diferencias
+        de percepción entre la imagen publicada y el producto físico entregado,
+        particularmente en lo referente a brillo, saturación de color, textura
+        aparente o nitidez de detalles. Dichas diferencias son inherentes al
+        proceso de edición y no constituyen publicidad engañosa, defecto del
+        producto, incumplimiento contractual ni fundamento válido para
+        devolución o reclamación.
+
+     e) El Catálogo Digital del Taller no está compuesto exclusivamente por
+        Imágenes Editadas con IA. El Taller publica también Imágenes Reales
+        sin Edición de sus productos, las cuales reflejan fielmente el aspecto
+        físico de la prenda sin ningún tratamiento de mejora artificial. El
+        Usuario tiene derecho a solicitar Imágenes Reales sin Edición de
+        cualquier producto antes de efectuar su pedido, a través de los
+        canales oficiales disponibles en https://www.confeccionesliss.com/links
+
+3.3  DIRECCIÓN DEL PROCESO DE PRODUCCIÓN. El flujo de trabajo del Taller
+     es invariablemente el siguiente, en el orden aquí establecido y en
+     ningún otro:
+
+     PRIMERO: El Taller confecciona o dispone de la Prenda Real.
+     SEGUNDO: La Prenda Real es fotografiada o documentada en su estado físico.
+     TERCERO: La imagen de la Prenda Real es procesada mediante IA para
+              mejorar su presentación visual.
+     CUARTO:  La imagen resultante es publicada en el Catálogo Digital.
+
+     Bajo ninguna circunstancia el Taller invierte este proceso publicando
+     imágenes de prendas cuya existencia física dependa de la imagen generada
+     o sugerida por IA. La IA es exclusivamente una herramienta de presentación,
+     no una herramienta de diseño de productos nuevos ni de invención de
+     artículos inexistentes.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 4 — GARANTÍA DE AUTENTICIDAD Y VERACIDAD COMERCIAL
+───────────────────────────────────────────────────────────────────────────────
+
+4.1  El Taller garantiza de forma expresa e irrevocable que todo producto
+     publicado en su Catálogo Digital, en sus redes sociales y en cualquier
+     material de comunicación comercial es un producto real que el Taller
+     puede confeccionar y entregar. Esta garantía se extiende a todos los
+     artículos publicados, sin excepción.
+
+4.2  El Taller no publica bajo ninguna circunstancia imágenes de productos
+     ficticios, de artículos que no puede confeccionar, de prendas diseñadas
+     exclusivamente por IA sin correlato físico real, ni de productos que
+     existan únicamente como imagen digital.
+
+4.3  El Usuario puede verificar la autenticidad y disponibilidad de cualquier
+     prenda publicada comunicándose con el Taller a través de los canales
+     oficiales disponibles en:
+
+         https://www.confeccionesliss.com/links
+
+4.4  La existencia de mejoras visuales mediante IA en las imágenes del Catálogo
+     Digital no desvirtúa ni invalida la garantía de autenticidad establecida
+     en el numeral 4.1. La presentación visual mejorada no altera la realidad
+     del producto, sino únicamente su representación fotográfica.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 5 — DIFERENCIAS VISUALES ENTRE IMAGEN PUBLICADA Y PRODUCTO FÍSICO
+───────────────────────────────────────────────────────────────────────────────
+
+5.1  El Usuario reconoce y acepta expresamente que las imágenes publicadas
+     por el Taller en su Catálogo Digital y canales de comunicación han sido
+     sometidas a tratamiento de edición mediante IA con fines de presentación
+     comercial y que, en consecuencia, pueden existir diferencias perceptibles
+     entre la imagen publicada y el producto físico entregado.
+
+5.2  Las posibles diferencias entre la imagen publicada y el producto físico
+     pueden incluir, sin limitarse a ello: variaciones en la saturación,
+     brillo o tono del color; diferencias en la percepción de textura o
+     grosor del tejido; variaciones en la nitidez o definición visual de
+     costuras y detalles; diferencias en el contexto de presentación o fondo
+     de la imagen.
+
+5.3  Las diferencias descritas en el numeral anterior son consecuencia directa
+     e inevitable del proceso de edición y mejora visual mediante IA, y son
+     de conocimiento expreso del Usuario desde el momento en que accede al
+     contenido del Taller. En consecuencia, dichas diferencias:
+
+     a) No constituyen publicidad engañosa ni falsa representación del producto.
+     b) No constituyen incumplimiento de ninguna obligación contractual
+        del Taller.
+     c) No fundamentan reclamo alguno por diferencia entre lo ofrecido y
+        lo entregado, siempre que el producto físico corresponda en sus
+        características esenciales (tipo de prenda, modelo, talla y color
+        base) a lo acordado entre las partes.
+     d) No fundamentan solicitud de devolución, cambio ni reembolso con
+        base exclusiva en la diferencia visual entre imagen editada y
+        producto físico.
+
+5.4  Para cualquier consulta sobre el aspecto o características reales de
+     una prenda antes de efectuar un pedido, el Usuario deberá comunicarse
+     con el Taller a través de sus canales oficiales. El Taller hará sus
+     mejores esfuerzos por proporcionar información adicional, incluyendo
+     fotografías sin edición cuando sea posible.
+
+5.5  Toda diferencia visual entre la imagen publicada y el producto físico
+     deberá haberse comunicado al Taller dentro de los plazos establecidos
+     en la Política de Devoluciones, disponible en:
+
+         https://www.confeccionesliss.com/legal/devoluciones
+
+     Transcurridos dichos plazos, el Taller no estará obligado a atender
+     ninguna reclamación de esta naturaleza.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 6 — NATURALEZA JURÍDICA DE LOS MODELOS: DERECHOS DE IMAGEN Y
+             PROTECCIÓN DE IDENTIDAD
+───────────────────────────────────────────────────────────────────────────────
+
+6.1  LIAM ALEJANDRO (MODELO IA) — RÉGIMEN JURÍDICO. Liam Alejandro,
+     el Modelo IA utilizado por el Taller en sus contenidos visuales, es
+     una construcción sintética masculina generada mediante inteligencia
+     artificial. No tiene identidad civil reconocible en el ordenamiento
+     jurídico salvadoreño como persona natural, no tiene derechos de imagen
+     atribuibles a ninguna persona física, y no ha sido creado a partir de
+     fotografías, datos biométricos ni imagen de ningún ser humano real.
+     Su perfil en Facebook (https://www.facebook.com/confeccionliss.admin)
+     constituye una extensión artística y comercial de su identidad ficticia,
+     gestionada en todo momento por el Encargado de Comunicaciones, sin que
+     dicha presencia digital implique atribución de personalidad jurídica ni
+     derechos civiles al personaje.
+
+6.2  Dado que Liam Alejandro no representa a ninguna persona natural, el
+     Usuario queda expresamente impedido de:
+
+     a) Reclamar al Taller por supuesta utilización no autorizada de la imagen
+        de una persona concreta, con base en el parecido visual de Liam
+        Alejandro con algún individuo real.
+     b) Exigir la retirada de contenido bajo el argumento de que Liam
+        Alejandro reproduce o se asemeja a su propia imagen o la de un tercero.
+     c) Atribuir al Taller responsabilidad civil o de cualquier otra índole
+        derivada del parecido casual de Liam Alejandro con personas reales.
+     d) Cuestionar la transparencia del Taller respecto a Liam Alejandro,
+        dado que su naturaleza irreal ha sido pública y declarada en todo
+        momento a través de la presente Política, disponible en los Canales
+        Oficiales.
+
+6.3  El Taller, en el diseño y selección de Liam Alejandro, ha actuado de
+     buena fe y con la debida diligencia para que la figura generada no
+     constituya representación identificable de ninguna persona natural
+     existente. Cualquier semejanza visual involuntaria de Liam Alejandro
+     con persona real alguna no genera derecho a indemnización ni a reclamo
+     de ningún tipo en contra del Taller.
+
+6.4  MODELO FEMENINO HUMANO — RÉGIMEN JURÍDICO. Las imágenes del Modelo
+     Femenino Humano publicadas en el Catálogo Digital del Taller fueron
+     obtenidas con el pleno consentimiento de la persona fotografiada. El
+     Taller garantiza que:
+
+     a) La participación del Modelo Femenino Humano fue libre y voluntaria.
+     b) El tratamiento de edición con IA aplicado sobre dichas imágenes se
+        limitó a mejoras estéticas del entorno visual y de la presentación
+        del producto, sin alterar la identidad ni la apariencia esencial
+        de la persona fotografiada de manera que pudiera considerarse
+        engañosa o lesiva para su imagen.
+     c) El Taller asume plena responsabilidad por el uso adecuado de las
+        imágenes del Modelo Femenino Humano dentro de los términos acordados.
+
+6.5  APARICIONES DEL ENCARGADO DE COMUNICACIONES. El Encargado de
+     Comunicaciones, Carlos José Molina Villacorta, ha realizado apariciones
+     en el Catálogo Digital del Taller en calidad de colaborador visual,
+     con su propio consentimiento expreso. Dichas apariciones han sido
+     editadas con IA conforme a los procedimientos establecidos en la
+     presente Política. El Usuario reconoce que estas apariciones son de
+     carácter público y comercial, y que no constituyen uso no autorizado
+     de imagen ni infracción de derecho alguno.
+
+6.6  Liam Alejandro, los parámetros utilizados para su generación, las
+     imágenes resultantes, su identidad artística y el proceso creativo que
+     los rodea constituyen activos comerciales del Taller, protegidos por
+     los principios generales de propiedad intelectual aplicables en El
+     Salvador. Queda expresamente prohibida su reproducción, copia,
+     alteración o uso comercial sin autorización escrita del Taller.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 7 — PROPIEDAD INTELECTUAL DEL CONTENIDO GENERADO CON IA
+───────────────────────────────────────────────────────────────────────────────
+
+7.1  Todo el contenido visual publicado por el Taller, incluyendo las imágenes
+     de productos editadas con IA, las composiciones del Modelo IA portando
+     prendas del Taller, los materiales de campaña y cualquier otro elemento
+     gráfico de carácter comercial, es propiedad exclusiva del Taller o ha
+     sido utilizado bajo licencia válida.
+
+7.2  El Usuario obtiene únicamente una licencia limitada, personal, no
+     exclusiva, intransferible y revocable para visualizar el contenido
+     del Taller con el exclusivo propósito de explorar el catálogo y evaluar
+     la adquisición de productos. Esta licencia no autoriza la descarga, copia,
+     reproducción, distribución, modificación, uso comercial ni publicación
+     del contenido en ningún medio o plataforma.
+
+7.3  El uso no autorizado del contenido visual del Taller, incluyendo las
+     imágenes editadas con IA, el Modelo IA, o cualquier material de campaña,
+     faculta al Taller para ejercer las acciones legales que correspondan
+     conforme a la legislación salvadoreña aplicable.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 8 — EXENCIÓN DE RESPONSABILIDAD DEL TALLER POR EL USO DE IA
+───────────────────────────────────────────────────────────────────────────────
+
+8.1  En la máxima medida permitida por la legislación salvadoreña aplicable,
+     Confecciones Liss queda expresamente eximido de toda responsabilidad
+     derivada de los siguientes supuestos, sin que esta lista sea limitativa:
+
+     a) Diferencias visuales entre las imágenes del catálogo, procesadas con
+        IA, y el producto físico real entregado al Usuario, siempre que
+        dichas diferencias sean consecuencia del proceso de edición y no
+        correspondan a un cambio sustancial en las características esenciales
+        del producto acordadas entre las partes.
+
+     b) Expectativas estéticas del Usuario formadas a partir de las imágenes
+        editadas del Catálogo Digital que no se vean satisfechas por el
+        producto físico, cuando dicha insatisfacción derive exclusivamente
+        de la mejora visual aplicada por IA y no de un defecto de fabricación
+        real o de un incumplimiento del Taller en las especificaciones acordadas.
+
+     c) Confusión o error del Usuario respecto a si el contenido visual del
+        Taller ha sido editado con IA, dado que la presente Política declara
+        dicho uso de forma expresa, pública y accesible, y es vinculante desde
+        el momento en que el Usuario accede a cualquier canal oficial del Taller.
+
+     d) Reclamaciones basadas en la apariencia del Modelo IA, incluyendo su
+        parecido casual con personas reales, su tamaño o proporciones
+        corporales, o cualquier característica estética de la figura generada.
+
+     e) Decisiones de compra adoptadas por el Usuario basándose exclusiva
+        o principalmente en las imágenes del catálogo sin haber consultado
+        previamente con el Taller sobre las características específicas de la
+        prenda.
+
+     f) Interpretaciones incorrectas del contenido visual del Taller derivadas
+        del desconocimiento de la presente Política por parte del Usuario.
+
+     g) Cualquier controversia, reclamo o responsabilidad legal que el
+        Usuario intente derivar del uso de IA en los contenidos comerciales
+        del Taller, siempre que dicho uso sea conforme a lo establecido en
+        la presente Política.
+
+8.2  La exención de responsabilidad establecida en el numeral anterior no
+     opera en caso de que el Taller publique imágenes de productos que no
+     puede confeccionar ni entregar, supuesto que el Taller declara de
+     forma expresa que no ocurrirá en ningún caso conforme al Artículo 4.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 9 — DIVULGACIÓN OBLIGATORIA, CONSENTIMIENTO INFORMADO Y
+             DERECHO A LA INFORMACIÓN DEL USUARIO
+───────────────────────────────────────────────────────────────────────────────
+
+9.1  La presente Política constituye la divulgación oficial y suficiente del
+     Taller respecto a su uso de inteligencia artificial en la producción de
+     contenido visual. Su publicación en https://www.confeccionesliss.com/legal
+     y su inclusión en el repositorio de políticas del Taller hacen presumir de pleno derecho el conocimiento de la presente Política
+     por parte de todo Usuario que acceda a cualquier contenido del Taller.
+
+9.2  Al visualizar, compartir, comentar, guardar en favoritos, consultar o
+     interactuar de cualquier modo con el contenido comercial del Taller —
+     ya sea en la Plataforma, en redes sociales, en aplicaciones de mensajería
+     o en cualquier otro canal — el Usuario declara de forma tácita e
+     irrevocable haber tomado conocimiento de la presente Política y haber
+     aceptado en su integridad sus términos y condiciones.
+
+9.3  El Taller no está obligado a incluir avisos, etiquetas, marcas de agua
+     ni notas específicas en cada imagen individual que indiquen el uso de IA,
+     dado que la presente Política establece dicho uso de manera general y
+     aplicable a la totalidad del contenido visual del Taller. La ausencia
+     de aviso individualizado en una imagen concreta no desvirtúa la
+     aplicabilidad de la presente Política a dicha imagen.
+
+9.4  DERECHO A LA INFORMACIÓN. El Usuario tiene el derecho expreso e
+     irrenunciable de recibir información clara sobre la naturaleza del
+     contenido visual publicado por el Taller. En ejercicio de dicho
+     derecho, el Usuario podrá en todo momento:
+
+     a) Solicitar al Taller la aclaración sobre si una imagen específica
+        del Catálogo Digital corresponde a una Imagen Editada con IA,
+        a una Imagen Real sin Edición, o a una imagen del Modelo Femenino
+        Humano o del Encargado de Comunicaciones.
+
+     b) Solicitar Imágenes Reales sin Edición de cualquier producto de
+        interés antes de efectuar su pedido, a través de los canales
+        oficiales disponibles en https://www.confeccionesliss.com/links
+
+     c) Consultar la totalidad de sus derechos como Usuario del Taller en:
+            https://www.confeccionesliss.com/legal/derechos
+
+     d) Consultar la totalidad de sus deberes como Usuario del Taller en:
+            https://www.confeccionesliss.com/legal/deberes
+
+9.5  El ejercicio de los derechos establecidos en el numeral anterior no
+     suspende ni modifica las condiciones comerciales aplicables al pedido
+     del Usuario, ni otorga derechos adicionales de devolución o reembolso
+     más allá de los establecidos en la Política de Devoluciones del Taller.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 10 — RELACIÓN CON OTRAS POLÍTICAS DEL TALLER
+───────────────────────────────────────────────────────────────────────────────
+
+10.1 La presente Política forma parte integral del marco jurídico comercial
+     de Confecciones Liss y debe interpretarse de forma complementaria y
+     consistente con las demás políticas del Taller, en particular:
+
+     — Términos y Condiciones de Uso:
+       https://www.confeccionesliss.com/legal/terminos
+
+     — Política de Privacidad:
+       https://www.confeccionesliss.com/legal/privacidad
+
+     — Política de Devoluciones:
+       https://www.confeccionesliss.com/legal/devoluciones
+
+     — Política de Confección:
+       https://www.confeccionesliss.com/legal/confeccion
+
+     — Política de Envíos:
+       https://www.confeccionesliss.com/legal/envios
+
+     — Política de Cotizaciones:
+       https://www.confeccionesliss.com/legal/cotizaciones
+
+     — Política de Promociones:
+       https://www.confeccionesliss.com/legal/promociones
+
+     — Programa de Referidos:
+       https://www.confeccionesliss.com/legal/referidos
+
+     — Derechos del Usuario:
+       https://www.confeccionesliss.com/legal/derecho
+
+     — Deberes del Usuario:
+       https://www.confeccionesliss.com/legal/deberes
+
+10.2 En caso de aparente conflicto entre la presente Política y cualquier
+     otra política del Taller, prevalecerá la interpretación más favorable
+     al principio de transparencia comercial y a la garantía de autenticidad
+     de los productos establecida en el Artículo 4.
+
+10.3 La Política de Devoluciones es el instrumento específico que rige los
+     plazos, condiciones y procedimientos aplicables a cualquier reclamación
+     por diferencias entre la imagen del producto y el producto físico.
+     Toda reclamación de esta naturaleza deberá gestionarse conforme a
+     dicha Política, sin que la presente Política amplíe los derechos de
+     devolución o reembolso del Usuario más allá de lo establecido en ella.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 11 — CANALES OFICIALES DE CONSULTA Y COMUNICACIÓN
+───────────────────────────────────────────────────────────────────────────────
+
+11.1 Toda consulta, solicitud de aclaración o comunicación relacionada con
+     el uso de inteligencia artificial en el contenido del Taller, con
+     la autenticidad de un producto publicado, o con cualquier aspecto
+     regulado por la presente Política, deberá gestionarse exclusivamente
+     a través de los canales oficiales de Confecciones Liss, disponibles en:
+
+         https://www.confeccionesliss.com/links
+
+11.2 El Taller no reconocerá reclamaciones, consultas ni comunicaciones
+     gestionadas fuera de los canales oficiales. Cualquier promesa, aclaración
+     o compromiso comunicado a través de canales no oficiales, personas no
+     autorizadas o plataformas no verificadas es inválido e inoponible al Taller.
+
+11.3 El Taller atenderá las consultas relacionadas con esta Política dentro
+     de sus horarios de atención habituales (Lunes a Sábado, 8:00 AM – 5:00 PM)
+     y a través del número de WhatsApp habilitado para comunicación comercial.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 12 — RESOLUCIÓN DE DISPUTAS Y JURISDICCIÓN APLICABLE
+───────────────────────────────────────────────────────────────────────────────
+
+12.1 Toda controversia que surja de la aplicación, interpretación o
+     incumplimiento de la presente Política se resolverá en primera instancia
+     mediante negociación directa de buena fe entre el Usuario y el Taller,
+     a través de los canales oficiales establecidos en el Artículo 11.
+
+12.2 De no alcanzarse un acuerdo en un plazo razonable, la controversia
+     se someterá a la jurisdicción exclusiva de los tribunales competentes
+     de la República de El Salvador, aplicando la legislación salvadoreña
+     vigente. El Usuario renuncia expresamente a cualquier otro fuero
+     o jurisdicción que pudiera corresponderle.
+
+12.3 La legislación de la República de El Salvador es la única aplicable
+     a la presente Política y a todas las relaciones jurídicas que de ella
+     deriven, con exclusión de cualquier normativa extranjera, independientemente
+     del lugar de residencia o domicilio del Usuario.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 13 — MODIFICACIONES A LA POLÍTICA
+───────────────────────────────────────────────────────────────────────────────
+
+13.1 Confecciones Liss se reserva el derecho de modificar, actualizar o
+     ampliar la presente Política en cualquier momento, publicando la versión
+     actualizada en los canales oficiales del Taller disponibles en:
+
+         https://www.confeccionesliss.com/links
+
+13.2 Las modificaciones entrarán en vigencia inmediatamente después de su
+     publicación. El acceso continuado al contenido del Taller con posterioridad
+     a la publicación de cualquier modificación constituirá aceptación
+     automática e irrevocable de la versión actualizada de la Política.
+
+13.3 El Taller no está obligado a notificar individualmente a cada Usuario
+     sobre las modificaciones a la presente Política. Es responsabilidad
+     exclusiva del Usuario consultar periódicamente la versión vigente.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 14 — DIVISIBILIDAD
+───────────────────────────────────────────────────────────────────────────────
+
+14.1 Si alguna disposición de la presente Política fuera declarada inválida,
+     ilegal o inaplicable por un tribunal competente, las restantes disposiciones
+     continuarán en plena vigencia y efecto, sin que la invalidez parcial
+     afecte la validez del conjunto del documento.
+
+14.2 En caso de que una disposición sea declarada inválida, el Taller y el
+     Usuario realizarán sus mejores esfuerzos para acordar una disposición
+     sustituta que, siendo legalmente válida, refleje en la mayor medida
+     posible la intención original de la disposición inválida.
+
+───────────────────────────────────────────────────────────────────────────────
+CONFECCIONES LISS — CONTACTO OFICIAL
+Toda gestión exclusivamente a través de: https://www.confeccionesliss.com/links
+Política de Privacidad:    https://www.confeccionesliss.com/legal/privacidad
+Términos y Condiciones:    https://www.confeccionesliss.com/legal/terminos
+Política de Devoluciones:  https://www.confeccionesliss.com/legal/devoluciones
+Política de Confección:    https://www.confeccionesliss.com/legal/confeccion
+Política de Promociones:   https://www.confeccionesliss.com/legal/promociones
+Derechos del Usuario:      https://www.confeccionesliss.com/legal/derecho
+Deberes del Usuario:       https://www.confeccionesliss.com/legal/deberes
+Perfil Modelo IA:          https://www.facebook.com/confeccionliss.admin
+Dirección:  Barrio La Merced, 5ª Calle Poniente y 1ª Avenida Sur, Casa #402,
+            San Miguel, El Salvador.
+Horario:    Lunes a Sábado, 8:00 AM – 5:00 PM
+Encargado de Comunicaciones: Carlos José Molina Villacorta
+Vigente desde su publicación — Versión: Junio 2026
+───────────────────────────────────────────────────────────────────────────────

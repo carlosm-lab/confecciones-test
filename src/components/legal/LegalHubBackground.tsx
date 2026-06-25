@@ -31,36 +31,159 @@ const LEGAL_DOCS: LegalDoc[] = [
     readingTime: 22,
   },
   {
-    slug: "politica-de-cotizaciones",
+    slug: "cotizaciones",
     title: "COTIZACIONES",
     tagline: "Proceso, tiempos y condiciones de nuestras cotizaciones.",
     icon: "request_quote",
-    available: false,
-    readingTime: 8,
+    available: true,
+    readingTime: 18,
   },
   {
-    slug: "politica-de-envios",
+    slug: "envios",
     title: "ENVÍOS",
     tagline: "Cobertura, plazos y condiciones de envío de pedidos.",
     icon: "local_shipping",
-    available: false,
-    readingTime: 7,
+    available: true,
+    readingTime: 15,
   },
   {
-    slug: "politica-de-devoluciones",
+    slug: "devoluciones",
     title: "DEVOLUCIONES",
     tagline: "Condiciones y procedimiento para devolución de productos.",
     icon: "replay",
-    available: false,
-    readingTime: 6,
+    available: true,
+    readingTime: 12,
   },
   {
-    slug: "politica-de-confeccion",
+    slug: "confeccion",
     title: "CONFECCIÓN",
     tagline: "Estándares de calidad y proceso de confección de prendas.",
     icon: "straighten",
-    available: false,
+    available: true,
+    readingTime: 17,
+  },
+  {
+    slug: "promociones",
+    title: "PROMOCIONES",
+    tagline: "Términos, condiciones y validez de descuentos y promociones.",
+    icon: "sell",
+    available: true,
+    readingTime: 16,
+  },
+  {
+    slug: "referidos",
+    title: "REFERIDOS",
+    tagline: "Reglas, beneficios y condiciones del programa de referidos.",
+    icon: "group_add",
+    available: true,
+    readingTime: 18,
+  },
+  {
+    slug: "ia",
+    title: "INT... ARTIFICIAL",
+    tagline: "Politica y aviso sobre el uso de inteligencia artificial",
+    icon: "psychology",
+    available: true,
+    readingTime: 20,
+  },
+  {
+    slug: "deberes",
+    title: "DEBERES",
+    tagline:
+      "El catálogo de deberes y obligaciones que rigen la relación comercial.",
+    icon: "task_alt",
+    available: true,
+    readingTime: 20,
+  },
+  {
+    slug: "derechos",
+    title: "DERECHOS",
+    tagline:
+      "Catálogo taxativo de derechos reconocidos al usuario y cliente del Taller.",
+    icon: "verified_user",
+    available: true,
+    readingTime: 22,
+  },
+  {
+    slug: "terceros",
+    title: "LOGOS INSTITUCIONALES",
+    tagline:
+      "Descargo por uso de logotipos e identidad visual institucional de terceros.",
+    icon: "account_balance",
+    available: true,
+    readingTime: 20,
+  },
+  {
+    slug: "cookies",
+    title: "COOKIES",
+    tagline:
+      "Uso de cookies y almacenamiento local de forma transparente y funcional.",
+    icon: "cookie",
+    available: true,
     readingTime: 10,
+  },
+  {
+    slug: "ugc",
+    title: "CONTENIDO UGC",
+    tagline:
+      "Condiciones de tratamiento, republicación y moderación de contenido generado por usuarios.",
+    icon: "forum",
+    available: true,
+    readingTime: 12,
+  },
+  {
+    slug: "comunicaciones",
+    title: "COMUNICACIONES",
+    tagline:
+      "Condiciones de uso de WhatsApp, redes sociales oficiales y canales de atención.",
+    icon: "chat",
+    available: true,
+    readingTime: 12,
+  },
+  {
+    slug: "accesibilidad",
+    title: "ACCESIBILIDAD",
+    tagline:
+      "Declaración de accesibilidad web, nivel WCAG, medidas implementadas y limitaciones técnicas.",
+    icon: "accessibility_new",
+    available: true,
+    readingTime: 12,
+  },
+  {
+    slug: "mayoreo",
+    title: "MAYOREO & GRUPOS",
+    tagline:
+      "Condiciones para compras grupales, corporativas y estudiantiles, anticipos, mínimos y entregas.",
+    icon: "groups",
+    available: true,
+    readingTime: 10,
+  },
+  {
+    slug: "fotografia",
+    title: "FOTOGRAFÍA & IMAGEN",
+    tagline:
+      "Derechos de uso, protección de datos y publicación de prendas personalizadas y bordados en portafolio.",
+    icon: "photo_camera",
+    available: false,
+    readingTime: 0,
+  },
+  {
+    slug: "disputas",
+    title: "RESOLUCIÓN & DISPUTAS",
+    tagline:
+      "Procedimiento centralizado de mediación, plazos de reclamación y resolución amigable de diferencias.",
+    icon: "gavel",
+    available: false,
+    readingTime: 0,
+  },
+  {
+    slug: "garantia",
+    title: "GARANTÍA & PRODUCTO",
+    tagline:
+      "Condiciones de cobertura, plazos de reclamo por defectos de fábrica y soporte de calidad.",
+    icon: "verified",
+    available: false,
+    readingTime: 0,
   },
 ];
 
@@ -104,20 +227,57 @@ export default function LegalHubBackground({
           >
             Documentos Legales
           </h1>
-          <p
+          <div
             className={cn(
               anim,
-              "text-on-surface-variant mt-4 max-w-xl text-left text-sm leading-relaxed md:text-base"
+              "relative mt-6 w-full rounded-2xl border border-[rgba(20,48,103,0.35)] bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-8"
             )}
             style={delay("200ms")}
           >
-            Transparencia y protección — accede a todas nuestras políticas y
-            términos.{" "}
-            <span className="font-medium text-emerald-600">
-              {available} disponibles
-            </span>{" "}
-            · {LEGAL_DOCS.length - available} próximamente
-          </p>
+            {/* Marco de bordes punteados (estilo /links) */}
+            <div className="border-primary pointer-events-none absolute inset-3 z-10 rounded-[12px] border-[2px] border-dashed opacity-50" />
+
+            <div className="relative z-20">
+              <p className="text-justify text-sm leading-relaxed text-slate-700 md:text-left md:text-base">
+                La presente documentación establece de manera integral,
+                exhaustiva y vinculante el catálogo de reglas, derechos,
+                deberes, obligaciones, beneficios y disposiciones que
+                corresponden a toda persona natural o jurídica que acceda,
+                navegue, consulte, interactúe, solicite servicios o adquiera
+                productos de Confecciones Liss, ya sea en calidad de visitante,
+                usuario de la plataforma o cliente con pedido en curso o
+                completado. El desconocimiento de los reglamentos, normativas y
+                demás, no eximen al usuario de su cumplimiento. Se recomienda
+                encarecidamente leer todas y cada una de las disposiciones aquí
+                contenidas.
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-slate-500">
+                <span className="flex items-center gap-1">
+                  <span
+                    className="material-symbols-outlined text-[14px] text-emerald-600"
+                    aria-hidden="true"
+                  >
+                    check_circle
+                  </span>
+                  <span className="text-emerald-700">
+                    {available} disponibles
+                  </span>
+                </span>
+                <span className="text-slate-300">·</span>
+                <span className="flex items-center gap-1">
+                  <span
+                    className="material-symbols-outlined text-[14px] text-amber-600"
+                    aria-hidden="true"
+                  >
+                    pending
+                  </span>
+                  <span className="text-amber-700">
+                    {LEGAL_DOCS.length - available} próximamente
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -182,9 +342,10 @@ function DocCard({ doc }: { doc: LegalDoc }) {
       )}
       <span
         className={cn(
-          "material-symbols-outlined text-[48px] text-white/80 transition-transform duration-300",
+          "material-symbols-outlined text-white/80 transition-transform duration-300",
           doc.available && "group-hover:scale-110"
         )}
+        style={{ fontSize: "80px" }}
         aria-hidden="true"
       >
         {doc.icon}
@@ -194,27 +355,12 @@ function DocCard({ doc }: { doc: LegalDoc }) {
 
   const infoPanel = (
     <div className="p-3 @[280px]:p-3.5 @[320px]:p-4">
-      <div className="mb-2 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1.5">
-          <span
-            className="material-symbols-outlined text-primary group-hover:text-tertiary text-[13px] transition-colors duration-300 @[280px]:text-[15px] @[320px]:text-[17px]"
-            aria-hidden="true"
-          >
-            {doc.icon}
-          </span>
+      <div className="mb-2 flex items-center gap-2">
+        <div className="flex items-center">
           <h2 className="text-primary group-hover:text-tertiary text-[11px] font-extrabold tracking-wider uppercase transition-colors duration-300 @[280px]:text-[12.5px] @[320px]:text-[14px] @[360px]:text-[15px]">
             {doc.title}
           </h2>
         </div>
-        {doc.available ? (
-          <span className="bg-surface-container text-primary rounded-full px-1.5 py-0.5 text-[8px] font-semibold @[280px]:px-2 @[280px]:text-[9px] @[320px]:text-[10px]">
-            Leer →
-          </span>
-        ) : (
-          <span className="bg-surface-container rounded-full px-1.5 py-0.5 text-[8px] font-semibold text-slate-400 @[280px]:px-2 @[280px]:text-[9px] @[320px]:text-[10px]">
-            Próx.
-          </span>
-        )}
       </div>
       <p className="text-on-surface-variant mt-1 line-clamp-2 text-[9px] leading-snug transition-all @[280px]:text-[10px] @[320px]:text-[11px] @[360px]:text-[12px]">
         {doc.tagline}

@@ -77,6 +77,96 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly",
       priority: 0.5,
     },
+    {
+      url: `${siteConfig.url}/legal/cotizaciones`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/envios`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/devoluciones`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/confeccion`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/promociones`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/referidos`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/ia`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/deberes`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/derechos`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/terceros`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/cookies`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/ugc`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/comunicaciones`,
+      lastModified: new Date("2026-06-24"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/accesibilidad`,
+      lastModified: new Date("2026-06-25"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteConfig.url}/legal/mayoreo`,
+      lastModified: new Date("2026-06-25"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
   ];
 
   // Páginas de categoría del catálogo (una por sector)

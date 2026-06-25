@@ -1,0 +1,267 @@
+═══════════════════════════════════════════════════════════════════════════════
+              POLÍTICA DE USO DE COOKIES Y TECNOLOGÍAS DE RASTREO
+              CONFECCIONES LISS
+              Versión vigente — Sujeta a actualización sin previo aviso
+
+═══════════════════════════════════════════════════════════════════════════════
+
+La presente Política de Uso de Cookies y Tecnologías de Rastreo (en adelante
+"la Política") regula de manera integral, exhaustiva y vinculante el uso que
+Confecciones Liss (en adelante "el Taller") hace de cookies, almacenamiento
+local y otras tecnologías de almacenamiento o acceso a información en el
+dispositivo del usuario, en el marco del funcionamiento de su plataforma web
+oficial (https://www.confeccionesliss.com/, en adelante "la Plataforma").
+
+Toda persona natural que acceda, navegue o utilice la Plataforma (en adelante
+"el Usuario") declara haber leído, comprendido y aceptado en su integridad,
+de forma libre, voluntaria e informada, la totalidad de los términos aquí
+establecidos. La presente Política complementa y debe leerse en conjunto con
+la Política de Privacidad del Taller, disponible en:
+
+    https://www.confeccionesliss.com/legal/privacidad
+
+El desconocimiento de esta Política no exime al Usuario de su cumplimiento.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 1 — DEFINICIONES
+───────────────────────────────────────────────────────────────────────────────
+
+1.1  A los efectos de la presente Política, se entenderá por:
+
+     a) "Cookie": archivo de texto pequeño que un sitio web almacena en el
+        dispositivo del Usuario con el fin de recordar información sobre su
+        visita o preferencias.
+
+     b) "Almacenamiento local" o "localStorage": mecanismo de almacenamiento
+        del navegador que permite a la Plataforma guardar datos directamente
+        en el dispositivo del Usuario de forma persistente entre sesiones,
+        sin fecha de expiración automática, salvo las condiciones definidas
+        por la Plataforma.
+
+     c) "Tecnologías de rastreo": conjunto de mecanismos técnicos —incluyendo
+        cookies, localStorage, tokens de sesión y similares— utilizados para
+        identificar, recordar o rastrear el comportamiento o preferencias del
+        Usuario en la Plataforma.
+
+     d) "Terceros": proveedores de servicios externos cuyos sistemas interactúan
+        con la Plataforma, incluyendo Supabase, Google y Vercel.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 2 — TECNOLOGÍAS UTILIZADAS POR LA PLATAFORMA
+───────────────────────────────────────────────────────────────────────────────
+
+2.1  La Plataforma de Confecciones Liss no utiliza cookies de rastreo
+     publicitario, cookies de terceros para seguimiento entre sitios, ni
+     ningún tipo de tecnología orientada a la elaboración de perfiles
+     comerciales del Usuario. La Plataforma opera bajo un modelo de mínima
+     recopilación de datos.
+
+2.2  Las tecnologías de almacenamiento efectivamente utilizadas por la
+     Plataforma son las siguientes:
+
+     a) ALMACENAMIENTO LOCAL (localStorage): La Plataforma utiliza localStorage
+        para persistir de forma local en el dispositivo del Usuario los
+        siguientes datos, sin los cuales las funcionalidades descritas no
+        operarían correctamente:
+
+        — Ítems del carrito de compras del Usuario.
+        — Identificadores de productos marcados como favoritos.
+        — Marcas de tiempo de última modificación del carrito.
+        — Preferencia de modo visual (oscuro o claro).
+        — Registro binario de aceptación del aviso informativo de cookies
+          de primera visita.
+
+        El carrito almacenado en localStorage se elimina automáticamente
+        transcurridos siete (7) días de inactividad del Usuario.
+
+     b) TOKENS DE SESIÓN (autenticación Google OAuth): Cuando el Usuario
+        decide iniciar sesión mediante Google OAuth, el sistema genera y
+        almacena en el navegador un token de sesión gestionado por Supabase
+        que permite mantener la sesión activa. Este token es estrictamente
+        funcional y no se utiliza para rastreo publicitario.
+
+     c) REGISTRO DE ACEPTACIÓN DE AVISO: Un valor booleano en localStorage
+        registra si el Usuario ha interactuado con el aviso informativo de
+        cookies que se muestra en la primera visita. Este dato no se transmite
+        a ningún servidor y permanece exclusivamente en el dispositivo.
+
+2.3  La Plataforma NO utiliza:
+
+     — Cookies de terceros para publicidad segmentada.
+     — Píxeles de seguimiento de redes publicitarias.
+     — Herramientas de análisis de comportamiento como Google Analytics,
+       Meta Pixel, Hotjar ni similares.
+     — Cookies de sesión con fines distintos a los estrictamente funcionales
+       descritos en el numeral anterior.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 3 — FINALIDAD DEL USO DE TECNOLOGÍAS DE ALMACENAMIENTO
+───────────────────────────────────────────────────────────────────────────────
+
+3.1  Todas las tecnologías de almacenamiento utilizadas por la Plataforma
+     tienen finalidad exclusivamente funcional, es decir, son necesarias para
+     que la Plataforma opere de la manera prevista y para que el Usuario pueda
+     disfrutar de sus funcionalidades principales. Ninguna de ellas tiene
+     finalidad publicitaria, de perfilado comercial ni de seguimiento entre
+     sitios web.
+
+3.2  Las finalidades específicas de cada tecnología son:
+
+     a) Carrito y favoritos en localStorage: permitir que el Usuario conserve
+        su selección de productos entre sesiones sin necesidad de iniciar
+        sesión, y que el carrito persista ante recargas de página.
+
+     b) Token de sesión OAuth: mantener la identidad del Usuario autenticado
+        activa durante la navegación, evitando que deba iniciar sesión en
+        cada página.
+
+     c) Preferencia visual: recordar si el Usuario prefiere el modo oscuro
+        o claro de la interfaz.
+
+     d) Registro de aceptación de aviso: evitar mostrar repetidamente el
+        aviso informativo de cookies a Usuarios que ya lo hayan reconocido.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 4 — PROVEEDORES TERCEROS Y SUS TECNOLOGÍAS
+───────────────────────────────────────────────────────────────────────────────
+
+4.1  La Plataforma utiliza servicios de terceros que, como parte de su
+     funcionamiento, pueden acceder a o generar datos técnicos en el
+     dispositivo del Usuario. El Taller no tiene control sobre las prácticas
+     de dichos terceros, que se rigen por sus propias políticas:
+
+     a) SUPABASE: proveedor de base de datos y autenticación. Gestiona los
+        tokens de sesión del Usuario autenticado y puede registrar datos de
+        conexión técnicos (dirección IP, marcas de tiempo) conforme a su
+        propia política de privacidad disponible en https://supabase.com/privacy
+
+     b) GOOGLE (OAuth): proveedor del servicio de autenticación. Cuando el
+        Usuario elige iniciar sesión con Google, Google procesa los datos de
+        autenticación conforme a su política de privacidad disponible en
+        https://policies.google.com/privacy
+
+     c) VERCEL: proveedor de alojamiento y distribución de contenido. Puede
+        registrar datos técnicos de las solicitudes al servidor (IP, agente
+        de usuario, rutas solicitadas) conforme a su política de privacidad
+        disponible en https://vercel.com/legal/privacy-policy
+
+4.2  El Taller selecciona proveedores que ofrecen garantías contractuales
+     razonables sobre la protección de datos. Sin embargo, el Taller no
+     asume responsabilidad por las prácticas de datos de dichos terceros
+     más allá de su rol como responsable del tratamiento de los datos que
+     gestiona directamente.
+
+4.3  La Plataforma no incorpora tecnologías de terceros con fines publicitarios.
+     Si en el futuro se incorporara algún servicio de este tipo, la presente
+     Política será actualizada con anticipación razonable.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 5 — CONSENTIMIENTO Y GESTIÓN DE PREFERENCIAS
+───────────────────────────────────────────────────────────────────────────────
+
+5.1  Dado que las tecnologías de almacenamiento utilizadas por la Plataforma
+     son de naturaleza estrictamente funcional y necesaria para el correcto
+     funcionamiento del servicio, su uso no requiere consentimiento previo
+     explícito en los mismos términos que se exige para cookies publicitarias
+     o de rastreo. Sin embargo, el Taller informa al Usuario sobre su uso
+     mediante el aviso de primera visita y la presente Política, en cumplimiento
+     del principio de transparencia.
+
+5.2  El Usuario puede gestionar o eliminar los datos almacenados en su
+     dispositivo mediante las siguientes acciones:
+
+     a) Borrar el localStorage de la Plataforma desde la configuración de
+        su navegador (habitualmente en Herramientas de desarrollador >
+        Aplicación > Almacenamiento local). Esta acción eliminará el carrito,
+        los favoritos no sincronizados con una cuenta, las preferencias
+        visuales y el registro de aceptación del aviso.
+
+     b) Cerrar sesión en la Plataforma, lo cual revoca el token de sesión
+        activo gestionado por Supabase.
+
+     c) Revocar el acceso de la Plataforma a su cuenta de Google desde la
+        configuración de seguridad de Google (https://myaccount.google.com/
+        permissions), lo cual desvinculará la autenticación OAuth.
+
+5.3  La eliminación de los datos de localStorage puede afectar el correcto
+     funcionamiento de las funcionalidades de carrito y favoritos no
+     sincronizadas con una cuenta de Usuario. El Taller no asume
+     responsabilidad por pérdida de datos derivada de acciones de limpieza
+     realizadas por el propio Usuario.
+
+5.4  El Usuario que no desee que se almacene ningún dato en su dispositivo
+     puede optar por navegar en modo incógnito o privado en su navegador,
+     lo cual limitará la persistencia de los datos entre sesiones, aunque
+     el funcionamiento de algunas funcionalidades puede verse afectado.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 6 — EXENCIÓN DE RESPONSABILIDAD DEL TALLER
+───────────────────────────────────────────────────────────────────────────────
+
+6.1  En la máxima medida permitida por la legislación de la República de
+     El Salvador, Confecciones Liss queda expresamente eximido de toda
+     responsabilidad derivada de:
+
+     a) El procesamiento de datos técnicos realizado por los proveedores
+        terceros descritos en el Artículo 4, conforme a sus propias políticas.
+
+     b) La pérdida de datos del carrito, favoritos o preferencias del Usuario
+        derivada de la limpieza manual del localStorage o del uso del modo
+        incógnito del navegador.
+
+     c) Incompatibilidades entre la Plataforma y determinados navegadores,
+        extensiones o configuraciones de seguridad que impidan el correcto
+        funcionamiento del localStorage.
+
+     d) El uso de tecnologías de bloqueo de cookies o scripts por parte del
+        Usuario, y las consecuencias funcionales que dicho bloqueo pueda
+        tener sobre la experiencia de uso de la Plataforma.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 7 — RELACIÓN CON OTRAS POLÍTICAS DEL TALLER
+───────────────────────────────────────────────────────────────────────────────
+
+7.1  La presente Política forma parte integral del marco jurídico de
+     Confecciones Liss y debe interpretarse de forma complementaria con:
+
+     — Política de Privacidad:
+       https://www.confeccionesliss.com/legal/privacidad
+
+     — Términos y Condiciones de Uso:
+       https://www.confeccionesliss.com/legal/terminos
+
+     — Política de Deberes del Usuario:
+       https://www.confeccionesliss.com/legal/deberes
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 8 — MODIFICACIONES A LA POLÍTICA
+───────────────────────────────────────────────────────────────────────────────
+
+8.1  Confecciones Liss se reserva el derecho de modificar la presente Política
+     en cualquier momento, publicando la versión actualizada en:
+     https://www.confeccionesliss.com/legal/cookies
+
+8.2  Las modificaciones entrarán en vigencia de forma inmediata desde su
+     publicación. El acceso continuado a la Plataforma constituirá aceptación
+     automática de la versión actualizada.
+
+───────────────────────────────────────────────────────────────────────────────
+ARTÍCULO 9 — DIVISIBILIDAD
+───────────────────────────────────────────────────────────────────────────────
+
+9.1  Si alguna disposición de la presente Política fuera declarada inválida
+     o inaplicable por un tribunal competente, las restantes disposiciones
+     continuarán en plena vigencia y efecto.
+
+───────────────────────────────────────────────────────────────────────────────
+CONFECCIONES LISS — CONTACTO OFICIAL
+Toda gestión exclusivamente a través de: https://www.confeccionesliss.com/links
+Política de Privacidad:    https://www.confeccionesliss.com/legal/privacidad
+Términos y Condiciones:    https://www.confeccionesliss.com/legal/terminos
+Política de Cookies:       https://www.confeccionesliss.com/legal/cookies
+Dirección:  Barrio La Merced, 5ª Calle Poniente y 1ª Avenida Sur, Casa #402,
+            San Miguel, El Salvador.
+Horario:    Lunes a Sábado, 8:00 AM – 5:00 PM
+Encargado de Comunicaciones: Carlos José Molina Villacorta
+Vigente desde su publicación — Versión: Junio 2026
+───────────────────────────────────────────────────────────────────────────────
