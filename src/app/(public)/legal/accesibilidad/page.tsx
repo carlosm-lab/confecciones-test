@@ -92,7 +92,7 @@ export default function AccesibilidadPage() {
 
       <LegalArticleReader
         title="Política de Accesibilidad del Sitio Web"
-        subtitle="Declaración de conformidad, medidas implementadas y limitaciones técnicas de la plataforma digital de Confecciones Liss."
+        category="Declaración de conformidad, medidas implementadas y limitaciones técnicas de la plataforma digital de Confecciones Liss."
         date="25 Jun, 2026"
         readingTime={12}
       >

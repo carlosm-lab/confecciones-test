@@ -92,7 +92,7 @@ export default function MayoreoPage() {
 
       <LegalArticleReader
         title="Política de Pedidos en Grupo y Mayoreo"
-        subtitle="Regulación de compras corporativas, colectivos de estudiantes y pedidos a gran escala fabricados por Confecciones Liss."
+        category="Regulación de compras corporativas, colectivos de estudiantes y pedidos a gran escala fabricados por Confecciones Liss."
         date="25 Jun, 2026"
         readingTime={10}
       >
