@@ -296,6 +296,14 @@ export function Footer() {
                 Garantía de Producto
               </Link>
             </li>
+            <li>
+              <Link
+                href="/legal/contratacion"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Contratación de Talento
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

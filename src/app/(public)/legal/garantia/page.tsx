@@ -226,7 +226,7 @@ export default function GarantiaPage() {
           </P>
           <Ul
             items={[
-              "a) El Cliente debe comunicar la inconformidad de ajuste al Taller a través de los canales oficiales disponibles en https://www.confeccionesliss.com/links, dentro de los cinco (5) días hábiles siguientes a la recepción de la prenda.",
+              "a) El Cliente debe comunicar la inconformidad de ajuste al Taller de forma presencial, al momento del retiro de la prenda en las instalaciones del Taller. La observación debe realizarse en ese acto, antes de que el Cliente abandone las instalaciones. No se admiten reclamaciones de ajuste posteriores al retiro de la prenda, independientemente del motivo o el tiempo transcurrido.",
               "b) El Cliente debe presentar la prenda en las instalaciones del Taller portándola puesta, a fin de que el personal autorizado pueda evaluar objetivamente la inconformidad de ajuste.",
               "c) No se evaluarán inconformidades de ajuste reportadas únicamente por fotografía, video o descripción verbal sin presentación presencial de la prenda.",
               "d) El Taller evaluará la inconformidad y determinará si está cubierta por la garantía, comunicando al Cliente el resultado de dicha evaluación y el plazo estimado para la corrección.",
@@ -244,7 +244,7 @@ export default function GarantiaPage() {
               "c) Solicitudes de modificación de diseño, modelo, tipo de prenda, largo, apertura o cualquier otro aspecto estructural distinto al ajuste corporal, cuando dichas modificaciones no fueron parte del acuerdo original.",
               "d) Inconformidades estéticas o subjetivas sobre aspectos aprobados por el Cliente antes del inicio de la producción, conforme al Artículo 4 de la presente Política.",
               "e) Desgaste, encogimiento, deformación o cualquier alteración de la prenda derivada del uso, el lavado o el cuidado inadecuado de la misma con posterioridad a su entrega.",
-              "f) Inconformidades reportadas fuera del plazo de cinco (5) días hábiles establecido en el numeral 2.4(a).",
+              "f) Inconformidades reportadas con posterioridad al retiro presencial de la prenda de las instalaciones del Taller, conforme al numeral 2.4(a).",
             ]}
           />
         </Section>
@@ -279,7 +279,7 @@ export default function GarantiaPage() {
           </P>
           <Ul
             items={[
-              "a) El Cliente debe comunicar el defecto al Taller a través de los canales oficiales disponibles en https://www.confeccionesliss.com/links, dentro de los cinco (5) días hábiles siguientes a la recepción de la prenda.",
+              "a) El Cliente debe comunicar el defecto al Taller de forma presencial, al momento del retiro de la prenda en las instalaciones del Taller. La observación debe realizarse en ese mismo acto, antes de abandonar las instalaciones. Sin perjuicio de lo anterior, si el defecto es de naturaleza objetiva, visible e inequívocamente atribuible al proceso de confección del Taller, el Cliente podrá reportarlo a través de los canales oficiales disponibles en https://www.confeccionesliss.com/links, adjuntando evidencia fotográfica o de video clara, únicamente si el defecto no era perceptible al momento del retiro presencial. El Taller evaluará la razonabilidad de la no detección al momento del retiro en cada caso concreto.",
               "b) La comunicación debe incluir evidencia fotográfica o de video clara y específica del defecto, con indicación de la ubicación exacta del mismo en la prenda.",
               "c) El Taller evaluará la evidencia presentada y determinará si el defecto reportado está cubierto por la garantía, comunicando al Cliente su decisión en un plazo razonable.",
               "d) Si el Taller confirma la existencia del defecto cubierto, procederá a la corrección o reelaboración de la prenda en el menor plazo posible, sujeto a su carga operativa.",
@@ -295,7 +295,7 @@ export default function GarantiaPage() {
               "b) Defectos derivados de la calidad de la tela o material cuando dicha tela o material haya sido elegida o proporcionada por el Cliente, conforme al Artículo 6.3 de la presente Política.",
               "c) Variaciones menores de tonalidad, textura o acabado propias de los procesos de producción textil e inherentes a la industria, que no comprometan la funcionalidad ni la integridad de la prenda.",
               "d) Daños, desgaste o defectos causados por el uso, el lavado, el planchado o el cuidado inadecuado de la prenda con posterioridad a su entrega.",
-              "e) Defectos reportados fuera del plazo de cinco (5) días hábiles establecido en el numeral 3.3(a).",
+              "e) Defectos reportados con posterioridad al retiro de la prenda, salvo el supuesto excepcional establecido en el numeral 3.3(a) para defectos objetivos no perceptibles al momento del retiro.",
               "f) Defectos atribuibles a diseños, archivos o especificaciones incorrectos proporcionados por el Cliente.",
             ]}
           />
@@ -456,7 +456,7 @@ export default function GarantiaPage() {
               "a) Haber pagado el total del pedido conforme a las condiciones acordadas.",
               "b) Haber proporcionado información correcta, completa y verificada al Taller antes del inicio de la producción.",
               "c) Haber aprobado las especificaciones del pedido conforme al proceso establecido en la Política de Confección.",
-              "d) Haber comunicado la inconformidad dentro de los plazos establecidos.",
+              "d) Haber comunicado la inconformidad de forma presencial al momento del retiro de la prenda en las instalaciones del Taller, conforme a lo establecido en la presente Política.",
               "e) Haber utilizado los canales oficiales para comunicar la inconformidad.",
             ]}
           />
@@ -481,25 +481,26 @@ export default function GarantiaPage() {
             ni está obligado a atenderla.
           </P>
           <P>
-            <strong>7.3</strong> PLAZO DE REPORTE. Las inconformidades objeto de
-            garantía deben reportarse dentro de los cinco (5) días hábiles
-            siguientes a la recepción de la prenda. El plazo se computa desde el
-            momento en que el Cliente recibe físicamente la prenda,
-            independientemente de si la ha probado o no. La expiración del plazo
-            sin reporte extingue el derecho a invocar la garantía, con
-            independencia de la causa o gravedad del defecto.
+            <strong>7.3</strong> MOMENTO DE REPORTE. Las inconformidades objeto
+            de garantía deben manifestarse de forma presencial al momento del
+            retiro de la prenda en las instalaciones del Taller. Una vez que el
+            Cliente abandona las instalaciones del Taller con la prenda en su
+            poder, la garantía deja por finalizado su efecto y ninguna
+            inconformidad posterior es atribuible al Taller, salvo el supuesto
+            excepcional de defecto objetivo no perceptible al momento del retiro
+            establecido en el numeral 3.3(a).
           </P>
           <P>
-            <strong>7.4</strong> CANAL DE REPORTE. Todo reporte de garantía debe
-            realizarse exclusivamente a través de los canales oficiales del
-            Taller disponibles en:{" "}
+            <strong>7.4</strong> CANAL DE REPORTE. En el supuesto excepcional
+            admitido por el numeral 3.3(a), el reporte debe realizarse
+            exclusivamente a través de los canales oficiales del Taller
+            disponibles en:{" "}
             <Link href="/links" className="text-blue-600 hover:underline">
               https://www.confeccionesliss.com/links
             </Link>
-            . Los reportes realizados fuera de los canales oficiales, o
-            comunicados a personas no autorizadas del Taller, no generan
-            obligación alguna para el Taller y no interrumpen el plazo de
-            reporte.
+            , adjuntando evidencia objetiva del defecto. Los reportes realizados
+            fuera de los canales oficiales, o comunicados a personas no
+            autorizadas del Taller, no generan obligación alguna para el Taller.
           </P>
           <P>
             <strong>7.5</strong> La garantía se ejerce mediante corrección o
@@ -566,7 +567,7 @@ export default function GarantiaPage() {
               "b) Inconformidades de ajuste en prendas confeccionadas a la medida, cuando la causa sea un cambio en las medidas corporales del Cliente posterior a la toma de medidas.",
               "c) Inconformidades de cualquier naturaleza de carácter subjetivo del Cliente, conforme al Artículo 4.",
               "d) Defectos de calidad o comportamiento de telas o materiales elegidos o proporcionados por el Cliente.",
-              "e) Inconformidades reportadas fuera del plazo de cinco (5) días hábiles.",
+              "e) Inconformidades reportadas con posterioridad al retiro presencial de la prenda de las instalaciones del Taller, fuera del supuesto excepcional del numeral 3.3(a).",
               "f) Inconformidades reportadas fuera de los canales oficiales del Taller.",
               "g) Inconformidades sobre aspectos aprobados por el Cliente antes del inicio de la producción.",
               "h) Daños causados por el uso, lavado, planchado o cuidado inadecuado de la prenda.",
@@ -675,7 +676,7 @@ export default function GarantiaPage() {
                   "¿Quién accede?: Solo quien solicitó confección a la medida, asistió presencialmente y realizó el anticipo correspondiente.",
                   "¿Qué cubre?: Hasta 3 ajustes correctivos gratuitos o reelaboración completa desde cero si la causa es del Taller.",
                   "¿Qué NO cubre?: Cambios en las medidas corporales del cliente, selección de siluetas inapropiadas o inconformidad estética.",
-                  "Plazo de reporte: 5 días hábiles a partir de la entrega de la prenda.",
+                  "Momento de reporte: al momento del retiro presencial en las instalaciones del Taller. Una vez que el cliente abandona las instalaciones, la garantía no es exigible.",
                 ]}
               />
             </div>
@@ -695,7 +696,7 @@ export default function GarantiaPage() {
                   "¿Quién accede?: Cualquier cliente de producto de confección propia del Taller (precios mayores o iguales a USD $30.00).",
                   "¿Qué cubre?: Defectos objetivos de costura, roturas de hilos, desalineación severa de bordados o sublimaciones del Taller.",
                   "¿Qué NO cubre?: Defectos del material exterior elegido por el cliente, variaciones normales de tono, daños por uso.",
-                  "Plazo de reporte: 5 días hábiles a partir de la entrega de la prenda.",
+                  "Momento de reporte: al momento del retiro presencial en las instalaciones del Taller. Una vez que el cliente abandona las instalaciones, la garantía no es exigible.",
                 ]}
               />
             </div>

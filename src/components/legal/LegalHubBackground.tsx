@@ -185,6 +185,15 @@ const LEGAL_DOCS: LegalDoc[] = [
     available: true,
     readingTime: 15,
   },
+  {
+    slug: "contratacion",
+    title: "CONTRATACIÓN",
+    tagline:
+      "Modalidades de vinculación, requisitos técnicos, remuneración y condiciones del trabajo en el Taller.",
+    icon: "handshake",
+    available: true,
+    readingTime: 12,
+  },
 ];
 
 /* ── LegalHubBackground ───────────────────────────────────────────────────── */
