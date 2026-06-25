@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Política de envíos de Confecciones Liss: tarifas de delivery en El Salvador, cobertura departamental, tiempos de preparación y condiciones de entrega.",
   keywords:
-    "envíos uniformes El Salvador, delivery scrubs, cobertura envíos, tarifas delivery, Confecciones Liss, envío gratis uniformes",
+    "envíos de confecciones liss, delivery de confecciones liss, cobertura de confecciones liss, despacho confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/envios` },
   openGraph: {
     title: "Política de Envíos y Delivery en El Salvador | Confecciones Liss",

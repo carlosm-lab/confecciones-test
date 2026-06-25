@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Política de promociones de Confecciones Liss: descuentos por reseña en Google Maps, ofertas de temporada, programa de referidos y sus reglas aplicables.",
   keywords:
-    "promociones uniformes, descuentos scrubs, programa referidos, descuento reseña, ofertas temporada, Confecciones Liss El Salvador",
+    "promociones de confecciones liss, descuentos de confecciones liss, ofertas de confecciones liss, cupones confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/promociones` },
   openGraph: {
     title: "Política General de Promociones y Descuentos | Confecciones Liss",

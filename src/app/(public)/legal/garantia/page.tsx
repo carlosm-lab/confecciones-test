@@ -9,18 +9,18 @@ import { Section, Hr, P, Ul } from "@/components/legal/LegalContent";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Política de Garantía y Calidad del Producto | Confecciones Liss",
+  title: "Garantía de Calidad y Ajuste de Prendas Liss",
   description:
-    "Condiciones completas de garantía y calidad del producto de Confecciones Liss: Garantía Premier de Ajuste (medida), garantía de fabricación y cobertura en El Salvador.",
+    "Garantía de calidad de Confecciones Liss: conozca la Garantía Premier de Ajuste a medida, condiciones de fabricación y la cobertura en todo El Salvador.",
   keywords:
-    "garantia uniformes, calidad de producto, confeccion a la medida, garantia liss, telas uniformes, Confecciones Liss, El Salvador",
+    "garantía de calidad de confecciones liss, garantía premier de ajuste liss, ajuste a medida de confecciones liss, defectos de fabricación liss",
   alternates: {
     canonical: `${siteConfig.url}/legal/garantia`,
   },
   openGraph: {
-    title: "Política de Garantía y Calidad del Producto | Confecciones Liss",
+    title: "Garantía de Calidad y Ajuste de Prendas Liss | Confecciones Liss",
     description:
-      "Condiciones completas de garantía y calidad del producto de Confecciones Liss: Garantía Premier de Ajuste (medida), garantía de fabricación y cobertura en El Salvador.",
+      "Garantía de calidad de Confecciones Liss: conozca la Garantía Premier de Ajuste a medida, condiciones de fabricación y la cobertura en todo El Salvador.",
     url: `${siteConfig.url}/legal/garantia`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Garantía y Calidad del Producto | Confecciones Liss",
+    title: "Garantía de Calidad y Ajuste de Prendas Liss | Confecciones Liss",
     description:
-      "Condiciones completas de garantía y calidad del producto de Confecciones Liss: Garantía Premier de Ajuste (medida), garantía de fabricación y cobertura en El Salvador.",
+      "Garantía de calidad de Confecciones Liss: conozca la Garantía Premier de Ajuste a medida, condiciones de fabricación y la cobertura en todo El Salvador.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -59,9 +59,9 @@ export default function GarantiaPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Garantía y Calidad del Producto | Confecciones Liss",
+          name: "Garantía de Calidad y Ajuste de Prendas Liss | Confecciones Liss",
           description:
-            "Condiciones completas de garantía y calidad del producto de Confecciones Liss: Garantía Premier de Ajuste (medida), garantía de fabricación y cobertura en El Salvador.",
+            "Garantía de calidad de Confecciones Liss: conozca la Garantía Premier de Ajuste a medida, condiciones de fabricación y la cobertura en todo El Salvador.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },

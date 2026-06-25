@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Política de cotizaciones de Confecciones Liss: vigencia de precios, tallas especiales, tiempos de entrega, condiciones de pago y anticipos requeridos.",
   keywords:
-    "cotizaciones uniformes, presupuesto uniformes, precios scrubs El Salvador, cotización taller, Confecciones Liss, anticipos uniformes",
+    "cotizaciones de confecciones liss, presupuesto de confecciones liss, precios de confecciones liss, anticipos de confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/cotizaciones` },
   openGraph: {
     title: "Política General de Cotizaciones Comerciales | Confecciones Liss",

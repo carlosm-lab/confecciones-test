@@ -15,20 +15,18 @@ import {
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title:
-    "Política de Fotografía, Uso de Imagen y Derechos Visuales | Confecciones Liss",
+  title: "Política de Fotografía y Uso de Imagen Liss",
   description:
-    "Regulación integral y condiciones bajo las cuales Confecciones Liss gestiona el uso, captación y publicación de fotografías e imágenes de prendas, clientes y modelos.",
+    "Condiciones de uso de fotografías de Confecciones Liss: captación de imágenes de prendas, consentimiento de modelos y protección de derechos visuales.",
   keywords:
-    "política de fotografía, derechos de imagen, uso de imagen, portafolio de prendas, Confecciones Liss, uniformes El Salvador, modelos externos, uso comercial de imagen",
+    "política de fotografía de confecciones liss, derechos de imagen de confecciones liss, uso de fotos de confecciones liss, modelos de confecciones liss",
   alternates: {
     canonical: `${siteConfig.url}/legal/fotografia`,
   },
   openGraph: {
-    title:
-      "Política de Fotografía, Uso de Imagen y Derechos Visuales | Confecciones Liss",
+    title: "Política de Fotografía y Uso de Imagen Liss | Confecciones Liss",
     description:
-      "Regulación integral y condiciones bajo las cuales Confecciones Liss gestiona el uso, captación y publicación de fotografías e imágenes de prendas, clientes y modelos.",
+      "Condiciones de uso de fotografías de Confecciones Liss: captación de imágenes de prendas, consentimiento de modelos y protección de derechos visuales.",
     url: `${siteConfig.url}/legal/fotografia`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -36,10 +34,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Política de Fotografía, Uso de Imagen y Derechos Visuales | Confecciones Liss",
+    title: "Política de Fotografía y Uso de Imagen Liss | Confecciones Liss",
     description:
-      "Regulación integral y condiciones bajo las cuales Confecciones Liss gestiona el uso, captación y publicación de fotografías e imágenes de prendas, clientes y modelos.",
+      "Condiciones de uso de fotografías de Confecciones Liss: captación de imágenes de prendas, consentimiento de modelos y protección de derechos visuales.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -68,9 +65,9 @@ export default function FotografiaPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Fotografía, Uso de Imagen y Derechos Visuales | Confecciones Liss",
+          name: "Política de Fotografía y Uso de Imagen Liss | Confecciones Liss",
           description:
-            "Regulación integral y condiciones bajo las cuales Confecciones Liss gestiona el uso, captación y publicación de fotografías e imágenes de prendas, clientes y modelos.",
+            "Condiciones de uso de fotografías de Confecciones Liss: captación de imágenes de prendas, consentimiento de modelos y protección de derechos visuales.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },

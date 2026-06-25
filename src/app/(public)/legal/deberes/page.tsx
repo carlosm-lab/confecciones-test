@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Política de deberes de Confecciones Liss: obligaciones de pago, información oportuna, conducta diligente y uso aceptable de toda nuestra plataforma web.",
   keywords:
-    "deberes usuario, obligaciones cliente, conducta aceptable, marco legal, política cliente, Confecciones Liss El Salvador",
+    "deberes del cliente de confecciones liss, obligaciones del usuario de confecciones liss, conducta cliente confecciones liss, normas confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/deberes` },
   openGraph: {
     title: "Política de Deberes de Usuarios y Clientes | Confecciones Liss",

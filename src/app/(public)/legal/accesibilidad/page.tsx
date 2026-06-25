@@ -15,20 +15,18 @@ import {
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title:
-    "Política de Accesibilidad del Sitio Web — Declaración WCAG 2.1 AA | Confecciones Liss",
+  title: "Accesibilidad Web: Declaración WCAG 2.1 AA",
   description:
-    "Declaración oficial de accesibilidad digital de Confecciones Liss v2.0: compromiso WCAG 2.1 AA, medidas implementadas, limitaciones conocidas, canal de reporte y alternativas de acceso.",
+    "Declaración de accesibilidad web de Confecciones Liss: conozca nuestro compromiso WCAG 2.1 AA, medidas aplicadas y todos los canales oficiales de reporte.",
   keywords:
-    "accesibilidad web, WCAG 2.1 AA, WCAG 2.2, declaración accesibilidad, lectores de pantalla, navegación teclado, Confecciones Liss El Salvador",
+    "declaración de accesibilidad de confecciones liss, accesibilidad web de confecciones liss, wcag 2.1 de confecciones liss, navegación accesible liss",
   alternates: {
     canonical: `${siteConfig.url}/legal/accesibilidad`,
   },
   openGraph: {
-    title:
-      "Política de Accesibilidad — Declaración WCAG 2.1 AA | Confecciones Liss",
+    title: "Accesibilidad Web: Declaración WCAG 2.1 AA | Confecciones Liss",
     description:
-      "Declaración oficial de accesibilidad digital de Confecciones Liss v2.0: compromiso WCAG 2.1 AA, medidas implementadas, limitaciones conocidas, canal de reporte y alternativas de acceso.",
+      "Declaración de accesibilidad web de Confecciones Liss: conozca nuestro compromiso WCAG 2.1 AA, medidas aplicadas y todos los canales oficiales de reporte.",
     url: `${siteConfig.url}/legal/accesibilidad`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -36,10 +34,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Política de Accesibilidad — Declaración WCAG 2.1 AA | Confecciones Liss",
+    title: "Accesibilidad Web: Declaración WCAG 2.1 AA | Confecciones Liss",
     description:
-      "Declaración oficial de accesibilidad digital de Confecciones Liss v2.0: compromiso WCAG 2.1 AA, medidas implementadas, limitaciones conocidas, canal de reporte y alternativas de acceso.",
+      "Declaración de accesibilidad web de Confecciones Liss: conozca nuestro compromiso WCAG 2.1 AA, medidas aplicadas y todos los canales oficiales de reporte.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -68,9 +65,9 @@ export default function AccesibilidadPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Accesibilidad del Sitio Web — Declaración WCAG 2.1 AA | Confecciones Liss",
+          name: "Accesibilidad Web: Declaración WCAG 2.1 AA | Confecciones Liss",
           description:
-            "Declaración oficial de accesibilidad digital de Confecciones Liss v2.0: compromiso WCAG 2.1 AA, medidas implementadas, limitaciones conocidas, canal de reporte y alternativas de acceso.",
+            "Declaración de accesibilidad web de Confecciones Liss: conozca nuestro compromiso WCAG 2.1 AA, medidas aplicadas y todos los canales oficiales de reporte.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },

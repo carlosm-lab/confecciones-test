@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Política de Inteligencia Artificial de Confecciones Liss: uso de imágenes IA, modelo Liam Alejandro, transparencia en contenidos y derechos de imagen.",
   keywords:
-    "inteligencia artificial uniformes, modelo IA Confecciones Liss, Liam Alejandro modelo, imágenes IA moda, transparencia IA, Confecciones Liss",
+    "inteligencia artificial de confecciones liss, liam alejandro modelo liss, imágenes ia de confecciones liss, tecnología en confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/ia` },
   openGraph: {
     title: "Política de Uso de Inteligencia Artificial | Confecciones Liss",

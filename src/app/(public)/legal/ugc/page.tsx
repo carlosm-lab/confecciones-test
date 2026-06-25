@@ -9,17 +9,16 @@ import { Section, Hr, P, LegalFootnote } from "@/components/legal/LegalContent";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Política de Contenido Generado por el Usuario (UGC)",
+  title: "Política de Contenido del Usuario (UGC) Liss",
   description:
-    "Política de Contenido Generado por el Usuario de Confecciones Liss: condiciones de republicación, derechos, moderación, contenido prohibido, reseñas y garantías del usuario.",
+    "Política de Contenido Generado por el Usuario en Confecciones Liss: derechos de uso, moderación de reseñas, conductas prohibidas y sus reclamos de autor.",
   keywords:
-    "contenido generado por usuarios, UGC, republicación contenido, reseñas productos, licencias contenido, moderación reseñas, Confecciones Liss El Salvador",
+    "contenido de usuarios en confecciones liss, ugc de confecciones liss, fotos de clientes en confecciones liss, moderación de reseñas liss",
   alternates: { canonical: `${siteConfig.url}/legal/ugc` },
   openGraph: {
-    title:
-      "Política de Contenido Generado por el Usuario (UGC) | Confecciones Liss",
+    title: "Política de Contenido del Usuario (UGC) Liss | Confecciones Liss",
     description:
-      "Política de Contenido Generado por el Usuario de Confecciones Liss: condiciones de republicación, derechos, moderación, contenido prohibido, reseñas y garantías del usuario.",
+      "Política de Contenido Generado por el Usuario en Confecciones Liss: derechos de uso, moderación de reseñas, conductas prohibidas y sus reclamos de autor.",
     url: `${siteConfig.url}/legal/ugc`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -27,10 +26,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Política de Contenido Generado por el Usuario (UGC) | Confecciones Liss",
+    title: "Política de Contenido del Usuario (UGC) Liss | Confecciones Liss",
     description:
-      "Política de Contenido Generado por el Usuario de Confecciones Liss: condiciones de republicación, derechos, moderación, contenido prohibido, reseñas y garantías del usuario.",
+      "Política de Contenido Generado por el Usuario en Confecciones Liss: derechos de uso, moderación de reseñas, conductas prohibidas y sus reclamos de autor.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -59,13 +57,14 @@ export default function PoliticaUgcPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Contenido Generado por el Usuario (UGC) — Políticas Oficiales | Confecciones Liss",
+          name: "Política de Contenido del Usuario (UGC) Liss | Confecciones Liss",
           description:
-            "Política de Contenido Generado por el Usuario de Confecciones Liss: condiciones de republicación, derechos, moderación, contenido prohibido, reseñas y garantías del usuario.",
+            "Política de Contenido Generado por el Usuario en Confecciones Liss: derechos de uso, moderación de reseñas, conductas prohibidas y sus reclamos de autor.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
-        datePublished: "2026-06-24",
+        datePublished: "2026-06-25",
+        dateModified: "2026-06-25",
       },
       buildBreadcrumbSchema([
         { name: "Inicio", item: siteConfig.url },

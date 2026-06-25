@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Programa de referidos de Confecciones Liss: acumula descuentos recomendando clientes, condiciones de validez, vigencia de saldo y reglas del programa.",
   keywords:
-    "programa referidos, descuento por referir, saldo referidos, Confecciones Liss, referidos uniformes El Salvador, recompensas clientes",
+    "programa de referidos de confecciones liss, recomendar clientes a confecciones liss, descuentos por referidos liss, premios liss",
   alternates: { canonical: `${siteConfig.url}/legal/referidos` },
   openGraph: {
     title: "Política del Programa de Referidos Oficiales | Confecciones Liss",

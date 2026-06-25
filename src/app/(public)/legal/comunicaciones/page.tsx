@@ -9,17 +9,16 @@ import { Section, Hr, P, LegalFootnote } from "@/components/legal/LegalContent";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title:
-    "Política de Comunicaciones Comerciales (WhatsApp, Redes Sociales y Canales Digitales)",
+  title: "Política de Comunicaciones Comerciales Liss",
   description:
-    "Política de Comunicaciones Comerciales de Confecciones Liss: canales oficiales, WhatsApp, redes sociales, horario de atención, conductas prohibidas, privacidad y validez de acuerdos.",
+    "Política de comunicaciones de Confecciones Liss: WhatsApp, redes sociales, horarios de atención, conductas prohibidas y validez de acuerdos digitales.",
   keywords:
-    "comunicaciones comerciales, WhatsApp oficial, canales oficiales, redes sociales, horario atención, conductas prohibidas, Confecciones Liss El Salvador",
+    "comunicaciones de confecciones liss, whatsapp oficial de confecciones liss, canales digitales de confecciones liss, contacto oficial confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/comunicaciones` },
   openGraph: {
-    title: "Política de Comunicaciones Comerciales | Confecciones Liss",
+    title: "Política de Comunicaciones Comerciales Liss | Confecciones Liss",
     description:
-      "Política de Comunicaciones Comerciales de Confecciones Liss: canales oficiales, WhatsApp, redes sociales, horario de atención, conductas prohibidas, privacidad y validez de acuerdos.",
+      "Política de comunicaciones de Confecciones Liss: WhatsApp, redes sociales, horarios de atención, conductas prohibidas y validez de acuerdos digitales.",
     url: `${siteConfig.url}/legal/comunicaciones`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -27,9 +26,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Comunicaciones Comerciales | Confecciones Liss",
+    title: "Política de Comunicaciones Comerciales Liss | Confecciones Liss",
     description:
-      "Política de Comunicaciones Comerciales de Confecciones Liss: canales oficiales, WhatsApp, redes sociales, horario de atención, conductas prohibidas, privacidad y validez de acuerdos.",
+      "Política de comunicaciones de Confecciones Liss: WhatsApp, redes sociales, horarios de atención, conductas prohibidas y validez de acuerdos digitales.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -58,13 +57,14 @@ export default function PoliticaComunicacionesPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Comunicaciones Comerciales — Políticas Oficiales | Confecciones Liss",
+          name: "Política de Comunicaciones Comerciales Liss | Confecciones Liss",
           description:
-            "Política de Comunicaciones Comerciales de Confecciones Liss: canales oficiales, WhatsApp, redes sociales, horario de atención, conductas prohibidas, privacidad y validez de acuerdos.",
+            "Política de comunicaciones de Confecciones Liss: WhatsApp, redes sociales, horarios de atención, conductas prohibidas y validez de acuerdos digitales.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
-        datePublished: "2026-06-24",
+        datePublished: "2026-06-25",
+        dateModified: "2026-06-25",
       },
       buildBreadcrumbSchema([
         { name: "Inicio", item: siteConfig.url },

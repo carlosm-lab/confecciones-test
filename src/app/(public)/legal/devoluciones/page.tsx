@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Política oficial de devoluciones de Confecciones Liss: reglas de anticipos, reclamaciones y reembolsos. Sin devolución ni cambio en prendas personalizadas.",
   keywords:
-    "política devoluciones, no devolución prendas, anticipos uniformes, reclamaciones, política cambios, Confecciones Liss El Salvador",
+    "devoluciones en confecciones liss, reembolsos de confecciones liss, reclamos de confecciones liss, cambios de prendas confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/devoluciones` },
   openGraph: {
     title: "Política de Devoluciones y Reclamaciones Liss | Confecciones Liss",

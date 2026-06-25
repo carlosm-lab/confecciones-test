@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Política de confección de Confecciones Liss: modalidades por talla y medida, toma de medidas, garantías, anticipos de pago y plazos de entrega vigentes.",
   keywords:
-    "política confección, uniformes a la medida, toma de medidas, scrubs El Salvador, garantía ajuste, Confecciones Liss San Miguel",
+    "política de confección de confecciones liss, confección a medida de confecciones liss, toma de medidas de confecciones liss, taller confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/confeccion` },
   openGraph: {
     title: "Política de Confección de Prendas y Uniformes | Confecciones Liss",

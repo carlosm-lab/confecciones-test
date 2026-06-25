@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Términos y condiciones de Confecciones Liss: responsabilidades del usuario, propiedad intelectual, resolución de disputas y toda la legislación aplicable.",
   keywords:
-    "términos y condiciones, condiciones de uso, reglamento usuario, derechos usuario, Confecciones Liss, política legal El Salvador",
+    "términos y condiciones de confecciones liss, condiciones de uso de confecciones liss, contrato legal de confecciones liss, web confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/terminos` },
   openGraph: {
     title: "Términos y Condiciones del Servicio en Línea | Confecciones Liss",

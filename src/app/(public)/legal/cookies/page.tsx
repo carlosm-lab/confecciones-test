@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Política de Cookies de Confecciones Liss: uso de cookies funcionales, localStorage, tecnologías de rastreo, gestión y derechos del usuario sobre su uso.",
   keywords:
-    "política cookies, cookies funcionales, localStorage, tecnologías rastreo, privacidad cookies, Confecciones Liss El Salvador",
+    "política de cookies de confecciones liss, cookies de confecciones liss, rastreo digital de confecciones liss, privacidad liss cookies",
   alternates: { canonical: `${siteConfig.url}/legal/cookies` },
   openGraph: {
     title: "Política de Cookies y Tecnologías de Rastreo | Confecciones Liss",

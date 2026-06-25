@@ -15,18 +15,18 @@ import {
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Política de Pedidos en Grupo y Mayoreo | Confecciones Liss",
+  title: "Política de Pedidos en Grupo y Mayoreo Liss",
   description:
-    "Condiciones completas de pedidos grupales y al mayoreo de Confecciones Liss: volúmenes mínimos, anticipos (Modalidad A/B), retención y abandono de prendas, responsabilidad del representante y jurisdicción.",
+    "Condiciones de pedidos en grupo y mayoreo en Confecciones Liss: volúmenes mínimos, anticipos de pago, plazos de entrega y sus límites de responsabilidad.",
   keywords:
-    "pedidos mayoreo, uniformes grupales, colectivos estudiantes, anticipo uniformes, política mayoreo, pedidos en grupo, Confecciones Liss, uniformes El Salvador",
+    "pedidos al mayoreo de confecciones liss, pedidos grupales de confecciones liss, uniformes en grupo de confecciones liss, precios mayoreo liss",
   alternates: {
     canonical: `${siteConfig.url}/legal/mayoreo`,
   },
   openGraph: {
-    title: "Política de Pedidos en Grupo y Mayoreo | Confecciones Liss",
+    title: "Política de Pedidos en Grupo y Mayoreo Liss | Confecciones Liss",
     description:
-      "Condiciones completas de pedidos grupales y al mayoreo de Confecciones Liss: volúmenes mínimos, anticipos (Modalidad A/B), retención y abandono de prendas, responsabilidad del representante y jurisdicción.",
+      "Condiciones de pedidos en grupo y mayoreo en Confecciones Liss: volúmenes mínimos, anticipos de pago, plazos de entrega y sus límites de responsabilidad.",
     url: `${siteConfig.url}/legal/mayoreo`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -34,9 +34,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Pedidos en Grupo y Mayoreo | Confecciones Liss",
+    title: "Política de Pedidos en Grupo y Mayoreo Liss | Confecciones Liss",
     description:
-      "Condiciones completas de pedidos grupales y al mayoreo de Confecciones Liss: volúmenes mínimos, anticipos (Modalidad A/B), retención y abandono de prendas, responsabilidad del representante y jurisdicción.",
+      "Condiciones de pedidos en grupo y mayoreo en Confecciones Liss: volúmenes mínimos, anticipos de pago, plazos de entrega y sus límites de responsabilidad.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -65,9 +65,9 @@ export default function MayoreoPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Pedidos en Grupo y Mayoreo | Confecciones Liss",
+          name: "Política de Pedidos en Grupo y Mayoreo Liss | Confecciones Liss",
           description:
-            "Condiciones completas de pedidos grupales y al mayoreo de Confecciones Liss: volúmenes mínimos, anticipos (Modalidad A/B), retención y abandono de prendas, responsabilidad del representante y jurisdicción.",
+            "Condiciones de pedidos en grupo y mayoreo en Confecciones Liss: volúmenes mínimos, anticipos de pago, plazos de entrega y sus límites de responsabilidad.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Política de Confecciones Liss sobre el uso de logotipos de terceros: descargo de responsabilidad, propiedad intelectual, marcas registradas y permisos.",
   keywords:
-    "logotipos de terceros, marcas registradas, descargo de responsabilidad, propiedad intelectual, uniformes personalizados, logos institucionales El Salvador",
+    "logotipos de terceros en confecciones liss, marcas de confecciones liss, propiedad intelectual en confecciones liss, descargo de marcas liss",
   alternates: { canonical: `${siteConfig.url}/legal/terceros` },
   openGraph: {
     title: "Política de Logos y de Identidad de Terceros | Confecciones Liss",

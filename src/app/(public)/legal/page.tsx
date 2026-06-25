@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description:
     "Accede a los documentos legales de Confecciones Liss: privacidad, términos, devoluciones, envíos, cookies, referidos, IA y accesibilidad en El Salvador.",
   keywords:
-    "documentos legales, política de privacidad, términos y condiciones, políticas legales, derechos usuario, devoluciones, envíos El Salvador, cookies, Confecciones Liss",
-  alternates: { canonical: PAGE_URL },
+    "documentos legales de confecciones liss, políticas legales de confecciones liss, términos y condiciones de confecciones liss, legal confecciones liss",
+  alternates: { canonical: `${siteConfig.url}/legal` },
   openGraph: {
     title: "Documentos Legales: Políticas y Privacidad | Confecciones Liss",
     description:

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Política de derechos de Confecciones Liss: transparencia, atención al cliente, reclamaciones, rectificación de datos personales y protección del usuario.",
   keywords:
-    "derechos usuario, derechos cliente, protección consumidor, reclamaciones, transparencia, Confecciones Liss, derechos El Salvador",
+    "derechos del usuario de confecciones liss, derechos del cliente de confecciones liss, atención al cliente de confecciones liss, reclamos confecciones liss",
   alternates: { canonical: `${siteConfig.url}/legal/derechos` },
   openGraph: {
     title: "Política de Derechos del Usuario y Cliente | Confecciones Liss",

@@ -9,19 +9,18 @@ import { Section, Hr, P, Ul } from "@/components/legal/LegalContent";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Política de Resolución de Disputas y Conflictos | Confecciones Liss",
+  title: "Política de Resolución de Disputas en Liss",
   description:
-    "Política y procedimiento centralizado de resolución de disputas de Confecciones Liss. Conoce las etapas de mediación, plazos de reclamación, y jurisdicción aplicable en El Salvador.",
+    "Política de resolución de disputas de Confecciones Liss: etapas de mediación, plazos de reclamos, validez de acuerdos y la jurisdicción en El Salvador.",
   keywords:
-    "resolucion de disputas, mediacion, reclamos, canales oficiales, Confecciones Liss, El Salvador, terminos legales, arbitraje comercial",
+    "resolución de disputas de confecciones liss, mediación de confecciones liss, reclamos de confecciones liss, jurisdicción legal confecciones liss",
   alternates: {
     canonical: `${siteConfig.url}/legal/disputas`,
   },
   openGraph: {
-    title:
-      "Política de Resolución de Disputas y Conflictos | Confecciones Liss",
+    title: "Política de Resolución de Disputas en Liss | Confecciones Liss",
     description:
-      "Política y procedimiento centralizado de resolución de disputas de Confecciones Liss. Conoce las etapas de mediación, plazos de reclamación, y jurisdicción aplicable en El Salvador.",
+      "Política de resolución de disputas de Confecciones Liss: etapas de mediación, plazos de reclamos, validez de acuerdos y la jurisdicción en El Salvador.",
     url: `${siteConfig.url}/legal/disputas`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -29,10 +28,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Política de Resolución de Disputas y Conflictos | Confecciones Liss",
+    title: "Política de Resolución de Disputas en Liss | Confecciones Liss",
     description:
-      "Política y procedimiento centralizado de resolución de disputas de Confecciones Liss. Conoce las etapas de mediación, plazos de reclamación, y jurisdicción aplicable en El Salvador.",
+      "Política de resolución de disputas de Confecciones Liss: etapas de mediación, plazos de reclamos, validez de acuerdos y la jurisdicción en El Salvador.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -61,9 +59,9 @@ export default function DisputasPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Resolución de Disputas y Conflictos | Confecciones Liss",
+          name: "Política de Resolución de Disputas en Liss | Confecciones Liss",
           description:
-            "Política y procedimiento centralizado de resolución de disputas de Confecciones Liss. Conoce las etapas de mediación, plazos de reclamación, y jurisdicción aplicable en El Salvador.",
+            "Política de resolución de disputas de Confecciones Liss: etapas de mediación, plazos de reclamos, validez de acuerdos y la jurisdicción en El Salvador.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },

@@ -9,20 +9,18 @@ import { Section, Hr, P, Ul } from "@/components/legal/LegalContent";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title:
-    "Política de Contratación y Vinculación de Talento | Confecciones Liss",
+  title: "Política de Vinculación y Contratación Liss",
   description:
-    "Condiciones, modalidades, requisitos y derechos de la vinculación laboral en Confecciones Liss: trabajo a destajo por temporada y colaboración independiente por proyecto.",
+    "Requisitos, derechos y condiciones de contratación en Confecciones Liss: trabajo a destajo por temporada y toda la colaboración profesional independiente.",
   keywords:
-    "contratacion confeccion, trabajo a destajo, colaboracion independiente, uniformes El Salvador, talento confeccionistas, Confecciones Liss",
+    "contratación de personal en confecciones liss, empleo en confecciones liss, trabajo a destajo de confecciones liss, talento confecciones liss",
   alternates: {
     canonical: `${siteConfig.url}/legal/contratacion`,
   },
   openGraph: {
-    title:
-      "Política de Contratación y Vinculación de Talento | Confecciones Liss",
+    title: "Política de Vinculación y Contratación Liss | Confecciones Liss",
     description:
-      "Condiciones, modalidades, requisitos y derechos de la vinculación laboral en Confecciones Liss: trabajo a destajo por temporada y colaboración independiente por proyecto.",
+      "Requisitos, derechos y condiciones de contratación en Confecciones Liss: trabajo a destajo por temporada y toda la colaboración profesional independiente.",
     url: `${siteConfig.url}/legal/contratacion`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -30,10 +28,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Política de Contratación y Vinculación de Talento | Confecciones Liss",
+    title: "Política de Vinculación y Contratación Liss | Confecciones Liss",
     description:
-      "Condiciones, modalidades, requisitos y derechos de la vinculación laboral en Confecciones Liss: trabajo a destajo por temporada y colaboración independiente por proyecto.",
+      "Requisitos, derechos y condiciones de contratación en Confecciones Liss: trabajo a destajo por temporada y toda la colaboración profesional independiente.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -62,9 +59,9 @@ export default function ContratacionPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Contratación y Vinculación de Talento | Confecciones Liss",
+          name: "Política de Vinculación y Contratación Liss | Confecciones Liss",
           description:
-            "Condiciones, modalidades, requisitos y derechos de la vinculación laboral en Confecciones Liss: trabajo a destajo por temporada y colaboración independiente por proyecto.",
+            "Requisitos, derechos y condiciones de contratación en Confecciones Liss: trabajo a destajo por temporada y toda la colaboración profesional independiente.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Política oficial de privacidad de Confecciones Liss: recopilación, uso y seguridad de datos personales, y ejercicio de derechos de acceso y rectificación.",
   keywords:
-    "política de privacidad, protección de datos, datos personales, RGPD, derechos usuario, privacidad El Salvador, Confecciones Liss",
+    "política de privacidad de confecciones liss, protección de datos de confecciones liss, seguridad de datos de confecciones liss, datos personales liss",
   alternates: { canonical: `${siteConfig.url}/legal/privacidad` },
   openGraph: {
     title: "Política de Privacidad y Protección de Datos | Confecciones Liss",
