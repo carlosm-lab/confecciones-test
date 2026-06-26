@@ -80,90 +80,75 @@ export function ServicioManoObraDetalle() {
 
         {/* Hero Section */}
         <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
-          <div className="mx-auto flex w-full max-w-screen-2xl flex-col items-center gap-8 lg:flex-row lg:gap-16">
-            {/* Desktop Image (Left on desktop, hidden on mobile) */}
-            <div className="relative hidden w-full lg:block lg:w-[42%] lg:shrink-0">
-              <div className="border-primary/12 relative aspect-[4/5] w-full overflow-hidden rounded-xl border shadow-sm">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="flex flex-col items-center gap-12 lg:flex-row">
+              {/* Left: Image (45% / lg:w-[45%]) */}
+              <div className="border-primary/12 relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 overflow-hidden rounded-xl border shadow-sm sm:h-[400px] lg:h-[480px] lg:w-[45%] lg:max-w-none">
                 <Image
                   alt="Manos costurando a máquina en taller"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIOK8UY5TesvxqjgC-Hwzg1ChKEulzHNqCG0kzVs_ttKJCHxUqdEdMLD9L6yLQY_4CZ3SpSURhaA-teMGZlRDHSf54LpLg09zvPPvI3G17Qv2B3ha0XpAczn8Z9ePBV_aU1qq0iOLby22hSdzlVYdDOHJJ79fZECSwenAOvf12ZViI69T3CxsPQ1PlsKOShnHhZk4WRDodUOsCknVFOqWsxCcv4SUiMv-8Wl0u-q-p2XxtTP3wMOohB9ndCnWWERpi7f7fa4dO2RR3"
                   fill
-                  sizes="42vw"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
                   priority
                   className="object-cover"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#143067]/20 to-transparent" />
               </div>
-            </div>
 
-            {/* Right: Content Column */}
-            <div className="flex w-full flex-col space-y-6 lg:flex-1">
-              <div className="inline-flex items-center gap-3">
-                <div className="bg-secondary h-6 w-1 rounded-full" />
-                <span className="text-secondary font-sans text-xs font-semibold tracking-widest uppercase">
-                  Servicio
-                </span>
-              </div>
-              <h1 className="text-primary font-serif text-[32px] leading-tight font-bold md:text-[48px]">
-                Servicio de Solo Mano de Obra
-              </h1>
-
-              {/* Mobile Image (Visible on mobile, aspect-video) */}
-              <div className="relative mb-6 w-full lg:hidden">
-                <div className="border-primary/12 relative aspect-video w-full overflow-hidden rounded-xl border shadow-sm">
-                  <Image
-                    alt="Manos costurando a máquina en taller"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIOK8UY5TesvxqjgC-Hwzg1ChKEulzHNqCG0kzVs_ttKJCHxUqdEdMLD9L6yLQY_4CZ3SpSURhaA-teMGZlRDHSf54LpLg09zvPPvI3G17Qv2B3ha0XpAczn8Z9ePBV_aU1qq0iOLby22hSdzlVYdDOHJJ79fZECSwenAOvf12ZViI69T3CxsPQ1PlsKOShnHhZk4WRDodUOsCknVFOqWsxCcv4SUiMv-8Wl0u-q-p2XxtTP3wMOohB9ndCnWWERpi7f7fa4dO2RR3"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 0"
-                    priority
-                    className="object-cover"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#143067]/20 to-transparent" />
+              {/* Right: Content Column (55% / lg:w-[55%]) */}
+              <div className="flex w-full flex-col space-y-6 lg:w-[55%]">
+                <div className="inline-flex items-center gap-3">
+                  <div className="bg-secondary h-6 w-1 rounded-full" />
+                  <span className="text-secondary font-sans text-xs font-semibold tracking-widest uppercase">
+                    Servicio
+                  </span>
                 </div>
-              </div>
+                <h1 className="text-primary font-serif text-[32px] leading-tight font-bold md:text-[48px]">
+                  Servicio de Solo Mano de Obra
+                </h1>
 
-              <p className="text-on-surface-variant max-w-prose font-sans text-lg leading-relaxed">
-                Tú pones la tela, nosotros ponemos el talento. Trae tu material
-                y confeccionamos tu prenda cobrando exclusivamente la mano de
-                obra.
-              </p>
-              <div className="flex flex-wrap gap-3 pt-2">
-                <span className="bg-surface-container-low text-primary border-primary/5 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                  <span className="material-symbols-outlined text-tertiary text-[16px]">
-                    savings
+                <p className="text-on-surface-variant max-w-prose font-sans text-lg leading-relaxed">
+                  Tú pones la tela, nosotros ponemos el talento. Trae tu
+                  material y confeccionamos tu prenda cobrando exclusivamente la
+                  mano de obra.
+                </p>
+                <div className="flex flex-wrap gap-3 pt-2">
+                  <span className="bg-surface-container-low text-primary border-primary/5 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
+                    <span className="material-symbols-outlined text-secondary text-[16px]">
+                      savings
+                    </span>
+                    Súper económico
                   </span>
-                  Súper económico
-                </span>
-                <span className="bg-surface-container-low text-primary border-primary/5 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                  <span className="material-symbols-outlined text-tertiary text-[16px]">
-                    design_services
+                  <span className="bg-surface-container-low text-primary border-primary/5 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
+                    <span className="material-symbols-outlined text-secondary text-[16px]">
+                      design_services
+                    </span>
+                    Tus propios diseños
                   </span>
-                  Tus propios diseños
-                </span>
-                <span className="bg-surface-container-low text-primary border-primary/5 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                  <span className="material-symbols-outlined text-tertiary text-[16px]">
-                    checkroom
+                  <span className="bg-surface-container-low text-primary border-primary/5 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
+                    <span className="material-symbols-outlined text-secondary text-[16px]">
+                      checkroom
+                    </span>
+                    Aceptamos toda tela
                   </span>
-                  Aceptamos toda tela
-                </span>
-              </div>
-              <div className="pt-6">
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border-primary/12 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border bg-[#143067] px-8 py-4 font-sans text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#143067]/90 sm:w-auto"
-                >
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                    aria-hidden="true"
+                </div>
+                <div className="pt-6">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border-primary/12 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border bg-[#143067] px-8 py-4 font-sans text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#143067]/90 sm:w-auto"
                   >
-                    chat
-                  </span>
-                  Cotizar costura
-                </a>
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                      aria-hidden="true"
+                    >
+                      chat
+                    </span>
+                    Cotizar costura
+                  </a>
+                </div>
               </div>
             </div>
           </div>

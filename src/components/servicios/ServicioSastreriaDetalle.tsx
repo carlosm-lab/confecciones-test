@@ -80,78 +80,65 @@ export function ServicioSastreriaDetalle() {
 
         {/* Hero Section */}
         <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
-          <div className="mx-auto flex w-full max-w-screen-2xl flex-col items-center gap-8 lg:flex-row lg:gap-16">
-            {/* Left side content */}
-            <div className="flex w-full flex-col items-start lg:flex-1">
-              <div className="mb-6 flex items-center gap-4">
-                <span className="bg-secondary h-6 w-1"></span>
-                <span className="text-on-surface-variant font-sans text-xs font-semibold tracking-widest uppercase">
-                  SERVICIO
-                </span>
-              </div>
-              <h1 className="text-primary mb-6 font-serif text-[32px] leading-tight font-bold md:text-[48px]">
-                Confección y Sastrería a la Medida
-              </h1>
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="flex flex-col items-center gap-12 md:flex-row">
+              {/* Left side content (55% / md:w-[55%]) */}
+              <div className="flex w-full flex-col items-start md:w-[55%]">
+                <div className="mb-6 flex items-center gap-4">
+                  <span className="bg-secondary h-6 w-1"></span>
+                  <span className="text-on-surface-variant font-sans text-xs font-semibold tracking-widest uppercase">
+                    SERVICIO
+                  </span>
+                </div>
+                <h1 className="text-primary mb-6 font-serif text-[32px] leading-tight font-bold md:text-[48px]">
+                  Confección y Sastrería a la Medida
+                </h1>
 
-              {/* Mobile Image (Visible on mobile, aspect-[4/3]) */}
-              <div className="relative mb-6 w-full lg:hidden">
-                <div className="bg-primary/5 absolute inset-0 -z-10 -m-2 rounded-t-2xl rounded-b-lg" />
-                <div className="border-primary/10 relative aspect-[4/3] w-full overflow-hidden rounded-t-2xl rounded-b-lg border shadow-md">
+                <p className="text-on-surface-variant mb-8 max-w-lg font-sans text-lg leading-relaxed">
+                  Olvídate de uniformes estándar que no te favorecen. Tomamos
+                  más de 12 medidas anatómicas para crear una prenda que se
+                  adapta perfectamente a tu cuerpo.
+                </p>
+                <div className="mb-10 flex flex-wrap gap-3">
+                  <span className="text-on-surface-variant border-primary/10 rounded-full border bg-[#F0F2F5] px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase">
+                    Tallas inclusivas
+                  </span>
+                  <span className="text-on-surface-variant border-primary/10 rounded-full border bg-[#F0F2F5] px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase">
+                    Entalle perfecto
+                  </span>
+                  <span className="text-on-surface-variant border-primary/10 rounded-full border bg-[#F0F2F5] px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase">
+                    Realza tu figura
+                  </span>
+                </div>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-primary inline-flex cursor-pointer items-center gap-2 rounded-lg px-6 py-3 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+                >
+                  <span
+                    className="material-symbols-outlined text-[20px]"
+                    aria-hidden="true"
+                  >
+                    chat
+                  </span>
+                  Agendar visita al taller
+                </a>
+              </div>
+
+              {/* Right Side Image (45% / md:w-[45%]) */}
+              <div className="relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 sm:h-[400px] md:h-[480px] md:w-[45%] md:max-w-none">
+                <div className="bg-primary/5 absolute inset-0 -z-10 -m-4 rounded-t-2xl rounded-b-lg" />
+                <div className="border-primary/10 relative h-full w-full overflow-hidden rounded-t-2xl rounded-b-lg border shadow-md">
                   <Image
                     alt="Medición y sastrería profesional"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqWKImQOmvghJ9sTWz-PPSR-X6p3OJFCZ7SQy2ujL63JLQJhDVp_ao4QQikgLRZ9UI4MBKUWjF09De_7XStyh4MfrvbLSO9lR3mO9ZINHCrHZu7r-UaAxfdatm6nJFfqeFHw0jVB3VqlyVzFBV56Dt_axkoPyM-dwx8aeG4bC5j5giSjFqtHuvigtbJxcul23soXhglEB-BqZRJ5VOrMsxKpbhP_Hq1F99zIo3yEF_yl6wDObNg_q1c_H8XyUlyhl2hXyVSK4jCPfq"
                     fill
-                    sizes="(max-width: 1024px) 100vw, 0"
+                    sizes="(max-width: 768px) 100vw, 45vw"
                     priority
                     className="object-cover"
                   />
                 </div>
-              </div>
-
-              <p className="text-on-surface-variant mb-8 max-w-lg font-sans text-lg leading-relaxed">
-                Olvídate de uniformes estándar que no te favorecen. Tomamos más
-                de 12 medidas anatómicas para crear una prenda que se adapta
-                perfectamente a tu cuerpo.
-              </p>
-              <div className="mb-10 flex flex-wrap gap-3">
-                <span className="text-on-surface-variant border-primary/10 rounded-full border bg-[#F0F2F5] px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase">
-                  Tallas inclusivas
-                </span>
-                <span className="text-on-surface-variant border-primary/10 rounded-full border bg-[#F0F2F5] px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase">
-                  Entalle perfecto
-                </span>
-                <span className="text-on-surface-variant border-primary/10 rounded-full border bg-[#F0F2F5] px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase">
-                  Realza tu figura
-                </span>
-              </div>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-primary inline-flex cursor-pointer items-center gap-2 rounded-lg px-6 py-3 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
-              >
-                <span
-                  className="material-symbols-outlined text-[20px]"
-                  aria-hidden="true"
-                >
-                  chat
-                </span>
-                Agendar visita al taller
-              </a>
-            </div>
-
-            {/* Desktop Image (Right on desktop, hidden on mobile) */}
-            <div className="relative hidden w-full lg:block lg:w-[42%] lg:shrink-0">
-              <div className="bg-primary/5 absolute inset-0 -z-10 -m-4 rounded-t-2xl rounded-b-lg" />
-              <div className="border-primary/10 relative aspect-[4/5] w-full overflow-hidden rounded-t-2xl rounded-b-lg border shadow-md">
-                <Image
-                  alt="Medición y sastrería profesional"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqWKImQOmvghJ9sTWz-PPSR-X6p3OJFCZ7SQy2ujL63JLQJhDVp_ao4QQikgLRZ9UI4MBKUWjF09De_7XStyh4MfrvbLSO9lR3mO9ZINHCrHZu7r-UaAxfdatm6nJFfqeFHw0jVB3VqlyVzFBV56Dt_axkoPyM-dwx8aeG4bC5j5giSjFqtHuvigtbJxcul23soXhglEB-BqZRJ5VOrMsxKpbhP_Hq1F99zIo3yEF_yl6wDObNg_q1c_H8XyUlyhl2hXyVSK4jCPfq"
-                  fill
-                  sizes="42vw"
-                  priority
-                  className="object-cover"
-                />
               </div>
             </div>
           </div>

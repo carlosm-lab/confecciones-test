@@ -27,84 +27,73 @@ export function ServicioRopaCasualDetalle() {
         </div>
 
         {/* Hero Section */}
+        {/* Hero Section */}
         <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
-          <div className="mx-auto flex w-full max-w-screen-2xl flex-col items-center gap-8 lg:flex-row lg:gap-16">
-            {/* Left: Content Column */}
-            <div className="flex w-full flex-col items-start lg:flex-1">
-              <div className="mb-6 flex items-center gap-3">
-                <div className="bg-secondary h-6 w-1" />
-                <span className="text-secondary font-sans text-xs font-semibold tracking-wider uppercase">
-                  Servicio
-                </span>
-              </div>
-              <h1 className="text-primary mb-6 font-serif text-[32px] leading-tight font-bold md:text-[48px]">
-                Confección de Ropa Casual y de Vestir
-              </h1>
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="flex flex-col items-center gap-12 md:flex-row">
+              {/* Left: Content Column (55% / md:w-[55%]) */}
+              <div className="flex w-full flex-col items-start md:w-[55%]">
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="bg-secondary h-6 w-1" />
+                  <span className="text-secondary font-sans text-xs font-semibold tracking-wider uppercase">
+                    Servicio
+                  </span>
+                </div>
+                <h1 className="text-primary mb-6 font-serif text-[32px] leading-tight font-bold md:text-[48px]">
+                  Confección de Ropa Casual y de Vestir
+                </h1>
 
-              {/* Mobile Image (visible on mobile, hidden on lg+) */}
-              <div className="relative mb-6 w-full lg:hidden">
-                <div className="border-primary/12 relative aspect-[4/3] w-full overflow-hidden rounded-xl border shadow-md">
+                <p className="text-on-surface-variant mb-8 font-sans text-lg leading-relaxed">
+                  ¿Viste algo que te encantó en Pinterest o Instagram? Lo
+                  hacemos realidad. Confeccionamos prendas a la medida
+                  basándonos en tus imágenes o ideas, asegurando un ajuste
+                  perfecto y acabados de alta calidad para cada ocasión.
+                </p>
+                <div className="mb-10 flex flex-wrap gap-4">
+                  <span className="bg-surface-container-low text-primary border-primary/10 inline-flex items-center rounded border px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
+                    <span className="material-symbols-outlined mr-2 text-[18px]">
+                      draw
+                    </span>{" "}
+                    Diseño libre
+                  </span>
+                  <span className="bg-surface-container-low text-primary border-primary/10 inline-flex items-center rounded border px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
+                    <span className="material-symbols-outlined mr-2 text-[18px]">
+                      photo_camera
+                    </span>{" "}
+                    Copiamos de fotos
+                  </span>
+                  <span className="bg-surface-container-low text-primary border-primary/10 inline-flex items-center rounded border px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
+                    <span className="material-symbols-outlined mr-2 text-[18px]">
+                      family_restroom
+                    </span>{" "}
+                    Toda la familia
+                  </span>
+                </div>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-primary hover:bg-primary/95 inline-flex w-full cursor-pointer items-center justify-center rounded px-8 py-4 font-sans text-xs font-bold tracking-wider text-white uppercase shadow-md transition-all md:w-auto"
+                >
+                  Enviar diseño por WhatsApp
+                  <span className="material-symbols-outlined ml-2 text-[20px]">
+                    arrow_forward
+                  </span>
+                </a>
+              </div>
+
+              {/* Right: Image Column (45% / md:w-[45%]) */}
+              <div className="relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 sm:h-[400px] md:h-[480px] md:w-[45%] md:max-w-none">
+                <div className="border-primary/12 relative h-full w-full overflow-hidden rounded-xl border shadow-md">
                   <Image
                     alt="Studio de sastreria y confeccion de ropa"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWTRZx5W-uPd8adEBbgLS5OehCkntY8Bct6jTW9MgSskNd10j1uWakL7Oo83OZdMVDjFuz1Vy_P9Q9cklYhvoXwIL3AACQ6vjMya8ncZSiVisb8lZ2BgLAp-0WEXPp6QOw4sNw9qhbgyBqp45lMV8Iyx6iyTZJM_ocAYEujXc-XGbScd_JOFP9Oxz5Iqheh6IZd8sU4M4AxLzkC2BH31Qrep2lmjWFezjyyTKnUPDnIoQtsC9BLgeQd_L_756dG-2pI-mHX-F1o1Xr"
                     fill
-                    sizes="(max-width: 1024px) 100vw, 0"
+                    sizes="(max-width: 768px) 100vw, 45vw"
                     priority
                     className="object-cover"
                   />
                 </div>
-              </div>
-
-              <p className="text-on-surface-variant mb-8 font-sans text-lg leading-relaxed">
-                ¿Viste algo que te encantó en Pinterest o Instagram? Lo hacemos
-                realidad. Confeccionamos prendas a la medida basándonos en tus
-                imágenes o ideas, asegurando un ajuste perfecto y acabados de
-                alta calidad para cada ocasión.
-              </p>
-              <div className="mb-10 flex flex-wrap gap-4">
-                <span className="bg-surface-container-low text-primary border-primary/10 inline-flex items-center rounded border px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                  <span className="material-symbols-outlined mr-2 text-[18px]">
-                    draw
-                  </span>{" "}
-                  Diseño libre
-                </span>
-                <span className="bg-surface-container-low text-primary border-primary/10 inline-flex items-center rounded border px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                  <span className="material-symbols-outlined mr-2 text-[18px]">
-                    photo_camera
-                  </span>{" "}
-                  Copiamos de fotos
-                </span>
-                <span className="bg-surface-container-low text-primary border-primary/10 inline-flex items-center rounded border px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                  <span className="material-symbols-outlined mr-2 text-[18px]">
-                    family_restroom
-                  </span>{" "}
-                  Toda la familia
-                </span>
-              </div>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-primary hover:bg-primary/95 inline-flex w-full cursor-pointer items-center justify-center rounded px-8 py-4 font-sans text-xs font-bold tracking-wider text-white uppercase shadow-md transition-all md:w-auto"
-              >
-                Enviar diseño por WhatsApp
-                <span className="material-symbols-outlined ml-2 text-[20px]">
-                  arrow_forward
-                </span>
-              </a>
-            </div>
-
-            {/* Desktop Image (Right on desktop, hidden on mobile) */}
-            <div className="hidden lg:block lg:w-[42%] lg:shrink-0">
-              <div className="border-primary/12 relative aspect-[4/5] w-full overflow-hidden rounded-xl border shadow-md">
-                <Image
-                  alt="Studio de sastreria y confeccion de ropa"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWTRZx5W-uPd8adEBbgLS5OehCkntY8Bct6jTW9MgSskNd10j1uWakL7Oo83OZdMVDjFuz1Vy_P9Q9cklYhvoXwIL3AACQ6vjMya8ncZSiVisb8lZ2BgLAp-0WEXPp6QOw4sNw9qhbgyBqp45lMV8Iyx6iyTZJM_ocAYEujXc-XGbScd_JOFP9Oxz5Iqheh6IZd8sU4M4AxLzkC2BH31Qrep2lmjWFezjyyTKnUPDnIoQtsC9BLgeQd_L_756dG-2pI-mHX-F1o1Xr"
-                  fill
-                  sizes="42vw"
-                  priority
-                  className="object-cover"
-                />
               </div>
             </div>
           </div>

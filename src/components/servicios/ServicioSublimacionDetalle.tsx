@@ -75,84 +75,73 @@ export function ServicioSublimacionDetalle() {
 
       {/* ── HERO ── */}
       <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
-        <div className="mx-auto flex w-full max-w-screen-2xl flex-col items-center gap-8 lg:flex-row lg:gap-16">
-          {/* Desktop Image (Left on desktop, hidden on mobile) */}
-          <div className="hidden w-full lg:block lg:w-[42%] lg:shrink-0">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[16px]">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="flex flex-col items-center gap-12 md:flex-row">
+            {/* Left: Image (45% / md:w-[45%]) */}
+            <div className="border-primary/12 relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 overflow-hidden rounded-2xl border shadow-sm sm:h-[400px] md:h-[480px] md:w-[45%] md:max-w-none">
               <Image
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
                 alt="Jerseys deportivos sublimados"
                 fill
-                sizes="42vw"
+                sizes="(max-width: 768px) 100vw, 45vw"
                 priority
-                className="border-primary/12 rounded-[16px] border object-cover shadow-sm"
+                className="object-cover"
               />
             </div>
-          </div>
 
-          {/* Text/Content Column */}
-          <div className="flex w-full flex-col justify-center lg:flex-1">
-            <div className="mb-6 inline-flex items-center gap-3">
-              <div className="bg-secondary h-4 w-1"></div>
-              <span className="text-on-surface-variant font-sans text-xs font-semibold tracking-wider uppercase">
-                SERVICIO
-              </span>
-            </div>
-            <h1 className="text-primary mb-6 font-serif text-[28px] leading-tight font-bold md:text-[48px]">
-              Sublimación Textil Full Color
-            </h1>
-
-            {/* Mobile Image (Visible on mobile, aspect-[4/3]) */}
-            <div className="relative mb-6 w-full lg:hidden">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[16px]">
-                <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
-                  alt="Jerseys deportivos sublimados"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 0"
-                  priority
-                  className="border-primary/12 rounded-[16px] border object-cover shadow-sm"
-                />
+            {/* Right: Content (55% / md:w-[55%]) */}
+            <div className="flex w-full flex-col justify-center md:w-[55%]">
+              <div className="mb-6 inline-flex items-center gap-3">
+                <div className="bg-secondary h-4 w-1"></div>
+                <span className="text-on-surface-variant font-sans text-xs font-semibold tracking-wider uppercase">
+                  SERVICIO
+                </span>
               </div>
-            </div>
+              <h1 className="text-primary mb-6 font-serif text-[28px] leading-tight font-bold md:text-[48px]">
+                Sublimación Textil Full Color
+              </h1>
 
-            <p className="text-on-surface-variant mb-8 max-w-xl font-sans text-lg leading-relaxed">
-              Impresión textil mediante calor para prendas deportivas. Tinta
-              permanente que se funde con la fibra y nunca se cuartea ni pierde
-              color.
-            </p>
-            <div className="mb-10 flex flex-wrap gap-3">
-              <span className="bg-surface-container-low border-primary/12 text-primary inline-flex items-center rounded-full border px-4 py-2 font-sans text-sm font-medium">
-                <span className="material-symbols-outlined text-secondary mr-2 text-[16px]">
-                  palette
+              <p className="text-on-surface-variant mb-8 max-w-xl font-sans text-lg leading-relaxed">
+                Impresión textil mediante calor para prendas deportivas. Tinta
+                permanente que se funde con la fibra y nunca se cuartea ni
+                pierde color.
+              </p>
+              <div className="mb-10 flex flex-wrap gap-3">
+                <span className="bg-surface-container-low border-primary/12 text-primary inline-flex items-center rounded-full border px-4 py-2 font-sans text-sm font-medium">
+                  <span className="material-symbols-outlined text-secondary mr-2 text-[16px]">
+                    palette
+                  </span>
+                  Colores vibrantes
                 </span>
-                Colores vibrantes
-              </span>
-              <span className="bg-surface-container-low border-primary/12 text-primary inline-flex items-center rounded-full border px-4 py-2 font-sans text-sm font-medium">
-                <span className="material-symbols-outlined text-secondary mr-2 text-[16px]">
-                  water_drop
+                <span className="bg-surface-container-low border-primary/12 text-primary inline-flex items-center rounded-full border px-4 py-2 font-sans text-sm font-medium">
+                  <span className="material-symbols-outlined text-secondary mr-2 text-[16px]">
+                    water_drop
+                  </span>
+                  No se decolora
                 </span>
-                No se decolora
-              </span>
-              <span className="bg-surface-container-low border-primary/12 text-primary inline-flex items-center rounded-full border px-4 py-2 font-sans text-sm font-medium">
-                <span className="material-symbols-outlined text-secondary mr-2 text-[16px]">
-                  touch_app
+                <span className="bg-surface-container-low border-primary/12 text-primary inline-flex items-center rounded-full border px-4 py-2 font-sans text-sm font-medium">
+                  <span className="material-symbols-outlined text-secondary mr-2 text-[16px]">
+                    touch_app
+                  </span>
+                  Textura invisible
                 </span>
-                Textura invisible
-              </span>
-            </div>
-            <div>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-primary hover:bg-primary/95 inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-8 py-4 font-sans text-base font-semibold text-white shadow-md transition-all duration-300 hover:shadow-lg"
-              >
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  chat
-                </span>
-                Cotizar sublimación
-              </a>
+              </div>
+              <div>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-primary hover:bg-primary/95 inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-8 py-4 font-sans text-base font-semibold text-white shadow-md transition-all duration-300 hover:shadow-lg"
+                >
+                  <span
+                    className="material-symbols-outlined"
+                    aria-hidden="true"
+                  >
+                    chat
+                  </span>
+                  Cotizar sublimación
+                </a>
+              </div>
             </div>
           </div>
         </div>

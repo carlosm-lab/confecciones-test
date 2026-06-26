@@ -89,92 +89,77 @@ export function ServicioBordadosDetalle() {
       </div>
 
       {/* ── HERO ── */}
-      {/* Layout: flex-col en móvil → flex-row en lg+. Imagen duplicada: móvil (visible <lg) y desktop (visible lg+) */}
       <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
-        <div className="mx-auto flex w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
-          {/* Columna izquierda: contenido (55% en desktop) */}
-          <div className="flex w-full flex-col items-start gap-6 lg:flex-1">
-            {/* Label "SERVICIO" con barra roja */}
-            <div className="flex items-center gap-4">
-              <div className="h-6 w-1 bg-[#B43024]" />
-              <span className="text-primary font-sans text-xs font-semibold tracking-widest uppercase">
-                Servicio
-              </span>
-            </div>
-
-            <h1 className="text-primary font-serif text-[28px] leading-tight font-bold md:text-[48px]">
-              Servicio de Bordado Computarizado
-            </h1>
-
-            {/* Imagen – versión móvil/tablet (se oculta en lg+) */}
-            <div className="relative w-full lg:hidden">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[16px]">
-                <Image
-                  src={DATA.heroImage}
-                  alt="Máquina de bordado computarizado"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 0"
-                  priority
-                  className="border-primary/12 rounded-[16px] border object-cover shadow-sm"
-                />
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-8 lg:gap-16">
+            {/* Left: Content (55% / md:col-span-7) */}
+            <div className="flex flex-col items-start gap-6 md:col-span-7">
+              {/* Label "SERVICIO" con barra roja */}
+              <div className="flex items-center gap-4">
+                <div className="h-6 w-1 bg-[#B43024]" />
+                <span className="text-primary font-sans text-xs font-semibold tracking-widest uppercase">
+                  Servicio
+                </span>
               </div>
-            </div>
 
-            <p className="text-on-surface-variant max-w-2xl font-sans text-lg leading-relaxed">
-              Personalizamos sus prendas con precisión milimétrica. Nuestro
-              servicio de bordado computarizado garantiza durabilidad, colores
-              vibrantes y un acabado profesional que refleja la calidad de su
-              marca. Ideal para uniformes, gorras y textiles corporativos.
-            </p>
+              <h1 className="text-primary font-serif text-[28px] leading-tight font-bold md:text-[48px]">
+                Servicio de Bordado Computarizado
+              </h1>
 
-            {/* Chips de features — bg-primary (#143067) con texto blanco */}
-            <div className="mt-2 flex flex-wrap gap-3">
-              {[
-                { icon: "verified", text: "Alta precisión" },
-                { icon: "local_shipping", text: "Entregas rápidas" },
-                { icon: "design_services", text: "Digitalización gratis" },
-              ].map((f) => (
-                <div
-                  key={f.text}
-                  className="bg-primary text-on-primary flex items-center gap-2 rounded-full px-4 py-2 font-sans text-sm font-medium"
-                >
-                  <span
-                    className="material-symbols-outlined text-sm"
-                    aria-hidden="true"
+              <p className="text-on-surface-variant max-w-2xl font-sans text-lg leading-relaxed">
+                Personalizamos sus prendas con precisión milimétrica. Nuestro
+                servicio de bordado computarizado garantiza durabilidad, colores
+                vibrantes y un acabado profesional que refleja la calidad de su
+                marca. Ideal para uniformes, gorras y textiles corporativos.
+              </p>
+
+              {/* Chips de features — bg-primary (#143067) con texto blanco */}
+              <div className="mt-2 flex flex-wrap gap-3">
+                {[
+                  { icon: "verified", text: "Alta precisión" },
+                  { icon: "local_shipping", text: "Entregas rápidas" },
+                  { icon: "design_services", text: "Digitalización gratis" },
+                ].map((f) => (
+                  <div
+                    key={f.text}
+                    className="bg-primary text-on-primary flex items-center gap-2 rounded-full px-4 py-2 font-sans text-sm font-medium"
                   >
-                    {f.icon}
-                  </span>
-                  {f.text}
-                </div>
-              ))}
+                    <span
+                      className="material-symbols-outlined text-sm"
+                      aria-hidden="true"
+                    >
+                      {f.icon}
+                    </span>
+                    {f.text}
+                  </div>
+                ))}
+              </div>
+
+              {/* Botón CTA */}
+              <a
+                href={whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-primary text-on-primary hover:bg-primary/90 mt-6 inline-flex cursor-pointer items-center gap-2 rounded-[12px] px-8 py-4 font-sans text-base font-semibold shadow-sm transition-colors"
+              >
+                <span
+                  className="material-symbols-outlined"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                  aria-hidden="true"
+                >
+                  chat
+                </span>
+                Cotizar bordado
+              </a>
             </div>
 
-            {/* Botón CTA */}
-            <a
-              href={whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-primary text-on-primary hover:bg-primary/90 mt-6 inline-flex cursor-pointer items-center gap-2 rounded-[12px] px-8 py-4 font-sans text-base font-semibold shadow-sm transition-colors"
-            >
-              <span
-                className="material-symbols-outlined"
-                style={{ fontVariationSettings: "'FILL' 1" }}
-                aria-hidden="true"
-              >
-                chat
-              </span>
-              Cotizar bordado
-            </a>
-          </div>
-
-          {/* Imagen – versión desktop (se oculta en <lg) */}
-          <div className="hidden w-full lg:block lg:w-[42%] lg:shrink-0">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[16px]">
+            {/* Right: Image (45% / md:col-span-5) */}
+            <div className="relative mx-auto h-[300px] w-full max-w-[500px] sm:h-[400px] md:col-span-5 md:h-[500px] md:max-w-none">
               <Image
                 src={DATA.heroImage}
                 alt="Máquina de bordado computarizado"
                 fill
-                sizes="42vw"
+                sizes="(max-width: 768px) 100vw, 40vw"
                 priority
                 className="border-primary/12 rounded-[16px] border object-cover shadow-sm"
               />
