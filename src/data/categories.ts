@@ -35,12 +35,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Tipo de Prenda",
         icon: "checkroom",
         filterField: "tipo",
-        options: [
-          { value: "scrubs", label: "Scrubs" },
-          { value: "gorros", label: "Gorros Quirúrgicos" },
-          { value: "batas", label: "Batas" },
-          { value: "chaquetas", label: "Chaquetas Clínicas" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
       {
         label: "Tallas",
@@ -56,13 +52,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         ],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Scrubs", icon: "medical_services" },
-      { label: "Gorros", icon: "checkroom" },
-      { label: "Batas", icon: "dry_cleaning" },
-      { label: "Chaquetas", icon: "styler" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/scrubs.webp",
     hubTagline: "Scrubs, batas y gorros con tela antimicrobiana Sincatex",
   },
@@ -100,14 +91,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Universidad",
         icon: "school",
         filterField: "tipo",
-        options: [
-          { value: "UNIVO", label: "UNIVO" },
-          { value: "UNAB", label: "UNAB" },
-          { value: "UGB", label: "UGB" },
-          { value: "UMA", label: "UMA" },
-          { value: "IEPROES", label: "IEPROES" },
-          { value: "UES", label: "UES" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
       {
         label: "Tallas",
@@ -122,15 +107,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         ],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "UNIVO", icon: "school" },
-      { label: "UNAB", icon: "school" },
-      { label: "UGB", icon: "school" },
-      { label: "UMA", icon: "school" },
-      { label: "IEPROES", icon: "school" },
-      { label: "UES", icon: "school" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/universitarios.webp",
     hubTagline: "Scrubs clínicos con colores oficiales de tu universidad",
   },
@@ -167,13 +145,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Tipo de Prenda",
         icon: "checkroom",
         filterField: "tipo",
-        options: [
-          { value: "camisas", label: "Camisas" },
-          { value: "faldas", label: "Faldas" },
-          { value: "pantalones", label: "Pantalones" },
-          { value: "sueteres", label: "Suéteres" },
-          { value: "corbatas", label: "Corbatas" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
       {
         label: "Tallas",
@@ -190,13 +163,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         ],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Camisas", icon: "checkroom" },
-      { label: "Faldas", icon: "dry_cleaning" },
-      { label: "Pantalones", icon: "styler" },
-      { label: "Suéteres", icon: "warm" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/escolares.webp",
     hubTagline: "Camisas, faldas, pantalones y suéteres para tu colegio",
   },
@@ -233,12 +201,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Tipo de Prenda",
         icon: "checkroom",
         filterField: "tipo",
-        options: [
-          { value: "camisas", label: "Camisas" },
-          { value: "polos", label: "Polos" },
-          { value: "gabachas", label: "Gabachas" },
-          { value: "chalecos", label: "Chalecos" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
       {
         label: "Tallas",
@@ -253,13 +217,8 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         ],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Camisas", icon: "checkroom" },
-      { label: "Polos", icon: "dry_cleaning" },
-      { label: "Gabachas", icon: "styler" },
-      { label: "Chalecos", icon: "warm" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/corporativo.webp",
     hubTagline: "Camisas, polos y gabachas con bordado de logo empresarial",
   },
@@ -297,19 +256,12 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Tipo de Prenda",
         icon: "checkroom",
         filterField: "tipo",
-        options: [
-          { value: "camisetas", label: "Camisetas" },
-          { value: "shorts", label: "Shorts" },
-          { value: "conjuntos", label: "Conjuntos" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Camisetas", icon: "sports" },
-      { label: "Shorts", icon: "checkroom" },
-      { label: "Conjuntos", icon: "dry_cleaning" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/deportivo.webp",
     hubTagline: "Uniformes sublimados para equipos, academias y ligas",
   },
@@ -347,20 +299,12 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Tipo de Artículo",
         icon: "checkroom",
         filterField: "tipo",
-        options: [
-          { value: "gorros", label: "Gorros" },
-          { value: "llaveros", label: "Llaveros" },
-          { value: "pines", label: "Pines" },
-          { value: "detalles", label: "Detalles de Enfermería" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Gorros", icon: "checkroom" },
-      { label: "Llaveros", icon: "key" },
-      { label: "Pines", icon: "push_pin" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/accesorios.webp",
     hubTagline: "Gorros quirúrgicos, llaveros, pines y detalles de enfermería",
   },
@@ -398,17 +342,12 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Género",
         icon: "wc",
         filterField: "tipo",
-        options: [
-          { value: "mujer", label: "Damas" },
-          { value: "hombre", label: "Caballeros" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Damas", icon: "female" },
-      { label: "Caballeros", icon: "male" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/lenceria.png",
     hubTagline:
       "Lencería fina blanca en algodón y encaje para hombres y mujeres",
@@ -447,17 +386,12 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Tipo de Artículo",
         icon: "checkroom",
         filterField: "tipo",
-        options: [
-          { value: "prendas", label: "Prendas de Vestir" },
-          { value: "articulos", label: "Artículos y Regalos" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Prendas", icon: "checkroom" },
-      { label: "Artículos", icon: "coffee" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/sublimados.png",
     hubTagline:
       "Prendas y artículos personalizados con sublimación de alta definición",
@@ -496,17 +430,12 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Categoría",
         icon: "checkroom",
         filterField: "tipo",
-        options: [
-          { value: "ropa", label: "Ropa" },
-          { value: "zapatos", label: "Zapatos" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Ropa", icon: "checkroom" },
-      { label: "Zapatos", icon: "steps" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/ropa-calzado.png",
     hubTagline:
       "Vestuario casual y calzado de tendencia para damas y caballeros",
@@ -545,17 +474,12 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Estilo",
         icon: "checkroom",
         filterField: "tipo",
-        options: [
-          { value: "crop-tops", label: "Crop Tops" },
-          { value: "tops-casuales", label: "Tops Casuales" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Crop Tops", icon: "checkroom" },
-      { label: "Tops Casuales", icon: "dry_cleaning" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/tops.png",
     hubTagline:
       "Crop tops y blusas cortas con patrones modernos de excelente ajuste",
@@ -594,17 +518,12 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
         label: "Tipo de Arreglo",
         icon: "eco",
         filterField: "tipo",
-        options: [
-          { value: "flores", label: "Flores Individuales" },
-          { value: "ramos", label: "Ramos y Arreglos" },
-        ],
+        // Poblado dinámicamente desde Supabase en [sector]/page.tsx → getCategoriesForSector
+        options: [],
       },
     ],
-    categoryChips: [
-      { label: "Todo", icon: "grid_view" },
-      { label: "Flores", icon: "eco" },
-      { label: "Ramos", icon: "local_florist" },
-    ],
+    // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
+    categoryChips: [{ label: "Todo", icon: "grid_view" }],
     hubImage: "/images/categorias/limpiapipas.png",
     hubTagline:
       "Flores y ramos de limpiapipas hechos a mano que duran para siempre",
