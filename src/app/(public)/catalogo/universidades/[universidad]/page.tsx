@@ -20,7 +20,6 @@ const UNIVERSITY_CONFIG: Record<
   {
     sigla: string;
     nombre: string;
-    carreras: string[];
     seoTitle: string;
     seoDescription: string;
   }
@@ -28,7 +27,6 @@ const UNIVERSITY_CONFIG: Record<
   univo: {
     sigla: "UNIVO",
     nombre: "Universidad de Oriente",
-    carreras: ["Enfermería", "Medicina", "Odontología", "Fisioterapia"],
     seoTitle: "Uniformes UNIVO — Universidad de Oriente | Confecciones Liss",
     seoDescription:
       "Scrubs clínicos con los colores oficiales de UNIVO (Universidad de Oriente). Enfermería, Medicina y Odontología. Tela Sincatex, bordado de carrera incluido. San Miguel, El Salvador.",
@@ -36,7 +34,6 @@ const UNIVERSITY_CONFIG: Record<
   ieproes: {
     sigla: "IEPROES",
     nombre: "Instituto Especializado de Profesionales de la Salud",
-    carreras: ["Enfermería", "Fisioterapia", "Laboratorio Clínico"],
     seoTitle: "Uniformes IEPROES | Confecciones Liss",
     seoDescription:
       "Scrubs clínicos con colores oficiales para estudiantes de IEPROES. Enfermería, Fisioterapia y Laboratorio Clínico. Tela Sincatex. San Miguel, El Salvador.",
@@ -44,7 +41,6 @@ const UNIVERSITY_CONFIG: Record<
   ugb: {
     sigla: "UGB",
     nombre: "Universidad Gerardo Barrios",
-    carreras: ["Enfermería", "Laboratorio Clínico", "Fisioterapia"],
     seoTitle: "Uniformes UGB — Universidad Gerardo Barrios | Confecciones Liss",
     seoDescription:
       "Uniformes clínicos con colores oficiales para UGB. Enfermería y Laboratorio Clínico. Confeccionados en San Miguel, El Salvador. Bordado incluido.",
@@ -52,7 +48,6 @@ const UNIVERSITY_CONFIG: Record<
   unab: {
     sigla: "UNAB",
     nombre: "Universidad Andrés Bello",
-    carreras: ["Enfermería", "Ciencias de la Salud", "Medicina"],
     seoTitle: "Uniformes UNAB — Universidad Andrés Bello | Confecciones Liss",
     seoDescription:
       "Scrubs universitarios con colores oficiales para UNAB. Enfermería y Ciencias de la Salud. Tela Sincatex, entrega en San Miguel, El Salvador.",
@@ -60,7 +55,6 @@ const UNIVERSITY_CONFIG: Record<
   ues: {
     sigla: "UES",
     nombre: "Universidad de El Salvador",
-    carreras: ["Medicina", "Enfermería", "Farmacia", "Odontología"],
     seoTitle: "Uniformes UES — Universidad de El Salvador | Confecciones Liss",
     seoDescription:
       "Uniformes clínicos con colores oficiales para la Universidad de El Salvador (UES). Medicina, Enfermería y Farmacia. Bordado de carrera incluido. San Miguel.",
@@ -68,7 +62,6 @@ const UNIVERSITY_CONFIG: Record<
   uma: {
     sigla: "UMA",
     nombre: "Universidad Modular Abierta",
-    carreras: ["Enfermería", "Salud Pública", "Trabajo Social"],
     seoTitle: "Uniformes UMA — Universidad Modular Abierta | Confecciones Liss",
     seoDescription:
       "Uniformes clínicos con colores oficiales para la UMA (Universidad Modular Abierta). Confeccionados a la medida en San Miguel, El Salvador.",
@@ -139,33 +132,21 @@ export default async function UniversidadPage({
   // Construir CategoryConfig dinámico compatible con CatalogPageClient.
   // Las categorías de DB (carreras de esa universidad) reemplazan el hardcode.
   // Si DB no devuelve categorías, se usan las carreras hardcodeadas como fallback.
-  const carreraOptions =
-    dbCategories.length > 0
-      ? dbCategories.map((cat) => ({
-          value: cat.slug,
-          label: cat.name,
-        }))
-      : univConfig.carreras.map((c) => ({
-          value: c.toLowerCase().replace(/\s+/g, "-"),
-          label: c,
-        }));
+  // Carreras provienen exclusivamente de Supabase — sin fallback hardcodeado.
+  // Si la DB no tiene carreras para esta universidad, options queda [] y
+  // el FilterSidebar solo mostrará el botón "Todos".
+  const carreraOptions = dbCategories.map((cat) => ({
+    value: cat.slug,
+    label: cat.name,
+  }));
 
-  const carreraChips =
-    dbCategories.length > 0
-      ? [
-          { label: "Todo", icon: "grid_view" },
-          ...dbCategories.map((cat) => ({
-            label: cat.name,
-            icon: "medical_services",
-          })),
-        ]
-      : [
-          { label: "Todo", icon: "grid_view" },
-          ...univConfig.carreras.map((c) => ({
-            label: c,
-            icon: "medical_services",
-          })),
-        ];
+  const carreraChips = [
+    { label: "Todo", icon: "grid_view" },
+    ...dbCategories.map((cat) => ({
+      label: cat.name,
+      icon: "medical_services",
+    })),
+  ];
 
   const catalogConfig: CategoryConfig = {
     // sector = "universitario" se pasa al CatalogPageClient y al CatalogProductCard:
