@@ -128,11 +128,11 @@ export default function SobreNosotrosClient() {
       />
 
       {/* Escena 1: Origen (2005) */}
-      <section className="relative flex min-h-[90vh] items-center justify-center px-6 py-20 md:px-12 lg:px-24">
+      <section className="relative flex min-h-[90vh] items-center justify-center px-5 py-20 md:px-8">
         <div className="pointer-events-none absolute top-10 left-10 font-serif text-[10rem] leading-none font-bold text-[#143067]/5 select-none md:text-[18rem]">
           2005
         </div>
-        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
+        <div className="mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
           <motion.div
             className="z-10 space-y-6 lg:col-span-7"
             initial="hidden"
@@ -161,7 +161,7 @@ export default function SobreNosotrosClient() {
           </motion.div>
 
           <motion.div
-            className="relative flex justify-center lg:col-span-5"
+            className="relative flex justify-center lg:col-span-5 lg:justify-end"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -183,8 +183,8 @@ export default function SobreNosotrosClient() {
       </section>
 
       {/* Escena 2: Crecimiento Orgánico */}
-      <section className="relative flex min-h-[85vh] items-center justify-center border-y border-slate-100 bg-[#ffffff] px-6 py-20 md:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl space-y-12">
+      <section className="relative flex min-h-[85vh] items-center justify-center border-y border-slate-100 bg-[#ffffff] px-5 py-20 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl space-y-12">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <motion.div
               className="space-y-6 lg:col-span-5"
@@ -298,8 +298,8 @@ export default function SobreNosotrosClient() {
       </section>
 
       {/* Escena 3: Proyecto Institucional (CE Salomón Granados) */}
-      <section className="relative flex min-h-[90vh] items-center justify-center bg-[#f8f9fb] px-6 py-20 md:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl rounded-[2.5rem] border border-[#143067]/10 bg-[#d7dffc] p-8 shadow-[0_30px_70px_rgba(20,48,103,0.06)] md:p-16">
+      <section className="relative flex min-h-[90vh] items-center justify-center bg-[#f8f9fb] px-5 py-20 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl rounded-[2.5rem] border border-[#143067]/10 bg-[#d7dffc] p-8 shadow-[0_30px_70px_rgba(20,48,103,0.06)] md:p-16">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <motion.div
               className="space-y-6 lg:col-span-7"
@@ -386,8 +386,8 @@ export default function SobreNosotrosClient() {
       </section>
 
       {/* Escena 4: Experiencia Industrial */}
-      <section className="relative flex min-h-[85vh] items-center justify-center bg-[#ffffff] px-6 py-20 md:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl space-y-12">
+      <section className="relative flex min-h-[85vh] items-center justify-center bg-[#ffffff] px-5 py-20 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl space-y-12">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <motion.div
               className="relative lg:col-span-5"
@@ -451,7 +451,7 @@ export default function SobreNosotrosClient() {
       </section>
 
       {/* Escena 5: Crisis (2020) — Momento Oscuro */}
-      <section className="relative flex min-h-[90vh] items-center justify-center bg-[#001b4a] px-6 py-24 text-white md:px-12 lg:px-24">
+      <section className="relative flex min-h-[90vh] items-center justify-center bg-[#001b4a] px-5 py-24 text-white md:px-8">
         {/* Hilos abstractos oscuros al fondo */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-10" />
 
@@ -492,8 +492,8 @@ export default function SobreNosotrosClient() {
       </section>
 
       {/* Escena 6: Renacimiento (2021) */}
-      <section className="relative flex min-h-[90vh] items-center justify-center bg-[#ffffff] px-6 py-20 md:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl space-y-12">
+      <section className="relative flex min-h-[90vh] items-center justify-center bg-[#ffffff] px-5 py-20 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl space-y-12">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <motion.div
               className="space-y-6 lg:col-span-7"
@@ -578,7 +578,7 @@ export default function SobreNosotrosClient() {
       </section>
 
       {/* Escena 7: El Crecimiento del Equipo (No cards. Timeline vertical interactivo) */}
-      <section className="relative flex min-h-screen items-center justify-center border-t border-slate-100 bg-[#f8f9fb] px-6 py-24 md:px-12 lg:px-24">
+      <section className="relative flex min-h-screen items-center justify-center border-t border-slate-100 bg-[#f8f9fb] px-5 py-24 md:px-8">
         <div className="mx-auto w-full max-w-4xl space-y-16">
           <div className="mx-auto max-w-2xl space-y-4 text-center">
             <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
@@ -650,8 +650,8 @@ export default function SobreNosotrosClient() {
       </section>
 
       {/* Escena 8: Transformación Digital (2026) */}
-      <section className="relative flex min-h-[90vh] items-center justify-center bg-[#ffffff] px-6 py-20 md:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl space-y-12">
+      <section className="relative flex min-h-[90vh] items-center justify-center bg-[#ffffff] px-5 py-20 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl space-y-12">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <motion.div
               className="space-y-6 lg:col-span-7"
@@ -743,7 +743,7 @@ export default function SobreNosotrosClient() {
       </section>
 
       {/* Escena Final: Identidad Actual (Cierre de revista) */}
-      <section className="relative flex min-h-screen items-center justify-center border-t border-slate-100 bg-[#f8f9fb] px-6 py-24 md:px-12 lg:px-24">
+      <section className="relative flex min-h-screen items-center justify-center border-t border-slate-100 bg-[#f8f9fb] px-5 py-24 md:px-8">
         <div className="mx-auto w-full max-w-5xl space-y-12 text-center">
           <motion.div
             initial="hidden"

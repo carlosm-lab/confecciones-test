@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import FilosofiaClient from "@/components/empresa/FilosofiaClient";
+import { Footer } from "@/components/layout/Footer";
 
 /** Sandbox de desarrollo — nunca debe aparecer en buscadores. */
 export const metadata: Metadata = {
@@ -19,6 +20,9 @@ export default function SandboxPage() {
       </div>
       <div className="mt-8 border-t border-[#e1e2e4] pt-8">
         <FilosofiaClient />
+      </div>
+      <div className="mt-12">
+        <Footer />
       </div>
     </div>
   );

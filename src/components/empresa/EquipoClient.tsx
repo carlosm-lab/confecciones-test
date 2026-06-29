@@ -35,7 +35,7 @@ export default function EquipoClient() {
   return (
     <div className="relative overflow-hidden bg-[#f8f9fb] text-[#191c1e] antialiased selection:bg-[#d7dffc] selection:text-[#143067]">
       {/* 1. CABECERA EDITORIAL */}
-      <section className="relative px-6 py-20 md:px-12 lg:px-24">
+      <section className="relative px-5 py-20 md:px-8">
         <div className="mx-auto max-w-4xl space-y-6 text-center">
           <motion.div
             initial="hidden"
@@ -64,8 +64,8 @@ export default function EquipoClient() {
       </section>
 
       {/* 2. BLOQUE PROTAGONISTA (HERO DEL EQUIPO - FUNDADORA) */}
-      <section className="relative px-6 pb-24 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="relative px-5 pb-24 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl">
           <motion.div
             className="relative grid grid-cols-1 items-center gap-12 overflow-hidden rounded-[40px] border border-slate-100 bg-white p-8 shadow-[0_20px_50px_rgba(20,48,103,0.05)] md:p-16 lg:grid-cols-12"
             initial="hidden"
@@ -133,8 +133,8 @@ export default function EquipoClient() {
       </section>
 
       {/* 3. CAPA PRODUCCIÓN (Asymmetric 2-Column Offset) */}
-      <section className="relative border-y border-slate-100 bg-[#ffffff] px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl space-y-16">
+      <section className="relative border-y border-slate-100 bg-[#ffffff] px-5 py-24 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl space-y-16">
           <div className="max-w-2xl space-y-4">
             <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
               Capa Producción
@@ -210,8 +210,8 @@ export default function EquipoClient() {
       </section>
 
       {/* 4. CAPA CONTROL Y CALIDAD (Horizontal Technical Strip) */}
-      <section className="relative bg-[#f8f9fb] px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl">
+      <section className="relative bg-[#f8f9fb] px-5 py-24 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl">
           <motion.div
             className="grid grid-cols-1 items-center gap-12 rounded-[36px] border border-slate-100 bg-white p-8 shadow-sm md:p-12 lg:grid-cols-12"
             initial="hidden"
@@ -271,8 +271,8 @@ export default function EquipoClient() {
       </section>
 
       {/* 5. CAPA LOGÍSTICA Y OPERACIÓN (Timeline Card Layout) */}
-      <section className="relative border-t border-slate-100 bg-[#ffffff] px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl">
+      <section className="relative border-t border-slate-100 bg-[#ffffff] px-5 py-24 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl">
           <motion.div
             className="relative grid grid-cols-1 items-center gap-12 rounded-[36px] border border-slate-100 bg-[#f8f9fb] p-8 md:p-12 lg:grid-cols-12"
             initial="hidden"
@@ -332,11 +332,10 @@ export default function EquipoClient() {
       </section>
 
       {/* 6. CAPA ESTRATÉGICA Y DIGITAL (Brutalist Dark Tech Block) */}
-      <section className="relative flex min-h-[60vh] items-center justify-center bg-[#001b4a] px-6 py-24 text-white md:px-12 lg:px-24">
-        {/* Subtle mesh background */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-10" />
+      <section className="relative flex min-h-[60vh] items-center justify-center bg-[#001b4a] px-5 py-24 text-white md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-10" />
 
-        <div className="mx-auto w-full max-w-7xl">
           <motion.div
             className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12"
             initial="hidden"
@@ -408,8 +407,8 @@ export default function EquipoClient() {
       </section>
 
       {/* 7. CAPA IMAGEN INSTITUCIONAL (Staggered Magazine Spread) */}
-      <section className="relative bg-[#f8f9fb] px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl space-y-16">
+      <section className="relative bg-[#f8f9fb] px-5 py-24 md:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl space-y-16">
           <div className="max-w-2xl space-y-4">
             <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
               Capa Imagen
@@ -487,7 +486,7 @@ export default function EquipoClient() {
       </section>
 
       {/* CTA Final */}
-      <section className="relative border-t border-slate-100 bg-[#ffffff] px-6 py-24 md:px-12 lg:px-24">
+      <section className="relative border-t border-slate-100 bg-[#ffffff] px-5 py-24 md:px-8">
         <div className="mx-auto w-full max-w-4xl space-y-8 text-center">
           <motion.div
             initial="hidden"

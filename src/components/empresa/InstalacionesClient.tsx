@@ -580,7 +580,7 @@ function StationAlmacen({ station }: { station: Station }) {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#191c1e]/30 via-[#191c1e]/50 to-[#191c1e]" />
         <motion.div
-          className="absolute inset-0 flex items-center px-8 md:px-16 lg:px-24"
+          className="absolute inset-0 flex items-center px-5 md:px-8"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -609,7 +609,7 @@ function StationAlmacen({ station }: { station: Station }) {
         </motion.div>
       </div>
 
-      <div className="px-8 py-12 md:px-16 md:py-16 lg:px-24">
+      <div className="px-5 py-12 md:px-8 md:py-16">
         <motion.div
           className="flex flex-col gap-0 md:flex-row"
           initial={{ opacity: 0 }}
@@ -782,7 +782,7 @@ export default function InstalacionesClient() {
           TALLER
         </span>
 
-        <div className="relative z-10 mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-12 px-8 py-20 md:px-16 lg:grid-cols-2 lg:px-24">
+        <div className="relative z-10 mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-12 px-5 py-20 md:px-8 lg:grid-cols-2">
           <motion.div
             className="space-y-8"
             initial="hidden"
@@ -1104,7 +1104,7 @@ export default function InstalacionesClient() {
       </div>
 
       {/* CTA FINAL */}
-      <section className="relative overflow-hidden bg-white px-8 py-24 md:px-16 md:py-32 lg:px-24">
+      <section className="relative overflow-hidden bg-white px-5 py-24 md:px-8 md:py-32">
         <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-[#143067] via-[#b43024] to-[#143067]" />
         <motion.div
           className="mx-auto max-w-4xl space-y-8 text-center"

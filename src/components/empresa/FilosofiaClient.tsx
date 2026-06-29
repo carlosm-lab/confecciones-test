@@ -104,7 +104,7 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <header
         ref={headerRef}
-        className="relative flex min-h-[92vh] flex-col items-stretch justify-between border-b border-[#e1e2e4] bg-[#f8f9fb] px-6 py-12 md:px-16 md:py-20 lg:flex-row lg:py-0"
+        className="relative flex min-h-[92vh] flex-col items-stretch justify-between border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-12 md:px-8 md:py-20 lg:flex-row lg:py-0"
       >
         {/* Left Side: Word and Quotes */}
         <div className="z-10 flex flex-1 flex-col justify-between pt-12 pb-8 lg:py-24">
@@ -151,9 +151,9 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section
         ref={s1Ref}
-        className="relative w-full bg-[#f8f9fb] px-6 py-24 md:px-16 md:py-36"
+        className="relative w-full bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36"
       >
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-24">
+        <div className="mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-24">
           {/* Left: Narrow Text */}
           <div className="flex flex-col justify-center lg:col-span-7">
             <motion.h2
@@ -217,7 +217,7 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* 3. SECCIÓN 2 (Declaración de Principios - El Manifiesto del Tiempo) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="relative w-full overflow-hidden bg-[#143067] px-6 py-24 text-white md:px-16 md:py-32">
+      <section className="relative w-full overflow-hidden bg-[#143067] px-5 py-24 text-white md:px-8 md:py-32">
         {/* Background decorative textile curves */}
         <div className="pointer-events-none absolute inset-0 opacity-10">
           <svg
@@ -241,7 +241,7 @@ export default function FilosofiaClient() {
           </svg>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="relative z-10 mx-auto w-full max-w-screen-2xl">
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-24">
             {/* Left Column: The Philosophy / Context */}
             <div className="flex flex-col justify-between lg:col-span-5">
@@ -321,8 +321,8 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* 4. SECCIÓN 3 (Museum Horizontal Panels) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-6 py-24 md:px-16 md:py-36">
-        <div className="mx-auto mb-16 max-w-7xl">
+      <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36">
+        <div className="mx-auto mb-16 w-full max-w-screen-2xl">
           <span className="mb-3 block font-mono text-xs tracking-[0.2em] text-[#b43024] uppercase">
             03 // NUESTROS PILARES
           </span>
@@ -332,7 +332,7 @@ export default function FilosofiaClient() {
         </div>
 
         {/* Desktop Accordion / Mobile Scroll */}
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto w-full max-w-screen-2xl">
           {/* Desktop Version: Hover Accordion */}
           <div className="hidden h-[450px] w-full items-stretch gap-4 lg:flex">
             {MUSEUM_PANELS.map((panel, idx) => {
@@ -427,7 +427,7 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* 5. SECCIÓN 4 (Manifiesto) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="relative w-full border-b border-[#e1e2e4] bg-white px-6 py-24 md:px-16 md:py-36">
+      <section className="relative w-full border-b border-[#e1e2e4] bg-white px-5 py-24 md:px-8 md:py-36">
         <div className="mx-auto w-full max-w-4xl">
           <motion.div
             initial={{ opacity: 0 }}
@@ -471,8 +471,8 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* 6. SECCIÓN 5 (Bento Grid) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-6 py-24 md:px-16 md:py-36">
-        <div className="mx-auto w-full max-w-7xl">
+      <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36">
+        <div className="mx-auto w-full max-w-screen-2xl">
           <div className="mb-16">
             <span className="mb-3 block font-mono text-xs tracking-[0.2em] text-[#b43024] uppercase">
               05 // PERSPECTIVA DE NUESTRO PROPÓSITO
@@ -590,8 +590,8 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* 7. SECCIÓN 6 (Editorial Lookbook Gallery) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-6 py-24 md:px-16 md:py-36">
-        <div className="mx-auto w-full max-w-7xl">
+      <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36">
+        <div className="mx-auto w-full max-w-screen-2xl">
           <div className="mb-16">
             <span className="mb-3 block font-mono text-xs tracking-[0.2em] text-[#b43024] uppercase">
               06 // REGISTRO VISUAL
@@ -659,8 +659,8 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* 8. CIERRE (Split CTA Footer) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="relative w-full bg-white px-6 py-24 md:px-16 md:py-36">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-24">
+      <section className="relative w-full bg-white px-5 py-24 md:px-8 md:py-36">
+        <div className="mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-24">
           {/* Left Column */}
           <div>
             <h2 className="max-w-md font-serif text-3xl leading-[1.1] font-bold text-[#143067] sm:text-4xl md:text-5xl">

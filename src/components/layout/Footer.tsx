@@ -9,11 +9,470 @@ import {
   SiYoutube,
 } from "react-icons/si";
 
+const socialSvgPaths: Record<string, string> = {
+  instagram:
+    "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z",
+  facebook:
+    "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z",
+  facebookAdmin:
+    "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z",
+  tiktok:
+    "M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z",
+  youtube:
+    "M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z",
+  googleMaps:
+    "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z",
+  whatsapp:
+    "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z",
+  threads:
+    "M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z",
+  twitter:
+    "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.847L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117Z",
+  linkedin:
+    "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
+  pinterest:
+    "M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z",
+  marketplace:
+    "M11.985 0C5.365 0 0 5.4 0 12.064c0 6.028 4.388 11.022 10.133 11.902V15.58H7.09v-3.516h3.042v-2.68c0-3.027 1.79-4.698 4.537-4.698 1.312 0 2.684.236 2.684.236v2.971H15.83c-1.489 0-1.953.932-1.953 1.887v2.284h3.325l-.53 3.516h-2.795v8.386C19.607 23.081 24 18.088 24 12.064 24 5.4 18.602 0 11.985 0z",
+};
+
+interface SocialBubble {
+  href: string;
+  svgKey: string;
+  color: string;
+  label: string;
+}
+
+const socialBubbles: SocialBubble[] = [
+  {
+    href: siteConfig.links.instagram,
+    svgKey: "instagram",
+    color: "hover:text-[#E1306C]",
+    label: "Instagram",
+  },
+  {
+    href: siteConfig.links.facebook,
+    svgKey: "facebook",
+    color: "hover:text-[#1877F2]",
+    label: "Facebook",
+  },
+  {
+    href: siteConfig.links.facebookAdmin,
+    svgKey: "facebookAdmin",
+    color: "hover:text-[#1877F2]",
+    label: "Perfil de Facebook",
+  },
+  {
+    href: siteConfig.links.tiktok,
+    svgKey: "tiktok",
+    color: "hover:text-white",
+    label: "TikTok",
+  },
+  {
+    href: siteConfig.links.youtube,
+    svgKey: "youtube",
+    color: "hover:text-[#FF0000]",
+    label: "YouTube",
+  },
+  {
+    href: siteConfig.links.googleMaps,
+    svgKey: "googleMaps",
+    color: "hover:text-[#4285F4]",
+    label: "Google Maps",
+  },
+  {
+    href: siteConfig.links.whatsapp,
+    svgKey: "whatsapp",
+    color: "hover:text-[#25D366]",
+    label: "WhatsApp",
+  },
+  {
+    href: siteConfig.links.threads,
+    svgKey: "threads",
+    color: "hover:text-white",
+    label: "Threads",
+  },
+  {
+    href: siteConfig.links.twitter,
+    svgKey: "twitter",
+    color: "hover:text-white",
+    label: "X (Twitter)",
+  },
+  {
+    href: siteConfig.links.linkedin,
+    svgKey: "linkedin",
+    color: "hover:text-[#0077B5]",
+    label: "LinkedIn",
+  },
+  {
+    href: siteConfig.links.pinterest,
+    svgKey: "pinterest",
+    color: "hover:text-[#E60023]",
+    label: "Pinterest",
+  },
+  {
+    href: siteConfig.links.marketplace,
+    svgKey: "marketplace",
+    color: "hover:text-[#1877F2]",
+    label: "MarketPlace",
+  },
+];
+
+function SocialIcon({ id, className }: { id: string; className?: string }) {
+  const path = socialSvgPaths[id];
+  if (!path) return null;
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
+      <path d={path} />
+    </svg>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="mt-auto border-t border-[#1e2d4a] bg-[#0b1b3d] font-sans text-white">
       <div className="mx-auto max-w-screen-2xl px-6 py-16 md:px-12 lg:py-20">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+        {/* ================= MOBILE LAYOUT (max-width: 767px) ================= */}
+        <div className="block md:hidden">
+          <div className="flex flex-col items-center">
+            {/* 1. Centra el logo */}
+            <Link href="/" className="mb-6 inline-block">
+              <Image
+                src="/logo.png"
+                alt="Confecciones Liss"
+                width={180}
+                height={180}
+                className="h-[72px] w-auto brightness-0 invert"
+              />
+            </Link>
+
+            {/* 2. Burbujas de redes sociales y contacto en una fila */}
+            <div className="mb-6 flex flex-wrap items-center justify-center gap-3">
+              {socialBubbles.map((social, idx) => (
+                <a
+                  key={idx}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
+                >
+                  <SocialIcon
+                    id={social.svgKey}
+                    className="h-[1.125rem] w-[1.125rem]"
+                  />
+                </a>
+              ))}
+            </div>
+
+            {/* 3. Texto de descripción centrado */}
+            <p className="mb-8 max-w-sm text-center text-sm leading-relaxed text-[#a5b1c9]">
+              Confección profesional de scrubs médicos, uniformes empresariales
+              y escolares. Calidad artesanal y diseño contemporáneo desde San
+              Miguel, El Salvador.
+            </p>
+
+            {/* 5. Explorar y Legal en dos columnas iguales */}
+            <div className="mb-10 grid w-full grid-cols-2 gap-8">
+              {/* Explorar */}
+              <div>
+                <h4 className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                  Explorar
+                </h4>
+                <ul className="space-y-3 text-sm">
+                  {[
+                    { href: "/", label: "Inicio" },
+                    { href: "/catalogo", label: "Catálogo" },
+                    { href: "/servicios", label: "Servicios" },
+                    { href: "/empresa", label: "Empresa" },
+                    { href: "/contacto", label: "Contacto" },
+                  ].map((link, idx) => (
+                    <li key={idx}>
+                      <Link
+                        href={link.href}
+                        className="text-[#a5b1c9] transition-colors duration-200 hover:text-white hover:underline"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Legal */}
+              <div>
+                <h4 className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                  Legal
+                </h4>
+                <ul className="space-y-3 text-sm">
+                  {[
+                    {
+                      href: "/legal/privacidad",
+                      label: "Política de Privacidad",
+                    },
+                    {
+                      href: "/legal/terminos",
+                      label: "Términos y Condiciones",
+                    },
+                    { href: "/legal/envios", label: "Política de Envíos" },
+                    {
+                      href: "/legal/devoluciones",
+                      label: "Política de Devoluciones",
+                    },
+                    { href: "/legal/garantia", label: "Garantía de Producto" },
+                    { href: "/legal/mayoreo", label: "Ventas al Mayoreo" },
+                  ].map((link, idx) => (
+                    <li key={idx}>
+                      <Link
+                        href={link.href}
+                        className="text-[#a5b1c9] transition-colors duration-200 hover:text-white hover:underline"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                  <li className="mt-3 border-t border-[#1e2d4a] pt-2">
+                    <Link
+                      href="/legal"
+                      className="inline-flex items-center gap-1 font-semibold text-[#e8cbb5] transition-colors duration-200 hover:text-white hover:underline"
+                    >
+                      Más
+                      <span className="material-symbols-outlined text-[16px]">
+                        arrow_right_alt
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* 6. Contacto al final, encima del copyright */}
+            <div className="w-full border-t border-[#1e2d4a]/50 pt-8">
+              <h4 className="mb-4 text-left font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                Contacto
+              </h4>
+              <ul className="flex flex-col items-start space-y-4 text-sm text-[#a5b1c9]">
+                <li className="flex gap-3 text-left">
+                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[#e8cbb5]">
+                    location_on
+                  </span>
+                  <span className="leading-relaxed">
+                    {siteConfig.address.full}
+                  </span>
+                </li>
+                <li className="flex justify-start gap-3 text-left">
+                  <span className="material-symbols-outlined shrink-0 text-[20px] text-[#e8cbb5]">
+                    phone
+                  </span>
+                  <a
+                    href={siteConfig.links.whatsappDirect}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors duration-200 hover:text-white hover:underline"
+                  >
+                    {siteConfig.phone}
+                  </a>
+                </li>
+                <li className="flex justify-start gap-3 text-left">
+                  <span className="material-symbols-outlined shrink-0 text-[20px] text-[#e8cbb5]">
+                    mail
+                  </span>
+                  <a
+                    href={`mailto:${siteConfig.email}`}
+                    className="transition-colors duration-200 hover:text-white hover:underline"
+                  >
+                    {siteConfig.email}
+                  </a>
+                </li>
+                <li className="flex justify-start gap-3 text-left">
+                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[#e8cbb5]">
+                    schedule
+                  </span>
+                  <span className="leading-relaxed">{siteConfig.schedule}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* ================= TABLET LAYOUT (min-width: 768px and max-width: 1023px) ================= */}
+        <div className="hidden md:block lg:hidden">
+          {/* 1. Centra el logo en todo el ancho del footer en la parte superior */}
+          <div className="mb-6 flex justify-center">
+            <Link href="/">
+              <Image
+                src="/logo.png"
+                alt="Confecciones Liss"
+                width={180}
+                height={180}
+                className="h-[72px] w-auto brightness-0 invert"
+              />
+            </Link>
+          </div>
+
+          {/* 2. Fila centrada con todas las burbujas */}
+          <div className="mb-10 flex flex-wrap items-center justify-center gap-3">
+            {socialBubbles.map((social, idx) => (
+              <a
+                key={idx}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
+              >
+                <SocialIcon
+                  id={social.svgKey}
+                  className="h-[1.125rem] w-[1.125rem]"
+                />
+              </a>
+            ))}
+          </div>
+
+          {/* 3. Layout de tres columnas debajo */}
+          <div className="grid grid-cols-3 gap-8">
+            {/* Columna Izquierda: descripción + Contacto (Sin Cambios) */}
+            <div className="space-y-8">
+              <div>
+                <p className="text-sm leading-relaxed text-[#a5b1c9]">
+                  Confección profesional de scrubs médicos, uniformes
+                  empresariales y escolares. Calidad artesanal y diseño
+                  contemporáneo desde San Miguel, El Salvador.
+                </p>
+              </div>
+              <div>
+                <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                  Contacto
+                </h4>
+                <ul className="space-y-4 text-sm text-[#a5b1c9]">
+                  <li className="flex items-start gap-3">
+                    <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[#e8cbb5]">
+                      location_on
+                    </span>
+                    <span className="leading-relaxed">
+                      {siteConfig.address.full}
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <span className="material-symbols-outlined shrink-0 text-[20px] text-[#e8cbb5]">
+                      phone
+                    </span>
+                    <a
+                      href={siteConfig.links.whatsappDirect}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-colors duration-200 hover:text-white hover:underline"
+                    >
+                      {siteConfig.phone}
+                    </a>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <span className="material-symbols-outlined shrink-0 text-[20px] text-[#e8cbb5]">
+                      mail
+                    </span>
+                    <a
+                      href={`mailto:${siteConfig.email}`}
+                      className="transition-colors duration-200 hover:text-white hover:underline"
+                    >
+                      {siteConfig.email}
+                    </a>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[#e8cbb5]">
+                      schedule
+                    </span>
+                    <span className="leading-relaxed">
+                      {siteConfig.schedule}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Columna Central: Explorar (Centrada) */}
+            <div className="flex flex-col items-center">
+              <div className="w-fit">
+                <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                  Explorar
+                </h4>
+                <ul className="space-y-3 text-sm">
+                  {[
+                    { href: "/", label: "Inicio" },
+                    { href: "/catalogo", label: "Catálogo" },
+                    { href: "/servicios", label: "Servicios" },
+                    { href: "/empresa", label: "Empresa" },
+                    { href: "/contacto", label: "Contacto" },
+                  ].map((link, idx) => (
+                    <li key={idx}>
+                      <Link
+                        href={link.href}
+                        className="text-[#a5b1c9] transition-colors duration-200 hover:text-white hover:underline"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Columna Derecha: Legal */}
+            <div className="flex flex-col items-end">
+              <div className="w-fit">
+                <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                  Legal
+                </h4>
+                <ul className="space-y-3 text-sm">
+                  {[
+                    {
+                      href: "/legal/privacidad",
+                      label: "Política de Privacidad",
+                    },
+                    {
+                      href: "/legal/terminos",
+                      label: "Términos y Condiciones",
+                    },
+                    { href: "/legal/envios", label: "Política de Envíos" },
+                    {
+                      href: "/legal/devoluciones",
+                      label: "Política de Devoluciones",
+                    },
+                    { href: "/legal/garantia", label: "Garantía de Producto" },
+                    { href: "/legal/mayoreo", label: "Ventas al Mayoreo" },
+                  ].map((link, idx) => (
+                    <li key={idx}>
+                      <Link
+                        href={link.href}
+                        className="text-[#a5b1c9] transition-colors duration-200 hover:text-white hover:underline"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                  <li className="mt-3 border-t border-[#1e2d4a] pt-2">
+                    <Link
+                      href="/legal"
+                      className="inline-flex items-center gap-1 font-semibold text-[#e8cbb5] transition-colors duration-200 hover:text-white hover:underline"
+                    >
+                      Más
+                      <span className="material-symbols-outlined text-[16px]">
+                        arrow_right_alt
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ================= DESKTOP LAYOUT (min-width: 1024px) ================= */}
+        <div className="hidden lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Column 1: Branding & Socials */}
           <div className="flex flex-col justify-between space-y-6 lg:col-span-4">
             <div>

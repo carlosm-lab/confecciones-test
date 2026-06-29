@@ -221,7 +221,7 @@ export default function EmpresaPage() {
             <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
               <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
                 <span className="text-center lg:text-left">
-                  Nuestra Identidad{" "}
+                  La Identidad De{" "}
                 </span>
                 <span className="text-secondary font-serif md:mt-2 md:flex md:w-full md:items-center md:justify-center md:gap-4 lg:mt-0 lg:inline lg:gap-0">
                   {/* LÍNEA DECORATIVA IZQUIERDA (Solo Tablet) */}
@@ -230,7 +230,9 @@ export default function EmpresaPage() {
                     <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
                   </span>
 
-                  <span className="shrink-0">Confecciones Liss</span>
+                  <span className="shrink-0">
+                    &ldquo;Confecciones Liss&rdquo;
+                  </span>
 
                   {/* LÍNEA DECORATIVA DERECHA (Solo Tablet) */}
                   <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
@@ -268,17 +270,18 @@ export default function EmpresaPage() {
                     style={{ animationDelay: "150ms" }}
                   >
                     <p>
-                      Durante dos décadas, Confecciones Liss ha cultivado un
-                      legado de precisión y dedicación en el arte textil.
-                      Nuestra identidad se forja en la intersección entre la
-                      artesanía tradicional y la innovación industrial, creando
-                      piezas que hablan por sí mismas.
+                      Confecciones Liss nació en 2005 en un pequeño cantón de
+                      Chinameca, San Miguel, El Salvador, confeccionando prendas
+                      desde casa. Hoy somos un taller especializado en uniformes
+                      escolares, médicos y empresariales, con más de 20 años de
+                      experiencia respaldada por contratos con el Ministerio de
+                      Educación y talleres de la región.
                     </p>
                     <p>
-                      Más que una fábrica, somos un colectivo de creadores
-                      comprometidos con la excelencia. Descubra los pilares que
-                      sostienen nuestro proceso, nuestro equipo y nuestra visión
-                      hacia el futuro del diseño textil.
+                      Conozca el equipo, los procesos, la filosofía y la
+                      infraestructura que nos permiten entregar uniformes de
+                      calidad con toma de medidas, bordado personalizado y
+                      control de calidad en cada prenda.
                     </p>
                   </div>
                 </div>
@@ -311,12 +314,27 @@ export default function EmpresaPage() {
         {/* Navigation Mosaic */}
         <section className="py-section-gap relative w-full px-5 md:px-8">
           <div className="mx-auto w-full max-w-screen-2xl">
+            {/* Título de transición */}
+            <div className="mb-12 text-center md:text-left">
+              <span className="font-label-sm text-label-sm text-secondary mb-2 block font-sans tracking-widest uppercase">
+                Áreas de la Empresa
+              </span>
+              <h2 className="font-serif text-3xl font-bold tracking-tight text-[#001b4a] md:text-4xl">
+                Conozca Confecciones Liss por Dentro
+              </h2>
+              <p className="text-on-surface-variant mt-3 max-w-2xl font-sans text-sm md:text-base">
+                Explore nuestra historia, procesos, filosofía corporativa y la
+                infraestructura tecnológica que impulsa nuestra producción
+                textil.
+              </p>
+            </div>
+
             <div className="gap-gutter relative z-10 grid grid-cols-1 grid-rows-[auto] md:grid-cols-12">
               {/* Heritage Column (Span 7) */}
               <div className="gap-gutter flex flex-col md:col-span-7">
                 {/* Sobre Nosotros */}
                 <Link
-                  className="group border-outline-variant/50 hover-lift relative block h-[400px] overflow-hidden rounded border bg-white"
+                  className="group border-primary/35 hover:border-primary/55 relative block h-[400px] overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                   href="/empresa/sobre-nosotros"
                 >
                   <div className="absolute inset-0 z-10 bg-[#001b4a]/5 transition-colors duration-500 group-hover:bg-[#001b4a]/0"></div>
@@ -339,7 +357,7 @@ export default function EmpresaPage() {
                 <div className="gap-gutter grid h-auto grid-cols-1 sm:h-[250px] sm:grid-cols-2">
                   {/* Filosofía */}
                   <Link
-                    className="group border-outline-variant/50 hover-lift bg-surface-container-lowest relative block flex flex-col justify-between rounded border p-8"
+                    className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex flex-col justify-between rounded-2xl border p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                     href="/empresa/filosofia"
                   >
                     <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#001b4a]/10 text-[#001b4a]">
@@ -358,7 +376,7 @@ export default function EmpresaPage() {
                   </Link>
                   {/* Equipo */}
                   <Link
-                    className="group border-outline-variant/50 hover-lift relative block h-[200px] overflow-hidden rounded border bg-[#001b4a] sm:h-full"
+                    className="group border-primary/35 hover:border-primary/55 relative block h-[200px] overflow-hidden rounded-2xl border bg-[#001b4a] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] sm:h-full"
                     href="/empresa/equipo"
                   >
                     <div
@@ -384,7 +402,7 @@ export default function EmpresaPage() {
               <div className="gap-gutter flex flex-col md:col-span-5">
                 {/* Instalaciones */}
                 <Link
-                  className="group border-outline-variant/50 hover-lift bg-surface-container-lowest relative block flex h-[250px] flex-col justify-between overflow-hidden rounded border p-8"
+                  className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex h-[250px] flex-col justify-between overflow-hidden rounded-2xl border p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                   href="/empresa/instalaciones"
                 >
                   <div className="flex items-start justify-between">
@@ -400,7 +418,7 @@ export default function EmpresaPage() {
                   </p>
                 </Link>
                 {/* Icon Grid for Processes */}
-                <div className="bg-surface-container-lowest border-outline-variant/50 grid flex-grow grid-cols-1 gap-4 rounded border p-6">
+                <div className="bg-surface-container-lowest border-primary/35 hover:border-primary/55 grid flex-grow grid-cols-1 gap-4 rounded-2xl border p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]">
                   <Link
                     className="hover:bg-surface-container-low group flex items-center gap-4 rounded p-4 transition-colors"
                     href="/empresa/proceso-de-confeccion"
@@ -466,7 +484,7 @@ export default function EmpresaPage() {
               {/* Bottom Typography Cards (Span 12) */}
               <div className="gap-gutter grid grid-cols-1 md:col-span-12 md:grid-cols-3">
                 <Link
-                  className="group border-outline-variant/50 hover-lift bg-surface-container-lowest relative block flex h-[160px] flex-col justify-between rounded border p-6 md:p-8"
+                  className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex h-[160px] flex-col justify-between rounded-2xl border p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
                   href="/empresa/responsabilidad-social"
                 >
                   <div>
@@ -485,7 +503,7 @@ export default function EmpresaPage() {
                 </Link>
 
                 <Link
-                  className="group border-outline-variant/50 hover-lift bg-surface-container-lowest relative block flex h-[160px] flex-col justify-between rounded border p-6 md:p-8"
+                  className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex h-[160px] flex-col justify-between rounded-2xl border p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
                   href="/empresa/transparencia"
                 >
                   <div>
@@ -504,7 +522,7 @@ export default function EmpresaPage() {
                 </Link>
 
                 <Link
-                  className="group border-outline-variant/50 hover-lift bg-surface-container-lowest relative block flex h-[160px] flex-col justify-between rounded border p-6 md:p-8"
+                  className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex h-[160px] flex-col justify-between rounded-2xl border p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
                   href="/empresa/media-kit"
                 >
                   <div>

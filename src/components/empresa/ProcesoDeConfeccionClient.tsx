@@ -144,7 +144,7 @@ export default function ProcesoDeConfeccionClient() {
       {/* CABECERA (60/40 con ilustración abstracta) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="relative border-b border-[#e4e6ea] bg-[#f8f9fb] px-5 py-12 md:py-20 lg:px-8">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto w-full max-w-screen-2xl">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
             {/* Lado Izquierdo: Textos */}
             <div className="space-y-6 lg:col-span-7">
@@ -356,7 +356,7 @@ export default function ProcesoDeConfeccionClient() {
       {/* INDICADOR DE RECORRIDO (Barra horizontal sticky) */}
       {/* ──────────────────────────────────────────────────────── */}
       <div className="sticky top-[58px] z-40 w-full border-b border-[#e4e6ea] bg-white/90 shadow-[0_1px_3px_rgba(0,0,0,0.02)] backdrop-blur-md">
-        <div className="scrollbar-none mx-auto max-w-7xl overflow-x-auto px-4">
+        <div className="scrollbar-none mx-auto w-full max-w-screen-2xl overflow-x-auto px-4">
           <nav className="flex min-w-[900px] items-center justify-between gap-1.5 py-3 md:gap-3 md:py-4">
             {STAGES.map((stage) => {
               const isActive = activeStage === stage.id;
@@ -394,7 +394,7 @@ export default function ProcesoDeConfeccionClient() {
         {/* ETAPA 1: Primer contacto */}
         <section
           id="primer-contacto"
-          className="mx-auto max-w-7xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
+          className="mx-auto w-full max-w-screen-2xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
         >
           <motion.div
             variants={animationVariants}
@@ -449,7 +449,7 @@ export default function ProcesoDeConfeccionClient() {
         {/* ETAPA 2: Análisis del proyecto (Bento UI) */}
         <section
           id="analisis"
-          className="mx-auto max-w-7xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
+          className="mx-auto w-full max-w-screen-2xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
         >
           <motion.div
             variants={animationVariants}
@@ -556,7 +556,7 @@ export default function ProcesoDeConfeccionClient() {
         {/* ETAPA 3: Toma de medidas (Dos columnas) */}
         <section
           id="medidas"
-          className="mx-auto max-w-7xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
+          className="mx-auto w-full max-w-screen-2xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
         >
           <motion.div
             variants={animationVariants}
@@ -615,7 +615,7 @@ export default function ProcesoDeConfeccionClient() {
           id="materiales"
           className="scroll-mt-28 border-y border-[#e4e6ea] bg-white py-16"
         >
-          <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-6">
+          <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-5 lg:px-6">
             <motion.div
               variants={animationVariants}
               initial="initial"
@@ -679,7 +679,7 @@ export default function ProcesoDeConfeccionClient() {
         {/* ETAPA 5: Corte (Editorial de dos columnas) */}
         <section
           id="corte"
-          className="mx-auto max-w-7xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
+          className="mx-auto w-full max-w-screen-2xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
         >
           <motion.div
             variants={animationVariants}
@@ -733,7 +733,7 @@ export default function ProcesoDeConfeccionClient() {
         {/* ETAPA 6: Confección (Taller layout, foto grande central + paneles flotantes) */}
         <section
           id="confeccion"
-          className="mx-auto max-w-7xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
+          className="mx-auto w-full max-w-screen-2xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
         >
           <motion.div
             variants={animationVariants}
@@ -810,7 +810,7 @@ export default function ProcesoDeConfeccionClient() {
         {/* ETAPA 7: Personalización (Tarjetas suspendidas) */}
         <section
           id="personalizacion"
-          className="mx-auto max-w-7xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
+          className="mx-auto w-full max-w-screen-2xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
         >
           <motion.div
             variants={animationVariants}
@@ -883,7 +883,7 @@ export default function ProcesoDeConfeccionClient() {
           id="calidad"
           className="scroll-mt-28 bg-[#143067] py-16 text-white md:py-24"
         >
-          <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-6">
+          <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-5 lg:px-6">
             <motion.div
               variants={animationVariants}
               initial="initial"
@@ -955,7 +955,7 @@ export default function ProcesoDeConfeccionClient() {
         {/* ETAPA 9: Preparación para entrega */}
         <section
           id="empaque"
-          className="mx-auto max-w-7xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
+          className="mx-auto w-full max-w-screen-2xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
         >
           <motion.div
             variants={animationVariants}
@@ -1011,7 +1011,7 @@ export default function ProcesoDeConfeccionClient() {
         {/* ETAPA 10: Entrega (Cierre visual potente) */}
         <section
           id="entrega"
-          className="mx-auto max-w-7xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
+          className="mx-auto w-full max-w-screen-2xl scroll-mt-28 px-4 sm:px-5 lg:px-6"
         >
           <motion.div
             variants={animationVariants}
@@ -1066,7 +1066,7 @@ export default function ProcesoDeConfeccionClient() {
       {/* PARTICIPACIÓN DEL EQUIPO (Mesa de trabajo interactiva) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="border-y border-[#e4e6ea] bg-white py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-6">
+        <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-5 lg:px-6">
           <div className="text-center">
             <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#b43024] uppercase">
               Sinergia y Personas
@@ -1188,7 +1188,7 @@ export default function ProcesoDeConfeccionClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* DIFERENCIALES (Sección editorial en filas) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-5 md:py-24 lg:px-6">
+      <section className="mx-auto w-full max-w-screen-2xl px-4 py-16 sm:px-5 md:py-24 lg:px-6">
         <div className="max-w-3xl">
           <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#b43024] uppercase">
             Diferenciales
