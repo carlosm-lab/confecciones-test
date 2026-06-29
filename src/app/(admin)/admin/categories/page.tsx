@@ -1,11 +1,15 @@
-"use client";
+﻿"use client";
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
 import { generateSlug } from "@/lib/slug";
 import { useConfirm } from "@/context/ConfirmContext";
 import { invalidateCategoryCache } from "@/hooks/useCategories";
-import { CATALOGS } from "@/config/catalogs";
+import {
+  CATALOGS,
+  CATALOGS_GENERAL,
+  CATALOGS_UNIVERSITY,
+} from "@/config/catalogs";
 import { CustomSelect } from "@/components/ui/CustomSelect";
 
 interface Category {
@@ -28,6 +32,7 @@ export default function AdminCategoriesPage() {
   };
 
   const [isEditing, setIsEditing] = useState(false);
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [currentCat, setCurrentCat] = useState<Category>({
     id: "",
     name: "",
@@ -37,6 +42,12 @@ export default function AdminCategoriesPage() {
 
   const confirm = useConfirm();
 
+  // Determina si el catalogo seleccionado es una universidad
+  const isUniversityCatalog =
+    currentCat.catalog != null &&
+    CATALOGS_UNIVERSITY.some((u) => u.value === currentCat.catalog);
+
+  // ── Fetch ───────────────────────────────────────────────────────────────────
   const fetchCategories = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -50,7 +61,7 @@ export default function AdminCategoriesPage() {
       setCategories(data || []);
     } catch (error) {
       logger.error("Error:", error);
-      showToast("Error cargando categorías", false);
+      showToast("Error cargando categorias", false);
     } finally {
       setIsLoading(false);
     }
@@ -60,30 +71,52 @@ export default function AdminCategoriesPage() {
     fetchCategories();
   }, [fetchCategories]);
 
+  // ── Handlers ────────────────────────────────────────────────────────────────
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
-    setCurrentCat((prev) => ({
-      ...prev,
-      name,
-      slug: isEditing ? prev.slug : generateSlug(name),
-    }));
+    if (isEditing || slugManuallyEdited) {
+      setCurrentCat((prev) => ({ ...prev, name }));
+      return;
+    }
+    setCurrentCat((prev) => ({ ...prev, name, slug: generateSlug(name) }));
+  };
+
+  const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSlugManuallyEdited(true);
+    setCurrentCat((prev) => ({ ...prev, slug: e.target.value }));
+  };
+
+  const handleCatalogChange = (value: string) => {
+    setCurrentCat((prev) => ({ ...prev, catalog: value || null }));
+  };
+
+  const handleEdit = (cat: Category) => {
+    setCurrentCat(cat);
+    setIsEditing(true);
+    setSlugManuallyEdited(false);
+  };
+
+  const handleCancelEdit = () => {
+    setCurrentCat({ id: "", name: "", slug: "", catalog: null });
+    setSlugManuallyEdited(false);
+    setIsEditing(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentCat.name || !currentCat.slug) {
-      showToast("Por favor completa todos los campos", false);
+      showToast("Por favor completa nombre y slug", false);
+      return;
+    }
+    if (!currentCat.catalog) {
+      showToast("Por favor selecciona un catalogo", false);
       return;
     }
 
     setIsSaving(true);
     try {
       const supabase = getSupabaseClient();
-      if (!currentCat.catalog) {
-        showToast("Por favor selecciona un catálogo", false);
-        setIsSaving(false);
-        return;
-      }
       const payload = {
         name: currentCat.name,
         slug: currentCat.slug,
@@ -96,14 +129,15 @@ export default function AdminCategoriesPage() {
           .update(payload)
           .eq("id", currentCat.id);
         if (error) throw error;
-        showToast("Categoría actualizada");
+        showToast("Categoria actualizada");
       } else {
         const { error } = await supabase.from("categories").insert([payload]);
         if (error) throw error;
-        showToast("Categoría creada");
+        showToast("Categoria creada");
       }
 
       setCurrentCat({ id: "", name: "", slug: "", catalog: null });
+      setSlugManuallyEdited(false);
       setIsEditing(false);
       invalidateCategoryCache();
       fetchCategories();
@@ -121,22 +155,12 @@ export default function AdminCategoriesPage() {
     }
   };
 
-  const handleEdit = (cat: Category) => {
-    setCurrentCat(cat);
-    setIsEditing(true);
-  };
-
-  const handleCancelEdit = () => {
-    setCurrentCat({ id: "", name: "", slug: "", catalog: null });
-    setIsEditing(false);
-  };
-
   const handleDelete = async (id: string) => {
     const isConfirmed = await confirm({
-      title: "Eliminar categoría",
+      title: "Eliminar categoria",
       message:
-        "¿Estás seguro de eliminar esta categoría? Si hay productos asociados, no podrán ser mostrados correctamente en el catálogo.",
-      confirmText: "Sí, eliminar",
+        "Estas seguro de eliminar esta categoria? Si hay productos asociados no se mostraran correctamente.",
+      confirmText: "Si, eliminar",
       cancelText: "Cancelar",
       type: "danger",
     });
@@ -146,7 +170,7 @@ export default function AdminCategoriesPage() {
       const supabase = getSupabaseClient();
       const { error } = await supabase.from("categories").delete().eq("id", id);
       if (error) throw error;
-      showToast("Categoría eliminada");
+      showToast("Categoria eliminada");
       invalidateCategoryCache();
       fetchCategories();
     } catch (error) {
@@ -155,22 +179,28 @@ export default function AdminCategoriesPage() {
     }
   };
 
+  // ── Derived state ────────────────────────────────────────────────────────────
   const inputClass =
     "w-full px-4 py-2.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white outline-none transition-all";
 
-  // Agrupar categorías por catálogo para la vista
+  const presentCatalogs = Array.from(
+    new Set(categories.map((c) => c.catalog || "__none__"))
+  );
+
   const filteredCategories = filterCatalog
-    ? categories.filter((c) => c.catalog === filterCatalog)
+    ? filterCatalog === "__none__"
+      ? categories.filter((c) => !c.catalog)
+      : categories.filter((c) => c.catalog === filterCatalog)
     : categories;
 
-  // Catálogos presentes en la lista para los tabs
-  const presentCatalogs = Array.from(
-    new Set(categories.map((c) => c.catalog || "sin-catalogo"))
-  );
+  // Resolver la info del catalogo para mostrar en la lista
+  const getCatalogInfo = (catalogValue: string | null) => {
+    if (!catalogValue) return null;
+    return CATALOGS.find((c) => c.value === catalogValue) ?? null;
+  };
 
   return (
     <div className="flex h-full w-full max-w-[1400px] flex-col">
-      {/* Toast */}
       {toast && (
         <div
           className={`fixed top-4 right-4 z-[300] flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-lg ${toast.ok ? "bg-green-600 text-white" : "bg-red-600 text-white"}`}
@@ -182,79 +212,87 @@ export default function AdminCategoriesPage() {
         </div>
       )}
 
-      {/* Header — static */}
       <div className="mb-6 shrink-0">
         <h1 className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
-          Categorías
+          Categorias
         </h1>
         <p className="text-slate-500 dark:text-slate-400">
-          Administra las subcategorías dentro de cada catálogo de Confecciones
+          Administra las subcategorias dentro de cada catalogo de Confecciones
           Liss.
         </p>
       </div>
 
-      {/* Info Banner — static */}
       <div className="bg-primary/5 border-primary/20 mb-6 flex shrink-0 gap-3 rounded-2xl border p-4">
         <span className="material-symbols-outlined text-primary mt-0.5 shrink-0 text-[22px]">
           info
         </span>
         <div className="text-primary/90 dark:text-primary/70 text-sm">
-          <p className="mb-1 font-bold">
-            ¿Cómo funciona el sistema de catálogos?
-          </p>
+          <p className="mb-1 font-bold">Arquitectura de catalogos</p>
           <p>
-            Cada <strong>catálogo</strong> (Scrubs, Escolar, Corporativo…) es
-            una sección separada del sitio en{" "}
+            Los <strong>catalogos generales</strong> (Scrubs, Escolar…) usan la
+            ruta{" "}
             <code className="bg-primary/10 rounded px-1 text-xs">
-              /catalogo/[sector]
+              /catalogo/[sector]/[producto]
             </code>
-            . Las <strong>categorías</strong> son subcarpetas dentro de cada
-            catálogo (ej: UNIVO, UNAB dentro de Universitario). Asigna el
-            catálogo correcto a cada categoría para que los filtros funcionen
-            correctamente.
+            . Los <strong>catalogos universitarios</strong> (UNIVO, UGB…) usan{" "}
+            <code className="bg-primary/10 rounded px-1 text-xs">
+              /catalogo/universidades/[universidad]/[producto]
+            </code>
+            . Selecciona la universidad directamente como catalogo — cada una es
+            su propio catalogo en la base de datos.
           </p>
         </div>
       </div>
 
-      {/* Body: form + list — fills remaining height */}
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 md:grid-cols-3">
-        {/* Form Column — full height, no spacer */}
+        {/* Form */}
         <div className="flex min-h-0 flex-col md:col-span-1 md:h-full">
-          {/* Form Card — stretches to fill full column height */}
           <div className="border-primary/30 dark:border-primary/20 flex flex-1 flex-col rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
             <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">
-              {isEditing ? "Editar Categoría" : "Nueva Categoría"}
+              {isEditing ? "Editar Categoria" : "Nueva Categoria"}
             </h2>
             <form
               onSubmit={handleSubmit}
               className="flex flex-1 flex-col gap-4"
             >
-              {/* Catálogo */}
+              {/* Catalogo */}
               <div>
                 <label
                   htmlFor="cat-catalog"
                   className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
-                  Catálogo <span className="text-red-500">*</span>
+                  Catalogo <span className="text-red-500">*</span>
                 </label>
                 <CustomSelect
                   id="cat-catalog"
-                  options={CATALOGS.map((c) => ({
-                    value: c.value,
-                    label: c.label,
-                  }))}
+                  options={[
+                    {
+                      value: "__group_general__",
+                      label: "── Catalogos generales ──",
+                    },
+                    ...CATALOGS_GENERAL.map((c) => ({
+                      value: c.value,
+                      label: c.label,
+                    })),
+                    { value: "__group_univ__", label: "── Universidades ──" },
+                    ...CATALOGS_UNIVERSITY.map((c) => ({
+                      value: c.value,
+                      label: c.label,
+                    })),
+                  ].filter((o) => !o.value.startsWith("__group_"))}
                   value={currentCat.catalog || ""}
-                  onChange={(value) =>
-                    setCurrentCat((prev) => ({
-                      ...prev,
-                      catalog: value || null,
-                    }))
-                  }
-                  placeholder="Seleccionar catálogo…"
+                  onChange={handleCatalogChange}
+                  placeholder="Seleccionar catalogo..."
                 />
-                <p className="mt-1 text-xs text-slate-500">
-                  Define en cuál sección del sitio aparece esta categoría.
-                </p>
+                {isUniversityCatalog && (
+                  <p className="mt-1 text-xs text-violet-600 dark:text-violet-400">
+                    <span className="material-symbols-outlined align-middle text-[13px]">
+                      school
+                    </span>{" "}
+                    Catalogo universitario — las categorias creadas aqui
+                    apareceran como carreras en la pagina de esa universidad.
+                  </p>
+                )}
               </div>
 
               {/* Nombre */}
@@ -263,7 +301,7 @@ export default function AdminCategoriesPage() {
                   htmlFor="cat-name"
                   className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
-                  Nombre de la subcategoría
+                  {isUniversityCatalog ? "Carrera / Subcategoria" : "Nombre"}
                 </label>
                 <input
                   id="cat-name"
@@ -271,7 +309,9 @@ export default function AdminCategoriesPage() {
                   required
                   value={currentCat.name}
                   onChange={handleNameChange}
-                  placeholder="Ej. Scrubs UNIVO Azul"
+                  placeholder={
+                    isUniversityCatalog ? "Ej. Enfermeria" : "Ej. Scrubs Azules"
+                  }
                   className={inputClass}
                 />
               </div>
@@ -289,18 +329,32 @@ export default function AdminCategoriesPage() {
                   type="text"
                   required
                   value={currentCat.slug}
-                  onChange={(e) =>
-                    setCurrentCat({ ...currentCat, slug: e.target.value })
+                  onChange={handleSlugChange}
+                  placeholder={
+                    isUniversityCatalog ? "enfermeria" : "scrubs-azules"
                   }
-                  placeholder="scrubs-univo-azul"
                   className={inputClass}
                 />
                 <p className="mt-1 text-xs text-slate-500">
-                  Único. Minúsculas, números y guiones.
+                  Unico. Minusculas, numeros y guiones.
                 </p>
+                {slugManuallyEdited && !isEditing && (
+                  <button
+                    type="button"
+                    className="text-primary mt-1 text-xs underline"
+                    onClick={() => {
+                      setCurrentCat((prev) => ({
+                        ...prev,
+                        slug: generateSlug(prev.name),
+                      }));
+                      setSlugManuallyEdited(false);
+                    }}
+                  >
+                    Volver a auto-generar
+                  </button>
+                )}
               </div>
 
-              {/* Spacer pushes button to bottom of card */}
               <div className="flex-1" />
 
               <div className="flex flex-col gap-2">
@@ -317,7 +371,7 @@ export default function AdminCategoriesPage() {
                   ) : isEditing ? (
                     "Guardar Cambios"
                   ) : (
-                    "Crear Categoría"
+                    "Crear Categoria"
                   )}
                 </button>
                 {isEditing && (
@@ -334,9 +388,9 @@ export default function AdminCategoriesPage() {
           </div>
         </div>
 
-        {/* List Column — flex-col: tabs static on top, list scrolls below */}
+        {/* List */}
         <div className="flex min-h-0 flex-col gap-4 md:col-span-2 md:h-full">
-          {/* Catalog Filter Tabs — static */}
+          {/* Catalog filter tabs */}
           <div className="flex shrink-0 flex-wrap gap-2">
             <button
               type="button"
@@ -345,35 +399,57 @@ export default function AdminCategoriesPage() {
             >
               Todos ({categories.length})
             </button>
-            {CATALOGS.filter((c) => presentCatalogs.includes(c.value)).map(
-              (c) => {
-                const count = categories.filter(
-                  (cat) => cat.catalog === c.value
-                ).length;
-                return (
-                  <button
-                    key={c.value}
-                    type="button"
-                    onClick={() => setFilterCatalog(c.value)}
-                    className={`rounded-xl px-3 py-1.5 text-xs font-bold transition-colors ${filterCatalog === c.value ? "bg-primary text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10"}`}
-                  >
-                    {c.label} ({count})
-                  </button>
-                );
-              }
-            )}
-            {presentCatalogs.includes("sin-catalogo") && (
+
+            {/* Tabs de catalogos generales */}
+            {CATALOGS_GENERAL.filter((c) =>
+              presentCatalogs.includes(c.value)
+            ).map((c) => {
+              const count = categories.filter(
+                (cat) => cat.catalog === c.value
+              ).length;
+              return (
+                <button
+                  key={c.value}
+                  type="button"
+                  onClick={() => setFilterCatalog(c.value)}
+                  className={`rounded-xl px-3 py-1.5 text-xs font-bold transition-colors ${filterCatalog === c.value ? "bg-primary text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10"}`}
+                >
+                  {c.label} ({count})
+                </button>
+              );
+            })}
+
+            {/* Tabs de universidades */}
+            {CATALOGS_UNIVERSITY.filter((c) =>
+              presentCatalogs.includes(c.value)
+            ).map((c) => {
+              const count = categories.filter(
+                (cat) => cat.catalog === c.value
+              ).length;
+              return (
+                <button
+                  key={c.value}
+                  type="button"
+                  onClick={() => setFilterCatalog(c.value)}
+                  className={`rounded-xl px-3 py-1.5 text-xs font-bold uppercase transition-colors ${filterCatalog === c.value ? "bg-violet-600 text-white shadow-sm" : "border border-violet-200 bg-white text-violet-600 hover:bg-violet-50 dark:border-violet-700 dark:bg-white/5 dark:text-violet-300 dark:hover:bg-violet-900/20"}`}
+                >
+                  {c.value} ({count})
+                </button>
+              );
+            })}
+
+            {presentCatalogs.includes("__none__") && (
               <button
                 type="button"
                 onClick={() => setFilterCatalog("__none__")}
                 className={`rounded-xl px-3 py-1.5 text-xs font-bold transition-colors ${filterCatalog === "__none__" ? "bg-amber-500 text-white" : "bg-amber-50 text-amber-700 hover:bg-amber-100 dark:bg-amber-500/10 dark:text-amber-400 dark:hover:bg-amber-500/20"}`}
               >
-                ⚠ Sin catálogo ({categories.filter((c) => !c.catalog).length})
+                Sin catalogo ({categories.filter((c) => !c.catalog).length})
               </button>
             )}
           </div>
 
-          {/* Category List — only this section scrolls */}
+          {/* Category list */}
           <div className="custom-scrollbar border-primary/30 dark:border-primary/20 min-h-0 flex-1 overflow-y-auto rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
             {isLoading ? (
               <div className="flex justify-center p-8">
@@ -386,15 +462,16 @@ export default function AdminCategoriesPage() {
                 </span>
                 <p className="text-slate-500">
                   {filterCatalog
-                    ? "No hay categorías en este catálogo. Crea una nueva."
-                    : "No hay categorías. Crea una primera."}
+                    ? "No hay categorias en este catalogo."
+                    : "No hay categorias. Crea una primera."}
                 </p>
               </div>
             ) : (
               <ul className="divide-y divide-slate-100 dark:divide-white/5">
                 {filteredCategories.map((cat) => {
-                  const catalogInfo = CATALOGS.find(
-                    (c) => c.value === cat.catalog
+                  const catalogInfo = getCatalogInfo(cat.catalog);
+                  const isUniv = CATALOGS_UNIVERSITY.some(
+                    (u) => u.value === cat.catalog
                   );
                   return (
                     <li
@@ -404,15 +481,17 @@ export default function AdminCategoriesPage() {
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
                           {catalogInfo ? (
-                            <span className="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold">
+                            <span
+                              className={`inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold uppercase ${isUniv ? "bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300" : "bg-primary/10 text-primary"}`}
+                            >
                               <span className="material-symbols-outlined text-[12px]">
                                 {catalogInfo.icon}
                               </span>
-                              {catalogInfo.label.split(" ").slice(1).join(" ")}
+                              {cat.catalog}
                             </span>
                           ) : (
                             <span className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700">
-                              ⚠ Sin catálogo
+                              Sin catalogo
                             </span>
                           )}
                           <p className="truncate font-bold text-slate-900 dark:text-white">
@@ -426,7 +505,7 @@ export default function AdminCategoriesPage() {
                       <div className="flex shrink-0 gap-2">
                         <button
                           onClick={() => handleEdit(cat)}
-                          aria-label={`Editar categoría ${cat.name}`}
+                          aria-label={`Editar ${cat.name}`}
                           className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20"
                         >
                           <span className="material-symbols-outlined text-[20px]">
@@ -435,7 +514,7 @@ export default function AdminCategoriesPage() {
                         </button>
                         <button
                           onClick={() => handleDelete(cat.id)}
-                          aria-label={`Eliminar categoría ${cat.name}`}
+                          aria-label={`Eliminar ${cat.name}`}
                           className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20"
                         >
                           <span className="material-symbols-outlined text-[20px]">

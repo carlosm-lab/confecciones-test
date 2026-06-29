@@ -23,6 +23,7 @@ const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Inicio", mobileIcon: "home" },
   { href: "/catalogo", label: "Catálogo", mobileIcon: "storefront" },
   { href: "/servicios", label: "Servicios", mobileIcon: "design_services" },
+  { href: "/empresa", label: "Empresa", mobileIcon: "business" },
   { href: "/contacto", label: "Contacto", mobileIcon: "mail" },
 ];
 

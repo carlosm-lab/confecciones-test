@@ -1,0 +1,62 @@
+/empresa (hub)
+Propósito: Página de aterrizaje que agrupa toda la información corporativa de la marca. Su función es ser el nodo del que cuelgan las subpáginas de empresa, permitiendo que Google entienda que existe una sección institucional organizada.
+
+Contenido esperado: Introducción breve a Confecciones Liss como empresa. Tarjetas o bloques que enlacen visualmente a /empresa/sobre-nosotros, /empresa/filosofia, /empresa/equipo y /empresa/media-kit. Una línea de tiempo compacta de hitos de la empresa si hay datos disponibles.
+
+SEO: Título Empresa | Confecciones Liss. Canonical: https://www.confeccionesliss.com/empresa. Robots: index, follow.
+
+Schema JSON-LD: Organization con name, url, logo, foundingDate si se conoce, address y sameAs con redes sociales.
+
+
+/empresa/sobre-nosotros
+Propósito: Construir confianza y humanizar la marca. También captura búsquedas del tipo "quiénes son Confecciones Liss".
+
+Contenido esperado: Historia de la empresa: cuándo empezó, quién la fundó, en qué barrio nació. Descripción del taller físico en el Barrio La Merced, San Miguel. Qué la diferencia de otros talleres de la zona oriental. Fotografías del taller y de las costureras si están disponibles (o placeholders indicando dónde irán). Datos como años de experiencia, número aproximado de clientes atendidos o prendas confeccionadas si se tienen.
+
+SEO: Título Sobre Nosotros | Taller de Confección en San Miguel | Confecciones Liss. Canonical: https://www.confeccionesliss.com/empresa/sobre-nosotros. Robots: index, follow.
+
+Schema JSON-LD: AboutPage con referencia a la Organization.
+
+
+/empresa/filosofia
+Propósito: Comunicar los valores de la marca. Útil para clientes institucionales que evalúan proveedores y para candidatos a trabajar en la empresa.
+
+Contenido esperado: Misión de Confecciones Liss. Visión a largo plazo. Valores centrales (calidad, atención personalizada, puntualidad, inclusión de tallas, etc.). Puede estructurarse como bloques visuales con ícono, título y párrafo corto por cada valor. No debe ser un texto corporativo genérico; debe sonar como la voz real del taller.
+
+SEO: Título Filosofía y Valores | Confecciones Liss. Canonical: https://www.confeccionesliss.com/empresa/filosofia. Robots: index, follow.
+
+Schema JSON-LD: WebPage genérico con BreadcrumbList.
+
+
+/empresa/equipo
+Propósito: Mostrar a las personas detrás de la marca. Genera confianza y es útil para posicionamiento de E-E-A-T (Experience, Expertise, Authority, Trust) en Google.
+
+Contenido esperado: Perfiles del equipo con nombre, rol y fotografía. Si el equipo es pequeño, puede mostrar a la dueña o fundadora con una descripción más extensa y al resto con tarjetas compactas. Si no hay fotos disponibles, los placeholders deben dejarse claramente indicados en el código con un comentario. No debe ser una página de "recursos humanos"; debe sentirse como presentación de personas reales.
+
+SEO: Título Nuestro Equipo | Confecciones Liss. Canonical: https://www.confeccionesliss.com/empresa/equipo. Robots: index, follow.
+
+Schema JSON-LD: Lista de Person con name, jobTitle y worksFor apuntando a la Organization.
+
+
+/empresa/media-kit
+Propósito: Ser el recurso oficial para marcas, medios de comunicación, creadores de contenido e influencers que quieran colaborar o mencionar a Confecciones Liss. También es útil para licitaciones institucionales que piden información de la empresa.
+
+Contenido esperado:
+
+Imagen de marca: Logotipos en versiones positivo, negativo y monocromático. Indicación de colores de marca en HEX/HSL/RGB (los colores ya están definidos en globals.css: primary #143067, tertiary #b43024, etc.). Tipografías utilizadas (Noto Serif para titulares, Manrope para cuerpo). Guía de uso correcto e incorrecto del logo.
+
+Descripción de la marca: Qué hace Confecciones Liss, cuál es su misión, a quién atiende y cuál es su propuesta de valor diferencial.
+
+Estadísticas de audiencia: Datos demográficos de clientes (edad predominante, género, ubicación geográfica, sectores profesionales). Alcance en redes sociales por plataforma. Métricas de interacción si están disponibles. Esta sección debe construirse de forma que los datos sean fáciles de editar en el archivo de datos correspondiente, ya que se actualizarán periódicamente.
+
+Biografía profesional: Párrafo corto listo para ser copiado y pegado en un artículo de prensa o post de colaboración. Debe estar en primera persona del plural y en tono profesional pero cálido.
+
+Casos de éxito: Sección de colaboraciones previas, campañas destacadas o clientes notables. Puede arrancar vacía con un mensaje de "próximamente" o con un CTA a contacto para solicitar información.
+
+Tarifas y servicios para colaboraciones: Lista de formatos de colaboración disponibles (mención en redes, post patrocinado, uniformes para influencer, etc.). No incluye precios fijos; redirige a contacto.
+
+Activos descargables: Botones o enlaces de descarga para el pack de logos, las fotos oficiales y la guía de estilo en PDF. Estos archivos irán en /public/media-kit/ y el agente debe dejar los href apuntando a esas rutas aunque los archivos no existan aún.
+
+SEO: Título Media Kit | Confecciones Liss. Canonical: https://www.confeccionesliss.com/empresa/media-kit. Robots: index, follow. Es una página pública que debe ser indexada para que periodistas y colaboradores la encuentren orgánicamente.
+
+Schema JSON-LD: WebPage con about apuntando a la Organization.

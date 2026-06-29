@@ -519,3 +519,80 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
   - `title: string` — Título del banner.
   - `description: string` — Descripción secundaria.
   - `ctaText: string` — Texto del botón.
+
+## Empresa Components
+
+### SobreNosotrosClient
+
+- **Ruta:** `src/components/empresa/SobreNosotrosClient.tsx`
+- **Descripción:** Componente cliente que implementa el storytelling interactivo continuo (9 escenas/capítulos) con animaciones detalladas mediante Framer Motion, visualizaciones SVG de recomendación y barras de progreso.
+- **Props:** No recibe props.
+
+### FilosofiaClient
+
+- **Ruta:** `src/components/empresa/FilosofiaClient.tsx`
+- **Descripción:** Experiencia editorial inmersiva que explica la filosofía y el oficio artesanal de Confecciones Liss. Cuenta con un lienzo de cabecera con la palabra "FILOSOFÍA" a gran escala y un lienzo de patronaje técnico abstracto (`TextilePatternCanvas`) con capas animadas mediante parallax; una sección con desplazamiento vertical de imagen y texto de alta legibilidad; una secuencia de oraciones cinéticas reveladas al hacer scroll sobre fondo azul institucional; un acordeón horizontal tipo museo con 7 paneles animados en flex-grow interactivo (para desktop) y snap-scroll táctil (para mobile); un manifiesto con 8 afirmaciones tipográficas de ancho completo; un Bento grid asimétrico de 5 módulos combinando Misión, Visión, cita destacada, estadísticas e imágenes del taller; y una galería de lookbook con 3 fotografías gigantes de gran impacto visual.
+- **Props:** No recibe props.
+
+### TextilePatternCanvas
+
+- **Ruta:** `src/components/empresa/TextilePatternCanvas.tsx`
+- **Descripción:** Composición visual técnica abstracta en SVG que representa líneas de patronaje, curvas francesas, guías de corte y anotaciones de sastrería. Las capas individuales están conectadas a una `MotionValue` de scroll para moverse de forma independiente y asíncrona creando un efecto parallax de profundidad.
+- **Props:**
+  - `scrollYProgress: MotionValue<number>` — Valor de movimiento de scroll para el control del parallax de las capas.
+
+### EquipoClient
+
+- **Ruta:** `src/components/empresa/EquipoClient.tsx`
+- **Descripción:** Componente cliente que organiza el equipo de Confecciones Liss en capas asimétricas no uniformes por roles funcionales con enlaces interactivos.
+- **Props:** No recibe props.
+
+### PerfilDetalleClient
+
+- **Ruta:** `src/components/empresa/PerfilDetalleClient.tsx`
+- **Descripción:** Componente cliente que detalla el perfil profesional, biografía ampliada y áreas técnicas de cada especialista del taller.
+- **Props:**
+  - `member: TeamMember` — Los datos del miembro del equipo a visualizar.
+
+### InstalacionesClient
+
+- **Ruta:** `src/components/empresa/InstalacionesClient.tsx`
+- **Descripción:** Experiencia de visita guiada inmersiva por las 5 estaciones del taller de Confecciones Liss. Cada estación tiene un layout editorial único y distinto: (1) dark navy full-bleed con parallax, (2) film-strip 3-panel con acento lateral rojo, (3) imagen full-bleed centrada con barra de specs oscura, (4) split asimétrico panel azul/imagen, (5) hero oscuro + timeline horizontal de proceso. Incluye navegación flotante lateral con puntos de progreso y plano SVG esquemático del taller.
+- **Props:** No recibe props.
+- **Sub-componentes internos:** `StationCorte`, `StationConfeccion`, `StationBordado`, `StationCalidad`, `StationAlmacen`, `TourProgressNav`
+
+### CalidadClient
+
+- **Ruta:** `src/components/empresa/CalidadClient.tsx`
+- **Descripción:** Componente de cliente estilo manual de control de calidad técnico e industrial para Confecciones Liss. Cada sección cuenta con un diseño de maquetación y ritmo asimétrico propio, animaciones fluidas de Framer Motion, e interactivos como un diagrama de flujo de trabajo en equipo.
+- **Props:** No recibe props.
+
+### CertificacionesClient
+
+- **Ruta:** `src/components/empresa/CertificacionesClient.tsx`
+- **Descripción:** Componente de cliente diseñado como un Centro de Credenciales y expediente profesional técnico para Confecciones Liss. Incluye secciones asimétricas de trayectoria, organigrama técnico de equipo, biblioteca de capacitaciones continuas, línea de tiempo e hitos históricos de la empresa.
+- **Props:** No recibe props.
+
+### ResponsabilidadSocialClient
+
+- **Ruta:** `src/components/empresa/ResponsabilidadSocialClient.tsx`
+- **Descripción:** Componente de cliente diseñado como un Informe Público de Impacto y memoria anual editorial para Confecciones Liss. Presenta capítulos asimétricos alternando imágenes documentales, hitos históricos de empleo, interfaces de diagramas de planos digitales y manifiestos de compromiso social.
+- **Props:** No recibe props.
+
+### TransparenciaClient
+
+- **Ruta:** `src/components/empresa/TransparenciaClient.tsx`
+- **Descripción:** Componente de cliente diseñado como un Centro de Transparencia interactivo de paneles divididos para Confecciones Liss. Organiza cabeceras documentales, flujogramas de toma de decisiones, actas legales de compromiso, archivadores de carpetas activas, notas adhesivas asimétricas para preguntas frecuentes, y un panel de control lateral con consolas de logs en tiempo real.
+- **Props:** No recibe props.
+
+### MediaKitClient
+
+- **Ruta:** `src/components/empresa/MediaKitClient.tsx`
+- **Descripción:** Componente de cliente diseñado como un Media Kit oficial y guía de recursos de marca en una cuadrícula de 12 columnas para Confecciones Liss. Contiene cabeceras compactas de descarga de logotipos, tableros de especificaciones de identidad visual (8 módulos únicos), guías de uso correcto/incorrecto de logotipo, tablas de información institucional de auditoría, filas de integrantes del equipo para prensa, tablas de descargas disponibles y bandas finales de contacto.
+- **Props:** No recibe props.
+
+### ProcesoDeConfeccionClient
+
+- **Ruta:** `src/components/empresa/ProcesoDeConfeccionClient.tsx`
+- **Descripción:** Experiencia de usuario inmersiva para descubrir el flujo de trabajo del taller de Confecciones Liss a lo largo de 10 etapas asimétricas. Cuenta con una cabecera con ilustración abstracta vectorial SVG, barra superior flotante interactiva sincronizada con el scroll para marcar el progreso, cuadrículas Bento para el análisis del proyecto, bloques editoriales alternantes, y una Mesa de Trabajo técnica conectada interactivamente al equipo de costura.
+- **Props:** No recibe props.

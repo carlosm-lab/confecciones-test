@@ -19,7 +19,7 @@ import type { Category } from "@/hooks/useCategories";
 import type { Product } from "@/lib/productUtils";
 import { isValidOffer } from "@/lib/productUtils";
 
-import { CATALOGS } from "@/config/catalogs";
+import { CATALOGS, CATALOGS_UNIVERSITY } from "@/config/catalogs";
 import { CustomSelect } from "@/components/ui/CustomSelect";
 
 interface ProductModalProps {
@@ -178,7 +178,13 @@ export default function ProductModal({
       // Modo edición: derivar el catálogo desde la categoría actual del producto.
       // product.catalog es campo virtual (no existe en DB).
       // product.sector es la columna real que persiste el valor.
+      const isUniv =
+        product.sector === "universitario" ||
+        product.catalog === "universitario";
       const inferredCatalog =
+        (isUniv && product.category
+          ? (categories.find((c) => c.slug === product.category)?.catalog ?? "")
+          : "") ||
         product.catalog ||
         product.sector ||
         (product.category
@@ -524,7 +530,10 @@ export default function ProductModal({
       price: calculatedPrice,
       old_price: calculatedOldPrice,
       // 'catalog' NO es columna real en la tabla — se guarda como 'sector'
-      sector: formData.catalog || null,
+      // Si el catálogo seleccionado pertenece a una universidad, guardamos 'universitario' en 'sector'.
+      sector: CATALOGS_UNIVERSITY.some((u) => u.value === formData.catalog)
+        ? "universitario"
+        : formData.catalog || null,
       category: formData.category || null,
       tags: Array.isArray(formData.tags) ? formData.tags : [],
       image_path: formData.images[0] || formData.image_path || null,

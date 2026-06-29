@@ -438,17 +438,15 @@ export async function getProductsByUniversity(
 // ── Obtener categorías (carreras) de una universidad específica ───────────────
 /**
  * Devuelve las carreras de una universidad desde la tabla `categories`.
- * Las carreras usan slugs compuestos con guión: "univo-enfermeria", "univo-medicina".
  *
- * Para "univo" devuelve:
- *   { slug: "univo-enfermeria", name: "Enfermería" }
- *   { slug: "univo-medicina",   name: "Medicina" }
+ * ARQUITECTURA ACTUALIZADA:
+ * Cada universidad es su propio catálogo en la DB.
+ *   catalog = 'univo'    → carreras de UNIVO
+ *   catalog = 'ugb'      → carreras de UGB
+ *   ...etc.
  *
- * Excluye el slug raíz de la universidad (e.g. "univo") para que el sidebar
- * solo muestre carreras reales, no la universidad como opción de filtro.
- *
- * Si no hay carreras en DB, devuelve [] — el caller usará el fallback hardcoded
- * del UNIVERSITY_CONFIG.
+ * El hub /catalogo/universidades NO tiene catalog propio en la DB.
+ * Las categorías se crean con catalog = slug_universidad directamente.
  */
 export async function getCategoriesForUniversity(
   universidad: string
@@ -458,9 +456,7 @@ export async function getCategoriesForUniversity(
   const { data, error } = await supabase
     .from("categories")
     .select("id, name, slug, catalog")
-    .eq("catalog", "universitario")
-    // "univo-%" con guión → excluye el slug raíz "univo", incluye "univo-enfermeria"
-    .ilike("slug", `${universidad}-%`)
+    .eq("catalog", universidad)
     .order("name");
 
   if (error) {

@@ -1,0 +1,447 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Nosotros - Confecciones Liss</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Noto+Serif:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2e3133",
+                        "surface-tint": "#455d96",
+                        "tertiary": "#141d32",
+                        "on-tertiary-fixed-variant": "#3e465d",
+                        "on-tertiary-container": "#929ab5",
+                        "on-surface": "#191c1e",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-fixed-dim": "#bec6e2",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#dae2ff",
+                        "primary-fixed-dim": "#b1c5ff",
+                        "on-tertiary-fixed": "#121b30",
+                        "secondary-fixed": "#ffdad5",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#757781",
+                        "on-primary-fixed": "#001946",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e1e2e5",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-secondary": "#ffffff",
+                        "background": "#f8f9fc",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e7e8eb",
+                        "secondary-container": "#fc6452",
+                        "surface": "#f8f9fc",
+                        "on-surface-variant": "#444650",
+                        "inverse-primary": "#b1c5ff",
+                        "primary-container": "#143067",
+                        "on-primary-fixed-variant": "#2c457d",
+                        "surface-container": "#eceef0",
+                        "surface-dim": "#d8dadd",
+                        "secondary-fixed-dim": "#ffb4a9",
+                        "primary": "#001b4a",
+                        "on-secondary-fixed": "#410000",
+                        "secondary": "#b02d22",
+                        "tertiary-container": "#2a3248",
+                        "on-secondary-fixed-variant": "#8e130c",
+                        "on-secondary-container": "#650001",
+                        "outline-variant": "#c4c6d1",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f8f9fc",
+                        "primary-fixed": "#d9e2ff",
+                        "on-primary-container": "#8299d7",
+                        "surface-container-highest": "#e1e2e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "sm": "12px",
+                        "base": "8px",
+                        "xl": "80px",
+                        "margin-mobile": "16px",
+                        "lg": "48px",
+                        "md": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "headline-lg-mobile": ["Noto Serif"],
+                        "headline-md": ["Noto Serif"],
+                        "display-lg": ["Noto Serif"],
+                        "headline-lg": ["Noto Serif"],
+                        "body-lg": ["Manrope"],
+                        "label-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .texture-overlay {
+            background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L20 10 M10 0 L10 20" stroke="rgba(20,48,103,0.03)" stroke-width="1"/></svg>');
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar (Shared Component) -->
+<nav class="bg-surface/90 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant/20 shadow-sm transition-all duration-300 ease-in-out">
+<div class="flex justify-between items-center px-gutter max-w-7xl mx-auto h-20">
+<div class="font-headline-md text-headline-md font-bold text-primary">
+                Confecciones Liss
+            </div>
+<div class="hidden md:flex items-center space-x-gutter">
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md" href="#">Products</a>
+<a class="text-secondary font-bold border-b-2 border-secondary pb-1 font-label-md text-label-md" href="#">About Us</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md" href="#">Contact</a>
+</div>
+<div class="hidden md:block">
+<button class="bg-primary-container text-on-primary font-label-md text-label-md px-md py-sm rounded-lg hover:shadow-md transition-all">Get a Quote</button>
+</div>
+<!-- Mobile Menu Button -->
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-24 pb-xl">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-margin-desktop py-xl relative">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg items-center">
+<div class="relative z-10">
+<h1 class="font-display-lg text-display-lg text-primary mb-md">Quiénes somos</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-lg leading-relaxed">
+                        Confecciones Liss es una empresa textil de carácter familiar, arraigada en San Miguel, El Salvador. 
+                        Nos especializamos en la confección artesanal y profesional de uniformes médicos, escolares y corporativos, 
+                        cuidando cada detalle para ofrecer prendas que reflejen confianza y calidad en cada puntada.
+                    </p>
+</div>
+<div class="relative h-96 rounded-xl overflow-hidden shadow-lg border border-outline-variant/20">
+<div class="bg-cover bg-center w-full h-full" data-alt="A warm, brightly lit professional textile workshop setting. In the foreground, hands are carefully adjusting a measuring tape on a crisp white medical scrub. The focus is on the human touch and artisanal craftsmanship. The background shows sewing machines and bolts of navy blue and white fabric. High-key lighting, modern yet traditional mood, incorporating the #143067 navy color palette." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCsg4vTKRJJVZUNqZIJS36a2kyzkNVpV7t4kDvRbAMZq3kuNsFMumMsgNlRrH2VMIYEhmSH5X4bTGBe7nUOyg997lwfwsvEEqHxovVc6XIwGc6kUDbXLOQETOTy4Ue_IPjFpbmMOXrmfZUv4I9MKH2ySpqbPK2YMykNMDWz4xJGqVOr9UfIWNPuFU7fd5QFda2G1hKFqBUUzPkVnaUem-i-wismov0vaa2ucpluJ06Cye1j8med1cn3Ju-kAQRuoNeO1o6oot_gPw')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary-container/40 to-transparent"></div>
+</div>
+</div>
+</section>
+<!-- Historia Section -->
+<section class="bg-surface-container-low py-xl relative texture-overlay">
+<div class="max-w-7xl mx-auto px-margin-desktop">
+<div class="max-w-3xl mx-auto text-center mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-md">Nuestra Historia</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Fundada en 2005 por Iris Lisseth Villacorta de Molina, nuestra historia comienza en el hogar, 
+                        con una máquina de coser y un compromiso inquebrantable con la calidad.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg items-center">
+<div class="md:col-span-5 h-[400px] rounded-xl overflow-hidden shadow-lg">
+<div class="bg-cover bg-center w-full h-full" data-alt="A split image composition or a seamless transition showing a small vintage sewing setup transitioning into a modern, medium-scale garment manufacturing line. Focus on the evolution from home business to industrial capacity. Warm lighting, incorporating navy and soft whites. The overall feel is established, resilient, and professional." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_LNuwWzdDQf8n8FILS07EC4ZC23zGi8uxnWOCD2DANRNKT3Pw_B9zEzz-dw7Pv26BiPbX4TrStRI0mjKzWf3ihgPjLb-MC_Z929povudNJnX2S1upo8ZbbbGUy6ZH7kCsyV9m9yqoZr_sOSmbmD7OJD4mo39XAPQl6A5frEhtttdMgZwc5eWR9Cb2O7dBtjd6zdwrv5G6gcfyatKx2MsowvjepcKJmPn4GQO3baJkbDpdwNsqk_FcQSVY3Y-WYATz8mxqjrPrrQ')"></div>
+</div>
+<div class="md:col-span-7 bg-surface p-lg rounded-xl shadow-sm border border-outline-variant/10">
+<div class="space-y-md">
+<div class="flex gap-sm">
+<span class="material-symbols-outlined text-secondary">history_edu</span>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                    Lo que comenzó como un pequeño proyecto familiar pronto creció gracias a la confianza de nuestros clientes 
+                                    y la adjudicación de contratos institucionales clave.
+                                </p>
+</div>
+<div class="flex gap-sm">
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                    Nuestra evolución nos llevó a especializarnos, expandiendo nuestras líneas hacia los uniformes médicos 
+                                    (scrubs) de alto rendimiento y uniformes universitarios, marcando la transición de un negocio local a 
+                                    una operación industrial estructurada sin perder el calor humano.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Misión, Visión y Valores Section -->
+<section class="max-w-7xl mx-auto px-margin-desktop py-xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Misión -->
+<div class="bg-surface-container-low p-lg rounded-xl shadow-sm border border-outline-variant/10 text-center">
+<span class="material-symbols-outlined text-display-lg text-secondary mb-md">target</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-sm">Nuestra Misión</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Fabricar uniformes personalizados de alta calidad con precisión, durabilidad y entrega puntual.
+            </p>
+</div>
+<!-- Visión -->
+<div class="bg-surface-container-low p-lg rounded-xl shadow-sm border border-outline-variant/10 text-center">
+<span class="material-symbols-outlined text-display-lg text-secondary mb-md">visibility</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-sm">Nuestra Visión</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Convertirnos en el fabricante de uniformes líder en El Salvador, reconocidos por nuestra artesanía y compromiso con el cliente.
+            </p>
+</div>
+<!-- Valores -->
+<div class="bg-surface-container-low p-lg rounded-xl shadow-sm border border-outline-variant/10 text-center">
+<span class="material-symbols-outlined text-display-lg text-secondary mb-md">diamond</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-sm">Nuestros Valores</h3>
+<ul class="font-body-md text-body-md text-on-surface-variant space-y-xs text-left inline-block">
+<li class="">• Calidad sin negociación</li>
+<li class="">• Puntualidad</li>
+<li class="">• Trato honesto y cercano</li>
+<li class="">• Precisión artesanal</li>
+<li class="">• Innovación responsable</li>
+<li class="">• Orgullo salvadoreño</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Qué problema resolvemos & Por qué elegirnos Section -->
+<section class="bg-surface-container-low py-xl">
+<div class="max-w-7xl mx-auto px-margin-desktop">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-xl">
+<!-- Problema -->
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-md">El problema que resolvemos</h2>
+<div class="space-y-md">
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-error mt-1">cancel</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Uniformes genéricos que no ajustan</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Las tallas estándar no se adaptan a cuerpos reales, causando incomodidad.</p>
+</div>
+</div>
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-error mt-1">cancel</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Entregas tardías</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Retrasos que afectan la imagen corporativa de tu equipo.</p>
+</div>
+</div>
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-error mt-1">cancel</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Materiales de baja calidad</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Telas que se desgastan rápidamente o pierden color con las lavadas.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Solución / Por qué elegirnos -->
+<div class="bg-primary-container p-lg rounded-xl shadow-md text-on-primary-container flex flex-col justify-center">
+<h2 class="font-headline-lg text-headline-lg text-on-primary mb-md">Nuestra Solución</h2>
+<p class="font-body-md text-body-md text-on-primary-container mb-lg">
+                    Prendas a la medida, entrega confiable y telas duraderas y certificadas (Sincatex, Ripstop, gabardina).
+                </p>
+<h3 class="font-headline-md text-headline-md text-on-primary mb-sm">Por qué elegirnos</h3>
+<ul class="space-y-sm">
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span class="font-body-md text-body-md">Ajuste personalizado (12+ medidas)</span>
+</li>
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span class="font-body-md text-body-md">Materiales certificados</span>
+</li>
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span class="font-body-md text-body-md">Coordinación de entrega personal</span>
+</li>
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span class="font-body-md text-body-md">20 años de experiencia</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Nuestro Equipo Section -->
+<section class="max-w-7xl mx-auto px-margin-desktop py-xl">
+<div class="text-center mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-md">Nuestro Equipo</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Conoce a las personas detrás de cada puntada de excelencia.</p>
+</div>
+<!-- Prominent Member -->
+<div class="max-w-3xl mx-auto bg-surface-container-low rounded-xl shadow-sm border border-outline-variant/10 p-lg mb-lg flex flex-col md:flex-row items-center gap-lg text-center md:text-left">
+<div class="w-32 h-32 rounded-full bg-[#143067] flex items-center justify-center text-on-primary text-display-lg shrink-0">
+            IV
+        </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Iris Lisseth Villacorta de Molina</h3>
+<p class="font-label-md text-label-md text-secondary mb-sm">Directora General y Fundadora</p>
+<div class="flex flex-wrap gap-xs justify-center md:justify-start">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Corte y Confección</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Control de Calidad</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">20+ años</span>
+</div>
+</div>
+</div>
+<!-- Grid for the rest -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+<div class="bg-surface p-md rounded-xl border border-outline-variant/10 flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-[#143067] flex items-center justify-center text-on-primary font-headline-md mb-md">LR</div>
+<h4 class="font-label-md text-label-md text-primary font-bold">Lilian Romero</h4>
+<p class="font-label-sm text-label-sm text-secondary mb-sm">Especialista en Confección de Uniformes</p>
+<div class="flex flex-wrap gap-xs justify-center mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Uniformes</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Ensamblado</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Producción</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/10 flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-[#143067] flex items-center justify-center text-on-primary font-headline-md mb-md">NV</div>
+<h4 class="font-label-md text-label-md text-primary font-bold">Nubia Vázquez</h4>
+<p class="font-label-sm text-label-sm text-secondary mb-sm">Especialista en Confección de Prendas</p>
+<div class="flex flex-wrap gap-xs justify-center mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Patronaje</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Uniformes</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Acabados</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/10 flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-[#143067] flex items-center justify-center text-on-primary font-headline-md mb-md">BM</div>
+<h4 class="font-label-md text-label-md text-primary font-bold">Blanca Martínez</h4>
+<p class="font-label-sm text-label-sm text-secondary mb-sm">Operaria de Producción</p>
+<div class="flex flex-wrap gap-xs justify-center mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Producción Textil</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Ensamblado</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/10 flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-[#143067] flex items-center justify-center text-on-primary font-headline-md mb-md">RM</div>
+<h4 class="font-label-md text-label-md text-primary font-bold">René Alfonso Méndez</h4>
+<p class="font-label-sm text-label-sm text-secondary mb-sm">Control de Calidad y Toma de Medidas</p>
+<div class="flex flex-wrap gap-xs justify-center mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Calidad</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Inspección</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Medidas</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/10 flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-[#143067] flex items-center justify-center text-on-primary font-headline-md mb-md">CM</div>
+<h4 class="font-label-md text-label-md text-primary font-bold">Carlos Antonio Molina</h4>
+<p class="font-label-sm text-label-sm text-secondary mb-sm">Logística y Atención Comercial</p>
+<div class="flex flex-wrap gap-xs justify-center mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Logística</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Atención al Cliente</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/10 flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-[#143067] flex items-center justify-center text-on-primary font-headline-md mb-md">CJ</div>
+<h4 class="font-label-md text-label-md text-primary font-bold">Carlos José Molina Villacorta</h4>
+<p class="font-label-sm text-label-sm text-secondary mb-sm">Director de Estrategia Digital</p>
+<div class="flex flex-wrap gap-xs justify-center mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">SEO</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Desarrollo Web</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Inteligencia Digital</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/10 flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-[#143067] flex items-center justify-center text-on-primary font-headline-md mb-md">JM</div>
+<h4 class="font-label-md text-label-md text-primary font-bold">Jackeline Lisseth Molina Villacorta</h4>
+<p class="font-label-sm text-label-sm text-secondary mb-sm">Modelo Institucional</p>
+<div class="flex flex-wrap gap-xs justify-center mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Imagen de Marca</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Fotografía</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/10 flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-[#143067] flex items-center justify-center text-on-primary font-headline-md mb-md">LA</div>
+<h4 class="font-label-md text-label-md text-primary font-bold">Liam Alejandro</h4>
+<p class="font-label-sm text-label-sm text-secondary mb-sm">Modelo Institucional</p>
+<div class="flex flex-wrap gap-xs justify-center mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Imagen de Marca</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">Uniformes</span>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Final -->
+<section class="bg-surface-container-low py-xl">
+    <div class="max-w-7xl mx-auto px-margin-desktop">
+        <div class="text-center mb-xl">
+            <h2 class="font-headline-lg text-headline-lg text-primary mb-md">Por qué elegirnos</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mx-auto">Nuestra dedicación a la excelencia se refleja en cada aspecto de nuestro proceso de confección.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+            <div class="flex flex-col items-center text-center space-y-sm">
+                <span class="material-symbols-outlined text-display-lg text-secondary">straighten</span>
+                <h3 class="font-headline-md text-headline-md text-primary">Ajuste a la medida</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">12+ medidas por persona para un calce perfecto y profesional.</p>
+            </div>
+            <div class="flex flex-col items-center text-center space-y-sm">
+                <span class="material-symbols-outlined text-display-lg text-secondary">verified</span>
+                <h3 class="font-headline-md text-headline-md text-primary">Materiales certificados</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">Telas de alto rendimiento como Sincatex, Ripstop y gabardina.</p>
+            </div>
+            <div class="flex flex-col items-center text-center space-y-sm">
+                <span class="material-symbols-outlined text-display-lg text-secondary">local_shipping</span>
+                <h3 class="font-headline-md text-headline-md text-primary">Logística personalizada</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">Coordinación directa de entregas para su total tranquilidad.</p>
+            </div>
+            <div class="flex flex-col items-center text-center space-y-sm">
+                <span class="material-symbols-outlined text-display-lg text-secondary">workspace_premium</span>
+                <h3 class="font-headline-md text-headline-md text-primary">20 años de experiencia</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">Trayectoria probada con instituciones, hospitales y empresas líderes.</p>
+            </div>
+        </div>
+    </div>
+</section><section class="max-w-4xl mx-auto px-margin-desktop py-xl text-center">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-md">Hablemos de tu próximo uniforme</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">
+                Agenda una consulta para descubrir cómo podemos elevar la imagen de tu equipo.
+            </p>
+<div class="flex flex-col sm:flex-row justify-center gap-md">
+<button class="bg-primary-container text-on-primary font-label-md text-label-md px-lg py-sm rounded-lg hover:shadow-md transition-all flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+                    WhatsApp
+                </button>
+<button class="border-2 border-primary-container text-primary-container font-label-md text-label-md px-lg py-sm rounded-lg hover:bg-primary-container/5 transition-all flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+                    Product Catalog
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-tertiary-container text-on-tertiary-container w-full rounded-t-xl mt-xl bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')] bg-opacity-5">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg px-margin-desktop py-xl max-w-7xl mx-auto">
+<div class="space-y-sm">
+<div class="font-headline-md text-headline-md text-on-tertiary">Confecciones Liss</div>
+<p class="font-body-md text-body-md opacity-90">© 2024 Confecciones Liss. Family Trust in Every Stitch. San Miguel, El Salvador.</p>
+</div>
+<div class="flex flex-col space-y-sm font-body-md text-body-md">
+<a class="text-on-tertiary-container/80 hover:text-on-tertiary hover:underline decoration-secondary-fixed underline-offset-4 opacity-90 hover:opacity-100 transition-opacity" href="#">WhatsApp Support</a>
+<a class="text-on-tertiary-container/80 hover:text-on-tertiary hover:underline decoration-secondary-fixed underline-offset-4 opacity-90 hover:opacity-100 transition-opacity" href="#">Product Catalog</a>
+</div>
+<div class="flex flex-col space-y-sm font-body-md text-body-md">
+<a class="text-on-tertiary-container/80 hover:text-on-tertiary hover:underline decoration-secondary-fixed underline-offset-4 opacity-90 hover:opacity-100 transition-opacity" href="#">Sustainability</a>
+<a class="text-on-tertiary-container/80 hover:text-on-tertiary hover:underline decoration-secondary-fixed underline-offset-4 opacity-90 hover:opacity-100 transition-opacity" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+
+
+</body></html>

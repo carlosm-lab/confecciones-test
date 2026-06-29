@@ -11,330 +11,220 @@ import {
 
 export function Footer() {
   return (
-    <footer className="bg-primary mt-auto font-sans text-white">
-      <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-8 px-5 py-10 md:grid-cols-3 md:gap-12 md:px-8 md:py-14">
-        {/* Branding */}
-        <div>
-          <div className="mb-6 flex items-center gap-2">
-            <Image
-              src="/logo.png"
-              alt="Confecciones Liss"
-              width={200}
-              height={200}
-              className="h-16 w-auto brightness-0 invert"
-            />
-          </div>
-          <p className="text-primary-container mb-6 max-w-xs text-sm">
-            Confección profesional a la medida de scrubs médicos y uniformes en
-            San Miguel, El Salvador. Envíos a todo el país con pago al recibir.
-          </p>
-          <div className="flex gap-4">
-            <a
-              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
-              href={siteConfig.links.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Seguir en Instagram"
-              style={{ color: "#E1306C" }}
-            >
-              <SiInstagram className="text-2xl" aria-hidden="true" />
-            </a>
-            <a
-              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
-              href={siteConfig.links.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Seguir en Facebook"
-              style={{ color: "#1877F2" }}
-            >
-              <SiFacebook className="text-2xl" aria-hidden="true" />
-            </a>
-            <a
-              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
-              href={siteConfig.links.tiktok}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Seguir en TikTok"
-              style={{ color: "#FFFFFF" }}
-            >
-              <SiTiktok className="text-2xl" aria-hidden="true" />
-            </a>
-            <a
-              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
-              href={siteConfig.links.youtube}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Seguir en YouTube"
-              style={{ color: "#FF0000" }}
-            >
-              <SiYoutube className="text-2xl" aria-hidden="true" />
-            </a>
-            <a
-              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
-              href={siteConfig.links.googleMaps}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Ver en Google Maps"
-              style={{ color: "#4285F4" }}
-            >
-              <SiGooglemaps className="text-2xl" aria-hidden="true" />
-            </a>
-          </div>
-        </div>
+    <footer className="mt-auto border-t border-[#1e2d4a] bg-[#0b1b3d] font-sans text-white">
+      <div className="mx-auto max-w-screen-2xl px-6 py-16 md:px-12 lg:py-20">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+          {/* Column 1: Branding & Socials */}
+          <div className="flex flex-col justify-between space-y-6 lg:col-span-4">
+            <div>
+              <Link href="/" className="mb-6 inline-block">
+                <Image
+                  src="/logo.png"
+                  alt="Confecciones Liss"
+                  width={180}
+                  height={180}
+                  className="h-12 w-auto brightness-0 invert"
+                />
+              </Link>
+              <p className="max-w-sm text-sm leading-relaxed text-[#a5b1c9]">
+                Confección profesional de scrubs médicos, uniformes
+                empresariales y escolares. Calidad artesanal y diseño
+                contemporáneo desde San Miguel, El Salvador.
+              </p>
+            </div>
 
-        {/* Contacto */}
-        <div>
-          <h4 className="mb-6 font-serif text-lg">Contacto</h4>
-          <ul className="text-primary-container space-y-3 text-sm">
-            <li className="flex items-center gap-2">
-              <span
-                className="material-symbols-outlined text-[18px]"
-                aria-hidden="true"
-              >
-                location_on
-              </span>{" "}
-              {siteConfig.address.full}
-            </li>
-            <li className="flex items-center gap-2">
-              <span
-                className="material-symbols-outlined text-[18px]"
-                aria-hidden="true"
-              >
-                phone
-              </span>{" "}
-              <a
-                href={siteConfig.links.whatsappDirect}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline"
-              >
-                {siteConfig.phone}
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <span
-                className="material-symbols-outlined text-[18px]"
-                aria-hidden="true"
-              >
-                mail
-              </span>{" "}
-              {siteConfig.email}
-            </li>
-            <li className="flex items-center gap-2">
-              <span
-                className="material-symbols-outlined text-[18px]"
-                aria-hidden="true"
-              >
-                schedule
-              </span>{" "}
-              {siteConfig.schedule}
-            </li>
-          </ul>
-        </div>
+            <div className="flex items-center gap-3">
+              {[
+                {
+                  href: siteConfig.links.instagram,
+                  icon: SiInstagram,
+                  color: "hover:text-[#E1306C]",
+                  label: "Instagram",
+                },
+                {
+                  href: siteConfig.links.facebook,
+                  icon: SiFacebook,
+                  color: "hover:text-[#1877F2]",
+                  label: "Facebook",
+                },
+                {
+                  href: siteConfig.links.tiktok,
+                  icon: SiTiktok,
+                  color: "hover:text-white",
+                  label: "TikTok",
+                },
+                {
+                  href: siteConfig.links.youtube,
+                  icon: SiYoutube,
+                  color: "hover:text-[#FF0000]",
+                  label: "YouTube",
+                },
+                {
+                  href: siteConfig.links.googleMaps,
+                  icon: SiGooglemaps,
+                  color: "hover:text-[#4285F4]",
+                  label: "Google Maps",
+                },
+              ].map((social, idx) => (
+                <a
+                  key={idx}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
+                >
+                  <social.icon className="text-lg" />
+                </a>
+              ))}
+            </div>
+          </div>
 
-        {/* Legal */}
-        <div>
-          <h4 className="mb-6 font-serif text-lg">Legal</h4>
-          <ul className="text-primary-container space-y-3 text-sm">
-            <li>
-              <Link
-                href="/legal"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Documentos Legales
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/privacidad"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Privacidad
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/terminos"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Términos y Condiciones
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/cotizaciones"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Cotizaciones
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/envios"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Envíos
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/devoluciones"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Devoluciones
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/confeccion"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Confección
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/promociones"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Promociones
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/referidos"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Programa de Referidos
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/ia"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de IA
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/deberes"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Deberes
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/derechos"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Derechos
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/terceros"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Logos Institucionales
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/cookies"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Cookies
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/ugc"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de UGC
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/comunicaciones"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Comunicaciones
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/accesibilidad"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Accesibilidad
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/mayoreo"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Política de Mayoreo
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/disputas"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Resolución de Disputas
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/garantia"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Garantía de Producto
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/legal/contratacion"
-                className="transition-colors hover:text-white hover:underline"
-              >
-                Contratación de Talento
-              </Link>
-            </li>
-          </ul>
+          {/* Column 2: Explorar */}
+          <div className="lg:col-span-2">
+            <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+              Explorar
+            </h4>
+            <ul className="space-y-3 text-sm">
+              {[
+                { href: "/", label: "Inicio" },
+                { href: "/catalogo", label: "Catálogo" },
+                { href: "/servicios", label: "Servicios" },
+                { href: "/empresa", label: "Empresa" },
+                { href: "/contacto", label: "Contacto" },
+              ].map((link, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={link.href}
+                    className="text-[#a5b1c9] transition-colors duration-200 hover:text-white hover:underline"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Contacto */}
+          <div className="lg:col-span-3">
+            <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+              Contacto
+            </h4>
+            <ul className="space-y-4 text-sm text-[#a5b1c9]">
+              <li className="flex items-start gap-3">
+                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[#e8cbb5]">
+                  location_on
+                </span>
+                <span className="leading-relaxed">
+                  {siteConfig.address.full}
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="material-symbols-outlined shrink-0 text-[20px] text-[#e8cbb5]">
+                  phone
+                </span>
+                <a
+                  href={siteConfig.links.whatsappDirect}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-200 hover:text-white hover:underline"
+                >
+                  {siteConfig.phone}
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="material-symbols-outlined shrink-0 text-[20px] text-[#e8cbb5]">
+                  mail
+                </span>
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="transition-colors duration-200 hover:text-white hover:underline"
+                >
+                  {siteConfig.email}
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[#e8cbb5]">
+                  schedule
+                </span>
+                <span className="leading-relaxed">{siteConfig.schedule}</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Legal */}
+          <div className="lg:col-span-3">
+            <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+              Legal
+            </h4>
+            <ul className="space-y-3 text-sm">
+              {[
+                { href: "/legal/privacidad", label: "Política de Privacidad" },
+                { href: "/legal/terminos", label: "Términos y Condiciones" },
+                { href: "/legal/envios", label: "Política de Envíos" },
+                {
+                  href: "/legal/devoluciones",
+                  label: "Política de Devoluciones",
+                },
+                { href: "/legal/garantia", label: "Garantía de Producto" },
+                { href: "/legal/mayoreo", label: "Ventas al Mayoreo" },
+              ].map((link, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={link.href}
+                    className="text-[#a5b1c9] transition-colors duration-200 hover:text-white hover:underline"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li className="mt-3 border-t border-[#1e2d4a] pt-2">
+                <Link
+                  href="/legal"
+                  className="inline-flex items-center gap-1 font-semibold text-[#e8cbb5] transition-colors duration-200 hover:text-white hover:underline"
+                >
+                  Ver todos los documentos
+                  <span className="material-symbols-outlined text-[16px]">
+                    arrow_right_alt
+                  </span>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
       {/* Copyright bar */}
-      <div className="border-t border-white/10">
-        <div className="text-primary-container mx-auto flex w-full max-w-screen-2xl flex-col items-center justify-between gap-3 px-8 py-5 text-xs sm:flex-row">
-          <p>
-            © {new Date().getFullYear()} Confecciones Liss. Todos los derechos
-            reservados.
+      <div className="border-t border-[#1e2d4a] bg-[#08132e] py-6">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-4 px-6 text-xs text-[#7c8ba6] md:flex-row md:px-12">
+          <p className="text-center md:text-left">
+            © {new Date().getFullYear()}{" "}
+            <Link
+              href="/"
+              className="transition-colors duration-200 hover:text-white"
+            >
+              Confecciones Liss
+            </Link>
+            . Todos los derechos reservados.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <Link
               href="/legal/privacidad"
-              className="transition-colors hover:text-white hover:underline"
+              className="transition-colors duration-200 hover:text-white"
             >
               Privacidad
             </Link>
-            <span className="opacity-30">·</span>
             <Link
               href="/legal/terminos"
-              className="transition-colors hover:text-white hover:underline"
+              className="transition-colors duration-200 hover:text-white"
             >
               Términos
             </Link>
-            <span className="opacity-30">·</span>
             <Link
               href="/legal"
-              className="transition-colors hover:text-white hover:underline"
+              className="transition-colors duration-200 hover:text-white"
             >
-              Legal
+              Documentos
             </Link>
           </div>
         </div>

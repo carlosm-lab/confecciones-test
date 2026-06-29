@@ -16,7 +16,91 @@ This document tracks important architectural decisions made during the project l
 
 ## Logged Decisions
 
-_ (Add new decisions below this line)_
+**Date:** 2026-06-28
+**Decision:** Rediseño Completo de Manifiesto Editorial e Inmersivo para `/empresa/filosofia`
+**Context:** Se requería rediseñar la página de filosofía desde cero para no parecer la típica página corporativa con tarjetas repetitivas de visión/misión/valores, sino transmitir la esencia viva del oficio artesanal acumulado desde 2005. Se prohibió expresamente reutilizar cualquier sección o patrón previo del sitio, buscando una experiencia editorial premium de estudio creativo.
+**Decision:**
+
+- Se eliminó por completo el código previo de `FilosofiaClient.tsx` y se desarrolló desde cero un manifiesto editorial dinámico.
+- Se modularizó la cabecera separando el lienzo de dibujo técnico SVG en `TextilePatternCanvas.tsx`, implementando 5 capas de trazados vectoriales (grilla, moldes, curvas francesas, costuras y anotaciones) animados de forma asíncrona mediante parallax con `useScroll` y `useTransform`.
+- Se implementó una sección sticky de pantalla completa en fondo azul institucional donde 4 frases clave se revelan y desvanecen secuencialmente de acuerdo con el progreso de scroll vertical.
+- Se diseñó un acordeón horizontal tipo museo para los 7 compromisos/valores que expande suavemente el panel enfocado (flex-grow interactivo) y comprime los demás en desktop usando `layout` de Framer Motion, con degradado a snap-scroll horizontal táctil en mobile.
+- Se estructuró un Bento Grid asimétrico de 5 módulos combinando de forma armónica Misión, Visión, cita destacada de legado, estadísticas e imágenes reales del taller en blanco y negro sin iconos.
+- Se incorporaron 3 lookbooks a escala gigante con frases flotantes de alto impacto y un footer de doble columna simétrica.
+  **Consequences:**
+- Se logra transmitir con fuerza la identidad familiar del taller mediante un diseño sofisticado y dinámico tipo revista de diseño contemporánea, con transiciones suaves basadas exclusivamente en opacidad, escala mínima y desplazamientos lentos (sin rebotes ni giros). Se mantiene una óptima experiencia responsive y altos estándares de accesibilidad visual y SEO técnico.
+
+---
+
+**Date:** 2026-06-28
+**Decision:** Desarrollo desde Cero de la Experiencia Interactiva de Proceso de Confección (`/empresa/proceso-de-confeccion`)
+**Context:** Se requería rediseñar completamente la página de Proceso de Confección para crear una experiencia inmersiva y dinámica de 10 etapas del taller que transmitiera precisión técnica y profesionalidad. Se prohibió el reuso de cualquier sección o patrón visual previo.
+**Decision:**
+
+- Se eliminó el renderizado antiguo de `InstalacionesClient` en `/empresa/proceso-de-confeccion/page.tsx` para no duplicar la vista de instalaciones.
+- Se implementó `ProcesoDeConfeccionClient.tsx` desde cero como una narrativa editorial fluida que alterna estructuras visuales (Cabecera 60/40, Bento UI para análisis, columnas alternantes, bandas de materiales de ancho completo, grids asimétricos con paneles de confección flotantes y un grid rígido con líneas finas sin iconos para calidad).
+- Se diseñó un indicador sticky horizontal de progreso que se sincroniza dinámicamente con la etapa visible mediante `IntersectionObserver`.
+- Se desarrolló una "Mesa de Trabajo" interactiva que visualiza las conexiones de cada integrante del equipo con las etapas específicas del taller en las que colabora.
+- Se agregaron las filas editoriales de diferenciales corporativos de la marca familiar.
+  **Consequences:**
+- Se logra una experiencia interactiva sin precedentes en la sección corporativa que ilustra detalladamente el proceso de manufactura, facilitando la comprensión del visitante y manteniendo altos índices de conversión y SEO técnico.
+
+---
+
+**Date:** 2026-06-28
+**Decision:** Enrutamiento del Hub `/empresa` e `/empresa/instalaciones`
+**Context:** Se necesitaba solucionar problemas de ruteo: (1) las tarjetas del grid Bento redirigían a rutas obsoletas de `/legal/*`, y (2) la ruta `/empresa/instalaciones` arrojaba error 404 al no existir su correspondiente archivo de página, mientras que `/empresa/proceso-de-confeccion` renderizaba incorrectamente el componente `InstalacionesClient` en vez de su propio SEO.
+**Decision:**
+
+- Se restauró la página del Hub `/empresa/page.tsx` original a su diseño inicial por rechazo del usuario de los cambios del nuevo hub.
+- Se re-enlazaron las tarjetas del grid del Hub original a sus rutas correspondientes de `/empresa/*` (e.g. `/empresa/calidad`, `/empresa/certificaciones`, etc.) en lugar de las rutas legales obsoletas.
+- Se creó la página `src/app/(public)/empresa/instalaciones/page.tsx` renderizando el recorrido del taller (`InstalacionesClient`) con SEO y Breadcrumbs de "Instalaciones".
+- Se removió el directorio vacío redundante `src/app/empresa`.
+  **Consequences:**
+- Se corrigen los enlaces del Hub corporativo original, garantizando que el usuario acceda a las páginas correspondientes sin toparse con errores 404 ni redirecciones a políticas legales, manteniendo el diseño original preferido por el usuario. La página de Instalaciones opera bajo su URL limpia con SEO optimizado y JSON-LD estructurado de LocalBusiness.
+
+---
+
+**Date:** 2026-06-27
+**Decision:** Hub de Equipo Asimétrico por Capas y Subrutas de Perfil Dinámicas (`/empresa/equipo/[slug]`)
+**Context:** Se requería reestructurar `/empresa/equipo` para evitar el diseño uniforme de cards 3x3 o 4x4 y el lenguaje corporativo vacío. Se necesitaba reflejar una jerarquía real del taller y vincular a cada miembro de manera interactiva a una ficha de perfil única.
+**Decision:**
+
+- Se implementó `team.ts` como base de datos unificada del equipo.
+- Se desarrolló `EquipoClient.tsx` que estructura al equipo en capas funcionales asimétricas con layouts diferenciados (Hero para la fundadora, cuadrículas de alturas variables para producción, franjas técnicas horizontales para control/logística, panel tecnológico brutalista para estrategia digital y mosaico editorial para modelos).
+- Se implementó la ruta dinámica `/empresa/equipo/[slug]/page.tsx` usando SSG (`generateStaticParams`) y metadatos dinámicos para indexar la ficha técnica individual de cada empleado.
+- Se configuraron los diales de diseño en `DESIGN_VARIANCE: 9`, `MOTION_INTENSITY: 7` y `VISUAL_DENSITY: 3`.
+  **Consequences:**
+- Se logra una experiencia de usuario sumamente personalizada y Premium que dignifica el trabajo de cada miembro de la empresa familiar, potenciando además la indexación de perfiles (SEO/E-E-A-T).
+
+---
+
+**Date:** 2026-06-27
+**Decision:** Rediseño a Manifiesto Editorial para `/empresa/filosofia`
+**Context:** Se requería diseñar la página de filosofía corporativa, misión y visión como una experiencia de lectura por bloques conceptuales (no cards de dashboard tradicionales) con el fin de transmitir la cultura organizativa y código de calidad técnico del taller.
+**Decision:**
+
+- Se implementó `FilosofiaClient.tsx` bajo un patrón de lectura fluida con espaciado amplio, contrastes tipográficos y ritmos asimétricos.
+- Se mantuvo `page.tsx` para SEO, robots e inyección de datos estructurados JSON-LD.
+- Se definieron los diales de diseño en `DESIGN_VARIANCE: 8`, `MOTION_INTENSITY: 6` y `VISUAL_DENSITY: 3`.
+- Se introdujo un bloque central en color oscuro (`#001b4a`) que destaca visualmente los tres pilares del uniforme (Funcional, Duradero, Impecable).
+  **Consequences:**
+- La página proyecta una imagen técnica, seria y confiable de la empresa, evitando clichés y plantillas corporativas comunes.
+
+---
+
+**Date:** 2026-06-27
+**Decision:** Rediseño interactivo de Storytelling en Scroll Continuo para `/empresa/sobre-nosotros`
+**Context:** Se requería transformar la página institucional estática en una experiencia visual de alto impacto tipo narrativa editorial/cinematográfica de scroll continuo (9 escenas secuenciales), respetando la identidad visual y los datos de `nuestrahistoria.txt`.
+**Decision:**
+
+- Se crearon componentes modulares: `SobreNosotrosClient.tsx` implementa toda la lógica de animación con `framer-motion` (entradas staggered, barras de progreso y flujos interactivos de recomendación en SVG).
+- Se mantuvo `page.tsx` como Server Component para preservar los metadatos SEO, Breadcrumbs y el marcado JSON-LD estructurado de `AboutPage`.
+- Se configuraron los diales de diseño en `DESIGN_VARIANCE: 8`, `MOTION_INTENSITY: 8` y `VISUAL_DENSITY: 3` para una estética de galería de arte y revista editorial de modas.
+  **Consequences:**
+- Se logra una experiencia inmersiva fluida en móvil y escritorio sin sacrificar la velocidad de renderizado en el servidor ni la indexación de los buscadores.
+
+---
 
 **Date:** 2026-06-26
 **Decision:** Ruta dinámica de servicios [slug] y modularización del diseño de Stitch

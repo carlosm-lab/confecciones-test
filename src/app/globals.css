@@ -238,15 +238,19 @@
   0% {
     transform: translate(0px, 0px);
   }
+
   25% {
     transform: translate(1.5px, -3px);
   }
+
   50% {
     transform: translate(-1px, -1.5px);
   }
+
   75% {
     transform: translate(-2px, 2px);
   }
+
   100% {
     transform: translate(0px, 0px);
   }
@@ -257,7 +261,8 @@
   height: 100%;
   animation: hub-float 6s ease-in-out infinite;
   animation-delay: var(--float-delay, 0s);
-  will-change: transform; /* GPU compositing: sin repaint en cada frame */
+  will-change: transform;
+  /* GPU compositing: sin repaint en cada frame */
 }
 
 @layer utilities {
@@ -625,13 +630,16 @@
     opacity: 0;
     transform: scale(0.3);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.15);
   }
+
   75% {
     transform: scale(0.9);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);

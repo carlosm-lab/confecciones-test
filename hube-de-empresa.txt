@@ -1,0 +1,1171 @@
+Ahora procedo a redactar la especificación técnica completa para el Hub `/empresa`.
+
+---
+
+# ESPECIFICACIÓN TÉCNICA — HUB `/empresa`
+## Confecciones Liss — Documento de Arquitectura Frontend v1.0
+
+---
+
+## INSTRUCCIONES INICIALES OBLIGATORIAS
+
+- Elimina completamente la implementación actual de esta página.
+- No reutilices absolutamente ningún componente existente.
+- No reutilices ningún layout.
+- No reutilices ninguna sección.
+- No reutilices estilos.
+- No reutilices la composición.
+- No reutilices el Hero.
+- No reutilices componentes compartidos.
+- No reutilices la arquitectura existente.
+- Construye toda la página completamente desde cero.
+- Una vez terminada la implementación, verifica que todas las tarjetas del Hub estén correctamente enlazadas a sus rutas correspondientes.
+
+---
+
+## 1. PROPÓSITO DE LA PÁGINA
+
+Esta página es el Hub central de la sección `/empresa` del sitio web corporativo de Confecciones Liss. Su función no es decorativa. Su función es estratégica: actúa como puerta de entrada institucional, presenta la empresa con autoridad, genera confianza inmediata y distribuye al visitante hacia las secciones internas mediante un sistema de tarjetas de navegación claramente jerarquizado.
+
+El visitante que llega a `/empresa` debe comprender en menos de 5 segundos que está frente a una empresa familiar salvadoreña seria, con historia verificable, equipo real, procesos definidos y presencia digital propia. Debe sentir confianza antes de hacer clic en cualquier sección.
+
+Esta página no vende. Esta página establece autoridad y credibilidad.
+
+---
+
+## 2. STACK TÉCNICO
+
+- **Framework:** Next.js (App Router)
+- **Estilos:** Tailwind CSS únicamente. Sin CSS externo adicional.
+- **Tipografías:** Google Fonts — `Noto Serif` (pesos 400, 600, 700) y `Manrope` (pesos 400, 500, 600, 700). Importar mediante `next/font/google`.
+- **Animaciones:** Framer Motion para entradas suaves y microinteracciones. Sin animaciones exageradas.
+- **Iconos:** `lucide-react` exclusivamente.
+- **Imágenes:** `next/image` con `priority` en el Hero.
+- **Sin librerías de componentes externas.** Sin shadcn. Sin Radix. Sin Headless UI. Todo construido desde cero con Tailwind.
+
+---
+
+## 3. SISTEMA DE TOKENS DE DISEÑO
+
+Definir estas variables como constantes en el componente o en un archivo de configuración local. No usar valores arbitrarios en ningún className.
+
+```
+COLOR_PRIMARY:        #143067   → Azul institucional profundo
+COLOR_ACCENT:         #b43024   → Rojo acento
+COLOR_BG:             #f8f9fb   → Fondo general de página
+COLOR_SURFACE:        #ffffff   → Superficies de tarjetas
+COLOR_TEXT_MAIN:      #191c1e   → Texto principal
+COLOR_TEXT_SECONDARY: #444650   → Texto secundario / descripciones
+COLOR_BORDER:         #e4e6ea   → Bordes suaves
+COLOR_PRIMARY_LIGHT:  #edf1f7   → Fondo tint azul muy suave para badges y labels
+COLOR_ACCENT_LIGHT:   #fdf2f1   → Fondo tint rojo muy suave
+
+FONT_SERIF:   'Noto Serif', serif       → Títulos principales, declaraciones
+FONT_SANS:    'Manrope', sans-serif     → Cuerpo, UI, etiquetas, navegación
+
+RADIUS_SM:    6px
+RADIUS_MD:    12px
+RADIUS_LG:    20px
+RADIUS_XL:    28px
+
+SHADOW_SM:    0 1px 3px rgba(0,0,0,0.06)
+SHADOW_MD:    0 4px 16px rgba(0,0,0,0.08)
+SHADOW_LG:    0 8px 32px rgba(0,0,0,0.10)
+SHADOW_HOVER: 0 12px 40px rgba(20,48,103,0.13)
+```
+
+---
+
+## 4. TIPOGRAFÍA — ESCALA COMPLETA
+
+```
+Display XL:   Noto Serif, 56px/64px, weight 700, tracking -0.02em   → Solo H1 del Hero
+Display L:    Noto Serif, 40px/48px, weight 700, tracking -0.015em  → Títulos de sección
+Display M:    Noto Serif, 28px/36px, weight 600, tracking -0.01em   → Títulos de tarjetas grandes
+Heading:      Manrope, 20px/28px, weight 700, tracking 0            → Títulos de tarjetas pequeñas
+Subheading:   Manrope, 14px/20px, weight 600, tracking 0.06em, UPPERCASE → Labels / eyebrows
+Body L:       Manrope, 18px/28px, weight 400                        → Párrafos principales
+Body M:       Manrope, 16px/24px, weight 400                        → Descripciones en tarjetas
+Body S:       Manrope, 14px/20px, weight 400                        → Metadatos, captions
+UI Label:     Manrope, 13px/18px, weight 600, tracking 0.04em       → Texto de botones, badges
+Micro:        Manrope, 11px/16px, weight 500, tracking 0.08em, UPPERCASE → Etiquetas mínimas
+```
+
+**Responsive typography:**
+- Mobile (<768px): Display XL → 36px/44px; Display L → 28px/36px; Display M → 22px/30px
+- Tablet (768–1023px): Display XL → 44px/52px; Display L → 32px/40px
+- Desktop (≥1024px): Escala completa como se define arriba
+
+---
+
+## 5. ARQUITECTURA GENERAL DE LA PÁGINA
+
+La página se divide en **7 bloques estructurales** en este orden exacto e inamovible:
+
+```
+┌──────────────────────────────────────────────┐
+│  BLOQUE 1: BREADCRUMB + EYEBROW              │  altura: auto / padding top 32px
+├──────────────────────────────────────────────┤
+│  BLOQUE 2: HERO INSTITUCIONAL                │  altura: min 480px desktop
+├──────────────────────────────────────────────┤
+│  BLOQUE 3: BANDA DE DATOS VERIFICABLES       │  altura: auto / padding 40px 0
+├──────────────────────────────────────────────┤
+│  BLOQUE 4: GRID DE NAVEGACIÓN (TARJETAS HUB) │  altura: auto / padding 80px 0
+├──────────────────────────────────────────────┤
+│  BLOQUE 5: DECLARACIÓN INSTITUCIONAL         │  altura: auto / padding 64px 0
+├──────────────────────────────────────────────┤
+│  BLOQUE 6: MINI-PREVIEW DEL EQUIPO           │  altura: auto / padding 64px 0
+├──────────────────────────────────────────────┤
+│  BLOQUE 7: CTA FINAL + DATOS DE CONTACTO     │  altura: auto / padding 80px 0
+└──────────────────────────────────────────────┘
+```
+
+**Fondo de página:** `#f8f9fb` aplicado al `<main>`. Sin gradientes de fondo en el body.
+
+**Contenedor máximo:** `max-w-7xl mx-auto px-6` en desktop. `px-4` en mobile. `px-5` en tablet.
+
+**Sin navbar propia en esta especificación.** El navbar global del sitio ya existe. Esta especificación cubre únicamente el contenido entre el navbar y el footer.
+
+---
+
+## 6. BLOQUE 1 — BREADCRUMB + EYEBROW
+
+### Posición
+Primer elemento visible después del navbar. Padding top: 40px desktop, 28px mobile.
+
+### Estructura HTML semántica
+```
+<nav aria-label="breadcrumb">
+  <ol>
+    <li>Inicio</li>
+    <li aria-current="page">Empresa</li>
+  </ol>
+</nav>
+```
+
+### Contenido exacto
+```
+Inicio  /  Empresa
+```
+
+### Estilos
+- Font: Manrope, 13px, weight 500
+- Color `Inicio`: `#444650` con hover → `#143067`, transición 200ms
+- Separador `/`: `#c4c7cc`, margin horizontal 8px
+- Color `Empresa`: `#143067`, weight 600, sin enlace (página actual)
+- `Inicio` enlaza a `/`
+
+### Comportamiento
+- Sin animación de entrada. Aparece estático.
+- Visible en todos los breakpoints.
+
+---
+
+## 7. BLOQUE 2 — HERO INSTITUCIONAL
+
+### Concepto de diseño
+El Hero no utiliza imagen de fondo ni gradiente oscuro. Utiliza una composición asimétrica en dos columnas sobre fondo `#f8f9fb`. La columna izquierda contiene el contenido textual. La columna derecha contiene una tarjeta elevada con glassmorphism sutil que muestra una fotografía institucional del taller.
+
+Este Hero debe sentirse como la portada de un informe institucional de alta calidad, no como un banner publicitario.
+
+### Grid del Hero
+- Desktop: 2 columnas, proporción 55% / 45%, gap 64px, alineación vertical centrada
+- Tablet: 2 columnas, proporción 50% / 50%, gap 40px
+- Mobile: 1 columna, la imagen va debajo del texto, gap 32px
+
+### Columna izquierda — Contenido textual
+
+**Eyebrow (etiqueta superior):**
+```
+EMPRESA
+```
+- Manrope, 12px, weight 700, tracking 0.12em, UPPERCASE
+- Color: `#b43024`
+- Hay un pequeño rectángulo sólido de 3px × 20px en color `#b43024` a la izquierda del texto, alineado verticalmente al centro del texto
+- Margin bottom: 20px desde el eyebrow hasta el H1
+
+**H1 principal:**
+```
+Más de veinte años
+construyendo confianza
+puntada a puntada.
+```
+- Noto Serif, 56px/64px desktop, 36px/44px mobile
+- Weight 700
+- Color: `#191c1e`
+- Tracking: -0.02em
+- El salto de línea debe respetarse: son tres líneas en desktop
+- Margin bottom: 24px
+
+**Párrafo de introducción:**
+```
+Somos Confecciones Liss, una empresa familiar salvadoreña especializada en la confección de uniformes escolares, empresariales e indumentaria médica. Nuestra historia comenzó en 2005 con una sola máquina de coser y continúa creciendo gracias al trabajo de un equipo especializado comprometido con la calidad.
+```
+- Manrope, 18px/28px, weight 400
+- Color: `#444650`
+- Max-width: 480px
+- Margin bottom: 40px
+
+**Fila de botones:**
+
+Botón primario:
+```
+Texto:    Conoce nuestra historia
+Destino:  /empresa/sobre-nosotros
+Estilo:   Fondo #143067, texto #ffffff, sin borde
+Padding:  14px 28px
+Radius:   8px
+Font:     Manrope 15px weight 600
+Hover:    Fondo #0f2550, sombra SHADOW_MD, transform translateY(-1px)
+Transition: all 200ms ease
+```
+
+Botón secundario:
+```
+Texto:    Conoce al equipo
+Destino:  /empresa/equipo
+Estilo:   Fondo transparente, texto #143067, borde 1.5px solid #143067
+Padding:  14px 28px
+Radius:   8px
+Font:     Manrope 15px weight 600
+Hover:    Fondo #edf1f7, borde #143067
+Transition: all 200ms ease
+```
+
+Los dos botones están en la misma fila en desktop. En mobile se apilan verticalmente con gap 12px. Cada botón ocupa 100% del ancho en mobile.
+
+### Columna derecha — Tarjeta de imagen
+
+**Contenedor de la tarjeta:**
+- Background: `#ffffff`
+- Border: 1px solid `#e4e6ea`
+- Border-radius: 20px
+- Box-shadow: `0 8px 40px rgba(20,48,103,0.10)`
+- Padding: 12px
+- Posición relativa para el badge flotante
+
+**Imagen dentro de la tarjeta:**
+```
+Placeholder ID:     HERO_TALLER_001
+Descripción:        Fotografía del taller de Confecciones Liss mostrando el área de confección activa
+Relación de aspecto: 4:3
+Ancho:              100% del contenedor
+Border-radius:      12px (interior)
+Object-fit:         cover
+Object-position:    center
+ALT:                "Taller de confección de Confecciones Liss en San Miguel, El Salvador"
+```
+
+Si la fotografía no está disponible, mostrar un placeholder con:
+- Fondo: `#edf1f7`
+- Ícono centrado: `lucide-react → Scissors`, tamaño 48px, color `#143067` opacity 0.3
+- Texto debajo: `[FOTO: Taller activo — HERO_TALLER_001]`, Manrope 12px, color `#888`
+
+**Badge flotante sobre la imagen (esquina inferior izquierda, dentro del padding de la tarjeta):**
+- Fondo: `#143067`
+- Texto línea 1: `Fundada oficialmente`, Manrope 11px weight 500, color `rgba(255,255,255,0.75)`
+- Texto línea 2: `20 de enero de 2021`, Manrope 14px weight 700, color `#ffffff`
+- Padding: 10px 16px
+- Border-radius: 8px
+- Position: absolute, bottom 20px, left 20px
+
+**Decoración adicional (sutil):**
+Un pequeño elemento decorativo en la esquina superior derecha de la columna derecha: tres puntos en cuadrícula (3×3) en color `#143067` opacity 0.08. Tamaño de cada punto: 4px. Gap entre puntos: 6px. Esto se implementa con un patrón CSS o SVG inline pequeño. No debe ser prominente.
+
+---
+
+## 8. BLOQUE 3 — BANDA DE DATOS VERIFICABLES
+
+### Concepto
+Una franja horizontal de fondo blanco (`#ffffff`) con borde superior e inferior `1px solid #e4e6ea`. Muestra 4 datos numéricos verificables de la empresa dispuestos horizontalmente. Es una banda sobria, no una sección llamativa.
+
+### Espaciado
+- Padding vertical: 40px desktop, 32px mobile
+- Margin vertical respecto a bloques adyacentes: 0 (la banda toca directamente el Hero arriba y el Grid abajo)
+
+### Grid de datos
+- Desktop: 4 columnas iguales, separadas por divisores verticales `1px solid #e4e6ea`
+- Tablet: 2×2 con divisores solo verticales en cada fila
+- Mobile: 2×2, sin divisores, con gap 24px
+
+### Los 4 datos exactos (en este orden):
+
+**Dato 1:**
+```
+Número:      +20
+Unidad:      años de experiencia
+Descripción: Desde 2005 confeccionando prendas
+```
+
+**Dato 2:**
+```
+Número:      2021
+Unidad:      fundación oficial
+Descripción: 20 de enero de 2021
+```
+
+**Dato 3:**
+```
+Número:      9
+Unidad:      personas en el equipo
+Descripción: Especialistas en confección y tecnología
+```
+
+**Dato 4:**
+```
+Número:      3
+Unidad:      líneas de producto
+Descripción: Escolar, empresarial e indumentaria médica
+```
+
+### Estilo de cada dato
+- Número: Noto Serif, 40px, weight 700, color `#143067`
+- Unidad: Manrope, 14px, weight 600, color `#444650`, margin top 4px
+- Descripción: Manrope, 13px, weight 400, color `#888b96`, margin top 6px
+- Alineación: centrado horizontalmente dentro de cada celda
+- Sin hover. Sin enlace. Sin animación.
+
+---
+
+## 9. BLOQUE 4 — GRID DE NAVEGACIÓN (TARJETAS HUB)
+
+### Propósito
+Este bloque es el núcleo funcional del Hub. Contiene **11 tarjetas de navegación**, una por cada sección interna de `/empresa`. Cada tarjeta es un enlace independiente a su ruta correspondiente.
+
+### Espaciado del bloque
+- Padding top: 80px desktop, 56px mobile
+- Padding bottom: 80px desktop, 56px mobile
+
+### Eyebrow del bloque
+```
+EXPLORA LA EMPRESA
+```
+- Manrope, 12px, weight 700, tracking 0.12em, UPPERCASE, color `#b43024`
+- Centrado
+- Margin bottom: 12px
+
+### Título del bloque
+```
+Todo lo que necesitas saber
+sobre Confecciones Liss
+```
+- Noto Serif, 40px/48px desktop, 28px/36px mobile
+- Weight 700, color `#191c1e`
+- Centrado
+- Margin bottom: 56px desktop, 40px mobile
+
+### Sistema de grid de las tarjetas
+
+Las 11 tarjetas se distribuyen en un layout **Bento asimétrico**. No es un grid uniforme. Hay tarjetas de diferentes tamaños para crear jerarquía visual.
+
+**Desktop (≥1024px):**
+```
+FILA 1: [TARJETA A — grande 2/3] [TARJETA B — mediana 1/3]
+FILA 2: [TARJETA C — mediana 1/3] [TARJETA D — mediana 1/3] [TARJETA E — mediana 1/3]
+FILA 3: [TARJETA F — grande 1/2] [TARJETA G — mediana 1/4] [TARJETA H — mediana 1/4]
+FILA 4: [TARJETA I — mediana 1/3] [TARJETA J — mediana 1/3] [TARJETA K — mediana 1/3]
+```
+
+Implementar con CSS Grid:
+```css
+grid-template-columns: repeat(6, 1fr);
+gap: 16px;
+
+Tarjeta A: col-span-4
+Tarjeta B: col-span-2
+Tarjeta C: col-span-2
+Tarjeta D: col-span-2
+Tarjeta E: col-span-2
+Tarjeta F: col-span-3
+Tarjeta G: col-span-1 (ajustar si no cuadra → col-span-1.5 con subgrid o adaptar a col-span-2)
+Tarjeta H: col-span-1 (igual)
+Tarjeta I: col-span-2
+Tarjeta J: col-span-2
+Tarjeta K: col-span-2
+```
+
+Nota: Si el subgrid genera conflictos, adaptar a:
+```
+FILA 3: [TARJETA F — col-span-3] [TARJETA G — col-span-1 y medio aprox] [TARJETA H — col-span-1 y medio aprox]
+```
+→ Usar `grid-template-columns: repeat(6, 1fr)` y asignar F=3, G=2, H=1 o F=3, G=1, H=2 dependiendo de cuál va primero. El desarrollador debe mantener la proporción visual: F es la más grande de la fila.
+
+**Tablet (768–1023px):**
+Todas las tarjetas en grid de 2 columnas iguales. La Tarjeta A ocupa las 2 columnas (col-span-2).
+
+**Mobile (<768px):**
+Todas las tarjetas en 1 columna. Todas iguales en ancho.
+
+### Altura mínima de las tarjetas por tamaño:
+- Grande (col-span-4 / col-span-3): min-height 280px desktop
+- Mediana (col-span-2): min-height 200px desktop
+- Pequeña (col-span-1): min-height 200px desktop
+- Mobile: min-height 140px para todas
+
+### Definición exacta de cada tarjeta
+
+Cada tarjeta comparte esta estructura base:
+- Background: `#ffffff`
+- Border: `1px solid #e4e6ea`
+- Border-radius: `16px`
+- Padding: `28px` (grandes), `24px` (medianas), `20px` (pequeñas)
+- Transition: `all 260ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`
+- Cursor: pointer
+- Display: flex, flex-direction: column, justify-content: space-between
+- Position: relative (para el ícono decorativo absoluto si se usa)
+
+**Estado hover de TODAS las tarjetas:**
+- Box-shadow: `0 12px 40px rgba(20,48,103,0.13)`
+- Transform: `translateY(-3px)`
+- Border-color: `#143067` opacity 0.3
+
+**Elemento de flecha en hover:**
+Cada tarjeta tiene en su esquina inferior derecha un ícono de `lucide-react → ArrowUpRight`, tamaño 18px, color `#143067`. En estado normal: opacity 0. En hover: opacity 1. Transition 200ms.
+
+---
+
+### TARJETA A — Sobre Nosotros (GRANDE)
+```
+Ruta destino:     /empresa/sobre-nosotros
+Tamaño:           Grande (col-span-4 desktop)
+Background:       #ffffff
+Border-left:      4px solid #143067 (borde izquierdo de acento, además del borde normal)
+
+Contenido:
+  Ícono:          lucide-react → BookOpen, 32px, color #143067
+  Eyebrow:        "NUESTRA HISTORIA"
+                  Manrope 11px weight 700 tracking 0.1em UPPERCASE color #b43024
+                  margin-bottom 10px
+  Título:         "Sobre Nosotros"
+                  Noto Serif 28px weight 700 color #191c1e
+                  margin-bottom 12px
+  Descripción:    "Conoce la historia de Confecciones Liss: desde una máquina
+                  de coser en 2005 hasta un equipo especializado con presencia
+                  digital propia. Más de dos décadas de aprendizaje, trabajo y
+                  compromiso con la calidad."
+                  Manrope 16px weight 400 color #444650
+                  max 3 líneas en desktop
+  
+  Fila inferior:
+    Tag izquierdo:  Badge "Desde 2005" — fondo #edf1f7, texto #143067, 
+                    Manrope 12px weight 600, padding 4px 10px, radius 6px
+    Flecha:         ArrowUpRight (ver especificación global de hover)
+
+Altura mínima desktop: 280px
+```
+
+---
+
+### TARJETA B — Filosofía (MEDIANA)
+```
+Ruta destino:     /empresa/filosofia
+Tamaño:           Mediana (col-span-2 desktop)
+Background:       #ffffff
+
+Contenido:
+  Ícono:          lucide-react → Compass, 28px, color #143067
+  Eyebrow:        "IDENTIDAD"
+                  Manrope 11px weight 700 tracking 0.1em UPPERCASE color #b43024
+  Título:         "Filosofía"
+                  Noto Serif 22px weight 700 color #191c1e
+  Descripción:    "Misión, visión y los valores que guían cada decisión
+                  en Confecciones Liss."
+                  Manrope 14px weight 400 color #444650
+
+Altura mínima desktop: 280px
+```
+
+---
+
+### TARJETA C — Equipo (MEDIANA)
+```
+Ruta destino:     /empresa/equipo
+Tamaño:           Mediana (col-span-2 desktop)
+Background:       #ffffff
+
+Contenido:
+  Ícono:          lucide-react → Users, 28px, color #143067
+  Eyebrow:        "LAS PERSONAS"
+                  Manrope 11px weight 700 tracking 0.1em UPPERCASE color #b43024
+  Título:         "Equipo"
+                  Noto Serif 22px weight 700 color #191c1e
+  Descripción:    "Conoce a las personas detrás de cada uniforme.
+                  Un equipo de especialistas con roles definidos."
+                  Manrope 14px weight 400 color #444650
+  Tag:            Badge "9 integrantes" — fondo #edf1f7, texto #143067,
+                  Manrope 12px weight 600, padding 4px 10px, radius 6px
+```
+
+---
+
+### TARJETA D — Instalaciones (MEDIANA)
+```
+Ruta destino:     /empresa/instalaciones
+Tamaño:           Mediana (col-span-2 desktop)
+Background:       #ffffff
+
+Contenido:
+  Ícono:          lucide-react → Building2, 28px, color #143067
+  Eyebrow:        "EL TALLER"
+  Título:         "Instalaciones"
+  Descripción:    "Barrio La Merced, San Miguel. Conoce las áreas
+                  de trabajo donde se confeccionan nuestros productos."
+                  Manrope 14px weight 400 color #444650
+```
+
+---
+
+### TARJETA E — Proceso de Confección (MEDIANA)
+```
+Ruta destino:     /empresa/proceso-de-confeccion
+Tamaño:           Mediana (col-span-2 desktop)
+Background:       #ffffff
+
+Contenido:
+  Ícono:          lucide-react → Workflow, 28px, color #143067
+  Eyebrow:        "CÓMO TRABAJAMOS"
+  Título:         "Proceso de Confección"
+  Descripción:    "Del pedido a la entrega. Conoce cada etapa del
+                  proceso de confección de un uniforme."
+                  Manrope 14px weight 400 color #444650
+```
+
+---
+
+### TARJETA F — Calidad (GRANDE)
+```
+Ruta destino:     /empresa/calidad
+Tamaño:           Grande (col-span-3 desktop)
+Background:       #143067  ← Esta tarjeta tiene fondo primario oscuro (única excepción)
+Border:           ninguno visible (el color de fondo lo reemplaza)
+
+Contenido:
+  Ícono:          lucide-react → ShieldCheck, 32px, color #ffffff opacity 0.9
+  Eyebrow:        "ESTÁNDARES"
+                  Manrope 11px weight 700 tracking 0.1em UPPERCASE color rgba(255,255,255,0.6)
+  Título:         "Control de Calidad"
+                  Noto Serif 28px weight 700 color #ffffff
+  Descripción:    "Cada prenda pasa por inspección de costuras, pruebas
+                  de resistencia, verificación de bordados y control
+                  de acabados antes de ser entregada."
+                  Manrope 15px weight 400 color rgba(255,255,255,0.75)
+  
+  Tag:            Badge — fondo rgba(255,255,255,0.12), texto #ffffff,
+                  texto del badge: "René Alfonso Méndez — Responsable"
+                  Manrope 12px weight 600, padding 5px 12px, radius 6px
+  
+  Flecha hover:   ArrowUpRight color #ffffff
+
+Estado hover:
+  Box-shadow:     0 12px 40px rgba(20,48,103,0.30)
+  Transform:      translateY(-3px)
+  Background:     #0f2550 (ligeramente más oscuro)
+
+Altura mínima desktop: 280px
+```
+
+---
+
+### TARJETA G — Certificaciones (MEDIANA)
+```
+Ruta destino:     /empresa/certificaciones
+Tamaño:           Mediana (col-span-2 desktop) → En FILA 3 junto con F y H
+Background:       #ffffff
+
+Contenido:
+  Ícono:          lucide-react → Award, 26px, color #143067
+  Eyebrow:        "CREDENCIALES"
+  Título:         "Certificaciones"
+  Descripción:    "Formación técnica y especialización verificable
+                  de los integrantes del equipo."
+                  Manrope 14px weight 400 color #444650
+```
+
+---
+
+### TARJETA H — Responsabilidad Social (MEDIANA)
+```
+Ruta destino:     /empresa/responsabilidad-social
+Tamaño:           Mediana (col-span-1 desktop) → Ajustar a col-span-2 si el grid así lo requiere
+Background:       #ffffff
+
+Contenido:
+  Ícono:          lucide-react → Heart, 26px, color #b43024
+  Eyebrow:        "COMUNIDAD"
+                  color #b43024
+  Título:         "Responsabilidad Social"
+  Descripción:    "Empresa familiar que genera empleo e impacto
+                  positivo en San Miguel, El Salvador."
+                  Manrope 14px weight 400 color #444650
+```
+
+---
+
+### TARJETA I — Transparencia (MEDIANA)
+```
+Ruta destino:     /empresa/transparencia
+Tamaño:           Mediana (col-span-2 desktop)
+Background:       #ffffff
+
+Contenido:
+  Ícono:          lucide-react → Eye, 28px, color #143067
+  Eyebrow:        "CONFIANZA"
+  Título:         "Transparencia"
+  Descripción:    "Documentamos quiénes somos, cómo trabajamos y
+                  qué experiencia respalda nuestro trabajo."
+                  Manrope 14px weight 400 color #444650
+```
+
+---
+
+### TARJETA J — Media Kit (MEDIANA)
+```
+Ruta destino:     /empresa/media-kit
+Tamaño:           Mediana (col-span-2 desktop)
+Background:       #ffffff
+
+Contenido:
+  Ícono:          lucide-react → FileImage, 28px, color #143067
+  Eyebrow:        "PRENSA Y MEDIOS"
+  Título:         "Media Kit"
+  Descripción:    "Recursos institucionales para medios, prensa
+                  y colaboradores. Logotipos, colores y descripción."
+                  Manrope 14px weight 400 color #444650
+```
+
+---
+
+### TARJETA K — Ubicación / Contacto rápido (MEDIANA)
+```
+Ruta destino:     NINGUNO — esta tarjeta NO es un enlace de navegación.
+                  Es una tarjeta informativa estática de contacto rápido.
+Tamaño:           Mediana (col-span-2 desktop)
+Background:       #fdf2f1  ← Tint suave del acento
+Border:           1px solid rgba(180,48,36,0.15)
+Cursor:           default (no es clickeable como tarjeta completa)
+
+Contenido:
+  Ícono:          lucide-react → MapPin, 28px, color #b43024
+  Eyebrow:        "VISÍTANOS"
+                  color #b43024
+  Título:         "San Miguel, El Salvador"
+                  Noto Serif 20px weight 700 color #191c1e
+  Dirección:      "Barrio La Merced, 5A Calle Poniente &
+                  1A Avenida Sur, San Miguel"
+                  Manrope 13px weight 400 color #444650
+  
+  Fila de contacto:
+    Enlace WhatsApp:
+      Texto:    "WhatsApp"
+      Href:     "https://wa.me/50373317181"
+      Target:   _blank
+      Estilo:   Manrope 13px weight 600, color #b43024, underline en hover
+      Ícono:    MessageCircle 14px a la izquierda
+    
+    Enlace correo:
+      Texto:    "confeccionesliss.contacto@gmail.com"
+      Href:     "mailto:confeccionesliss.contacto@gmail.com"
+      Estilo:   Manrope 13px weight 400, color #444650, underline en hover
+      (Solo visible en desktop; ocultar en mobile para no romper layout)
+
+Sin estado hover de elevación (no es tarjeta de navegación).
+```
+
+---
+
+## 10. BLOQUE 5 — DECLARACIÓN INSTITUCIONAL
+
+### Concepto
+Una sección de ancho completo con fondo `#ffffff` y un borde sutil. Contiene una cita institucional de gran tamaño tipográfico, centrada, que resume la filosofía de la empresa. Es un momento de pausa visual entre el grid y el preview del equipo.
+
+### Espaciado
+- Padding vertical: 80px desktop, 56px mobile
+- Border top: `1px solid #e4e6ea`
+- Border bottom: `1px solid #e4e6ea`
+
+### Contenido exacto
+
+**Comilla decorativa:**
+Un carácter tipográfico `"` (comilla de apertura tipográfica) en Noto Serif, 120px, color `#143067` opacity 0.08. Posición: absoluta, arriba a la izquierda del contenedor. No interfiere con el texto.
+
+**Cita principal:**
+```
+"En Confecciones Liss creemos que una prenda nunca comienza
+en una máquina de coser; comienza en la confianza que
+una persona deposita en quien la confecciona."
+```
+- Noto Serif, 28px/40px desktop, 22px/32px mobile
+- Weight 600
+- Color: `#191c1e`
+- Texto centrado
+- Max-width: 720px
+- Margin: 0 auto
+
+**Atribución:**
+```
+— Filosofía de Confecciones Liss
+```
+- Manrope, 14px, weight 500, color `#444650`
+- Centrado
+- Margin top: 24px
+
+**Enlace a filosofía:**
+```
+Texto:    Leer nuestra filosofía completa
+Destino:  /empresa/filosofia
+Estilo:   Manrope 14px weight 600, color #143067
+          Underline decorativo que aparece en hover
+          Ícono ArrowRight 14px a la derecha, color #143067
+Posición: Centrado debajo de la atribución, margin top 20px
+```
+
+---
+
+## 11. BLOQUE 6 — MINI-PREVIEW DEL EQUIPO
+
+### Concepto
+Una sección con fondo `#f8f9fb` que muestra una vista previa reducida del equipo. No es un listado completo. Son tarjetas compactas con nombre, cargo e imagen placeholder. El objetivo es humanizar la empresa antes del CTA final.
+
+### Espaciado
+- Padding vertical: 64px desktop, 48px mobile
+
+### Eyebrow
+```
+EL EQUIPO
+```
+- Manrope, 12px, weight 700, tracking 0.12em, UPPERCASE, color `#b43024`
+- Centrado, margin bottom 10px
+
+### Título
+```
+Las personas detrás de cada uniforme
+```
+- Noto Serif, 36px/44px desktop, 26px/34px mobile
+- Weight 700, color `#191c1e`
+- Centrado, margin bottom 8px
+
+### Subtítulo
+```
+Un equipo multidisciplinario especializado en confección,
+calidad y transformación digital.
+```
+- Manrope, 16px, weight 400, color `#444650`
+- Centrado, max-width 500px, margin 0 auto, margin bottom 48px
+
+### Grid de tarjetas de equipo
+
+**Desktop:** 4 columnas. Mostrar solo los 4 primeros miembros en este bloque.
+**Tablet:** 2 columnas × 2 filas. 4 tarjetas.
+**Mobile:** 2 columnas × 2 filas. 4 tarjetas.
+
+**Los 4 miembros mostrados en este bloque (en este orden exacto):**
+
+1. Iris Lisseth de Molina — Directora General y Fundadora
+2. Lilian Romero — Especialista en Confección de Uniformes
+3. Nubia Vázquez — Especialista en Confección de Prendas
+4. René Alfonso Méndez — Responsable de Control de Calidad
+
+### Estilo de cada tarjeta de equipo
+
+```
+Fondo:          #ffffff
+Border:         1px solid #e4e6ea
+Border-radius:  14px
+Padding:        20px
+Hover:          box-shadow SHADOW_MD, translateY(-2px)
+Transition:     all 220ms ease
+Cursor:         pointer (toda la tarjeta enlaza al perfil individual)
+```
+
+**Imagen de perfil:**
+```
+Forma:          Círculo
+Tamaño:         72px × 72px
+Background:     #edf1f7 (placeholder)
+Ícono dentro:   lucide-react → User, 32px, color #143067 opacity 0.4
+                (cuando no hay foto real)
+Margin bottom:  16px
+```
+
+**Contenido de cada tarjeta:**
+```
+Nombre:   Manrope 15px weight 700 color #191c1e margin-bottom 4px
+Cargo:    Manrope 12px weight 400 color #444650 margin-bottom 12px
+Enlace:   "Ver perfil →"
+          Manrope 13px weight 600 color #143067
+          Sin subrayado por defecto. Subrayado en hover.
+```
+
+**Rutas de enlace de cada tarjeta:**
+```
+Iris Lisseth de Molina    → /empresa/equipo/iris-lisseth-de-molina
+Lilian Romero             → /empresa/equipo/lilian-romero
+Nubia Vázquez             → /empresa/equipo/nubia-vazquez
+René Alfonso Méndez       → /empresa/equipo/rene-alfonso-mendez
+```
+
+### Botón final del bloque
+```
+Texto:    Ver a todos los integrantes del equipo
+Destino:  /empresa/equipo
+Estilo:   Secundario — fondo transparente, texto #143067, borde 1.5px solid #143067
+Padding:  12px 28px, radius 8px
+Posición: Centrado, margin top 40px
+Hover:    Fondo #edf1f7
+```
+
+---
+
+## 12. BLOQUE 7 — CTA FINAL + DATOS DE CONTACTO
+
+### Concepto
+El cierre de la página. Fondo `#143067` (azul institucional profundo). Composición en dos partes: izquierda con CTA de contacto, derecha con datos directos. Tono institucional y cálido a la vez.
+
+### Espaciado
+- Padding vertical: 80px desktop, 64px mobile
+- Border-radius: 0 (ocupa ancho completo como banda final antes del footer global)
+
+### Grid
+- Desktop: 2 columnas, proporción 55% / 45%, gap 80px, alineación vertical centrada
+- Mobile: 1 columna, gap 40px
+
+### Columna izquierda
+
+**Eyebrow:**
+```
+CONTACTO
+```
+- Manrope, 12px, weight 700, tracking 0.12em, UPPERCASE, color rgba(255,255,255,0.55)
+- Margin bottom 12px
+
+**Título:**
+```
+¿Listo para comenzar
+tu pedido?
+```
+- Noto Serif, 36px/44px desktop, 28px/36px mobile
+- Weight 700, color `#ffffff`
+- Margin bottom 16px
+
+**Párrafo:**
+```
+Contáctanos directamente para cotizar tu pedido, resolver
+tus dudas o coordinar una visita al taller. Respondemos
+por WhatsApp de lunes a sábado.
+```
+- Manrope, 16px/26px, weight 400, color rgba(255,255,255,0.75)
+- Margin bottom 36px
+
+**Botón CTA principal:**
+```
+Texto:      Cotizar por WhatsApp
+Href:       https://wa.me/50373317181
+Target:     _blank
+Estilo:     Fondo #b43024, texto #ffffff, sin borde
+Padding:    15px 32px, radius 8px
+Font:       Manrope 15px weight 700
+Hover:      Fondo #9c2820, box-shadow 0 4px 20px rgba(180,48,36,0.4), translateY(-1px)
+Transition: all 200ms ease
+Ícono:      lucide-react → MessageCircle, 18px, a la izquierda del texto, gap 8px
+```
+
+**Enlace de correo:**
+```
+Texto:      confeccionesliss.contacto@gmail.com
+Href:       mailto:confeccionesliss.contacto@gmail.com
+Estilo:     Manrope 14px weight 400, color rgba(255,255,255,0.65)
+            Underline en hover, color #ffffff en hover
+Display:    Block, margin top 16px
+```
+
+### Columna derecha
+
+Tres bloques de datos de contacto apilados verticalmente con gap 24px:
+
+**Bloque 1 — Dirección:**
+```
+Ícono:   lucide-react → MapPin, 20px, color rgba(255,255,255,0.6)
+Label:   "Dirección"
+         Manrope 11px weight 600 tracking 0.08em UPPERCASE color rgba(255,255,255,0.5)
+Dato:    "Barrio La Merced, 5A Calle Poniente & 1A Avenida Sur, San Miguel, El Salvador"
+         Manrope 15px weight 400 color #ffffff
+```
+
+**Bloque 2 — Teléfono / WhatsApp:**
+```
+Ícono:   lucide-react → Phone, 20px, color rgba(255,255,255,0.6)
+Label:   "WhatsApp / Teléfono"
+Dato:    "+503 7331 7181"
+         Manrope 15px weight 600 color #ffffff
+         Enlazado a: https://wa.me/50373317181
+```
+
+**Bloque 3 — Redes sociales:**
+```
+Ícono:   lucide-react → Share2, 20px, color rgba(255,255,255,0.6)
+Label:   "Redes sociales"
+Dato:    "@confeccionliss"
+         Manrope 15px weight 400 color rgba(255,255,255,0.85)
+         (Texto estático — sin enlace único ya que aplica a múltiples plataformas)
+```
+
+**Línea separadora decorativa** entre los bloques de datos:
+- `1px solid rgba(255,255,255,0.1)` horizontal, ancho completo de la columna derecha
+
+---
+
+## 13. ANIMACIONES Y MICROINTERACCIONES
+
+### Entrada de la página
+Usar `framer-motion` con `AnimatePresence`. La página entera hace fade-in suave en 300ms con `opacity: 0 → 1`. Sin movimiento vertical en el fade-in de la página.
+
+### Entradas por scroll (IntersectionObserver o Framer Motion `whileInView`)
+Aplicar a: Bloque 3, Bloque 4, Bloque 5, Bloque 6, Bloque 7.
+
+```
+Variante de entrada estándar:
+  initial:   { opacity: 0, y: 24 }
+  animate:   { opacity: 1, y: 0 }
+  transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }
+  once:      true (no repetir al hacer scroll de vuelta)
+```
+
+Las tarjetas del Bloque 4 entran con un **stagger** de 60ms entre cada tarjeta. El orden del stagger sigue el orden visual del grid (izquierda a derecha, arriba a abajo).
+
+```
+Stagger:
+  transition: { delay: index * 0.06 }
+```
+
+### Hover en tarjetas
+- Transform: `translateY(-3px)`, duration 260ms
+- Box-shadow: cambio de SHADOW_SM a SHADOW_HOVER, duration 260ms
+- Ícono ArrowUpRight: `opacity: 0 → 1`, `transform: translateX(-4px) translateY(4px) → translateX(0) translateY(0)`, duration 200ms
+
+### Respeto a preferencias del sistema
+Implementar `@media (prefers-reduced-motion: reduce)` deshabilitando transforms y animaciones. Solo permitir opacity transitions.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+---
+
+## 14. RESPONSIVE — BREAKPOINTS EXACTOS
+
+```
+mobile:   < 640px
+sm:       640px – 767px
+tablet:   768px – 1023px
+desktop:  ≥ 1024px
+xl:       ≥ 1280px
+2xl:      ≥ 1536px
+```
+
+### Comportamiento por breakpoint en cada bloque:
+
+**Bloque 2 (Hero):**
+- `<640px`: columna única. Imagen debajo del texto. Imagen con aspect-ratio 4:3. Botones full-width apilados.
+- `640–767px`: columna única. Igual que mobile.
+- `768–1023px`: 2 columnas 50/50. Gap 32px. Imagen mantiene ratio 4:3.
+- `≥1024px`: 2 columnas 55/45. Gap 64px. Hero mínimo 480px de altura.
+
+**Bloque 3 (Datos):**
+- `<768px`: 2×2 grid. Gap 0. Sin divisores. Cada celda con padding 24px 16px.
+- `≥768px`: 4 columnas con divisores verticales.
+
+**Bloque 4 (Tarjetas Hub):**
+- `<768px`: 1 columna. Todas las tarjetas igual de anchas. Min-height 140px.
+- `768–1023px`: 2 columnas. La Tarjeta A ocupa col-span-2. Las demás en pares.
+- `≥1024px`: Grid Bento asimétrico descrito anteriormente.
+
+**Bloque 6 (Equipo preview):**
+- `<640px`: 2 columnas × 2 filas.
+- `640–1023px`: 2 columnas × 2 filas.
+- `≥1024px`: 4 columnas × 1 fila.
+
+**Bloque 7 (CTA Final):**
+- `<768px`: 1 columna. Columna izquierda primero, columna derecha debajo. Botón full-width.
+- `≥768px`: 2 columnas como se especificó.
+
+---
+
+## 15. SEMÁNTICA HTML Y ACCESIBILIDAD
+
+```
+<main> wrapping toda la página
+<nav aria-label="breadcrumb"> para el breadcrumb
+<section aria-labelledby="hero-heading"> para el Hero
+<section aria-labelledby="datos-heading"> para la banda de datos
+<section aria-labelledby="navegacion-heading"> para el grid de tarjetas
+<blockquote> para la cita institucional del Bloque 5
+<section aria-labelledby="equipo-heading"> para el preview del equipo
+<section aria-labelledby="contacto-heading"> para el CTA final
+```
+
+Cada `<section>` tiene un `id` único correspondiente.
+
+Todas las tarjetas de navegación son `<a>` envolviendo el contenido completo. No usar `<div>` con onClick para navegación.
+
+Las tarjetas del Bloque 6 (equipo) también son `<a>` envolviendo todo el contenido de la tarjeta.
+
+La Tarjeta K (contacto rápido) no es un `<a>`. Es un `<div>` con `role="region"` y `aria-label="Información de contacto rápido"`.
+
+**Focus visible en todos los elementos interactivos:**
+```css
+:focus-visible {
+  outline: 2px solid #143067;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+```
+
+**Alt text de imagen del Hero:**
+```
+"Taller de confección de Confecciones Liss en San Miguel, El Salvador"
+```
+
+**Skip link:**
+```html
+<a href="#main-content" class="sr-only focus:not-sr-only">
+  Saltar al contenido principal
+</a>
+```
+Visible solo en focus, posicionado absolutamente en la esquina superior izquierda con fondo `#143067` y texto `#ffffff`.
+
+---
+
+## 16. SEO — METADATOS
+
+Implementar en el `<head>` del archivo `page.tsx` o `layout.tsx` correspondiente usando `generateMetadata` de Next.js:
+
+```typescript
+export const metadata = {
+  title: 'Empresa | Confecciones Liss — Taller de Uniformes en San Miguel, El Salvador',
+  description: 'Conoce Confecciones Liss: empresa familiar salvadoreña con más de 20 años confeccionando uniformes escolares, empresariales e indumentaria médica. Historia, equipo, procesos y valores.',
+  keywords: [
+    'confecciones liss',
+    'uniformes san miguel el salvador',
+    'taller de uniformes el salvador',
+    'uniformes escolares san miguel',
+    'uniformes médicos el salvador',
+    'scrubs el salvador',
+    'empresa de uniformes san miguel',
+  ],
+  openGraph: {
+    title: 'Empresa | Confecciones Liss',
+    description: 'Empresa familiar salvadoreña especializada en uniformes escolares, empresariales e indumentaria médica. Más de 20 años de experiencia.',
+    url: 'https://confeccionesliss.com/empresa',
+    siteName: 'Confecciones Liss',
+    locale: 'es_SV',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://confeccionesliss.com/empresa',
+  },
+}
+```
+
+**Structured Data (JSON-LD):**
+Insertar en el `<head>` mediante `<Script type="application/ld+json">`:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Confecciones Liss",
+  "description": "Empresa familiar salvadoreña especializada en confección de uniformes escolares, empresariales e indumentaria médica.",
+  "foundingDate": "2021-01-20",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Barrio La Merced, 5A Calle Poniente & 1A Avenida Sur",
+    "addressLocality": "San Miguel",
+    "addressCountry": "SV"
+  },
+  "telephone": "+50373317181",
+  "email": "confeccionesliss.contacto@gmail.com",
+  "url": "https://confeccionesliss.com",
+  "sameAs": [
+    "https://www.pinterest.com/confeccionliss",
+    "https://www.youtube.com/@confeccionliss"
+  ]
+}
+```
+
+---
+
+## 17. ESTRUCTURA DE ARCHIVOS
+
+```
+app/
+  empresa/
+    page.tsx          ← Esta página. El Hub /empresa
+    layout.tsx        ← Layout específico de /empresa si es necesario
+    components/
+      HeroSection.tsx
+      DataBand.tsx
+      NavigationGrid.tsx
+      NavCard.tsx           ← Tarjeta individual reutilizable solo dentro de /empresa
+      InstitutionalQuote.tsx
+      TeamPreview.tsx
+      TeamPreviewCard.tsx
+      ContactCTA.tsx
+```
+
+**Nota:** Los componentes en `app/empresa/components/` son locales a esta sección. No exportarlos globalmente.
+
+---
+
+## 18. ESTADO DE CARGA
+
+No implementar skeleton loaders en esta página. Todo el contenido es estático y no requiere fetch. La página debe renderizarse completamente en el servidor (SSG o SSR).
+
+Usar `export const dynamic = 'force-static'` si el framework lo permite para asegurar generación estática.
+
+---
+
+## 19. PERFORMANCE
+
+- Las imágenes usan `next/image` con `sizes` correctos.
+- La imagen del Hero usa `priority={true}`.
+- Las tipografías usan `next/font/google` con `display: 'swap'`.
+- No importar librerías pesadas innecesarias.
+- El componente de Framer Motion se importa con `dynamic` si el bundle inicial es una preocupación: `import { motion } from 'framer-motion'` directo es aceptable para este caso.
+
+---
+
+## 20. CHECKLIST DE AUDITORÍA FINAL
+
+Antes de entregar la implementación, verificar:
+
+- [ ] ¿Las 11 tarjetas del grid enlazan a su ruta correcta?
+- [ ] ¿La Tarjeta A tiene borde izquierdo de acento `#143067`?
+- [ ] ¿La Tarjeta F tiene fondo `#143067` y texto blanco?
+- [ ] ¿La Tarjeta K NO es un enlace de navegación?
+- [ ] ¿El Hero tiene su badge con fecha de fundación?
+- [ ] ¿El breadcrumb enlaza correctamente a `/`?
+- [ ] ¿El botón de WhatsApp del CTA final enlaza a `https://wa.me/50373317181`?
+- [ ] ¿El correo del CTA final enlaza a `mailto:confeccionesliss.contacto@gmail.com`?
+- [ ] ¿Las 4 tarjetas del preview de equipo enlazan al slug correcto?
+- [ ] ¿El botón "Ver a todos los integrantes" enlaza a `/empresa/equipo`?
+- [ ] ¿El enlace "Conoce nuestra historia" enlaza a `/empresa/sobre-nosotros`?
+- [ ] ¿El enlace "Leer nuestra filosofía completa" enlaza a `/empresa/filosofia`?
+- [ ] ¿La cita institucional usa `<blockquote>`?
+- [ ] ¿Existe el skip link de accesibilidad?
+- [ ] ¿El focus visible está implementado en todos los elementos interactivos?
+- [ ] ¿Las animaciones respetan `prefers-reduced-motion`?
+- [ ] ¿Los metadatos SEO están completos?
+- [ ] ¿El JSON-LD está implementado?
+- [ ] ¿Todas las imágenes tienen atributo `alt` definido?
+- [ ] ¿Los placeholders de imagen están claramente identificados con su ID?
+- [ ] ¿La página es completamente legible y funcional en mobile `<375px`?
+- [ ] ¿Ningún texto se corta o desborda en ningún breakpoint?
+
+---
+
+*Fin de la especificación técnica — Hub `/empresa` — Confecciones Liss v1.0*

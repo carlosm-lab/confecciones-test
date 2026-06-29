@@ -34,13 +34,13 @@ const eslintConfig = defineConfig([
           default: "allow",
           rules: [
             {
-              from: ["ui"],
-              disallow: ["components", "hooks", "actions", "server"],
+              from: { type: "ui" },
+              disallow: { to: { type: ["components", "hooks", "actions", "server"] } },
               message: "UI components cannot import from higher layers.",
             },
             {
-              from: ["client", "components"],
-              disallow: ["server", "actions"],
+              from: [{ type: "client" }, { type: "components" }],
+              disallow: { to: { type: ["server", "actions"] } },
               message: "Client components cannot directly import server code or actions.",
             },
           ],

@@ -36,21 +36,7 @@ const nextConfig = {
   allowedDevOrigins: ["192.168.1.189"],
   async headers() {
     const isDev = process.env.NODE_ENV === 'development';
-    const commonHeaders = [
-      // Prevent ALL caching of HTML documents so the browser always fetches fresh
-      // from the server when restoring a session — this is the root cause of the
-      // "dead page" problem on browser reopen.
-      { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
-      { key: 'Pragma', value: 'no-cache' },
-      { key: 'Expires', value: '0' },
-      { key: 'Surrogate-Control', value: 'no-store' },
-    ];
-
-    // SEC-006 fix: headers aplicados SIEMPRE (dev + prod)
-    // X-Frame-Options, X-Content-Type-Options y Referrer-Policy son seguros en dev.
-    // X-XSS-Protection es heredado pero inofensivo.
-    // HSTS excluido de dev (HSTS en localhost rompe el ambiente local).
-    // CSP excluido de dev (interferencia con HMR de Next.js).
+    
     const alwaysOnHeaders = [
       { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
       { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -62,9 +48,6 @@ const nextConfig = {
       { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
       {
         key: 'Content-Security-Policy',
-        // report-uri: los navegadores envían automáticamente un POST a /api/csp-report
-        // cuando bloquean un recurso — crea un log de auditoría de intentos de XSS.
-        // report-to es el estándar moderno, report-uri es el legacy con mayor soporte.
         value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https://lh3.googleusercontent.com; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' ws: wss: https://cvbdqsxjfrbwovzpydng.supabase.co https://cvbdqsxjfrbwovzpydng.supabase.in; frame-src 'self' https://challenges.cloudflare.com https://www.google.com; report-uri /api/csp-report;",
       },
       {
@@ -75,9 +58,25 @@ const nextConfig = {
 
     return [
       {
-        // Apply no-cache headers to all HTML page routes (not static assets)
-        source: '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|eot|otf|css|js|map)).*)',
-        headers: [...commonHeaders, ...alwaysOnHeaders, ...securityHeaders],
+        // 1. Rutas dinámicas / privadas / interactivas (evitar cache por completo)
+        source: '/(admin|mi-cuenta|api|auth)/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
+          { key: 'Pragma', value: 'no-cache' },
+          { key: 'Expires', value: '0' },
+          { key: 'Surrogate-Control', value: 'no-store' },
+          ...alwaysOnHeaders,
+          ...securityHeaders,
+        ],
+      },
+      {
+        // 2. Rutas públicas (SSG optimizado para CDNs y navegadores)
+        source: '/((?!admin|mi-cuenta|api|auth|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|eot|otf|css|js|map)).*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=0, stale-while-revalidate=86400' },
+          ...alwaysOnHeaders,
+          ...securityHeaders,
+        ],
       },
     ];
   },

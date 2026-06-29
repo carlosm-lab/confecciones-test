@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import FilosofiaClient from "@/components/empresa/FilosofiaClient";
 
 /** Sandbox de desarrollo — nunca debe aparecer en buscadores. */
 export const metadata: Metadata = {
@@ -15,6 +16,9 @@ export default function SandboxPage() {
           Esta ruta se utiliza exclusivamente para validar visualmente y probar
           los componentes del proyecto.
         </div>
+      </div>
+      <div className="mt-8 border-t border-[#e1e2e4] pt-8">
+        <FilosofiaClient />
       </div>
     </div>
   );

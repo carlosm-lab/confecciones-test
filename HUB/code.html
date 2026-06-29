@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Confecciones Liss - Nuestra Identidad</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;family=Noto+Serif:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#b1c5ff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#ffdad5",
+                        "primary": "#001b4a",
+                        "on-tertiary-fixed-variant": "#3e465d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f8f9fc",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary-fixed": "#410000",
+                        "on-primary-container": "#8299d7",
+                        "primary-fixed-dim": "#b1c5ff",
+                        "on-tertiary-container": "#929ab5",
+                        "tertiary-container": "#2a3248",
+                        "background": "#f8f9fc",
+                        "surface-container": "#eceef0",
+                        "outline": "#757781",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "surface-variant": "#e1e2e5",
+                        "on-primary-fixed": "#001946",
+                        "secondary-fixed-dim": "#ffb4a9",
+                        "on-secondary-container": "#650001",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2e3133",
+                        "on-tertiary-fixed": "#121b30",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary": "#b02d22",
+                        "tertiary": "#141d32",
+                        "surface-dim": "#d8dadd",
+                        "surface-tint": "#455d96",
+                        "surface-container-high": "#e7e8eb",
+                        "primary-fixed": "#d9e2ff",
+                        "surface-container-highest": "#e1e2e5",
+                        "on-secondary-fixed-variant": "#8e130c",
+                        "primary-container": "#143067",
+                        "outline-variant": "#c4c6d1",
+                        "surface": "#f8f9fc",
+                        "tertiary-fixed": "#dae2ff",
+                        "on-surface-variant": "#444650",
+                        "on-primary-fixed-variant": "#2c457d",
+                        "secondary-container": "#fc6452",
+                        "tertiary-fixed-dim": "#bec6e2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "section-gap": "80px",
+                        "unit": "8px",
+                        "container-max": "1280px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Noto Serif"],
+                        "headline-sm": ["Noto Serif"],
+                        "label-md": ["Manrope"],
+                        "title-lg": ["Manrope"],
+                        "headline-md": ["Noto Serif"],
+                        "body-lg": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "display-lg": ["Noto Serif"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["36px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "title-lg": ["20px", { "lineHeight": "1.5", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .editorial-shadow {
+            box-shadow: 0 10px 30px -10px rgba(0, 27, 74, 0.05);
+        }
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0, 27, 74, 0.1);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant opacity-100 sticky top-0 z-50 w-full transition-all duration-300">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="font-display-lg text-title-lg font-bold tracking-tight text-primary">
+                Confecciones Liss
+            </div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Sobre Nosotros</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="#">Filosofía</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="#">Proceso</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="#">Calidad</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="#">Responsabilidad</a>
+</nav>
+<div class="hidden md:block">
+<button class="bg-primary text-on-primary px-6 py-3 rounded uppercase font-label-md text-label-md hover:bg-primary-container transition-colors">
+                    Media Kit
+                </button>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative pt-24 pb-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<div class="lg:col-span-7 z-10 pr-0 lg:pr-12">
+<span class="inline-block px-3 py-1 bg-surface-variant text-on-surface-variant rounded-full font-label-sm text-label-sm uppercase tracking-widest mb-6">Empresa</span>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-8">Nuestra Identidad</h1>
+<div class="space-y-6 text-on-surface-variant font-body-lg text-body-lg max-w-2xl">
+<p>
+                            Durante dos décadas, Confecciones Liss ha cultivado un legado de precisión y dedicación en el arte textil. Nuestra identidad se forja en la intersección entre la artesanía tradicional y la innovación industrial, creando piezas que hablan por sí mismas.
+                        </p>
+<p>
+                            Más que una fábrica, somos un colectivo de creadores comprometidos con la excelencia. Descubra los pilares que sostienen nuestro proceso, nuestro equipo y nuestra visión hacia el futuro del diseño textil.
+                        </p>
+</div>
+</div>
+<div class="lg:col-span-5 relative h-[500px] lg:h-[700px] mt-12 lg:mt-0 w-full">
+<div class="absolute inset-0 bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/30">
+<img alt="" class="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-G2wJz71AP5vwCDp3t359I7x2kSZWb9W7SHnNgNThWNfLM7fMGzA0y5M1GjR6pDnLljfIYHiihui8K68JiUD61l1KTSZN1A_Oo_XYoUlopyn2KmLs-ATCrchByg932AMdkhGYxkz2-QJc41OYMvs5KMFq3BuohZHD_x0PQnYgjNgxZmdeVpUJnQX1nbkXpev54ppZsOzALWst7M23heLgF9ER-lEwexccB4aD4cpnHF9CP4YW-nLRvjo2GTw9BzKMAp4XF9tpZeY"/>
+</div>
+<!-- Texture overlay hint -->
+<div class="absolute -bottom-10 -left-10 w-48 h-48 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mix-blend-overlay"></div>
+</div>
+</div>
+</section>
+<!-- Navigation Mosaic -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto bg-surface relative">
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCA_dtbKO2gKPfmO3qqXiKveDcd4FvT5-dtf5Y5zdKUMFrPgP--wyVakAedqUAIUoUVO9pbw1Ji79fE4Qv8Yq0n_DtU4mdHINtHM5wo5yqjryB93PfBkhYYY1YTPXxUfoThIeLTg8WUUi9YxYRHoUxISBWZqw31qFQwfasdrg0GI1YqmMmLdQV93xfiyzVNrOLCuIBnurN-ZT1A4rWkfflrNbleNYUF1T2gXGZdbUU7olBfd5JvgFwrlSgQ5iAu2zM1vqPa8iif6bA'); background-size: cover;"></div>
+<div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-gutter grid-rows-[auto]">
+<!-- Heritage Column (Span 7) -->
+<div class="md:col-span-7 flex flex-col gap-gutter">
+<!-- Sobre Nosotros -->
+<a class="group block relative h-[400px] overflow-hidden rounded border border-outline-variant/50 hover-lift bg-white" href="#">
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-primary/0 transition-colors duration-500 z-10"></div>
+<img class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 transition-opacity duration-500" data-alt="A sophisticated black and white photograph showing a pair of experienced tailor hands carefully measuring a piece of fine worsted wool fabric with a wooden ruler, soft natural window light illuminating the texture of the cloth, creating a timeless, premium atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDql6RAV4sbPJQGYiXijV7KHGzjJUep7ygJh0aamJxp9_KY2wPDDgZuqgHyZ2hSX5FHdJ0_zeDOOcmveyy3URfYQuwBDOHHaeKJnJtwfHT8R4APNmQ4dC5IeR89-M-GRnMhKL3Mrmz4RIrW6UfXKZPfojqoPElzWRv7xPnZzlzYWzxpMNKA05CvKHF38tVCtOs7SaFpaAbA0baMp_63_ivw10zgiOvHS0bReDbkD2_GAibQocZlAk9zBix5wNco3k5Ph_kMGvT35cY"/>
+<div class="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-primary/90 via-primary/30 to-transparent z-20">
+<h2 class="font-headline-md text-headline-md text-white mb-2 group-hover:-translate-y-2 transition-transform duration-300">Sobre Nosotros</h2>
+<p class="font-body-md text-body-md text-white/80 opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300">La historia y visión detrás de nuestro legado textil.</p>
+</div>
+</a>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter h-[250px]">
+<!-- Filosofía -->
+<a class="group block relative p-8 rounded border border-outline-variant/50 hover-lift bg-surface-container-lowest flex flex-col justify-between" href="#">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2 group-hover:text-secondary transition-colors">Filosofía</h3>
+<p class="font-body-sm text-on-surface-variant">El detalle como norma, la calidad como hábito.</p>
+</div>
+</a>
+<!-- Equipo -->
+<a class="group block relative overflow-hidden rounded border border-outline-variant/50 hover-lift bg-primary" href="#">
+<div class="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-500 mix-blend-luminosity" data-alt="A wide shot of a modern, clean textile factory floor bathed in warm afternoon sunlight, showing rows of high-tech sewing machines and a few elegantly dressed workers in crisp navy uniforms reviewing patterns." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQfuCw9iFMcAepWqQzYxvk_deGCTp3Sd_jtBmvgXVVurewLIaQrmqPhJbgTVGbSfnmy6RC2LeLmJWSCBNhbirYqs2oO3odK-T6MTipYU99fX9SjPCglW2voe02jvIoNrJVSx8NQWmY30jpe40cXPSrh006tQQmoXI7rwi1VJ8JoCiBA2IK9qZ4nGtWSZoYST8L1aIlSx1ScBYPuK_yT5akxRP7VH6KdjXxSZWRUQBC02LggCNY2R4ix-7wuNHKeW_qHFzmZdsJ_5E'); background-size: cover;"></div>
+<div class="absolute inset-0 p-8 flex flex-col justify-end z-20">
+<h3 class="font-headline-sm text-headline-sm text-white mb-2">Nuestro Equipo</h3>
+<p class="font-body-sm text-white/80">Los artesanos detrás de la maquinaria.</p>
+</div>
+</a>
+</div>
+</div>
+<!-- Technical Column (Span 5) -->
+<div class="md:col-span-5 flex flex-col gap-gutter">
+<!-- Instalaciones -->
+<a class="group block relative h-[250px] overflow-hidden rounded border border-outline-variant/50 hover-lift bg-surface-container-lowest p-8 flex flex-col justify-between" href="#">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Instalaciones</h3>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+<p class="font-body-md text-on-surface-variant">Un recorrido por nuestro centro de producción de vanguardia.</p>
+</a>
+<!-- Icon Grid for Processes -->
+<div class="grid grid-cols-1 gap-4 flex-grow bg-surface-container-lowest p-6 rounded border border-outline-variant/50">
+<a class="flex items-center gap-4 p-4 rounded hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-16 h-16 shrink-0 flex items-center justify-center bg-surface rounded">
+<img alt="" class="w-10 h-10 object-contain mix-blend-multiply opacity-80 group-hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD6YmAqb_zdTS9DKq81gxmcNQo1DbwvhW0Hzx0Ug6Bpw2z5h0oX6HOvVncd_AyuAPhlSGNRjspP5eKzd0YrjawC1Zw5EZGdXCK4CzUAaXl_SCI3Xl0OLUWMFb1dIjHXKfAbr6dLdFCvviIwVei4lHZFkRHWv0Jpe2Wh0nnlPPfVR8fnMD7MFGLRWE_PcG0XUYqm9Ug69qoEd5pWrq5gn_wCbwu1Qnmq6T6ngDTkGFN-TerIsO0BbuTebPXct0Je4DKVjzFErMGvQ0"/>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-primary">Proceso de Confección</h4>
+<p class="font-body-sm text-on-surface-variant text-sm mt-1">Metodología paso a paso.</p>
+</div>
+</a>
+<div class="h-px w-full bg-outline-variant/30"></div>
+<a class="flex items-center gap-4 p-4 rounded hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-16 h-16 shrink-0 flex items-center justify-center bg-surface rounded text-primary">
+<span class="material-symbols-outlined text-3xl">verified</span>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-primary">Calidad</h4>
+<p class="font-body-sm text-on-surface-variant text-sm mt-1">Estándares y protocolos.</p>
+</div>
+</a>
+<div class="h-px w-full bg-outline-variant/30"></div>
+<a class="flex items-center gap-4 p-4 rounded hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-16 h-16 shrink-0 flex items-center justify-center bg-surface rounded text-primary">
+<span class="material-symbols-outlined text-3xl">workspace_premium</span>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-primary">Certificaciones</h4>
+<p class="font-body-sm text-on-surface-variant text-sm mt-1">Garantías internacionales.</p>
+</div>
+</a>
+</div>
+</div>
+<!-- Bottom Typography Links (Span 12) -->
+<div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-outline-variant/30 mt-4">
+<a class="group" href="#">
+<span class="block font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-2">Compromiso</span>
+<h4 class="font-title-lg text-title-lg text-primary group-hover:text-secondary transition-colors flex items-center gap-2">
+                            Responsabilidad Social <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">north_east</span>
+</h4>
+</a>
+<a class="group" href="#">
+<span class="block font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-2">Ética</span>
+<h4 class="font-title-lg text-title-lg text-primary group-hover:text-secondary transition-colors flex items-center gap-2">
+                            Transparencia <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">north_east</span>
+</h4>
+</a>
+<a class="group" href="#">
+<span class="block font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-2">Prensa</span>
+<h4 class="font-title-lg text-title-lg text-primary group-hover:text-secondary transition-colors flex items-center gap-2">
+                            Media Kit <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">north_east</span>
+</h4>
+</a>
+</div>
+</div>
+</section>
+<!-- Brief Timeline Accent -->
+<section class="py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-t border-outline-variant/20">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+<div class="w-full md:w-1/3">
+<h3 class="font-headline-sm text-headline-sm text-primary">Evolución Constante</h3>
+<p class="font-body-sm text-on-surface-variant mt-2">Hitos que marcan nuestro camino hacia la perfección.</p>
+</div>
+<div class="w-full md:w-2/3 flex flex-wrap gap-8 justify-start md:justify-end">
+<div class="flex flex-col">
+<span class="font-display-lg-mobile text-primary opacity-20">1998</span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant -mt-4 pl-1">Fundaciones</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-lg-mobile text-primary opacity-20">2015</span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant -mt-4 pl-1">Expansión</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-lg-mobile text-primary">Hoy</span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-secondary -mt-4 pl-1">Excelencia</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
+<div class="md:col-span-4 mb-8 md:mb-0">
+<div class="font-display-lg text-headline-sm text-primary mb-4">
+                    Confecciones Liss
+                </div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+                    © 2024 Confecciones Liss. Excelencia Textil desde hace dos décadas.
+                </p>
+</div>
+<div class="md:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
+<div>
+<h4 class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-6">Nosotros</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-primary underline hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Sobre Nosotros</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Filosofía</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Nuestro Equipo</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Instalaciones</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-6">Operación</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Proceso</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Calidad</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Certificaciones</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-6">Corporativo</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Responsabilidad Social</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Transparencia</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors focus:ring-1 focus:ring-primary outline-none" href="#">Media Kit</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
