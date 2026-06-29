@@ -104,10 +104,10 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <header
         ref={headerRef}
-        className="relative flex min-h-[92vh] flex-col items-stretch justify-between border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-12 md:px-8 md:py-20 lg:flex-row lg:py-0"
+        className="relative flex min-h-[92vh] flex-col items-stretch justify-between border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 pt-4 pb-12 md:px-8 md:pt-6 md:pb-20 lg:flex-row lg:py-0"
       >
         {/* Left Side: Word and Quotes */}
-        <div className="z-10 flex flex-1 flex-col justify-between pt-12 pb-8 lg:py-24">
+        <div className="z-10 flex flex-1 flex-col justify-between pt-4 pb-8 lg:py-24">
           <div>
             <motion.h1
               initial={{ opacity: 0, y: 15 }}

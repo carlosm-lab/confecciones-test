@@ -9,7 +9,7 @@ export default function MediaKitClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* CABECERA (Max-height 380px, Split 60/40) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <header className="mx-auto max-w-[1600px] border-b border-[#e1e2e5] px-5 pt-8 pb-10 md:px-8">
+      <header className="mx-auto max-w-[1600px] border-b border-[#e1e2e5] px-5 pt-4 pb-10 md:px-8 md:pt-6">
         <div className="flex flex-col items-center justify-between gap-6 overflow-hidden rounded border border-[#e1e2e5] bg-white p-6 shadow-sm md:max-h-[380px] md:flex-row md:p-8">
           {/* Columna Izquierda: Textos */}
           <div className="space-y-4 md:w-3/5">

@@ -782,7 +782,7 @@ export default function InstalacionesClient() {
           TALLER
         </span>
 
-        <div className="relative z-10 mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-12 px-5 py-20 md:px-8 lg:grid-cols-2">
+        <div className="relative z-10 mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-12 px-5 pt-4 pb-20 md:px-8 md:pt-6 md:pb-20 lg:grid-cols-2">
           <motion.div
             className="space-y-8"
             initial="hidden"

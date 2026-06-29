@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { heroTrustBadges } from "@/lib/seo-data";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 const PAGE_URL = `${siteConfig.url}/empresa`;
 const PAGE_TITLE = "Empresa | Confecciones Liss";
@@ -213,6 +214,19 @@ export default function EmpresaPage() {
       />
 
       <main className="bg-[#f8f9fc] text-[#191c1e] antialiased selection:bg-[#d9e2ff] selection:text-[#001946]">
+        {/* Breadcrumb section */}
+        <section className="bg-[#f8f9fc] px-5 pt-4 pb-0 md:px-8 md:pt-6 md:pb-0">
+          <div className="mx-auto max-w-screen-2xl">
+            <Breadcrumb
+              items={[
+                { label: "Inicio", href: "/" },
+                { label: "Empresa", href: "/empresa" },
+              ]}
+              className="animate-fade-in-up"
+            />
+          </div>
+        </section>
+
         {/* ======================================================== */}
         {/* 1. HERO COPIADO DEL INDEX EXACTAMENTE SIN CAMBIAR NADA */}
         {/* ======================================================== */}
@@ -270,18 +284,14 @@ export default function EmpresaPage() {
                     style={{ animationDelay: "150ms" }}
                   >
                     <p>
-                      Confecciones Liss nació en 2005 en un pequeño cantón de
-                      Chinameca, San Miguel, El Salvador, confeccionando prendas
-                      desde casa. Hoy somos un taller especializado en uniformes
-                      escolares, médicos y empresariales, con más de 20 años de
-                      experiencia respaldada por contratos con el Ministerio de
-                      Educación y talleres de la región.
-                    </p>
-                    <p>
-                      Conozca el equipo, los procesos, la filosofía y la
-                      infraestructura que nos permiten entregar uniformes de
-                      calidad con toma de medidas, bordado personalizado y
-                      control de calidad en cada prenda.
+                      Empezamos Confeccionando prendas desde casa. Hoy somos un
+                      taller especializado en uniformes escolares, médicos y
+                      empresariales, con más de 20 años de experiencia
+                      respaldada por contratos con el Ministerio de Educación y
+                      talleres de la región. Conozca el equipo, los procesos, la
+                      filosofía y la infraestructura que nos permiten entregar
+                      uniformes de calidad con toma de medidas, bordado
+                      personalizado y control de calidad en cada prenda.
                     </p>
                   </div>
                 </div>

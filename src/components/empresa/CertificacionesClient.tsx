@@ -18,7 +18,7 @@ export default function CertificacionesClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* 1. HERO: CENTRO DE CREDENCIALES (Ficha de Expediente) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-8 pb-16 md:px-8 md:pt-12 md:pb-24">
+      <section className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-16 md:px-8 md:pt-6 md:pb-24">
         <div className="rounded border border-[#143067]/20 bg-white p-6 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] md:p-12">
           {/* Metadata superior del expediente */}
           <div className="mb-10 flex flex-col items-start justify-between gap-4 border-b border-[#e1e2e5] pb-6 font-mono text-xs text-[#444650] md:flex-row md:items-center">

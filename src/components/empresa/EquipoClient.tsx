@@ -35,7 +35,7 @@ export default function EquipoClient() {
   return (
     <div className="relative overflow-hidden bg-[#f8f9fb] text-[#191c1e] antialiased selection:bg-[#d7dffc] selection:text-[#143067]">
       {/* 1. CABECERA EDITORIAL */}
-      <section className="relative px-5 py-20 md:px-8">
+      <section className="relative px-5 pt-4 pb-20 md:px-8 md:pt-6 md:pb-20">
         <div className="mx-auto max-w-4xl space-y-6 text-center">
           <motion.div
             initial="hidden"

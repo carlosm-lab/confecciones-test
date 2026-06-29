@@ -128,7 +128,7 @@ export default function SobreNosotrosClient() {
       />
 
       {/* Escena 1: Origen (2005) */}
-      <section className="relative flex min-h-[90vh] items-center justify-center px-5 py-20 md:px-8">
+      <section className="relative flex min-h-[90vh] items-center justify-center px-5 pt-4 pb-20 md:px-8 md:pt-6 md:pb-20">
         <div className="pointer-events-none absolute top-10 left-10 font-serif text-[10rem] leading-none font-bold text-[#143067]/5 select-none md:text-[18rem]">
           2005
         </div>

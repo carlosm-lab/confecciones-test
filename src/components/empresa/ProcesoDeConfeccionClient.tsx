@@ -143,7 +143,7 @@ export default function ProcesoDeConfeccionClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* CABECERA (60/40 con ilustración abstracta) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="relative border-b border-[#e4e6ea] bg-[#f8f9fb] px-5 py-12 md:py-20 lg:px-8">
+      <section className="relative border-b border-[#e4e6ea] bg-[#f8f9fb] px-5 pt-4 pb-12 md:px-8 md:pt-6 md:pb-20">
         <div className="mx-auto w-full max-w-screen-2xl">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
             {/* Lado Izquierdo: Textos */}

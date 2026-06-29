@@ -150,7 +150,7 @@ export default function TransparenciaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* CABECERA DOCUMENTAL (Reemplaza al Hero) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <header className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-8 pb-12 md:px-8">
+      <header className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-12 md:px-8 md:pt-6">
         <div className="rounded border border-[#143067]/20 bg-white p-6 shadow-sm md:p-10">
           <div className="mb-8 flex flex-col items-start justify-between gap-4 border-b border-[#e1e2e5] pb-6 font-mono text-xs text-[#444650] md:flex-row md:items-center">
             <div className="space-y-1">
