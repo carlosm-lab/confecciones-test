@@ -19,7 +19,7 @@ export default function TextilePatternCanvas({
   return (
     <div className="relative flex h-[500px] w-full items-center justify-center overflow-hidden md:h-[600px] lg:h-full">
       {/* Background Tech Label */}
-      <div className="absolute top-8 right-8 font-mono text-[10px] tracking-[0.25em] text-[#b43024] uppercase opacity-60">
+      <div className="absolute top-8 right-8 font-mono text-[10px] font-bold tracking-[0.25em] text-[#143067] uppercase opacity-60">
         LIS-2005 // SCHEMA_V5
       </div>
 
@@ -96,9 +96,9 @@ export default function TextilePatternCanvas({
           {/* French Curve Template 2 (Brand Red Accent) */}
           <path
             d="M 450,150 C 350,160 220,220 120,380 C 140,320 280,200 450,150 Z"
-            fill="#b43024"
+            fill="#143067"
             fillOpacity="0.02"
-            stroke="#b43024"
+            stroke="#143067"
             strokeWidth="2"
             strokeLinecap="round"
           />
@@ -111,7 +111,7 @@ export default function TextilePatternCanvas({
           {/* Measurement Ticks along Curve 2 (Red Accent) */}
           <path
             d="M 320,182 L 322,176 M 300,192 L 302,186 M 280,203 L 282,197 M 260,215 L 262,209 M 240,228 L 242,222"
-            stroke="#b43024"
+            stroke="#143067"
             strokeWidth="0.8"
           />
         </motion.g>
@@ -129,10 +129,10 @@ export default function TextilePatternCanvas({
             strokeDasharray="3,6"
           />
           {/* Scissors indicator point */}
-          <circle cx="500" cy="250" r="3" fill="#b43024" />
+          <circle cx="500" cy="250" r="3" fill="#143067" />
           <path
             d="M 495,245 L 505,255 M 495,255 L 505,245"
-            stroke="#b43024"
+            stroke="#143067"
             strokeWidth="1"
           />
 
@@ -178,7 +178,7 @@ export default function TextilePatternCanvas({
           <text x="130" y="240" fill="currentColor">
             DRAFT_PLANE: A-A
           </text>
-          <text x="350" y="140" fill="#b43024">
+          <text x="350" y="140" fill="#143067">
             SHOULDER_CURVE: R-45
           </text>
           <text x="410" y="520" fill="currentColor">

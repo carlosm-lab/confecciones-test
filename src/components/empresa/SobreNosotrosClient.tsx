@@ -119,7 +119,7 @@ export default function SobreNosotrosClient() {
     <div className="relative overflow-hidden bg-[#f8f9fb] text-[#191c1e] antialiased selection:bg-[#d7dffc] selection:text-[#143067]">
       {/* Barra de progreso de lectura superior */}
       <motion.div
-        className="fixed top-0 left-0 z-50 h-[3px] bg-[#b43024]"
+        className="fixed top-0 left-0 z-50 h-[3px] bg-[#143067]"
         style={{
           scaleX: 0,
           transformOrigin: "0%",
@@ -129,7 +129,7 @@ export default function SobreNosotrosClient() {
       />
 
       {/* Escena 1: Origen (2005) */}
-      <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+      <section className="relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
         <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
           <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
             {/* Breadcrumb section */}
@@ -144,11 +144,11 @@ export default function SobreNosotrosClient() {
               />
             </div>
 
-            <span className="mb-2 font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+            <span className="mb-2 font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
               Capítulo I — El Origen
             </span>
 
-            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
+            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-4xl leading-tight tracking-tight md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-6xl">
               <span className="text-center lg:text-left">
                 Una historia construida{" "}
               </span>
@@ -176,9 +176,8 @@ export default function SobreNosotrosClient() {
                 className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
                 style={{ animationDelay: "300ms" }}
               >
-                <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
-                  <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
-                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
+                <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl md:aspect-auto md:h-full md:w-full">
                     <Image
                       fill
                       src="/images/servicios/mano-obra.png"
@@ -194,7 +193,7 @@ export default function SobreNosotrosClient() {
               {/* COLUMNA DE TEXTO Y ACCIONES */}
               <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
                 <div
-                  className="animate-fade-in-up text-on-surface-variant mb-6 w-full space-y-4 font-sans text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl"
+                  className="animate-fade-in-up text-on-surface-variant mb-6 w-full space-y-4 font-sans text-base leading-relaxed"
                   style={{ animationDelay: "150ms" }}
                 >
                   <p>
@@ -218,8 +217,7 @@ export default function SobreNosotrosClient() {
             className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
             style={{ animationDelay: "300ms" }}
           >
-            <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
-              <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+            <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <div className="relative h-full w-full overflow-hidden rounded-2xl">
                 <Image
                   fill
@@ -240,13 +238,33 @@ export default function SobreNosotrosClient() {
         <div className="mx-auto w-full max-w-screen-2xl space-y-12">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <motion.div
-              className="space-y-6 lg:col-span-5"
+              className="flex justify-center lg:col-span-5 lg:justify-start"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              <div className="border-primary/35 relative flex aspect-square w-full max-w-lg items-center justify-center overflow-hidden rounded-3xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+                <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                  <Image
+                    fill
+                    src="/images/servicios/mano-obra.png"
+                    alt="Reputación y recomendación en el taller"
+                    className="object-cover object-center"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    priority
+                  />
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="space-y-6 lg:col-span-7"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
                 Capítulo II — Reputación
               </span>
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
@@ -258,93 +276,10 @@ export default function SobreNosotrosClient() {
                 reparaciones y uniformes. Cada prenda entregada con precisión
                 generaba una recomendación espontánea.
               </p>
-              <blockquote className="relative border-l-4 border-[#b43024] pl-6 font-serif text-xl leading-relaxed text-[#143067] italic md:text-2xl">
+              <blockquote className="relative border-l-4 border-[#143067] pl-6 font-serif text-xl leading-relaxed text-[#143067] italic md:text-2xl">
                 &ldquo;Su reputación no se construyó con campañas de publicidad.
                 Se construyó gracias a la calidad absoluta de su trabajo.&rdquo;
               </blockquote>
-            </motion.div>
-
-            <motion.div
-              className="flex justify-center lg:col-span-7 lg:justify-end"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              {/* Mapa de Recomendación - SVG interactivo/animado */}
-              <div className="relative flex aspect-square w-full max-w-lg flex-col items-center justify-center rounded-3xl border border-slate-100 bg-[#f8f9fb] p-8">
-                <svg
-                  className="pointer-events-none absolute inset-0 h-full w-full p-4"
-                  viewBox="0 0 400 400"
-                  fill="none"
-                >
-                  {/* Hilos de recomendación */}
-                  <motion.path
-                    d="M200 200 L100 120 M200 200 L300 120 M200 200 L200 80 M200 200 L120 280 M200 200 L280 280"
-                    stroke="#143067"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 4"
-                    variants={drawLine}
-                  />
-                  <motion.path
-                    d="M100 120 L80 60 M300 120 L320 60 M120 280 L60 300 M280 280 L340 300"
-                    stroke="#b43024"
-                    strokeWidth="1"
-                    strokeDasharray="3 3"
-                    variants={drawLine}
-                  />
-                </svg>
-
-                {/* Nodos de la red */}
-                <div className="relative z-10 grid grid-cols-3 gap-16 text-center">
-                  <div className="col-start-2 flex flex-col items-center">
-                    <motion.div
-                      className="flex h-16 w-16 items-center justify-center rounded-full bg-[#143067] font-serif text-lg font-bold text-white shadow-lg"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      Iris
-                    </motion.div>
-                    <span className="mt-2 font-mono text-xs font-semibold text-[#143067]">
-                      FUNDADORA
-                    </span>
-                  </div>
-
-                  <div className="col-start-1 row-start-2 flex flex-col items-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-[#d7dffc] font-sans text-xs font-bold text-[#143067]">
-                      Vecino
-                    </div>
-                    <span className="mt-1 font-sans text-[10px] text-[#444650]">
-                      Cantón
-                    </span>
-                  </div>
-
-                  <div className="col-start-3 row-start-2 flex flex-col items-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-[#d7dffc] font-sans text-xs font-bold text-[#143067]">
-                      Amigo
-                    </div>
-                    <span className="mt-1 font-sans text-[10px] text-[#444650]">
-                      Recomendación
-                    </span>
-                  </div>
-
-                  <div className="col-start-1 row-start-3 flex flex-col items-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-red-100 bg-[#f8d7da] font-sans text-xs font-bold text-[#b43024]">
-                      Colegio
-                    </div>
-                    <span className="mt-1 font-sans text-[10px] text-[#b43024]">
-                      Hito escolar
-                    </span>
-                  </div>
-
-                  <div className="col-start-3 row-start-3 flex flex-col items-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-red-100 bg-[#f8d7da] font-sans text-xs font-bold text-[#b43024]">
-                      Maquila
-                    </div>
-                    <span className="mt-1 font-sans text-[10px] text-[#b43024]">
-                      Industria
-                    </span>
-                  </div>
-                </div>
-              </div>
             </motion.div>
           </div>
         </div>
@@ -352,7 +287,7 @@ export default function SobreNosotrosClient() {
 
       {/* Escena 3: Proyecto Institucional (CE Salomón Granados) */}
       <section className="relative flex min-h-[90vh] items-center justify-center bg-[#f8f9fb] px-5 py-20 md:px-8">
-        <div className="mx-auto w-full max-w-screen-2xl rounded-[2.5rem] border border-[#143067]/10 bg-[#d7dffc] p-8 shadow-[0_30px_70px_rgba(20,48,103,0.06)] md:p-16">
+        <div className="border-primary/35 mx-auto w-full max-w-screen-2xl rounded-[2.5rem] border bg-[#d7dffc] p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-16">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <motion.div
               className="space-y-6 lg:col-span-7"
@@ -366,7 +301,7 @@ export default function SobreNosotrosClient() {
                   CÓDIGO DE ESCUELA: 12855
                 </span>
               </div>
-              <span className="block font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+              <span className="block font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
                 Capítulo III — Confianza en Volumen
               </span>
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
@@ -386,53 +321,53 @@ export default function SobreNosotrosClient() {
             </motion.div>
 
             <motion.div
-              className="flex flex-col gap-4 rounded-3xl border border-[#143067]/10 bg-white p-8 shadow-sm lg:col-span-5"
+              className="space-y-6 lg:col-span-5"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <div className="flex items-center gap-4">
-                <span className="material-symbols-outlined text-4xl text-[#143067]">
-                  check_box
-                </span>
-                <div>
-                  <h4 className="font-sans font-bold text-[#143067]">
-                    Precisión a Escala
-                  </h4>
-                  <p className="font-sans text-xs text-[#444650]">
-                    Cientos de camisas y pantalones a medida.
-                  </p>
-                </div>
-              </div>
-              <div className="my-2 h-px bg-slate-100" />
-              <div className="flex items-center gap-4">
-                <span className="material-symbols-outlined text-4xl text-[#143067]">
-                  inventory_2
-                </span>
-                <div>
-                  <h4 className="font-sans font-bold text-[#143067]">
-                    Control Logístico
-                  </h4>
-                  <p className="font-sans text-xs text-[#444650]">
-                    Distribución y entrega puntual sin un solo error de talla.
-                  </p>
-                </div>
-              </div>
-              <div className="my-2 h-px bg-slate-100" />
-              <div className="flex items-center gap-4">
-                <span className="material-symbols-outlined text-4xl text-[#b43024]">
-                  workspace_premium
-                </span>
-                <div>
-                  <h4 className="font-sans font-bold text-[#b43024]">
-                    Estándar de Calidad
-                  </h4>
-                  <p className="font-sans text-xs text-[#444650]">
-                    Prendas que soportaron años de uso diario escolar.
-                  </p>
-                </div>
-              </div>
+              <ul className="space-y-6">
+                <li className="flex items-start gap-4">
+                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-2xl text-[#143067]">
+                    check_box
+                  </span>
+                  <div>
+                    <h4 className="font-sans font-bold text-[#143067]">
+                      Precisión a Escala
+                    </h4>
+                    <p className="mt-1 font-sans text-sm text-[#444650]">
+                      Cientos de camisas y pantalones a medida.
+                    </p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-2xl text-[#143067]">
+                    inventory_2
+                  </span>
+                  <div>
+                    <h4 className="font-sans font-bold text-[#143067]">
+                      Control Logístico
+                    </h4>
+                    <p className="mt-1 font-sans text-sm text-[#444650]">
+                      Distribución y entrega puntual sin un solo error de talla.
+                    </p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-2xl font-bold text-[#143067]">
+                    workspace_premium
+                  </span>
+                  <div>
+                    <h4 className="font-sans font-bold text-[#143067]">
+                      Estándar de Calidad
+                    </h4>
+                    <p className="mt-1 font-sans text-sm text-[#444650]">
+                      Prendas que soportaron años de uso diario escolar.
+                    </p>
+                  </div>
+                </li>
+              </ul>
             </motion.div>
           </div>
         </div>
@@ -449,7 +384,7 @@ export default function SobreNosotrosClient() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-slate-100 shadow-[0_20px_50px_rgba(20,48,103,0.05)]">
+              <div className="border-primary/35 relative aspect-[4/5] w-full overflow-hidden rounded-3xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
                   src="/images/servicios/confeccion.png"
                   alt="Confección y costura en taller industrial de San Miguel"
@@ -467,7 +402,7 @@ export default function SobreNosotrosClient() {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
                 Capítulo IV — El Aprendizaje Industrial
               </span>
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
@@ -484,7 +419,7 @@ export default function SobreNosotrosClient() {
                 maquinaria de alta especialización y los esquemas más estrictos
                 de control de calidad en serie.
               </p>
-              <div className="space-y-3 rounded-2xl border border-slate-100 bg-[#f8f9fb] p-6 font-mono text-xs text-[#143067]">
+              <div className="border-primary/35 space-y-3 rounded-2xl border bg-[#f8f9fb] p-6 font-mono text-xs text-[#143067] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <div className="flex justify-between">
                   <span>[TÉCNICA]</span>
                   <span className="font-bold">CONFECCIÓN EN SERIE</span>
@@ -516,12 +451,12 @@ export default function SobreNosotrosClient() {
             variants={fadeIn}
             className="space-y-6"
           >
-            <span className="font-mono text-xs font-semibold tracking-[0.25em] text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-white uppercase">
               Capítulo V — Resiliencia
             </span>
             <h2 className="font-serif text-5xl leading-tight font-bold md:text-7xl">
               Cuando el mundo <br />
-              <span className="text-[#b43024] italic">se detuvo</span>
+              <span className="font-bold text-white italic">se detuvo</span>
             </h2>
             <p className="mx-auto max-w-[62ch] font-sans text-lg leading-relaxed text-slate-300">
               La pandemia del COVID-19 en 2020 cerró talleres, suspendió
@@ -536,7 +471,7 @@ export default function SobreNosotrosClient() {
               definitivamente o renacer.
             </p>
             <div className="pt-4">
-              <span className="inline-block border-y border-[#b43024]/40 px-8 py-3 font-serif text-xl text-slate-200 italic">
+              <span className="inline-block border-y border-white/40 px-8 py-3 font-serif text-xl text-slate-200 italic">
                 &ldquo;Elegimos comenzar de nuevo.&rdquo;
               </span>
             </div>
@@ -555,13 +490,13 @@ export default function SobreNosotrosClient() {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
                 Capítulo VI — El Renacimiento
               </span>
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
                 20 de enero de 2021
               </h2>
-              <h3 className="font-serif text-2xl text-[#b43024] italic">
+              <h3 className="font-serif text-2xl font-bold text-[#143067] italic">
                 El nacimiento oficial de Confecciones Liss
               </h3>
               <p className="font-sans text-base leading-relaxed text-[#444650]">
@@ -578,7 +513,7 @@ export default function SobreNosotrosClient() {
             </motion.div>
 
             <motion.div
-              className="rounded-[2.5rem] border border-slate-100 bg-[#f8f9fb] p-8 shadow-sm lg:col-span-5"
+              className="border-primary/35 rounded-[2.5rem] border bg-[#f8f9fb] p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:col-span-5"
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -634,7 +569,7 @@ export default function SobreNosotrosClient() {
       <section className="relative flex min-h-screen items-center justify-center border-t border-slate-100 bg-[#f8f9fb] px-5 py-24 md:px-8">
         <div className="mx-auto w-full max-w-4xl space-y-16">
           <div className="mx-auto max-w-2xl space-y-4 text-center">
-            <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
               Capítulo VII — El Factor Humano
             </span>
             <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
@@ -663,13 +598,13 @@ export default function SobreNosotrosClient() {
                   {member.initials}
                 </div>
 
-                <div className="space-y-3 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm md:p-8">
+                <div className="border-primary/35 space-y-3 rounded-3xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-8">
                   <div className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
                     <div>
                       <h3 className="font-serif text-xl font-bold text-[#143067]">
                         {member.name}
                       </h3>
-                      <p className="font-mono text-xs font-semibold text-[#b43024]">
+                      <p className="font-mono text-xs font-bold text-[#143067]">
                         {member.role}
                       </p>
                     </div>
@@ -713,7 +648,7 @@ export default function SobreNosotrosClient() {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
                 Capítulo VIII — Transformación Tecnológica
               </span>
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
@@ -736,14 +671,14 @@ export default function SobreNosotrosClient() {
             </motion.div>
 
             <motion.div
-              className="space-y-6 rounded-3xl border border-blue-900/50 bg-[#001b4a] p-8 text-white shadow-[0_20px_50px_rgba(0,27,74,0.15)] lg:col-span-5"
+              className="border-primary/35 space-y-6 rounded-3xl border bg-[#001b4a] p-8 text-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:col-span-5"
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-4xl text-[#b43024]">
+                <span className="material-symbols-outlined text-4xl font-bold text-[#143067]">
                   monitoring
                 </span>
                 <h4 className="font-serif text-lg font-bold">
@@ -759,7 +694,7 @@ export default function SobreNosotrosClient() {
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-blue-950">
                     <motion.div
-                      className="h-full rounded-full bg-[#b43024]"
+                      className="h-full rounded-full bg-[#143067]"
                       initial={{ width: 0 }}
                       whileInView={{ width: "95%" }}
                       viewport={{ once: true }}
@@ -805,12 +740,12 @@ export default function SobreNosotrosClient() {
             variants={fadeIn}
             className="space-y-6"
           >
-            <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
               Capítulo Final — Nuestra Promesa
             </span>
             <h2 className="font-serif text-5xl leading-tight font-bold text-[#143067] md:text-7xl">
               Dos décadas construyendo <br />
-              <span className="text-[#b43024] italic">confianza</span>
+              <span className="font-bold text-[#143067] italic">confianza</span>
             </h2>
             <p className="mx-auto max-w-[36ch] font-serif text-xl leading-relaxed text-[#143067] italic md:text-2xl">
               &ldquo;Un uniforme no es simplemente una prenda de vestir. Es la
@@ -827,7 +762,7 @@ export default function SobreNosotrosClient() {
 
           {/* Modelos Institucionales y Cierre */}
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 pt-8 md:grid-cols-2">
-            <div className="rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm">
+            <div className="border-primary/35 rounded-3xl border bg-white p-6 text-center shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="material-symbols-outlined mb-2 text-4xl text-[#143067]">
                 account_circle
               </span>
@@ -838,7 +773,7 @@ export default function SobreNosotrosClient() {
                 Modelo Institucional
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm">
+            <div className="border-primary/35 rounded-3xl border bg-white p-6 text-center shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="material-symbols-outlined mb-2 text-4xl text-[#143067]">
                 account_circle
               </span>

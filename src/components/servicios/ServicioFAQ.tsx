@@ -27,7 +27,7 @@ function FAQItem({ question, answer }: FAQ) {
         </span>
         <span
           className={cn(
-            "material-symbols-outlined text-[#B43024] transition-transform duration-300",
+            "material-symbols-outlined text-[#143067] transition-transform duration-300",
             isOpen && "rotate-180"
           )}
           aria-hidden="true"

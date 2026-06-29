@@ -54,7 +54,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
       >
         <span className="text-primary font-serif text-lg font-bold">{q}</span>
         <span
-          className={`material-symbols-outlined text-[#B43024] transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+          className={`material-symbols-outlined text-[#143067] transition-transform duration-300 ${open ? "rotate-180" : ""}`}
           aria-hidden="true"
         >
           expand_more
@@ -220,7 +220,7 @@ export function ServicioBordadosDetalle() {
             <div className="order-1 flex flex-col gap-4 md:order-2">
               <h2 className="text-primary flex items-center gap-3 font-serif text-2xl font-bold md:text-3xl">
                 <span
-                  className="material-symbols-outlined text-tertiary text-3xl"
+                  className="material-symbols-outlined text-primary text-3xl"
                   aria-hidden="true"
                 >
                   info
@@ -265,7 +265,7 @@ export function ServicioBordadosDetalle() {
                     className="text-on-surface flex items-center gap-3 font-sans text-base"
                   >
                     <span
-                      className="material-symbols-outlined text-tertiary text-lg"
+                      className="material-symbols-outlined text-primary text-lg"
                       aria-hidden="true"
                     >
                       check_circle
@@ -323,7 +323,7 @@ export function ServicioBordadosDetalle() {
               </p>
             </div>
             <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3">
-              <div className="bg-tertiary/30 absolute top-1/2 right-[16.666%] left-[16.666%] z-0 hidden h-[2px] -translate-y-1/2 md:block" />
+              <div className="absolute top-1/2 right-[16.666%] left-[16.666%] z-0 hidden h-[2px] -translate-y-1/2 bg-[#143067]/35 md:block" />
               {[
                 {
                   n: "1",
@@ -349,12 +349,12 @@ export function ServicioBordadosDetalle() {
                   className="border-primary/12 relative z-10 flex flex-col items-center gap-4 rounded-[16px] border bg-white p-6 text-center shadow-sm"
                 >
                   <div
-                    className={`flex h-16 w-16 items-center justify-center rounded-full font-serif text-2xl font-bold text-white shadow-md ${step.accent ? "bg-tertiary" : "bg-primary"}`}
+                    className={`flex h-16 w-16 items-center justify-center rounded-full font-serif text-2xl font-bold text-white shadow-md ${step.accent ? "bg-primary" : "bg-primary"}`}
                   >
                     {step.n}
                   </div>
                   <h3
-                    className={`font-sans text-lg font-semibold ${step.accent ? "text-tertiary" : "text-primary"}`}
+                    className={`font-sans text-lg font-semibold ${step.accent ? "text-primary" : "text-primary"}`}
                   >
                     {step.title}
                   </h3>
@@ -398,7 +398,7 @@ export function ServicioBordadosDetalle() {
                   className="border-primary/12 flex items-center gap-4 rounded-[12px] border bg-white p-4 shadow-sm"
                 >
                   <span
-                    className="material-symbols-outlined text-tertiary text-3xl"
+                    className="material-symbols-outlined text-primary text-3xl"
                     aria-hidden="true"
                   >
                     {item.icon}

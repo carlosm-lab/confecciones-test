@@ -3,6 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import { teamData, TeamMember } from "@/data/team";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 export default function EquipoClient() {
   const founder = teamData.find((m) => m.slug === "lisseth-molina")!;
@@ -35,8 +36,18 @@ export default function EquipoClient() {
   return (
     <div className="relative overflow-hidden bg-[#f8f9fb] text-[#191c1e] antialiased selection:bg-[#d7dffc] selection:text-[#143067]">
       {/* 1. CABECERA EDITORIAL */}
-      <section className="relative px-5 pt-4 pb-20 md:px-8 md:pt-6 md:pb-20">
-        <div className="mx-auto max-w-4xl space-y-6 text-center">
+      <section className="relative flex min-h-[calc(100dvh-56px)] flex-col justify-between px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+        <div className="mx-auto w-full max-w-screen-2xl">
+          <Breadcrumb
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Empresa", href: "/empresa" },
+              { label: "Nuestro Equipo", href: "/empresa/equipo" },
+            ]}
+            className="animate-fade-in-up mb-6 lg:mb-8"
+          />
+        </div>
+        <div className="mx-auto my-auto max-w-4xl space-y-6 text-center">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -44,13 +55,13 @@ export default function EquipoClient() {
             variants={fadeIn}
             className="space-y-4"
           >
-            <span className="font-mono text-xs font-semibold tracking-[0.25em] text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-[#143067] uppercase">
               El Corazón del Taller
             </span>
-            <h1 className="font-serif text-5xl leading-tight font-bold text-[#143067] md:text-7xl">
+            <h1 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl lg:text-6xl">
               Nuestro equipo
             </h1>
-            <p className="mx-auto max-w-[32ch] font-serif text-xl leading-relaxed text-[#444650] italic md:text-2xl">
+            <p className="mx-auto max-w-[32ch] font-serif text-lg leading-relaxed text-[#444650] italic md:text-xl">
               Detrás de cada uniforme hay personas reales que hacen posible cada
               etapa del proceso de confección.
             </p>
@@ -67,7 +78,7 @@ export default function EquipoClient() {
       <section className="relative px-5 pb-24 md:px-8">
         <div className="mx-auto w-full max-w-screen-2xl">
           <motion.div
-            className="relative grid grid-cols-1 items-center gap-12 overflow-hidden rounded-[40px] border border-slate-100 bg-white p-8 shadow-[0_20px_50px_rgba(20,48,103,0.05)] md:p-16 lg:grid-cols-12"
+            className="border-primary/35 relative grid grid-cols-1 items-center gap-12 overflow-hidden rounded-[40px] border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-16 lg:grid-cols-12"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -75,11 +86,8 @@ export default function EquipoClient() {
           >
             {/* Visual Frame - Retrato Grande */}
             <div className="flex justify-center lg:col-span-5">
-              <Link
-                href={`/empresa/equipo/${founder.slug}`}
-                className="group relative flex aspect-[4/5] w-full max-w-md items-center justify-center overflow-hidden rounded-[32px] bg-[#143067] shadow-xl transition-all select-none active:scale-[0.98]"
-              >
-                <span className="absolute font-serif text-9xl font-bold text-white/10 transition-all duration-500 select-none group-hover:text-white/20">
+              <div className="group relative flex aspect-[4/5] w-full max-w-md items-center justify-center overflow-hidden rounded-[32px] bg-[#143067] shadow-xl select-none">
+                <span className="absolute font-serif text-9xl font-bold text-white/10 select-none">
                   {founder.initials}
                 </span>
                 {/* Visual Overlay Design */}
@@ -88,27 +96,19 @@ export default function EquipoClient() {
                   <span className="inline-block rounded-full border border-white/30 bg-white/10 px-4 py-1.5 font-mono text-[10px] tracking-wider uppercase backdrop-blur-md">
                     {founder.experience}
                   </span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-serif text-2xl font-bold">
-                      Ver Perfil
-                    </span>
-                    <span className="material-symbols-outlined translate-x-0 text-xl transition-transform duration-300 group-hover:translate-x-2">
-                      arrow_right_alt
-                    </span>
-                  </div>
                 </div>
-              </Link>
+              </div>
             </div>
 
             {/* Texto Lateral */}
             <div className="space-y-6 lg:col-span-7">
-              <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
                 Fundadora & Directora
               </span>
               <h2 className="font-serif text-4xl font-bold text-[#143067] md:text-5xl">
                 {founder.name}
               </h2>
-              <p className="font-sans text-lg leading-relaxed font-semibold text-[#b43024] italic">
+              <p className="font-sans text-lg leading-relaxed font-bold text-[#143067] italic">
                 &ldquo;{founder.quote}&rdquo;
               </p>
               <p className="font-sans text-base leading-relaxed text-[#444650]">
@@ -136,7 +136,7 @@ export default function EquipoClient() {
       <section className="relative border-y border-slate-100 bg-[#ffffff] px-5 py-24 md:px-8">
         <div className="mx-auto w-full max-w-screen-2xl space-y-16">
           <div className="max-w-2xl space-y-4">
-            <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
               Capa Producción
             </span>
             <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
@@ -151,7 +151,7 @@ export default function EquipoClient() {
             {production.map((member, idx) => (
               <motion.div
                 key={member.slug}
-                className={`relative flex flex-col justify-between space-y-6 rounded-[32px] border border-slate-100 bg-[#f8f9fb] p-8 shadow-xs ${
+                className={`border-primary/35 relative flex flex-col justify-between space-y-6 rounded-[32px] border bg-[#f8f9fb] p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] ${
                   idx === 1 ? "md:translate-y-8" : ""
                 }`}
                 initial="hidden"
@@ -164,14 +164,14 @@ export default function EquipoClient() {
                     <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#143067] font-serif text-2xl font-bold text-white shadow-sm select-none">
                       {member.initials}
                     </div>
-                    <span className="font-mono text-xs font-semibold tracking-wider text-[#b43024] uppercase">
+                    <span className="font-mono text-xs font-bold font-semibold tracking-wider text-[#143067] uppercase">
                       {member.experience}
                     </span>
                   </div>
                   <h3 className="font-serif text-2xl leading-snug font-bold text-[#143067]">
                     {member.name}
                   </h3>
-                  <p className="font-sans text-xs font-semibold tracking-wider text-[#b43024] uppercase">
+                  <p className="font-sans text-xs font-bold font-semibold tracking-wider text-[#143067] uppercase">
                     {member.role}
                   </p>
                   <p className="font-sans text-sm leading-relaxed text-[#444650] italic">
@@ -193,15 +193,6 @@ export default function EquipoClient() {
                       </span>
                     ))}
                   </div>
-                  <Link
-                    href={`/empresa/equipo/${member.slug}`}
-                    className="group flex items-center gap-1 font-mono text-xs font-bold text-[#143067] transition-all hover:text-[#b43024]"
-                  >
-                    <span>Ver Detalles</span>
-                    <span className="material-symbols-outlined translate-x-0 text-sm transition-transform duration-200 group-hover:translate-x-1.5">
-                      arrow_right_alt
-                    </span>
-                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -213,17 +204,17 @@ export default function EquipoClient() {
       <section className="relative bg-[#f8f9fb] px-5 py-24 md:px-8">
         <div className="mx-auto w-full max-w-screen-2xl">
           <motion.div
-            className="grid grid-cols-1 items-center gap-12 rounded-[36px] border border-slate-100 bg-white p-8 shadow-sm md:p-12 lg:grid-cols-12"
+            className="border-primary/35 grid grid-cols-1 items-center gap-12 rounded-[36px] border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12 lg:grid-cols-12"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
           >
             <div className="flex flex-col items-center space-y-4 text-center lg:col-span-4 lg:items-start lg:text-left">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#b43024] font-serif text-3xl font-bold text-white shadow-md select-none">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#143067] font-serif text-3xl font-bold text-white shadow-md select-none">
                 {quality.initials}
               </div>
-              <span className="font-mono text-xs font-semibold tracking-[0.25em] text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-[#143067] uppercase">
                 Control de Calidad
               </span>
               <h3 className="font-serif text-3xl leading-none font-bold text-[#143067]">
@@ -255,15 +246,6 @@ export default function EquipoClient() {
                     </span>
                   ))}
                 </div>
-                <Link
-                  href={`/empresa/equipo/${quality.slug}`}
-                  className="group flex items-center gap-1 font-mono text-xs font-bold text-[#143067] transition-all hover:text-[#b43024]"
-                >
-                  <span>Ver Ficha Técnica</span>
-                  <span className="material-symbols-outlined translate-x-0 text-sm transition-transform duration-200 group-hover:translate-x-1.5">
-                    arrow_right_alt
-                  </span>
-                </Link>
               </div>
             </div>
           </motion.div>
@@ -274,14 +256,14 @@ export default function EquipoClient() {
       <section className="relative border-t border-slate-100 bg-[#ffffff] px-5 py-24 md:px-8">
         <div className="mx-auto w-full max-w-screen-2xl">
           <motion.div
-            className="relative grid grid-cols-1 items-center gap-12 rounded-[36px] border border-slate-100 bg-[#f8f9fb] p-8 md:p-12 lg:grid-cols-12"
+            className="border-primary/35 relative grid grid-cols-1 items-center gap-12 rounded-[36px] border bg-[#f8f9fb] p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12 lg:grid-cols-12"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
           >
             <div className="order-2 space-y-6 lg:order-1 lg:col-span-8 lg:border-r lg:border-slate-200/60 lg:pr-12">
-              <span className="font-mono text-xs font-semibold tracking-[0.25em] text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-[#143067] uppercase">
                 Cadena & Entrega
               </span>
               <p className="font-serif text-lg leading-relaxed text-[#143067] italic md:text-xl">
@@ -304,15 +286,6 @@ export default function EquipoClient() {
                     </span>
                   ))}
                 </div>
-                <Link
-                  href={`/empresa/equipo/${logistics.slug}`}
-                  className="group flex items-center gap-1 font-mono text-xs font-bold text-[#143067] transition-all hover:text-[#b43024]"
-                >
-                  <span>Ver Proceso de Distribución</span>
-                  <span className="material-symbols-outlined translate-x-0 text-sm transition-transform duration-200 group-hover:translate-x-1.5">
-                    arrow_right_alt
-                  </span>
-                </Link>
               </div>
             </div>
 
@@ -347,7 +320,7 @@ export default function EquipoClient() {
             <div className="order-2 flex justify-center lg:order-1 lg:col-span-5">
               <div className="relative flex aspect-square w-full max-w-md flex-col justify-between rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-xs">
                 <div className="flex items-start justify-between">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#b43024] font-serif text-xl font-bold text-white select-none">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#143067] font-serif text-xl font-bold text-white select-none">
                     {strategy.initials}
                   </div>
                   <span className="rounded-full bg-white/10 px-3 py-1 font-mono text-[10px] tracking-wider text-slate-400 uppercase">
@@ -355,25 +328,19 @@ export default function EquipoClient() {
                   </span>
                 </div>
                 <div className="space-y-4">
-                  <div className="font-mono text-xs font-semibold text-[#b43024]">
+                  <div className="font-mono text-xs font-bold text-[#143067]">
                     SYSTEMS_INTEGRATION_LOG
                   </div>
                   <pre className="overflow-hidden font-mono text-[11px] leading-normal text-slate-300 select-none">
                     {`$ npm run build:seo\n> Generating metadata...\n> Ingesting schema.org data\n> Optimized routes: 80/80\n> CUM: 9.32 (IEPROES)`}
                   </pre>
                 </div>
-                <Link
-                  href={`/empresa/equipo/${strategy.slug}`}
-                  className="group w-full rounded-xl border border-white/10 bg-white/10 py-3 text-center font-mono text-xs font-bold text-white transition-all hover:bg-white/15"
-                >
-                  Access Digital Stack &rarr;
-                </Link>
               </div>
             </div>
 
             {/* Details Panel */}
             <div className="order-1 space-y-6 lg:order-2 lg:col-span-7">
-              <span className="font-mono text-xs font-semibold tracking-[0.25em] text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-[#143067] uppercase">
                 Capa Estratégica & SEO
               </span>
               <h2 className="font-serif text-4xl leading-tight font-bold md:text-5xl">
@@ -410,7 +377,7 @@ export default function EquipoClient() {
       <section className="relative bg-[#f8f9fb] px-5 py-24 md:px-8">
         <div className="mx-auto w-full max-w-screen-2xl space-y-16">
           <div className="max-w-2xl space-y-4">
-            <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
               Capa Imagen
             </span>
             <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
@@ -426,7 +393,7 @@ export default function EquipoClient() {
             {models.map((member, idx) => (
               <motion.div
                 key={member.slug}
-                className={`group flex flex-col justify-between rounded-[36px] border border-slate-100 bg-white p-8 shadow-sm ${
+                className={`group border-primary/35 flex flex-col justify-between rounded-[36px] border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] ${
                   idx === 1 ? "md:translate-y-12" : ""
                 }`}
                 initial="hidden"
@@ -446,7 +413,7 @@ export default function EquipoClient() {
                     <h3 className="font-serif text-2xl font-bold text-[#143067]">
                       {member.name}
                     </h3>
-                    <p className="font-sans text-xs font-bold tracking-wider text-[#b43024] uppercase">
+                    <p className="font-sans text-xs font-bold tracking-wider text-[#143067] uppercase">
                       {member.role}
                     </p>
                     <p className="font-sans text-sm leading-relaxed text-[#444650] italic">
@@ -469,15 +436,6 @@ export default function EquipoClient() {
                       </span>
                     ))}
                   </div>
-                  <Link
-                    href={`/empresa/equipo/${member.slug}`}
-                    className="flex items-center gap-1 font-mono text-xs font-bold text-[#143067] transition-all hover:text-[#b43024]"
-                  >
-                    <span>Ver Perfil</span>
-                    <span className="material-symbols-outlined translate-x-0 text-sm transition-transform duration-200 group-hover:translate-x-1.5">
-                      arrow_right_alt
-                    </span>
-                  </Link>
                 </div>
               </motion.div>
             ))}

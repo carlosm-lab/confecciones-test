@@ -211,7 +211,7 @@ export function ServicioSublimacionDetalle() {
                   </div>
                   <div className="bg-surface-container-low flex h-3 w-full overflow-hidden rounded-full">
                     <div
-                      className="bg-tertiary/20 h-full w-1/4"
+                      className="h-full w-1/4 bg-[#143067]/15"
                       title="No recomendado (0-40%)"
                     />
                     <div
@@ -252,7 +252,7 @@ export function ServicioSublimacionDetalle() {
                     <span className="text-on-surface-variant flex items-center justify-center gap-2 font-sans text-sm font-bold">
                       Tradicional{" "}
                       <span
-                        className="material-symbols-outlined text-tertiary text-[18px] font-bold"
+                        className="material-symbols-outlined text-primary text-[18px] font-bold"
                         style={{ fontVariationSettings: "'FILL' 1" }}
                       >
                         cancel

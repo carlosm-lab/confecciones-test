@@ -10,10 +10,10 @@ export default function MediaKitClient() {
       {/* CABECERA (Max-height 380px, Split 60/40) */}
       {/* ──────────────────────────────────────────────────────── */}
       <header className="mx-auto max-w-[1600px] border-b border-[#e1e2e5] px-5 pt-4 pb-10 md:px-8 md:pt-6">
-        <div className="flex flex-col items-center justify-between gap-6 overflow-hidden rounded border border-[#e1e2e5] bg-white p-6 shadow-sm md:max-h-[380px] md:flex-row md:p-8">
+        <div className="border-primary/35 flex flex-col items-center justify-between gap-6 overflow-hidden rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:max-h-[380px] md:flex-row md:p-8">
           {/* Columna Izquierda: Textos */}
           <div className="space-y-4 md:w-3/5">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
               RECURSOS DE MARCA
             </span>
             <h1 className="font-serif text-3xl leading-tight font-bold text-[#143067] md:text-5xl">
@@ -94,7 +94,7 @@ export default function MediaKitClient() {
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
           {/* Columna Izquierda (30%) */}
           <div className="space-y-4 lg:col-span-4">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
               Especificaciones
             </span>
             <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -271,7 +271,7 @@ export default function MediaKitClient() {
             </div>
 
             {/* Módulo 5: Color Secundario */}
-            <div className="flex aspect-square flex-col justify-between rounded bg-[#b43024] p-4 text-white">
+            <div className="flex aspect-square flex-col justify-between rounded bg-[#143067] p-4 text-white">
               <span className="font-mono text-[9px] text-white/60">
                 05 // COLOR ACENTO
               </span>
@@ -324,8 +324,8 @@ export default function MediaKitClient() {
             {/* Módulo 8: Zona de Protección */}
             <div className="flex aspect-square flex-col justify-between rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4 font-mono text-[9px] text-[#444650]">
               <span className="text-[#444650]/60">08 // REGLA DE MARGEN</span>
-              <div className="my-auto border border-dashed border-[#b43024] p-3 text-center">
-                <p className="font-bold text-[#b43024]">MARGEN X</p>
+              <div className="my-auto border border-dashed border-[#143067] p-3 text-center">
+                <p className="font-bold text-[#143067]">MARGEN X</p>
                 <p className="mt-1 text-[8px] text-[#444650]">
                   Espacio libre obligatorio de 20px alrededor.
                 </p>
@@ -343,7 +343,7 @@ export default function MediaKitClient() {
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
           {/* Columna Izquierda: Textos */}
           <div className="space-y-6 lg:col-span-6">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
               Biografía Oficial
             </span>
             <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -395,7 +395,7 @@ export default function MediaKitClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-[1600px] border-b border-[#e1e2e5] px-5 py-16 md:px-8">
         <div className="mb-12 space-y-3">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
             Normas de Aplicación
           </span>
           <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -619,7 +619,7 @@ export default function MediaKitClient() {
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
           {/* Tabla de Información */}
           <div className="space-y-6">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
               Datos de Auditoría
             </span>
             <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -676,7 +676,7 @@ export default function MediaKitClient() {
 
             <div className="flex items-center justify-between font-mono text-[9px] text-[#444650]">
               <span>MUESTRA DE IMAGEN: TALLER DE COSTURA</span>
-              <span className="font-bold text-[#b43024]">PLACEHOLDER</span>
+              <span className="font-bold text-[#143067]">PLACEHOLDER</span>
             </div>
 
             {/* SVG Camara Placeholder icon */}
@@ -706,7 +706,7 @@ export default function MediaKitClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-[1600px] border-b border-[#e1e2e5] px-5 py-16 md:px-8">
         <div className="mb-12 space-y-3">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
             Contactos Autorizados
           </span>
           <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -749,7 +749,7 @@ export default function MediaKitClient() {
           ].map((member, index) => (
             <div
               key={index}
-              className="flex min-h-[160px] flex-col justify-between rounded border border-[#e1e2e5] bg-white p-4 text-center transition-colors duration-300 hover:border-[#b43024]/40"
+              className="flex min-h-[160px] flex-col justify-between rounded border border-[#e1e2e5] bg-white p-4 text-center transition-colors duration-300 hover:border-[#143067]/40"
             >
               <div className="space-y-2">
                 <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#143067]/10 font-serif text-xs font-bold text-[#143067]">
@@ -762,7 +762,7 @@ export default function MediaKitClient() {
                   <h3 className="font-serif text-xs leading-tight font-bold text-[#143067]">
                     {member.name}
                   </h3>
-                  <p className="mt-1 font-mono text-[9px] font-semibold text-[#b43024]">
+                  <p className="mt-1 font-mono text-[9px] font-bold text-[#143067]">
                     {member.role}
                   </p>
                 </div>
@@ -780,7 +780,7 @@ export default function MediaKitClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-[1600px] border-b border-[#e1e2e5] px-5 py-16 md:px-8">
         <div className="mb-12 space-y-3">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
             Descargas Públicas
           </span>
           <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -818,7 +818,7 @@ export default function MediaKitClient() {
                   Fotografías de productos y uniformes
                 </td>
                 <td className="p-4">ZIP</td>
-                <td className="p-4 text-right font-bold text-[#b43024]/60">
+                <td className="p-4 text-right font-bold text-[#143067]/65">
                   Próximamente
                 </td>
               </tr>
@@ -827,7 +827,7 @@ export default function MediaKitClient() {
                   Manual de Identidad y Marca Corporativa
                 </td>
                 <td className="p-4">PDF</td>
-                <td className="p-4 text-right font-bold text-[#b43024]/60">
+                <td className="p-4 text-right font-bold text-[#143067]/65">
                   Próximamente
                 </td>
               </tr>
@@ -836,7 +836,7 @@ export default function MediaKitClient() {
                   Imágenes de las instalaciones físicas (Taller)
                 </td>
                 <td className="p-4">ZIP</td>
-                <td className="p-4 text-right font-bold text-[#b43024]/60">
+                <td className="p-4 text-right font-bold text-[#143067]/65">
                   Próximamente
                 </td>
               </tr>
@@ -845,7 +845,7 @@ export default function MediaKitClient() {
                   Fotografías retratos del equipo oficial
                 </td>
                 <td className="p-4">ZIP</td>
-                <td className="p-4 text-right font-bold text-[#b43024]/60">
+                <td className="p-4 text-right font-bold text-[#143067]/65">
                   Próximamente
                 </td>
               </tr>
@@ -861,7 +861,7 @@ export default function MediaKitClient() {
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
           {/* Columna Izquierda: Bio */}
           <div className="space-y-4 lg:col-span-7">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
               Resumen de Prensa
             </span>
             <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -948,7 +948,7 @@ export default function MediaKitClient() {
           <div className="pt-2">
             <Link
               href="/contacto"
-              className="inline-block rounded bg-[#b43024] px-6 py-2 font-mono text-[10px] tracking-wider text-white uppercase shadow-md transition-colors hover:bg-[#b43024]/90"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
             >
               Contactar al equipo
             </Link>

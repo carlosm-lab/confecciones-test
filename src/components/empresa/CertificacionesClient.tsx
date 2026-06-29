@@ -19,7 +19,7 @@ export default function CertificacionesClient() {
       {/* 1. HERO: CENTRO DE CREDENCIALES (Ficha de Expediente) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-16 md:px-8 md:pt-6 md:pb-24">
-        <div className="rounded border border-[#143067]/20 bg-white p-6 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] md:p-12">
+        <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           {/* Metadata superior del expediente */}
           <div className="mb-10 flex flex-col items-start justify-between gap-4 border-b border-[#e1e2e5] pb-6 font-mono text-xs text-[#444650] md:flex-row md:items-center">
             <div className="space-y-1">
@@ -28,7 +28,7 @@ export default function CertificacionesClient() {
               </p>
               <p>
                 ID ARCHIVO:{" "}
-                <span className="font-bold text-[#b43024]">
+                <span className="font-bold text-[#143067]">
                   DOC-REF-CERT-2026
                 </span>
               </p>
@@ -45,7 +45,7 @@ export default function CertificacionesClient() {
               <h1 className="font-serif text-4xl leading-tight tracking-tight text-[#143067] md:text-5xl lg:text-6xl">
                 Credenciales y Certificaciones
               </h1>
-              <p className="border-l-2 border-[#b43024] pl-4 font-serif text-lg leading-relaxed text-[#444650] md:text-xl">
+              <p className="border-l-2 border-[#143067] pl-4 font-serif text-lg leading-relaxed text-[#444650] md:text-xl">
                 La confianza se construye con hechos, experiencia y formación
                 comprobable.
               </p>
@@ -61,7 +61,7 @@ export default function CertificacionesClient() {
 
             {/* Ilustración de Archivador Técnico (SVG Blueprint) */}
             <div className="flex justify-center lg:col-span-5">
-              <div className="relative flex aspect-[4/3] w-full max-w-md flex-col justify-between overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb] p-6">
+              <div className="border-primary/35 relative flex aspect-[4/3] w-full max-w-md flex-col justify-between overflow-hidden rounded border bg-[#f8f9fb] p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <div
                   className="pointer-events-none absolute inset-0 opacity-[0.03]"
                   style={{
@@ -95,7 +95,7 @@ export default function CertificacionesClient() {
                     width="60"
                     height="38"
                     rx="1"
-                    className="fill-white text-[#b43024]/10"
+                    className="fill-white text-[#143067]/15"
                   />
 
                   {/* Lines representing certificate text */}
@@ -129,7 +129,7 @@ export default function CertificacionesClient() {
                     cx="70"
                     cy="38"
                     r="5"
-                    className="text-[#b43024]/40"
+                    className="text-[#143067]/40"
                     strokeWidth="0.5"
                   />
 
@@ -142,7 +142,7 @@ export default function CertificacionesClient() {
 
                 <div className="z-10 flex items-end justify-between border-t border-[#e1e2e5] pt-4 font-mono text-[9px] text-[#444650]">
                   <span>EXPEDIENTE CL-2026 // ACREDITACIONES</span>
-                  <span className="font-bold text-[#b43024]">VERIFICADO</span>
+                  <span className="font-bold text-[#143067]">VERIFICADO</span>
                 </div>
               </div>
             </div>
@@ -157,33 +157,33 @@ export default function CertificacionesClient() {
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
           {/* Columna Izquierda: Números Grandes */}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:col-span-5 lg:grid-cols-1 lg:gap-8">
-            <div className="flex flex-col justify-between rounded border border-[#e1e2e5] bg-white p-6">
+            <div className="border-primary/35 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="font-serif text-5xl font-bold text-[#143067]">
                 20+ Años
               </span>
-              <span className="mt-2 block font-mono text-xs font-semibold tracking-wider text-[#b43024] uppercase">
+              <span className="mt-2 block font-mono text-xs font-bold font-semibold tracking-wider text-[#143067] uppercase">
                 Oficio Acumulado
               </span>
               <p className="mt-1 text-xs text-[#444650]">
                 Trayectoria de costura fina y patronaje.
               </p>
             </div>
-            <div className="flex flex-col justify-between rounded border border-[#e1e2e5] bg-white p-6">
+            <div className="border-primary/35 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="font-serif text-5xl font-bold text-[#143067]">
                 2021
               </span>
-              <span className="mt-2 block font-mono text-xs font-semibold tracking-wider text-[#b43024] uppercase">
+              <span className="mt-2 block font-mono text-xs font-bold font-semibold tracking-wider text-[#143067] uppercase">
                 Fundación Oficial
               </span>
               <p className="mt-1 text-xs text-[#444650]">
                 Apertura del taller en Barrio La Merced.
               </p>
             </div>
-            <div className="flex flex-col justify-between rounded border border-[#e1e2e5] bg-white p-6">
+            <div className="border-primary/35 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="font-serif text-5xl font-bold text-[#143067]">
                 3 Áreas
               </span>
-              <span className="mt-2 block font-mono text-xs font-semibold tracking-wider text-[#b43024] uppercase">
+              <span className="mt-2 block font-mono text-xs font-bold font-semibold tracking-wider text-[#143067] uppercase">
                 Especialización
               </span>
               <p className="mt-1 text-xs text-[#444650]">
@@ -194,7 +194,7 @@ export default function CertificacionesClient() {
 
           {/* Columna Derecha: Editorial */}
           <div className="space-y-6 lg:col-span-7">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
               Respaldo Real
             </span>
             <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
@@ -228,7 +228,7 @@ export default function CertificacionesClient() {
       <section className="border-t border-[#e1e2e5] bg-white">
         <div className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
           <div className="mb-12 md:mb-16">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
               Liderazgo Técnico
             </span>
             <h2 className="mt-2 font-serif text-3xl text-[#143067] md:text-4xl">
@@ -258,7 +258,7 @@ export default function CertificacionesClient() {
                   <h3 className="font-serif text-xl font-bold text-[#143067]">
                     Lisseth Molina
                   </h3>
-                  <p className="font-mono text-xs font-semibold tracking-wider text-[#b43024] uppercase">
+                  <p className="font-mono text-xs font-bold font-semibold tracking-wider text-[#143067] uppercase">
                     Directora General y Fundadora
                   </p>
                 </div>
@@ -280,7 +280,7 @@ export default function CertificacionesClient() {
 
                 <div className="space-y-4 font-sans text-sm text-[#444650]">
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       verified_user
                     </span>
                     <div>
@@ -294,7 +294,7 @@ export default function CertificacionesClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       verified_user
                     </span>
                     <div>
@@ -308,7 +308,7 @@ export default function CertificacionesClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       verified_user
                     </span>
                     <div>
@@ -322,7 +322,7 @@ export default function CertificacionesClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       verified_user
                     </span>
                     <div>
@@ -336,7 +336,7 @@ export default function CertificacionesClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       verified_user
                     </span>
                     <div>
@@ -356,7 +356,7 @@ export default function CertificacionesClient() {
                 <span>
                   * CERTIFICADOS ESCANEADOS DISPONIBLES BAJO SOLICITUD COMERCIAL
                 </span>
-                <span className="font-bold tracking-wider text-[#b43024] uppercase">
+                <span className="font-bold tracking-wider text-[#143067] uppercase">
                   Acreditaciones Vigentes
                 </span>
               </div>
@@ -370,7 +370,7 @@ export default function CertificacionesClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto mb-12 max-w-xl space-y-4 text-center md:mb-16">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
             Estructura Operativa
           </span>
           <h2 className="font-serif text-3xl text-[#143067] md:text-4xl">
@@ -388,7 +388,7 @@ export default function CertificacionesClient() {
           {/* Nivel 1: Dirección */}
           <div className="flex justify-center">
             <div className="w-full max-w-sm rounded border-2 border-[#143067] bg-white p-6 text-center">
-              <span className="mb-1 block font-mono text-[9px] font-bold tracking-wider text-[#b43024] uppercase">
+              <span className="mb-1 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                 DIRECCIÓN GENERAL / CALIDAD
               </span>
               <h3 className="font-serif text-lg font-bold text-[#143067]">
@@ -406,9 +406,9 @@ export default function CertificacionesClient() {
           {/* Nivel 2: Producción & Operaciones */}
           <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
             {/* Rama A: Confección Especializada */}
-            <div className="flex flex-col justify-between rounded border border-[#e1e2e5] bg-white p-6 transition-colors duration-300 hover:border-[#143067]/40">
+            <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
               <div>
-                <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#b43024] uppercase">
+                <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                   CONFECCIÓN Y ENSAMBLADO
                 </span>
                 <h3 className="mb-2 font-serif text-base font-bold text-[#143067]">
@@ -425,9 +425,9 @@ export default function CertificacionesClient() {
             </div>
 
             {/* Rama B: Calidad & Logística */}
-            <div className="flex flex-col justify-between rounded border border-[#143067]/10 bg-[#143067]/5 p-6 transition-colors duration-300 hover:border-[#143067]/30">
+            <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded border bg-[#143067]/5 p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
               <div>
-                <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#b43024] uppercase">
+                <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                   CALIDAD, MEDIDAS Y LOGÍSTICA
                 </span>
                 <h3 className="mb-2 font-serif text-base font-bold text-[#143067]">
@@ -445,9 +445,9 @@ export default function CertificacionesClient() {
             </div>
 
             {/* Rama C: Estrategia & Imagen */}
-            <div className="flex flex-col justify-between rounded border border-[#e1e2e5] bg-white p-6 transition-colors duration-300 hover:border-[#143067]/40">
+            <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
               <div>
-                <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#b43024] uppercase">
+                <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                   TECNOLOGÍA E IMAGEN
                 </span>
                 <h3 className="mb-2 font-serif text-base font-bold text-[#143067]">
@@ -475,7 +475,7 @@ export default function CertificacionesClient() {
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
             {/* Texto descriptivo */}
             <div className="space-y-6 lg:col-span-5">
-              <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
                 Evolución Profesional
               </span>
               <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
@@ -500,7 +500,7 @@ export default function CertificacionesClient() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
               <div className="space-y-3 rounded border border-[#e1e2e5] bg-[#f8f9fb] p-6">
                 <div className="flex items-start justify-between">
-                  <span className="font-mono text-[10px] font-bold tracking-wider text-[#b43024] uppercase">
+                  <span className="font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
                     MÓDULO COMPLETADO
                   </span>
                   <span className="material-symbols-outlined text-[#143067]">
@@ -522,7 +522,7 @@ export default function CertificacionesClient() {
 
               <div className="space-y-3 rounded border border-[#e1e2e5] bg-[#f8f9fb] p-6">
                 <div className="flex items-start justify-between">
-                  <span className="font-mono text-[10px] font-bold tracking-wider text-[#b43024] uppercase">
+                  <span className="font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
                     MÓDULO COMPLETADO
                   </span>
                   <span className="material-symbols-outlined text-[#143067]">
@@ -588,7 +588,7 @@ export default function CertificacionesClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto mb-16 max-w-xl space-y-4 text-center">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
             Línea Histórica
           </span>
           <h2 className="font-serif text-3xl text-[#143067] md:text-4xl">
@@ -621,7 +621,7 @@ export default function CertificacionesClient() {
                 hogar. Desarrollo de habilidades iniciales de costura, remiendos
                 y corte anatómico a baja escala en San Miguel.
               </p>
-              <ul className="list-inside list-disc font-mono text-xs text-[#b43024]">
+              <ul className="list-inside list-disc font-mono text-xs font-bold text-[#143067]">
                 <li>Proyecto de confección familiar</li>
                 <li>Crecimiento de clientela por recomendación boca a boca</li>
               </ul>
@@ -654,14 +654,14 @@ export default function CertificacionesClient() {
 
           {/* Hito 3: 2021 */}
           <div className="relative pl-8 md:pl-12">
-            <div className="absolute top-1.5 -left-[9px] h-4 w-4 rounded-full border-4 border-[#b43024] bg-white"></div>
+            <div className="absolute top-1.5 -left-[9px] h-4 w-4 rounded-full border-4 border-[#143067] bg-white"></div>
 
-            <div className="absolute top-0 -left-36 hidden w-24 text-right font-serif text-3xl font-bold text-[#b43024] md:block">
+            <div className="absolute top-0 -left-36 hidden w-24 text-right font-serif text-3xl font-bold text-[#143067] md:block">
               2021
             </div>
 
-            <div className="space-y-2 rounded border border-[#b43024]/40 bg-white p-6">
-              <span className="block font-serif text-xl font-bold text-[#b43024] md:hidden">
+            <div className="space-y-2 rounded border border-[#143067]/40 bg-white p-6">
+              <span className="block font-serif text-xl font-bold text-[#143067] md:hidden">
                 2021 — Fundación Oficial
               </span>
               <span className="hidden font-serif text-lg font-bold text-[#143067] md:block">
@@ -707,7 +707,7 @@ export default function CertificacionesClient() {
       <section className="border-t border-b border-[#e1e2e5] bg-white">
         <div className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
           <div className="mb-12 md:mb-16">
-            <span className="font-mono text-xs font-bold font-semibold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold font-semibold tracking-widest text-[#143067] uppercase">
               Archivo Documental
             </span>
             <h2 className="mt-2 font-serif text-3xl text-[#143067] md:text-4xl">
@@ -763,7 +763,7 @@ export default function CertificacionesClient() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between font-mono text-xs text-[#444650]/60">
                     <span>REF: REG-DOC-{doc.id}</span>
-                    <span className="font-bold text-[#b43024]">
+                    <span className="font-bold text-[#143067]">
                       {doc.format}
                     </span>
                   </div>
@@ -805,7 +805,7 @@ export default function CertificacionesClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
         <div className="border-t border-b border-[#143067]/20 py-8 text-center">
-          <p className="mb-4 font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+          <p className="mb-4 font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
             Filosofía de Acreditación
           </p>
           <div className="mx-auto max-w-3xl space-y-4">
@@ -827,16 +827,16 @@ export default function CertificacionesClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-[#143067] px-5 py-20 text-center text-white md:px-8 md:py-32">
         <div className="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-white/[0.02] blur-3xl filter"></div>
-        <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-[#b43024]/[0.05] blur-2xl filter"></div>
+        <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-[#143067]/[0.05] blur-2xl filter"></div>
 
         <div className="relative z-10 mx-auto max-w-2xl space-y-8">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
             Respaldo Técnico
           </span>
           <h2 className="font-serif text-3xl leading-tight tracking-tight text-white md:text-5xl">
             La confianza también se documenta.
           </h2>
-          <div className="mx-auto h-0.5 w-16 bg-[#b43024]"></div>
+          <div className="mx-auto h-0.5 w-16 bg-[#143067]"></div>
 
           <div className="space-y-6 font-serif text-lg leading-relaxed text-[#dae2ff]">
             <p>
@@ -854,7 +854,7 @@ export default function CertificacionesClient() {
           <div className="pt-8">
             <Link
               href="/contacto"
-              className="inline-block rounded bg-[#b43024] px-8 py-3 font-mono text-xs tracking-wider text-white uppercase shadow-lg shadow-black/10 transition-colors hover:bg-[#b43024]/90"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
             >
               Contactar con el Taller
             </Link>

@@ -105,7 +105,7 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section
         ref={headerRef}
-        className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4"
+        className="relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4"
       >
         <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
           <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
@@ -121,11 +121,11 @@ export default function FilosofiaClient() {
               />
             </div>
 
-            <span className="mb-2 font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+            <span className="mb-2 font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
               Filosofía y Valores
             </span>
 
-            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
+            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-4xl leading-tight tracking-tight md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-6xl">
               <span className="text-center lg:text-left">
                 Nuestros Valores y{" "}
               </span>
@@ -153,8 +153,7 @@ export default function FilosofiaClient() {
                 className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
                 style={{ animationDelay: "300ms" }}
               >
-                <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
-                  <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
                     <Image
                       fill
@@ -171,7 +170,7 @@ export default function FilosofiaClient() {
               {/* COLUMNA DE TEXTO Y ACCIONES */}
               <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
                 <div
-                  className="animate-fade-in-up text-on-surface-variant mb-6 w-full space-y-4 font-sans text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl"
+                  className="animate-fade-in-up text-on-surface-variant mb-6 w-full space-y-4 font-sans text-base leading-relaxed"
                   style={{ animationDelay: "150ms" }}
                 >
                   <p>
@@ -190,8 +189,7 @@ export default function FilosofiaClient() {
             className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
             style={{ animationDelay: "300ms" }}
           >
-            <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
-              <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+            <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <div className="relative h-full w-full overflow-hidden rounded-2xl">
                 <Image
                   fill
@@ -215,18 +213,35 @@ export default function FilosofiaClient() {
         className="relative w-full bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36"
       >
         <div className="mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-24">
-          {/* Left: Narrow Text */}
+          {/* Left: Large Vertical Image with Parallax Shift inside container */}
+          <div className="flex justify-center lg:col-span-5 lg:justify-start">
+            <div className="relative aspect-[3/4] w-full max-w-[420px] overflow-hidden rounded-lg border border-[#c4c6d1] bg-[#edeef0]">
+              <motion.div
+                style={{ y: s1ImageY }}
+                className="absolute inset-x-0 -top-12 -bottom-12"
+              >
+                <Image
+                  src="/images/empresa/filosofia/vintage_sewing_machine.png"
+                  alt="La primera máquina de coser en nuestro taller"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover grayscale"
+                />
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Right: Narrow Text */}
           <div className="flex flex-col justify-center lg:col-span-7">
             <motion.h2
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={smoothTransition}
-              className="mb-10 max-w-lg font-serif text-3xl leading-[1.1] font-bold text-[#143067] md:text-4xl lg:text-5xl"
+              className="mb-10 max-w-none font-serif text-3xl leading-[1.1] font-bold text-[#143067] md:text-4xl lg:text-5xl"
             >
-              No fabricamos prendas.
-              <br />
-              Construimos confianza.
+              No fabricamos prendas. Construimos confianza.
             </motion.h2>
 
             <motion.div
@@ -252,25 +267,6 @@ export default function FilosofiaClient() {
                 diferencia.
               </p>
             </motion.div>
-          </div>
-
-          {/* Right: Large Vertical Image with Parallax Shift inside container */}
-          <div className="flex justify-center lg:col-span-5">
-            <div className="relative aspect-[3/4] w-full max-w-[420px] overflow-hidden rounded-lg border border-[#c4c6d1] bg-[#edeef0]">
-              <motion.div
-                style={{ y: s1ImageY }}
-                className="absolute inset-x-0 -top-12 -bottom-12"
-              >
-                <Image
-                  src="/images/empresa/filosofia/vintage_sewing_machine.png"
-                  alt="La primera máquina de coser en nuestro taller"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover grayscale"
-                />
-              </motion.div>
-            </div>
           </div>
         </div>
       </section>
@@ -384,7 +380,7 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36">
         <div className="mx-auto mb-16 w-full max-w-screen-2xl">
-          <span className="mb-3 block font-mono text-xs tracking-[0.2em] text-[#b43024] uppercase">
+          <span className="mb-3 block font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase">
             03 // NUESTROS PILARES
           </span>
           <h2 className="font-serif text-3xl font-bold tracking-tight text-[#143067] md:text-4xl">
@@ -407,8 +403,10 @@ export default function FilosofiaClient() {
                   transition={smoothTransition}
                   onMouseEnter={() => setHoveredPanel(idx)}
                   onMouseLeave={() => setHoveredPanel(null)}
-                  className={`relative flex flex-col justify-between overflow-hidden rounded-lg border border-[#c4c6d1] bg-white p-8 transition-shadow duration-300 ${
-                    isHovered ? "border-[#143067] shadow-md" : "shadow-none"
+                  className={`border-primary/35 relative flex flex-col justify-between overflow-hidden rounded-lg border bg-white p-8 transition-shadow duration-300 ${
+                    isHovered
+                      ? "border-primary/55 shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
+                      : "shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]"
                   }`}
                   style={{
                     flex: isHovered ? "2.8" : isAnyHovered ? "0.6" : "1",
@@ -416,7 +414,7 @@ export default function FilosofiaClient() {
                 >
                   {/* Panel Number */}
                   <div className="flex items-start justify-between">
-                    <span className="font-mono text-lg font-bold text-[#b43024]">
+                    <span className="font-mono text-lg font-bold text-[#143067]">
                       {panel.num}
                     </span>
                     {isHovered && (
@@ -460,10 +458,10 @@ export default function FilosofiaClient() {
               {MUSEUM_PANELS.map((panel) => (
                 <div
                   key={panel.num}
-                  className="flex min-h-[320px] w-[85vw] shrink-0 snap-center flex-col justify-between rounded-lg border border-[#c4c6d1] bg-white p-8 md:w-[45vw]"
+                  className="border-primary/35 flex min-h-[320px] w-[85vw] shrink-0 snap-center flex-col justify-between rounded-lg border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:w-[45vw]"
                 >
                   <div>
-                    <span className="font-mono text-lg font-bold text-[#b43024]">
+                    <span className="font-mono text-lg font-bold text-[#143067]">
                       {panel.num}
                     </span>
                     <h3 className="mt-6 mb-4 font-serif text-2xl font-bold text-[#143067]">
@@ -497,7 +495,7 @@ export default function FilosofiaClient() {
             transition={smoothTransition}
             className="mb-20 text-center"
           >
-            <span className="mb-3 block font-mono text-xs tracking-[0.2em] text-[#b43024] uppercase">
+            <span className="mb-3 block font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase">
               04 // CÓDIGO INALTERABLE
             </span>
             <h2 className="font-serif text-3xl font-bold tracking-tight text-[#143067] md:text-5xl">
@@ -516,10 +514,10 @@ export default function FilosofiaClient() {
                 className="group flex items-baseline justify-between gap-6 border-b border-[#e1e2e4] py-6 transition-all duration-300 hover:pl-2 md:py-8"
               >
                 <div className="flex items-baseline gap-6 md:gap-10">
-                  <span className="font-mono text-xs text-[#b43024] select-none">
+                  <span className="font-mono text-xs font-bold text-[#143067] select-none">
                     {(idx + 1).toString().padStart(2, "0")}
                   </span>
-                  <span className="font-serif text-xl font-medium tracking-tight text-[#143067] transition-colors duration-300 group-hover:text-[#b43024] sm:text-2xl md:text-3xl">
+                  <span className="font-serif text-xl font-bold font-medium tracking-tight text-[#143067] transition-colors duration-300 group-hover:text-[#143067] sm:text-2xl md:text-3xl">
                     {line}
                   </span>
                 </div>
@@ -535,7 +533,7 @@ export default function FilosofiaClient() {
       <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36">
         <div className="mx-auto w-full max-w-screen-2xl">
           <div className="mb-16">
-            <span className="mb-3 block font-mono text-xs tracking-[0.2em] text-[#b43024] uppercase">
+            <span className="mb-3 block font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase">
               05 // PERSPECTIVA DE NUESTRO PROPÓSITO
             </span>
             <h2 className="font-serif text-3xl font-bold text-[#143067] md:text-4xl">
@@ -550,10 +548,10 @@ export default function FilosofiaClient() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={smoothTransition}
-              className="flex min-h-[250px] flex-col justify-between rounded-2xl border border-[#c4c6d1] bg-white p-8 md:col-span-2 md:p-12"
+              className="border-primary/35 flex min-h-[250px] flex-col justify-between rounded-2xl border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:col-span-2 md:p-12"
             >
               <div>
-                <span className="mb-6 block font-mono text-xs tracking-widest text-[#b43024] uppercase">
+                <span className="mb-6 block font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
                   NUESTRA MISIÓN
                 </span>
                 <p className="font-serif text-xl leading-relaxed font-medium text-[#143067] md:text-2xl">
@@ -571,10 +569,10 @@ export default function FilosofiaClient() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={smoothTransition}
-              className="flex min-h-[250px] flex-col justify-between rounded-2xl border border-[#c4c6d1] bg-white p-8 md:col-span-1 md:p-10"
+              className="border-primary/35 flex min-h-[250px] flex-col justify-between rounded-2xl border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:col-span-1 md:p-10"
             >
               <div>
-                <span className="mb-6 block font-mono text-xs tracking-widest text-[#b43024] uppercase">
+                <span className="mb-6 block font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
                   NUESTRA VISIÓN
                 </span>
                 <p className="font-sans text-sm leading-relaxed text-[#444650] md:text-base">
@@ -592,7 +590,7 @@ export default function FilosofiaClient() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={smoothTransition}
-              className="relative min-h-[350px] overflow-hidden rounded-2xl border border-[#c4c6d1] md:col-span-1 md:row-span-2 md:min-h-full"
+              className="border-primary/35 relative min-h-[350px] overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:col-span-1 md:row-span-2 md:min-h-full"
             >
               <Image
                 src="/images/empresa/filosofia/textile_workshop.png"
@@ -609,9 +607,9 @@ export default function FilosofiaClient() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={smoothTransition}
-              className="flex min-h-[200px] flex-col justify-center rounded-2xl border border-[#c4c6d1] bg-white p-8 md:col-span-2 md:p-12"
+              className="border-primary/35 flex min-h-[200px] flex-col justify-center rounded-2xl border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:col-span-2 md:p-12"
             >
-              <blockquote className="border-l-2 border-[#b43024] pl-6 font-serif text-lg leading-relaxed text-[#444650] italic md:pl-8 md:text-xl">
+              <blockquote className="border-l-2 border-[#143067] pl-6 font-serif text-lg leading-relaxed text-[#444650] italic md:pl-8 md:text-xl">
                 &ldquo;En Confecciones Liss, las decisiones no se toman para el
                 próximo mes. Se toman para la próxima década, asegurando que
                 cada puntada resista el paso del tiempo y del uso
@@ -625,7 +623,7 @@ export default function FilosofiaClient() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={smoothTransition}
-              className="flex min-h-[180px] flex-col justify-between rounded-2xl border border-[#c4c6d1] bg-white p-8 md:col-span-2 md:p-12"
+              className="border-primary/35 flex min-h-[180px] flex-col justify-between rounded-2xl border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:col-span-2 md:p-12"
             >
               <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
                 <div>
@@ -654,7 +652,7 @@ export default function FilosofiaClient() {
       <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36">
         <div className="mx-auto w-full max-w-screen-2xl">
           <div className="mb-16">
-            <span className="mb-3 block font-mono text-xs tracking-[0.2em] text-[#b43024] uppercase">
+            <span className="mb-3 block font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase">
               06 // REGISTRO VISUAL
             </span>
             <h2 className="font-serif text-3xl font-bold text-[#143067] md:text-4xl">
@@ -664,7 +662,7 @@ export default function FilosofiaClient() {
 
           <div className="flex flex-col gap-12 md:gap-16">
             {/* Card 1 */}
-            <div className="group relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[#c4c6d1] md:aspect-[21/9]">
+            <div className="group border-primary/35 relative aspect-[16/9] w-full overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-[21/9]">
               <div className="absolute inset-0 z-10 bg-[#001946]/35 transition-colors duration-500 group-hover:bg-[#001946]/25" />
               <Image
                 src="/images/empresa/filosofia/artisan_working.png"
@@ -681,7 +679,7 @@ export default function FilosofiaClient() {
             </div>
 
             {/* Card 2 */}
-            <div className="group relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[#c4c6d1] md:aspect-[21/9]">
+            <div className="group border-primary/35 relative aspect-[16/9] w-full overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-[21/9]">
               <div className="absolute inset-0 z-10 bg-[#001946]/35 transition-colors duration-500 group-hover:bg-[#001946]/25" />
               <Image
                 src="/images/empresa/filosofia/sewing_stitch_detail.png"
@@ -698,7 +696,7 @@ export default function FilosofiaClient() {
             </div>
 
             {/* Card 3 */}
-            <div className="group relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[#c4c6d1] md:aspect-[21/9]">
+            <div className="group border-primary/35 relative aspect-[16/9] w-full overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-[21/9]">
               <div className="absolute inset-0 z-10 bg-[#001946]/35 transition-colors duration-500 group-hover:bg-[#001946]/25" />
               <Image
                 src="/images/empresa/filosofia/quality_control_inspection.png"

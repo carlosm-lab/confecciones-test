@@ -148,7 +148,7 @@ export default function ProcesoDeConfeccionClient() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
             {/* Lado Izquierdo: Textos */}
             <div className="space-y-6 lg:col-span-7">
-              <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#b43024] uppercase">
+              <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#143067] uppercase">
                 Trayectoria Textil
               </span>
               <h1 className="font-serif text-[40px] leading-tight font-bold tracking-[-0.02em] text-[#191c1e] md:text-[56px]">
@@ -177,215 +177,24 @@ export default function ProcesoDeConfeccionClient() {
               </div>
             </div>
 
-            {/* Lado Derecho: Ilustración Abstracta de Costura */}
-            <div className="flex justify-center lg:col-span-5">
-              <div className="relative flex aspect-square w-full max-w-[420px] items-center justify-center overflow-hidden rounded-2xl border border-[#e4e6ea] bg-white p-6 shadow-sm">
-                {/* SVG Abstracto */}
-                <svg
-                  viewBox="0 0 400 400"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-full w-full text-[#143067]"
-                >
-                  {/* Cuadrícula de base */}
-                  <g className="opacity-10">
-                    <line
-                      x1="40"
-                      y1="0"
-                      x2="40"
-                      y2="400"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                    <line
-                      x1="120"
-                      y1="0"
-                      x2="120"
-                      y2="400"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                    <line
-                      x1="200"
-                      y1="0"
-                      x2="200"
-                      y2="400"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                    <line
-                      x1="280"
-                      y1="0"
-                      x2="280"
-                      y2="400"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                    <line
-                      x1="360"
-                      y1="0"
-                      x2="360"
-                      y2="400"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                    <line
-                      x1="0"
-                      y1="80"
-                      x2="400"
-                      y2="80"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                    <line
-                      x1="0"
-                      y1="160"
-                      x2="400"
-                      y2="160"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                    <line
-                      x1="0"
-                      y1="240"
-                      x2="400"
-                      y2="240"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                    <line
-                      x1="0"
-                      y1="320"
-                      x2="400"
-                      y2="320"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                  </g>
-
-                  {/* Curvas de patrones de sastre */}
-                  <path
-                    d="M 60,340 C 60,180 200,60 340,60"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    className="opacity-40"
+            {/* Lado Derecho: Imagen de Costura */}
+            <div className="flex justify-center lg:col-span-5 lg:justify-end">
+              <div className="border-primary/35 relative flex aspect-square w-full max-w-[420px] items-center justify-center overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+                <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                  <Image
+                    fill
+                    src="/images/servicios/mano-obra.png"
+                    alt="Proceso de Confección - Confecciones Liss"
+                    className="object-cover object-center"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    priority
                   />
-                  <path
-                    d="M 60,340 H 340 V 60"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 4"
-                    className="opacity-30"
-                  />
-
-                  {/* Curva de manga/talle en acento rojo */}
-                  <path
-                    d="M 120,340 C 120,240 220,180 340,180"
-                    stroke="#b43024"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    className="opacity-75"
-                  />
-
-                  {/* Rectángulo de molde (Lienzo geométrico) */}
-                  <rect
-                    x="80"
-                    y="100"
-                    width="140"
-                    height="180"
-                    rx="8"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    className="opacity-25"
-                  />
-
-                  {/* Formas geométricas / Moldes de corte */}
-                  <polygon
-                    points="220,100 300,100 300,180"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    className="opacity-25"
-                  />
-
-                  {/* Línea de costura hilvanada (Stitch) */}
-                  <path
-                    d="M 40,200 Q 200,380 360,200"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeDasharray="6 6"
-                    className="opacity-60"
-                  />
-
-                  {/* Detalles técnicos (Puntos flotantes, coordenadas) */}
-                  <circle cx="60" cy="340" r="4" fill="currentColor" />
-                  <circle cx="340" cy="60" r="4" fill="currentColor" />
-                  <circle cx="340" cy="180" r="4" fill="#b43024" />
-                  <circle cx="120" cy="340" r="3" fill="#b43024" />
-
-                  {/* Elemento decorativo flotante estilo transportador */}
-                  <path
-                    d="M 280,240 A 40,40 0 0 1 200,240"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                    className="opacity-30"
-                  />
-                  <line
-                    x1="240"
-                    y1="240"
-                    x2="240"
-                    y2="210"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                    className="opacity-30"
-                  />
-                </svg>
-
-                {/* Sello o etiqueta flotante de la ilustración */}
-                <div className="absolute right-4 bottom-4 rounded bg-[#edf1f7] px-2 py-1 font-mono text-[9px] font-semibold text-[#143067] uppercase">
-                  MOLD_COORD_A1
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* ──────────────────────────────────────────────────────── */}
-      {/* INDICADOR DE RECORRIDO (Barra horizontal sticky) */}
-      {/* ──────────────────────────────────────────────────────── */}
-      <div className="sticky top-[58px] z-40 w-full border-b border-[#e4e6ea] bg-white/90 shadow-[0_1px_3px_rgba(0,0,0,0.02)] backdrop-blur-md">
-        <div className="scrollbar-none mx-auto w-full max-w-screen-2xl overflow-x-auto px-4">
-          <nav className="flex min-w-[900px] items-center justify-between gap-1.5 py-3 md:gap-3 md:py-4">
-            {STAGES.map((stage) => {
-              const isActive = activeStage === stage.id;
-              return (
-                <button
-                  key={stage.id}
-                  onClick={() => handleScrollTo(stage.id)}
-                  className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1.5 font-sans text-xs font-semibold tracking-wide transition-all ${
-                    isActive
-                      ? "bg-[#143067] text-white shadow-sm"
-                      : "text-[#444650] hover:bg-[#edf1f7]/50 hover:text-[#143067]"
-                  }`}
-                >
-                  <span
-                    className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold ${
-                      isActive
-                        ? "bg-white text-[#143067]"
-                        : "bg-[#edf1f7] text-[#444650]"
-                    }`}
-                  >
-                    {stage.num}
-                  </span>
-                  <span>{stage.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
-      </div>
 
       {/* ──────────────────────────────────────────────────────── */}
       {/* LAS 10 ETAPAS DEL PROCESO */}
@@ -405,10 +214,10 @@ export default function ProcesoDeConfeccionClient() {
           >
             <div className="space-y-4 md:col-span-6">
               <div className="flex items-baseline gap-4">
-                <span className="font-serif text-[48px] leading-none font-bold text-[#b43024]/20 md:text-[64px]">
+                <span className="font-serif text-[48px] leading-none font-bold text-[#143067]/20 md:text-[64px]">
                   01
                 </span>
-                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#b43024] uppercase">
+                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#143067] uppercase">
                   Primer contacto
                 </span>
               </div>
@@ -433,7 +242,7 @@ export default function ProcesoDeConfeccionClient() {
               </div>
             </div>
             <div className="flex justify-center md:col-span-6">
-              <div className="relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border border-[#e4e6ea] bg-white p-2 shadow-sm">
+              <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
                   src="/images/servicios/mano-obra.png"
                   alt="Cliente siendo atendido en Confecciones Liss"
@@ -459,10 +268,10 @@ export default function ProcesoDeConfeccionClient() {
             className="space-y-8"
           >
             <div className="flex items-baseline gap-4 border-b border-[#e4e6ea] pb-4">
-              <span className="font-serif text-[48px] leading-none font-bold text-[#b43024]/20 md:text-[64px]">
+              <span className="font-serif text-[48px] leading-none font-bold text-[#143067]/20 md:text-[64px]">
                 02
               </span>
-              <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#b43024] uppercase">
+              <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#143067] uppercase">
                 Análisis del proyecto
               </span>
             </div>
@@ -482,7 +291,7 @@ export default function ProcesoDeConfeccionClient() {
                     los materiales que serán necesarios.
                   </p>
                 </div>
-                <div className="mt-6 font-mono text-[10px] tracking-wider text-[#b43024] uppercase">
+                <div className="mt-6 font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
                   PLANIFICACIÓN DE REQUISITOS // LISSETH MOLINA
                 </div>
               </div>
@@ -567,7 +376,7 @@ export default function ProcesoDeConfeccionClient() {
           >
             {/* Foto izquierda */}
             <div className="order-2 flex justify-center md:order-1">
-              <div className="relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border border-[#e4e6ea] bg-white p-2 shadow-sm">
+              <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
                   src="/images/servicios/ropa-general.png"
                   alt="Toma de medidas anatómicas en Confecciones Liss"
@@ -580,10 +389,10 @@ export default function ProcesoDeConfeccionClient() {
             {/* Texto derecha */}
             <div className="order-1 space-y-4 md:order-2">
               <div className="flex items-baseline gap-4">
-                <span className="font-serif text-[48px] leading-none font-bold text-[#b43024]/20 md:text-[64px]">
+                <span className="font-serif text-[48px] leading-none font-bold text-[#143067]/20 md:text-[64px]">
                   03
                 </span>
-                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#b43024] uppercase">
+                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#143067] uppercase">
                   Toma de medidas
                 </span>
               </div>
@@ -624,10 +433,10 @@ export default function ProcesoDeConfeccionClient() {
               className="space-y-10"
             >
               <div className="flex items-baseline gap-4">
-                <span className="font-serif text-[48px] leading-none font-bold text-[#b43024]/20 md:text-[64px]">
+                <span className="font-serif text-[48px] leading-none font-bold text-[#143067]/20 md:text-[64px]">
                   04
                 </span>
-                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#b43024] uppercase">
+                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#143067] uppercase">
                   Materiales
                 </span>
               </div>
@@ -691,10 +500,10 @@ export default function ProcesoDeConfeccionClient() {
             {/* Texto izquierda */}
             <div className="space-y-4">
               <div className="flex items-baseline gap-4">
-                <span className="font-serif text-[48px] leading-none font-bold text-[#b43024]/20 md:text-[64px]">
+                <span className="font-serif text-[48px] leading-none font-bold text-[#143067]/20 md:text-[64px]">
                   05
                 </span>
-                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#b43024] uppercase">
+                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#143067] uppercase">
                   Corte
                 </span>
               </div>
@@ -717,7 +526,7 @@ export default function ProcesoDeConfeccionClient() {
             </div>
             {/* Foto derecha */}
             <div className="flex justify-center">
-              <div className="relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border border-[#e4e6ea] bg-white p-2 shadow-sm">
+              <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
                   src="/images/servicios/confeccion.png"
                   alt="Área de corte de Confecciones Liss"
@@ -743,15 +552,15 @@ export default function ProcesoDeConfeccionClient() {
             className="space-y-10"
           >
             <div className="flex items-baseline gap-4">
-              <span className="font-serif text-[48px] leading-none font-bold text-[#b43024]/20 md:text-[64px]">
+              <span className="font-serif text-[48px] leading-none font-bold text-[#143067]/20 md:text-[64px]">
                 06
               </span>
-              <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#b43024] uppercase">
+              <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#143067] uppercase">
                 Confección
               </span>
             </div>
 
-            <div className="relative overflow-hidden rounded-[24px] border border-[#e4e6ea] bg-white p-4 shadow-sm">
+            <div className="border-primary/35 relative overflow-hidden rounded-[24px] border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-[#edf1f7]">
                 <Image
                   src="/images/servicios/confeccion.png"
@@ -785,7 +594,7 @@ export default function ProcesoDeConfeccionClient() {
                 ].map((panel, idx) => (
                   <div
                     key={idx}
-                    className="rounded-xl border border-[#e4e6ea] bg-white/95 p-4 shadow-sm backdrop-blur-sm"
+                    className="border-primary/35 rounded-xl border bg-white/95 p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] backdrop-blur-sm"
                   >
                     <h5 className="font-sans text-[14px] font-bold text-[#143067]">
                       {panel.title}
@@ -820,10 +629,10 @@ export default function ProcesoDeConfeccionClient() {
             className="space-y-10"
           >
             <div className="flex items-baseline gap-4">
-              <span className="font-serif text-[48px] leading-none font-bold text-[#b43024]/20 md:text-[64px]">
+              <span className="font-serif text-[48px] leading-none font-bold text-[#143067]/20 md:text-[64px]">
                 07
               </span>
-              <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#b43024] uppercase">
+              <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#143067] uppercase">
                 Personalización
               </span>
             </div>
@@ -863,7 +672,7 @@ export default function ProcesoDeConfeccionClient() {
                 ].map((card, idx) => (
                   <div
                     key={idx}
-                    className="rounded-xl border border-[#e4e6ea] bg-white p-5 shadow-[0_4px_16px_rgba(20,48,103,0.04)] transition-all hover:shadow-[0_8px_32px_rgba(20,48,103,0.08)]"
+                    className="border-primary/35 rounded-xl border bg-white p-5 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                   >
                     <h4 className="font-serif text-[16px] font-bold text-[#143067]">
                       {card.title}
@@ -966,7 +775,7 @@ export default function ProcesoDeConfeccionClient() {
           >
             {/* Foto izquierda */}
             <div className="flex justify-center">
-              <div className="relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border border-[#e4e6ea] bg-white p-2 shadow-sm">
+              <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
                   src="/images/servicios/sublimacion.png"
                   alt="Preparación y empaque de uniformes en Confecciones Liss"
@@ -979,10 +788,10 @@ export default function ProcesoDeConfeccionClient() {
             {/* Texto derecha */}
             <div className="space-y-4">
               <div className="flex items-baseline gap-4">
-                <span className="font-serif text-[48px] leading-none font-bold text-[#b43024]/20 md:text-[64px]">
+                <span className="font-serif text-[48px] leading-none font-bold text-[#143067]/20 md:text-[64px]">
                   09
                 </span>
-                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#b43024] uppercase">
+                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#143067] uppercase">
                   Empaque
                 </span>
               </div>
@@ -1023,10 +832,10 @@ export default function ProcesoDeConfeccionClient() {
             {/* Texto izquierda */}
             <div className="space-y-4">
               <div className="flex items-baseline gap-4">
-                <span className="font-serif text-[48px] leading-none font-bold text-[#b43024]/20 md:text-[64px]">
+                <span className="font-serif text-[48px] leading-none font-bold text-[#143067]/20 md:text-[64px]">
                   10
                 </span>
-                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#b43024] uppercase">
+                <span className="font-sans text-xs font-bold tracking-[0.1em] text-[#143067] uppercase">
                   Entrega
                 </span>
               </div>
@@ -1048,7 +857,7 @@ export default function ProcesoDeConfeccionClient() {
             </div>
             {/* Foto derecha */}
             <div className="flex justify-center">
-              <div className="relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border border-[#e4e6ea] bg-white p-2 shadow-sm">
+              <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
                   src="/images/servicios/mano-obra.png"
                   alt="Cliente de Confecciones Liss recibiendo sus uniformes"
@@ -1068,7 +877,7 @@ export default function ProcesoDeConfeccionClient() {
       <section className="border-y border-[#e4e6ea] bg-white py-16 md:py-24">
         <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-5 lg:px-6">
           <div className="text-center">
-            <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#b43024] uppercase">
+            <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#143067] uppercase">
               Sinergia y Personas
             </span>
             <h2 className="mt-3 font-serif text-[28px] font-bold tracking-[-0.015em] text-[#191c1e] md:text-[36px]">
@@ -1106,7 +915,7 @@ export default function ProcesoDeConfeccionClient() {
                       <h4 className="font-sans text-[15px] font-bold text-[#191c1e]">
                         {crew.name}
                       </h4>
-                      <span className="font-mono text-[9px] font-bold tracking-wider text-[#b43024] uppercase">
+                      <span className="font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                         {crew.stages.length}{" "}
                         {crew.stages.length === 1 ? "Etapa" : "Etapas"}
                       </span>
@@ -1152,13 +961,13 @@ export default function ProcesoDeConfeccionClient() {
                       <div className="flex items-center justify-between">
                         <span
                           className={`font-mono text-[10px] font-bold ${
-                            isConnected ? "text-white/60" : "text-[#b43024]/40"
+                            isConnected ? "text-white/60" : "text-[#143067]/40"
                           }`}
                         >
                           {st.num}
                         </span>
                         {isConnected && (
-                          <span className="h-2 w-2 animate-pulse rounded-full bg-[#b43024]" />
+                          <span className="h-2 w-2 animate-pulse rounded-full bg-[#143067]" />
                         )}
                       </div>
                       <div className="mt-3 font-serif text-[14px] font-bold">
@@ -1190,7 +999,7 @@ export default function ProcesoDeConfeccionClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto w-full max-w-screen-2xl px-4 py-16 sm:px-5 md:py-24 lg:px-6">
         <div className="max-w-3xl">
-          <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#b43024] uppercase">
+          <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#143067] uppercase">
             Diferenciales
           </span>
           <h2 className="mt-3 font-serif text-[32px] font-bold tracking-[-0.015em] text-[#191c1e] md:text-[44px]">

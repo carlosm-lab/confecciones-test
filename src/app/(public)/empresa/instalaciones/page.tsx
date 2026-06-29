@@ -96,20 +96,6 @@ export default function InstalacionesPage() {
       />
 
       <div className="min-h-screen bg-[#f8f9fb]">
-        {/* Breadcrumb section */}
-        <section className="bg-[#f8f9fb] px-5 pt-4 pb-0 md:px-8 md:pt-6 md:pb-0">
-          <div className="mx-auto max-w-screen-2xl">
-            <Breadcrumb
-              items={[
-                { label: "Inicio", href: "/" },
-                { label: "Empresa", href: "/empresa" },
-                { label: "Instalaciones", href: "/empresa/instalaciones" },
-              ]}
-              className="animate-fade-in-up"
-            />
-          </div>
-        </section>
-
         {/* Instalaciones Client Tour Component */}
         <InstalacionesClient />
       </div>

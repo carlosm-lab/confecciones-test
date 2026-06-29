@@ -571,7 +571,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-4 text-sm text-[#a5b1c9]">
               <li className="flex items-start gap-3">
-                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[#e8cbb5]">
+                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
                   location_on
                 </span>
                 <span className="leading-relaxed">
@@ -579,7 +579,7 @@ export function Footer() {
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="material-symbols-outlined shrink-0 text-[20px] text-[#e8cbb5]">
+                <span className="material-symbols-outlined shrink-0 text-[20px] text-white">
                   phone
                 </span>
                 <a
@@ -592,7 +592,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <span className="material-symbols-outlined shrink-0 text-[20px] text-[#e8cbb5]">
+                <span className="material-symbols-outlined shrink-0 text-[20px] text-white">
                   mail
                 </span>
                 <a
@@ -603,7 +603,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[#e8cbb5]">
+                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
                   schedule
                 </span>
                 <span className="leading-relaxed">{siteConfig.schedule}</span>
@@ -640,7 +640,7 @@ export function Footer() {
               <li className="mt-3 border-t border-[#1e2d4a] pt-2">
                 <Link
                   href="/legal"
-                  className="inline-flex items-center gap-1 font-semibold text-[#e8cbb5] transition-colors duration-200 hover:text-white hover:underline"
+                  className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
                 >
                   Ver todos los documentos
                   <span className="material-symbols-outlined text-[16px]">

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 interface TechSpec {
   label: string;
@@ -141,7 +142,6 @@ function StationCorte({ station }: { station: Station }) {
       >
         {station.number}
       </span>
-      <div className="absolute top-0 right-[30%] h-full w-[2px] bg-[#b43024]/30 md:right-[40%]" />
       <div className="relative z-10 grid min-h-[85vh] grid-cols-1 md:grid-cols-2">
         <div className="flex flex-col justify-center space-y-8 p-8 md:p-16 lg:p-24">
           <motion.div
@@ -152,8 +152,8 @@ function StationCorte({ station }: { station: Station }) {
             className="space-y-6"
           >
             <div className="flex items-center gap-4">
-              <span className="block h-[2px] w-8 bg-[#b43024]" />
-              <span className="font-mono text-[10px] font-semibold tracking-[0.35em] text-[#b43024] uppercase">
+              <span className="block h-[2px] w-8 bg-white" />
+              <span className="font-mono text-[10px] font-bold tracking-[0.35em] text-white uppercase">
                 {station.area}
               </span>
             </div>
@@ -179,7 +179,7 @@ function StationCorte({ station }: { station: Station }) {
           >
             {station.technicalSpecs.map((spec) => (
               <div key={spec.label} className="space-y-1">
-                <span className="block font-mono text-[9px] tracking-widest text-[#b43024] uppercase">
+                <span className="block font-mono text-[9px] font-bold tracking-widest text-white uppercase">
                   {spec.label}
                 </span>
                 <span className="block font-sans text-xs font-bold text-white/80">
@@ -189,38 +189,38 @@ function StationCorte({ station }: { station: Station }) {
             ))}
           </motion.div>
           <div className="flex items-center gap-2 pt-2">
-            <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-[#b43024]" />
+            <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-white" />
             <span className="font-mono text-[9px] tracking-widest text-white/30 uppercase">
               {station.feeling}
             </span>
           </div>
         </div>
-        <motion.div
-          className="relative min-h-[40vh] overflow-hidden md:min-h-full"
-          style={{ y: imageY }}
-          initial={{ opacity: 0, scale: 1.05 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Image
-            src={station.image}
-            alt={station.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#143067] via-transparent to-transparent md:from-transparent" />
-          <div className="absolute inset-0 bg-[#143067]/20" />
-          <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8">
-            <span
-              className="font-serif leading-none font-black text-white/10 select-none"
-              style={{ fontSize: "clamp(2.5rem,6vw,5rem)" }}
-            >
-              {station.accentWord}
-            </span>
-          </div>
-        </motion.div>
+        <div className="flex items-center justify-center px-5 py-10 md:p-12 lg:p-16">
+          <motion.div
+            className="border-primary/35 relative aspect-[4/3] w-full max-w-[75%] overflow-hidden rounded-[24px] border bg-white/5 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]"
+            initial={{ opacity: 0, scale: 1.05 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Image
+              src={station.image}
+              alt={station.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 40vw"
+            />
+            <div className="absolute inset-0 bg-[#143067]/10" />
+            <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8">
+              <span
+                className="font-serif leading-none font-black text-white/10 select-none"
+                style={{ fontSize: "clamp(2rem,4vw,3.5rem)" }}
+              >
+                {station.accentWord}
+              </span>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
@@ -230,8 +230,7 @@ function StationCorte({ station }: { station: Station }) {
 function StationConfeccion({ station }: { station: Station }) {
   return (
     <div className="relative overflow-hidden bg-[#f8f9fb]">
-      <div className="absolute top-0 bottom-0 left-0 w-1 bg-[#b43024]" />
-      <div className="pl-8 md:pl-12">
+      <div className="px-5 py-12 md:px-16 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -248,7 +247,7 @@ function StationConfeccion({ station }: { station: Station }) {
               {station.number}
             </span>
             <div className="space-y-2">
-              <span className="block font-mono text-[10px] tracking-[0.3em] text-[#b43024] uppercase">
+              <span className="block font-mono text-[10px] font-bold tracking-[0.3em] text-[#143067] uppercase">
                 {station.area}
               </span>
               <h2
@@ -336,9 +335,9 @@ function StationConfeccion({ station }: { station: Station }) {
             {station.technicalSpecs.map((spec) => (
               <div
                 key={spec.label}
-                className="space-y-0.5 border-l-2 border-[#b43024]/30 pl-3"
+                className="space-y-0.5 border-l-2 border-[#143067]/30 pl-3"
               >
-                <span className="block font-mono text-[9px] tracking-widest text-[#b43024] uppercase">
+                <span className="block font-mono text-[9px] font-bold tracking-widest text-[#143067] uppercase">
                   {spec.label}
                 </span>
                 <span className="block font-sans text-xs font-bold text-[#143067]">
@@ -371,11 +370,11 @@ function StationBordado({ station }: { station: Station }) {
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="flex items-center justify-center gap-4">
-          <div className="h-[1px] w-16 bg-[#b43024]" />
-          <span className="font-mono text-[10px] tracking-[0.35em] text-[#b43024] uppercase">
+          <div className="h-[1px] w-16 bg-[#143067]" />
+          <span className="font-mono text-[10px] font-bold tracking-[0.35em] text-[#143067] uppercase">
             {station.area}
           </span>
-          <div className="h-[1px] w-16 bg-[#b43024]" />
+          <div className="h-[1px] w-16 bg-[#143067]" />
         </div>
         <h2
           className="mx-auto max-w-[16ch] font-serif leading-tight font-bold text-[#143067]"
@@ -431,7 +430,7 @@ function StationBordado({ station }: { station: Station }) {
               key={spec.label}
               className="min-w-[140px] flex-1 space-y-1 md:px-8"
             >
-              <span className="block font-mono text-[9px] tracking-widest text-[#b43024] uppercase">
+              <span className="block font-mono text-[9px] font-bold tracking-widest text-white uppercase">
                 {spec.label}
               </span>
               <span className="block font-sans text-xs font-bold text-white">
@@ -465,7 +464,7 @@ function StationCalidad({ station }: { station: Station }) {
             {station.number}
           </span>
           <div className="relative space-y-4">
-            <span className="block font-mono text-[10px] tracking-[0.35em] text-[#b43024] uppercase">
+            <span className="block font-mono text-[10px] font-bold tracking-[0.35em] text-[#143067] uppercase">
               {station.area}
             </span>
             <h2
@@ -495,7 +494,7 @@ function StationCalidad({ station }: { station: Station }) {
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
-                <span className="mt-0.5 flex-shrink-0 font-mono text-[9px] tracking-widest text-[#b43024] uppercase">
+                <span className="mt-0.5 flex-shrink-0 font-mono text-[9px] font-bold tracking-widest text-[#143067] uppercase">
                   {spec.label}
                 </span>
                 <span className="text-right font-sans text-xs font-bold text-[#143067]">
@@ -588,8 +587,8 @@ function StationAlmacen({ station }: { station: Station }) {
         >
           <div className="max-w-[55ch] space-y-4">
             <div className="flex items-center gap-4">
-              <span className="block h-[1px] w-6 bg-[#b43024]" />
-              <span className="font-mono text-[10px] tracking-[0.35em] text-[#b43024] uppercase">
+              <span className="block h-[1px] w-6 bg-white" />
+              <span className="font-mono text-[10px] font-bold tracking-[0.35em] text-white uppercase">
                 {station.area}
               </span>
             </div>
@@ -631,16 +630,16 @@ function StationAlmacen({ station }: { station: Station }) {
               }}
             >
               {i < steps.length - 1 && (
-                <div className="absolute top-5 left-full z-10 hidden h-[1px] w-full bg-[#b43024]/20 md:block" />
+                <div className="absolute top-5 left-full z-10 hidden h-[1px] w-full bg-white/20 md:block" />
               )}
               <div className="space-y-3 border-b border-white/5 pr-0 pb-8 last:border-0 md:border-b-0 md:pr-8 md:pb-0">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-[#b43024]/40">
-                    <span className="material-symbols-outlined text-lg text-[#b43024]">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-white/40">
+                    <span className="material-symbols-outlined text-lg text-white">
                       {step.icon}
                     </span>
                   </div>
-                  <span className="font-mono text-[9px] tracking-widest text-[#b43024] uppercase">
+                  <span className="font-mono text-[9px] font-bold tracking-widest text-white uppercase">
                     Paso {i + 1}
                   </span>
                 </div>
@@ -657,7 +656,7 @@ function StationAlmacen({ station }: { station: Station }) {
         <div className="mt-12 grid grid-cols-2 gap-6 border-t border-white/5 pt-8 md:grid-cols-4">
           {station.technicalSpecs.map((spec) => (
             <div key={spec.label} className="space-y-1">
-              <span className="block font-mono text-[9px] tracking-widest text-[#b43024] uppercase">
+              <span className="block font-mono text-[9px] font-bold tracking-widest text-white uppercase">
                 {spec.label}
               </span>
               <span className="block font-sans text-xs font-bold text-white/70">
@@ -754,14 +753,9 @@ export default function InstalacionesClient() {
 
   return (
     <div className="relative bg-[#f8f9fb] text-[#191c1e] antialiased selection:bg-[#d7dffc] selection:text-[#143067]">
-      <TourProgressNav
-        activeStation={activeStation}
-        onNavigate={scrollToStation}
-      />
-
       {/* HERO */}
       <section
-        className="relative flex items-center overflow-hidden bg-[#143067]"
+        className="relative flex flex-col items-center justify-center overflow-hidden bg-[#143067]"
         style={{ minHeight: "90vh" }}
       >
         <div
@@ -782,6 +776,19 @@ export default function InstalacionesClient() {
           TALLER
         </span>
 
+        {/* Breadcrumbs inside Hero */}
+        <div className="relative z-20 w-full max-w-screen-2xl px-5 pt-6 pb-0 md:px-8 md:pt-8 md:pb-0">
+          <Breadcrumb
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Empresa", href: "/empresa" },
+              { label: "Instalaciones", href: "/empresa/instalaciones" },
+            ]}
+            variant="light"
+            className="animate-fade-in-up"
+          />
+        </div>
+
         <div className="relative z-10 mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-12 px-5 pt-4 pb-20 md:px-8 md:pt-6 md:pb-20 lg:grid-cols-2">
           <motion.div
             className="space-y-8"
@@ -789,11 +796,7 @@ export default function InstalacionesClient() {
             animate="visible"
             variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
           >
-            <motion.div variants={fadeIn}>
-              <span className="font-mono text-[10px] tracking-[0.4em] text-[#b43024] uppercase">
-                Barrio La Merced &middot; San Miguel, El Salvador
-              </span>
-            </motion.div>
+            {/* Hero red sub-label removed */}
             <motion.h1
               variants={fadeIn}
               className="font-serif leading-[0.95] font-bold tracking-tighter text-white"
@@ -801,7 +804,7 @@ export default function InstalacionesClient() {
             >
               Nuestras
               <br />
-              <em className="text-[#b43024] not-italic">Insta</em>
+              <em className="text-white not-italic">Insta</em>
               <span className="text-white">laciones</span>
             </motion.h1>
             <motion.p
@@ -820,17 +823,7 @@ export default function InstalacionesClient() {
               construye cada prenda, desde el rollo de tela hasta la entrega
               final al cliente.
             </motion.p>
-            <motion.div variants={fadeIn}>
-              <button
-                onClick={() => scrollToStation("corte")}
-                className="group inline-flex cursor-pointer items-center gap-3 bg-[#b43024] px-8 py-4 font-sans font-bold text-white transition-all duration-150 hover:bg-[#b43024]/90 active:scale-[0.98]"
-              >
-                Iniciar Visita Guiada
-                <span className="material-symbols-outlined text-xl transition-transform duration-200 group-hover:translate-y-1">
-                  arrow_downward
-                </span>
-              </button>
-            </motion.div>
+            {/* Visita guiada button removed */}
           </motion.div>
 
           <motion.div
@@ -988,10 +981,10 @@ export default function InstalacionesClient() {
                 cx="125"
                 cy="100"
                 r="4"
-                fill="#b43024"
+                fill="#ffffff"
                 fillOpacity="0.8"
               />
-              <circle cx="125" cy="100" r="8" fill="#b43024" fillOpacity="0.2">
+              <circle cx="125" cy="100" r="8" fill="#ffffff" fillOpacity="0.2">
                 <animate
                   attributeName="r"
                   values="8;14;8"
@@ -1043,14 +1036,7 @@ export default function InstalacionesClient() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 animate-bounce flex-col items-center gap-2">
-          <span className="font-mono text-[9px] tracking-widest text-white/30 uppercase">
-            Desplazar
-          </span>
-          <span className="material-symbols-outlined text-base text-white/30">
-            expand_more
-          </span>
-        </div>
+        {/* Scroll indicator removed */}
       </section>
 
       <div className="h-px bg-gradient-to-r from-transparent via-[#b43024]/40 to-transparent" />
@@ -1065,7 +1051,7 @@ export default function InstalacionesClient() {
         >
           <StationCorte station={stations[0]} />
         </div>
-        <div className="h-px bg-gradient-to-r from-[#143067]/10 via-[#b43024]/20 to-[#143067]/10" />
+        <div className="h-px bg-gradient-to-r from-[#143067]/10 via-[#143067]/15 to-[#143067]/10" />
         <div
           ref={(el) => {
             stationRefs.current["confeccion"] = el;
@@ -1083,7 +1069,7 @@ export default function InstalacionesClient() {
         >
           <StationBordado station={stations[2]} />
         </div>
-        <div className="h-px bg-gradient-to-r from-[#143067]/10 via-[#b43024]/20 to-[#143067]/10" />
+        <div className="h-px bg-gradient-to-r from-[#143067]/10 via-[#143067]/15 to-[#143067]/10" />
         <div
           ref={(el) => {
             stationRefs.current["calidad"] = el;
@@ -1105,7 +1091,7 @@ export default function InstalacionesClient() {
 
       {/* CTA FINAL */}
       <section className="relative overflow-hidden bg-white px-5 py-24 md:px-8 md:py-32">
-        <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-[#143067] via-[#b43024] to-[#143067]" />
+        <div className="absolute top-0 right-0 left-0 h-1 bg-[#143067]" />
         <motion.div
           className="mx-auto max-w-4xl space-y-8 text-center"
           initial="hidden"
@@ -1115,7 +1101,7 @@ export default function InstalacionesClient() {
         >
           <div className="flex items-center justify-center gap-4">
             <div className="h-[1px] max-w-[80px] flex-1 bg-[#143067]/20" />
-            <span className="font-mono text-[10px] tracking-[0.35em] text-[#b43024] uppercase">
+            <span className="font-mono text-[10px] font-bold tracking-[0.35em] text-[#143067] uppercase">
               Fin del Recorrido
             </span>
             <div className="h-[1px] max-w-[80px] flex-1 bg-[#143067]/20" />
@@ -1125,7 +1111,9 @@ export default function InstalacionesClient() {
             style={{ fontSize: "clamp(2rem,5vw,3rem)" }}
           >
             Visitanos en el{" "}
-            <em className="text-[#b43024] not-italic">Barrio La Merced</em>
+            <em className="font-bold text-[#143067] not-italic">
+              Barrio La Merced
+            </em>
           </h2>
           <p className="mx-auto max-w-[60ch] font-sans text-base leading-relaxed text-[#444650]">
             Nuestras puertas estan abiertas para que compruebes en persona la
@@ -1135,7 +1123,7 @@ export default function InstalacionesClient() {
           <div className="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row">
             <Link
               href="/contacto"
-              className="inline-flex w-full items-center justify-center gap-2 bg-[#143067] px-8 py-4 font-sans font-bold text-white transition-all hover:bg-[#143067]/90 active:scale-[0.98] sm:w-auto"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
             >
               <span className="material-symbols-outlined text-lg">
                 calendar_month
@@ -1144,12 +1132,12 @@ export default function InstalacionesClient() {
             </Link>
             <Link
               href="/catalogo"
-              className="inline-flex w-full items-center justify-center gap-2 border border-[#143067]/25 bg-white px-8 py-4 font-sans font-bold text-[#143067] transition-all hover:bg-[#f8f9fb] active:scale-[0.98] sm:w-auto"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-[#143067] bg-transparent px-6 py-3.5 font-sans text-[14px] font-semibold text-[#143067] shadow-sm transition-all hover:bg-[#dae2ff]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
             >
               <span className="material-symbols-outlined text-lg">
                 menu_book
               </span>
-              Ver Catalogo
+              Ver Catálogo
             </Link>
           </div>
         </motion.div>

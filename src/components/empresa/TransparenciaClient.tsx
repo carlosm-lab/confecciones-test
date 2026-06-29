@@ -151,7 +151,7 @@ export default function TransparenciaClient() {
       {/* CABECERA DOCUMENTAL (Reemplaza al Hero) */}
       {/* ──────────────────────────────────────────────────────── */}
       <header className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-12 md:px-8 md:pt-6">
-        <div className="rounded border border-[#143067]/20 bg-white p-6 shadow-sm md:p-10">
+        <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-10">
           <div className="mb-8 flex flex-col items-start justify-between gap-4 border-b border-[#e1e2e5] pb-6 font-mono text-xs text-[#444650] md:flex-row md:items-center">
             <div className="space-y-1">
               <p className="font-semibold tracking-wider text-[#143067]">
@@ -159,7 +159,7 @@ export default function TransparenciaClient() {
               </p>
               <p>
                 CENTRO DE CONTROL:{" "}
-                <span className="font-bold text-[#b43024]">PORTAL-TRS-01</span>
+                <span className="font-bold text-[#143067]">PORTAL-TRS-01</span>
               </p>
             </div>
             <div className="space-y-1 text-left md:text-right">
@@ -178,7 +178,7 @@ export default function TransparenciaClient() {
               <span className="rounded border border-[#143067]/10 bg-[#143067]/5 px-3 py-1">
                 EMPRESA: Confecciones Liss
               </span>
-              <span className="rounded border border-[#b43024]/10 bg-[#b43024]/5 px-3 py-1 font-bold text-[#b43024]">
+              <span className="rounded border border-[#143067]/10 bg-[#143067]/5 px-3 py-1 font-bold text-[#143067]">
                 ESTADO: Información Pública
               </span>
               <span className="rounded border border-[#143067]/10 bg-[#143067]/5 px-3 py-1">
@@ -207,7 +207,7 @@ export default function TransparenciaClient() {
               className="space-y-6"
             >
               <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
-                <span className="font-mono text-xs font-bold text-[#b43024]">
+                <span className="font-mono text-xs font-bold text-[#143067]">
                   BLOQUE 01 //
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -277,7 +277,7 @@ export default function TransparenciaClient() {
               className="space-y-6"
             >
               <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
-                <span className="font-mono text-xs font-bold text-[#b43024]">
+                <span className="font-mono text-xs font-bold text-[#143067]">
                   BLOQUE 02 //
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -310,7 +310,7 @@ export default function TransparenciaClient() {
                     className="relative flex flex-col justify-between rounded border border-[#e1e2e5] bg-white p-5 transition-colors duration-300 hover:border-[#143067]/40"
                   >
                     <div className="space-y-3">
-                      <span className="font-mono text-[9px] font-bold text-[#b43024]">
+                      <span className="font-mono text-[9px] font-bold text-[#143067]">
                         PASO 0{index + 1}
                       </span>
                       <h3 className="font-serif text-base font-bold text-[#143067]">
@@ -322,7 +322,7 @@ export default function TransparenciaClient() {
                     </div>
                     {/* Flecha conectora (solo visible en desktop) */}
                     {index < arr.length - 1 && (
-                      <div className="pointer-events-none absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 rounded-full border border-[#e1e2e5] bg-white p-1 text-[#b43024] select-none md:block">
+                      <div className="pointer-events-none absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 rounded-full border border-[#e1e2e5] bg-white p-1 font-bold text-[#143067] select-none md:block">
                         <span className="material-symbols-outlined text-xs">
                           arrow_forward
                         </span>
@@ -342,7 +342,7 @@ export default function TransparenciaClient() {
               className="space-y-6"
             >
               <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
-                <span className="font-mono text-xs font-bold text-[#b43024]">
+                <span className="font-mono text-xs font-bold text-[#143067]">
                   BLOQUE 03 //
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -379,7 +379,7 @@ export default function TransparenciaClient() {
                   },
                 ].map((item) => (
                   <div key={item.num} className="flex items-center gap-6 p-5">
-                    <span className="shrink-0 font-mono text-xl font-bold text-[#b43024]">
+                    <span className="shrink-0 font-mono text-xl font-bold text-[#143067]">
                       {item.num} {"//"}
                     </span>
                     <p className="text-sm font-semibold text-[#191c1e]">
@@ -399,7 +399,7 @@ export default function TransparenciaClient() {
               className="space-y-6"
             >
               <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
-                <span className="font-mono text-xs font-bold text-[#b43024]">
+                <span className="font-mono text-xs font-bold text-[#143067]">
                   BLOQUE 04 //
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -442,7 +442,7 @@ export default function TransparenciaClient() {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between font-mono text-xs text-[#444650]/60">
                       <span>REF: {activeFolder.refCode}</span>
-                      <span className="font-bold text-[#b43024]">
+                      <span className="font-bold text-[#143067]">
                         {activeFolder.size}
                       </span>
                     </div>
@@ -473,7 +473,7 @@ export default function TransparenciaClient() {
               className="space-y-6"
             >
               <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
-                <span className="font-mono text-xs font-bold text-[#b43024]">
+                <span className="font-mono text-xs font-bold text-[#143067]">
                   BLOQUE 05 //
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -488,7 +488,7 @@ export default function TransparenciaClient() {
                     key={note.id}
                     className={`space-y-3 rounded border border-[#e1e2e5] bg-white p-6 shadow-[0_4px_15px_-10px_rgba(0,0,0,0.05)] transition-transform duration-500 hover:scale-[1.01] hover:rotate-0 ${note.size} ${note.rotation}`}
                   >
-                    <span className="block border-b border-[#e1e2e5] pb-2 font-mono text-[9px] font-bold tracking-wider text-[#b43024] uppercase">
+                    <span className="block border-b border-[#e1e2e5] pb-2 font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                       PREGUNTA FRECUENTE
                     </span>
                     <h3 className="font-serif text-sm leading-snug font-bold text-[#143067]">
@@ -511,7 +511,7 @@ export default function TransparenciaClient() {
               className="space-y-6"
             >
               <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
-                <span className="font-mono text-xs font-bold text-[#b43024]">
+                <span className="font-mono text-xs font-bold text-[#143067]">
                   BLOQUE 06 //
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -542,7 +542,7 @@ export default function TransparenciaClient() {
                 <h3 className="pl-12 font-serif text-3xl leading-tight font-bold tracking-tight text-white/50 md:pl-24 md:text-5xl lg:text-6xl">
                   Nuestros procesos.
                 </h3>
-                <h3 className="pl-16 font-serif text-3xl leading-tight font-bold tracking-tight text-[#b43024] md:pl-32 md:text-5xl lg:text-6xl">
+                <h3 className="pl-16 font-serif text-3xl leading-tight font-bold tracking-tight text-white md:pl-32 md:text-5xl lg:text-6xl">
                   Nuestros errores cuando ocurren.
                 </h3>
                 <h3 className="pt-4 pl-20 font-serif text-2xl font-semibold text-[#dae2ff] italic md:pl-40 md:text-4xl">
@@ -560,7 +560,7 @@ export default function TransparenciaClient() {
               className="space-y-6"
             >
               <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
-                <span className="font-mono text-xs font-bold text-[#b43024]">
+                <span className="font-mono text-xs font-bold text-[#143067]">
                   BLOQUE 07 //
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -618,78 +618,19 @@ export default function TransparenciaClient() {
           </div>
 
           {/* ======================================================== */}
-          {/* PANEL SECUNDARIO DERECHO (Control y Auditoría) */}
+          {/* IMAGEN DE TRANSPARENCIA (Reemplaza Panel de Auditoría) */}
           {/* ======================================================== */}
-          <div className="space-y-6 rounded border border-[#143067]/20 bg-white p-6 shadow-sm lg:sticky lg:top-8 lg:col-span-4">
-            {/* Cabecera del panel de control */}
-            <div className="space-y-1 border-b border-[#e1e2e5] pb-4">
-              <span className="block font-mono text-[10px] font-bold tracking-wider text-[#b43024] uppercase">
-                PANEL DE AUDITORÍA
-              </span>
-              <h3 className="font-serif text-lg font-bold text-[#143067]">
-                Resumen del Expediente
-              </h3>
-            </div>
-
-            {/* Placeholder de Documentación Institucional */}
-            <div className="relative flex aspect-[4/3] w-full flex-col justify-between overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4">
-              <div
-                className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(#143067 1px, transparent 1px)",
-                  backgroundSize: "12px 12px",
-                }}
-              ></div>
-
-              <div className="flex items-center gap-3">
-                <svg
-                  className="h-8 w-8 shrink-0 fill-none stroke-current stroke-1 text-[#143067]/60"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M 6,2 L 14,2 L 18,6 L 18,22 L 6,22 Z" />
-                  <line x1="9" y1="10" x2="15" y2="10" strokeWidth="0.8" />
-                  <line x1="9" y1="14" x2="15" y2="14" strokeWidth="0.8" />
-                </svg>
-                <div className="space-y-0.5">
-                  <h4 className="font-serif text-sm leading-tight font-bold text-[#143067]">
-                    Verified dossier.pdf
-                  </h4>
-                  <p className="font-mono text-[9px] text-[#444650]/60">
-                    CON-TRS-DOC-01 // 3.4 MB
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex justify-between border-t border-[#e1e2e5] pt-2 font-mono text-[9px] text-[#444650]">
-                <span>ESTADO: VERIFICADO</span>
-                <span className="font-bold text-[#b43024]">100% OK</span>
-              </div>
-            </div>
-
-            {/* Consola de logs de auditoría simulados en tiempo real */}
-            <div className="space-y-2">
-              <span className="block font-mono text-[9px] tracking-wider text-[#444650] uppercase">
-                LOGS DE ACTIVIDAD
-              </span>
-              <div className="h-[120px] space-y-2 overflow-y-auto rounded-md bg-[#191c1e] p-4 font-mono text-[10px] leading-relaxed text-[#dae2ff]">
-                {auditLog.map((log, i) => (
-                  <p key={i} className="truncate">
-                    {log}
-                  </p>
-                ))}
-              </div>
-            </div>
-
-            {/* Sello oficial */}
-            <div className="flex items-center justify-between border-t border-[#e1e2e5] pt-4">
-              <div className="font-mono text-[9px] text-[#444650]">
-                <p>REGISTRO INTEGRAL</p>
-                <p>SAN MIGUEL, EL SALVADOR</p>
-              </div>
-              <div className="pointer-events-none rotate-[-5deg] rounded-md border border-[#b43024] px-3 py-1 font-mono text-[9px] font-bold tracking-wider text-[#b43024] select-none">
-                VERIFICADO LISS
+          <div className="lg:sticky lg:top-8 lg:col-span-4">
+            <div className="border-primary/35 relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                <Image
+                  fill
+                  src="/images/servicios/mano-obra.png"
+                  alt="Transparencia y honestidad en el taller"
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 30vw"
+                  priority
+                />
               </div>
             </div>
           </div>
@@ -705,7 +646,7 @@ export default function TransparenciaClient() {
             &ldquo;La transparencia no es una sección del sitio web. Es la forma
             en que decidimos construir Confecciones Liss.&rdquo;
           </h2>
-          <div className="mx-auto h-0.5 w-16 bg-[#b43024]"></div>
+          <div className="mx-auto h-0.5 w-16 bg-[#143067]"></div>
 
           <div className="pt-4 font-mono text-xs text-[#444650]">
             <p className="font-bold text-[#143067]">Confecciones Liss</p>

@@ -21,7 +21,7 @@ export default function ResponsabilidadSocialClient() {
       {/* PORTADA (Hero Editorial) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-16 md:px-8 md:pt-6 md:pb-24">
-        <div className="rounded border border-[#143067]/20 bg-white p-6 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] md:p-12">
+        <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           {/* Metadata superior del informe */}
           <div className="mb-10 flex flex-col items-start justify-between gap-4 border-b border-[#e1e2e5] pb-6 font-mono text-xs text-[#444650] md:flex-row md:items-center">
             <div className="space-y-1">
@@ -30,7 +30,7 @@ export default function ResponsabilidadSocialClient() {
               </p>
               <p>
                 INFORME DE GESTIÓN SOCIAL:{" "}
-                <span className="font-bold text-[#b43024]">
+                <span className="font-bold text-[#143067]">
                   INFORME-RS-2026
                 </span>
               </p>
@@ -44,13 +44,13 @@ export default function ResponsabilidadSocialClient() {
           <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
             {/* Título de la Portada */}
             <div className="space-y-6 lg:col-span-6">
-              <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
                 Compromiso Comunitario
               </span>
               <h1 className="font-serif text-4xl leading-tight tracking-tight text-[#143067] md:text-5xl lg:text-7xl">
                 Responsabilidad Social
               </h1>
-              <p className="border-l-2 border-[#b43024] pl-4 font-serif text-lg leading-relaxed text-[#444650] md:text-2xl">
+              <p className="border-l-2 border-[#143067] pl-4 font-serif text-lg leading-relaxed text-[#444650] md:text-2xl">
                 Crecer como empresa también significa generar oportunidades,
                 compartir conocimiento y aportar al desarrollo de nuestra
                 comunidad.
@@ -83,7 +83,7 @@ export default function ResponsabilidadSocialClient() {
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
           {/* Imagen Grayscale */}
           <div className="lg:col-span-6">
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb]">
+            <div className="border-primary/35 relative aspect-[4/3] w-full overflow-hidden rounded border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <Image
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDql6RAV4sbPJQGYiXijV7KHGzjJUep7ygJh0aamJxp9_KY2wPDDgZuqgHyZ2hSX5FHdJ0_zeDOOcmveyy3URfYQuwBDOHHaeKJnJtwfHT8R4APNmQ4dC5IeR89-M-GRnMhKL3Mrmz4RIrW6UfXKZPfojqoPElzWRv7xPnZzlzYWzxpMNKA05CvKHF38tVCtOs7SaFpaAbA0baMp_63_ivw10zgiOvHS0bReDbkD2_GAibQocZlAk9zBix5wNco3k5Ph_kMGvT35cY"
                 alt="Taller tradicional de costura y confección"
@@ -101,7 +101,7 @@ export default function ResponsabilidadSocialClient() {
           {/* Texto del capítulo */}
           <div className="space-y-6 lg:col-span-6">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-[#b43024]">
+              <span className="font-mono text-xs font-bold text-[#143067]">
                 CAPÍTULO 01 //
               </span>
               <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -141,13 +141,13 @@ export default function ResponsabilidadSocialClient() {
           <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
             {/* Header del capítulo */}
             <div className="sticky top-8 space-y-4 lg:col-span-4">
-              <span className="font-mono text-xs font-bold text-[#b43024]">
+              <span className="font-mono text-xs font-bold text-[#143067]">
                 CAPÍTULO 02 //
               </span>
               <h2 className="font-serif text-3xl leading-tight text-[#143067]">
                 Generando empleo local
               </h2>
-              <h3 className="font-serif text-lg text-[#b43024] italic">
+              <h3 className="font-serif text-lg font-bold text-[#143067] italic">
                 Crecer significa crear oportunidades.
               </h3>
               <div className="space-y-3 text-sm leading-relaxed text-[#444650]">
@@ -187,8 +187,8 @@ export default function ResponsabilidadSocialClient() {
 
               {/* Hito 2021 */}
               <div className="relative space-y-2">
-                <div className="absolute top-1 -left-[31px] h-3 w-3 rounded-full border-2 border-[#b43024] bg-white md:-left-[55px]"></div>
-                <div className="font-serif text-2xl font-bold text-[#b43024]">
+                <div className="absolute top-1 -left-[31px] h-3 w-3 rounded-full border-2 border-[#143067] bg-white md:-left-[55px]"></div>
+                <div className="font-serif text-2xl font-bold text-[#143067]">
                   2021
                 </div>
                 <h4 className="font-serif text-base font-bold text-[#143067]">
@@ -228,7 +228,7 @@ export default function ResponsabilidadSocialClient() {
       {/* CAPÍTULO 3: APOSTAMOS POR EL CONOCIMIENTO (Cuaderno Trabajo) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-        <div className="relative overflow-hidden rounded border border-[#e1e2e5] bg-white p-6 md:p-12">
+        <div className="border-primary/35 relative overflow-hidden rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           {/* Grid lines background style (Cuaderno de trabajo) */}
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.02]"
@@ -239,11 +239,11 @@ export default function ResponsabilidadSocialClient() {
             }}
           ></div>
 
-          <div className="relative z-10 grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+          <div className="relative z-10">
             {/* Izquierda: Título y texto */}
-            <div className="space-y-6 lg:col-span-5">
+            <div className="space-y-6">
               <div className="space-y-2">
-                <span className="font-mono text-xs font-bold text-[#b43024]">
+                <span className="font-mono text-xs font-bold text-[#143067]">
                   CAPÍTULO 03 //
                 </span>
                 <h2 className="font-serif text-3xl leading-tight text-[#143067]">
@@ -267,58 +267,58 @@ export default function ResponsabilidadSocialClient() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
 
-            {/* Derecha: Simulación de Cuaderno de Notas Técnicas */}
-            <div className="space-y-6 rounded border border-[#e1e2e5] bg-[#f8f9fb] p-6 font-mono text-xs text-[#444650] lg:col-span-7">
-              <div className="flex items-center justify-between border-b border-[#e1e2e5] pb-3">
-                <span className="font-bold text-[#143067]">
-                  HOJA DE REGISTRO TÉCNICO // CAPACITACIÓN
-                </span>
-                <span className="text-[#b43024]">REV-03</span>
-              </div>
+        {/* Derecha: Simulación de Cuaderno de Notas Técnicas sacado al contenedor principal */}
+        <div className="border-primary/35 mt-8 space-y-6 rounded border bg-[#f8f9fb] p-6 font-mono text-xs text-[#444650] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+          <div className="flex items-center justify-between border-b border-[#e1e2e5] pb-3">
+            <span className="font-bold text-[#143067]">
+              HOJA DE REGISTRO TÉCNICO // CAPACITACIÓN
+            </span>
+            <span className="font-bold text-[#143067]">REV-03</span>
+          </div>
 
-              <div className="space-y-4">
-                <div className="space-y-1">
-                  <span className="font-bold text-[#b43024]">
-                    01 / CAPACITACIÓN EN MAQUINARIA INDUSTRIAL
-                  </span>
-                  <p className="pl-4 font-sans text-xs text-[#191c1e]">
-                    Instrucción periódica sobre ajuste de tensiones de puntada y
-                    enhebrado de máquinas overlock de alta velocidad para evitar
-                    fruncido en costuras de gabardinas.
-                  </p>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="font-bold text-[#b43024]">
-                    02 / PROTOCOLOS DE TRAZABILIDAD DE LOTES
-                  </span>
-                  <p className="pl-4 font-sans text-xs text-[#191c1e]">
-                    Estandarización de fichas de corte y códigos de control de
-                    calidad asignados a cada lote de producción para identificar
-                    operarios y materiales.
-                  </p>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="font-bold text-[#b43024]">
-                    03 / HIGIENE Y ERGONOMÍA EN EL TALLER
-                  </span>
-                  <p className="pl-4 font-sans text-xs text-[#191c1e]">
-                    Adaptación ergonómica de mesas de corte e implementación de
-                    descansos activos para el cuidado físico del personal de
-                    costura.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between border-t border-[#e1e2e5] pt-4 text-[10px]">
-                <span>TALLER CONFECCIONES LISS</span>
-                <span className="font-bold text-[#143067]">
-                  DOCUMENTACIÓN ACTIVA
-                </span>
-              </div>
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <span className="font-bold text-[#143067]">
+                01 / CAPACITACIÓN EN MAQUINARIA INDUSTRIAL
+              </span>
+              <p className="pl-4 font-sans text-xs text-[#191c1e]">
+                Instrucción periódica sobre ajuste de tensiones de puntada y
+                enhebrado de máquinas overlock de alta velocidad para evitar
+                fruncido en costuras de gabardinas.
+              </p>
             </div>
+
+            <div className="space-y-1">
+              <span className="font-bold text-[#143067]">
+                02 / PROTOCOLOS DE TRAZABILIDAD DE LOTES
+              </span>
+              <p className="pl-4 font-sans text-xs text-[#191c1e]">
+                Estandarización de fichas de corte y códigos de control de
+                calidad asignados a cada lote de producción para identificar
+                operarios y materiales.
+              </p>
+            </div>
+
+            <div className="space-y-1">
+              <span className="font-bold text-[#143067]">
+                03 / HIGIENE Y ERGONOMÍA EN EL TALLER
+              </span>
+              <p className="pl-4 font-sans text-xs text-[#191c1e]">
+                Adaptación ergonómica de mesas de corte e implementación de
+                descansos activos para el cuidado físico del personal de
+                costura.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between border-t border-[#e1e2e5] pt-4 text-[10px]">
+            <span>TALLER CONFECCIONES LISS</span>
+            <span className="font-bold text-[#143067]">
+              DOCUMENTACIÓN ACTIVA
+            </span>
           </div>
         </div>
       </section>
@@ -343,7 +343,7 @@ export default function ResponsabilidadSocialClient() {
 
                 <div className="mb-2 flex justify-between font-mono text-[9px] tracking-wider text-[#dae2ff] uppercase">
                   <span>Esquema de Interfaz</span>
-                  <span className="font-bold text-[#b43024]">
+                  <span className="font-bold text-[#143067]">
                     ONLINE ECOSYSTEM
                   </span>
                 </div>
@@ -386,7 +386,7 @@ export default function ResponsabilidadSocialClient() {
             {/* Texto descriptivo */}
             <div className="order-1 space-y-6 lg:order-2 lg:col-span-6">
               <div className="space-y-2">
-                <span className="font-mono text-xs font-bold text-[#b43024]">
+                <span className="font-mono text-xs font-bold text-[#143067]">
                   CAPÍTULO 04 //
                 </span>
                 <h2 className="font-serif text-3xl leading-tight text-[#143067]">
@@ -423,11 +423,11 @@ export default function ResponsabilidadSocialClient() {
       {/* CAPÍTULO 5: NUESTRO COMPROMISO DIARIO (Doble Página Editorial) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-        <div className="rounded border border-[#e1e2e5] bg-white p-6 shadow-sm md:p-12">
+        <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
             {/* Página Izquierda (Título y Manifiesto) */}
             <div className="space-y-6 lg:col-span-5 lg:border-r lg:border-[#e1e2e5] lg:pr-12">
-              <span className="font-mono text-xs font-bold text-[#b43024]">
+              <span className="font-mono text-xs font-bold text-[#143067]">
                 CAPÍTULO 05 //
               </span>
               <h2 className="font-serif text-4xl leading-tight text-[#143067]">
@@ -448,7 +448,7 @@ export default function ResponsabilidadSocialClient() {
             <div className="space-y-8 font-sans text-sm text-[#444650] lg:col-span-7 lg:pl-4">
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
                 <div className="space-y-1">
-                  <span className="font-mono text-xs font-bold text-[#b43024]">
+                  <span className="font-mono text-xs font-bold text-[#143067]">
                     01 //
                   </span>
                   <h3 className="font-serif text-base font-bold text-[#191c1e]">
@@ -461,7 +461,7 @@ export default function ResponsabilidadSocialClient() {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="font-mono text-xs font-bold text-[#b43024]">
+                  <span className="font-mono text-xs font-bold text-[#143067]">
                     02 //
                   </span>
                   <h3 className="font-serif text-base font-bold text-[#191c1e]">
@@ -474,7 +474,7 @@ export default function ResponsabilidadSocialClient() {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="font-mono text-xs font-bold text-[#b43024]">
+                  <span className="font-mono text-xs font-bold text-[#143067]">
                     03 //
                   </span>
                   <h3 className="font-serif text-base font-bold text-[#191c1e]">
@@ -487,7 +487,7 @@ export default function ResponsabilidadSocialClient() {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="font-mono text-xs font-bold text-[#b43024]">
+                  <span className="font-mono text-xs font-bold text-[#143067]">
                     04 //
                   </span>
                   <h3 className="font-serif text-base font-bold text-[#191c1e]">
@@ -500,7 +500,7 @@ export default function ResponsabilidadSocialClient() {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="font-mono text-xs font-bold text-[#b43024]">
+                  <span className="font-mono text-xs font-bold text-[#143067]">
                     05 //
                   </span>
                   <h3 className="font-serif text-base font-bold text-[#191c1e]">
@@ -513,7 +513,7 @@ export default function ResponsabilidadSocialClient() {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="font-mono text-xs font-bold text-[#b43024]">
+                  <span className="font-mono text-xs font-bold text-[#143067]">
                     06 //
                   </span>
                   <h3 className="font-serif text-base font-bold text-[#191c1e]">
@@ -526,7 +526,7 @@ export default function ResponsabilidadSocialClient() {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="font-mono text-xs font-bold text-[#b43024]">
+                  <span className="font-mono text-xs font-bold text-[#143067]">
                     07 //
                   </span>
                   <h3 className="font-serif text-base font-bold text-[#191c1e]">
@@ -539,7 +539,7 @@ export default function ResponsabilidadSocialClient() {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="font-mono text-xs font-bold text-[#b43024]">
+                  <span className="font-mono text-xs font-bold text-[#143067]">
                     08 //
                   </span>
                   <h3 className="font-serif text-base font-bold text-[#191c1e]">
@@ -562,7 +562,7 @@ export default function ResponsabilidadSocialClient() {
       <section className="bg-[#143067] px-5 py-16 text-white md:px-8 md:py-24">
         <div className="mx-auto grid max-w-screen-xl grid-cols-1 items-center gap-8 lg:grid-cols-12">
           <div className="space-y-4 lg:col-span-5">
-            <span className="block font-mono text-xs font-bold text-[#b43024]">
+            <span className="block font-mono text-xs font-bold text-[#143067]">
               CAPÍTULO 06 //
             </span>
             <h2 className="font-serif text-3xl leading-tight text-white md:text-4xl">
@@ -594,13 +594,13 @@ export default function ResponsabilidadSocialClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="border-t border-[#e1e2e5] bg-[#f8f9fb] px-5 py-20 text-center md:px-8 md:py-32">
         <div className="mx-auto max-w-2xl space-y-8">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
             Compromiso a Futuro
           </span>
           <h2 className="font-serif text-3xl leading-tight tracking-tight text-[#143067] md:text-5xl">
             El éxito también se mide por el impacto que dejamos.
           </h2>
-          <div className="mx-auto h-0.5 w-16 bg-[#b43024]"></div>
+          <div className="mx-auto h-0.5 w-16 bg-[#143067]"></div>
 
           <div className="space-y-6 font-sans text-base leading-relaxed text-[#444650]">
             <p>
@@ -618,7 +618,7 @@ export default function ResponsabilidadSocialClient() {
           <div className="pt-8">
             <Link
               href="/contacto"
-              className="inline-block rounded bg-[#b43024] px-8 py-3 font-mono text-xs tracking-wider text-white uppercase shadow-lg shadow-black/10 transition-colors hover:bg-[#b43024]/90"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
             >
               Contactar al Taller
             </Link>

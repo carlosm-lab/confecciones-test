@@ -93,7 +93,7 @@ export default function CalidadClient() {
       {/* 1. HERO: MANUAL DE CONTROL DE CALIDAD (Ficha Técnica) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="relative mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-16 md:px-8 md:pt-6 md:pb-24">
-        <div className="rounded border border-[#143067]/20 bg-white p-6 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] md:p-12">
+        <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           {/* Header técnico del documento */}
           <div className="mb-10 flex flex-col items-start justify-between gap-4 border-b border-[#e1e2e5] pb-6 font-mono text-xs text-[#444650] md:flex-row md:items-center">
             <div className="space-y-1">
@@ -102,7 +102,7 @@ export default function CalidadClient() {
               </p>
               <p>
                 DOCUMENTO DE ESPECIFICACIÓN:{" "}
-                <span className="font-bold text-[#b43024]">QA-MANUAL-2026</span>
+                <span className="font-bold text-[#143067]">QA-MANUAL-2026</span>
               </p>
             </div>
             <div className="space-y-1 text-left md:text-right">
@@ -117,7 +117,7 @@ export default function CalidadClient() {
               <h1 className="font-serif text-4xl leading-tight tracking-tight text-[#143067] md:text-5xl lg:text-6xl">
                 Control de Calidad
               </h1>
-              <p className="border-l-2 border-[#b43024] pl-4 font-serif text-lg leading-relaxed text-[#444650] md:text-xl">
+              <p className="border-l-2 border-[#143067] pl-4 font-serif text-lg leading-relaxed text-[#444650] md:text-xl">
                 La calidad no aparece al finalizar una prenda. Está presente
                 desde el primer corte de tela hasta el momento en que un
                 uniforme llega a las manos del cliente.
@@ -138,103 +138,18 @@ export default function CalidadClient() {
               </div>
             </div>
 
-            {/* Ilustración técnica (SVG Esquema de Sastrería/Cotas) */}
-            <div className="flex justify-center lg:col-span-5">
-              <div className="relative flex aspect-square w-full max-w-md flex-col justify-between overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb] p-6">
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(#143067 1px, transparent 1px)",
-                    backgroundSize: "16px 16px",
-                  }}
-                ></div>
-
-                {/* SVG Blueprint */}
-                <svg
-                  className="h-auto w-full fill-none stroke-current stroke-1 text-[#143067]/40"
-                  viewBox="0 0 100 100"
-                  aria-hidden="true"
-                >
-                  {/* Grid Lines */}
-                  <line x1="10" y1="10" x2="90" y2="10" strokeDasharray="2,2" />
-                  <line x1="10" y1="50" x2="90" y2="50" strokeDasharray="2,2" />
-                  <line x1="10" y1="90" x2="90" y2="90" strokeDasharray="2,2" />
-                  <line x1="10" y1="10" x2="10" y2="90" strokeDasharray="2,2" />
-                  <line x1="50" y1="10" x2="50" y2="90" strokeDasharray="2,2" />
-                  <line x1="90" y1="10" x2="90" y2="90" strokeDasharray="2,2" />
-
-                  {/* Garment Shape representation (Scrub top outline) */}
-                  <path d="M 30,20 L 70,20 L 70,26 L 80,34 L 74,40 L 68,36 L 68,80 L 32,80 L 32,36 L 26,40 L 20,34 L 30,26 Z" />
-                  <path d="M 44,20 C 44,26 56,26 56,20" />
-
-                  {/* Dimension markers */}
-                  <line
-                    x1="16"
-                    y1="34"
-                    x2="16"
-                    y2="80"
-                    stroke="#b43024"
-                    strokeWidth="0.5"
+            {/* Lado Derecho: Imagen de Control de Calidad */}
+            <div className="flex justify-center lg:col-span-5 lg:justify-end">
+              <div className="border-primary/35 relative flex aspect-square w-full max-w-md items-center justify-center overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+                <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                  <Image
+                    fill
+                    src="/images/servicios/mano-obra.png"
+                    alt="Control de Calidad - Confecciones Liss"
+                    className="object-cover object-center"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    priority
                   />
-                  <line
-                    x1="14"
-                    y1="34"
-                    x2="18"
-                    y2="34"
-                    stroke="#b43024"
-                    strokeWidth="0.5"
-                  />
-                  <line
-                    x1="14"
-                    y1="80"
-                    x2="18"
-                    y2="80"
-                    stroke="#b43024"
-                    strokeWidth="0.5"
-                  />
-
-                  {/* Angle indicator */}
-                  <path
-                    d="M 70,26 L 66,32"
-                    stroke="#b43024"
-                    strokeWidth="0.5"
-                    strokeDasharray="1,1"
-                  />
-                  <path
-                    d="M 69,33 A 6 6 0 0 1 73,31"
-                    stroke="#b43024"
-                    strokeWidth="0.5"
-                  />
-
-                  {/* Micro text representation */}
-                  <text
-                    x="12"
-                    y="58"
-                    className="fill-[#b43024] stroke-none font-mono text-[3px]"
-                  >
-                    L_TOT
-                  </text>
-                  <text
-                    x="73"
-                    y="36"
-                    className="fill-[#b43024] stroke-none font-mono text-[3px]"
-                  >
-                    45.0°
-                  </text>
-                  <text
-                    x="50"
-                    y="85"
-                    className="text-anchor-middle fill-[#143067] stroke-none font-mono text-[3px]"
-                    textAnchor="middle"
-                  >
-                    ANCHO BASAL: 58.0cm
-                  </text>
-                </svg>
-
-                <div className="z-10 flex items-end justify-between border-t border-[#e1e2e5] pt-4 font-mono text-[10px] text-[#444650]">
-                  <span>DIAGRAMA QA-01 // COTAS DE PATRÓN</span>
-                  <span className="font-bold text-[#b43024]">100% OK</span>
                 </div>
               </div>
             </div>
@@ -249,7 +164,7 @@ export default function CalidadClient() {
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
           {/* Eyebrow and Title */}
           <div className="space-y-4 lg:col-span-4">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
               Valores de Manufactura
             </span>
             <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
@@ -292,7 +207,7 @@ export default function CalidadClient() {
       <section className="border-t border-b border-[#e1e2e5] bg-white">
         <div className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
           <div className="mx-auto mb-16 max-w-xl space-y-4 text-center md:mb-24">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
               Trazabilidad Técnica
             </span>
             <h2 className="font-serif text-3xl text-[#143067] md:text-4xl lg:text-5xl">
@@ -316,7 +231,7 @@ export default function CalidadClient() {
             >
               <div className="space-y-6">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-serif text-5xl font-bold text-[#b43024] md:text-6xl">
+                  <span className="font-serif text-5xl font-bold text-[#143067] md:text-6xl">
                     01.
                   </span>
                   <h3 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -355,17 +270,23 @@ export default function CalidadClient() {
                       <tr>
                         <td className="p-3">01 // Ancho de hombros</td>
                         <td className="p-3">44.5 cm</td>
-                        <td className="p-3 text-[#b43024]">± 0.2 cm</td>
+                        <td className="p-3 font-bold text-[#143067]">
+                          ± 0.2 cm
+                        </td>
                       </tr>
                       <tr>
                         <td className="p-3">02 // Contorno de pecho</td>
                         <td className="p-3">102.0 cm</td>
-                        <td className="p-3 text-[#b43024]">± 0.5 cm</td>
+                        <td className="p-3 font-bold text-[#143067]">
+                          ± 0.5 cm
+                        </td>
                       </tr>
                       <tr>
                         <td className="p-3">03 // Largo total superior</td>
                         <td className="p-3">72.0 cm</td>
-                        <td className="p-3 text-[#b43024]">± 0.4 cm</td>
+                        <td className="p-3 font-bold text-[#143067]">
+                          ± 0.4 cm
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -405,7 +326,7 @@ export default function CalidadClient() {
 
               <div className="order-1 space-y-6 lg:order-2 lg:col-span-7">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-serif text-5xl font-bold text-[#b43024] md:text-6xl">
+                  <span className="font-serif text-5xl font-bold text-[#143067] md:text-6xl">
                     02.
                   </span>
                   <h3 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -427,7 +348,7 @@ export default function CalidadClient() {
                 {/* Lista técnica */}
                 <div className="grid grid-cols-1 gap-4 border-t border-[#e1e2e5] pt-4 sm:grid-cols-2">
                   <div className="rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4">
-                    <span className="mb-1 block font-mono text-[10px] font-bold tracking-wider text-[#b43024] uppercase">
+                    <span className="mb-1 block font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
                       MÉTODO
                     </span>
                     <h4 className="mb-1 font-serif text-sm font-bold text-[#143067]">
@@ -439,7 +360,7 @@ export default function CalidadClient() {
                     </p>
                   </div>
                   <div className="rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4">
-                    <span className="mb-1 block font-mono text-[10px] font-bold tracking-wider text-[#b43024] uppercase">
+                    <span className="mb-1 block font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
                       DESVIACIÓN
                     </span>
                     <h4 className="mb-1 font-serif text-sm font-bold text-[#143067]">
@@ -464,7 +385,7 @@ export default function CalidadClient() {
             >
               <div className="space-y-6 lg:col-span-7">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-serif text-5xl font-bold text-[#b43024] md:text-6xl">
+                  <span className="font-serif text-5xl font-bold text-[#143067] md:text-6xl">
                     03.
                   </span>
                   <h3 className="font-serif text-2xl text-white md:text-3xl">
@@ -489,7 +410,7 @@ export default function CalidadClient() {
               <div className="flex flex-col justify-between rounded border border-white/20 bg-white/5 p-6 lg:col-span-5">
                 <div className="mb-4 flex justify-between font-mono text-[10px] tracking-wider text-[#dae2ff] uppercase">
                   <span>Esquema Técnico</span>
-                  <span className="font-bold text-[#b43024]">
+                  <span className="font-bold text-[#143067]">
                     LOCKSTITCH 301
                   </span>
                 </div>
@@ -516,7 +437,7 @@ export default function CalidadClient() {
                   {/* Needle thread (upper loop) */}
                   <path
                     d="M 15,10 C 15,15 20,23 25,18 C 30,13 35,15 35,10 C 35,15 40,23 45,18 C 50,13 55,15 55,10 C 55,15 60,23 65,18 C 70,13 75,15 75,10 C 75,15 80,23 85,18"
-                    stroke="#b43024"
+                    stroke="#143067"
                     strokeWidth="1.5"
                   />
 
@@ -532,28 +453,28 @@ export default function CalidadClient() {
                     cx="25"
                     cy="18"
                     r="1.5"
-                    fill="#b43024"
+                    fill="#143067"
                     stroke="none"
                   />
                   <circle
                     cx="45"
                     cy="18"
                     r="1.5"
-                    fill="#b43024"
+                    fill="#143067"
                     stroke="none"
                   />
                   <circle
                     cx="65"
                     cy="18"
                     r="1.5"
-                    fill="#b43024"
+                    fill="#143067"
                     stroke="none"
                   />
                   <circle
                     cx="85"
                     cy="18"
                     r="1.5"
-                    fill="#b43024"
+                    fill="#143067"
                     stroke="none"
                   />
                 </svg>
@@ -575,7 +496,7 @@ export default function CalidadClient() {
             >
               <div className="space-y-6 lg:order-2">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-serif text-5xl font-bold text-[#b43024] md:text-6xl">
+                  <span className="font-serif text-5xl font-bold text-[#143067] md:text-6xl">
                     04.
                   </span>
                   <h3 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -634,7 +555,7 @@ export default function CalidadClient() {
             >
               <div className="space-y-6 lg:col-span-5">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-serif text-5xl font-bold text-[#b43024] md:text-6xl">
+                  <span className="font-serif text-5xl font-bold text-[#143067] md:text-6xl">
                     05.
                   </span>
                   <h3 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -655,7 +576,7 @@ export default function CalidadClient() {
               </div>
 
               {/* Clipboard QA Checklist */}
-              <div className="relative rounded border border-[#e1e2e5] bg-white p-6 shadow-sm lg:col-span-7">
+              <div className="border-primary/35 relative rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:col-span-7">
                 {/* Clipboard Clip style decoration */}
                 <div className="mx-auto -mt-8 mb-6 h-4 w-24 rounded-full border border-[#143067]/30 bg-[#143067]/20"></div>
 
@@ -665,7 +586,7 @@ export default function CalidadClient() {
 
                 <div className="space-y-4 font-sans text-sm text-[#444650]">
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       check_box
                     </span>
                     <div>
@@ -679,7 +600,7 @@ export default function CalidadClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       check_box
                     </span>
                     <div>
@@ -693,7 +614,7 @@ export default function CalidadClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       check_box
                     </span>
                     <div>
@@ -707,7 +628,7 @@ export default function CalidadClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       check_box
                     </span>
                     <div>
@@ -721,7 +642,7 @@ export default function CalidadClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined text-[#b43024] select-none">
+                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       check_box
                     </span>
                     <div>
@@ -765,7 +686,7 @@ export default function CalidadClient() {
 
               <div className="order-1 space-y-6 lg:order-2 lg:col-span-5">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-serif text-5xl font-bold text-[#b43024] md:text-6xl">
+                  <span className="font-serif text-5xl font-bold text-[#143067] md:text-6xl">
                     06.
                   </span>
                   <h3 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -784,7 +705,7 @@ export default function CalidadClient() {
                     transporte.
                   </p>
                 </div>
-                <div className="rounded-r border-l-4 border-[#b43024] bg-[#f8f9fb] p-4">
+                <div className="rounded-r border-l-4 border-[#143067] bg-[#f8f9fb] p-4">
                   <p className="text-xs leading-relaxed text-[#444650]">
                     * Todos nuestros paquetes incluyen la etiqueta de inspección
                     firmada por el operario encargado del control de calidad.
@@ -800,10 +721,10 @@ export default function CalidadClient() {
       {/* 4. LO QUE NUNCA PERMITIMOS (Checklist Industrial Red) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-        <div className="relative overflow-hidden rounded border-2 border-[#b43024] bg-white p-6 md:p-12">
+        <div className="relative overflow-hidden rounded border-2 border-[#143067] bg-white p-6 md:p-12">
           {/* Warning stamp decoration */}
-          <div className="pointer-events-none absolute -top-8 -right-8 flex h-32 w-32 rotate-12 items-center justify-center rounded-full border-4 border-[#b43024]/10 select-none">
-            <span className="font-mono text-[9px] font-bold tracking-widest text-[#b43024]/30 uppercase">
+          <div className="pointer-events-none absolute -top-8 -right-8 flex h-32 w-32 rotate-12 items-center justify-center rounded-full border-4 border-[#143067]/10 select-none">
+            <span className="font-mono text-[9px] font-bold tracking-widest text-[#143067]/30 uppercase">
               TOLERANCIA CERO
             </span>
           </div>
@@ -811,7 +732,7 @@ export default function CalidadClient() {
           <div className="relative z-10 grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
             {/* Title & Badge */}
             <div className="space-y-4 lg:col-span-4">
-              <span className="inline-block rounded bg-[#b43024]/10 px-3 py-1 font-mono text-xs font-bold text-[#b43024] uppercase">
+              <span className="inline-block rounded bg-[#143067]/10 px-3 py-1 font-mono text-xs font-bold text-[#143067] uppercase">
                 Inspección Crítica
               </span>
               <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
@@ -854,9 +775,9 @@ export default function CalidadClient() {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="flex gap-4 rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4 transition-colors duration-300 hover:border-[#b43024]/40"
+                  className="flex gap-4 rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4 transition-colors duration-300 hover:border-[#143067]/40"
                 >
-                  <span className="material-symbols-outlined shrink-0 text-[#b43024] select-none">
+                  <span className="material-symbols-outlined shrink-0 font-bold text-[#143067] select-none">
                     cancel
                   </span>
                   <div className="space-y-1">
@@ -882,7 +803,7 @@ export default function CalidadClient() {
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
             {/* Story */}
             <div className="space-y-6 lg:col-span-5">
-              <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+              <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
                 Flujo del Proceso
               </span>
               <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
@@ -945,7 +866,7 @@ export default function CalidadClient() {
                     className="space-y-3 rounded border border-[#143067]/10 bg-[#143067]/5 p-6"
                   >
                     <div className="flex items-baseline justify-between gap-2 border-b border-[#143067]/10 pb-2">
-                      <span className="font-mono text-xs font-bold tracking-wider text-[#b43024] uppercase">
+                      <span className="font-mono text-xs font-bold tracking-wider text-[#143067] uppercase">
                         ESTACIÓN: {activeRole.name}
                       </span>
                       <span className="font-mono text-[10px] text-[#444650]">
@@ -970,9 +891,9 @@ export default function CalidadClient() {
       {/* 6. NUESTRO COMPROMISO (Declaración Firmada) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-        <div className="mx-auto max-w-4xl rounded border border-[#e1e2e5] bg-white p-6 shadow-sm md:p-12">
+        <div className="border-primary/35 mx-auto max-w-4xl rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           <div className="mb-8 space-y-2 border-b border-[#e1e2e5] pb-6 text-center">
-            <span className="font-mono text-[10px] font-bold tracking-widest text-[#b43024] uppercase">
+            <span className="font-mono text-[10px] font-bold tracking-widest text-[#143067] uppercase">
               Compromiso Corporativo
             </span>
             <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
@@ -1014,7 +935,7 @@ export default function CalidadClient() {
               },
             ].map((promise, index) => (
               <div key={index} className="flex gap-4">
-                <span className="pt-1 font-mono text-xs font-bold text-[#b43024]">
+                <span className="pt-1 font-mono text-xs font-bold text-[#143067]">
                   {promise.num} {"//"}
                 </span>
                 <div className="space-y-1">
@@ -1040,8 +961,8 @@ export default function CalidadClient() {
 
             {/* Signature and Stamp */}
             <div className="flex items-center gap-4">
-              <div className="pointer-events-none rotate-[-3deg] rounded border border-[#b43024] px-3 py-2 text-center font-mono text-[9px] tracking-wider text-[#b43024] select-none">
-                <p className="mb-1 border-b border-[#b43024] pb-1 font-bold">
+              <div className="pointer-events-none rotate-[-3deg] rounded border border-[#143067] px-3 py-2 text-center font-mono text-[9px] font-bold tracking-wider text-[#143067] select-none">
+                <p className="mb-1 border-b border-[#143067] pb-1 font-bold">
                   GARANTÍA DE AJUSTE
                 </p>
                 <p>100% ARTESANAL</p>
@@ -1065,16 +986,16 @@ export default function CalidadClient() {
       <section className="relative overflow-hidden bg-[#143067] px-5 py-20 text-center text-white md:px-8 md:py-32">
         {/* Accent diagonal stripes representation (subtle background accent) */}
         <div className="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-white/[0.02] blur-3xl filter"></div>
-        <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-[#b43024]/[0.05] blur-2xl filter"></div>
+        <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-[#143067]/[0.05] blur-2xl filter"></div>
 
         <div className="relative z-10 mx-auto max-w-2xl space-y-8">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#b43024] uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
             Inspección de Calidad
           </span>
           <h2 className="font-serif text-3xl leading-tight tracking-tight text-white md:text-5xl">
             La confianza también se confecciona.
           </h2>
-          <div className="mx-auto h-0.5 w-16 bg-[#b43024]"></div>
+          <div className="mx-auto h-0.5 w-16 bg-[#143067]"></div>
 
           <div className="space-y-6 font-serif text-lg leading-relaxed text-[#dae2ff]">
             <p>
@@ -1095,7 +1016,7 @@ export default function CalidadClient() {
           <div className="pt-8">
             <Link
               href="/contacto"
-              className="inline-block rounded bg-[#b43024] px-8 py-3 font-mono text-xs tracking-wider text-white uppercase shadow-lg shadow-black/10 transition-colors hover:bg-[#b43024]/90"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
             >
               Agendar toma de medidas
             </Link>

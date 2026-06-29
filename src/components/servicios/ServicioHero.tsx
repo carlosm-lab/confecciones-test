@@ -31,7 +31,7 @@ export function ServicioHero({
         <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
           {/* Label "SERVICIO" con barra roja — diseño original del prototipo */}
           <div className="mb-4 flex items-center gap-3">
-            <div className="h-6 w-1 bg-[#B43024]" />
+            <div className="h-6 w-1 bg-[#143067]" />
             <span className="text-primary font-sans text-xs font-semibold tracking-widest uppercase">
               Servicio
             </span>
