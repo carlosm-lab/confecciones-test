@@ -28,56 +28,54 @@ const stations: Station[] = [
   {
     id: "corte",
     number: "01",
-    area: "Area de Corte",
-    title: "El Lienzo y la Geometria",
-    tagline:
-      "Donde la tela se convierte en piezas numeradas con precision quirurgica.",
-    accentWord: "Precision",
+    area: "Área de Corte",
+    title: "El punto de partida de cada prenda",
+    tagline: "Donde la tela se convierte en piezas listas para confeccionar.",
+    accentWord: "Corte",
     narrative:
-      "En mesas de 5.2 metros se extienden rollos de Sincatex, Ripstop y Gabardina premium. Cortadoras verticales industriales trazan moldes con tolerancia menor a 1.5mm. Cada pieza se clasifica y numera para mantener uniformidad de tonalidad en el ensamble final.",
+      "En esta área se reciben y revisan los rollos de tela antes de iniciar el proceso de corte. Cada pieza se traza siguiendo el patronaje correspondiente al uniforme solicitado, ya sea en serie para instituciones o a la medida para pedidos individuales. El objetivo es aprovechar el material y asegurar que cada pieza mantenga las proporciones exactas antes de pasar a confección.",
     image: "/images/servicios/ropa-general.png",
     technicalSpecs: [
-      { label: "Mesa de corte", value: "5.2 m longitud" },
-      { label: "Telas base", value: "Sincatex / Ripstop / Dacron" },
-      { label: "Tolerancia", value: "< 1.5 mm" },
-      { label: "Sistema", value: "Patronaje anatomico" },
+      { label: "Insumo", value: "Telas seleccionadas por tipo de uniforme" },
+      {
+        label: "Método",
+        value: "Patronaje según talla o medida personalizada",
+      },
     ],
-    feeling: "Tecnico y ordenado",
+    feeling: "Técnico y ordenado",
   },
   {
     id: "confeccion",
     number: "02",
-    area: "Area de Confeccion",
-    title: "El Motor del Taller",
-    tagline: "Maquinas industriales, manos expertas, ritmo constante.",
-    accentWord: "Ritmo",
+    area: "Área de Confección",
+    title: "El motor del taller",
+    tagline: "Máquinas industriales, manos expertas, trabajo constante.",
+    accentWord: "Confección",
     narrative:
-      "El corazon del taller. Maquinas planas de alta velocidad y remalladoras automaticas en linea modular. Costureras con decadas de experiencia ensamblan cada panel. Costuras de doble aguja en zonas criticas garantizan resistencia para la jornada laboral diaria.",
+      "Esta es el área donde las piezas cortadas se transforman en prendas terminadas. El equipo de confección, con experiencia que en algunos casos supera los veinte años, ensambla cada sección de la prenda utilizando maquinaria industrial. Las costuras se revisan durante el proceso para evitar defectos antes de pasar al área de bordado o control de calidad.",
     image: "/images/servicios/confeccion.png",
     technicalSpecs: [
-      { label: "Maquinaria", value: "Planas & Overlocks" },
-      { label: "Hilo", value: "Poliester alta tenacidad 40/2" },
-      { label: "Refuerzo", value: "Doble aguja en zonas criticas" },
-      { label: "Modelo", value: "Produccion modular" },
+      { label: "Equipo", value: "Máquinas de coser industriales" },
+      { label: "Enfoque", value: "Costuras reforzadas en zonas de mayor uso" },
     ],
-    feeling: "Dinamica y viva",
+    feeling: "Dinámica y viva",
   },
   {
     id: "bordado",
     number: "03",
-    area: "Area de Bordado",
-    title: "Identidad en Alta Definicion",
-    tagline:
-      "El escudo de tu institucion reproducido con fidelidad micrometrica.",
-    accentWord: "Detalle",
+    area: "Área de Bordado",
+    title: "Identidad institucional en cada prenda",
+    tagline: "El escudo o logo de tu institución, reproducido con precisión.",
+    accentWord: "Bordado",
     narrative:
-      "Bordadoras computarizadas multi-cabezal digitalizan logotipos institucionales con exactitud milimetrica. Hilos de sedalina brillante resistentes al cloro y lavado industrial. Cada escudo se limpia a mano tras el bordado para una definicion impecable.",
+      "En esta área se borda la identidad de cada cliente: escudos escolares, logotipos empresariales o insignias institucionales. El trabajo se realiza con bordadora especializada, cuidando que el resultado final sea consistente en color, tamaño y posición en cada prenda del mismo lote.",
     image: "/images/servicios/bordados.png",
     technicalSpecs: [
-      { label: "Sistema", value: "Multi-cabezal computarizado" },
-      { label: "Hilos", value: "Sedalina resistente a cloro" },
-      { label: "Precision", value: "Matriz digital automatizada" },
-      { label: "Acabado", value: "Limpieza manual post-bordado" },
+      { label: "Equipo", value: "Bordadora especializada" },
+      {
+        label: "Resultado",
+        value: "Logotipos e insignias institucionales consistentes",
+      },
     ],
     feeling: "Preciso y especializado",
   },
@@ -85,37 +83,34 @@ const stations: Station[] = [
     id: "calidad",
     number: "04",
     area: "Control de Calidad",
-    title: "El Filtro de Seguridad",
-    tagline: "Ninguna prenda sale sin superar esta compuerta de inspeccion.",
-    accentWord: "Rigor",
+    title: "El filtro de seguridad",
+    tagline: "Ninguna prenda sale del taller sin pasar por esta revisión.",
+    accentWord: "Calidad",
     narrative:
-      "Inspeccion individual bajo iluminacion de contraste focalizado. Se auditan costuras internas, se eliminan hilos sueltos y se validan las dimensiones del uniforme terminado contra la ficha de medidas original. Solo prendas aprobadas reciben el sello de calidad interno.",
+      "René Alfonso Méndez, responsable de control de calidad, revisa todas las costuras, pliegues y bordados de cada prenda antes de su entrega. Se verifica que las costuras soporten estiramiento y temperatura, y que los bordados no se deshilachen con el uso o el roce. Además se realizan pruebas de desgarre, planchado y lavado para confirmar que la prenda cumple con el estándar esperado.",
     image: "/images/servicios/mano-obra.png",
     technicalSpecs: [
-      { label: "Inspeccion", value: "Luz de contraste focalizada" },
-      { label: "Calce", value: "Vs. ficha de medidas" },
-      { label: "Auditoria", value: "Costuras internas y botones" },
-      { label: "Sello", value: "Certificacion interna Liss" },
+      { label: "Revisión", value: "Costuras, pliegues y bordados" },
+      { label: "Pruebas", value: "Desgarre, planchado y lavado" },
     ],
     feeling: "Riguroso y confiable",
   },
   {
     id: "almacen",
     number: "05",
-    area: "Almacen y Distribucion",
-    title: "El Ultimo Toque y la Ruta de Salida",
-    tagline: "Planchado al vapor, empaque individual y entrega directa.",
-    accentWord: "Orden",
+    area: "Empaque y Entrega",
+    title: "El último paso antes de llegar a tus manos",
+    tagline: "Planchado manual, empaque cuidado y entrega coordinada.",
+    accentWord: "Empaque",
     narrative:
-      "Cada uniforme se plancha al vapor para eliminar pliegues y asentar costuras. Empaque individual en bolsas protectoras, agrupado por tallas e instituciones. Carlos Molina coordina personalmente rutas de entrega directa a toda la zona oriental de El Salvador.",
+      "Una vez aprobada en control de calidad, cada prenda pasa al área de planchado manual para asegurar mejor presentación. Después se empaca y se notifica al cliente para su retiro en el taller. También ofrecemos la opción de envío a domicilio, con el saldo pendiente pagadero contra entrega.",
     image: "/images/servicios/sublimacion.png",
     technicalSpecs: [
-      { label: "Planchado", value: "Vapor industrial" },
-      { label: "Empaque", value: "Individual transparente" },
-      { label: "Cobertura", value: "Zona oriental + nacional" },
-      { label: "Garantia", value: "Ajuste incluido" },
+      { label: "Planchado", value: "Manual" },
+      { label: "Empaque", value: "Individual por prenda" },
+      { label: "Entrega", value: "Retiro en taller o envío a domicilio" },
     ],
-    feeling: "Ordenado y logistico",
+    feeling: "Ordenado y logístico",
   },
 ];
 
@@ -545,8 +540,8 @@ function StationAlmacen({ station }: { station: Station }) {
   const steps = [
     {
       icon: "dry_cleaning",
-      label: "Planchado al vapor",
-      desc: "Eliminacion de pliegues y fijado de costuras",
+      label: "Planchado manual",
+      desc: "Asegura una mejor presentación de la prenda",
     },
     {
       icon: "inventory_2",
@@ -555,13 +550,13 @@ function StationAlmacen({ station }: { station: Station }) {
     },
     {
       icon: "sell",
-      label: "Etiquetado",
-      desc: "Talla, codigo de institucion y cliente",
+      label: "Control final",
+      desc: "Verificación de cada lote antes de empaque",
     },
     {
       icon: "local_shipping",
-      label: "Distribucion",
-      desc: "Entrega directa a toda la zona oriental",
+      label: "Entrega coordinada",
+      desc: "Retiro en el taller o envío a domicilio",
     },
   ];
   return (
@@ -802,26 +797,23 @@ export default function InstalacionesClient() {
               className="font-serif leading-[0.95] font-bold tracking-tighter text-white"
               style={{ fontSize: "clamp(3rem,8vw,6rem)" }}
             >
-              Nuestras
-              <br />
-              <em className="text-white not-italic">Insta</em>
-              <span className="text-white">laciones</span>
+              Nuestras Instalaciones
             </motion.h1>
             <motion.p
               variants={fadeIn}
               className="max-w-[42ch] font-serif text-xl text-white/60 italic"
             >
-              Confecciones Liss opera como un taller de confeccion especializado
-              en uniformes escolares, empresariales y medicos, donde cada
-              proceso se realiza con precision y control de calidad.
+              Confecciones Liss opera como un taller de confección especializado
+              en uniformes escolares, empresariales y médicos, donde cada
+              proceso se realiza con atención al detalle y control de calidad.
             </motion.p>
             <motion.p
               variants={fadeIn}
               className="max-w-[55ch] font-sans text-sm leading-relaxed text-white/40"
             >
-              Te invitamos a recorrer las cinco estaciones de trabajo donde se
-              construye cada prenda, desde el rollo de tela hasta la entrega
-              final al cliente.
+              Te invitamos a conocer las áreas de trabajo donde se construye
+              cada prenda, desde el corte de la tela hasta la entrega final al
+              cliente.
             </motion.p>
             {/* Visita guiada button removed */}
           </motion.div>
@@ -903,7 +895,7 @@ export default function InstalacionesClient() {
                 fillOpacity="0.4"
                 letterSpacing="2"
               >
-                02 CONFECCION
+                02 CONFECCIÓN
               </text>
               <rect
                 x="242"
@@ -975,7 +967,7 @@ export default function InstalacionesClient() {
                 fillOpacity="0.4"
                 letterSpacing="2"
               >
-                05 ALMACEN
+                05 EMPAQUE
               </text>
               <circle
                 cx="125"
@@ -1102,7 +1094,7 @@ export default function InstalacionesClient() {
           <div className="flex items-center justify-center gap-4">
             <div className="h-[1px] max-w-[80px] flex-1 bg-[#143067]/20" />
             <span className="font-mono text-[10px] font-bold tracking-[0.35em] text-[#143067] uppercase">
-              Fin del Recorrido
+              Visítanos
             </span>
             <div className="h-[1px] max-w-[80px] flex-1 bg-[#143067]/20" />
           </div>
@@ -1110,15 +1102,12 @@ export default function InstalacionesClient() {
             className="font-serif leading-tight font-bold text-[#143067]"
             style={{ fontSize: "clamp(2rem,5vw,3rem)" }}
           >
-            Visitanos en el{" "}
-            <em className="font-bold text-[#143067] not-italic">
-              Barrio La Merced
-            </em>
+            Visítanos en el Barrio La Merced
           </h2>
           <p className="mx-auto max-w-[60ch] font-sans text-base leading-relaxed text-[#444650]">
-            Nuestras puertas estan abiertas para que compruebes en persona la
+            Nuestras puertas están abiertas para que conozcas en persona la
             calidad de cada costura y selecciones los materiales ideales para
-            los uniformes de tu institucion.
+            los uniformes de tu institución, empresa o consultorio.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row">
             <Link

@@ -43,45 +43,45 @@ interface TeamConnection {
 
 const TEAM_CONNECTIONS: TeamConnection[] = [
   {
-    name: "Lisseth Molina",
-    role: "Supervisión general y fundadora",
-    desc: "Supervisa la calidad y define el patronaje industrial del taller.",
+    name: "Iris Lisseth Villacorta de Molina",
+    role: "Fundadora y Directora General",
+    desc: "Dirige la operación general del taller y supervisa cada etapa del proceso de confección.",
     stages: ["analisis", "corte", "calidad"],
   },
   {
     name: "Lilian Romero",
     role: "Especialista en confección",
-    desc: "Encargada del ensamble de prendas formales e indumentaria médica.",
+    desc: "Encargada del ensamble de prendas del taller con experiencia en uniformes formales y médicos.",
     stages: ["confeccion"],
   },
   {
     name: "Nubia Vázquez",
-    role: "Especialista en confección",
-    desc: "Garantiza uniformidad geométrica en lotes escolares y universitarios.",
+    role: "Especialista en confección de prendas",
+    desc: "Garantiza uniformidad y calidad de costura en lotes escolares y empresariales.",
     stages: ["confeccion"],
   },
   {
     name: "Blanca Martínez",
     role: "Operaria de producción",
-    desc: "Preparación técnica, habilitado rápido y habilitación de forros.",
+    desc: "Apoya en la preparación de materiales, habilitado y forros antes de la confección.",
     stages: ["materiales", "corte"],
   },
   {
     name: "René Alfonso Méndez",
-    role: "Calidad y toma de medidas",
-    desc: "Toma de medidas anatómicas en campo y auditoría final prenda a prenda.",
+    role: "Control de calidad y toma de medidas",
+    desc: "Realiza la toma de medidas con el cliente y la revisión final de calidad de cada prenda.",
     stages: ["medidas", "calidad"],
   },
   {
     name: "Carlos Antonio Molina",
-    role: "Logística y cadena de suministro",
-    desc: "Gestión de inventarios, compras de insumos y envíos nacionales.",
+    role: "Logística y atención al cliente",
+    desc: "Gestiona la adquisición de insumos, el empaque y la coordinación de entregas con el cliente.",
     stages: ["materiales", "empaque", "entrega"],
   },
   {
     name: "Carlos José Molina Villacorta",
-    role: "Ecosistema digital y comunicación",
-    desc: "Atención comercial por canales digitales y soporte técnico del taller.",
+    role: "Estrategia digital",
+    desc: "Gestiona la comunicación digital y la atención al cliente por canales en línea.",
     stages: ["primer-contacto"],
   },
 ];
@@ -149,30 +149,31 @@ export default function ProcesoDeConfeccionClient() {
             {/* Lado Izquierdo: Textos */}
             <div className="space-y-6 lg:col-span-7">
               <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#143067] uppercase">
-                Trayectoria Textil
+                Nuestro Proceso
               </span>
               <h1 className="font-serif text-[40px] leading-tight font-bold tracking-[-0.02em] text-[#191c1e] md:text-[56px]">
-                Del hilo a la excelencia.
+                Del primer contacto a la entrega final.
               </h1>
               <p className="max-w-2xl font-sans text-[16px] leading-[26px] text-[#444650] md:text-[18px] md:leading-[28px]">
-                Cada uniforme que confeccionamos es el resultado de un proceso
-                construido durante más de veinte años de experiencia. Desde el
-                primer contacto con el cliente hasta la entrega final, cada
-                etapa tiene un propósito y cada integrante del equipo desempeña
-                un papel fundamental para garantizar la calidad de cada prenda.
+                Cada uniforme que confeccionamos sigue un proceso definido,
+                construido a partir de más de veinte años de experiencia
+                práctica. Desde el primer contacto con el cliente hasta la
+                entrega final, cada etapa tiene un propósito y cada integrante
+                del equipo cumple una función específica para garantizar la
+                calidad de la prenda.
               </p>
               <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:gap-4">
                 <button
                   onClick={() => handleScrollTo("primer-contacto")}
                   className="inline-flex cursor-pointer items-center justify-center rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[15px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
                 >
-                  Ver el proceso completo
+                  Ver el Proceso Completo
                 </button>
                 <Link
                   href="/empresa/equipo"
                   className="inline-flex items-center justify-center rounded-lg border-[1.5px] border-[#143067] bg-transparent px-6 py-3.5 font-sans text-[15px] font-semibold text-[#143067] transition-all hover:bg-[#edf1f7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
                 >
-                  Conocer nuestro equipo
+                  Conocer Nuestro Equipo
                 </Link>
               </div>
             </div>
@@ -231,13 +232,16 @@ export default function ProcesoDeConfeccionClient() {
                   confección.
                 </p>
                 <p>
-                  Durante esta primera etapa escuchamos sus necesidades,
-                  resolvemos dudas y recopilamos la información necesaria para
-                  comprender el proyecto.
+                  Durante esta primera etapa escuchamos las necesidades del
+                  cliente, resolvemos dudas y recopilamos la información
+                  necesaria para comprender el proyecto: tipo de uniforme,
+                  cantidad y si se requiere personalización.
                 </p>
                 <p className="font-medium text-[#143067]">
-                  Si el trabajo requiere una atención personalizada, coordinamos
-                  los siguientes pasos para continuar con el proceso.
+                  Si el pedido es por tallas estándar, se recibe el adelanto
+                  correspondiente y el proyecto pasa directamente a registro. Si
+                  es un pedido a la medida, se coordina la visita del cliente al
+                  taller para la toma de medidas.
                 </p>
               </div>
             </div>
@@ -282,17 +286,17 @@ export default function ProcesoDeConfeccionClient() {
               <div className="flex flex-col justify-between rounded-[16px] border border-[#e4e6ea] bg-white p-8 md:col-span-4">
                 <div className="space-y-4">
                   <h3 className="font-serif text-[24px] font-bold text-[#191c1e]">
-                    Estudio técnico de viabilidad
+                    Estudio de viabilidad del pedido
                   </h3>
                   <p className="font-sans text-sm leading-relaxed text-[#444650] md:text-base">
-                    Cada solicitud es diferente. Antes de comenzar la producción
-                    analizamos el tipo de uniforme, la cantidad requerida, las
-                    necesidades específicas, las personalizaciones solicitadas y
-                    los materiales que serán necesarios.
+                    Cada solicitud es diferente. Antes de comenzar la
+                    producción, analizamos el tipo de uniforme, la cantidad
+                    requerida, las personalizaciones solicitadas y los
+                    materiales necesarios.
                   </p>
                 </div>
                 <div className="mt-6 font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
-                  PLANIFICACIÓN DE REQUISITOS // LISSETH MOLINA
+                  &nbsp;
                 </div>
               </div>
 
@@ -303,12 +307,12 @@ export default function ProcesoDeConfeccionClient() {
                     Tipo de uniforme
                   </h4>
                   <p className="mt-1 font-sans text-xs text-[#444650]">
-                    Evaluamos el diseño de patrón y ergonomía de la pieza
-                    corporativa o escolar.
+                    Definimos el diseño y el patrón adecuado para uso escolar,
+                    médico o empresarial.
                   </p>
                 </div>
                 <span className="font-mono text-[11px] text-[#888b96] uppercase">
-                  MODULO_01
+                  &nbsp;
                 </span>
               </div>
 
@@ -316,14 +320,15 @@ export default function ProcesoDeConfeccionClient() {
               <div className="flex flex-col justify-between space-y-2 rounded-[16px] border border-[#e4e6ea] bg-white p-6 md:col-span-2">
                 <div>
                   <h4 className="font-sans text-[15px] font-bold text-[#143067]">
-                    Volumen y Lotes
+                    Volumen y lotes
                   </h4>
                   <p className="mt-1 font-sans text-xs text-[#444650]">
-                    Definición de escala y organización modular de costura.
+                    Organizamos la producción según la cantidad de prendas
+                    requeridas por el pedido.
                   </p>
                 </div>
                 <span className="font-mono text-[11px] text-[#888b96] uppercase">
-                  MODULO_02
+                  &nbsp;
                 </span>
               </div>
 
@@ -331,15 +336,15 @@ export default function ProcesoDeConfeccionClient() {
               <div className="flex flex-col justify-between space-y-2 rounded-[16px] border border-[#e4e6ea] bg-white p-6 md:col-span-2">
                 <div>
                   <h4 className="font-sans text-[15px] font-bold text-[#143067]">
-                    Detalles y Bordados
+                    Detalles y bordados
                   </h4>
                   <p className="mt-1 font-sans text-xs text-[#444650]">
-                    Especificación de parches, estampados y logos
-                    institucionales.
+                    Especificamos logotipos, técnicas de bordado y acabados
+                    especiales para fortalecer tu identidad institucional.
                   </p>
                 </div>
                 <span className="font-mono text-[11px] text-[#888b96] uppercase">
-                  MODULO_03
+                  &nbsp;
                 </span>
               </div>
 
@@ -350,8 +355,8 @@ export default function ProcesoDeConfeccionClient() {
                     Insumos & Tallas
                   </h4>
                   <p className="mt-1 font-sans text-xs text-[#444650]">
-                    Curva de tallas, tejidos específicos y stock disponible de
-                    telas base.
+                    Confirmamos la curva de tallas y la disponibilidad de telas
+                    base para el proyecto.
                   </p>
                 </div>
                 <span className="font-mono text-[11px] text-[#888b96] uppercase">
@@ -397,22 +402,15 @@ export default function ProcesoDeConfeccionClient() {
                 </span>
               </div>
               <h2 className="font-serif text-[28px] font-bold text-[#191c1e] md:text-[36px]">
-                Ajuste milimétrico y ergonomía real
+                Ajuste real para cada cliente
               </h2>
               <div className="space-y-4 font-sans text-sm leading-relaxed text-[#444650] md:text-base">
                 <p>
-                  Cuando el proyecto lo requiere realizamos la toma de medidas
-                  para garantizar un ajuste adecuado.
-                </p>
-                <p>
-                  Durante esta etapa verificamos las medidas necesarias para
-                  elaborar prendas acordes a las características físicas de cada
-                  cliente o empleado.
-                </p>
-                <p className="font-semibold text-[#143067]">
-                  La precisión en esta fase resulta fundamental para obtener un
-                  producto final cómodo y duradero que aguante la jornada
-                  diaria.
+                  Cuando el proyecto lo requiere, realizamos la toma de medidas
+                  para garantizar un ajuste adecuado. Esta etapa se realiza con
+                  la asistencia presencial del cliente en el taller, donde se
+                  registran las medidas necesarias para elaborar una prenda
+                  acorde a sus características físicas.
                 </p>
               </div>
             </div>
@@ -446,20 +444,23 @@ export default function ProcesoDeConfeccionClient() {
                 {[
                   {
                     title: "Tela",
-                    desc: "Sincatex, Ripstop, Gabardina premium.",
+                    desc: "Seleccionada según el uso del uniforme: escolar, médico o empresarial.",
                   },
                   {
                     title: "Hilo",
-                    desc: "Poliéster de alta tenacidad calibre 40/2.",
+                    desc: "Resistente, adecuado para costuras de uso diario.",
                   },
                   {
                     title: "Accesorios",
-                    desc: "Botones de resina y cierres reforzados.",
+                    desc: "Botones, cierres y elementos complementarios según el diseño.",
                   },
-                  { title: "Colores", desc: "Tonos institucionales estables." },
+                  {
+                    title: "Colores",
+                    desc: "Definidos según la identidad institucional o preferencia del cliente.",
+                  },
                   {
                     title: "Insumos",
-                    desc: "Entretelas y forros protectores.",
+                    desc: "Entretelas y forros que aportan estructura y durabilidad a la prenda.",
                   },
                 ].map((item, index) => (
                   <div
@@ -508,18 +509,14 @@ export default function ProcesoDeConfeccionClient() {
                 </span>
               </div>
               <h2 className="font-serif text-[28px] font-bold text-[#191c1e] md:text-[36px]">
-                Geometría y simetría en la mesa de corte
+                Modelado y corte de cada pieza
               </h2>
               <div className="space-y-4 font-sans text-sm leading-relaxed text-[#444650] md:text-base">
                 <p>
-                  Con las medidas y materiales preparados comienza el proceso de
-                  corte físico en nuestras mesas industriales de más de 5 metros
-                  de longitud.
-                </p>
-                <p>
-                  Cada pieza es preparada y trazada cuidadosamente con
-                  tolerancias menores a 1.5mm para mantener la uniformidad
-                  absoluta y precisión geométrica antes de pasar al área de
+                  Con las medidas y materiales preparados, el proyecto pasa al
+                  área de modelado y corte. Cada pieza se traza y se corta
+                  cuidadosamente siguiendo el patrón correspondiente,
+                  manteniendo la uniformidad necesaria antes de pasar al área de
                   confección.
                 </p>
               </div>
@@ -577,19 +574,19 @@ export default function ProcesoDeConfeccionClient() {
                 {[
                   {
                     title: "Costura",
-                    desc: "Líneas de costura rectas a alta velocidad.",
+                    desc: "Ensamblaje de cada pieza siguiendo el patrón de la prenda.",
                   },
                   {
                     title: "Ensamblaje",
-                    desc: "Modular y progresivo para uniformidad.",
+                    desc: "Unión progresiva de las piezas hasta formar el uniforme completo.",
                   },
                   {
                     title: "Acabados",
-                    desc: "Sobrehilado interior y costuras dobles.",
+                    desc: "Bastillas, ojales y refuerzos en zonas de mayor uso.",
                   },
                   {
                     title: "Revisión continua",
-                    desc: "Inspección al vuelo del operador.",
+                    desc: "Verificación de costuras durante el proceso, antes de avanzar a la siguiente etapa.",
                   },
                 ].map((panel, idx) => (
                   <div
@@ -608,10 +605,9 @@ export default function ProcesoDeConfeccionClient() {
             </div>
 
             <p className="mx-auto max-w-3xl text-center font-sans text-sm leading-relaxed font-medium text-[#444650] md:text-base">
-              Las piezas pasan al área de confección donde nuestro equipo
+              Las piezas cortadas pasan al área de confección, donde el equipo
               especializado realiza el ensamblaje utilizando maquinaria
-              industrial y técnicas desarrolladas a partir de años de
-              experiencia.
+              industrial y la experiencia acumulada durante años de trabajo.
             </p>
           </motion.div>
         </section>
@@ -640,13 +636,12 @@ export default function ProcesoDeConfeccionClient() {
             <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
               <div className="space-y-4">
                 <h2 className="font-serif text-[28px] font-bold text-[#191c1e] md:text-[36px]">
-                  Bordados y detalles corporativos
+                  Bordados y detalles institucionales
                 </h2>
                 <p className="font-sans text-sm leading-relaxed text-[#444650] md:text-base">
-                  Cuando el proyecto lo requiere, incorporamos bordados
-                  computarizados, identificaciones y otros elementos
-                  personalizados respetando estrictamente las especificaciones
-                  gráficas de la institución.
+                  Cuando el proyecto lo requiere, incorporamos bordados,
+                  identificaciones u otros elementos personalizados, respetando
+                  las especificaciones gráficas de la institución o empresa.
                 </p>
               </div>
 
@@ -655,19 +650,19 @@ export default function ProcesoDeConfeccionClient() {
                 {[
                   {
                     title: "Bordado",
-                    desc: "Escudos con alta densidad de puntadas.",
+                    desc: "Escudos y logotipos institucionales reproducidos con fidelidad.",
                   },
                   {
                     title: "Logotipos",
-                    desc: "Estampados y sublimaciones nítidas.",
+                    desc: "Aplicación de marcas o insignias según el diseño solicitado.",
                   },
                   {
                     title: "Identificaciones",
-                    desc: "Badges y cintas personalizadas.",
+                    desc: "Etiquetas y elementos de identificación personal cuando se requieren.",
                   },
                   {
                     title: "Detalles",
-                    desc: "Botones cosidos con refuerzo de cruz.",
+                    desc: "Acabados finales como botones reforzados u ojales.",
                   },
                 ].map((card, idx) => (
                   <div
@@ -711,13 +706,16 @@ export default function ProcesoDeConfeccionClient() {
                   </span>
                 </div>
                 <h2 className="font-serif text-[32px] leading-tight font-bold text-white md:text-[40px]">
-                  Rigor absoluto prenda a prenda
+                  Revisión antes de cada entrega
                 </h2>
                 <p className="font-sans text-sm leading-relaxed text-white/80 md:text-base">
-                  Antes de considerar terminada una prenda realizamos un proceso
-                  de revisión donde verificamos costuras, acabados,
-                  presentación, uniformidad y condiciones generales del
-                  uniforme.
+                  Antes de considerar terminada una prenda, René Alfonso Méndez
+                  revisa todas las costuras, pliegues y bordados para confirmar
+                  que estén en orden. Se verifica que las costuras soporten
+                  estiramiento y temperatura, y que los bordados no se
+                  deshilachen con el roce o el uso. Además se realizan pruebas
+                  de desgarre, planchado y lavado para asegurar la calidad final
+                  del uniforme.
                 </p>
               </div>
 
@@ -728,18 +726,30 @@ export default function ProcesoDeConfeccionClient() {
                 </h3>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-6 divide-y divide-white/10 md:grid-cols-3 md:divide-y-0">
                   {[
-                    { label: "Costuras", desc: "Resistencia e hilos libres." },
-                    { label: "Acabados", desc: "Sobrehilos y bastillas." },
+                    {
+                      label: "Costuras",
+                      desc: "Resistencia y ausencia de hilos sueltos.",
+                    },
+                    {
+                      label: "Acabados",
+                      desc: "Revisión de sobrehilos y bastillas.",
+                    },
                     {
                       label: "Presentación",
-                      desc: "Limpieza textil y planchado.",
+                      desc: "Limpieza textil y planchado correcto.",
                     },
-                    { label: "Medidas", desc: "Tolerancia menor a 1.5mm." },
+                    {
+                      label: "Medidas",
+                      desc: "Verificación contra las medidas registradas del pedido.",
+                    },
                     {
                       label: "Detalles",
                       desc: "Refuerzo en botones y ojales.",
                     },
-                    { label: "Estado general", desc: "Uniformidad cromática." },
+                    {
+                      label: "Estado general",
+                      desc: "Revisión final de uniformidad y acabado de la prenda.",
+                    },
                   ].map((pt, idx) => (
                     <div
                       key={idx}
@@ -796,21 +806,14 @@ export default function ProcesoDeConfeccionClient() {
                 </span>
               </div>
               <h2 className="font-serif text-[28px] font-bold text-[#191c1e] md:text-[36px]">
-                Preparación final y empaque ordenado
+                Preparación final y empaque
               </h2>
               <div className="space-y-4 font-sans text-sm leading-relaxed text-[#444650] md:text-base">
                 <p>
-                  Una vez aprobadas las prendas por control de calidad, entran
-                  al área de preparación para entrega.
-                </p>
-                <p>
-                  Cada uniforme se limpia a mano para eliminar hilos residuales,
-                  se plancha con vapor a presión y se embolsa individualmente
-                  etiquetando su talla y nombre si es un pedido corporativo.
-                </p>
-                <p className="font-medium text-[#143067]">
-                  La presentación final de cada paquete es la carta de
-                  presentación de nuestro taller.
+                  Una vez aprobadas en control de calidad, las prendas pasan al
+                  área de planchado manual para mejorar su presentación. Después
+                  se empacan y se notifica al cliente para coordinar el retiro o
+                  el envío a domicilio.
                 </p>
               </div>
             </div>
@@ -844,14 +847,11 @@ export default function ProcesoDeConfeccionClient() {
               </h2>
               <div className="space-y-4 font-sans text-sm leading-relaxed text-[#444650] md:text-base">
                 <p>
-                  El proceso concluye cuando el cliente recibe un uniforme
-                  confeccionado con dedicación, experiencia y un compromiso
-                  permanente con la calidad.
-                </p>
-                <p>
-                  Ya sea mediante entrega directa en nuestro taller de Barrio La
-                  Merced o con envíos seguros a nivel nacional, nos aseguramos
-                  de que el pedido llegue en la fecha acordada.
+                  El proceso concluye cuando el cliente recibe el uniforme
+                  confeccionado con dedicación y atención al detalle. La entrega
+                  puede realizarse directamente en nuestro taller de Barrio La
+                  Merced, o mediante envío a domicilio, con el saldo pendiente
+                  pagadero contra entrega.
                 </p>
               </div>
             </div>
@@ -878,15 +878,14 @@ export default function ProcesoDeConfeccionClient() {
         <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-5 lg:px-6">
           <div className="text-center">
             <span className="block font-sans text-xs font-bold tracking-[0.12em] text-[#143067] uppercase">
-              Sinergia y Personas
+              Nuestro Equipo en Acción
             </span>
             <h2 className="mt-3 font-serif text-[28px] font-bold tracking-[-0.015em] text-[#191c1e] md:text-[36px]">
-              Mesa de Trabajo Técnica
+              Quién participa en cada etapa
             </h2>
             <p className="mx-auto mt-2 max-w-[500px] font-sans text-[15px] text-[#444650]">
-              Pasa el cursor o selecciona a un integrante para ver su
-              participación directa en las diferentes etapas del proceso de
-              manufactura.
+              Cada etapa del proceso de confección está a cargo de un integrante
+              del equipo con una función específica.
             </p>
           </div>
 
@@ -983,11 +982,9 @@ export default function ProcesoDeConfeccionClient() {
                 <span>
                   {hoveredCrew
                     ? `Mostrando conexiones para: ${hoveredCrew}`
-                    : "Pase el cursor sobre un miembro para visualizar flujos"}
+                    : "Selecciona a un integrante del equipo para ver en qué etapas participa."}
                 </span>
-                <span className="font-mono text-[9px] uppercase">
-                  SYS_WORKBOARD_v1
-                </span>
+                <span className="font-mono text-[9px] uppercase">&nbsp;</span>
               </div>
             </div>
           </div>
@@ -1014,35 +1011,35 @@ export default function ProcesoDeConfeccionClient() {
           {[
             {
               title: "Más de veinte años de experiencia acumulada",
-              desc: "Nuestra trayectoria nos ha permitido optimizar cada técnica de costura y patronaje, reduciendo errores y garantizando un calce anatómico duradero.",
+              desc: "Nuestra trayectoria, iniciada en 2005, nos ha permitido perfeccionar técnicas de costura y patronaje a lo largo de los años.",
             },
             {
-              title: "Empresa familiar con compromiso real",
-              desc: "No respondemos a accionistas anónimos. Respondemos al orgullo de nuestro propio apellido, brindando honestidad y un trato directo en cada uniforme.",
+              title: "Empresa familiar con trato directo",
+              desc: "Somos una empresa familiar. El trato con cada cliente es directo, sin intermediarios.",
             },
             {
               title: "Equipo especializado con roles definidos",
-              desc: "Costureras, patronistas y auditores dedicados exclusivamente a su especialidad para mantener los máximos estándares en cada puntada.",
+              desc: "Cada integrante del equipo cumple una función específica dentro del proceso de confección, lo que permite mantener un estándar de calidad en cada etapa.",
             },
             {
-              title: "Procesos organizados y transparentes",
-              desc: "Desde la planificación inicial hasta el control de calidad final, cada lote de prendas sigue un flujo operativo rigurosamente documentado.",
+              title: "Proceso organizado y transparente",
+              desc: "Desde el primer contacto hasta la entrega final, cada pedido sigue un flujo de trabajo definido.",
             },
             {
-              title: "Control de calidad absoluto prenda a prenda",
-              desc: "No auditamos muestras al azar. Revisamos de forma individual el 100% de las costuras y acabados de cada uniforme antes de entregarlo.",
+              title: "Revisión de calidad en cada prenda",
+              desc: "Cada uniforme pasa por una revisión de costuras, acabados y presentación antes de ser entregado.",
             },
             {
-              title: "Atención y personalización en campo",
-              desc: "Viajamos directamente a las instalaciones de las empresas para la toma de medidas corporativas individuales, garantizando la comodidad ergonómica.",
+              title: "Atención personalizada en pedidos a la medida",
+              desc: "Para pedidos a la medida, coordinamos la toma de medidas directamente con el cliente en nuestro taller.",
             },
             {
               title: "Cultura de mejora continua",
-              desc: "Actualizamos periódicamente nuestras metodologías de producción a partir de las valoraciones y feedback recibido por nuestros clientes.",
+              desc: "Buscamos constantemente formas de mejorar nuestros procesos y la calidad de nuestro trabajo.",
             },
             {
               title: "Transformación digital desarrollada internamente",
-              desc: "Digitalizamos el seguimiento interno del taller para prever cuellos de botella y asegurar entregas a tiempo sin precarizar el oficio artesano.",
+              desc: "Desde 2026 contamos con una estrategia digital propia que facilita la comunicación y el acceso a información sobre nuestros servicios.",
             },
           ].map((item, idx) => (
             <div
@@ -1076,7 +1073,7 @@ export default function ProcesoDeConfeccionClient() {
             <p className="mx-auto max-w-[680px] font-sans text-sm leading-relaxed text-[#444650] md:text-base">
               En Confecciones Liss entendemos que la confianza no se construye
               únicamente con el resultado final, sino con cada decisión tomada
-              durante el proceso de confección. Por ello trabajamos con
+              durante el proceso de confección. Por eso trabajamos con
               organización, experiencia y atención a los detalles desde el
               primer contacto hasta la entrega de cada prenda.
             </p>
@@ -1085,7 +1082,7 @@ export default function ProcesoDeConfeccionClient() {
                 href="/empresa/calidad"
                 className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
               >
-                Conocer nuestro compromiso con la calidad
+                Conocer Nuestro Control de Calidad
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>

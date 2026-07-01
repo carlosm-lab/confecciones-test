@@ -23,43 +23,43 @@ const MUSEUM_PANELS: MuseumPanel[] = [
     num: "01",
     value: "Calidad",
     description:
-      "Cada prenda representa la confianza de un cliente. Cuidamos cada acabado, costura y talle como si fuera el único.",
+      "Cada prenda representa el trabajo de nuestro equipo y la confianza de un cliente.",
   },
   {
     num: "02",
     value: "Experiencia",
     description:
-      "Creemos en el aprendizaje silencioso y construido trabajando durante décadas al frente de la aguja y el dedal.",
+      "Valoramos el aprendizaje constante adquirido durante años de trabajo real.",
   },
   {
     num: "03",
     value: "Honestidad",
     description:
-      "Preferimos comunicar la realidad técnica antes de realizar promesas artificiales. El valor real está en lo que entregamos.",
+      "Comunicamos nuestros procesos con claridad y cumplimos nuestros compromisos.",
   },
   {
     num: "04",
     value: "Respeto",
     description:
-      "Valoramos de forma íntegra a nuestros clientes, colaboradores y proveedores, promoviendo relaciones humanas justas.",
+      "Tratamos con respeto a clientes, colaboradores y proveedores.",
   },
   {
     num: "05",
     value: "Mejora continua",
     description:
-      "Siempre existe una mejor forma de trazar un patrón o coser un dobladillo. El aprendizaje nunca se detiene.",
+      "Buscamos constantemente nuevas formas de mejorar la calidad y optimizar procesos.",
   },
   {
     num: "06",
     value: "Compromiso",
     description:
-      "Cada prenda recibe la misma devoción técnica, sin importar si vestimos a una escuela local o a una gran institución.",
+      "Escuchamos, asesoramos y trabajamos para entregar soluciones que respondan a cada necesidad.",
   },
   {
     num: "07",
     value: "Orgullo por el origen",
     description:
-      "Nunca olvidamos que empezamos en 2005 con una sola máquina cosiendo para la familia, aprendiendo el valor del esfuerzo real.",
+      "Nunca olvidamos que comenzamos con una sola máquina de coser confeccionando prendas para la familia.",
   },
 ];
 
@@ -69,7 +69,7 @@ const MANIFESTO_LINES = [
   "La calidad nunca será opcional.",
   "Escuchamos antes de confeccionar.",
   "Cada uniforme merece el mismo cuidado.",
-  "La mejora continua forma parte del trabajo.",
+  "La mejora continua forma parte del trabajo diario.",
   "El respeto se demuestra trabajando.",
   "Nunca olvidaremos nuestro origen.",
 ];
@@ -178,7 +178,7 @@ export default function FilosofiaClient() {
                     aprendiendo un oficio. Desde 2005, nuestra filosofía ha sido
                     entregar la máxima calidad y precisión en cada prenda,
                     respaldados por un compromiso real con cada profesional y
-                    estudiante.
+                    cada estudiante que confía en nosotros.
                   </p>
                 </div>
               </div>
@@ -252,12 +252,12 @@ export default function FilosofiaClient() {
               className="max-w-[62ch] space-y-8 font-sans text-base leading-relaxed text-[#444650] md:text-lg"
             >
               <p>
-                En Confecciones Liss creemos que una prenda nunca comienza en
+                En Confecciones Liss entendemos que una prenda no comienza en
                 una máquina de coser; comienza en la confianza que una persona
                 deposita en quien la confecciona. Desde nuestros inicios en 2005
-                entendimos que nuestro trabajo no consiste únicamente en
-                fabricar uniformes, sino en crear prendas que acompañarán el día
-                a día de estudiantes, profesionales, empresas e instituciones.
+                supimos que nuestro trabajo no consiste únicamente en fabricar
+                uniformes, sino en crear prendas que acompañarán el día a día de
+                estudiantes, profesionales, empresas e instituciones.
               </p>
               <p>
                 Nuestra forma de trabajar nació mucho antes de tener un taller.
@@ -304,20 +304,20 @@ export default function FilosofiaClient() {
             <div className="flex flex-col justify-between lg:col-span-5">
               <div>
                 <span className="mb-4 block font-mono text-xs tracking-[0.2em] text-[#e8cbb5] uppercase">
-                  02 // NUESTRO TIEMPO
+                  Nuestro tiempo
                 </span>
                 <h2 className="mb-6 font-serif text-4xl leading-tight font-bold tracking-tight text-white sm:text-5xl">
                   Por qué elegimos ir despacio.
                 </h2>
                 <p className="mb-6 font-sans text-base leading-relaxed text-[#dae2ff] sm:text-lg">
-                  En una industria obsesionada con la rapidez y la producción en
-                  masa, nosotros creemos que el verdadero valor reside en la
-                  pausa, la precisión y la dedicación.
+                  En una industria que prioriza la rapidez y la producción en
+                  masa, en Confecciones Liss priorizamos la precisión y la
+                  dedicación en cada etapa del proceso.
                 </p>
                 <p className="font-sans text-sm leading-relaxed text-[#a2b4df]">
-                  No cortamos esquinas. Cada costura, cada ojal y cada
-                  terminación se realiza respetando el tiempo que requiere la
-                  materia prima para convertirse en una pieza duradera.
+                  Cada costura, cada ojal y cada terminación se realiza
+                  respetando el tiempo que requiere la materia prima para
+                  convertirse en una prenda duradera.
                 </p>
               </div>
             </div>
@@ -327,28 +327,28 @@ export default function FilosofiaClient() {
               {[
                 {
                   num: "01",
-                  label: "VELOCIDAD",
+                  label: "Velocidad",
                   statement: "No perseguimos velocidad.",
-                  desc: "La prisa compromete la precisión. Preferimos tardar más y asegurar que cada puntada sea perfecta.",
+                  desc: "La prisa compromete la precisión. Preferimos tardar más y asegurar que cada puntada esté correctamente realizada.",
                 },
                 {
                   num: "02",
-                  label: "VOLUMEN",
+                  label: "Volumen",
                   statement: "No perseguimos volumen.",
-                  desc: "No somos una maquila masiva. Producimos en lotes controlados para mantener un estándar de calidad insuperable.",
+                  desc: "Producimos en lotes controlados para mantener un estándar de calidad constante en cada entrega.",
                 },
                 {
                   num: "03",
-                  label: "EXCELENCIA",
+                  label: "Excelencia",
                   statement: "Perseguimos excelencia.",
-                  desc: "La perfection técnica es nuestro único norte. Cada detalle cuenta, desde el hilo hasta el botón.",
+                  desc: "Cada detalle cuenta, desde el hilo hasta el acabado final de la prenda.",
                 },
                 {
                   num: "04",
-                  label: "PROPÓSITO",
+                  label: "Propósito",
                   statement:
                     "Hacer bien las cosas siempre será más importante.",
-                  desc: "El orgullo del trabajo bien hecho es el pilar sobre el cual construimos nuestra reputación.",
+                  desc: "El trabajo bien hecho es el pilar sobre el cual construimos nuestra reputación.",
                 },
               ].map((item, idx) => (
                 <motion.div
@@ -378,10 +378,13 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* 4. SECCIÓN 3 (Museum Horizontal Panels) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <section className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36">
+      <section
+        id="valores"
+        className="relative w-full border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 py-24 md:px-8 md:py-36"
+      >
         <div className="mx-auto mb-16 w-full max-w-screen-2xl">
           <span className="mb-3 block font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase">
-            03 // NUESTROS PILARES
+            Nuestros pilares
           </span>
           <h2 className="font-serif text-3xl font-bold tracking-tight text-[#143067] md:text-4xl">
             Valores redactados como compromisos.
@@ -496,7 +499,7 @@ export default function FilosofiaClient() {
             className="mb-20 text-center"
           >
             <span className="mb-3 block font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase">
-              04 // CÓDIGO INALTERABLE
+              Código inalterable
             </span>
             <h2 className="font-serif text-3xl font-bold tracking-tight text-[#143067] md:text-5xl">
               Nunca vamos a negociar estos principios.
@@ -534,7 +537,7 @@ export default function FilosofiaClient() {
         <div className="mx-auto w-full max-w-screen-2xl">
           <div className="mb-16">
             <span className="mb-3 block font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase">
-              05 // PERSPECTIVA DE NUESTRO PROPÓSITO
+              Perspectiva de nuestro propósito
             </span>
             <h2 className="font-serif text-3xl font-bold text-[#143067] md:text-4xl">
               Misión, Visión e Impacto Técnico
@@ -557,8 +560,8 @@ export default function FilosofiaClient() {
                 <p className="font-serif text-xl leading-relaxed font-medium text-[#143067] md:text-2xl">
                   Diseñar, confeccionar y entregar uniformes escolares,
                   empresariales y médicos que combinen calidad, funcionalidad y
-                  durabilidad, ofreciendo un servicio cercano respaldado por la
-                  experiencia técnica.
+                  durabilidad, ofreciendo un servicio cercano y personalizado
+                  respaldado por la experiencia técnica y la mejora continua.
                 </p>
               </div>
             </motion.div>
@@ -576,10 +579,12 @@ export default function FilosofiaClient() {
                   NUESTRA VISIÓN
                 </span>
                 <p className="font-sans text-sm leading-relaxed text-[#444650] md:text-base">
-                  Consolidarnos como el taller de confección más confiable de El
-                  Salvador, destacando por la excelencia artesanal de nuestro
-                  equipo, la modernización de nuestros procesos y el trato
-                  humano impecable.
+                  Consolidarnos como una de las empresas de confección más
+                  reconocidas y confiables de El Salvador, destacando por la
+                  calidad de nuestros productos, la especialización de nuestro
+                  equipo y una transformación digital que facilite la
+                  experiencia de nuestros clientes, sin perder el trato humano
+                  que nos caracteriza.
                 </p>
               </div>
             </motion.div>
@@ -631,14 +636,15 @@ export default function FilosofiaClient() {
                     Desde 2005
                   </span>
                   <span className="mt-2 block font-sans text-sm font-medium tracking-wide text-[#555e76] uppercase md:text-base">
-                    perfeccionando un oficio de generación en generación.
+                    PERFECCIONANDO UN OFICIO DE GENERACIÓN EN GENERACIÓN
                   </span>
                 </div>
                 <div className="h-px w-full bg-[#c4c6d1] sm:h-12 sm:w-px"></div>
                 <div className="max-w-xs font-sans text-xs leading-relaxed text-[#757781]">
-                  Comenzamos con una sola costurera. Hoy diseñamos, cortamos y
-                  ensamblamos miles de piezas con precisión técnica e
-                  industrial.
+                  Comenzamos con una sola persona confeccionando desde casa. Hoy
+                  diseñamos, cortamos y ensamblamos uniformes con procesos
+                  técnicos definidos y un equipo especializado en cada etapa de
+                  producción.
                 </div>
               </div>
             </motion.div>
@@ -653,7 +659,7 @@ export default function FilosofiaClient() {
         <div className="mx-auto w-full max-w-screen-2xl">
           <div className="mb-16">
             <span className="mb-3 block font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase">
-              06 // REGISTRO VISUAL
+              Registro visual
             </span>
             <h2 className="font-serif text-3xl font-bold text-[#143067] md:text-4xl">
               Galería Editorial de la Confección
@@ -737,13 +743,13 @@ export default function FilosofiaClient() {
                 href="/empresa/sobre-nosotros"
                 className="inline-flex items-center justify-center rounded-lg bg-[#143067] px-8 py-4 font-sans text-sm font-semibold text-white shadow-sm transition-colors duration-300 hover:bg-[#001b4a]"
               >
-                Conocer nuestra historia
+                Conocer Nuestra Historia
               </Link>
               <Link
-                href="/empresa/proceso-de-confeccion"
+                href="#valores"
                 className="inline-flex items-center justify-center rounded-lg border border-[#143067] bg-transparent px-8 py-4 font-sans text-sm font-semibold text-[#143067] transition-colors duration-300 hover:bg-[#dae2ff]/20"
               >
-                Descubrir nuestro proceso
+                Ver Nuestros Valores
               </Link>
             </div>
           </div>

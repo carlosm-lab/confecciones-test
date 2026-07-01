@@ -5,33 +5,7 @@ import { ServicioFAQ } from "./ServicioFAQ";
 import { ServicioCTABanner } from "./ServicioCTABanner";
 import Image from "next/image";
 
-interface ServiceSection {
-  heading: string;
-  body: string;
-}
-
-interface ServicePage {
-  slug: string;
-  navLabel: string;
-  navIcon: string;
-  title: string;
-  subtitle: string;
-  seoTitle: string;
-  seoDescription: string;
-  description: string;
-  cardDescription: string;
-  heroGradient: string;
-  heroFeatures: { icon: string; text: string }[];
-  ctaBanner: {
-    title: string;
-    description: string;
-    ctaText: string;
-    ctaHref: string;
-  };
-  cardImage: string;
-  sections: ServiceSection[];
-  faqs: { question: string; answer: string }[];
-}
+import { ServicePage } from "@/data/services";
 
 interface ServicioDetalleGenericProps {
   service: ServicePage;

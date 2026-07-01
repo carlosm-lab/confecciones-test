@@ -4,9 +4,10 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import MediaKitClient from "@/components/empresa/MediaKitClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/media-kit`;
-const PAGE_TITLE = "Media Kit | Recursos Oficiales | Confecciones Liss";
+const PAGE_TITLE =
+  "Media Kit | Recursos Oficiales de Marca | Confecciones Liss";
 const PAGE_DESCRIPTION =
-  "Accede a los recursos oficiales de Confecciones Liss: logotipos en alta resolución, paleta de colores, tipografías y datos para prensa.";
+  "Recursos oficiales de Confecciones Liss para medios, periodistas e instituciones: logotipo, colores institucionales, biografía de marca y contactos autorizados.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

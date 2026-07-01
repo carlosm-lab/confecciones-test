@@ -55,8 +55,8 @@ export default function EquipoClient() {
             variants={fadeIn}
             className="space-y-4"
           >
-            <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-[#143067] uppercase">
-              El Corazón del Taller
+            <span className="font-mono text-xs font-bold tracking-[0.25em] text-[#143067] uppercase">
+              {" "}
             </span>
             <h1 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl lg:text-6xl">
               Nuestro equipo
@@ -66,9 +66,10 @@ export default function EquipoClient() {
               etapa del proceso de confección.
             </p>
             <p className="mx-auto max-w-[65ch] pt-2 font-sans text-base leading-relaxed text-[#444650]">
-              Confecciones Liss está formada por un equipo especializado en
-              producción, control de calidad, logística, confección y estrategia
-              digital.
+              Confecciones Liss está formada por un equipo especializado que
+              distribuye el trabajo entre producción, calidad, logística,
+              confección y estrategia digital. Cada integrante tiene una función
+              definida y una responsabilidad concreta dentro del proceso.
             </p>
           </motion.div>
         </div>
@@ -103,7 +104,7 @@ export default function EquipoClient() {
             {/* Texto Lateral */}
             <div className="space-y-6 lg:col-span-7">
               <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-                Fundadora & Directora
+                FUNDADORA Y DIRECTORA
               </span>
               <h2 className="font-serif text-4xl font-bold text-[#143067] md:text-5xl">
                 {founder.name}
@@ -137,13 +138,13 @@ export default function EquipoClient() {
         <div className="mx-auto w-full max-w-screen-2xl space-y-16">
           <div className="max-w-2xl space-y-4">
             <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-              Capa Producción
+              ÁREA DE PRODUCCIÓN
             </span>
             <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
-              Manos maestras en el ensamble
+              Especialistas en confección
             </h2>
             <p className="font-sans text-base leading-relaxed text-[#444650]">
-              Las especialistas encargadas de la costura y el patronaje fino.
+              Las personas encargadas de la costura y el patronaje fino.
             </p>
           </div>
 
@@ -174,9 +175,11 @@ export default function EquipoClient() {
                   <p className="font-sans text-xs font-bold font-semibold tracking-wider text-[#143067] uppercase">
                     {member.role}
                   </p>
-                  <p className="font-sans text-sm leading-relaxed text-[#444650] italic">
-                    &ldquo;{member.quote}&rdquo;
-                  </p>
+                  {member.quote && (
+                    <p className="font-sans text-sm leading-relaxed text-[#444650] italic">
+                      &ldquo;{member.quote}&rdquo;
+                    </p>
+                  )}
                   <p className="font-sans text-sm leading-relaxed text-[#444650]/90">
                     {member.bio}
                   </p>
@@ -184,7 +187,7 @@ export default function EquipoClient() {
 
                 <div className="flex items-center justify-between border-t border-slate-200/60 pt-4">
                   <div className="flex flex-wrap gap-1">
-                    {member.tags.slice(0, 2).map((t) => (
+                    {member.tags.map((t) => (
                       <span
                         key={t}
                         className="rounded-full border border-slate-100 bg-white px-2.5 py-0.5 font-sans text-[10px] font-medium text-slate-600"
@@ -215,7 +218,7 @@ export default function EquipoClient() {
                 {quality.initials}
               </div>
               <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-[#143067] uppercase">
-                Control de Calidad
+                CONTROL DE CALIDAD
               </span>
               <h3 className="font-serif text-3xl leading-none font-bold text-[#143067]">
                 {quality.name}
@@ -223,6 +226,11 @@ export default function EquipoClient() {
               <p className="font-sans text-xs font-bold tracking-wider text-slate-500 uppercase">
                 {quality.role}
               </p>
+              {quality.experience && (
+                <span className="mt-2 inline-block rounded-full border border-[#143067]/10 bg-[#143067]/5 px-3 py-1 font-mono text-[10px] tracking-wider text-[#143067] uppercase">
+                  {quality.experience}
+                </span>
+              )}
             </div>
 
             <div className="space-y-6 lg:col-span-8 lg:border-l lg:border-slate-100 lg:pl-12">
@@ -232,9 +240,11 @@ export default function EquipoClient() {
               <p className="font-sans text-base leading-relaxed text-[#444650]">
                 {quality.bio}
               </p>
-              <p className="font-sans text-sm leading-relaxed text-[#444650]/80">
-                {quality.details}
-              </p>
+              {quality.details && (
+                <p className="font-sans text-sm leading-relaxed text-[#444650]/80">
+                  {quality.details}
+                </p>
+              )}
               <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
                 <div className="flex flex-wrap gap-2">
                   {quality.tags.map((tag) => (
@@ -264,7 +274,7 @@ export default function EquipoClient() {
           >
             <div className="order-2 space-y-6 lg:order-1 lg:col-span-8 lg:border-r lg:border-slate-200/60 lg:pr-12">
               <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-[#143067] uppercase">
-                Cadena & Entrega
+                LOGÍSTICA Y ENTREGA
               </span>
               <p className="font-serif text-lg leading-relaxed text-[#143067] italic md:text-xl">
                 &ldquo;{logistics.quote}&rdquo;
@@ -272,9 +282,11 @@ export default function EquipoClient() {
               <p className="font-sans text-base leading-relaxed text-[#444650]">
                 {logistics.bio}
               </p>
-              <p className="font-sans text-sm leading-relaxed text-[#444650]/80">
-                {logistics.details}
-              </p>
+              {logistics.details && (
+                <p className="font-sans text-sm leading-relaxed text-[#444650]/80">
+                  {logistics.details}
+                </p>
+              )}
               <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
                 <div className="flex flex-wrap gap-2">
                   {logistics.tags.map((tag) => (
@@ -299,6 +311,11 @@ export default function EquipoClient() {
               <p className="font-sans text-xs font-bold tracking-wider text-slate-500 uppercase">
                 {logistics.role}
               </p>
+              {logistics.experience && (
+                <span className="mt-2 inline-block rounded-full border border-[#143067]/10 bg-[#143067]/5 px-3 py-1 font-mono text-[10px] tracking-wider text-[#143067] uppercase">
+                  {logistics.experience}
+                </span>
+              )}
             </div>
           </motion.div>
         </div>
@@ -341,7 +358,7 @@ export default function EquipoClient() {
             {/* Details Panel */}
             <div className="order-1 space-y-6 lg:order-2 lg:col-span-7">
               <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-[#143067] uppercase">
-                Capa Estratégica & SEO
+                ÁREA DIGITAL
               </span>
               <h2 className="font-serif text-4xl leading-tight font-bold md:text-5xl">
                 {strategy.name}
@@ -349,15 +366,22 @@ export default function EquipoClient() {
               <p className="font-sans text-xs font-bold tracking-wider text-slate-300 uppercase">
                 {strategy.role}
               </p>
+              {strategy.subtitle && (
+                <p className="-mt-2 font-sans text-xs font-semibold text-slate-300/80">
+                  {strategy.subtitle}
+                </p>
+              )}
               <p className="font-serif text-lg leading-relaxed text-slate-200 italic md:text-xl">
                 &ldquo;{strategy.quote}&rdquo;
               </p>
               <p className="font-sans text-base leading-relaxed text-slate-300">
                 {strategy.bio}
               </p>
-              <p className="font-sans text-sm leading-relaxed text-slate-400">
-                {strategy.details}
-              </p>
+              {strategy.details && (
+                <p className="font-sans text-sm leading-relaxed text-slate-400">
+                  {strategy.details}
+                </p>
+              )}
               <div className="flex flex-wrap gap-2 pt-2">
                 {strategy.tags.map((tag) => (
                   <span
@@ -378,14 +402,15 @@ export default function EquipoClient() {
         <div className="mx-auto w-full max-w-screen-2xl space-y-16">
           <div className="max-w-2xl space-y-4">
             <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-              Capa Imagen
+              IMAGEN DE MARCA
             </span>
             <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
               Nuestra presentación visual
             </h2>
             <p className="font-sans text-base leading-relaxed text-[#444650]">
-              Los rostros que representan el calce real y la caída de nuestros
-              uniformes en campañas digitales.
+              Los modelos que aparecen en el sitio web y en las fotos de
+              nuestros uniformes son colaboradores de la propia empresa, lo que
+              garantiza autenticidad en cada imagen institucional.
             </p>
           </div>
 
@@ -416,9 +441,11 @@ export default function EquipoClient() {
                     <p className="font-sans text-xs font-bold tracking-wider text-[#143067] uppercase">
                       {member.role}
                     </p>
-                    <p className="font-sans text-sm leading-relaxed text-[#444650] italic">
-                      &ldquo;{member.quote}&rdquo;
-                    </p>
+                    {member.quote && (
+                      <p className="font-sans text-sm leading-relaxed text-[#444650] italic">
+                        &ldquo;{member.quote}&rdquo;
+                      </p>
+                    )}
                     <p className="font-sans text-sm leading-relaxed text-[#444650]/90">
                       {member.bio}
                     </p>
@@ -457,9 +484,9 @@ export default function EquipoClient() {
               ¿Listo para cotizar tus uniformes?
             </h2>
             <p className="mx-auto max-w-[58ch] font-sans text-base leading-relaxed text-[#444650]">
-              Nuestro equipo está listo para asesorarte con la toma de medidas,
-              el diseño de bordados personalizados y la selección de las mejores
-              telas.
+              Nuestro equipo está disponible para asesorarte, tomar medidas y
+              preparar tu pedido. Cuéntanos qué necesitas y te respondemos a la
+              brevedad.
             </p>
             <div className="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row">
               <Link

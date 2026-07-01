@@ -20,7 +20,7 @@ const team: TeamMember[] = [
     role: "Especialista en Confección de Uniformes",
     year: "Marzo 2021",
     description:
-      "Primera colaboradora del taller. Experta en ensamblado de prendas escolares, empresariales y médicas con altos estándares de precisión y acabado.",
+      "Primera colaboradora del taller. Especialista en confección de uniformes escolares, empresariales y médicos. Con dominio de maquinaria industrial y altos estándares de acabado, fue pieza clave en la consolidación del taller durante sus primeros meses de operación.",
     specialties: [
       "Confección de uniformes",
       "Acabados textiles",
@@ -33,46 +33,34 @@ const team: TeamMember[] = [
     role: "Especialista en Confección de Prendas",
     year: "Agosto 2021",
     description:
-      "Aportó uniformidad y consistencia en los diferentes procesos de producción, garantizando un acabado uniforme en cada prenda.",
-    specialties: [
-      "Confección de prendas",
-      "Detalle técnico",
-      "Control de acabados",
-    ],
+      "Especialista en confección y ensamblaje de prendas. Su incorporación reforzó la consistencia del proceso productivo, garantizando uniformidad en acabados y rendimiento estable en producción continua.",
+    specialties: ["Confección de prendas", "Ensamblaje", "Control de acabados"],
     initials: "NV",
   },
   {
     name: "Carlos Antonio Molina",
-    role: "Encargado de Logística y Atención Comercial",
+    role: "Logística y Atención al Cliente",
     year: "2022",
     description:
-      "Asumió la gestión de distribución, entregas a nivel nacional y relación directa con clientes institucionales y corporativos.",
-    specialties: [
-      "Logística nacional",
-      "Atención al cliente",
-      "Distribución eficiente",
-    ],
+      "Responsable de la coordinación de entregas, atención directa al cliente y distribución de pedidos. Gestiona la relación con clientes institucionales y empresariales, asegurando que cada entrega llegue en tiempo y forma.",
+    specialties: ["Logística", "Atención al cliente", "Distribución"],
     initials: "CM",
   },
   {
     name: "Blanca Martínez",
-    role: "Operaria de Producción",
+    role: "Operaria de Confección",
     year: "2023",
     description:
-      "Fortaleció la capacidad operativa del taller para cumplir con pedidos masivos en tiempos de entrega rigurosos.",
-    specialties: [
-      "Ensamblado rápido",
-      "Preparación de piezas",
-      "Costura industrial",
-    ],
+      "Operaria de producción especializada en costura industrial. Su incorporación amplió la capacidad del taller para absorber pedidos de mayor volumen sin comprometer los plazos de entrega.",
+    specialties: ["Costura industrial", "Producción", "Preparación de piezas"],
     initials: "BM",
   },
   {
     name: "René Alfonso Méndez",
-    role: "Responsable de Control de Calidad y Toma de Medidas",
-    year: "2025",
+    role: "Control de Calidad y Toma de Medidas",
+    year: "Finales de 2025",
     description:
-      "Inspector de costuras y medidas personalizadas, encargado de garantizar que cada uniforme entregado quede a la medida exacta del profesional.",
+      "Responsable de la inspección final de cada prenda antes de su entrega. Verifica costuras, pliegues, bordados y resistencia al uso. También realiza la toma de medidas personalizada para pedidos a la medida, garantizando que cada uniforme se ajuste con precisión al cliente.",
     specialties: [
       "Control de calidad",
       "Toma de medidas",
@@ -144,9 +132,7 @@ export default function SobreNosotrosClient() {
               />
             </div>
 
-            <span className="mb-2 font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-              Capítulo I — El Origen
-            </span>
+            <span className="mb-2 font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase" />
 
             <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-4xl leading-tight tracking-tight md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-6xl">
               <span className="text-center lg:text-left">
@@ -159,7 +145,7 @@ export default function SobreNosotrosClient() {
                   <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
                 </span>
 
-                <span className="shrink-0">puntada a puntada</span>
+                <span className="shrink-0">desde 2005</span>
 
                 {/* LÍNEA DECORATIVA DERECHA (Solo Tablet) */}
                 <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
@@ -197,16 +183,14 @@ export default function SobreNosotrosClient() {
                   style={{ animationDelay: "150ms" }}
                 >
                   <p>
-                    Toda gran historia tiene un primer paso. En el año 2005,
-                    nuestra fundadora inició un pequeño taller desde su hogar.
-                    Especialista en moda y técnica certificada en Corte y
-                    Confección, comenzó confeccionando y reparando ropa para su
-                    propia familia.
-                  </p>
-                  <p>
-                    No había local comercial, empleados, ni internet. Solo una
-                    máquina de coser, talento, disciplina y la firme decisión de
-                    perfeccionar cada costura que salía de sus manos.
+                    En 2005, Iris Lisseth Villacorta de Molina comenzó
+                    confeccionando prendas para su familia desde su hogar en el
+                    cantón donde residía, con una sola máquina de coser mecanica
+                    y formación técnica certificada en Corte y Confección. Lo
+                    que nació como una solución doméstica se convirtió en un
+                    taller con presencia institucional, equipo especializado y
+                    más de dos décadas de experiencia verificable en el sector
+                    textil de El Salvador.
                   </p>
                 </div>
               </div>
@@ -264,17 +248,16 @@ export default function SobreNosotrosClient() {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-                Capítulo II — Reputación
-              </span>
+              <span className="font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase" />
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
                 El valor de la palabra dada
               </h2>
               <p className="font-sans text-base leading-relaxed text-[#444650]">
-                Lo que comenzó como un apoyo familiar pronto atrajo la atención
-                del cantón. Vecinos y amigos buscaban el taller para vestidos,
-                reparaciones y uniformes. Cada prenda entregada con precisión
-                generaba una recomendación espontánea.
+                La reputación de Confecciones Liss no se construyó con
+                publicidad. Se construyó prenda a prenda, entrega a entrega. Los
+                habitantes del cantón comenzaron a solicitar el servicio después
+                de ver la calidad del trabajo. Cada cliente satisfecho generó el
+                siguiente, sin necesidad de intermediarios ni campañas.
               </p>
               <blockquote className="relative border-l-4 border-[#143067] pl-6 font-serif text-xl leading-relaxed text-[#143067] italic md:text-2xl">
                 &ldquo;Su reputación no se construyó con campañas de publicidad.
@@ -301,22 +284,18 @@ export default function SobreNosotrosClient() {
                   CÓDIGO DE ESCUELA: 12855
                 </span>
               </div>
-              <span className="block font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-                Capítulo III — Confianza en Volumen
-              </span>
+              <span className="block font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase" />
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
-                Vistiendo a toda una institución
+                El primer contrato institucional
               </h2>
               <p className="font-sans text-base leading-relaxed text-[#444650]">
-                El primer gran desafío comercial llegó al asumir la elaboración
-                completa de los uniformes escolares para los alumnos del{" "}
-                <strong>Centro Escolar Profesor Jorge Salomón Granados</strong>.
-              </p>
-              <p className="font-sans text-base leading-relaxed text-[#444650]">
-                Este encargo representó un riguroso reto de planificación y
-                cadena de confección. Demostró que el taller casero podía
-                sostener la misma finura en las costuras incluso al producir en
-                gran volumen.
+                El primer gran encargo institucional llegó del Ministerio de
+                Educación de El Salvador: la confección completa de los
+                uniformes para los alumnos del Centro Escolar Profesor Jorge
+                Salomón Granados (código 12855). Este proyecto demostró que una
+                sola persona podía mantener sus estándares de calidad a escala,
+                cumpliendo plazos de entrega y produciendo en volumen sin
+                sacrificar el acabado.
               </p>
             </motion.div>
 
@@ -334,10 +313,12 @@ export default function SobreNosotrosClient() {
                   </span>
                   <div>
                     <h4 className="font-sans font-bold text-[#143067]">
-                      Precisión a Escala
+                      Precisión a escala
                     </h4>
                     <p className="mt-1 font-sans text-sm text-[#444650]">
-                      Cientos de camisas y pantalones a medida.
+                      Uniformes completos para todos los estudiantes del centro
+                      escolar, confeccionados y entregados según las
+                      especificaciones del Ministerio de Educación.
                     </p>
                   </div>
                 </li>
@@ -347,10 +328,11 @@ export default function SobreNosotrosClient() {
                   </span>
                   <div>
                     <h4 className="font-sans font-bold text-[#143067]">
-                      Control Logístico
+                      Control logístico
                     </h4>
                     <p className="mt-1 font-sans text-sm text-[#444650]">
-                      Distribución y entrega puntual sin un solo error de talla.
+                      Coordinación de corte, confección y entrega sin errores de
+                      talla ni demoras en la distribución.
                     </p>
                   </div>
                 </li>
@@ -360,10 +342,11 @@ export default function SobreNosotrosClient() {
                   </span>
                   <div>
                     <h4 className="font-sans font-bold text-[#143067]">
-                      Estándar de Calidad
+                      Estándar de durabilidad
                     </h4>
                     <p className="mt-1 font-sans text-sm text-[#444650]">
-                      Prendas que soportaron años de uso diario escolar.
+                      Prendas diseñadas para soportar el uso diario escolar
+                      durante todo el ciclo lectivo.
                     </p>
                   </div>
                 </li>
@@ -402,22 +385,19 @@ export default function SobreNosotrosClient() {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-                Capítulo IV — El Aprendizaje Industrial
-              </span>
+              <span className="font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase" />
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
-                La escuela de las maquilas
+                Producción industrial: la etapa de las maquilas
               </h2>
               <p className="font-sans text-base leading-relaxed text-[#444650]">
-                El reconocimiento de la calidad artesanal del taller llamó la
-                atención de maquilas industriales en la ciudad de San Miguel.
-                Nuestra fundadora se incorporó a estos procesos fabriles a gran
-                escala.
-              </p>
-              <p className="font-sans text-base leading-relaxed text-[#444650]">
-                Allí dominó la estandarización industrial, la operación de
-                maquinaria de alta especialización y los esquemas más estrictos
-                de control de calidad en serie.
+                Entre 2012 y 2019, la calidad del trabajo de la fundadora captó
+                la atención de distintos talleres de confección en San Miguel.
+                Durante ese período, la fundadora trabajó y aprendió sobre
+                procesos industriales de gran escala, donde adquirió dominio en
+                estandarización de producción, operación de maquinaria
+                industrial avanzada y sistemas rigurosos de control de calidad
+                en serie. Esa experiencia industrial es la base técnica sobre la
+                que opera Confecciones Liss hoy.
               </p>
               <div className="border-primary/35 space-y-3 rounded-2xl border bg-[#f8f9fb] p-6 font-mono text-xs text-[#143067] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <div className="flex justify-between">
@@ -426,11 +406,11 @@ export default function SobreNosotrosClient() {
                 </div>
                 <div className="flex justify-between">
                   <span>[MAQUINARIA]</span>
-                  <span className="font-bold">MAQUINAS INDUSTRIALES</span>
+                  <span className="font-bold">MAQUINARIA INDUSTRIAL</span>
                 </div>
                 <div className="flex justify-between">
                   <span>[MÉTODO]</span>
-                  <span className="font-bold">PRECISIÓN ARTESANAL</span>
+                  <span className="font-bold">CONTROL DE CALIDAD</span>
                 </div>
               </div>
             </motion.div>
@@ -451,24 +431,18 @@ export default function SobreNosotrosClient() {
             variants={fadeIn}
             className="space-y-6"
           >
-            <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-white uppercase">
-              Capítulo V — Resiliencia
-            </span>
+            <span className="font-mono text-xs font-bold tracking-[0.25em] text-white uppercase" />
             <h2 className="font-serif text-5xl leading-tight font-bold md:text-7xl">
               Cuando el mundo <br />
               <span className="font-bold text-white italic">se detuvo</span>
             </h2>
-            <p className="mx-auto max-w-[62ch] font-sans text-lg leading-relaxed text-slate-300">
-              La pandemia del COVID-19 en 2020 cerró talleres, suspendió
-              actividades comerciales y nos dejó sin ingresos familiares de la
-              noche a la mañana.
-            </p>
-            <p className="mx-auto max-w-[62ch] font-sans text-base leading-relaxed text-slate-400">
-              Sostuvimos el taller a base de esfuerzo, apoyo y un modesto fondo
-              de emergencia ahorrado centavo a centavo durante años. Al
-              disiparse la crisis, las maquilas y el empleo tradicional habían
-              desaparecido. Solo quedaba una última opción: retirarse
-              definitivamente o renacer.
+            <p className="mx-auto max-w-[62ch] font-sans text-base leading-relaxed text-slate-300">
+              La pandemia del COVID-19 en 2020 eliminó los ingresos familiares
+              de un día para otro. Las maquilas cerraron. Los encargos se
+              detuvieron. La familia sostuvo el período con apoyo gubernamental
+              y un fondo de emergencia acumulado durante años. Cuando la crisis
+              comenzó a ceder, el empleo previo ya no existía. La decisión fue
+              clara: reiniciar desde cero o no reiniciar.
             </p>
             <div className="pt-4">
               <span className="inline-block border-y border-white/40 px-8 py-3 font-serif text-xl text-slate-200 italic">
@@ -490,9 +464,7 @@ export default function SobreNosotrosClient() {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-                Capítulo VI — El Renacimiento
-              </span>
+              <span className="font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase" />
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
                 20 de enero de 2021
               </h2>
@@ -500,15 +472,11 @@ export default function SobreNosotrosClient() {
                 El nacimiento oficial de Confecciones Liss
               </h3>
               <p className="font-sans text-base leading-relaxed text-[#444650]">
-                No nacimos con inversionistas externos ni equipos avanzados.
-                Nuestra empresa nació a partir de los últimos{" "}
-                <strong>dos mil dólares</strong>
-                del fondo de emergencia familiar.
-              </p>
-              <p className="font-sans text-base leading-relaxed text-[#444650]">
-                Con ese capital se alquiló un pequeño local de confección y se
-                compró el equipamiento base indispensable para abrir las
-                puertas.
+                Con los últimos USD 2,000 del fondo de emergencia familiar se
+                alquiló un pequeño local en San Miguel y se adquirió el
+                equipamiento mínimo necesario para abrir. Sin inversores
+                externos. Sin financiamiento bancario. Con lo justo para
+                comenzar.
               </p>
             </motion.div>
 
@@ -530,34 +498,34 @@ export default function SobreNosotrosClient() {
 
               <div className="space-y-4">
                 <div className="flex items-center justify-between font-sans text-sm">
-                  <span className="text-[#444650]">Máquina de Coser Recta</span>
-                  <span className="font-mono font-bold text-[#143067]">x1</span>
+                  <span className="text-[#444650]">
+                    Máquina de coser industrial
+                  </span>
+                  <span className="font-mono font-bold text-[#143067]">×1</span>
                 </div>
                 <div className="h-px bg-slate-200" />
                 <div className="flex items-center justify-between font-sans text-sm">
-                  <span className="text-[#444650]">Bordadora de Marca</span>
-                  <span className="font-mono font-bold text-[#143067]">x1</span>
+                  <span className="text-[#444650]">Bordadora</span>
+                  <span className="font-mono font-bold text-[#143067]">×1</span>
                 </div>
                 <div className="h-px bg-slate-200" />
                 <div className="flex items-center justify-between font-sans text-sm">
                   <span className="text-[#444650]">
-                    Máquina Rana (Ojaladora)
+                    Máquina rana (ojaladora)
                   </span>
-                  <span className="font-mono font-bold text-[#143067]">x1</span>
+                  <span className="font-mono font-bold text-[#143067]">×1</span>
                 </div>
                 <div className="h-px bg-slate-200" />
                 <div className="flex items-center justify-between font-sans text-sm">
                   <span className="text-[#444650]">
-                    Mesa de Corte y Patronaje
+                    Mesa de corte y patronaje
                   </span>
-                  <span className="font-mono font-bold text-[#143067]">x1</span>
+                  <span className="font-mono font-bold text-[#143067]">×1</span>
                 </div>
                 <div className="h-px bg-slate-200" />
                 <div className="flex items-center justify-between font-sans text-sm">
-                  <span className="text-[#444650]">
-                    Rollos de Tela Iniciales
-                  </span>
-                  <span className="font-mono font-bold text-[#143067]">x2</span>
+                  <span className="text-[#444650]">Rollos de tela</span>
+                  <span className="font-mono font-bold text-[#143067]">×2</span>
                 </div>
               </div>
             </motion.div>
@@ -569,16 +537,15 @@ export default function SobreNosotrosClient() {
       <section className="relative flex min-h-screen items-center justify-center border-t border-slate-100 bg-[#f8f9fb] px-5 py-24 md:px-8">
         <div className="mx-auto w-full max-w-4xl space-y-16">
           <div className="mx-auto max-w-2xl space-y-4 text-center">
-            <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-              Capítulo VII — El Factor Humano
-            </span>
+            <span className="font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase" />
             <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
-              Nuestra mayor fortaleza
+              El equipo que hace posible cada entrega
             </h2>
             <p className="font-sans text-base leading-relaxed text-[#444650]">
-              El crecimiento de la demanda impulsó la evolución de nuestro
-              equipo. Artesanos expertos que sumaron su experiencia para
-              robustecer la producción.
+              El crecimiento sostenido de la demanda impulsó la formación de un
+              equipo especializado. Cada integrante se incorporó en un momento
+              clave del desarrollo de la empresa y aportó la capacidad necesaria
+              para escalar sin perder calidad.
             </p>
           </div>
 
@@ -631,8 +598,8 @@ export default function SobreNosotrosClient() {
           </div>
 
           <div className="pt-4 text-center font-serif text-lg text-[#143067] italic">
-            &ldquo;Hoy entendemos que nuestro mayor activo no son las máquinas.
-            Son las personas que las operan.&rdquo;
+            &ldquo;Nuestro mayor activo no son las máquinas. Son las personas
+            que las operan.&rdquo;
           </div>
         </div>
       </section>
@@ -648,25 +615,22 @@ export default function SobreNosotrosClient() {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-                Capítulo VIII — Transformación Tecnológica
-              </span>
+              <span className="font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase" />
               <h2 className="font-serif text-4xl leading-tight font-bold text-[#143067] md:text-5xl">
-                La era de los datos y el SEO
+                Transformación digital desde 2026
               </h2>
               <p className="font-sans text-base leading-relaxed text-[#444650]">
-                En enero de 2026 se incorporó{" "}
-                <strong>Carlos José Molina Villacorta</strong>, Técnico en
-                Servicios Informáticos, especialista en Inteligencia Digital y
-                estudiante avanzado de Licenciatura en Psicología en IEPROES
-                (CUM 9.32).
-              </p>
-              <p className="font-sans text-base leading-relaxed text-[#444650]">
-                Con su llegada, se diseñó la plataforma web y se implementó una
-                estrategia de <strong>Saturación de Canales</strong>. Esta
-                metodología, basada en inteligencia competitiva y análisis
-                profundo de datos, logró una presencia dominante en resultados
-                de búsqueda para toda la región oriental.
+                En enero de 2026 se incorporó Carlos José Molina Villacorta,
+                Técnico en Computación, certificado en Técnicas de Inteligencia,
+                Recolección y Análisis de Datos, con estudios en curso de
+                Licenciatura en Psicología de la Salud en EL Instituto
+                Especializado de Profesionales de la Salud (IEPROES - Centro
+                Regional San Miguel). Con su incorporación se diseñó la
+                plataforma web institucional y se implementó una estrategia de
+                posicionamiento orgánico orientada a la región oriental de El
+                Salvador. La estrategia combina inteligencia competitiva,
+                análisis de comportamiento del usuario y arquitectura de
+                contenidos estructurada según los estándares E-E-A-T de Google.
               </p>
             </motion.div>
 
@@ -682,15 +646,15 @@ export default function SobreNosotrosClient() {
                   monitoring
                 </span>
                 <h4 className="font-serif text-lg font-bold">
-                  Saturación de Canales
+                  Presencia digital regional
                 </h4>
               </div>
 
               <div className="space-y-4">
                 <div>
                   <div className="mb-1 flex justify-between font-mono text-xs text-slate-300">
-                    <span>PRESENCIA WEB REGIONAL</span>
-                    <span>DOMINANTE</span>
+                    <span>COBERTURA GEOGRÁFICA</span>
+                    <span>REGIÓN ORIENTAL</span>
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-blue-950">
                     <motion.div
@@ -704,9 +668,9 @@ export default function SobreNosotrosClient() {
                 </div>
 
                 <div>
-                  <div className="mb-1 flex justify-between font-mono text-xs text-slate-300">
-                    <span>RENDIMIENTO ACADÉMICO (CUM)</span>
-                    <span>9.32</span>
+                  <div className="mb-1 flex justify-between font-mono text-xs text-[#d7dffc]">
+                    <span>ESTRATEGIA DE POSICIONAMIENTO</span>
+                    <span>ORGÁNICA</span>
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-blue-950">
                     <motion.div
@@ -721,7 +685,7 @@ export default function SobreNosotrosClient() {
 
                 <div className="pt-2 font-mono text-[11px] leading-relaxed text-slate-400">
                   {
-                    "// Integración de tecnología y análisis del comportamiento del consumidor como motores de posicionamiento orgánico."
+                    "// Arquitectura de contenidos estructurada bajo estándares E-E-A-T de Google."
                   }
                 </div>
               </div>
@@ -740,9 +704,7 @@ export default function SobreNosotrosClient() {
             variants={fadeIn}
             className="space-y-6"
           >
-            <span className="font-mono text-xs font-bold font-semibold tracking-[0.2em] text-[#143067] uppercase">
-              Capítulo Final — Nuestra Promesa
-            </span>
+            <span className="font-mono text-xs font-bold tracking-[0.2em] text-[#143067] uppercase" />
             <h2 className="font-serif text-5xl leading-tight font-bold text-[#143067] md:text-7xl">
               Dos décadas construyendo <br />
               <span className="font-bold text-[#143067] italic">confianza</span>
@@ -753,10 +715,11 @@ export default function SobreNosotrosClient() {
               presentación de un profesional.&rdquo;
             </p>
             <p className="mx-auto max-w-[62ch] font-sans text-base leading-relaxed text-[#444650]">
-              Por eso confeccionamos cada pieza con el mismo nivel de
-              dedicación, precisión y responsabilidad con el que Iris inició
-              esta historia en el año 2005. Una sola máquina y un sueño que,
-              gracias a ti, sigue creciendo hoy.
+              Desde 2005 hasta hoy, cada prenda elaborada lleva el mismo nivel
+              de dedicación con el que Iris Lisseth de Molina comenzó esta
+              historia. El equipo crece, los procesos mejoran y la tecnología
+              avanza, pero el estándar de calidad que construyó la reputación de
+              Confecciones Liss no cambia.
             </p>
           </motion.div>
 
@@ -767,10 +730,10 @@ export default function SobreNosotrosClient() {
                 account_circle
               </span>
               <h4 className="font-serif text-base font-bold text-[#143067]">
-                Jackeline Lisseth
+                Jackeline Lisseth Molina
               </h4>
               <p className="mt-1 font-sans text-xs text-[#444650]">
-                Modelo Institucional
+                Modelo institucional
               </p>
             </div>
             <div className="border-primary/35 rounded-3xl border bg-white p-6 text-center shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
@@ -778,26 +741,26 @@ export default function SobreNosotrosClient() {
                 account_circle
               </span>
               <h4 className="font-serif text-base font-bold text-[#143067]">
-                Liam Alejandro
+                Liam Alejandro Molina
               </h4>
               <p className="mt-1 font-sans text-xs text-[#444650]">
-                Modelo Institucional
+                Modelo institucional
               </p>
             </div>
           </div>
 
           <div className="flex flex-col items-center justify-center gap-4 pt-8 sm:flex-row">
             <Link
-              href="/catalogo"
+              href="/contacto"
               className="inline-flex w-full items-center justify-center rounded-xl bg-[#143067] px-8 py-4 font-sans font-bold text-white shadow-md transition-all duration-150 hover:bg-[#143067]/90 hover:shadow-lg active:scale-[0.98] sm:w-auto"
             >
-              Explorar Catálogo
+              Solicitar Cotización
             </Link>
             <Link
-              href="/contacto"
+              href="/catalogo"
               className="inline-flex w-full items-center justify-center rounded-xl border border-[#143067]/20 bg-white px-8 py-4 font-sans font-bold text-[#143067] shadow-sm transition-all duration-150 hover:bg-slate-50 hover:shadow-md active:scale-[0.98] sm:w-auto"
             >
-              Hacer una Cotización
+              Explorar Catálogo
             </Link>
           </div>
         </div>

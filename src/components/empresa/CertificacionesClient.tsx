@@ -20,30 +20,14 @@ export default function CertificacionesClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-16 md:px-8 md:pt-6 md:pb-24">
         <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
-          {/* Metadata superior del expediente */}
-          <div className="mb-10 flex flex-col items-start justify-between gap-4 border-b border-[#e1e2e5] pb-6 font-mono text-xs text-[#444650] md:flex-row md:items-center">
-            <div className="space-y-1">
-              <p className="font-semibold tracking-wider text-[#143067]">
-                CONFECCIONES LISS — EXPEDIENTE DE MARCA
-              </p>
-              <p>
-                ID ARCHIVO:{" "}
-                <span className="font-bold text-[#143067]">
-                  DOC-REF-CERT-2026
-                </span>
-              </p>
-            </div>
-            <div className="space-y-1 text-left md:text-right">
-              <p>ESTADO: ACTUALIZADO / VIGENTE</p>
-              <p>PÁGINAS: 04 SECCIONES CLAVE</p>
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
             {/* Texto del Hero */}
             <div className="space-y-6 lg:col-span-7">
+              <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
+                Formación y Experiencia
+              </span>
               <h1 className="font-serif text-4xl leading-tight tracking-tight text-[#143067] md:text-5xl lg:text-6xl">
-                Credenciales y Certificaciones
+                Formación y Experiencia
               </h1>
               <p className="border-l-2 border-[#143067] pl-4 font-serif text-lg leading-relaxed text-[#444650] md:text-xl">
                 La confianza se construye con hechos, experiencia y formación
@@ -52,10 +36,9 @@ export default function CertificacionesClient() {
               <p className="max-w-xl text-base leading-relaxed text-[#444650]">
                 En Confecciones Liss creemos que la calidad comienza con el
                 conocimiento. Nuestra experiencia se ha construido durante más
-                de dos décadas de trabajo continuo, capacitación permanente y
-                especialización en confección de uniformes. Esta página reúne
-                las principales credenciales que respaldan nuestro trabajo y
-                reflejan el compromiso de mejorar continuamente.
+                de dos décadas de trabajo continuo, capacitación práctica y
+                especialización en confección de uniformes. Esta página reúne la
+                formación y la trayectoria que respaldan nuestro trabajo.
               </p>
             </div>
 
@@ -141,7 +124,7 @@ export default function CertificacionesClient() {
                 </svg>
 
                 <div className="z-10 flex items-end justify-between border-t border-[#e1e2e5] pt-4 font-mono text-[9px] text-[#444650]">
-                  <span>EXPEDIENTE CL-2026 // ACREDITACIONES</span>
+                  <span>CONFECCIONES LISS // FORMACIÓN Y EXPERIENCIA</span>
                   <span className="font-bold text-[#143067]">VERIFICADO</span>
                 </div>
               </div>
@@ -165,7 +148,7 @@ export default function CertificacionesClient() {
                 Oficio Acumulado
               </span>
               <p className="mt-1 text-xs text-[#444650]">
-                Trayectoria de costura fina y patronaje.
+                Trayectoria en costura y confección desde 2005.
               </p>
             </div>
             <div className="border-primary/35 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
@@ -187,7 +170,7 @@ export default function CertificacionesClient() {
                 Especialización
               </span>
               <p className="mt-1 text-xs text-[#444650]">
-                Uniformes médicos, escolares y de gala.
+                Uniformes escolares, médicos y empresariales.
               </p>
             </div>
           </div>
@@ -195,7 +178,7 @@ export default function CertificacionesClient() {
           {/* Columna Derecha: Editorial */}
           <div className="space-y-6 lg:col-span-7">
             <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-              Respaldo Real
+              Trayectoria
             </span>
             <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
               Nuestra mayor certificación es la experiencia
@@ -209,13 +192,13 @@ export default function CertificacionesClient() {
               </p>
               <p>
                 Nuestra experiencia comenzó en 2005 confeccionando prendas desde
-                casa y, desde entonces, cada proyecto ha representado una
+                casa. Desde entonces, cada proyecto ha representado una
                 oportunidad para perfeccionar técnicas, conocer nuevos procesos
                 y elevar nuestros estándares.
               </p>
               <p>
                 Hoy esa experiencia acumulada forma parte de cada uniforme que
-                fabricamos en la zona oriental de El Salvador.
+                confeccionamos para clientes en la zona oriental de El Salvador.
               </p>
             </div>
           </div>
@@ -229,7 +212,7 @@ export default function CertificacionesClient() {
         <div className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
           <div className="mb-12 md:mb-16">
             <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-              Liderazgo Técnico
+              Formación Técnica
             </span>
             <h2 className="mt-2 font-serif text-3xl text-[#143067] md:text-4xl">
               Formación técnica de la fundadora
@@ -263,22 +246,17 @@ export default function CertificacionesClient() {
                   </p>
                 </div>
               </div>
-
-              <div className="relative z-10 mt-8 space-y-1 border-t border-[#e1e2e5] pt-8 text-left font-mono text-xs text-[#444650]">
-                <p>REGISTRO: CON-LISS-01</p>
-                <p>CARGO: DIRECTORA TÉCNICA DE CORTE</p>
-                <p>SINDICATO: EL SALVADOR TEXTIL</p>
-              </div>
             </div>
 
             {/* Listado de Acreditaciones Técnicas */}
             <div className="flex flex-col justify-between rounded border border-[#e1e2e5] p-6 md:p-8 lg:col-span-8">
               <div className="space-y-6">
                 <h4 className="border-b border-[#e1e2e5] pb-3 font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-                  ACREDITACIONES Y COMPETENCIAS COMPROBADAS
+                  Formación y experiencia práctica
                 </h4>
 
                 <div className="space-y-4 font-sans text-sm text-[#444650]">
+                  {/* Certificaciones formales */}
                   <div className="flex items-start gap-4">
                     <span className="material-symbols-outlined font-bold text-[#143067] select-none">
                       verified_user
@@ -288,8 +266,8 @@ export default function CertificacionesClient() {
                         Técnico Certificado en Corte y Confección
                       </strong>
                       <span>
-                        Acreditación en sistemas de patronaje industrial,
-                        escalado de tallas y corte.
+                        Formación técnica base que sustenta más de 20 años de
+                        práctica en patronaje y confección.
                       </span>
                     </div>
                   </div>
@@ -299,11 +277,11 @@ export default function CertificacionesClient() {
                     </span>
                     <div>
                       <strong className="block text-[#191c1e]">
-                        Especialista en Confección de Uniformes
+                        Creación de Prendas Médicas
                       </strong>
                       <span>
-                        Experiencia comprobada en costura lineal y estructurada
-                        de uniformes institucionales y escolares.
+                        Capacitación específica en confección de uniformes para
+                        el sector salud.
                       </span>
                     </div>
                   </div>
@@ -313,11 +291,10 @@ export default function CertificacionesClient() {
                     </span>
                     <div>
                       <strong className="block text-[#191c1e]">
-                        Manejo de Maquinaria Industrial
+                        Confección de Ropa Interior
                       </strong>
                       <span>
-                        Operación de máquinas planas de alta velocidad,
-                        overlocks de 5 hilos y bordadoras automáticas.
+                        Formación complementaria en técnicas de confección fina.
                       </span>
                     </div>
                   </div>
@@ -327,38 +304,46 @@ export default function CertificacionesClient() {
                     </span>
                     <div>
                       <strong className="block text-[#191c1e]">
-                        Confección de Indumentaria Médica
+                        Manejo de Equipo Industrial
                       </strong>
                       <span>
-                        Patronaje anatómico para scrubs médicos, batas de
-                        laboratorio clínico y gorros quirúrgicos.
+                        Capacitación en operación de maquinaria de confección
+                        industrial.
+                      </span>
+                    </div>
+                  </div>
+                  {/* Experiencia práctica */}
+                  <div className="flex items-start gap-4">
+                    <span className="material-symbols-outlined font-bold text-[#143067]/60 select-none">
+                      work_history
+                    </span>
+                    <div>
+                      <strong className="block text-[#191c1e]">
+                        Experiencia en Confección de Uniformes Institucionales
+                      </strong>
+                      <span>
+                        Más de una década de práctica confeccionando uniformes
+                        escolares para el Ministerio de Educación y producción
+                        en talleres de San Miguel.
                       </span>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      verified_user
+                    <span className="material-symbols-outlined font-bold text-[#143067]/60 select-none">
+                      work_history
                     </span>
                     <div>
                       <strong className="block text-[#191c1e]">
-                        Producción Institucional de Gran Volumen
+                        Experiencia en Producción de Gran Volumen
                       </strong>
                       <span>
-                        Planificación y balance de líneas de producción modular
-                        para pedidos masivos de centros educativos.
+                        Trayectoria en maquilas de San Miguel entre 2012 y 2019,
+                        donde adquirió práctica en estandarización de procesos y
+                        producción en serie.
                       </span>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#e1e2e5] pt-4 font-mono text-[10px] text-[#444650]">
-                <span>
-                  * CERTIFICADOS ESCANEADOS DISPONIBLES BAJO SOLICITUD COMERCIAL
-                </span>
-                <span className="font-bold tracking-wider text-[#143067] uppercase">
-                  Acreditaciones Vigentes
-                </span>
               </div>
             </div>
           </div>
@@ -371,7 +356,7 @@ export default function CertificacionesClient() {
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto mb-12 max-w-xl space-y-4 text-center md:mb-16">
           <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-            Estructura Operativa
+            Cómo Trabajamos
           </span>
           <h2 className="font-serif text-3xl text-[#143067] md:text-4xl">
             Especialización del equipo
@@ -379,7 +364,7 @@ export default function CertificacionesClient() {
           <p className="text-sm leading-relaxed text-[#444650]">
             Cada integrante del equipo aporta conocimientos específicos dentro
             del proceso de producción. No operamos como una maquila masiva
-            indiferenciada, sino como un taller de artesanos especializados.
+            indiferenciada, sino como un taller con roles especializados.
           </p>
         </div>
 
@@ -389,13 +374,13 @@ export default function CertificacionesClient() {
           <div className="flex justify-center">
             <div className="w-full max-w-sm rounded border-2 border-[#143067] bg-white p-6 text-center">
               <span className="mb-1 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
-                DIRECCIÓN GENERAL / CALIDAD
+                Dirección General
               </span>
               <h3 className="font-serif text-lg font-bold text-[#143067]">
                 Lisseth Molina
               </h3>
               <p className="mt-1 font-sans text-xs text-[#444650]">
-                Patronaje, corte general y auditoría final de uniformes.
+                Patronaje, corte general y supervisión de calidad.
               </p>
             </div>
           </div>
@@ -409,18 +394,15 @@ export default function CertificacionesClient() {
             <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
               <div>
                 <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
-                  CONFECCIÓN Y ENSAMBLADO
+                  Confección y Ensamblado
                 </span>
                 <h3 className="mb-2 font-serif text-base font-bold text-[#143067]">
-                  Lilian Romero / Nubia Vázquez / Blanca Martínez
+                  Lilian Romero · Nubia Vázquez · Blanca Martínez
                 </h3>
                 <p className="text-xs leading-relaxed text-[#444650]">
-                  Operación de remalladoras y costura de precisión para prendas
-                  médicas, escolares e institucionales.
+                  Costura y ensamblado de uniformes escolares, médicos e
+                  institucionales.
                 </p>
-              </div>
-              <div className="mt-4 border-t border-[#e1e2e5] pt-4 font-mono text-[9px] text-[#444650]">
-                Especialidad: Confección en serie con costura de seguridad.
               </div>
             </div>
 
@@ -428,19 +410,15 @@ export default function CertificacionesClient() {
             <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded border bg-[#143067]/5 p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
               <div>
                 <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
-                  CALIDAD, MEDIDAS Y LOGÍSTICA
+                  Calidad, Medidas y Logística
                 </span>
                 <h3 className="mb-2 font-serif text-base font-bold text-[#143067]">
-                  René Alfonso Méndez / Carlos Antonio Molina
+                  René Alfonso Méndez · Carlos Antonio Molina
                 </h3>
                 <p className="text-xs leading-relaxed text-[#444650]">
-                  Toma física de 12 cotas anatómicas, inspección de costura bajo
-                  lupa y coordinación de envíos nacionales.
+                  Toma de medidas, inspección de costuras y coordinación de
+                  entregas.
                 </p>
-              </div>
-              <div className="mt-4 border-t border-[#e1e2e5] pt-4 font-mono text-[9px] text-[#143067]">
-                Especialidad: Ajuste perfecto anatómico e inspección
-                post-lavado.
               </div>
             </div>
 
@@ -448,19 +426,15 @@ export default function CertificacionesClient() {
             <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
               <div>
                 <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
-                  TECNOLOGÍA E IMAGEN
+                  Tecnología e Imagen
                 </span>
                 <h3 className="mb-2 font-serif text-base font-bold text-[#143067]">
-                  Carlos José Molina / Jackeline / Liam
+                  Carlos José Molina · Jackeline · Liam
                 </h3>
                 <p className="text-xs leading-relaxed text-[#444650]">
-                  Dirección de sistemas informáticos, SEO, automatización de
-                  base de datos e imagen institucional en catálogos.
+                  Desarrollo web, posicionamiento digital e imagen institucional
+                  del taller.
                 </p>
-              </div>
-              <div className="mt-4 border-t border-[#e1e2e5] pt-4 font-mono text-[9px] text-[#444650]">
-                Especialidad: Desarrollo web, catalogación y control digital de
-                lotes.
               </div>
             </div>
           </div>
@@ -468,118 +442,26 @@ export default function CertificacionesClient() {
       </section>
 
       {/* ──────────────────────────────────────────────────────── */}
-      {/* 5. CAPACITACIÓN CONTINUA (Biblioteca / Archivador) */}
+      {/* 5. CAPACITACIÓN CONTINUA — Párrafo simplificado */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="border-t border-b border-[#e1e2e5] bg-white">
         <div className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
-            {/* Texto descriptivo */}
-            <div className="space-y-6 lg:col-span-5">
-              <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-                Evolución Profesional
-              </span>
-              <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
-                Capacitación continua
-              </h2>
-              <div className="h-1 w-12 rounded-full bg-[#143067]"></div>
-              <div className="space-y-4 text-base leading-relaxed text-[#444650]">
-                <p>
-                  La industria textil evoluciona constantemente y nuestro
-                  compromiso es seguir aprendiendo.
-                </p>
-                <p>
-                  Por ello mantenemos una filosofía de mejora continua mediante
-                  capacitación, investigación de nuevos materiales,
-                  actualización de procesos y adopción de mejores prácticas en
-                  confección y control de calidad.
-                </p>
-              </div>
-            </div>
-
-            {/* Archivador de carpetas / diplomas */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
-              <div className="space-y-3 rounded border border-[#e1e2e5] bg-[#f8f9fb] p-6">
-                <div className="flex items-start justify-between">
-                  <span className="font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
-                    MÓDULO COMPLETADO
-                  </span>
-                  <span className="material-symbols-outlined text-[#143067]">
-                    folder_open
-                  </span>
-                </div>
-                <h3 className="font-serif text-base font-bold text-[#143067]">
-                  Fibras Técnicas y Repelencia
-                </h3>
-                <p className="text-xs leading-relaxed text-[#444650]">
-                  Investigación aplicada a textiles antifluidos de tecnología
-                  Sincatex y poliéster microfibra.
-                </p>
-                <div className="flex justify-between border-t border-[#e1e2e5] pt-2 font-mono text-[10px] text-[#444650]">
-                  <span>Vigencia: Permanente</span>
-                  <span>Lote: TX-2025</span>
-                </div>
-              </div>
-
-              <div className="space-y-3 rounded border border-[#e1e2e5] bg-[#f8f9fb] p-6">
-                <div className="flex items-start justify-between">
-                  <span className="font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
-                    MÓDULO COMPLETADO
-                  </span>
-                  <span className="material-symbols-outlined text-[#143067]">
-                    folder_open
-                  </span>
-                </div>
-                <h3 className="font-serif text-base font-bold text-[#143067]">
-                  Ergonomía Médica Textil
-                </h3>
-                <p className="text-xs leading-relaxed text-[#444650]">
-                  Adaptación de holguras anatómicas para prendas que requieren
-                  movilidad de 12 horas.
-                </p>
-                <div className="flex justify-between border-t border-[#e1e2e5] pt-2 font-mono text-[10px] text-[#444650]">
-                  <span>Vigencia: Permanente</span>
-                  <span>Lote: ER-2026</span>
-                </div>
-              </div>
-
-              {/* Slot disponible / Futuras constancias */}
-              <div className="flex min-h-[140px] flex-col justify-between space-y-3 rounded border border-dashed border-[#e1e2e5] bg-white p-6">
-                <div className="flex items-start justify-between text-[#444650]/40">
-                  <span className="font-mono text-[9px] tracking-wider uppercase">
-                    SLOT RESERVADO
-                  </span>
-                  <span className="material-symbols-outlined text-xs">add</span>
-                </div>
-                <div>
-                  <h3 className="font-serif text-sm font-bold text-[#444650]/60">
-                    [ Slot disponible para futura constancia ]
-                  </h3>
-                  <p className="mt-1 text-[11px] text-[#444650]/40">
-                    Capacitación programada para el segundo semestre de 2026.
-                  </p>
-                </div>
-              </div>
-
-              {/* Slot disponible / Futuras constancias 2 */}
-              <div className="flex min-h-[140px] flex-col justify-between space-y-3 rounded border border-dashed border-[#e1e2e5] bg-white p-6">
-                <div className="flex items-start justify-between text-[#444650]/40">
-                  <span className="font-mono text-[9px] tracking-wider uppercase">
-                    SLOT RESERVADO
-                  </span>
-                  <span className="material-symbols-outlined text-xs">add</span>
-                </div>
-                <div>
-                  <h3 className="font-serif text-sm font-bold text-[#444650]/60">
-                    [ Acreditación en curso ]
-                  </h3>
-                  <p className="mt-1 text-[11px] text-[#444650]/40">
-                    Estudios de resistencia textil ante lavado industrial
-                    severo.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="mb-8">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
+              Mejora Continua
+            </span>
+            <h2 className="mt-2 font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
+              Capacitación continua
+            </h2>
+            <div className="mt-4 h-1 w-12 rounded-full bg-[#143067]"></div>
           </div>
+          <p className="max-w-3xl text-base leading-relaxed text-[#444650]">
+            La mejora continua en Confecciones Liss se da principalmente a
+            través de la práctica constante: cada nuevo proyecto representa una
+            oportunidad para perfeccionar procesos y técnicas. Cuando el equipo
+            complete nuevas capacitaciones formales, esta sección se actualizará
+            para reflejarlas.
+          </p>
         </div>
       </section>
 
@@ -589,7 +471,7 @@ export default function CertificacionesClient() {
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto mb-16 max-w-xl space-y-4 text-center">
           <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-            Línea Histórica
+            Trayectoria
           </span>
           <h2 className="font-serif text-3xl text-[#143067] md:text-4xl">
             Experiencia comprobable
@@ -618,13 +500,9 @@ export default function CertificacionesClient() {
               </span>
               <p className="text-sm leading-relaxed text-[#444650]">
                 Nuestra fundadora inicia un pequeño taller familiar desde el
-                hogar. Desarrollo de habilidades iniciales de costura, remiendos
-                y corte anatómico a baja escala en San Miguel.
+                hogar, confeccionando y reparando prendas para la familia y,
+                poco después, para vecinos del cantón.
               </p>
-              <ul className="list-inside list-disc font-mono text-xs font-bold text-[#143067]">
-                <li>Proyecto de confección familiar</li>
-                <li>Crecimiento de clientela por recomendación boca a boca</li>
-              </ul>
             </div>
           </div>
 
@@ -638,16 +516,16 @@ export default function CertificacionesClient() {
 
             <div className="space-y-2 rounded border border-[#e1e2e5] bg-white p-6">
               <span className="block font-serif text-xl font-bold text-[#143067] md:hidden">
-                2012 — Costura Industrial
+                2012 — Confección Institucional
               </span>
               <span className="hidden font-serif text-lg font-bold text-[#143067] md:block">
                 Confección institucional y experiencia en maquilas
               </span>
               <p className="text-sm leading-relaxed text-[#444650]">
-                El taller se encarga de confeccionar uniformes escolares a gran
-                volumen (Centro Escolar Profesor Jorge Salomón Granados).
-                Colaboraciones técnicas con maquilas industriales locales
-                permiten estandarizar procesos y capacitar personal.
+                El taller asume la confección completa de uniformes para el
+                Centro Escolar Profesor Jorge Salomón Granados. Posteriormente,
+                la fundadora trabaja en maquilas industriales de San Miguel,
+                donde adquiere experiencia en producción a gran escala.
               </p>
             </div>
           </div>
@@ -668,10 +546,8 @@ export default function CertificacionesClient() {
                 Nacimiento oficial de Confecciones Liss
               </span>
               <p className="text-sm leading-relaxed text-[#444650]">
-                Apertura formal de nuestras instalaciones físicas en Barrio La
-                Merced, San Miguel. Adquisición de maquinaria industrial plana,
-                overlock e inversión inicial de $2,000 en insumos base.
-                Contratación de operarias especializadas.
+                Apertura formal del taller en Barrio La Merced, San Miguel, con
+                una inversión inicial de USD 2,000 en equipamiento básico.
               </p>
             </div>
           </div>
@@ -689,12 +565,12 @@ export default function CertificacionesClient() {
                 2026 — Transformación Digital
               </span>
               <span className="hidden font-serif text-lg font-bold text-[#143067] md:block">
-                Ecosistema Digital y Expansión Online
+                Transformación digital
               </span>
               <p className="text-sm leading-relaxed text-[#444650]">
-                Implementación de la infraestructura digital del taller.
-                Integración de bases de datos anatómicas de clientes, SEO
-                técnico avanzado y lanzamiento del catálogo interactivo.
+                Desarrollo de la plataforma web institucional y una estrategia
+                de posicionamiento orgánico para fortalecer la presencia digital
+                del taller.
               </p>
             </div>
           </div>
@@ -702,111 +578,12 @@ export default function CertificacionesClient() {
       </section>
 
       {/* ──────────────────────────────────────────────────────── */}
-      {/* 7. DOCUMENTACIÓN INSTITUCIONAL (Expedientes con Frame) */}
-      {/* ──────────────────────────────────────────────────────── */}
-      <section className="border-t border-b border-[#e1e2e5] bg-white">
-        <div className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-          <div className="mb-12 md:mb-16">
-            <span className="font-mono text-xs font-bold font-semibold tracking-widest text-[#143067] uppercase">
-              Archivo Documental
-            </span>
-            <h2 className="mt-2 font-serif text-3xl text-[#143067] md:text-4xl">
-              Documentación institucional
-            </h2>
-            <div className="mt-4 h-1 w-12 rounded-full bg-[#143067]"></div>
-          </div>
-
-          {/* Rejilla de Documentos placeholder elegantes */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                id: "01",
-                name: "Constancia de Registro Comercial",
-                format: "PDF / 1.4 MB",
-                desc: "Inscripción fiscal oficial de Confecciones Liss ante las autoridades salvadoreñas.",
-              },
-              {
-                id: "02",
-                name: "Diplomas Técnicos de Sastrería",
-                format: "PNG / 3.8 MB",
-                desc: "Acreditaciones técnicas de patronaje y corte de la Directora General.",
-              },
-              {
-                id: "03",
-                name: "Reconocimientos de Centros Escolares",
-                format: "PDF / 2.1 MB",
-                desc: "Notas de satisfacción y cumplimiento emitidas por directores educativos.",
-              },
-              {
-                id: "04",
-                name: "Certificados de Proveedores de Hilos",
-                format: "PDF / 850 KB",
-                desc: "Fichas técnicas que certifican la tenacidad y solidez del hilo calibre 40/2.",
-              },
-              {
-                id: "05",
-                name: "Fotografías de Estaciones de Taller",
-                format: "ZIP / 45 MB",
-                desc: "Archivo fotográfico oficial de las mesas de corte y bordadoras computarizadas.",
-              },
-              {
-                id: "06",
-                name: "Garantías y Políticas Vigentes",
-                format: "PDF / 920 KB",
-                desc: "Documentación oficial de los términos de confección por talla y a la medida.",
-              },
-            ].map((doc) => (
-              <div
-                key={doc.id}
-                className="flex min-h-[200px] flex-col justify-between rounded border border-[#e1e2e5] bg-[#f8f9fb] p-6 transition-all duration-300 hover:border-[#143067]/40"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between font-mono text-xs text-[#444650]/60">
-                    <span>REF: REG-DOC-{doc.id}</span>
-                    <span className="font-bold text-[#143067]">
-                      {doc.format}
-                    </span>
-                  </div>
-
-                  {/* SVG Document Icon */}
-                  <div className="flex items-center gap-3">
-                    <svg
-                      className="h-8 w-8 shrink-0 fill-none stroke-current stroke-1 text-[#143067]/60"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path d="M 6,2 L 14,2 L 18,6 L 18,22 L 6,22 Z" />
-                      <line x1="9" y1="10" x2="15" y2="10" strokeWidth="0.8" />
-                      <line x1="9" y1="14" x2="15" y2="14" strokeWidth="0.8" />
-                    </svg>
-                    <h3 className="font-serif text-base leading-tight font-bold text-[#143067]">
-                      {doc.name}
-                    </h3>
-                  </div>
-                  <p className="text-xs leading-relaxed text-[#444650]">
-                    {doc.desc}
-                  </p>
-                </div>
-
-                <div className="mt-4 flex items-center justify-between border-t border-[#e1e2e5] pt-4 font-mono text-[10px] text-[#143067]">
-                  <span>DISPONIBLE PRÓXIMAMENTE</span>
-                  <span className="material-symbols-outlined text-xs select-none">
-                    lock
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ──────────────────────────────────────────────────────── */}
-      {/* 8. NUESTRO COMPROMISO CON LA MEJORA CONTINUA (Manifiesto) */}
+      {/* 7. FILOSOFÍA DE ACREDITACIÓN (Manifiesto) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
         <div className="border-t border-b border-[#143067]/20 py-8 text-center">
           <p className="mb-4 font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-            Filosofía de Acreditación
+            Nuestra Filosofía
           </p>
           <div className="mx-auto max-w-3xl space-y-4">
             <h3 className="font-serif text-2xl leading-snug text-[#143067] md:text-3xl">
@@ -823,38 +600,36 @@ export default function CertificacionesClient() {
       </section>
 
       {/* ──────────────────────────────────────────────────────── */}
-      {/* 9. CIERRE: LA CONFIANZA TAMBIÉN SE DOCUMENTA */}
+      {/* 8. CIERRE: LA CONFIANZA TAMBIÉN SE CONSTRUYE CON EXPERIENCIA */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-[#143067] px-5 py-20 text-center text-white md:px-8 md:py-32">
         <div className="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-white/[0.02] blur-3xl filter"></div>
         <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-[#143067]/[0.05] blur-2xl filter"></div>
 
         <div className="relative z-10 mx-auto max-w-2xl space-y-8">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-            Respaldo Técnico
+          <span className="font-mono text-xs font-bold tracking-widest text-white/60 uppercase">
+            Nuestro Compromiso
           </span>
           <h2 className="font-serif text-3xl leading-tight tracking-tight text-white md:text-5xl">
-            La confianza también se documenta.
+            La confianza también se construye con experiencia.
           </h2>
-          <div className="mx-auto h-0.5 w-16 bg-[#143067]"></div>
+          <div className="mx-auto h-0.5 w-16 bg-white/30"></div>
 
           <div className="space-y-6 font-serif text-lg leading-relaxed text-[#dae2ff]">
             <p>
-              Cada proyecto realizado, cada capacitación recibida y cada nueva
-              habilidad incorporada fortalecen el compromiso que asumimos con
-              nuestros clientes.
+              Cada proyecto realizado y cada habilidad incorporada fortalecen el
+              compromiso que asumimos con nuestros clientes.
             </p>
             <p className="font-sans text-sm font-bold tracking-wider text-white uppercase">
-              Seguiremos aprendiendo, perfeccionando procesos y ampliando
-              nuestras capacidades para ofrecer uniformes que representen con
-              orgullo a quienes los utilizan.
+              Seguiremos aprendiendo y perfeccionando procesos para ofrecer
+              uniformes que representen con orgullo a quienes los utilizan.
             </p>
           </div>
 
           <div className="pt-8">
             <Link
               href="/contacto"
-              className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-white/20 bg-white/10 px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-white/20 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-white"
             >
               Contactar con el Taller
             </Link>

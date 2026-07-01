@@ -4,9 +4,10 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import FilosofiaClient from "@/components/empresa/FilosofiaClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/filosofia`;
-const PAGE_TITLE = "Filosofía y Valores | Confecciones Liss";
+const PAGE_TITLE =
+  "Filosofía, Misión y Valores | Confecciones Liss — San Miguel, El Salvador";
 const PAGE_DESCRIPTION =
-  "Descubre la misión, visión y valores de Confecciones Liss, así como el compromiso de calidad y precisión artesanal que aplicamos en cada prenda.";
+  "Conoce la filosofía, misión, visión y valores de Confecciones Liss: un taller de confección comprometido con la calidad técnica, la honestidad y la mejora continua desde 2005.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

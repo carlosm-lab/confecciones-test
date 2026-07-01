@@ -1,4 +1,4 @@
-﻿import { notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SERVICE_PAGES } from "@/data/services";
 import { siteConfig } from "@/config/site";
@@ -68,6 +68,24 @@ export default async function ServicioSlugPage({ params }: Props) {
     areaServed: { "@type": "City", name: "San Miguel" },
     mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
   };
+
+  // FAQPage structured data — aplica a cualquier servicio con FAQs
+  const faqJsonLd =
+    service.faqs?.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: service.faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
+
   return (
     <>
       <script
@@ -76,6 +94,14 @@ export default async function ServicioSlugPage({ params }: Props) {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+      )}
       <ServicioDetallePage service={service} />
     </>
   );

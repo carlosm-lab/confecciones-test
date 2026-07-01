@@ -20,19 +20,19 @@ const teamRoles: TeamRole[] = [
     id: "medidas",
     name: "Toma de Medidas",
     responsible: "Control de Calidad",
-    focus: "Tolerancia anatómica",
+    focus: "Registro de medidas",
     description:
-      "Registro de 12 cotas anatómicas por cliente en nuestra base de datos para confección personalizada.",
-    spec: "Precisión de ±0.5cm sobre contornos anatómicos básicos.",
+      "Verificación de las medidas registradas del pedido para asegurar que cada pieza corresponda a la talla solicitada o a las medidas tomadas directamente al cliente.",
+    spec: "Ancho de hombros · Contorno de pecho · Largo total · Largo de manga",
   },
   {
     id: "corte",
     name: "Mesa de Corte",
     responsible: "Patronista / Cortador",
-    focus: "Geometría del patrón",
+    focus: "Alineación del patrón",
     description:
-      "Inspección de las piezas cortadas contra el molde digital y orientación del hilo de la tela.",
-    spec: "Tolerancia máxima de desalineación en mesa de 1.5mm.",
+      "Revisión de las piezas cortadas para comprobar alineación y precisión respecto al patrón. Un corte correcto garantiza que todas las piezas encajen durante la confección.",
+    spec: "Verificación visual del sentido de la tela antes del corte.",
   },
   {
     id: "confeccion",
@@ -40,35 +40,35 @@ const teamRoles: TeamRole[] = [
     responsible: "Especialista de Costura",
     focus: "Resistencia e integridad",
     description:
-      "Costuras de sobrehilado y uniones estructurales con tensión regulada de hilo poliéster.",
-    spec: "Puntada de seguridad de doble aguja en áreas críticas.",
+      "Inspección de costuras para comprobar resistencia, continuidad, alineación y acabado. Se verifica que no existan hilos sueltos ni uniones débiles.",
+    spec: "Cada costura se revisa individualmente para confirmar que el entrelazado sea uniforme.",
   },
   {
     id: "bordado",
     name: "Área de Bordado",
-    responsible: "Operario Computarizado",
-    focus: "Densidad y posición",
+    responsible: "Operario de Bordado",
+    focus: "Posición y acabado",
     description:
-      "Inspección del soporte de entretela y centrado preciso de la aguja con calibración digital.",
-    spec: "Desviación angular máxima de ±1.0° respecto al eje vertical.",
+      "Revisión de posición, tamaño, alineación y acabado del bordado. Se verifica que no se deshilache ni se desgaste con el uso, el roce o el lavado frecuente.",
+    spec: "Verificación de que el bordado quede fijo y sin hilos sueltos antes de coserlo a la prenda.",
   },
   {
     id: "calidad",
     name: "Revisión Técnica",
-    responsible: "Auditor de Calidad",
+    responsible: "René Alfonso Méndez",
     focus: "Cumplimiento del estándar",
     description:
-      "Inspección visual exhaustiva bajo luz natural y artificial para descartar fallos de costura o cabos sueltos.",
-    spec: "Auditoría del 100% de las prendas antes del planchado.",
+      "Inspección visual de costuras, pliegues y bordados antes de continuar con el planchado y empaque.",
+    spec: "Revisión individual de cada prenda antes de autorizar su entrega.",
   },
   {
     id: "almacen",
     name: "Preparación y Empaque",
-    responsible: "Logística y Entrega",
+    responsible: "Preparación de Pedidos",
     focus: "Presentación final",
     description:
-      "Doblado industrial, vaporizado a temperatura controlada y empaque en fundas de alta densidad.",
-    spec: "Empacado individual con etiqueta de trazabilidad de lote.",
+      "Revisión final, organización y empaque individual de cada uniforme para que llegue al cliente en las mejores condiciones, listo para su retiro o envío.",
+    spec: "Cada prenda se revisa antes de salir del taller.",
   },
 ];
 
@@ -94,23 +94,6 @@ export default function CalidadClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="relative mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-16 md:px-8 md:pt-6 md:pb-24">
         <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
-          {/* Header técnico del documento */}
-          <div className="mb-10 flex flex-col items-start justify-between gap-4 border-b border-[#e1e2e5] pb-6 font-mono text-xs text-[#444650] md:flex-row md:items-center">
-            <div className="space-y-1">
-              <p className="font-semibold tracking-wider text-[#143067]">
-                CONFECCIONES LISS — DEPARTAMENTO TÉCNICO
-              </p>
-              <p>
-                DOCUMENTO DE ESPECIFICACIÓN:{" "}
-                <span className="font-bold text-[#143067]">QA-MANUAL-2026</span>
-              </p>
-            </div>
-            <div className="space-y-1 text-left md:text-right">
-              <p>REVISIÓN: REV-05 / PÚBLICO</p>
-              <p>FECHA DE EMISIÓN: 27.06.2026</p>
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
             {/* Texto del Hero */}
             <div className="space-y-6 lg:col-span-7">
@@ -118,22 +101,21 @@ export default function CalidadClient() {
                 Control de Calidad
               </h1>
               <p className="border-l-2 border-[#143067] pl-4 font-serif text-lg leading-relaxed text-[#444650] md:text-xl">
-                La calidad no aparece al finalizar una prenda. Está presente
-                desde el primer corte de tela hasta el momento en que un
-                uniforme llega a las manos del cliente.
+                La calidad no se evalúa únicamente al finalizar una prenda. Está
+                presente desde el corte de la tela hasta el momento en que el
+                uniforme llega a manos del cliente.
               </p>
               <div className="max-w-xl space-y-4 text-base leading-relaxed text-[#444650]">
                 <p>
                   En Confecciones Liss entendemos que un uniforme representa la
                   imagen de una institución, una empresa o un profesional. Por
                   esa razón, cada prenda pasa por un proceso de revisión donde
-                  verificamos medidas, costuras, acabados, materiales y
-                  presentación antes de autorizar su entrega.
+                  se verifican costuras, acabados, bordados y resistencia antes
+                  de autorizar su entrega.
                 </p>
                 <p className="font-semibold text-[#143067]">
-                  No creemos en inspeccionar únicamente el resultado final.
-                  Creemos en controlar la calidad durante todo el proceso de
-                  confección.
+                  No revisamos únicamente el resultado final. Controlamos la
+                  calidad durante todo el proceso de confección.
                 </p>
               </div>
             </div>
@@ -165,7 +147,7 @@ export default function CalidadClient() {
           {/* Eyebrow and Title */}
           <div className="space-y-4 lg:col-span-4">
             <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-              Valores de Manufactura
+              Nuestro enfoque
             </span>
             <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
               Nuestra filosofía de calidad
@@ -184,17 +166,11 @@ export default function CalidadClient() {
 
             <div className="space-y-4 text-base leading-relaxed text-[#444650]">
               <p>
-                La calidad no depende de una sola persona. Es el resultado del
-                compromiso de todo el equipo.
-              </p>
-              <p>
-                Cada integrante del taller es responsable de revisar
-                cuidadosamente su trabajo antes de entregar la prenda a la
-                siguiente etapa del proceso.
-              </p>
-              <p>
-                Esto permite detectar cualquier detalle oportunamente y mantener
-                un estándar uniforme durante toda la producción.
+                La calidad no depende de una sola persona; es el resultado del
+                compromiso de todo el equipo. Cada integrante del taller revisa
+                cuidadosamente su trabajo antes de pasar la prenda a la
+                siguiente etapa, lo que permite detectar cualquier detalle a
+                tiempo y mantener un estándar uniforme en toda la producción.
               </p>
             </div>
           </div>
@@ -208,15 +184,14 @@ export default function CalidadClient() {
         <div className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
           <div className="mx-auto mb-16 max-w-xl space-y-4 text-center md:mb-24">
             <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-              Trazabilidad Técnica
+              Nuestro Proceso de Revisión
             </span>
             <h2 className="font-serif text-3xl text-[#143067] md:text-4xl lg:text-5xl">
-              Los seis controles que realiza cada uniforme
+              Los controles que realiza cada uniforme
             </h2>
             <p className="font-sans text-sm leading-relaxed text-[#444650]">
-              Cada uniforme que confeccionamos en nuestro taller físico del
-              Barrio La Merced es sometido a un riguroso examen técnico dividido
-              en seis etapas de tolerancia reducida.
+              Cada uniforme confeccionado en nuestro taller del Barrio La Merced
+              pasa por un proceso de revisión antes de su entrega.
             </p>
           </div>
 
@@ -240,56 +215,34 @@ export default function CalidadClient() {
                 </div>
                 <div className="space-y-4 text-base leading-relaxed text-[#444650]">
                   <p>
-                    Antes de iniciar la confección verificamos las medidas
-                    registradas para asegurar que cada pieza corresponda
-                    exactamente a la talla solicitada.
-                  </p>
-                  <p>
-                    Cada corte debe respetar las dimensiones establecidas para
-                    evitar diferencias durante el ensamblaje.
+                    Antes de iniciar la confección, verificamos las medidas
+                    registradas del pedido para asegurar que cada pieza
+                    corresponda a la talla solicitada o a las medidas tomadas
+                    directamente al cliente. Cada corte debe respetar las
+                    dimensiones establecidas para evitar diferencias durante el
+                    ensamblaje.
                   </p>
                 </div>
 
-                {/* Tabla de cotas de muestra */}
+                {/* Puntos de medida verificados */}
                 <div className="overflow-hidden rounded border border-[#e1e2e5]">
-                  <table className="w-full text-left font-mono text-xs text-[#444650]">
-                    <thead>
-                      <tr className="border-b border-[#e1e2e5] bg-[#f8f9fb]">
-                        <th className="p-3 font-bold text-[#143067]">
-                          PUNTO DE MEDIDA
-                        </th>
-                        <th className="p-3 font-bold text-[#143067]">
-                          TALLA M (std)
-                        </th>
-                        <th className="p-3 font-bold text-[#143067]">
-                          TOLERANCIA
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#e1e2e5]">
-                      <tr>
-                        <td className="p-3">01 // Ancho de hombros</td>
-                        <td className="p-3">44.5 cm</td>
-                        <td className="p-3 font-bold text-[#143067]">
-                          ± 0.2 cm
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="p-3">02 // Contorno de pecho</td>
-                        <td className="p-3">102.0 cm</td>
-                        <td className="p-3 font-bold text-[#143067]">
-                          ± 0.5 cm
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="p-3">03 // Largo total superior</td>
-                        <td className="p-3">72.0 cm</td>
-                        <td className="p-3 font-bold text-[#143067]">
-                          ± 0.4 cm
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="border-b border-[#e1e2e5] bg-[#f8f9fb] p-3">
+                    <p className="font-mono text-xs font-bold text-[#143067] uppercase">
+                      Puntos de medida verificados
+                    </p>
+                  </div>
+                  <div className="divide-y divide-[#e1e2e5] font-mono text-xs text-[#444650]">
+                    {[
+                      "Ancho de hombros",
+                      "Contorno de pecho",
+                      "Largo total",
+                      "Largo de manga",
+                    ].map((punto) => (
+                      <div key={punto} className="p-3">
+                        {punto}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -335,13 +288,11 @@ export default function CalidadClient() {
                 </div>
                 <div className="space-y-4 text-base leading-relaxed text-[#444650]">
                   <p>
-                    Cada pieza cortada es revisada para comprobar alineación,
-                    orientación de la tela y precisión del patrón.
-                  </p>
-                  <p>
-                    Un corte correcto garantiza que todas las piezas encajen
-                    perfectamente durante la confección, evitando torsiones o
-                    deformaciones tras los lavados.
+                    Cada pieza cortada se revisa para comprobar alineación y
+                    precisión respecto al patrón. Un corte correcto garantiza
+                    que todas las piezas encajen correctamente durante la
+                    confección, evitando deformaciones después del uso y el
+                    lavado.
                   </p>
                 </div>
 
@@ -349,26 +300,26 @@ export default function CalidadClient() {
                 <div className="grid grid-cols-1 gap-4 border-t border-[#e1e2e5] pt-4 sm:grid-cols-2">
                   <div className="rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4">
                     <span className="mb-1 block font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
-                      MÉTODO
+                      Método
                     </span>
                     <h4 className="mb-1 font-serif text-sm font-bold text-[#143067]">
-                      Alineación al Hilo
+                      Alineación al hilo de la tela
                     </h4>
                     <p className="text-xs text-[#444650]">
-                      Verificación visual del sentido de la urdimbre de tela
-                      Sincatex.
+                      Verificación visual del sentido de la tela antes del
+                      corte.
                     </p>
                   </div>
                   <div className="rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4">
                     <span className="mb-1 block font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
-                      DESVIACIÓN
+                      Estándar
                     </span>
                     <h4 className="mb-1 font-serif text-sm font-bold text-[#143067]">
-                      Tolerancia Cero
+                      Precisión del patrón
                     </h4>
                     <p className="text-xs text-[#444650]">
-                      Desviación máxima admisible menor a 1.5mm respecto al
-                      patrón original.
+                      Revisión de que cada pieza respete el patrón original sin
+                      desviaciones visibles.
                     </p>
                   </div>
                 </div>
@@ -394,25 +345,22 @@ export default function CalidadClient() {
                 </div>
                 <div className="space-y-4 text-base leading-relaxed text-[#dae2ff]">
                   <p>
-                    Las costuras son inspeccionadas para comprobar resistencia,
-                    continuidad, alineación y acabado.
+                    Las costuras se inspeccionan para comprobar resistencia,
+                    continuidad, alineación y acabado. Se verifica que no
+                    existan hilos sueltos, uniones débiles ni diferencias
+                    visibles entre piezas.
                   </p>
                   <p>
-                    También verificamos que no existan hilos sueltos, uniones
-                    débiles o diferencias visibles entre piezas. Usamos hilo de
-                    poliéster de alta tenacidad calibre 40/2 para resistir el
-                    uso diario severo de médicos y estudiantes.
+                    Utilizamos hilo resistente, adecuado para soportar el uso
+                    diario de uniformes médicos y escolares.
                   </p>
                 </div>
               </div>
 
-              {/* Diagrama SVG técnico de costura */}
+              {/* Bloque descriptivo de costura */}
               <div className="flex flex-col justify-between rounded border border-white/20 bg-white/5 p-6 lg:col-span-5">
-                <div className="mb-4 flex justify-between font-mono text-[10px] tracking-wider text-[#dae2ff] uppercase">
-                  <span>Esquema Técnico</span>
-                  <span className="font-bold text-[#143067]">
-                    LOCKSTITCH 301
-                  </span>
+                <div className="mb-4 font-mono text-[10px] tracking-wider text-[#dae2ff] uppercase">
+                  <span>Revisión de costura</span>
                 </div>
 
                 {/* SVG Seam Diagram */}
@@ -437,7 +385,7 @@ export default function CalidadClient() {
                   {/* Needle thread (upper loop) */}
                   <path
                     d="M 15,10 C 15,15 20,23 25,18 C 30,13 35,15 35,10 C 35,15 40,23 45,18 C 50,13 55,15 55,10 C 55,15 60,23 65,18 C 70,13 75,15 75,10 C 75,15 80,23 85,18"
-                    stroke="#143067"
+                    stroke="rgba(255,255,255,0.7)"
                     strokeWidth="1.5"
                   />
 
@@ -447,41 +395,11 @@ export default function CalidadClient() {
                     stroke="#ffffff"
                     strokeWidth="1.2"
                   />
-
-                  {/* Interlock circles */}
-                  <circle
-                    cx="25"
-                    cy="18"
-                    r="1.5"
-                    fill="#143067"
-                    stroke="none"
-                  />
-                  <circle
-                    cx="45"
-                    cy="18"
-                    r="1.5"
-                    fill="#143067"
-                    stroke="none"
-                  />
-                  <circle
-                    cx="65"
-                    cy="18"
-                    r="1.5"
-                    fill="#143067"
-                    stroke="none"
-                  />
-                  <circle
-                    cx="85"
-                    cy="18"
-                    r="1.5"
-                    fill="#143067"
-                    stroke="none"
-                  />
                 </svg>
 
                 <p className="mt-4 font-mono text-[9px] leading-normal text-[#dae2ff]">
-                  Puntadas por pulgada (SPI): 10-12 mínimo. Entrelazamiento
-                  central perfecto sin fruncido.
+                  Cada costura se revisa de forma individual para confirmar que
+                  el entrelazado del hilo sea uniforme y sin fruncidos.
                 </p>
               </div>
             </motion.div>
@@ -511,25 +429,8 @@ export default function CalidadClient() {
                     profesional.
                   </p>
                   <p>
-                    Se verifica el remate interno del hilo y la aplicación de
-                    entretela fusible de soporte para evitar distorsiones en el
-                    tejido durante los ciclos de lavado frecuentes.
-                  </p>
-                </div>
-
-                {/* Especificación de posicionamiento */}
-                <div className="space-y-2 rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4 font-mono text-xs text-[#444650]">
-                  <p className="border-b border-[#e1e2e5] pb-2 font-bold tracking-wider text-[#143067] uppercase">
-                    PARÁMETROS DE BORDADO
-                  </p>
-                  <p>· Centro: Alineado con el eje del bolsillo superior.</p>
-                  <p>
-                    · Altura: 7.5 cm ± 0.5 cm por debajo de la costura de
-                    hombro.
-                  </p>
-                  <p>
-                    · Tensión: Regulada para hilos de poliéster 120D/2
-                    satinados.
+                    Se verifica que el bordado no se deshilache ni se desgaste
+                    con el uso, el roce o el lavado frecuente.
                   </p>
                 </div>
               </div>
@@ -581,7 +482,7 @@ export default function CalidadClient() {
                 <div className="mx-auto -mt-8 mb-6 h-4 w-24 rounded-full border border-[#143067]/30 bg-[#143067]/20"></div>
 
                 <h4 className="mb-4 border-b border-[#e1e2e5] pb-3 font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-                  CHECKLIST DE INSPECCIÓN INTERNA
+                  Revisión final antes de entrega
                 </h4>
 
                 <div className="space-y-4 font-sans text-sm text-[#444650]">
@@ -594,8 +495,8 @@ export default function CalidadClient() {
                         Costuras estructurales
                       </strong>
                       <span>
-                        Ausencia de hilos saltados, costura recta y overlock
-                        parejo sin deformaciones.
+                        Ausencia de hilos sueltos y costura pareja sin
+                        deformaciones.
                       </span>
                     </div>
                   </div>
@@ -608,8 +509,8 @@ export default function CalidadClient() {
                         Terminaciones
                       </strong>
                       <span>
-                        Remate limpio en puntas de cuello, mangas, bastillas y
-                        ojales sin deshilachado.
+                        Remate limpio en cuello, mangas, bastillas y ojales, sin
+                        deshilachado.
                       </span>
                     </div>
                   </div>
@@ -622,8 +523,7 @@ export default function CalidadClient() {
                         Limpieza del tejido
                       </strong>
                       <span>
-                        Remoción completa de tiza de sastre, pelusas y cabos de
-                        hilo sobrantes.
+                        Remoción de hilos sobrantes y residuos de marcado.
                       </span>
                     </div>
                   </div>
@@ -633,11 +533,10 @@ export default function CalidadClient() {
                     </span>
                     <div>
                       <strong className="block text-[#191c1e]">
-                        Planchado y vaporizado
+                        Planchado
                       </strong>
                       <span>
-                        Alineación perfecta de pliegues estructurales a alta
-                        presión térmica.
+                        Alineación correcta de pliegues y acabado limpio.
                       </span>
                     </div>
                   </div>
@@ -649,10 +548,7 @@ export default function CalidadClient() {
                       <strong className="block text-[#191c1e]">
                         Presentación e insumos
                       </strong>
-                      <span>
-                        Botones cosidos firmemente, cierres YKK lubricados y
-                        alineados correctamente.
-                      </span>
+                      <span>Botones y cierres bien cosidos y alineados.</span>
                     </div>
                   </div>
                 </div>
@@ -695,20 +591,10 @@ export default function CalidadClient() {
                 </div>
                 <div className="space-y-4 text-base leading-relaxed text-[#444650]">
                   <p>
-                    Antes de salir del taller cada uniforme recibe una revisión
-                    final.
-                  </p>
-                  <p>
-                    Posteriormente es organizado, preparado y empacado
-                    individualmente para garantizar que llegue al cliente en las
-                    mejores condiciones posibles, libre de polvo o arrugas del
-                    transporte.
-                  </p>
-                </div>
-                <div className="rounded-r border-l-4 border-[#143067] bg-[#f8f9fb] p-4">
-                  <p className="text-xs leading-relaxed text-[#444650]">
-                    * Todos nuestros paquetes incluyen la etiqueta de inspección
-                    firmada por el operario encargado del control de calidad.
+                    Antes de salir del taller, cada uniforme recibe una revisión
+                    final. Posteriormente se organiza, se empaca individualmente
+                    y se prepara para que llegue al cliente en las mejores
+                    condiciones, listo para su retiro o envío a domicilio.
                   </p>
                 </div>
               </div>
@@ -733,15 +619,14 @@ export default function CalidadClient() {
             {/* Title & Badge */}
             <div className="space-y-4 lg:col-span-4">
               <span className="inline-block rounded bg-[#143067]/10 px-3 py-1 font-mono text-xs font-bold text-[#143067] uppercase">
-                Inspección Crítica
+                Estándares mínimos
               </span>
               <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
                 Lo que nunca permitimos
               </h2>
               <p className="text-sm leading-relaxed text-[#444650]">
-                Nuestros auditores tienen la instrucción obligatoria de
-                descartar y retornar a costura cualquier prenda que presente al
-                menos una de las siguientes fallas críticas.
+                Cualquier defecto detectado en estas áreas se corrige antes de
+                continuar o de autorizar la entrega del pedido.
               </p>
             </div>
 
@@ -750,27 +635,27 @@ export default function CalidadClient() {
               {[
                 {
                   title: "Una costura abierta",
-                  desc: "Cualquier salto de aguja en overlock o costura plana invalida el uniforme.",
-                },
-                {
-                  title: "Un bordado desalineado",
-                  desc: "El logotipo debe ubicarse exactamente sobre los márgenes rectos de la prenda.",
+                  desc: "Cualquier defecto de costura se detecta y corrige antes de continuar.",
                 },
                 {
                   title: "Una talla incorrecta",
-                  desc: "Se compara la prenda física contra la ficha anatómica del cliente.",
+                  desc: "Las medidas se confirman contra el pedido antes de avanzar a la siguiente etapa.",
+                },
+                {
+                  title: "Un bordado deshilachado",
+                  desc: "El bordado se revisa antes de coserlo a la prenda.",
                 },
                 {
                   title: "Una prenda sin revisar",
-                  desc: "Ningún uniforme sale del taller sin la firma física del inspector.",
+                  desc: "Ninguna prenda avanza sin pasar por control de calidad.",
                 },
                 {
                   title: "Una terminación descuidada",
-                  desc: "Ojales fruncidos o botones flojos son causal directa de rechazo.",
+                  desc: "Los detalles finales se verifican uno por uno.",
                 },
                 {
                   title: "Una entrega sin inspección final",
-                  desc: "El paquete completo se re-audita antes de asignarse a logística de envío.",
+                  desc: "El pedido completo se revisa antes de ser entregado.",
                 },
               ].map((item, index) => (
                 <div
@@ -804,7 +689,7 @@ export default function CalidadClient() {
             {/* Story */}
             <div className="space-y-6 lg:col-span-5">
               <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
-                Flujo del Proceso
+                Trabajo en equipo
               </span>
               <h2 className="font-serif text-3xl leading-tight text-[#143067] md:text-4xl">
                 La calidad es un trabajo en equipo
@@ -828,7 +713,7 @@ export default function CalidadClient() {
             <div className="space-y-6 lg:col-span-7">
               <div className="rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4">
                 <p className="mb-4 font-mono text-[10px] tracking-wider text-[#444650] uppercase">
-                  HAGA CLIC EN CUALQUIER ESTACIÓN PARA VER DETALLE
+                  Selecciona una etapa para ver más detalle.
                 </p>
 
                 {/* SVG Flow diagram */}
@@ -877,7 +762,7 @@ export default function CalidadClient() {
                       {activeRole.description}
                     </p>
                     <div className="rounded border border-[#e1e2e5] bg-white p-2 font-mono text-[11px] text-[#143067]">
-                      <strong>ESTÁNDAR TÉCNICO:</strong> {activeRole.spec}
+                      {activeRole.spec}
                     </div>
                   </motion.div>
                 </AnimatePresence>
@@ -894,7 +779,7 @@ export default function CalidadClient() {
         <div className="border-primary/35 mx-auto max-w-4xl rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           <div className="mb-8 space-y-2 border-b border-[#e1e2e5] pb-6 text-center">
             <span className="font-mono text-[10px] font-bold tracking-widest text-[#143067] uppercase">
-              Compromiso Corporativo
+              Nuestro compromiso
             </span>
             <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
               Lo que prometemos a cada cliente
@@ -905,33 +790,33 @@ export default function CalidadClient() {
             {[
               {
                 num: "01",
-                title: "Materiales Seleccionados",
-                text: "Trabajar con materiales e hilos de alta tenacidad seleccionados rigurosamente para cada proyecto.",
+                title: "Materiales seleccionados",
+                text: "Trabajamos con telas e hilos adecuados para el uso de cada tipo de uniforme.",
               },
               {
                 num: "02",
-                title: "Respeto a Especificaciones",
-                text: "Respetar minuciosamente los moldes, logos y colores institucionales acordados en la orden de compra.",
+                title: "Respeto a especificaciones",
+                text: "Respetamos los moldes, logotipos y colores institucionales acordados en cada pedido.",
               },
               {
                 num: "03",
-                title: "Proceso Ordenado",
-                text: "Mantener un taller limpio, estructurado y bajo un flujo de producción modular y supervisado.",
+                title: "Proceso ordenado",
+                text: "Mantenemos un taller organizado y un flujo de producción definido en cada etapa.",
               },
               {
                 num: "04",
-                title: "Revisión Individual",
-                text: "Revisar uno por uno cada uniforme antes de colocarlo en su empaque y autorizar el despacho.",
+                title: "Revisión individual",
+                text: "Revisamos cada uniforme antes de empacarlo y autorizar su entrega.",
               },
               {
                 num: "05",
-                title: "Escucha Activa",
-                text: "Escuchar al cliente en todo momento y realizar correcciones de entalle cuando sea técnicamente necesario.",
+                title: "Escucha activa",
+                text: "Escuchamos al cliente y realizamos ajustes de entalle cuando es técnicamente necesario.",
               },
               {
                 num: "06",
-                title: "Mejora Continua",
-                text: "Implementar optimizaciones técnicas de costura y actualizar nuestras guías tras cada lote terminado.",
+                title: "Mejora continua",
+                text: "Buscamos constantemente formas de mejorar nuestros procesos de confección.",
               },
             ].map((promise, index) => (
               <div key={index} className="flex gap-4">
@@ -950,30 +835,24 @@ export default function CalidadClient() {
             ))}
           </div>
 
-          {/* Sello de Garantía y Firma */}
+          {/* Bloque de cierre */}
           <div className="mt-12 flex flex-col items-center justify-between gap-6 border-t border-[#e1e2e5] pt-8 text-center sm:flex-row sm:text-left">
             <div className="space-y-1 font-mono text-xs text-[#444650]">
               <p className="font-bold text-[#143067]">
-                TALLER CONFECCIONES LISS
+                Taller Confecciones Liss
               </p>
               <p>Barrio La Merced, San Miguel, El Salvador</p>
             </div>
 
-            {/* Signature and Stamp */}
-            <div className="flex items-center gap-4">
-              <div className="pointer-events-none rotate-[-3deg] rounded border border-[#143067] px-3 py-2 text-center font-mono text-[9px] font-bold tracking-wider text-[#143067] select-none">
-                <p className="mb-1 border-b border-[#143067] pb-1 font-bold">
-                  GARANTÍA DE AJUSTE
-                </p>
-                <p>100% ARTESANAL</p>
+            {/* Dos columnas informativas */}
+            <div className="flex items-center gap-6">
+              <div className="text-center font-mono text-xs text-[#444650]">
+                <p className="font-bold text-[#143067]">Atención directa</p>
+                <p>Trato personalizado en cada pedido.</p>
               </div>
-              <div className="text-right font-mono text-xs">
-                <p className="border-b border-[#e1e2e5] px-4 pb-1 italic">
-                  Lisseth Molina
-                </p>
-                <p className="mt-1 text-[10px] text-[#444650]">
-                  Dirección General
-                </p>
+              <div className="text-center font-mono text-xs text-[#444650]">
+                <p className="font-bold text-[#143067]">Revisión en taller</p>
+                <p>Cada prenda se revisa antes de salir del taller.</p>
               </div>
             </div>
           </div>
@@ -1000,16 +879,16 @@ export default function CalidadClient() {
           <div className="space-y-6 font-serif text-lg leading-relaxed text-[#dae2ff]">
             <p>
               Cada uniforme que sale de nuestro taller representa el trabajo, la
-              experiencia y el compromiso de todo un equipo.
+              experiencia y el compromiso de todo el equipo.
             </p>
             <p>
-              Por eso nuestro proceso de calidad no termina cuando una prenda
-              está cosida. Termina únicamente cuando estamos convencidos de que
-              cumple con el estándar que nosotros mismos esperamos entregar.
+              Nuestro proceso de calidad no termina cuando una prenda está
+              cosida. Termina cuando confirmamos que cumple con el estándar que
+              nosotros mismos esperamos entregar.
             </p>
             <p className="pt-4 font-sans text-sm font-bold tracking-wider text-white uppercase">
-              Porque para Confecciones Liss la calidad no es una etapa del
-              proceso. Es el proceso completo.
+              Para Confecciones Liss, la calidad no es una etapa del proceso. Es
+              el proceso completo.
             </p>
           </div>
 
@@ -1018,7 +897,7 @@ export default function CalidadClient() {
               href="/contacto"
               className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
             >
-              Agendar toma de medidas
+              Agendar Toma de Medidas
             </Link>
           </div>
         </div>

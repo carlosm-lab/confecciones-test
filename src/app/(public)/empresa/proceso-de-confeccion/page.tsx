@@ -4,9 +4,10 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import ProcesoDeConfeccionClient from "@/components/empresa/ProcesoDeConfeccionClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/proceso-de-confeccion`;
-const PAGE_TITLE = "Proceso de Confección Textil | Confecciones Liss";
+const PAGE_TITLE =
+  "Proceso de Confección Textil | Confecciones Liss — San Miguel, El Salvador";
 const PAGE_DESCRIPTION =
-  "Descubre detalladamente nuestro proceso de confección textil paso a paso en Confecciones Liss, desde el primer contacto y la toma de medidas hasta la entrega final.";
+  "Conoce el proceso completo de confección de Confecciones Liss: desde el primer contacto hasta la entrega, pasando por corte, confección, bordado y control de calidad.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

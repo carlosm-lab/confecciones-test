@@ -4,9 +4,10 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import CalidadClient from "@/components/empresa/CalidadClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/calidad`;
-const PAGE_TITLE = "Manual de Control de Calidad | Confecciones Liss";
+const PAGE_TITLE =
+  "Control de Calidad | Confecciones Liss — San Miguel, El Salvador";
 const PAGE_DESCRIPTION =
-  "Descubre el proceso técnico de control de calidad de Confecciones Liss: verificación de medidas, costuras, bordado y acabados finales para uniformes impecables.";
+  "Conoce el proceso de control de calidad de Confecciones Liss: revisión de costuras, acabados, bordados y pruebas de resistencia antes de la entrega de cada uniforme.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

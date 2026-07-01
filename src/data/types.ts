@@ -129,3 +129,57 @@ export interface CategoryConfig {
   /** Frase corta descriptiva para la tarjeta del Category Hub */
   hubTagline: string;
 }
+
+// ──────────────────────────────────────────────
+// Tipos para Servicios (Blog informativo)
+// ──────────────────────────────────────────────
+
+export interface ProcessStep {
+  step: string;
+  title: string;
+  description: string;
+}
+
+export interface GalleryItem {
+  image: string;
+  label: string;
+}
+
+export interface PricingCard {
+  icon: string;
+  label: string;
+  value: string;
+  note?: string;
+}
+
+export interface ServiceSection {
+  heading: string;
+  body: string;
+}
+
+export interface ServicePage {
+  slug: string;
+  navLabel: string;
+  navIcon: string;
+  title: string;
+  subtitle: string;
+  seoTitle: string;
+  seoDescription: string;
+  description: string;
+  cardDescription: string;
+  heroGradient: string;
+  heroFeatures: { icon: string; text: string }[];
+  ctaBanner: {
+    title: string;
+    description: string;
+    ctaText: string;
+    ctaHref: string;
+  };
+  cardImage: string;
+  sections: ServiceSection[];
+  faqs: { question: string; answer: string }[];
+  processSteps?: ProcessStep[];
+  garmentGallery?: GalleryItem[];
+  pricingCards?: PricingCard[];
+  institutionLogos?: GalleryItem[];
+}

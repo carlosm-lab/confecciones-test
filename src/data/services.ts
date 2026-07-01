@@ -1,39 +1,8 @@
+import { ServicePage } from "./types";
 import { siteConfig } from "@/config/site";
 
-// ──────────────────────────────────────────────
-// Tipos para Servicios (Blog informativo)
-// ──────────────────────────────────────────────
-
-interface ServiceSection {
-  heading: string;
-  body: string;
-}
-
-interface ServicePage {
-  slug: string;
-  navLabel: string;
-  navIcon: string;
-  title: string;
-  subtitle: string;
-  seoTitle: string;
-  seoDescription: string;
-  description: string;
-  cardDescription: string;
-  heroGradient: string;
-  heroFeatures: { icon: string; text: string }[];
-  ctaBanner: {
-    title: string;
-    description: string;
-    ctaText: string;
-    ctaHref: string;
-  };
-  /** Imagen de portada para la tarjeta del listado */
-  cardImage: string;
-  /** Secciones del artículo informativo */
-  sections: ServiceSection[];
-  /** Preguntas frecuentes del servicio (FAQ Schema) */
-  faqs: { question: string; answer: string }[];
-}
+// Re-export para que otros módulos puedan importar el tipo desde este mismo archivo
+export type { ServicePage } from "./types";
 
 // ──────────────────────────────────────────────
 // Datos de servicios
@@ -46,50 +15,118 @@ export const SERVICE_PAGES: ServicePage[] = [
     navIcon: "draw",
     title: "Servicio de Bordado Computarizado",
     subtitle: "Bordados",
-    seoTitle: "Bordados Computarizados en San Miguel | Confecciones Liss",
+    seoTitle:
+      "Bordado de Uniformes UNIVO, UNAB, UGB, IEPROES y más | San Miguel",
     seoDescription:
-      "Servicio de bordado de logos, nombres e insignias sobre cualquier prenda, gorra o mochila. Pedidos desde 1 unidad hasta volumen industrial en San Miguel, El Salvador.",
+      "Bordado de logos institucionales para IEPROES, UNIVO, UNAB, UES, UGB, UMA, colegios, hospitales, clínicas y empresas en San Miguel, El Salvador. Bordado individual o incluido en tu pedido de uniformes.",
     description:
-      "Contamos con máquinas de bordado computarizado industrial de última generación. Logramos máxima fidelidad y detalles finos en escudos, logos corporativos y nombres. Bordamos sobre prendas armadas, camisas polo, gorras, mochilas y toallas.",
+      "Personalizamos prendas con bordado computarizado de alta precisión en nuestro taller de San Miguel, El Salvador. La mayoría de nuestros bordados forman parte de un pedido de uniforme, pero también aceptamos bordado individual sobre prendas que el cliente ya tiene.",
     cardDescription:
-      "Bordado computarizado industrial de alta precisión para escudos, logotipos y nombres sobre polos, gorras, camisas y prendas armadas.",
+      "Bordado computarizado de alta precisión para escudos, logotipos y nombres sobre uniformes y prendas individuales.",
     heroGradient: "bg-indigo-900 text-white",
     cardImage: "/images/servicios/bordados.png",
     heroFeatures: [
-      { icon: "precision_manufacturing", text: "Alta precisión" },
-      { icon: "speed", text: "Entregas rápidas" },
-      { icon: "loyalty", text: "Digitalización gratis" },
+      { icon: "verified", text: "Alta precisión" },
+      { icon: "design_services", text: "Digitalización gratis*" },
+      { icon: "shopping_bag", text: "Sin pedido mínimo" },
     ],
     ctaBanner: {
       title: "¿Necesitas bordar tu logo?",
       description:
-        "Envíanos tu diseño y la cantidad de prendas. Digitalizamos tu logotipo sin costo adicional.",
-      ctaText: "Cotizar bordado",
+        "Envíanos tu diseño y te enviaremos una cotización. Al confirmar tu pedido con el anticipo correspondiente, digitalizamos tu logo sin costo adicional y te compartimos una prueba digital antes de bordar.",
+      ctaText: "Solicitar cotización",
       ctaHref: siteConfig.links.whatsappDirect,
     },
     sections: [
       {
         heading: "¿Qué es el bordado computarizado?",
-        body: "El bordado computarizado es un proceso industrial donde una máquina de múltiples agujas reproduce un diseño digitalizado directamente sobre la tela. A diferencia del estampado o la sublimación, el hilo queda físicamente integrado a la prenda, lo que garantiza una durabilidad excepcional y un acabado premium que resiste cientos de lavados sin deteriorarse.",
+        body: "Es el proceso de reproducir un diseño digital mediante hilos sobre una prenda textil, utilizando máquinas de coser industriales controladas por computadora. El hilo queda físicamente integrado a la prenda, lo que garantiza una durabilidad excepcional frente a lavados y fricción constante.",
       },
       {
-        heading: "¿Sobre qué prendas bordamos?",
-        body: "Trabajamos sobre prácticamente cualquier superficie textil: camisas polo, batas médicas, scrubs, gorras, mochilas, toallas, chaquetas, gabachas, uniformes escolares y corporativos. Si la aguja puede atravesar la tela, podemos bordar sobre ella. Incluso bordamos sobre prendas que ya están armadas, sin necesidad de descoserlas.",
+        heading:
+          "Bordamos para hospitales, clínicas, laboratorios, universidades, colegios y empresas",
+        body: "El bordado institucional es una parte central de nuestro trabajo, no un servicio adicional. En el sector salud, bordamos escudos y logos sobre scrubs, batas y gorros quirúrgicos para hospitales, clínicas, laboratorios y consultorios de la zona oriental de El Salvador. Confeccionamos y bordamos scrubs clínicos en los colores oficiales de IEPROES (Instituto Especializado de Profesionales de la Salud), UNIVO (Universidad de Oriente), UNAB (Universidad Dr. Andrés Bello), UES (Universidad de El Salvador), UGB (Universidad Gerardo Barrios) y UMA (Universidad Modular Abierta). También bordamos el escudo institucional de colegios y escuelas en camisas, suéteres y chumpas de uniforme escolar, como en el caso del Centro Escolar Profesor Jorge Salomón Granados, bajo contrato con el Ministerio de Educación. Para empresas, bordamos logotipos corporativos en camisas, polos y gabachas.",
+      },
+      {
+        heading: "¿Bordado, sublimación o estampado?",
+        body: "El bordado computarizado es la opción más duradera para logos institucionales: el hilo queda integrado a la tela y resiste años de lavado sin perder color ni forma. Para diseños fotográficos a color completo sobre poliéster, la sublimación textil suele ser más adecuada. Si tienes dudas sobre cuál técnica conviene a tu proyecto, cuéntanos el uso que le darás a la prenda y te recomendamos la opción correcta.",
       },
       {
         heading: "Proceso de digitalización",
-        body: "Antes de bordar, tu logo o diseño pasa por un proceso llamado digitalización, donde un técnico convierte la imagen en un archivo de puntadas que la máquina entiende. Esto nos permite controlar la densidad, dirección y tipo de puntada para lograr la máxima fidelidad al original. La digitalización la hacemos internamente y sin costo adicional cuando el pedido se confirma.",
+        body: "Antes de bordar, tu logo pasa por un proceso llamado digitalización, donde se convierte la imagen en un archivo de puntadas que la máquina entiende. Este proceso es gratuito, pero solo se realiza una vez que el pedido se confirma con el anticipo correspondiente.",
       },
       {
-        heading: "Pedidos mínimos y tiempos de entrega",
-        body: "Aceptamos pedidos desde una sola pieza hasta volúmenes industriales de cientos de unidades. Los tiempos de entrega varían según la complejidad del diseño y la cantidad, pero un pedido estándar de 20 a 50 prendas suele estar listo en 3 a 5 días hábiles. Para volúmenes mayores, consulta directamente con nosotros.",
+        heading: "Precios y pedidos",
+        body: "Si el bordado forma parte de tu pedido de uniformes, el costo ya está incluido en el precio de la prenda. Si necesitas bordar una prenda individual, el costo inicia desde $5.00 y varía según el tamaño y la complejidad del diseño. No hay un mínimo de piezas, pero el precio final siempre se confirma con una cotización directa.",
+      },
+    ],
+    processSteps: [
+      {
+        step: "1",
+        title: "Digitalizar",
+        description:
+          "Convertimos tu archivo de imagen (JPG, PNG, PDF) en una matriz de bordado profesional.",
+      },
+      {
+        step: "2",
+        title: "Configurar",
+        description:
+          "Asignamos los colores de hilo y configuramos la tensión según el tipo de tela a bordar.",
+      },
+      {
+        step: "3",
+        title: "Bordar",
+        description:
+          "Nuestras máquinas ejecutan el diseño con alta velocidad y precisión.",
+      },
+    ],
+    garmentGallery: [
+      // TODO: reemplazar con fotografías reales de bordados propios del taller en cuanto estén disponibles.
+      // Cada entrada debe mostrar el PROCESO (máquina bordando, hilos, texturas) — nunca logos de marcas inventadas.
+      {
+        image: "/images/servicios/bordados.png",
+        label: "Uniformes Escolares",
+      },
+      {
+        image: "/images/servicios/bordados.png",
+        label: "Uniformes Médicos",
+      },
+      {
+        image: "/images/servicios/bordados.png",
+        label: "Uniformes Empresariales",
+      },
+      {
+        image: "/images/servicios/bordados.png",
+        label: "Gorras y Accesorios",
+      },
+    ],
+    institutionLogos: [
+      { image: "/logos/ieproes.png", label: "IEPROES" },
+      { image: "/logos/univo.png", label: "UNIVO" },
+      { image: "/logos/unab.png", label: "UNAB" },
+      { image: "/logos/ues.png", label: "UES" },
+      { image: "/logos/ugb-1.png", label: "UGB" },
+      { image: "/logos/uma.png", label: "UMA" },
+    ],
+    pricingCards: [
+      {
+        icon: "inventory_2",
+        label: "Pedido Mínimo",
+        value: "Desde 1 prenda",
+        note: "Sin volumen mínimo. El precio se confirma por cotización.",
+      },
+      {
+        icon: "attach_money",
+        label: "Bordado Individual",
+        value: "Desde $5.00",
+        note: "Incluido sin costo adicional cuando es parte de un uniforme.",
       },
     ],
     faqs: [
       {
         question: "¿Cuánto cuesta bordar un logo?",
         answer:
-          "El precio depende del tamaño del bordado y la cantidad de prendas. Un bordado estándar de logo (8-10 cm) en una prenda puede costar desde $3.00 por unidad en volúmenes de 20+ piezas. Envíanos tu diseño para una cotización exacta.",
+          "Si el bordado es parte de un pedido de uniformes, va incluido en el precio de la prenda. Si necesitas bordar una prenda individual, el costo inicia desde $5.00 y depende del tamaño y la cantidad de puntadas del diseño. Envíanos tu diseño para una cotización exacta.",
       },
       {
         question: "¿Se puede bordar sobre cualquier color de tela?",
@@ -100,6 +137,16 @@ export const SERVICE_PAGES: ServicePage[] = [
         question: "¿El bordado se deshila con los lavados?",
         answer:
           "No. Nuestras máquinas industriales aplican una entretela de respaldo que fija las puntadas. Un bordado bien hecho dura toda la vida útil de la prenda.",
+      },
+      {
+        question: "¿Bordan el logo de mi universidad en los scrubs?",
+        answer:
+          "Sí. Confeccionamos y bordamos scrubs clínicos en los colores y con el escudo oficial de IEPROES, UNIVO, UNAB, UES, UGB y UMA. Si tu universidad no está en esta lista, contáctanos: también bordamos logos institucionales bajo pedido.",
+      },
+      {
+        question: "¿Puedo pedir bordado si no vivo en San Miguel?",
+        answer:
+          "Sí. Coordinamos envíos a nivel nacional en El Salvador a través de transporte de terceros, con un costo adicional según destino. Puedes ver el detalle en nuestra Política de Envíos.",
       },
     ],
   },

@@ -1,92 +1,82 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
-// Estructura de carpetas para el bloque "Lo que publicamos"
 interface DocumentFolder {
   id: string;
   name: string;
+  href: string;
   description: string;
-  refCode: string;
-  size: string;
 }
 
 const documentFolders: DocumentFolder[] = [
   {
     id: "equipo",
     name: "Equipo de Trabajo",
+    href: "/empresa/equipo",
     description:
-      "Expediente detallado de las 9 personas especialistas en costura, patronaje, bordado, control de calidad y tecnología en el taller.",
-    refCode: "REG-EQ-2026",
-    size: "2.4 MB",
+      "Conoce a las personas que forman parte de Confecciones Liss y la función que cumple cada una en el proceso de confección.",
   },
   {
     id: "historia",
     name: "Historia Oficial",
+    href: "/empresa/sobre-nosotros",
     description:
-      "Trayectoria del oficio familiar fundado en 2005 y la constitución del taller físico en el Barrio La Merced en 2021.",
-    refCode: "HIS-LISS-01",
-    size: "1.8 MB",
+      "Nuestra trayectoria desde 2005 como taller familiar y nuestro crecimiento comercial.",
   },
   {
     id: "proceso",
     name: "Proceso de Confección",
+    href: "/empresa/proceso-de-confeccion",
     description:
-      "Ficha operativa detallada de las 5 estaciones físicas del taller: Corte, Confección, Bordado, Calidad y Almacén.",
-    refCode: "OPS-PROC-v5",
-    size: "4.2 MB",
+      "Las etapas detalladas de nuestro trabajo en el taller, desde el diseño inicial hasta el acabado de las prendas.",
   },
   {
     id: "calidad",
     name: "Manual de Calidad",
+    href: "/empresa/calidad",
     description:
-      "Guía técnica de tolerancias mecánicas (< 1.5mm), verificación de medidas y checklist de tolerancia cero para defectos críticos.",
-    refCode: "QA-MANUAL-2026",
-    size: "3.1 MB",
+      "Nuestros estándares y controles de costura para asegurar la durabilidad de cada uniforme.",
   },
   {
     id: "politicas",
     name: "Políticas y Garantías",
+    href: "/legal/garantia",
     description:
-      "Términos oficiales de contratación, devoluciones por talla, garantía de ajuste anatómico y envíos nacionales a los 14 departamentos.",
-    refCode: "POL-LEGAL-v2",
-    size: "950 KB",
+      "Términos y condiciones de compra, nuestra garantía de confección y políticas de devolución.",
   },
   {
     id: "mediakit",
     name: "Media Kit de Marca",
+    href: "/empresa/media-kit",
     description:
-      "Logotipos vectoriales oficiales, paleta de colores de marca (azul marino/rojo terracota), tipografías e imágenes de alta definición.",
-    refCode: "MDK-LISS-2026",
-    size: "12.5 MB",
+      "Recursos visuales oficiales, logotipos, colores e identidad gráfica de Confecciones Liss.",
   },
   {
     id: "instalaciones",
     name: "Visita de Instalaciones",
+    href: "/empresa/instalaciones",
     description:
-      "Plano arquitectónico esquemático y recorrido por la distribución de maquinaria industrial de costura en Barrio La Merced.",
-    refCode: "ARC-INST-2026",
-    size: "2.8 MB",
+      "Recorrido por la distribución física y maquinaria de nuestro taller en Barrio La Merced.",
   },
   {
     id: "responsabilidad",
     name: "Responsabilidad Social",
+    href: "/empresa/responsabilidad-social",
     description:
-      "Informe anual público detallando la creación de empleo local en San Miguel y el desarrollo tecnológico sin precarización.",
-    refCode: "CSR-REPORT-2026",
-    size: "1.5 MB",
+      "Nuestros compromisos con el empleo local en San Miguel y el desarrollo sostenible de nuestro taller.",
   },
 ];
 
-// Estructura de notas adhesivas (Preguntas frecuentes)
 interface StickyNote {
   id: number;
   question: string;
-  answer: string;
-  size: string; // Tailwind class size
-  rotation: string; // Inclinación
+  answer: React.ReactNode;
+  size: string;
+  rotation: string;
 }
 
 const stickyNotes: StickyNote[] = [
@@ -94,31 +84,59 @@ const stickyNotes: StickyNote[] = [
     id: 1,
     question: "¿Tienen tienda física abierta al público?",
     answer:
-      "No operamos como tienda de ropa casual. Nuestro local en Barrio La Merced, San Miguel es exclusivamente un taller de diseño y manufactura a medida. La toma de medidas presencial se realiza bajo agenda previa coordinada.",
+      "No operamos como tienda de ropa casual. Nuestro local en Barrio La Merced, San Miguel, es un taller de diseño y confección. La toma de medidas presencial se realiza bajo cita previa coordinada.",
     size: "col-span-1 md:col-span-6",
     rotation: "rotate-[-1.5deg]",
   },
   {
     id: 2,
-    question: "¿De dónde provienen las telas?",
+    question: "¿De dónde provienen los materiales?",
     answer:
-      "Consumimos principalmente textiles certificados de distribuidores nacionales (como Sincatex de El Salvador). Todo el hilo es de poliéster de alta tenacidad calibre 40/2 para asegurar costuras indestructibles ante lavados frecuentes.",
+      "Trabajamos con telas e hilos seleccionados según el uso de cada uniforme, priorizando resistencia y durabilidad frente al uso diario y los lavados frecuentes.",
     size: "col-span-1 md:col-span-6",
     rotation: "rotate-[2deg]",
   },
   {
     id: 3,
-    question: "¿Qué pasa si la prenda no me queda bien?",
-    answer:
-      "Ofrecemos garantía de ajuste del 100%. Si un uniforme presenta cualquier desviación en el calce anatómico respecto a las cotas físicas registradas, realizamos los ajustes técnicos en el taller sin ningún costo adicional para el cliente.",
+    question: "¿Qué pasa si la prenda a la medida no me queda bien?",
+    answer: (
+      <>
+        Si solicitaste confección a la medida, asististe presencialmente a la
+        toma de medidas y reportas la inconformidad al momento de retirar la
+        prenda en el taller, aplicamos nuestra Garantía Premier de Ajuste: hasta
+        3 ajustes correctivos gratuitos o la reelaboración completa de la prenda
+        si es necesario. Puedes ver el detalle completo en nuestra{" "}
+        <Link
+          href="/legal/garantia"
+          className="font-semibold text-[#143067] underline hover:text-[#143067]/80"
+        >
+          Política de Garantía
+        </Link>
+        .
+      </>
+    ),
     size: "col-span-1 md:col-span-7",
     rotation: "rotate-[-1deg]",
   },
   {
     id: 4,
-    question: "¿Hacen envíos a todo el país?",
-    answer:
-      "Sí. Coordinamos entregas verificadas a los 14 departamentos de El Salvador a través de empresas logísticas asociadas o transporte directo de nuestro taller para grandes lotes corporativos.",
+    question: "¿Hacen envíos a nivel nacional?",
+    answer: (
+      <>
+        Sí. Coordinamos envíos a nivel nacional en El Salvador a través de un
+        servicio de transporte de terceros. El costo varía entre USD $3.00 y
+        $5.00 según el destino, peso y volumen del pedido. La cobertura depende
+        de la disponibilidad del proveedor de transporte en cada zona. Más
+        detalles en nuestra{" "}
+        <Link
+          href="/legal/envios"
+          className="font-semibold text-[#143067] underline hover:text-[#143067]/80"
+        >
+          Política de Envíos
+        </Link>
+        .
+      </>
+    ),
     size: "col-span-1 md:col-span-5",
     rotation: "rotate-[1.5deg]",
   },
@@ -128,13 +146,6 @@ export default function TransparenciaClient() {
   const [activeFolderId, setActiveFolderId] = useState<string>("equipo");
   const activeFolder =
     documentFolders.find((f) => f.id === activeFolderId) || documentFolders[0];
-
-  const [auditLog, setAuditLog] = useState<string[]>([
-    "23:35:43 — Build verificado exitosamente.",
-    "23:33:00 — Sitemap y registro actualizados.",
-    "23:26:21 — CalidadClient compilado con éxito.",
-    "2026-06-27 — Centro de Transparencia inicializado.",
-  ]);
 
   const blockVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -148,26 +159,10 @@ export default function TransparenciaClient() {
   return (
     <div className="bg-[#f8f9fb] font-sans text-[#191c1e] antialiased selection:bg-[#143067]/10 selection:text-[#143067]">
       {/* ──────────────────────────────────────────────────────── */}
-      {/* CABECERA DOCUMENTAL (Reemplaza al Hero) */}
+      {/* CABECERA DOCUMENTAL (Hero) */}
       {/* ──────────────────────────────────────────────────────── */}
       <header className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-12 md:px-8 md:pt-6">
         <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-10">
-          <div className="mb-8 flex flex-col items-start justify-between gap-4 border-b border-[#e1e2e5] pb-6 font-mono text-xs text-[#444650] md:flex-row md:items-center">
-            <div className="space-y-1">
-              <p className="font-semibold tracking-wider text-[#143067]">
-                CONFECCIONES LISS — TRANSPARENCIA PÚBLICA
-              </p>
-              <p>
-                CENTRO DE CONTROL:{" "}
-                <span className="font-bold text-[#143067]">PORTAL-TRS-01</span>
-              </p>
-            </div>
-            <div className="space-y-1 text-left md:text-right">
-              <p>ESTADO: ACCESO LIBRE</p>
-              <p>ÚLTIMA AUDITORÍA: 27-06-2026</p>
-            </div>
-          </div>
-
           <div className="space-y-8">
             <h1 className="max-w-3xl font-serif text-3xl leading-tight tracking-tight text-[#143067] md:text-5xl lg:text-6xl">
               &ldquo;La confianza no se solicita. Se construye siendo
@@ -176,13 +171,13 @@ export default function TransparenciaClient() {
 
             <div className="flex flex-wrap gap-4 font-mono text-xs text-[#444650]">
               <span className="rounded border border-[#143067]/10 bg-[#143067]/5 px-3 py-1">
-                EMPRESA: Confecciones Liss
+                Empresa: Confecciones Liss
               </span>
               <span className="rounded border border-[#143067]/10 bg-[#143067]/5 px-3 py-1 font-bold text-[#143067]">
-                ESTADO: Información Pública
+                Estado: Información Pública
               </span>
               <span className="rounded border border-[#143067]/10 bg-[#143067]/5 px-3 py-1">
-                AUDITOR: René A. Méndez
+                Última actualización: Junio 2026
               </span>
             </div>
           </div>
@@ -190,13 +185,11 @@ export default function TransparenciaClient() {
       </header>
 
       {/* ──────────────────────────────────────────────────────── */}
-      {/* CUERPO PRINCIPAL: PANEL CENTRAL IZQUIERDO Y CONTROL DERECHO */}
+      {/* CUERPO PRINCIPAL */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-12 md:px-8">
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
-          {/* ======================================================== */}
-          {/* PANEL PRINCIPAL IZQUIERDO (Bloques de información) */}
-          {/* ======================================================== */}
+          {/* PANEL PRINCIPAL IZQUIERDO */}
           <div className="space-y-16 md:space-y-24 lg:col-span-8">
             {/* BLOQUE 1: Quiénes somos */}
             <motion.div
@@ -207,9 +200,6 @@ export default function TransparenciaClient() {
               className="space-y-6"
             >
               <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
-                <span className="font-mono text-xs font-bold text-[#143067]">
-                  BLOQUE 01 //
-                </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
                   Quiénes somos
                 </h2>
@@ -223,7 +213,7 @@ export default function TransparenciaClient() {
                   </p>
                   <p>
                     Nuestra historia comenzó en 2005 confeccionando prendas
-                    desde casa y, desde entonces, hemos construido nuestro
+                    desde casa, y desde entonces hemos construido nuestro
                     crecimiento a partir del trabajo constante, la
                     especialización y la confianza de nuestros clientes.
                   </p>
@@ -262,13 +252,13 @@ export default function TransparenciaClient() {
                     <span className="font-semibold text-[#191c1e]">
                       Naturaleza
                     </span>
-                    <span>Empresa Familiar</span>
+                    <span>Empresa familiar</span>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* BLOQUE 2: Cómo tomamos decisiones (Flujograma) */}
+            {/* BLOQUE 2: Cómo trabajamos (Flujograma) */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -276,33 +266,32 @@ export default function TransparenciaClient() {
               variants={blockVariants}
               className="space-y-6"
             >
-              <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
+              <div className="flex flex-col gap-1 border-b border-[#e1e2e5] pb-3">
                 <span className="font-mono text-xs font-bold text-[#143067]">
-                  BLOQUE 02 //
+                  Cómo trabajamos
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
                   Cómo tomamos decisiones
                 </h2>
               </div>
 
-              {/* Flujo operativo vertical en móvil, conectado horizontal en desktop */}
               <div className="relative grid grid-cols-1 items-stretch gap-4 md:grid-cols-4">
                 {[
                   {
                     step: "Cliente",
-                    desc: "El cliente define requerimientos de uniformidad. Tomamos 12 cotas anatómicas físicas para asegurar el talle perfecto.",
+                    desc: "El cliente define sus necesidades de uniformidad. Si el pedido es a la medida, se coordina la toma de medidas presencial en el taller.",
                   },
                   {
                     step: "Diseño",
-                    desc: "Trazado digital del patrón. Control estricto de tolerancias (< 1.5mm) y comprobación del hilo de la tela.",
+                    desc: "Se traza el patrón correspondiente al tipo de uniforme solicitado, verificando que corresponda a las especificaciones del cliente.",
                   },
                   {
                     step: "Producción",
-                    desc: "Manufactura física en el taller de San Miguel con costuras reforzadas e hilo poliéster de alta tenacidad.",
+                    desc: "La confección se realiza físicamente en nuestro taller de San Miguel, con revisión de costuras durante el proceso.",
                   },
                   {
                     step: "Entrega",
-                    desc: "Inspección técnica visual, planchado a alta presión, empaque individual y despacho con etiqueta firmada.",
+                    desc: "Inspección final de calidad, planchado manual, empaque individual y coordinación de entrega o envío.",
                   },
                 ].map((item, index, arr) => (
                   <div
@@ -333,7 +322,7 @@ export default function TransparenciaClient() {
               </div>
             </motion.div>
 
-            {/* BLOQUE 3: Nuestros compromisos públicos (Acta Legal) */}
+            {/* BLOQUE 3: Nuestros compromisos públicos */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -341,21 +330,20 @@ export default function TransparenciaClient() {
               variants={blockVariants}
               className="space-y-6"
             >
-              <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
+              <div className="flex flex-col gap-1 border-b border-[#e1e2e5] pb-3">
                 <span className="font-mono text-xs font-bold text-[#143067]">
-                  BLOQUE 03 //
+                  Nuestros compromisos
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
                   Nuestros compromisos públicos
                 </h2>
               </div>
 
-              {/* Formato Acta Legal sin iconos */}
               <div className="divide-y divide-[#e1e2e5] rounded border border-[#e1e2e5] bg-white font-sans text-sm text-[#444650]">
                 {[
                   {
                     num: "01",
-                    text: "Nunca ofrecer información falsa sobre materiales, procedencia o resistencia de tejidos.",
+                    text: "Nunca ofrecer información falsa sobre nuestros materiales, procesos o tiempos de producción.",
                   },
                   {
                     num: "02",
@@ -363,19 +351,19 @@ export default function TransparenciaClient() {
                   },
                   {
                     num: "03",
-                    text: "Explicar claramente cada etapa de costura y tolerancias anatómicas en cotizaciones.",
+                    text: "Explicar claramente las condiciones de cada modalidad de confección y de nuestra política de garantía antes de confirmar un pedido.",
                   },
                   {
                     num: "04",
-                    text: "Responder con honestidad ante reclamos post-venta, asumiendo la garantía de ajuste.",
+                    text: "Responder con honestidad ante reclamos, aplicando nuestra Garantía Premier de Ajuste en los pedidos a la medida que cumplan las condiciones establecidas.",
                   },
                   {
                     num: "05",
-                    text: "Corregir errores de patronaje o bordado inmediatamente sin recargo.",
+                    text: "Corregir errores de patronaje o confección atribuibles al taller, sin costo adicional, conforme a las condiciones de nuestra política de garantía.",
                   },
                   {
                     num: "06",
-                    text: "Mantener comunicación permanente y directa por canales digitales durante la fabricación.",
+                    text: "Mantener comunicación directa con el cliente durante el proceso de fabricación de su pedido.",
                   },
                 ].map((item) => (
                   <div key={item.num} className="flex items-center gap-6 p-5">
@@ -390,7 +378,7 @@ export default function TransparenciaClient() {
               </div>
             </motion.div>
 
-            {/* BLOQUE 4: Lo que publicamos (Archivador Documental) */}
+            {/* BLOQUE 4: Lo que publicamos */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -398,14 +386,20 @@ export default function TransparenciaClient() {
               variants={blockVariants}
               className="space-y-6"
             >
-              <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
+              <div className="flex flex-col gap-1 border-b border-[#e1e2e5] pb-3">
                 <span className="font-mono text-xs font-bold text-[#143067]">
-                  BLOQUE 04 //
+                  Lo que publicamos
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
                   Lo que publicamos
                 </h2>
               </div>
+
+              <p className="text-base text-[#444650]">
+                Confecciones Liss publica información pública sobre su historia,
+                equipo, procesos y políticas. A continuación, los documentos y
+                secciones disponibles en el sitio:
+              </p>
 
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {/* Grid de carpetas interactivas */}
@@ -413,14 +407,7 @@ export default function TransparenciaClient() {
                   {documentFolders.map((folder) => (
                     <button
                       key={folder.id}
-                      onClick={() => {
-                        setActiveFolderId(folder.id);
-                        // Añadir evento al log lateral de control
-                        setAuditLog((prev) => [
-                          `${new Date().toTimeString().slice(0, 8)} — Acceso a carpeta: ${folder.refCode}`,
-                          ...prev.slice(0, 3),
-                        ]);
-                      }}
+                      onClick={() => setActiveFolderId(folder.id)}
                       className={`flex items-center gap-2 rounded border p-3 text-left transition-all duration-300 ${
                         activeFolderId === folder.id
                           ? "border-[#143067] bg-[#143067] text-white"
@@ -440,12 +427,6 @@ export default function TransparenciaClient() {
                 {/* Detalle de la carpeta seleccionada */}
                 <div className="flex min-h-[200px] flex-col justify-between rounded border border-[#e1e2e5] bg-white p-6">
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between font-mono text-xs text-[#444650]/60">
-                      <span>REF: {activeFolder.refCode}</span>
-                      <span className="font-bold text-[#143067]">
-                        {activeFolder.size}
-                      </span>
-                    </div>
                     <h3 className="font-serif text-lg font-bold text-[#143067]">
                       {activeFolder.name}
                     </h3>
@@ -454,17 +435,19 @@ export default function TransparenciaClient() {
                     </p>
                   </div>
 
-                  <div className="mt-4 flex items-center justify-between border-t border-[#e1e2e5] pt-4 font-mono text-[10px] text-[#143067]">
-                    <span>DISPONIBLE EN EL SITIO</span>
-                    <span className="material-symbols-outlined text-xs select-none">
-                      verified
-                    </span>
+                  <div className="mt-6 border-t border-[#e1e2e5] pt-4">
+                    <Link
+                      href={activeFolder.href}
+                      className="flex items-center gap-1 font-mono text-xs font-bold text-[#143067] hover:underline"
+                    >
+                      Ver página completa →
+                    </Link>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* BLOQUE 5: Preguntas que recibimos (Notas Adhesivas) */}
+            {/* BLOQUE 5: Preguntas frecuentes */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -472,16 +455,15 @@ export default function TransparenciaClient() {
               variants={blockVariants}
               className="space-y-6"
             >
-              <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
+              <div className="flex flex-col gap-1 border-b border-[#e1e2e5] pb-3">
                 <span className="font-mono text-xs font-bold text-[#143067]">
-                  BLOQUE 05 //
+                  Preguntas frecuentes
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
                   Preguntas que recibimos con frecuencia
                 </h2>
               </div>
 
-              {/* Grid asimétrico tipo notas post-it en escritorio */}
               <div className="grid grid-cols-1 gap-6 pt-4 md:grid-cols-12">
                 {stickyNotes.map((note) => (
                   <div
@@ -494,15 +476,15 @@ export default function TransparenciaClient() {
                     <h3 className="font-serif text-sm leading-snug font-bold text-[#143067]">
                       {note.question}
                     </h3>
-                    <p className="font-sans text-xs leading-relaxed text-[#444650]">
+                    <div className="font-sans text-xs leading-relaxed text-[#444650]">
                       {note.answer}
-                    </p>
+                    </div>
                   </div>
                 ))}
               </div>
             </motion.div>
 
-            {/* BLOQUE 6: Lo que nunca ocultamos (Mural Tipográfico) */}
+            {/* BLOQUE 6: Lo que nunca ocultamos */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -510,16 +492,12 @@ export default function TransparenciaClient() {
               variants={blockVariants}
               className="space-y-6"
             >
-              <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
+              <div className="flex flex-col gap-1 border-b border-[#e1e2e5] pb-3">
                 <span className="font-mono text-xs font-bold text-[#143067]">
-                  BLOQUE 06 //
-                </span>
-                <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
                   Lo que nunca ocultamos
-                </h2>
+                </span>
               </div>
 
-              {/* Mural tipográfico con mucho espacio en blanco */}
               <div className="relative space-y-6 overflow-hidden rounded bg-[#143067] p-8 text-white md:space-y-8 md:p-16">
                 <div
                   className="pointer-events-none absolute inset-0 opacity-[0.02]"
@@ -551,7 +529,7 @@ export default function TransparenciaClient() {
               </div>
             </motion.div>
 
-            {/* BLOQUE 7: Transparencia en acción (Periódico) */}
+            {/* BLOQUE 7: Transparencia en acción */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -559,16 +537,15 @@ export default function TransparenciaClient() {
               variants={blockVariants}
               className="space-y-6"
             >
-              <div className="flex items-center gap-2 border-b border-[#e1e2e5] pb-3">
+              <div className="flex flex-col gap-1 border-b border-[#e1e2e5] pb-3">
                 <span className="font-mono text-xs font-bold text-[#143067]">
-                  BLOQUE 07 //
+                  Transparencia en acción
                 </span>
                 <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
                   Transparencia en acción
                 </h2>
               </div>
 
-              {/* Layout Periódico a 3 Columnas */}
               <div className="grid grid-cols-1 items-start gap-8 text-sm leading-relaxed text-[#444650] md:grid-cols-3">
                 {/* Columna 1: Foto */}
                 <div className="space-y-3">
@@ -582,7 +559,7 @@ export default function TransparenciaClient() {
                     />
                   </div>
                   <span className="block font-mono text-[9px] text-[#444650]">
-                    SECCIÓN DE ARCHIVO TÉCNICO: DESPACHO VERIFICADO.
+                    Preparación de pedidos en el taller.
                   </span>
                 </div>
 
@@ -603,43 +580,42 @@ export default function TransparenciaClient() {
                 {/* Columna 3: Notas editoriales */}
                 <div className="space-y-4">
                   <p>
-                    Confecciones Liss publica información completa sobre su
-                    historia, equipo, procesos, instalaciones y forma de trabajo
-                    para que cualquier cliente pueda conocer quién está detrás
-                    de la empresa antes de realizar una compra de uniformes.
+                    Confecciones Liss publica información sobre su historia,
+                    equipo, procesos, instalaciones y políticas para que
+                    cualquier cliente pueda conocer quién está detrás del taller
+                    antes de realizar un pedido.
                   </p>
                   <p className="font-semibold text-[#143067]">
-                    Sin filtros corporativos. Costura y servicio real desde San
-                    Miguel.
+                    Costura y servicio real desde San Miguel.
                   </p>
                 </div>
               </div>
             </motion.div>
           </div>
 
-          {/* ======================================================== */}
-          {/* IMAGEN DE TRANSPARENCIA (Reemplaza Panel de Auditoría) */}
-          {/* ======================================================== */}
-          <div className="lg:sticky lg:top-8 lg:col-span-4">
-            <div className="border-primary/35 relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
-              <div className="relative h-full w-full overflow-hidden rounded-2xl">
-                <Image
-                  fill
-                  src="/images/servicios/mano-obra.png"
-                  alt="Transparencia y honestidad en el taller"
-                  className="object-cover object-center"
-                  sizes="(max-width: 1024px) 100vw, 30vw"
-                  priority
-                />
-              </div>
+          {/* COLUMNA DERECHA STICKY */}
+          <div
+            className="lg:sticky lg:top-4 lg:col-span-4"
+            style={{ top: "calc(56px + 1rem)" }}
+          >
+            <div
+              className="border-primary/35 relative w-full overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]"
+              style={{ height: "calc(100dvh - 56px - 2rem)" }}
+            >
+              <Image
+                fill
+                src="/images/servicios/mano-obra.png"
+                alt="Transparencia y honestidad en el taller"
+                className="object-cover object-center"
+                sizes="(max-width: 1024px) 100vw, 30vw"
+                priority
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────── */}
-      {/* CIERRE (Sin CTA) */}
-      {/* ──────────────────────────────────────────────────────── */}
+      {/* CIERRE */}
       <footer className="border-t border-[#e1e2e5] bg-[#f8f9fb] px-5 py-20 text-center md:px-8 md:py-32">
         <div className="mx-auto max-w-2xl space-y-6">
           <h2 className="font-serif text-2xl leading-snug text-[#143067] md:text-3xl">

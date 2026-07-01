@@ -7,33 +7,7 @@ import { ServicioManoObraDetalle } from "./ServicioManoObraDetalle";
 import { ServicioRopaCasualDetalle } from "./ServicioRopaCasualDetalle";
 import { ServicioDetalleGeneric } from "./ServicioDetalleGeneric";
 
-interface ServiceSection {
-  heading: string;
-  body: string;
-}
-
-interface ServicePage {
-  slug: string;
-  navLabel: string;
-  navIcon: string;
-  title: string;
-  subtitle: string;
-  seoTitle: string;
-  seoDescription: string;
-  description: string;
-  cardDescription: string;
-  heroGradient: string;
-  heroFeatures: { icon: string; text: string }[];
-  ctaBanner: {
-    title: string;
-    description: string;
-    ctaText: string;
-    ctaHref: string;
-  };
-  cardImage: string;
-  sections: ServiceSection[];
-  faqs: { question: string; answer: string }[];
-}
+import { ServicePage } from "@/data/services";
 
 interface ServicioDetallePageProps {
   service: ServicePage;
@@ -41,7 +15,7 @@ interface ServicioDetallePageProps {
 
 export function ServicioDetallePage({ service }: ServicioDetallePageProps) {
   if (service.slug === "bordados-personalizados") {
-    return <ServicioBordadosDetalle />;
+    return <ServicioBordadosDetalle service={service} />;
   }
 
   if (service.slug === "sublimacion-deportiva") {

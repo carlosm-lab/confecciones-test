@@ -4,39 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
-import { heroTrustBadges } from "@/lib/seo-data";
+import { ServicePage } from "@/data/services";
 
-// ------------ datos ------------
-const DATA = {
-  heroImage:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuD6jGN2zqo5KCCZFCLxiPbzhahgf_EQFytz6rb5HVdLlxqQ4VJ8S1BystI0w_Sta5EGnt883oBvXgG3gk2yTOSoMhldpg6c_HOI1mhG78RTn1k3DAgUWm-M1MV43SEe5Wwc-0lmwCzphS3Gk7kVyKcx1ECxskfTUUKZSmBUmlpCpTttbR7UJq_C73mUbiJyOng80OMkHgyXaCEKmQxEaZQ3P-IWvpA3heAMe9VX4m9ryoy-Ft3YfkSHFcqjMfCPf0hV79efXsjD9FLV",
-  sectionAImage:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuBzNcREsUj-gAOY0MsFycUFSnXBmyNU2dpjy0BeOLrQD7UVXvxs7ioNsaS5Ip6xxQNurkxAkP0WxpR-NSCOFYUVrYslQBhv-Ls_Cb8TXdSeM2JatkyiduxXypH34w4_rEjNOhFeJdB4SvV8vBjjzqefhIhzzW9D4cKPW4s95WJRzaf1u4zTdfyznFV9zxr0avV4zYMNwRp3cciNvhdn2abhUSn8YC0ei8gB1IgpwoCCYH-lM6mH27YC0yov-kEUgEVy5U-KrD2pcpjX",
-  garmentImages: {
-    polos:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCJPKOJfFpAaIKRzm8AhXmbyfIoc018Ivq4Pxf59-SNQQ4w2mjiHNzOG-qyRI-I6TGL80ZSvpaCeUztBA59MoaxJc2GduXCO2MZr24AB9eWmBLJc2h8M9OliaNhDJeykMxDt_wKfUTmfotfdKY0BlSfDPPAMyDpcYJJrLrDlAmLD69XyHg058Xlp0HUDBw9gqW3auy2Ly3s34IhA9LQMHLyN0aGfn5LpCYPzi2BFsl4Nj5VDG9b-kL9-iomEX3iTqfVqwrKS0bm2Jez",
-    camisas:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD8UALRQZEd-VvcVKP-Jn-M3jfZTEYqGwxxmYdsOAWkJknIahgkm3Z6h9ECQCY48Y2gzKdvj9NQM0pxuZCooed187gNsOcUAOkek8mhY1vItk8jwBgNhciVFgD0Z1hJbyH54LvVFO0QfWgi3SDLRJ4gbvOkj4uiER7tFqf3WnV0FCcNedE962G8L6RaKfDQc3tbefLnBYbGqnBPvrigNxqtF-7nK_KATm4nSHHvbHpMSNp7F55EphIvk1SpOP02ix76oyihUeIOYuoo",
-    industrial:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAZfj19Pxka9aPjvaZscboS6tUZIxvkYYseVmlKiEhmBF0ibhYR7ifJT9IgWbACVRotvlJezaSRhGyIPZPlxpG7kdLdBBjAmgIb6Wis4l-SVh3zG1ykS68SefpMK4_bNH4yULGR7MEsEzFnV1AlQ0FovN59TCktEn8nqoxR_G5FLie5xziA-YxJrt6FMz55pYhdBHa6EmjcLCrUZjqLPf5CmMTTTNdi4tA_YRdL3f04fAq_b6gdYyxrDEv_4BmfI58L_N7bu46DNWLp",
-    gorras:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCdUQIwc-E3pdFJEWG4QTQnvndOiZYLnNPV3y_iDB8BId7OI9gYFUQIW4hgxN2tBQTepVtNE11XKx_lyNx_ulTkZfjbRI7isQmNauJhdMDYwf0aW-oPURA5RAArR74NEZxsR4g26w4rE2hu7e9WA4r7Lo8SeJF6LN3zNc2vlSUbbeZbFX9c1Q63mJrmJ2higZ6uzSA-AOzigwgQG8XxTxkRcmeH7OHqVpF7hlVgTvcKVl-cqf1aJDOXdiPu0_67C4feI_9QVW3TDThy",
-  },
-  faqs: [
-    {
-      q: "¿Cuánto cuesta bordar un logo?",
-      a: "El costo no depende del número de colores, sino de la cantidad de puntadas requeridas (tamaño y densidad del diseño) y del volumen total de prendas. Le recomendamos enviarnos su diseño para realizar una cotización exacta sin compromiso.",
-    },
-    {
-      q: "¿Se puede bordar sobre cualquier color de tela?",
-      a: "Sí. Contamos con una amplia paleta de hilos en diversos tonos. Si su tela es oscura, recomendamos usar un hilo base blanco bajo el diseño principal para asegurar que los colores de su logo resalten perfectamente sin perder intensidad.",
-    },
-    {
-      q: "¿El bordado se deshila con los lavados?",
-      a: "No. Utilizamos hilos de poliéster de alta tenacidad que son resistentes a lavados industriales, cloro y fricción. El bordado es, por naturaleza, la técnica de personalización más duradera disponible en el mercado textil.",
-    },
-  ],
-};
+interface ServicioBordadosDetalleProps {
+  service: ServicePage;
+}
 
 const fabricTextureStyle = {
   backgroundImage: `url('data:image/svg+xml,%3Csvg width="20" height="20" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0 0h20v20H0z" fill="none"/%3E%3Cpath d="M0 0h1v20H0zm2 0h1v20H2zm2 0h1v20H4zm2 0h1v20H6zm2 0h1v20H8zm2 0h1v20h-1zm2 0h1v20h-1zm2 0h1v20h-1zm2 0h1v20h-1zm2 0h1v20h-1zM0 0v1h20V0zm0 2v1h20V2zm0 2v1h20V4zm0 2v1h20V6zm0 2v1h20V8zm0 2v1h20v-1zm0 2v1h20v-1zm0 2v1h20v-1zm0 2v1h20v-1zm0 2v1h20v-1z" fill="%23143067" fill-opacity="0.03"/%3E%3C/svg%3E')`,
@@ -72,8 +44,17 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 // ------------ main component ------------
-export function ServicioBordadosDetalle() {
+export function ServicioBordadosDetalle({
+  service,
+}: ServicioBordadosDetalleProps) {
   const whatsapp = siteConfig.links.whatsappDirect;
+
+  // Extraer las secciones opcionales con valores por defecto para evitar errores
+  const sections = service.sections || [];
+  const garmentGallery = service.garmentGallery || [];
+  const institutionLogos = service.institutionLogos || [];
+  const processSteps = service.processSteps || [];
+  const pricingCards = service.pricingCards || [];
 
   return (
     <div className="w-full">
@@ -83,7 +64,7 @@ export function ServicioBordadosDetalle() {
           <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
             <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-[28px] leading-tight font-bold md:mb-10 md:flex md:flex-col md:items-center md:text-[48px] lg:mb-6 lg:block lg:text-left">
               <span className="block w-full text-center lg:text-left">
-                Servicio de Bordado Computarizado
+                {service.title}
               </span>
             </h1>
 
@@ -99,9 +80,9 @@ export function ServicioBordadosDetalle() {
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
                     <Image
                       fill
-                      alt="Máquina de bordado computarizado"
+                      alt={service.title}
                       className="rounded-xl object-cover object-center"
-                      src={DATA.heroImage}
+                      src={service.cardImage}
                       sizes="(max-width:768px) 80vw, 40vw"
                       priority
                     />
@@ -115,19 +96,10 @@ export function ServicioBordadosDetalle() {
                   className="animate-fade-in-up text-on-surface-variant mb-6 w-full font-sans text-lg leading-relaxed"
                   style={{ animationDelay: "150ms" }}
                 >
-                  Personalizamos sus prendas con precisión milimétrica. Nuestro
-                  servicio de bordado computarizado garantiza durabilidad,
-                  colores vibrantes y un acabado profesional que refleja la
-                  calidad de su marca. Ideal para uniformes, gorras y textiles
-                  corporativos.
+                  {service.description}
                 </p>
                 <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
-                  {[
-                    { icon: "verified", text: "Alta precisión" },
-                    { icon: "local_shipping", text: "Entregas rápidas" },
-                    { icon: "design_services", text: "Digitalización gratis" },
-                    { icon: "shopping_bag", text: "Sin pedido mínimo" },
-                  ].map((f, index) => (
+                  {service.heroFeatures.map((f, index) => (
                     <div
                       key={f.text}
                       className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
@@ -174,9 +146,9 @@ export function ServicioBordadosDetalle() {
               <div className="relative h-full w-full overflow-hidden rounded-xl">
                 <Image
                   fill
-                  alt="Máquina de bordado computarizado"
+                  alt={service.title}
                   className="rounded-xl object-cover object-center"
-                  src={DATA.heroImage}
+                  src={service.cardImage}
                   sizes="40vw"
                   priority
                 />
@@ -189,237 +161,256 @@ export function ServicioBordadosDetalle() {
       {/* ── EDITORIAL ── */}
       <section className="w-full px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-24">
-          {/* Sección A */}
-          <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-            {/* Imagen izquierda */}
-            <div className="border-primary/12 bg-surface-container-lowest relative order-2 aspect-[4/3] overflow-hidden rounded-[16px] border md:order-1">
-              <div
-                className="absolute inset-0 opacity-50"
-                style={fabricTextureStyle}
-              />
-              <Image
-                src={DATA.sectionAImage}
-                alt="Detalle de bordado de alta precisión"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="absolute inset-0 z-0 object-cover"
-              />
-              <div className="absolute inset-0 z-10 flex items-center justify-center">
-                <div className="rounded-full bg-white/90 p-6 shadow-lg backdrop-blur-sm">
-                  <span
-                    className="material-symbols-outlined text-primary text-[48px]"
-                    aria-hidden="true"
-                  >
-                    strikethrough_s
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Texto derecha */}
-            <div className="order-1 flex flex-col gap-4 md:order-2">
-              <h2 className="text-primary flex items-center gap-3 font-serif text-2xl font-bold md:text-3xl">
-                <span
-                  className="material-symbols-outlined text-primary text-3xl"
-                  aria-hidden="true"
-                >
-                  info
-                </span>
-                ¿Qué es el bordado computarizado?
-              </h2>
-              <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                Es el proceso de reproducir un diseño digital mediante hilos
-                sobre una prenda textil, utilizando máquinas de coser
-                industriales controladas por computadora. Este método ofrece una
-                resistencia superior frente a lavados y fricción constante,
-                garantizando que su logotipo mantenga su forma y color durante
-                toda la vida útil de la prenda. Es el estándar de oro para
-                indumentaria corporativa y uniformes de trabajo que requieren
-                transmitir una imagen sólida y profesional.
-              </p>
-            </div>
-          </div>
-
-          {/* Sección B */}
-          <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
-                ¿Sobre qué prendas bordamos?
-              </h2>
-              <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                Nuestra tecnología nos permite adaptar la tensión del hilo y el
-                tipo de puntada a una amplia variedad de textiles. Desde telas
-                ligeras hasta materiales gruesos, ajustamos cada matriz de
-                bordado para evitar frunces o daños en la tela original.
-              </p>
-              <ul className="mt-4 flex flex-col gap-3">
-                {[
-                  "Polos camiseros y camisetas (Algodón, Piqué)",
-                  "Camisas corporativas (Oxford, Popelina)",
-                  "Casacas, chalecos y polares",
-                  "Gorras, sombreros y accesorios textiles",
-                  "Ropa de trabajo industrial (Drill, Denim)",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="text-on-surface flex items-center gap-3 font-sans text-base"
-                  >
+          {/* Sección A - ¿Qué es el bordado computarizado? (sections[0]) */}
+          {sections[0] && (
+            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+              {/* Imagen izquierda */}
+              <div className="border-primary/12 bg-surface-container-lowest relative order-2 aspect-[4/3] overflow-hidden rounded-[16px] border md:order-1">
+                <div
+                  className="absolute inset-0 opacity-50"
+                  style={fabricTextureStyle}
+                />
+                <Image
+                  src={service.cardImage}
+                  alt={sections[0].heading}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="absolute inset-0 z-0 object-cover"
+                />
+                <div className="absolute inset-0 z-10 flex items-center justify-center">
+                  <div className="rounded-full bg-white/90 p-6 shadow-lg backdrop-blur-sm">
                     <span
-                      className="material-symbols-outlined text-primary text-lg"
+                      className="material-symbols-outlined text-primary text-[48px]"
                       aria-hidden="true"
                     >
-                      check_circle
+                      strikethrough_s
                     </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Grid 2×2 de swatches */}
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { src: DATA.garmentImages.polos, label: "Polos & Piqué" },
-                { src: DATA.garmentImages.camisas, label: "Camisas Oxford" },
-                {
-                  src: DATA.garmentImages.industrial,
-                  label: "Ropa Industrial",
-                },
-                { src: DATA.garmentImages.gorras, label: "Gorras" },
-              ].map(({ src, label }) => (
-                <div
-                  key={label}
-                  className="border-primary/12 bg-surface-container-lowest flex flex-col items-center gap-2 rounded-[16px] border p-4 text-center"
-                >
-                  <div className="relative mb-2 aspect-[4/3] w-full overflow-hidden rounded-lg">
-                    <Image
-                      src={src}
-                      alt={label}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-cover"
-                    />
                   </div>
-                  <span className="text-primary font-sans text-xs font-semibold tracking-wider uppercase">
-                    {label}
-                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
 
-          {/* Sección C – Proceso */}
-          <div className="border-primary/12 bg-surface-container-lowest relative flex flex-col gap-12 overflow-hidden rounded-[16px] border p-8 md:p-12">
-            <div className="bg-primary/5 absolute top-0 right-0 -z-10 h-64 w-64 rounded-bl-full" />
-            <div className="mx-auto flex max-w-2xl flex-col gap-4 text-center">
-              <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
-                Proceso de digitalización
-              </h2>
-              <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                Transformamos su logo en un programa que la máquina de bordar
-                entiende. Este proceso, conocido como &ldquo;ponchado&rdquo; o
-                matrizaje, es crucial para determinar la dirección de la
-                puntada, densidad y orden de los colores.
-              </p>
-            </div>
-            <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3">
-              <div className="absolute top-1/2 right-[16.666%] left-[16.666%] z-0 hidden h-[2px] -translate-y-1/2 bg-[#143067]/35 md:block" />
-              {[
-                {
-                  n: "1",
-                  title: "Digitalizar",
-                  desc: "Convertimos su archivo de imagen (JPG, PNG, PDF) en una matriz de bordado profesional.",
-                  accent: false,
-                },
-                {
-                  n: "2",
-                  title: "Configurar",
-                  desc: "Asignamos los colores de hilo exactos y configuramos la tensión según el tipo de tela a bordar.",
-                  accent: false,
-                },
-                {
-                  n: "3",
-                  title: "Bordar",
-                  desc: "Nuestras máquinas multicabezal ejecutan el diseño con alta velocidad y precisión absoluta.",
-                  accent: true,
-                },
-              ].map((step) => (
-                <div
-                  key={step.n}
-                  className="border-primary/12 relative z-10 flex flex-col items-center gap-4 rounded-[16px] border bg-white p-6 text-center shadow-sm"
-                >
-                  <div
-                    className={`flex h-16 w-16 items-center justify-center rounded-full font-serif text-2xl font-bold text-white shadow-md ${step.accent ? "bg-primary" : "bg-primary"}`}
-                  >
-                    {step.n}
-                  </div>
-                  <h3
-                    className={`font-sans text-lg font-semibold ${step.accent ? "text-primary" : "text-primary"}`}
-                  >
-                    {step.title}
-                  </h3>
-                  <p className="text-on-surface-variant font-sans text-sm leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Sección D – Pedidos mínimos */}
-          <div className="border-primary/12 bg-surface grid grid-cols-1 items-center gap-12 rounded-[16px] border p-8 md:grid-cols-2">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
-                Pedidos mínimos y tiempos
-              </h2>
-              <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                Atendemos desde pequeñas empresas hasta corporaciones. Nuestros
-                tiempos de entrega están optimizados para garantizar calidad sin
-                demoras innecesarias.
-              </p>
-            </div>
-            <div className="flex flex-col gap-6">
-              {[
-                {
-                  icon: "inventory_2",
-                  label: "Pedido Mínimo",
-                  value: "Desde 12 unidades",
-                  note: null,
-                },
-                {
-                  icon: "schedule",
-                  label: "Tiempo Promedio",
-                  value: "3 a 5 días hábiles",
-                  note: "Sujeto a volumen y complejidad del logo.",
-                },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="border-primary/12 flex items-center gap-4 rounded-[12px] border bg-white p-4 shadow-sm"
-                >
+              {/* Texto derecha */}
+              <div className="order-1 flex flex-col gap-4 md:order-2">
+                <h2 className="text-primary flex items-center gap-3 font-serif text-2xl font-bold md:text-3xl">
                   <span
                     className="material-symbols-outlined text-primary text-3xl"
                     aria-hidden="true"
                   >
-                    {item.icon}
+                    info
                   </span>
-                  <div>
-                    <p className="text-on-surface-variant font-sans text-[10px] font-semibold tracking-wider uppercase md:text-xs">
-                      {item.label}
-                    </p>
-                    <p className="text-primary font-sans text-lg font-bold">
-                      {item.value}
-                    </p>
-                    {item.note && (
-                      <p className="text-on-surface-variant mt-1 font-sans text-xs">
-                        {item.note}
-                      </p>
+                  {sections[0].heading}
+                </h2>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sections[0].body}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Sección B - Bordamos para hospitales... (sections[1]) + cuadrícula 2×2 de prendas */}
+          {sections[1] && (
+            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+              <div className="flex flex-col gap-4">
+                <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                  {sections[1].heading}
+                </h2>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sections[1].body}
+                </p>
+              </div>
+
+              {/* Grid 2×2 de prendas */}
+              {garmentGallery.length > 0 && (
+                <div className="grid grid-cols-2 gap-4">
+                  {garmentGallery.map((item) => (
+                    <div
+                      key={item.label}
+                      className="border-primary/12 bg-surface-container-lowest flex flex-col items-center gap-2 rounded-[16px] border p-4 text-center"
+                    >
+                      <div className="relative mb-2 aspect-[4/3] w-full overflow-hidden rounded-lg">
+                        <Image
+                          src={item.image}
+                          alt={item.label}
+                          fill
+                          sizes="(max-width: 768px) 50vw, 25vw"
+                          className="object-cover"
+                        />
+                      </div>
+                      <span className="text-primary font-sans text-xs font-semibold tracking-wider uppercase">
+                        {item.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Nueva cuadrícula de logos universitarios ── */}
+          {institutionLogos.length > 0 && (
+            <div className="border-primary/12 bg-surface-container-lowest rounded-[16px] border p-8 md:p-12">
+              <h2 className="text-primary mb-8 text-center font-serif text-2xl font-bold md:text-3xl">
+                Universidades e instituciones que bordamos
+              </h2>
+              <div className="grid grid-cols-3 gap-4 sm:grid-cols-6">
+                {institutionLogos.map((logo) => (
+                  <div
+                    key={logo.label}
+                    className="border-primary/10 flex flex-col items-center gap-2 rounded-[12px] border bg-white p-3 text-center shadow-sm"
+                  >
+                    <div className="relative h-16 w-full">
+                      <Image
+                        src={logo.image}
+                        alt={logo.label}
+                        fill
+                        sizes="(max-width: 640px) 30vw, 10vw"
+                        className="object-contain"
+                      />
+                    </div>
+                    <span className="text-primary font-sans text-[10px] font-semibold tracking-wider uppercase">
+                      {logo.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Sección C - ¿Bordado, sublimación o estampado? (sections[2]) */}
+          {sections[2] && (
+            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+              <div className="order-1 flex flex-col gap-4 md:order-2">
+                <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                  {sections[2].heading}
+                </h2>
+                {/* Renderizar el body con internal link en "sublimación textil" */}
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sections[2].body
+                    .split("sublimación textil")
+                    .map((part, i, arr) =>
+                      i < arr.length - 1 ? (
+                        <span key={i}>
+                          {part}
+                          <Link
+                            href="/servicios/sublimacion-deportiva"
+                            className="text-primary font-semibold underline underline-offset-2 hover:opacity-75"
+                          >
+                            sublimación textil
+                          </Link>
+                        </span>
+                      ) : (
+                        <span key={i}>{part}</span>
+                      )
+                    )}
+                </p>
+              </div>
+              <div className="border-primary/12 bg-surface-container-lowest relative order-2 aspect-[4/3] overflow-hidden rounded-[16px] border md:order-1">
+                <div
+                  className="absolute inset-0 opacity-30"
+                  style={fabricTextureStyle}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="grid grid-cols-3 gap-3 p-6">
+                    {["draw", "palette", "local_laundry_service"].map(
+                      (icon) => (
+                        <div
+                          key={icon}
+                          className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-full"
+                        >
+                          <span
+                            className="material-symbols-outlined text-primary text-[28px]"
+                            aria-hidden="true"
+                          >
+                            {icon}
+                          </span>
+                        </div>
+                      )
                     )}
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Sección D - Proceso de digitalización (sections[3]) + 3 pasos */}
+          {sections[3] && (
+            <div className="border-primary/12 bg-surface-container-lowest relative flex flex-col gap-12 overflow-hidden rounded-[16px] border p-8 md:p-12">
+              <div className="bg-primary/5 absolute top-0 right-0 -z-10 h-64 w-64 rounded-bl-full" />
+              <div className="mx-auto flex max-w-2xl flex-col gap-4 text-center">
+                <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                  {sections[3].heading}
+                </h2>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sections[3].body}
+                </p>
+              </div>
+              {processSteps.length > 0 && (
+                <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3">
+                  <div className="absolute top-1/2 right-[16.666%] left-[16.666%] z-0 hidden h-[2px] -translate-y-1/2 bg-[#143067]/35 md:block" />
+                  {processSteps.map((step) => (
+                    <div
+                      key={step.step}
+                      className="border-primary/12 relative z-10 flex flex-col items-center gap-4 rounded-[16px] border bg-white p-6 text-center shadow-sm"
+                    >
+                      <div className="bg-primary flex h-16 w-16 items-center justify-center rounded-full font-serif text-2xl font-bold text-white shadow-md">
+                        {step.step}
+                      </div>
+                      <h3 className="text-primary font-sans text-lg font-semibold">
+                        {step.title}
+                      </h3>
+                      <p className="text-on-surface-variant font-sans text-sm leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Sección E - Precios y pedidos (sections[4]) + pricing cards */}
+          {sections[4] && (
+            <div className="border-primary/12 bg-surface grid grid-cols-1 items-center gap-12 rounded-[16px] border p-8 md:grid-cols-2">
+              <div className="flex flex-col gap-4">
+                <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                  {sections[4].heading}
+                </h2>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sections[4].body}
+                </p>
+              </div>
+              {pricingCards.length > 0 && (
+                <div className="flex flex-col gap-6">
+                  {pricingCards.map((item) => (
+                    <div
+                      key={item.label}
+                      className="border-primary/12 flex items-center gap-4 rounded-[12px] border bg-white p-4 shadow-sm"
+                    >
+                      <span
+                        className="material-symbols-outlined text-primary text-3xl"
+                        aria-hidden="true"
+                      >
+                        {item.icon}
+                      </span>
+                      <div>
+                        <p className="text-on-surface-variant font-sans text-[10px] font-semibold tracking-wider uppercase md:text-xs">
+                          {item.label}
+                        </p>
+                        <p className="text-primary font-sans text-lg font-bold">
+                          {item.value}
+                        </p>
+                        {item.note && (
+                          <p className="text-on-surface-variant mt-1 font-sans text-xs">
+                            {item.note}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
@@ -435,8 +426,8 @@ export function ServicioBordadosDetalle() {
             </p>
           </div>
           <div className="mx-auto flex max-w-3xl flex-col gap-4">
-            {DATA.faqs.map((faq) => (
-              <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+            {service.faqs.map((faq) => (
+              <FAQItem key={faq.question} q={faq.question} a={faq.answer} />
             ))}
           </div>
         </div>
@@ -454,15 +445,13 @@ export function ServicioBordadosDetalle() {
               }}
             />
             <h2 className="z-10 font-serif text-[28px] leading-tight font-bold text-white md:text-[48px]">
-              ¿Necesitas bordar tu logo?
+              {service.ctaBanner.title}
             </h2>
             <p className="z-10 max-w-2xl font-sans text-lg leading-relaxed text-white/90">
-              Envíanos tu diseño y la cantidad que necesitas. Te enviaremos una
-              cotización detallada y una prueba digital de cómo quedará tu
-              matriz de bordado.
+              {service.ctaBanner.description}
             </p>
             <a
-              href={whatsapp}
+              href={service.ctaBanner.ctaHref}
               target="_blank"
               rel="noopener noreferrer"
               className="z-10 mt-4 inline-flex cursor-pointer items-center gap-2 rounded-[12px] bg-white px-8 py-4 font-sans text-base font-bold text-[#143067] shadow-md transition-colors hover:bg-white/90"
@@ -474,7 +463,7 @@ export function ServicioBordadosDetalle() {
               >
                 chat
               </span>
-              Solicitar cotización
+              {service.ctaBanner.ctaText}
             </a>
           </div>
         </div>
