@@ -157,6 +157,22 @@ export interface ServiceSection {
   body: string;
 }
 
+export interface ApplicationCategory {
+  icon: string;
+  title: string;
+  examples: string;
+  /** id de anchor para navegación interna */
+  anchorId?: string;
+}
+
+export interface CategoryDetail {
+  id: string;
+  icon: string;
+  title: string;
+  body: string;
+  bulletPoints?: string[];
+}
+
 export interface ServicePage {
   slug: string;
   navLabel: string;
@@ -174,6 +190,8 @@ export interface ServicePage {
     description: string;
     ctaText: string;
     ctaHref: string;
+    secondaryCtaText?: string;
+    secondaryCtaHref?: string;
   };
   cardImage: string;
   sections: ServiceSection[];
@@ -182,4 +200,6 @@ export interface ServicePage {
   garmentGallery?: GalleryItem[];
   pricingCards?: PricingCard[];
   institutionLogos?: GalleryItem[];
+  applicationCategories?: ApplicationCategory[];
+  categoryDetails?: CategoryDetail[];
 }

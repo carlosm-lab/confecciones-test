@@ -4,10 +4,9 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import CertificacionesClient from "@/components/empresa/CertificacionesClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/certificaciones`;
-const PAGE_TITLE =
-  "Formación y Experiencia | Confecciones Liss — San Miguel, El Salvador";
+const PAGE_TITLE = "Formación y Experiencia del Equipo | Confecciones Liss SV";
 const PAGE_DESCRIPTION =
-  "Conoce la formación técnica y la experiencia del equipo de Confecciones Liss: más de 20 años de trayectoria en confección, certificaciones reales y especialización por área.";
+  "Conoce la formación técnica y experiencia del equipo de Confecciones Liss: más de 20 años de trayectoria en confección en San Miguel, El Salvador.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

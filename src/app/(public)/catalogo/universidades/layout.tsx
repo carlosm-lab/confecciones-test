@@ -10,10 +10,11 @@ import { siteConfig } from "@/config/site";
 const PAGE_URL = `${siteConfig.url}/catalogo/universidades`;
 
 export const metadata: Metadata = {
-  title:
-    "Uniformes Universitarios | UNIVO, IEPROES, UGB, UES, UNAB, UMA — Confecciones Liss",
+  title: {
+    absolute: "Uniformes Universitarios en San Miguel | Confecciones Liss",
+  },
   description:
-    "Scrubs clínicos con colores oficiales para UNIVO, IEPROES, UGB, UNAB, UES y UMA. Confeccionados a la medida en San Miguel, El Salvador. Tela Sincatex, bordado de carrera incluido. Desde $39.50.",
+    "Scrubs clínicos con colores oficiales para UNIVO, IEPROES, UGB, UNAB, UES y UMA. Confeccionados a la medida en San Miguel. Desde $39.50.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Uniformes Universitarios — Confecciones Liss",

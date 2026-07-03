@@ -5,10 +5,9 @@ import EquipoClient from "@/components/empresa/EquipoClient";
 import { teamData } from "@/data/team";
 
 const PAGE_URL = `${siteConfig.url}/empresa/equipo`;
-const PAGE_TITLE =
-  "Nuestro Equipo | Confecciones Liss — San Miguel, El Salvador";
+const PAGE_TITLE = "Nuestro Equipo de Trabajo | Confecciones Liss San Miguel";
 const PAGE_DESCRIPTION =
-  "Conoce al equipo de Confecciones Liss: especialistas en confección, control de calidad, logística y transformación digital que hacen posible cada uniforme entregado en El Salvador.";
+  "Conoce al equipo de Confecciones Liss: especialistas en confección, control de calidad, logística y estrategia digital detrás de cada uniforme.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

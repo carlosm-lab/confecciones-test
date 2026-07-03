@@ -4,10 +4,9 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import InstalacionesClient from "@/components/empresa/InstalacionesClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/instalaciones`;
-const PAGE_TITLE =
-  "Instalaciones del Taller | Confecciones Liss — San Miguel, El Salvador";
+const PAGE_TITLE = "Instalaciones del Taller | Confecciones Liss San Miguel";
 const PAGE_DESCRIPTION =
-  "Conoce las instalaciones de Confecciones Liss en Barrio La Merced, San Miguel: áreas de corte, confección, bordado, control de calidad y empaque de uniformes escolares, médicos y empresariales.";
+  "Conoce las instalaciones de Confecciones Liss en San Miguel: áreas de corte, confección, bordado, calidad y empaque de uniformes escolares.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

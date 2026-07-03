@@ -48,8 +48,7 @@ import "@/env";
 
 export const metadata = {
   title: {
-    default:
-      "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
+    default: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Liss",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,

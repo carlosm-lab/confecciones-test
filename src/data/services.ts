@@ -18,7 +18,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     seoTitle:
       "Bordado de Uniformes UNIVO, UNAB, UGB, IEPROES y más | San Miguel",
     seoDescription:
-      "Bordado de logos institucionales para IEPROES, UNIVO, UNAB, UES, UGB, UMA, colegios, hospitales, clínicas y empresas en San Miguel, El Salvador. Bordado individual o incluido en tu pedido de uniformes.",
+      "Bordado de logos institucionales para IEPROES, UNIVO, UNAB, UES, UGB, UMA, colegios, hospitales y empresas en San Miguel, El Salvador.",
     description:
       "Personalizamos prendas con bordado computarizado de alta precisión en nuestro taller de San Miguel, El Salvador. La mayoría de nuestros bordados forman parte de un pedido de uniforme, pero también aceptamos bordado individual sobre prendas que el cliente ya tiene.",
     cardDescription:
@@ -151,65 +151,248 @@ export const SERVICE_PAGES: ServicePage[] = [
     ],
   },
   {
-    slug: "sublimacion-deportiva",
+    slug: "sublimacion",
     navLabel: "Sublimación",
     navIcon: "palette",
-    title: "Sublimación Textil Full Color",
+    title: "Sublimación Textil y de Objetos",
     subtitle: "Sublimación",
     seoTitle:
-      "Sublimación Textil y Deportiva en San Miguel | Confecciones Liss",
+      "Sublimación en San Miguel | Ropa, Tazas y Termos | Confecciones Liss",
     seoDescription:
-      "Impresión de telas por sublimación para uniformes deportivos, promocionales y banderas. Colores intensos que no se decoloran. San Miguel, El Salvador.",
+      "Sublimación full color en San Miguel, El Salvador: camisas, uniformes, tazas, termos, llaveros y artículos promocionales. Trabajos desde una sola pieza.",
     description:
-      "Servicio de impresión textil mediante calor. La técnica ideal para prendas de poliéster deportivas donde la tinta pasa a ser parte de la fibra, asegurando que nunca se cuartee ni pierda color. Ideal para diseños complejos o fotografías.",
+      "Servicio de sublimación full color en San Miguel. Aplicamos diseños de alta resolución sobre prendas de tela y sobre objetos como tazas, termos y artículos promocionales. Trabajamos desde una sola pieza, sin pedido mínimo.",
     cardDescription:
-      "Impresión textil mediante calor para prendas deportivas. Tinta permanente de alta resolución que no se cuartea, ni perderá su color.",
+      "Sublimación full color sobre ropa, tazas, termos y artículos promocionales, desde una sola pieza.",
     heroGradient: "bg-purple-900 text-white",
     cardImage: "/images/servicios/sublimacion.png",
     heroFeatures: [
-      { icon: "brush", text: "Colores vibrantes" },
-      { icon: "wash", text: "No se decolora" },
-      { icon: "layers", text: "Textura invisible" },
+      { icon: "palette", text: "Full color" },
+      { icon: "shopping_bag", text: "Sin pedido mínimo" },
+      { icon: "checkroom", text: "Ropa y objetos" },
     ],
     ctaBanner: {
-      title: "¿Tienes un diseño llamativo en mente?",
+      title: "¿Tienes un diseño en mente?",
       description:
-        "Podemos plasmarlo en tela con 100% de precisión cromática. Envíanos tu arte.",
+        "Envíanos tu arte y te decimos si tu prenda u objeto es apto para sublimación. Cotiza sin compromiso.",
       ctaText: "Cotizar sublimación",
       ctaHref: siteConfig.links.whatsappDirect,
+      secondaryCtaText: "Ver también Bordado",
+      secondaryCtaHref: "/servicios/bordados-personalizados",
     },
     sections: [
       {
-        heading: "¿Qué es la sublimación textil?",
-        body: "La sublimación es una técnica de impresión donde tintas especiales se transforman de estado sólido a gaseoso mediante calor y presión, penetrando las fibras de poliéster y fusionándose con ellas a nivel molecular. El resultado es una impresión que no se siente al tacto, no se cuartea, no se despega y mantiene colores vibrantes lavado tras lavado.",
+        heading: "¿Qué es la sublimación?",
+        body: "La sublimación es un proceso de impresión mediante calor: la tinta pasa de estado sólido a gaseoso y se fija sobre la superficie de la prenda u objeto. Es una técnica de impresión estándar, no un proceso especializado, y es ideal para diseños full color, degradados y fotografías sin costo adicional por cantidad de colores.",
       },
       {
-        heading: "¿Para qué tipo de prendas es ideal?",
-        body: "La sublimación funciona exclusivamente sobre telas de poliéster o mezclas con alto contenido de poliéster (mínimo 65%). Es la técnica por excelencia para uniformes deportivos, jerseys de fútbol, camisetas de ciclismo, banderas, banners promocionales y cualquier prenda donde necesites colores intensos y diseños de borde a borde sin limitaciones.",
+        heading: "Sublimación de camisetas, tazas, termos y regalos",
+        body: "Sublimamos sobre prendas de tela (camisas, uniformes deportivos y promocionales, gorras) y también sobre objetos rígidos como tazas, termos y llaveros. El resultado es full color, pero se aplica únicamente en las zonas o prendas donde la técnica es compatible con el material.",
       },
       {
-        heading: "Ventajas sobre el estampado tradicional",
-        body: "A diferencia de la serigrafía o el vinil, la sublimación permite imprimir degradados, fotografías y diseños ilimitados en color sin costo adicional por cada color. La tinta se convierte en parte de la tela, por lo que no agrega peso, no altera la textura y la prenda mantiene su transpirabilidad original — algo crítico en ropa deportiva.",
+        heading: "Uniformes deportivos e institucionales",
+        body: "Somos el mismo taller que confecciona uniformes institucionales para escuelas y universidades de San Miguel. Eso significa que entendemos las tallas, cortes y necesidades reales de equipos deportivos —no solo de impresión. Sublimamos camisetas y uniformes deportivos con nombre, número y escudo de equipo para ligas, academias y torneos escolares.",
+      },
+      {
+        heading: "¿Traes tu objeto o lo compras con nosotros?",
+        body: "Ambas opciones son posibles. Puedes traer tu propia taza, termo, cojín o camiseta para que la sublimemos con tu diseño, siempre que el material sea compatible con la técnica. Si prefieres no comprar el producto por tu cuenta, también tenemos artículos disponibles en el taller listos para personalizar. Te confirmamos la opción más conveniente al momento de cotizar.",
+      },
+      {
+        heading: "Cuidado y durabilidad",
+        body: "La duración del color depende principalmente del cuidado que se le dé a la prenda u objeto: exposición al sol, tipo de lavado y uso diario influyen en cómo se conserva el diseño con el tiempo. Recomendamos seguir las indicaciones de cuidado que te compartimos junto con tu pedido.",
       },
       {
         heading: "Nuestro proceso de sublimación",
-        body: "Recibimos tu diseño en alta resolución (mínimo 300 DPI), lo ajustamos a la plantilla de la prenda, imprimimos en papel transfer con tintas Epson originales y aplicamos calor a 200°C durante 40 segundos en nuestra prensa industrial. El resultado es un color exacto, homogéneo y permanente.",
+        body: "Recibimos tu diseño, lo ajustamos al tamaño de la prenda u objeto, lo imprimimos en papel especial con tinta de sublimación y lo transferimos mediante calor. El resultado es un diseño de bordes definidos y colores intensos.",
+      },
+      {
+        heading: "¿Sublimación o bordado? Guía rápida",
+        body: "Ambas técnicas tienen usos distintos y en Confecciones Liss ofrecemos las dos, así que te recomendamos la que mejor se ajuste a tu proyecto.",
+      },
+      {
+        heading: "El mismo taller que confecciona uniformes institucionales",
+        body: "La sublimación es uno de los servicios de un taller con más de 20 años de trayectoria en confección, ubicado en el Barrio La Merced, San Miguel. El mismo equipo que confecciona uniformes escolares, médicos y empresariales —incluyendo trabajo institucional para el Ministerio de Educación y universidades como UNIVO, UNAB, UGB, UES, UMA e IEPROES— es quien sublima tu proyecto. Esto significa que entendemos de tallas, cortes y necesidades reales, no solo de impresión.",
+      },
+      {
+        heading: "¿Puedo pedir sublimación si no vivo en San Miguel?",
+        body: "Sí. Coordinamos envíos a nivel nacional en El Salvador a través de transporte de terceros, con un costo adicional de $3.00 a $5.00 según destino, peso y volumen del pedido.",
+      },
+    ],
+    applicationCategories: [
+      {
+        icon: "checkroom",
+        title: "Ropa y uniformes",
+        examples:
+          "Camisas, jerseys deportivos, uniformes promocionales, gorras.",
+        anchorId: "ropa-uniformes",
+      },
+      {
+        icon: "local_cafe",
+        title: "Tazas y termos",
+        examples: "Tazas cerámicas, termos metálicos, vasos personalizados.",
+        anchorId: "tazas-termos",
+      },
+      {
+        icon: "mouse",
+        title: "Mousepads",
+        examples: "Diseños personalizados para oficina, gaming o regalo.",
+        anchorId: "mousepads",
+      },
+      {
+        icon: "bed",
+        title: "Cojines y almohadas",
+        examples:
+          "Cojines decorativos con fotos, diseños o mensajes personalizados.",
+        anchorId: "cojines-almohadas",
+      },
+      {
+        icon: "extension",
+        title: "Platos y rompecabezas",
+        examples:
+          "Artículos de regalo: platos decorativos y rompecabezas personalizados.",
+        anchorId: "platos-rompecabezas",
+      },
+      {
+        icon: "key",
+        title: "Accesorios y detalles",
+        examples: "Llaveros, mousepads y artículos promocionales varios.",
+        anchorId: "accesorios",
+      },
+    ],
+    categoryDetails: [
+      {
+        id: "ropa-uniformes",
+        icon: "checkroom",
+        title: "Camisetas y uniformes deportivos",
+        body: "Sublimamos camisetas y uniformes deportivos full color, incluyendo nombre, número y escudo de equipo. Es la opción ideal para ligas, academias deportivas, torneos escolares y equipos empresariales que buscan un diseño único sin límite de colores. Al ser el mismo taller que confecciona uniformes institucionales para escuelas y universidades de San Miguel, entendemos las tallas, cortes y necesidades reales de equipos deportivos.",
+        bulletPoints: [
+          "Nombre y número personalizados por jugador",
+          "Escudos y logos de equipo a color completo",
+          "Camisetas propias o proporcionadas por el taller",
+        ],
+      },
+      {
+        id: "tazas-termos",
+        icon: "local_cafe",
+        title: "Tazas y termos personalizados",
+        body: "Ideal para regalos, detalles corporativos o uso personal. Puedes traer tu propia taza o termo compatible con sublimación, o elegir entre los productos que ya tenemos disponibles en el taller.",
+        bulletPoints: [
+          "Tazas cerámicas y termos metálicos",
+          "Acepta tu propio producto o compra uno con nosotros",
+          "Ideal para regalos individuales o pedidos corporativos",
+        ],
+      },
+      {
+        id: "mousepads",
+        icon: "mouse",
+        title: "Mousepads personalizados",
+        body: "Diseños personalizados para oficina, gaming o regalo. Buena opción para artículos promocionales de empresa o para regalar algo único con un diseño propio.",
+      },
+      {
+        id: "cojines-almohadas",
+        icon: "bed",
+        title: "Cojines y almohadas",
+        body: "Cojines decorativos con fotos, diseños o mensajes personalizados. Un producto muy solicitado para fechas especiales, regalos del día de la madre, cumpleaños o decoración del hogar.",
+      },
+      {
+        id: "platos-rompecabezas",
+        icon: "extension",
+        title: "Platos, rompecabezas y regalos personalizados",
+        body: "Artículos pensados para regalo: platos decorativos y rompecabezas con fotografías o diseños personalizados. Populares para ocasiones especiales y detalles únicos.",
+      },
+      {
+        id: "accesorios",
+        icon: "key",
+        title: "Llaveros y accesorios",
+        body: "Detalles pequeños con gran impacto: llaveros personalizados ideales como recuerdo de evento, regalo promocional de empresa o detalle individual.",
+      },
+    ],
+    processSteps: [
+      {
+        step: "1",
+        title: "Diseño",
+        description:
+          "Preparamos el arte digital ajustado a la prenda u objeto a sublimar.",
+      },
+      {
+        step: "2",
+        title: "Impresión",
+        description:
+          "Imprimimos el diseño en papel especial con tinta de sublimación.",
+      },
+      {
+        step: "3",
+        title: "Prensado",
+        description:
+          "Aplicamos calor y presión para transferir el diseño a la superficie.",
+      },
+      {
+        step: "4",
+        title: "Terminado",
+        description:
+          "Enfriamos y revisamos la calidad del resultado antes de entregar.",
+      },
+    ],
+    pricingCards: [
+      {
+        icon: "inventory_2",
+        label: "Pedido Mínimo",
+        value: "Desde 1 pieza",
+        note: "Aceptamos trabajos individuales, sin volumen mínimo.",
+      },
+      {
+        icon: "local_shipping",
+        label: "Envíos nacionales",
+        value: "$3.00 – $5.00",
+        note: "Coordinamos envíos a todo El Salvador a través de transporte de terceros.",
       },
     ],
     faqs: [
       {
         question: "¿Se puede sublimar sobre algodón?",
         answer:
-          "No de forma directa. La sublimación requiere fibras de poliéster. Para algodón recomendamos bordado o serigrafía.",
+          "La sublimación funciona mejor sobre materiales sintéticos como el poliéster o sobre objetos con recubrimiento especial (como tazas). Sobre algodón puro no se fija correctamente; en esos casos recomendamos bordado o estampado.",
       },
       {
-        question: "¿Se decolora con el lavado?",
+        question: "¿El color se decolora con el tiempo?",
         answer:
-          "No. La tinta se fusiona molecularmente con la fibra, por lo que no se despega ni decolora. Recomendamos lavar al revés y sin cloro para maximizar la vida útil.",
+          "La durabilidad depende del cuidado que le des a la prenda u objeto. Con un cuidado adecuado (evitar exposición prolongada al sol y seguir las indicaciones de lavado), el diseño se mantiene en buen estado por mucho tiempo.",
       },
       {
-        question: "¿Cuántas prendas mínimo puedo pedir?",
-        answer: "Aceptamos desde una sola prenda. No hay pedido mínimo.",
+        question: "¿Cuántas piezas mínimo puedo pedir?",
+        answer:
+          "Aceptamos trabajos desde una sola pieza, ya sea una prenda o un objeto como una taza o termo.",
+      },
+      {
+        question: "¿También subliman tazas o termos personalizados?",
+        answer:
+          "Sí. Además de ropa, sublimamos tazas, termos, llaveros y otros artículos promocionales con tu diseño.",
+      },
+      {
+        question:
+          "¿Puedo llevar mi propia taza o camiseta para que la sublimen?",
+        answer:
+          "Sí, siempre que el material sea compatible con sublimación. También puedes comprar el producto directamente con nosotros si prefieres no conseguirlo por tu cuenta.",
+      },
+      {
+        question: "No tengo un diseño listo, ¿me pueden ayudar?",
+        answer:
+          "Sí, cuéntanos la idea que tienes en mente y podemos ayudarte a preparar un diseño adecuado para sublimación.",
+      },
+      {
+        question: "¿Hacen pedidos corporativos o para eventos en volumen?",
+        answer:
+          "Sí. Atendemos desde pedidos individuales hasta pedidos corporativos de mayor volumen, como camisetas para todo un equipo, tazas para regalos empresariales o artículos promocionales para un evento.",
+      },
+      {
+        question: "¿Puedo pedir sublimación si no vivo en San Miguel?",
+        answer:
+          "Sí. Coordinamos envíos a nivel nacional en El Salvador a través de transporte de terceros, con un costo adicional de $3.00 a $5.00 según destino, peso y volumen del pedido.",
+      },
+      {
+        question: "¿Cuánto tarda un pedido de sublimación?",
+        answer:
+          "El tiempo de entrega varía según la cantidad y el tipo de producto. Para pedidos pequeños puede estar listo en 1 a 3 días hábiles. Pedidos grandes o con artículos especiales pueden tomar más tiempo. Confirmamos el plazo exacto al momento de cotizar.",
       },
     ],
   },
@@ -220,9 +403,9 @@ export const SERVICE_PAGES: ServicePage[] = [
     title: "Confección y Sastrería a la Medida",
     subtitle: "A Medida",
     seoTitle:
-      "Taller de Confección a la Medida en San Miguel | Confecciones Liss",
+      "Confección de Ropa a la Medida en San Miguel | Confecciones Liss",
     seoDescription:
-      "¿No encuentras tu talla? En Confecciones Liss tomamos tus medidas exactas y creamos prendas perfectas para tu cuerpo. Plus size y petite. San Miguel, El Salvador.",
+      "¿No encuentras tu talla? En Confecciones Liss tomamos tus medidas exactas y creamos prendas perfectas para tu cuerpo. Plus size y petite.",
     description:
       "Olvídate de comprar uniformes estándar que no te favorecen. Visita nuestro taller en Barrio La Merced; tomamos más de 12 medidas anatómicas para crear una prenda que se adapta perfectamente a tus curvas, altura y complexión, brindando un entalle profesional incomparable.",
     cardDescription:

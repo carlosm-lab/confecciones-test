@@ -4,10 +4,9 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import TransparenciaClient from "@/components/empresa/TransparenciaClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/transparencia`;
-const PAGE_TITLE =
-  "Centro de Transparencia | Confecciones Liss — San Miguel, El Salvador";
+const PAGE_TITLE = "Centro de Transparencia | Confecciones Liss San Miguel";
 const PAGE_DESCRIPTION =
-  "Conoce cómo trabajamos en Confecciones Liss: nuestras decisiones, compromisos públicos, políticas oficiales y respuestas a las preguntas más frecuentes de nuestros clientes.";
+  "Conoce cómo trabajamos en Confecciones Liss: nuestras decisiones, compromisos públicos y políticas oficiales para todos nuestros clientes.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

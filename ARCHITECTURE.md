@@ -116,7 +116,7 @@ This document tracks important architectural decisions made during the project l
 - Se asegura una réplica exacta de los prototipos de Stitch sin alterar la consistencia del resto de las páginas del sitio.
 - A la fecha, se han implementado por completo los 5 componentes detallados específicos:
   1. `ServicioBordadosDetalle` (`bordados-personalizados`)
-  2. `ServicioSublimacionDetalle` (`sublimacion-deportiva`)
+  2. `ServicioSublimacionDetalle` (`sublimacion`)
   3. `ServicioSastreriaDetalle` (`confeccion-a-medida`)
   4. `ServicioManoObraDetalle` (`mano-de-obra`)
   5. `ServicioRopaCasualDetalle` (`ropa-general`)

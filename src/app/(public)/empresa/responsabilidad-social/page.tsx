@@ -4,10 +4,9 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import ResponsabilidadSocialClient from "@/components/empresa/ResponsabilidadSocialClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/responsabilidad-social`;
-const PAGE_TITLE =
-  "Responsabilidad Social | Confecciones Liss — San Miguel, El Salvador";
+const PAGE_TITLE = "Responsabilidad Social del Taller | Confecciones Liss SV";
 const PAGE_DESCRIPTION =
-  "Conoce el compromiso de Confecciones Liss con la comunidad de San Miguel: generación de empleo local, trabajo honesto y crecimiento de un equipo especializado desde 2005.";
+  "Conoce el compromiso de Confecciones Liss con San Miguel: generación de empleo local, trabajo honesto y un equipo especializado desde 2005.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

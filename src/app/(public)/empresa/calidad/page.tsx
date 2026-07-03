@@ -5,9 +5,9 @@ import CalidadClient from "@/components/empresa/CalidadClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/calidad`;
 const PAGE_TITLE =
-  "Control de Calidad | Confecciones Liss — San Miguel, El Salvador";
+  "Control de Calidad de Uniformes | Confecciones Liss San Miguel";
 const PAGE_DESCRIPTION =
-  "Conoce el proceso de control de calidad de Confecciones Liss: revisión de costuras, acabados, bordados y pruebas de resistencia antes de la entrega de cada uniforme.";
+  "Conoce el control de calidad de Confecciones Liss: revisión de costuras, acabados y pruebas de resistencia antes de entregar cada uniforme confeccionado.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

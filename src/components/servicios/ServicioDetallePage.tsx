@@ -18,8 +18,8 @@ export function ServicioDetallePage({ service }: ServicioDetallePageProps) {
     return <ServicioBordadosDetalle service={service} />;
   }
 
-  if (service.slug === "sublimacion-deportiva") {
-    return <ServicioSublimacionDetalle />;
+  if (service.slug === "sublimacion") {
+    return <ServicioSublimacionDetalle service={service} />;
   }
 
   if (service.slug === "confeccion-a-medida") {

@@ -9,12 +9,12 @@ interface GoogleReviewsProps {
 }
 
 export function GoogleReviews({ reviews }: GoogleReviewsProps) {
-  // Enlaces de cada reseña compartidos por el usuario
-  const reviewLinks = [
-    "https://maps.app.goo.gl/duFjMseLjYQHTERh6", // Iris M.
-    "https://maps.app.goo.gl/NnM5yP4f2Kd8UPxY7", // RUTH MEJIA
-    "https://maps.app.goo.gl/GgEdxryKJ2Qtpu7E8", // Erick Salvador
-  ];
+  // Enlaces de cada reseña compartidos por el usuario, mapeados por nombre para consistencia
+  const reviewLinksByName: Record<string, string> = {
+    "Iris M.": "https://maps.app.goo.gl/duFjMseLjYQHTERh6",
+    "RUTH MEJIA": "https://maps.app.goo.gl/NnM5yP4f2Kd8UPxY7",
+    "Erick Salvador": "https://maps.app.goo.gl/GgEdxryKJ2Qtpu7E8",
+  };
 
   return (
     <section
@@ -64,8 +64,9 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {reviews.map((r, index) => {
-            // Asignar el enlace correspondiente si es una de las 3 conocidas, o por defecto el perfil de G Maps
-            const href = reviewLinks[index] || siteConfig.links.googleMaps;
+            // Asignar el enlace correspondiente si es una de las conocidas, o por defecto el perfil de G Maps
+            const href =
+              reviewLinksByName[r.author_name] || siteConfig.links.googleMaps;
 
             return (
               <a

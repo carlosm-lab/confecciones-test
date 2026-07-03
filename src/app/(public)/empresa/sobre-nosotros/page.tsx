@@ -5,9 +5,9 @@ import SobreNosotrosClient from "@/components/empresa/SobreNosotrosClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/sobre-nosotros`;
 const PAGE_TITLE =
-  "Sobre Nosotros | Confecciones Liss — Taller de Uniformes en San Miguel, El Salvador";
+  "Sobre Nosotros | Confecciones Liss, Taller en San Miguel SV";
 const PAGE_DESCRIPTION =
-  "Conoce la historia de Confecciones Liss: más de 20 años confeccionando uniformes escolares, médicos y empresariales en San Miguel, El Salvador. Experiencia verificable desde 2005.";
+  "Conoce la historia de Confecciones Liss: más de 20 años confeccionando uniformes en San Miguel, El Salvador. Experiencia verificable desde 2005.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

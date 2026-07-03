@@ -5,9 +5,9 @@ import ProcesoDeConfeccionClient from "@/components/empresa/ProcesoDeConfeccionC
 
 const PAGE_URL = `${siteConfig.url}/empresa/proceso-de-confeccion`;
 const PAGE_TITLE =
-  "Proceso de Confección Textil | Confecciones Liss — San Miguel, El Salvador";
+  "Proceso de Confección Textil | Confecciones Liss San Miguel";
 const PAGE_DESCRIPTION =
-  "Conoce el proceso completo de confección de Confecciones Liss: desde el primer contacto hasta la entrega, pasando por corte, confección, bordado y control de calidad.";
+  "Conoce el proceso de confección de Confecciones Liss: del primer contacto a la entrega, pasando por corte, costura y control de calidad final.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

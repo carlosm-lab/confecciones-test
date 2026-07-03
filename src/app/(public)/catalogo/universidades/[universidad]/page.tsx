@@ -29,7 +29,7 @@ const UNIVERSITY_CONFIG: Record<
     nombre: "Universidad de Oriente",
     seoTitle: "Uniformes UNIVO — Universidad de Oriente | Confecciones Liss",
     seoDescription:
-      "Scrubs clínicos con los colores oficiales de UNIVO (Universidad de Oriente). Enfermería, Medicina y Odontología. Tela Sincatex, bordado de carrera incluido. San Miguel, El Salvador.",
+      "Scrubs clínicos con los colores oficiales de UNIVO: Enfermería, Medicina y Odontología. Bordado de carrera incluido. San Miguel, El Salvador.",
   },
   ieproes: {
     sigla: "IEPROES",
@@ -57,7 +57,7 @@ const UNIVERSITY_CONFIG: Record<
     nombre: "Universidad de El Salvador",
     seoTitle: "Uniformes UES — Universidad de El Salvador | Confecciones Liss",
     seoDescription:
-      "Uniformes clínicos con colores oficiales para la Universidad de El Salvador (UES). Medicina, Enfermería y Farmacia. Bordado de carrera incluido. San Miguel.",
+      "Uniformes clínicos con los colores oficiales de la UES: Medicina, Enfermería y Farmacia. Bordado de carrera incluido. San Miguel, El Salvador.",
   },
   uma: {
     sigla: "UMA",

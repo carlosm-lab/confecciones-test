@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { heroTrustBadges } from "@/lib/seo-data";
+import { ServicePage } from "@/data/types";
 
 const dotTextureStyle = {
   backgroundImage: `url('data:image/svg+xml;utf8,%3Csvg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23143067" fill-opacity="1" fill-rule="evenodd"%3E%3Ccircle cx="3" cy="3" r="3"/%3E%3Ccircle cx="13" cy="13" r="3"/%3E%3C/g%3E%3C/svg%3E')`,
@@ -23,7 +23,6 @@ interface FAQItemProps {
 
 function FAQItem({ question, answer }: FAQItemProps) {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div className="border-primary/12 overflow-hidden rounded-xl border bg-white shadow-sm">
       <button
@@ -58,24 +57,30 @@ function FAQItem({ question, answer }: FAQItemProps) {
   );
 }
 
-export function ServicioSublimacionDetalle() {
-  const whatsappUrl = siteConfig.links.whatsappDirect;
+interface ServicioSublimacionDetalleProps {
+  service: ServicePage;
+}
+
+export function ServicioSublimacionDetalle({
+  service,
+}: ServicioSublimacionDetalleProps) {
+  const whatsappUrl =
+    service.ctaBanner.ctaHref || siteConfig.links.whatsappDirect;
+  const sec = (i: number) => service.sections?.[i];
 
   return (
     <div className="w-full">
-      {/* ── HERO HOME TEMPLATE ── */}
+      {/* HERO */}
       <section className="relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
         <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row-reverse lg:items-center lg:gap-16">
           <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
             <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-[28px] leading-tight font-bold md:mb-10 md:flex md:flex-col md:items-center md:text-[48px] lg:mb-6 lg:block lg:text-left">
               <span className="block w-full text-center lg:text-left">
-                Sublimación Textil Full Color
+                {service.title}
               </span>
             </h1>
-
-            {/* Contenedor inferior de contenido (Móvil / Tablet) */}
             <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
-              {/* IMAGEN HERO - VERSIÓN MÓVIL */}
+              {/* IMAGE HERO - MOBILE */}
               <div
                 className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
                 style={{ animationDelay: "300ms" }}
@@ -85,7 +90,7 @@ export function ServicioSublimacionDetalle() {
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
                     <Image
                       fill
-                      alt="Jerseys deportivos sublimados"
+                      alt="Objetos y ropa sublimados"
                       className="rounded-xl object-cover object-center"
                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
                       sizes="(max-width:768px) 80vw, 40vw"
@@ -94,24 +99,16 @@ export function ServicioSublimacionDetalle() {
                   </div>
                 </div>
               </div>
-
-              {/* COLUMNA DE TEXTO Y ACCIONES */}
+              {/* TEXT COLUMN */}
               <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
                 <p
                   className="animate-fade-in-up text-on-surface-variant mb-6 w-full font-sans text-lg leading-relaxed"
                   style={{ animationDelay: "150ms" }}
                 >
-                  Impresión textil mediante calor para prendas deportivas. Tinta
-                  permanente que se funde con la fibra y nunca se cuartea ni
-                  pierde color.
+                  {service.description}
                 </p>
-                <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
-                  {[
-                    { icon: "palette", text: "Colores vibrantes" },
-                    { icon: "water_drop", text: "No se decolora" },
-                    { icon: "touch_app", text: "Textura invisible" },
-                    { icon: "verified", text: "Alta resolución" },
-                  ].map((b, index) => (
+                <div className="mb-8 grid w-full grid-cols-1 gap-x-3 gap-y-2.5 sm:grid-cols-3">
+                  {service.heroFeatures.map((b, index) => (
                     <div
                       key={b.text}
                       className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
@@ -145,7 +142,7 @@ export function ServicioSublimacionDetalle() {
               </div>
             </div>
           </div>
-          {/* IMAGEN HERO - VERSIÓN DESKTOP */}
+          {/* IMAGE HERO - DESKTOP */}
           <div
             className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
             style={{ animationDelay: "300ms" }}
@@ -155,7 +152,7 @@ export function ServicioSublimacionDetalle() {
               <div className="relative h-full w-full overflow-hidden rounded-xl">
                 <Image
                   fill
-                  alt="Jerseys deportivos sublimados"
+                  alt="Objetos y ropa sublimados"
                   className="rounded-xl object-cover object-center"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
                   sizes="40vw"
@@ -167,75 +164,135 @@ export function ServicioSublimacionDetalle() {
         </div>
       </section>
 
-      {/* Editorial Blocks */}
+      {/* APPLICATION CATEGORIES QUICK GRID */}
+      {service.applicationCategories &&
+        service.applicationCategories.length > 0 && (
+          <section className="border-primary/5 border-y bg-white px-5 py-10 md:px-8 md:py-14">
+            <div className="mx-auto max-w-screen-2xl">
+              <p className="text-outline mb-6 text-center font-sans text-xs font-semibold tracking-widest uppercase">
+                ¿Qué sublimamos?
+              </p>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+                {service.applicationCategories.map((cat) => (
+                  <a
+                    key={cat.anchorId ?? cat.title}
+                    href={cat.anchorId ? `#${cat.anchorId}` : undefined}
+                    className="border-primary/12 group flex flex-col items-center gap-2 rounded-2xl border bg-white p-4 text-center shadow-sm transition hover:shadow-md"
+                  >
+                    <div className="bg-primary/5 text-primary group-hover:bg-primary/10 flex h-11 w-11 items-center justify-center rounded-full transition">
+                      <span className="material-symbols-outlined text-[22px]">
+                        {cat.icon}
+                      </span>
+                    </div>
+                    <span className="text-primary font-sans text-xs leading-tight font-semibold">
+                      {cat.title}
+                    </span>
+                    <span className="text-on-surface-variant font-sans text-[11px] leading-snug">
+                      {cat.examples}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+      {/* EDITORIAL BLOCKS */}
       <section className="w-full px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-screen-2xl">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
-            {/* Main Content Column */}
+            {/* Main Content */}
             <div className="space-y-16 md:col-span-7">
-              {/* What is it? */}
-              <div className="space-y-6">
-                <div className="mb-4 flex items-center gap-4">
-                  <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
-                    <span className="material-symbols-outlined">layers</span>
+              {/* Sec 0 */}
+              {sec(0) && (
+                <div className="space-y-6">
+                  <div className="mb-4 flex items-center gap-4">
+                    <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
+                      <span className="material-symbols-outlined">layers</span>
+                    </div>
+                    <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                      {sec(0)!.heading}
+                    </h2>
                   </div>
-                  <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
-                    ¿Qué es la sublimación textil?
-                  </h2>
+                  <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                    {sec(0)!.body}
+                  </p>
                 </div>
-                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                  Es un proceso físico mediante el cual la tinta pasa de estado
-                  sólido a gaseoso mediante la aplicación de altas temperaturas
-                  (alrededor de 200°C), penetrando directamente en las fibras de
-                  poliéster de la tela. A diferencia de otras técnicas, la tinta
-                  no queda sobre la superficie, sino que forma parte estructural
-                  del tejido.
-                </p>
-              </div>
-
-              {/* Ideal for */}
-              <div className="border-primary/12 space-y-6 rounded-2xl border bg-white p-8 shadow-sm">
-                <h3 className="text-primary mb-2 font-serif text-xl font-bold md:text-2xl">
-                  ¿Para qué tipo de prendas es ideal?
-                </h3>
-                <p className="text-on-surface-variant mb-6 font-sans text-base leading-relaxed">
-                  La sublimación requiere un alto porcentaje de poliéster para
-                  que la tinta se fije correctamente. Es la técnica por
-                  excelencia para ropa deportiva, uniformes de alto rendimiento
-                  y prendas técnicas.
-                </p>
-                <div className="space-y-2">
-                  <div className="text-on-surface-variant mb-1 flex justify-between font-sans text-xs font-semibold tracking-wider uppercase">
-                    <span>Poliéster requerido</span>
-                    <span>100% Ideal</span>
+              )}
+              {/* Sec 1 */}
+              {sec(1) && (
+                <div className="space-y-6">
+                  <div className="mb-4 flex items-center gap-4">
+                    <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
+                      <span className="material-symbols-outlined">
+                        category
+                      </span>
+                    </div>
+                    <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                      {sec(1)!.heading}
+                    </h2>
                   </div>
-                  <div className="bg-surface-container-low flex h-3 w-full overflow-hidden rounded-full">
-                    <div
-                      className="h-full w-1/4 bg-[#143067]/15"
-                      title="No recomendado (0-40%)"
-                    />
-                    <div
-                      className="bg-secondary/60 h-full w-[35%]"
-                      title="Aceptable, colores opacos (40-75%)"
-                    />
-                    <div
-                      className="bg-primary h-full w-[40%]"
-                      title="Ideal, colores vibrantes (75-100%)"
-                    />
-                  </div>
-                  <div className="text-outline mt-1 flex justify-between font-sans text-[10px] font-semibold tracking-wider uppercase">
-                    <span>0%</span>
-                    <span>75% Mínimo recomendado</span>
-                    <span>100%</span>
-                  </div>
+                  <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                    {sec(1)!.body}
+                  </p>
                 </div>
-              </div>
+              )}
+              {/* Sec 2 */}
+              {sec(2) && (
+                <div className="space-y-6">
+                  <div className="mb-4 flex items-center gap-4">
+                    <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
+                      <span className="material-symbols-outlined">sports</span>
+                    </div>
+                    <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                      {sec(2)!.heading}
+                    </h2>
+                  </div>
+                  <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                    {sec(2)!.body}
+                  </p>
+                </div>
+              )}
+              {/* Sec 3 */}
+              {sec(3) && (
+                <div className="space-y-6">
+                  <div className="mb-4 flex items-center gap-4">
+                    <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
+                      <span className="material-symbols-outlined">
+                        shopping_bag
+                      </span>
+                    </div>
+                    <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                      {sec(3)!.heading}
+                    </h2>
+                  </div>
+                  <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                    {sec(3)!.body}
+                  </p>
+                </div>
+              )}
+              {/* Sec 4 – Cuidado y durabilidad */}
+              {sec(4) && (
+                <div className="space-y-6">
+                  <div className="mb-4 flex items-center gap-4">
+                    <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
+                      <span className="material-symbols-outlined">shield</span>
+                    </div>
+                    <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                      {sec(4)!.heading}
+                    </h2>
+                  </div>
+                  <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                    {sec(4)!.body}
+                  </p>
+                </div>
+              )}
             </div>
 
-            {/* Sidebar Column (Comparison Card) */}
-            <div className="relative md:col-span-5">
-              <div className="border-primary/12 sticky top-[100px] overflow-hidden rounded-2xl border bg-white shadow-[0_8px_24px_rgba(20,48,103,0.04)]">
-                {/* Card Header */}
+            {/* Sidebar */}
+            <div className="relative space-y-6 md:col-span-5">
+              {/* Comparison card */}
+              <div className="border-primary/12 overflow-hidden rounded-2xl border bg-white shadow-[0_8px_24px_rgba(20,48,103,0.04)]">
                 <div className="border-primary/12 grid grid-cols-2 border-b">
                   <div className="bg-primary/5 border-primary/12 border-r p-4 text-center">
                     <span className="text-primary flex items-center justify-center gap-2 font-sans text-sm font-bold">
@@ -260,23 +317,20 @@ export function ServicioSublimacionDetalle() {
                     </span>
                   </div>
                 </div>
-                {/* Card Body (Rows) */}
                 <div className="divide-primary/5 divide-y">
-                  {/* Row 1 */}
                   <div className="grid grid-cols-1 gap-2 p-4">
                     <div className="text-outline mb-1 text-center font-sans text-[10px] font-semibold tracking-wider uppercase">
                       Permanencia del color
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="text-primary text-center text-sm font-bold">
-                        Eterna (se funde con la tela)
+                        Alta durabilidad (según cuidado)
                       </div>
                       <div className="text-on-surface-variant text-center text-sm">
                         Se desgasta y cuartea
                       </div>
                     </div>
                   </div>
-                  {/* Row 2 */}
                   <div className="bg-surface-container-lowest grid grid-cols-1 gap-2 p-4">
                     <div className="text-outline mb-1 text-center font-sans text-[10px] font-semibold tracking-wider uppercase">
                       Textura al tacto
@@ -290,7 +344,6 @@ export function ServicioSublimacionDetalle() {
                       </div>
                     </div>
                   </div>
-                  {/* Row 3 */}
                   <div className="grid grid-cols-1 gap-2 p-4">
                     <div className="text-outline mb-1 text-center font-sans text-[10px] font-semibold tracking-wider uppercase">
                       Diseños degradados
@@ -304,7 +357,6 @@ export function ServicioSublimacionDetalle() {
                       </div>
                     </div>
                   </div>
-                  {/* Row 4 */}
                   <div className="bg-surface-container-lowest grid grid-cols-1 gap-2 p-4">
                     <div className="text-outline mb-1 text-center font-sans text-[10px] font-semibold tracking-wider uppercase">
                       Transpirabilidad
@@ -320,175 +372,366 @@ export function ServicioSublimacionDetalle() {
                   </div>
                 </div>
               </div>
+              {/* Pricing Cards */}
+              {service.pricingCards?.map((card, idx) => (
+                <div
+                  key={idx}
+                  className="border-primary/12 rounded-2xl border bg-white p-6 shadow-sm"
+                >
+                  <div className="mb-3 flex items-center gap-4">
+                    <div className="bg-primary/5 text-primary flex h-10 w-10 items-center justify-center rounded-full">
+                      <span className="material-symbols-outlined">
+                        {card.icon}
+                      </span>
+                    </div>
+                    <div>
+                      <div className="text-outline text-xs font-semibold tracking-wider uppercase">
+                        {card.label}
+                      </div>
+                      <div className="text-primary font-serif text-xl font-bold">
+                        {card.value}
+                      </div>
+                    </div>
+                  </div>
+                  {card.note && (
+                    <p className="text-on-surface-variant border-primary/5 border-t pt-3 font-sans text-sm leading-relaxed">
+                      {card.note}
+                    </p>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Process Flow */}
+      {/* CATEGORY DETAILS */}
+      {service.categoryDetails && service.categoryDetails.length > 0 && (
+        <section className="border-primary/5 border-t bg-[#f7f8fc] px-5 py-14 md:px-8 md:py-20">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="mb-12 text-center">
+              <p className="text-outline mb-2 font-sans text-xs font-semibold tracking-widest uppercase">
+                Por producto
+              </p>
+              <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                ¿Qué podemos personalizar para ti?
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {service.categoryDetails.map((detail) => (
+                <div
+                  key={detail.id}
+                  id={detail.id}
+                  className="border-primary/12 flex flex-col rounded-2xl border bg-white p-6 shadow-sm"
+                >
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="bg-primary/5 text-primary flex h-11 w-11 shrink-0 items-center justify-center rounded-full">
+                      <span className="material-symbols-outlined text-[22px]">
+                        {detail.icon}
+                      </span>
+                    </div>
+                    <h3 className="text-primary font-serif text-lg leading-tight font-bold">
+                      {detail.title}
+                    </h3>
+                  </div>
+                  <p className="text-on-surface-variant mb-4 font-sans text-sm leading-relaxed">
+                    {detail.body}
+                  </p>
+                  {detail.bulletPoints && detail.bulletPoints.length > 0 && (
+                    <ul className="mt-auto space-y-1.5">
+                      {detail.bulletPoints.map((point, pi) => (
+                        <li
+                          key={pi}
+                          className="text-on-surface-variant flex items-start gap-2 font-sans text-sm"
+                        >
+                          <span
+                            className="material-symbols-outlined text-secondary mt-0.5 shrink-0 text-[16px]"
+                            style={{ fontVariationSettings: "'FILL' 1" }}
+                          >
+                            check_circle
+                          </span>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* PROCESS FLOW */}
       <section className="border-primary/5 relative overflow-hidden border-y bg-white px-5 py-14 md:px-8 md:py-20">
         <div
           className="pointer-events-none absolute inset-0 z-0 opacity-[0.03]"
           style={dotTextureStyle}
         />
         <div className="relative z-10 mx-auto max-w-screen-2xl">
-          <div className="mb-12 text-center">
-            <h2 className="text-primary mb-4 font-serif text-2xl font-bold md:text-3xl">
-              Nuestro proceso de sublimación
-            </h2>
-            <p className="text-on-surface-variant mx-auto max-w-2xl font-sans text-base">
-              Precisión técnica en cada paso para garantizar acabados impecables
-              y duraderos.
-            </p>
-          </div>
+          {sec(5) && (
+            <div className="mb-12 text-center">
+              <h2 className="text-primary mb-4 font-serif text-2xl font-bold md:text-3xl">
+                {sec(5)!.heading}
+              </h2>
+              <p className="text-on-surface-variant mx-auto max-w-2xl font-sans text-base">
+                {sec(5)!.body}
+              </p>
+            </div>
+          )}
           <div className="relative flex flex-col items-center justify-between gap-6 md:flex-row md:gap-4">
-            {/* Connector Line (Desktop) */}
             <div className="bg-primary/12 absolute top-1/2 right-[12.5%] left-[12.5%] z-0 hidden h-[1px] -translate-y-1/2 md:block" />
-
-            {/* Step 1 */}
-            <div className="border-primary/12 relative z-10 flex w-full flex-col items-center rounded-xl border bg-white p-6 shadow-sm md:w-1/4 md:border-none md:shadow-none">
-              <div className="bg-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white text-white shadow-md">
-                <span className="material-symbols-outlined text-[28px]">
-                  design_services
-                </span>
+            {service.processSteps?.map((step, idx) => (
+              <div key={idx} className="contents">
+                <div className="border-primary/12 relative z-10 flex w-full flex-col items-center rounded-xl border bg-white p-6 shadow-sm md:w-1/4 md:border-none md:shadow-none">
+                  <div className="bg-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white text-white shadow-md">
+                    <span className="material-symbols-outlined text-[28px]">
+                      {idx === 0
+                        ? "design_services"
+                        : idx === 1
+                          ? "print"
+                          : idx === 2
+                            ? "heat_pump"
+                            : "checkroom"}
+                    </span>
+                  </div>
+                  <h4 className="text-primary mb-2 font-serif text-lg font-bold">
+                    {step.step}. {step.title}
+                  </h4>
+                  <p className="text-on-surface-variant text-center text-sm">
+                    {step.description}
+                  </p>
+                  {idx < (service.processSteps?.length ?? 0) - 1 && (
+                    <div className="md:hidden">
+                      <span className="material-symbols-outlined text-secondary mt-4">
+                        arrow_downward
+                      </span>
+                    </div>
+                  )}
+                </div>
+                {idx < (service.processSteps?.length ?? 0) - 1 && (
+                  <div className="text-secondary border-primary/5 relative z-10 hidden rounded-full border bg-white p-1 shadow-sm md:flex">
+                    <span className="material-symbols-outlined text-[24px]">
+                      arrow_forward
+                    </span>
+                  </div>
+                )}
               </div>
-              <h4 className="text-primary mb-2 font-serif text-lg font-bold">
-                1. Diseño
-              </h4>
-              <p className="text-on-surface-variant text-center text-sm">
-                Preparación digital del arte en alta resolución.
-              </p>
-              <span className="material-symbols-outlined text-secondary mt-4 md:hidden">
-                arrow_downward
-              </span>
-            </div>
-
-            {/* Arrow Desktop */}
-            <div className="text-secondary border-primary/5 relative z-10 hidden rounded-full border bg-white p-1 shadow-sm md:flex">
-              <span className="material-symbols-outlined text-[24px]">
-                arrow_forward
-              </span>
-            </div>
-
-            {/* Step 2 */}
-            <div className="border-primary/12 relative z-10 flex w-full flex-col items-center rounded-xl border bg-white p-6 shadow-sm md:w-1/4 md:border-none md:shadow-none">
-              <div className="bg-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white text-white shadow-md">
-                <span className="material-symbols-outlined text-[28px]">
-                  print
-                </span>
-              </div>
-              <h4 className="text-primary mb-2 font-serif text-lg font-bold">
-                2. Impresión
-              </h4>
-              <p className="text-on-surface-variant text-center text-sm">
-                Ploteo con tintas especiales sobre papel transfer.
-              </p>
-              <span className="material-symbols-outlined text-secondary mt-4 md:hidden">
-                arrow_downward
-              </span>
-            </div>
-
-            {/* Arrow Desktop */}
-            <div className="text-secondary border-primary/5 relative z-10 hidden rounded-full border bg-white p-1 shadow-sm md:flex">
-              <span className="material-symbols-outlined text-[24px]">
-                arrow_forward
-              </span>
-            </div>
-
-            {/* Step 3 */}
-            <div className="border-primary/12 relative z-10 flex w-full flex-col items-center rounded-xl border bg-white p-6 shadow-sm md:w-1/4 md:border-none md:shadow-none">
-              <div className="bg-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white text-white shadow-md">
-                <span className="material-symbols-outlined text-[28px]">
-                  heat_pump
-                </span>
-              </div>
-              <h4 className="text-primary mb-2 font-serif text-lg font-bold">
-                3. Prensado
-              </h4>
-              <p className="text-on-surface-variant text-center text-sm">
-                Transferencia térmica a 200°C con presión uniforme.
-              </p>
-              <span className="material-symbols-outlined text-secondary mt-4 md:hidden">
-                arrow_downward
-              </span>
-            </div>
-
-            {/* Arrow Desktop */}
-            <div className="text-secondary border-primary/5 relative z-10 hidden rounded-full border bg-white p-1 shadow-sm md:flex">
-              <span className="material-symbols-outlined text-[24px]">
-                arrow_forward
-              </span>
-            </div>
-
-            {/* Step 4 */}
-            <div className="border-primary/12 relative z-10 flex w-full flex-col items-center rounded-xl border bg-white p-6 shadow-sm md:w-1/4 md:border-none md:shadow-none">
-              <div className="bg-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white text-white shadow-md">
-                <span className="material-symbols-outlined text-[28px]">
-                  checkroom
-                </span>
-              </div>
-              <h4 className="text-primary mb-2 font-serif text-lg font-bold">
-                4. Terminado
-              </h4>
-              <p className="text-on-surface-variant text-center text-sm">
-                Enfriamiento y control de calidad de la prenda.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="w-full px-5 py-14 md:px-8 md:py-20">
+      {/* SUBLIMACION VS BORDADO GUIDE */}
+      {sec(6) && (
+        <section className="w-full px-5 py-14 md:px-8 md:py-20">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="mb-10 text-center">
+              <p className="text-outline mb-2 font-sans text-xs font-semibold tracking-widest uppercase">
+                Guía de decisión
+              </p>
+              <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
+                {sec(6)!.heading}
+              </h2>
+              <p className="text-on-surface-variant mx-auto mt-4 max-w-2xl font-sans text-base">
+                {sec(6)!.body}
+              </p>
+            </div>
+            <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+              <div className="grid grid-cols-3 border-b border-gray-100 bg-gray-50">
+                <div className="p-4 font-sans text-xs font-bold tracking-wider text-gray-500 uppercase">
+                  Criterio
+                </div>
+                <div className="border-x border-gray-100 p-4 text-center font-sans text-xs font-bold tracking-wider text-purple-700 uppercase">
+                  Sublimación
+                </div>
+                <div className="p-4 text-center font-sans text-xs font-bold tracking-wider text-blue-700 uppercase">
+                  Bordado
+                </div>
+              </div>
+              {[
+                {
+                  criteria: "Colores en diseño",
+                  sub: "Full color, degradados, fotos",
+                  bor: "Colores limitados por hilo",
+                },
+                {
+                  criteria: "Material ideal",
+                  sub: "Poliéster y materiales con recubrimiento",
+                  bor: "Cualquier tela, incluido algodón",
+                },
+                {
+                  criteria: "Textura visual",
+                  sub: "Plano, sin relieve",
+                  bor: "Relieve de hilo, tridimensional",
+                },
+                {
+                  criteria: "Ideal para",
+                  sub: "Jerseys deportivos, tazas, regalos",
+                  bor: "Logos institucionales, scrubs, uniformes",
+                },
+                {
+                  criteria: "Pedido mínimo",
+                  sub: "Desde 1 pieza",
+                  bor: "Desde 1 pieza",
+                },
+              ].map((row, i) => (
+                <div
+                  key={i}
+                  className={cn(
+                    "grid grid-cols-3 border-b border-gray-100 last:border-0",
+                    i % 2 === 1 && "bg-gray-50/60"
+                  )}
+                >
+                  <div className="p-4 font-sans text-sm font-semibold text-gray-700">
+                    {row.criteria}
+                  </div>
+                  <div className="border-x border-gray-100 p-4 text-center font-sans text-sm text-gray-600">
+                    {row.sub}
+                  </div>
+                  <div className="p-4 text-center font-sans text-sm text-gray-600">
+                    {row.bor}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {service.ctaBanner.secondaryCtaHref && (
+              <div className="mt-8 flex justify-center">
+                <Link
+                  href={service.ctaBanner.secondaryCtaHref}
+                  className="border-primary text-primary hover:bg-primary/5 inline-flex items-center gap-2 rounded-lg border px-6 py-3 font-sans text-sm font-semibold transition"
+                >
+                  <span className="material-symbols-outlined text-[18px]">
+                    arrow_forward
+                  </span>
+                  {service.ctaBanner.secondaryCtaText ??
+                    "Ver servicio de bordado"}
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* TRUST / AUTHORITY */}
+      {sec(7) && (
+        <section className="border-primary/5 border-y bg-[#f7f8fc] px-5 py-14 md:px-8 md:py-20">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center md:gap-16">
+              <div>
+                <p className="text-outline mb-2 font-sans text-xs font-semibold tracking-widest uppercase">
+                  Trayectoria
+                </p>
+                <h2 className="text-primary mb-6 font-serif text-2xl font-bold md:text-3xl">
+                  {sec(7)!.heading}
+                </h2>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sec(7)!.body}
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {["UNIVO", "UNAB", "UGB", "UES", "UMA", "IEPROES"].map(
+                  (inst) => (
+                    <div
+                      key={inst}
+                      className="border-primary/12 flex items-center gap-3 rounded-xl border bg-white p-4 shadow-sm"
+                    >
+                      <span className="material-symbols-outlined text-primary text-[20px]">
+                        school
+                      </span>
+                      <span className="text-primary font-sans text-sm font-semibold">
+                        {inst}
+                      </span>
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ENVIOS */}
+      {sec(8) && (
+        <section className="w-full px-5 py-14 md:px-8 md:py-20">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="border-primary/12 flex flex-col gap-6 rounded-2xl border bg-white p-8 shadow-sm md:flex-row md:items-center md:gap-10">
+              <div className="bg-primary/5 text-primary flex h-16 w-16 shrink-0 items-center justify-center rounded-full">
+                <span className="material-symbols-outlined text-[32px]">
+                  local_shipping
+                </span>
+              </div>
+              <div>
+                <h2 className="text-primary mb-2 font-serif text-xl font-bold md:text-2xl">
+                  {sec(8)!.heading}
+                </h2>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sec(8)!.body}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* FAQ */}
+      <section className="border-primary/5 border-t bg-[#f7f8fc] px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-screen-2xl">
           <h2 className="text-primary mb-10 text-center font-serif text-2xl font-bold md:text-3xl">
             Preguntas Frecuentes
           </h2>
           <div className="mx-auto max-w-3xl space-y-4">
-            <FAQItem
-              question="¿Se puede sublimar sobre algodón?"
-              answer="No. La tinta de sublimación solo reacciona y se fija en polímeros (plásticos). Si se aplica sobre 100% algodón, la tinta se caerá con la primera lavada. Recomendamos prendas con al menos 75% de poliéster para resultados vibrantes y duraderos."
-            />
-            <FAQItem
-              question="¿Se decolora con el lavado?"
-              answer="No. Al convertirse en un gas durante el prensado, la tinta penetra en la estructura de la fibra del poliéster. Esto significa que el diseño es tan duradero como la prenda misma; no se cuarteará, pelará ni desvanecerá con los lavados normales."
-            />
-            <FAQItem
-              question="¿Cuántas prendas mínimo puedo pedir?"
-              answer="Gracias a nuestra tecnología digital, podemos realizar trabajos desde una sola prenda. Sin embargo, ofrecemos precios preferenciales para pedidos por volumen, ideales para equipos deportivos o empresas."
-            />
+            {service.faqs.map((faq, index) => (
+              <FAQItem
+                key={index}
+                question={faq.question}
+                answer={faq.answer}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Banner */}
+      {/* CTA BANNER */}
       <section className="w-full px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-screen-2xl">
           <div className="relative flex min-h-[300px] flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#143067] p-10 text-center shadow-lg md:p-16">
-            {/* Texture overlay */}
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.05]"
               style={BORDADOS_CTA_TEXTURE}
             />
             <div className="relative z-10 max-w-2xl">
               <h2 className="mb-6 font-serif text-2xl font-bold text-white md:text-3xl">
-                ¿Tienes un diseño llamativo en mente?
+                {service.ctaBanner.title}
               </h2>
               <p className="mb-8 font-sans text-lg leading-relaxed text-white/80">
-                Hazlo realidad con la mejor técnica de impresión para prendas de
-                alto rendimiento. Cotiza sin compromiso.
+                {service.ctaBanner.description}
               </p>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 font-sans text-base font-bold text-[#143067] shadow-sm transition-colors duration-300 hover:bg-white/90"
-              >
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  chat
-                </span>
-                Escribir al WhatsApp
-              </a>
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 font-sans text-base font-bold text-[#143067] shadow-sm transition-colors duration-300 hover:bg-white/90"
+                >
+                  <span
+                    className="material-symbols-outlined"
+                    aria-hidden="true"
+                  >
+                    chat
+                  </span>
+                  {service.ctaBanner.ctaText}
+                </a>
+                {service.ctaBanner.secondaryCtaHref && (
+                  <Link
+                    href={service.ctaBanner.secondaryCtaHref}
+                    className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-white/40 px-8 py-4 font-sans text-base font-semibold text-white transition-colors duration-300 hover:bg-white/10"
+                  >
+                    {service.ctaBanner.secondaryCtaText ??
+                      "Comparar con bordado"}
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -292,7 +292,7 @@ export function ServicioBordadosDetalle({
                         <span key={i}>
                           {part}
                           <Link
-                            href="/servicios/sublimacion-deportiva"
+                            href="/servicios/sublimacion"
                             className="text-primary font-semibold underline underline-offset-2 hover:opacity-75"
                           >
                             sublimación textil

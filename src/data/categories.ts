@@ -9,7 +9,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
     description:
       "Scrubs, batas, gorros quirúrgicos y chaquetas clínicas confeccionados con tela antimicrobiana Sincatex.",
     seoDescription:
-      "Scrubs médicos, batas, gorros quirúrgicos y chaquetas clínicas confeccionados con tela antimicrobiana Sincatex. Bordado personalizado. Desde $35 en San Miguel, El Salvador.",
+      "Scrubs médicos, batas, gorros quirúrgicos y chaquetas clínicas con tela antimicrobiana Sincatex. Bordado personalizado. Desde $35, San Miguel.",
     icon: "health_and_safety",
     heroGradient: "bg-primary text-white",
     heroFeatures: [
@@ -64,7 +64,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
     description:
       "Scrubs clínicos con colores oficiales para UNIVO, UNAB, UGB, UMA, IEPROES, UES y más universidades de la zona oriental.",
     seoDescription:
-      "Scrubs clínicos universitarios con colores oficiales para UNIVO, UNAB, UGB, UMA, IEPROES. Confeccionados a la medida en San Miguel, El Salvador. Desde $39.50.",
+      "Scrubs clínicos universitarios con colores oficiales de UNIVO, UNAB, UGB, UMA e IEPROES. Confeccionados a la medida en San Miguel. Desde $39.50.",
     icon: "school",
     heroGradient:
       "bg-gradient-to-br from-violet-900 via-purple-900 to-indigo-900 text-white",
@@ -175,7 +175,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
     description:
       "Camisas, polos, gabachas y chalecos con bordado de logo y colores institucionales para empresas.",
     seoDescription:
-      "Camisas, polos, gabachas y chalecos corporativos con bordado de logo y colores institucionales. Precios por volumen desde 10 unidades. San Miguel, El Salvador.",
+      "Camisas, polos, gabachas y chalecos corporativos con bordado de logo institucional. Precios por volumen desde 10 unidades, San Miguel.",
     icon: "business_center",
     heroGradient: "relative bg-[#1a1a2e] text-white",
     heroFeatures: [
