@@ -27,8 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Uniformes Universitarios | UNIVO, IEPROES, UGB, UES — Confecciones Liss",
+    title: "Uniformes Universitarios en San Miguel | Confecciones Liss",
     description:
       "Scrubs con colores oficiales para universidades de El Salvador. Bordado de carrera incluido.",
     creator: siteConfig.twitterHandle,

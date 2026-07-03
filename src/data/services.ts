@@ -156,8 +156,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     navIcon: "palette",
     title: "Sublimación Textil y de Objetos",
     subtitle: "Sublimación",
-    seoTitle:
-      "Sublimación en San Miguel | Ropa, Tazas y Termos | Confecciones Liss",
+    seoTitle: "Sublimación en San Miguel | Ropa, Tazas y Termos | Liss",
     seoDescription:
       "Sublimación full color en San Miguel, El Salvador: camisas, uniformes, tazas, termos, llaveros y artículos promocionales. Trabajos desde una sola pieza.",
     description:
