@@ -40,7 +40,7 @@ const REAL_GOOGLE_REVIEWS_FALLBACK: GoogleReview[] = [
   {
     id: "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
     author_name: "Carlitos",
-    comment: "Excelente trabajo y calidad en las telas",
+    comment: null,
     rating: 5,
     author_avatar: null,
     created_at: "2026-07-02T12:00:00.000Z",

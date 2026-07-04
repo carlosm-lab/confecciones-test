@@ -350,7 +350,7 @@ export default async function HomePage() {
       {/* ═══ NAP + CONTACTO (NEW) ═══ */}
       <NapContacto />
 
-      {/* ═══ KEYWORDS SEO FOOTER (NEW) ═══ */}
+      {/* ═══ KEYWORDS SEO FOOTER (HOT RELOAD) ═══ */}
       <KeywordsSeoFooter />
     </>
   );
