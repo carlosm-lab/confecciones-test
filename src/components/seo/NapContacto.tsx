@@ -8,7 +8,7 @@ import {
   SiYoutube,
   SiWhatsapp,
   SiThreads,
-  SiLinkedin,
+  SiLinkedIn,
   SiPinterest,
   SiX,
 } from "react-icons/si";
@@ -24,7 +24,7 @@ const socialIconMap: Record<string, { Icon: IconType; color: string }> = {
   WhatsApp: { Icon: SiWhatsapp, color: "#25D366" },
   Threads: { Icon: SiThreads, color: "#000000" },
   Twitter: { Icon: SiX, color: "#000000" },
-  LinkedIn: { Icon: SiLinkedin, color: "#0077B5" },
+  LinkedIn: { Icon: SiLinkedIn, color: "#0077B5" },
   Pinterest: { Icon: SiPinterest, color: "#E60023" },
   MarketPlace: { Icon: SiFacebook, color: "#1877F2" },
 };
