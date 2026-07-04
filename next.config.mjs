@@ -59,7 +59,7 @@ const nextConfig = {
     return [
       {
         // 1. Rutas dinámicas / privadas / interactivas (evitar cache por completo)
-        source: '/(admin|mi-cuenta|api|auth)/:path*',
+        source: '/(admin|cuenta|api|auth)/:path*',
         headers: [
           { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
           { key: 'Pragma', value: 'no-cache' },
@@ -71,7 +71,7 @@ const nextConfig = {
       },
       {
         // 2. Rutas públicas (SSG optimizado para CDNs y navegadores)
-        source: '/((?!admin|mi-cuenta|api|auth|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|eot|otf|css|js|map)).*)',
+        source: '/((?!admin|cuenta|api|auth|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|eot|otf|css|js|map)).*)',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=0, stale-while-revalidate=86400' },
           ...alwaysOnHeaders,

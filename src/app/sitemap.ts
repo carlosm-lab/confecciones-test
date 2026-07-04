@@ -37,20 +37,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${siteConfig.url}/contacto`,
-      lastModified: new Date("2025-06-15"), // Página estática — no cambia frecuentemente
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${siteConfig.url}/servicios`,
-      lastModified: new Date("2025-06-15"), // Página estática — no cambia frecuentemente
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${siteConfig.url}/links`,
-      lastModified: new Date("2025-06-15"), // Página estática — no cambia frecuentemente
+      lastModified: now,
       changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${siteConfig.url}/ayuda`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
       priority: 0.7,
     },
     {
