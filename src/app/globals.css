@@ -544,6 +544,21 @@
   .nav-scroll-hidden-bottom {
     transform: translateY(100%) !important;
   }
+
+  /* Force hide top navbar & bottom navigation when mobile filter drawer is open */
+  body[data-filter-drawer-open="true"] header,
+  body[data-filter-drawer-open="true"] header.nav-scroll-hide {
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  body[data-filter-drawer-open="true"] nav.fixed.bottom-0,
+  body[data-filter-drawer-open="true"] nav.nav-scroll-hide {
+    transform: translateY(100%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 }
 
 /* ── Padilla Store utilities (catalog components, outside of layers to guarantee compiling) ── */

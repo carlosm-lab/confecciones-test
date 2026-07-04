@@ -63,15 +63,18 @@ export function AyudaPageClient({
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
-  // Lock body scroll when mobile drawer is open
+  // Lock body scroll and mark filter drawer open
   useEffect(() => {
     if (isMobileDrawerOpen) {
       document.body.style.overflow = "hidden";
+      document.body.setAttribute("data-filter-drawer-open", "true");
     } else {
       document.body.style.overflow = "";
+      document.body.removeAttribute("data-filter-drawer-open");
     }
     return () => {
       document.body.style.overflow = "";
+      document.body.removeAttribute("data-filter-drawer-open");
     };
   }, [isMobileDrawerOpen]);
 

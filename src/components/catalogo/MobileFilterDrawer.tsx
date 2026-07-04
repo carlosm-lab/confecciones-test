@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 /**
  * MobileFilterDrawer — Catálogo de Confecciones Liss
@@ -73,15 +73,18 @@ export function MobileFilterDrawer({
   isMultiSelect,
   setIsMultiSelect,
 }: MobileFilterDrawerProps) {
-  // Lock body scroll when drawer is open
+  // Lock body scroll and mark filter drawer open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      document.body.setAttribute("data-filter-drawer-open", "true");
     } else {
       document.body.style.overflow = "";
+      document.body.removeAttribute("data-filter-drawer-open");
     }
     return () => {
       document.body.style.overflow = "";
+      document.body.removeAttribute("data-filter-drawer-open");
     };
   }, [isOpen]);
 
