@@ -47,33 +47,36 @@ export function HeroImageCarousel({
   }, [isPaused]);
 
   return (
+    /* Wrapper externo: sin overflow-hidden para que las burbujas sobresalgan */
     <div className="relative h-full w-full">
-      {/* ── Imágenes ────────────────────────────────── */}
-      {IMAGES.map((src, idx) => (
-        <div
-          key={src}
-          className={`absolute inset-0 transition-opacity duration-700 ${
-            idx === currentIndex ? "z-10 opacity-100" : "z-0 opacity-0"
-          }`}
-        >
-          <Image
-            src={src}
-            fill
-            alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-            className="rounded-xl object-cover object-center"
-            sizes={sizes}
-            priority={priority || idx === 0}
-          />
-        </div>
-      ))}
+      {/* ── Imagen con overflow-hidden propio ──────── */}
+      <div className="absolute inset-0 overflow-hidden rounded-xl">
+        {IMAGES.map((src, idx) => (
+          <div
+            key={src}
+            className={`absolute inset-0 transition-opacity duration-700 ${
+              idx === currentIndex ? "z-10 opacity-100" : "z-0 opacity-0"
+            }`}
+          >
+            <Image
+              src={src}
+              fill
+              alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
+              className="rounded-xl object-cover object-center"
+              sizes={sizes}
+              priority={priority || idx === 0}
+            />
+          </div>
+        ))}
+      </div>
 
-      {/* ── Flecha Izquierda ────────────────────────── */}
+      {/* ── Flecha Izquierda — mitad adentro, mitad afuera ── */}
       <button
         onClick={goPrev}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         aria-label="Imagen anterior"
-        className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition hover:scale-110 hover:bg-white active:scale-95"
+        className="absolute top-1/2 left-0 z-30 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition hover:scale-110 hover:bg-white active:scale-95"
       >
         <svg
           width="16"
@@ -92,13 +95,13 @@ export function HeroImageCarousel({
         </svg>
       </button>
 
-      {/* ── Flecha Derecha ──────────────────────────── */}
+      {/* ── Flecha Derecha — mitad adentro, mitad afuera ── */}
       <button
         onClick={goNext}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         aria-label="Imagen siguiente"
-        className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition hover:scale-110 hover:bg-white active:scale-95"
+        className="absolute top-1/2 right-0 z-30 flex h-8 w-8 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition hover:scale-110 hover:bg-white active:scale-95"
       >
         <svg
           width="16"
