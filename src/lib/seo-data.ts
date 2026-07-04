@@ -129,7 +129,7 @@ export const universities = [
     sigla: "UEES",
     nombre: "Universidad Evangélica de El Salvador",
     ciudad: "El Salvador",
-    logo: null,
+    logo: "/logos/uees.avif",
   },
 ];
 

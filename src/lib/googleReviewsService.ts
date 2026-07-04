@@ -167,6 +167,31 @@ const REAL_GOOGLE_REVIEWS_FALLBACK: GoogleReview[] = [
     author_avatar: null,
     created_at: "2026-07-03T12:00:00.000Z",
   },
+  {
+    id: "eee1d8d2-7498-454f-b859-8be5c17f7b9e",
+    author_name: "Enmanuel Mejía",
+    comment: null,
+    rating: 5,
+    author_avatar: null,
+    created_at: "2026-07-03T12:00:00.000Z",
+  },
+  {
+    id: "fff2d8d2-7498-454f-b859-8be5c17f7b9e",
+    author_name: "Jeffry Anselmo Guzmán Robles",
+    comment: null,
+    rating: 5,
+    author_avatar: null,
+    created_at: "2026-07-03T12:00:00.000Z",
+  },
+  {
+    id: "aaa3d8d2-7498-454f-b859-8be5c17f7b9e",
+    author_name: "Marlyn Antonio Palacio Reyes",
+    comment:
+      "Una confección 10/10, muy recomendable me ha ayudado demasiado para mis uniformes de la universidad",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2026-07-03T12:00:00.000Z",
+  },
 ];
 
 function createServerClient() {

@@ -31,6 +31,9 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
     "pepa pig": "https://maps.app.goo.gl/sNx8z4AMbCWnxPRw8",
     "Kenia Yaritza Pérez Martínez": "https://maps.app.goo.gl/96pnCzRKtPvp9tey8",
     "Melisa López": "https://maps.app.goo.gl/AyLLeUJwpmqDjfvk6",
+    "Enmanuel Mejía": "https://maps.app.goo.gl/6S65SsmQhSk4too88",
+    "Jeffry Anselmo Guzmán Robles": "https://maps.app.goo.gl/6GnFJ87uUdK2CtQr9",
+    "Marlyn Antonio Palacio Reyes": "https://maps.app.goo.gl/eY7c3Joikm5AsiZN6",
   };
 
   return (
@@ -61,9 +64,12 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
           <div className="bg-tertiary mt-4 h-1 w-16 rounded-full" />
 
           <div className="mt-4 flex items-center gap-2">
-            <span className="text-xl font-bold text-slate-800">5.0</span>
-            <div className="flex text-amber-400" aria-label="5 de 5 estrellas">
-              {[1, 2, 3, 4, 5].map((s) => (
+            <span className="text-xl font-bold text-slate-800">4.8</span>
+            <div
+              className="flex text-amber-400"
+              aria-label="4.8 de 5 estrellas"
+            >
+              {[1, 2, 3, 4].map((s) => (
                 <span
                   key={s}
                   className="material-symbols-outlined font-fill-1 text-lg leading-none"
@@ -72,9 +78,15 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
                   star
                 </span>
               ))}
+              <span
+                className="material-symbols-outlined font-fill-1 text-lg leading-none"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                star_half
+              </span>
             </div>
             <span className="text-sm text-slate-500">
-              (Valoración excelente)
+              (4.8 de 5 estrellas · 21 reseñas)
             </span>
           </div>
         </div>
