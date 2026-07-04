@@ -231,24 +231,26 @@ export default async function HomePage() {
               style={{ animationDelay: "100ms" }}
             ></div>
           </div>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:gap-10 lg:grid-cols-4 lg:gap-6">
+          <div className="flex flex-col gap-6 lg:grid lg:grid-cols-4 lg:gap-6">
             {whyItems.map((w, index) => (
               <div
                 key={w.title}
-                className="animate-fade-in-up flex flex-col items-start text-left md:items-center md:text-center"
+                className="animate-fade-in-up flex flex-row items-start gap-4 text-left lg:flex-col lg:items-center lg:gap-0 lg:text-center"
                 style={{ animationDelay: `${index * 75 + 150}ms` }}
               >
-                <div className="bg-primary mb-4 flex h-12 w-12 items-center justify-center rounded-full text-white md:mb-6 md:h-16 md:w-16">
+                <div className="bg-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-white lg:mb-6 lg:h-16 lg:w-16">
                   <span className="material-symbols-outlined text-3xl">
                     {w.icon}
                   </span>
                 </div>
-                <h3 className="text-primary mb-3 font-serif text-xl">
-                  {w.title}
-                </h3>
-                <p className="text-on-surface-variant font-body text-sm">
-                  {w.desc}
-                </p>
+                <div>
+                  <h3 className="text-primary mb-1 font-serif text-lg lg:mb-3 lg:text-xl">
+                    {w.title}
+                  </h3>
+                  <p className="text-on-surface-variant font-body text-sm">
+                    {w.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -277,19 +279,19 @@ export default async function HomePage() {
               complicaciones.
             </p>
           </div>
-          <div className="relative grid grid-cols-1 gap-6 md:grid-cols-4 md:gap-8">
-            <div className="bg-primary-container/30 absolute top-12 right-[10%] left-[10%] z-0 hidden h-0.5 md:block" />
+          <div className="relative grid grid-cols-1 gap-6 lg:grid-cols-4 lg:gap-8">
+            <div className="bg-primary-container/30 absolute top-12 right-[10%] left-[10%] z-0 hidden h-0.5 lg:block" />
             {processSteps.map((s, index) => (
               <div
                 key={s.n}
-                className="animate-fade-in-up relative z-10 flex flex-row items-center gap-4 text-left md:flex-col md:gap-0 md:text-center"
+                className="animate-fade-in-up relative z-10 flex flex-row items-center gap-4 text-left lg:flex-col lg:gap-0 lg:text-center"
                 style={{ animationDelay: `${index * 75 + 200}ms` }}
               >
-                <div className="text-primary ambient-shadow flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white font-serif text-xl font-bold md:mb-4 md:h-20 md:w-20 md:text-2xl">
+                <div className="text-primary ambient-shadow flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white font-serif text-xl font-bold lg:mb-4 lg:h-20 lg:w-20 lg:text-2xl">
                   {s.n}
                 </div>
                 <div>
-                  <h3 className="mb-1 font-serif text-xl md:mb-2">{s.title}</h3>
+                  <h3 className="mb-1 font-serif text-xl lg:mb-2">{s.title}</h3>
                   <p className="text-primary-container text-sm">{s.desc}</p>
                 </div>
               </div>

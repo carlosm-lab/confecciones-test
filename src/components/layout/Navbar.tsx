@@ -263,17 +263,19 @@ export function Navbar() {
       const pillsContainer = navPillsRef.current;
       if (!container || !pillsContainer) return;
 
-      const containerWidth = container.getBoundingClientRect().width;
+      // Non-negotiable: 24px on each side (double the 12px inter-pill gap)
+      const SIDE_MARGIN = 24;
+      const availableWidth =
+        container.getBoundingClientRect().width - SIDE_MARGIN * 2;
+
       const pillElements = Array.from(pillsContainer.children) as HTMLElement[];
 
       let accumulatedWidth = 0;
       let count = 0;
 
       for (let i = 0; i < pillElements.length; i++) {
-        // Obtenemos el ancho exacto del elemento de la píldora incluyendo márgenes si los hay.
-        // Las píldoras tienen anchos fijos estables (flex-shrink-0).
-        const pillWidth = pillElements[i].getBoundingClientRect().width + 12; // 12px de gap
-        if (accumulatedWidth + pillWidth - 12 <= containerWidth) {
+        const pillWidth = pillElements[i].getBoundingClientRect().width + 12; // 12px inter-pill gap
+        if (accumulatedWidth + pillWidth - 12 <= availableWidth) {
           accumulatedWidth += pillWidth;
           count++;
         } else {
@@ -368,10 +370,9 @@ export function Navbar() {
           {!isHomeOnly && (
             <div
               ref={navContainerRef}
-              className="hidden min-w-0 flex-1 items-center justify-center px-6 md:flex"
+              className="hidden min-w-0 flex-1 items-center md:flex"
             >
-              {/* Contenedor temporal e invisible con todos los elementos para que ResizeObserver
-                  siempre pueda medir la anchura ideal estática de cada píldora sin mutar su DOM. */}
+              {/* Invisible measure container — ResizeObserver reads pill widths from here */}
               <div
                 ref={navPillsRef}
                 className="pointer-events-none absolute -z-50 flex gap-3 whitespace-nowrap opacity-0"
@@ -381,15 +382,15 @@ export function Navbar() {
                   <div
                     key={`measure-${link.href}`}
                     className="border-primary/10 text-primary flex h-10 items-center justify-center rounded-full border bg-white px-4 text-sm font-bold whitespace-nowrap shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)]"
-                    style={{ width: "120px" }} // Ancho fijo por píldora consistente
+                    style={{ width: "120px" }}
                   >
                     {link.label}
                   </div>
                 ))}
               </div>
 
-              {/* Píldoras visibles renderizadas de manera interactiva */}
-              <nav className="flex gap-3">
+              {/* Non-negotiable 24px left margin (double inter-pill gap of 12px) */}
+              <nav className="ml-6 flex gap-3">
                 {visiblePills.map((link) => {
                   const isActive =
                     link.href === "/"
@@ -406,7 +407,7 @@ export function Navbar() {
                           ? "bg-primary border-transparent text-white"
                           : "bg-white hover:bg-slate-50"
                       )}
-                      style={{ width: "120px" }} // Ancho fijo por píldora consistente
+                      style={{ width: "120px" }}
                     >
                       {link.label}
                     </Link>
@@ -420,7 +421,7 @@ export function Navbar() {
           {!isHomeOnly && (
             <div
               ref={menuRef}
-              className="relative flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3 md:flex-none"
+              className="relative flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3 md:ml-6 md:flex-none"
             >
               {/* Search bar — full bar (md+) */}
               <button
