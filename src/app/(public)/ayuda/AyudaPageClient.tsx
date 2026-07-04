@@ -608,7 +608,7 @@ export function AyudaPageClient({
       {/* ── MOBILE FILTER DRAWER (lg:hidden) ── */}
       {isMobileDrawerOpen && (
         <div
-          className="fixed inset-0 z-50 cursor-pointer bg-black/40 backdrop-blur-xs lg:hidden"
+          className="fixed inset-0 z-[998] cursor-pointer bg-black/40 backdrop-blur-xs lg:hidden"
           onClick={() => setIsMobileDrawerOpen(false)}
           aria-hidden="true"
         />
@@ -618,7 +618,7 @@ export function AyudaPageClient({
         role="dialog"
         aria-modal="true"
         aria-labelledby="mobile-ayuda-filter-title"
-        className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-[22rem] transform flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed inset-y-0 right-0 z-[999] flex w-full max-w-[22rem] transform flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${
           isMobileDrawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

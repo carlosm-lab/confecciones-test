@@ -96,7 +96,7 @@ export function MobileFilterDrawer({
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 cursor-pointer bg-black/30 backdrop-blur-[2px] sm:bg-black/20 lg:hidden"
+          className="fixed inset-0 z-[998] cursor-pointer bg-black/40 backdrop-blur-[2px] sm:bg-black/20 lg:hidden"
           onClick={onClose}
           aria-hidden="true"
         />
@@ -108,7 +108,7 @@ export function MobileFilterDrawer({
         aria-modal="true"
         aria-labelledby="filter-drawer-title"
         className={cn(
-          "fixed inset-y-0 right-0 z-50 flex w-full max-w-[22rem] transform flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden",
+          "fixed inset-y-0 right-0 z-[999] flex w-full max-w-[22rem] transform flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
       >

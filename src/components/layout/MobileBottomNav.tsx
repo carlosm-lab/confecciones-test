@@ -206,8 +206,9 @@ export function MobileBottomNav() {
 
   return (
     <nav
+      data-mobile-bottom-nav
       className={cn(
-        "nav-scroll-hide fixed right-0 bottom-0 left-0 z-50 sm:hidden",
+        "nav-scroll-hide fixed right-0 bottom-0 left-0 z-40 sm:hidden",
         !scrollVisible && "nav-scroll-hidden-bottom"
       )}
       style={{ height: SVG_H, overflow: "visible" }}
