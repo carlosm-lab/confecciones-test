@@ -94,7 +94,7 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### HeroImageCarousel
 
 - **Ruta:** `src/components/ui/HeroImageCarousel.tsx`
-- **Descripción:** Componente de carrusel de imágenes para el hero principal. Muestra 6 imágenes en una secuencia infinita con transición suave de desvanecimiento (cross-fade) mediante opacidad controlada por estado.
+- **Descripción:** Componente de carrusel de imágenes para el hero principal. Muestra 6 imágenes en una secuencia infinita (intervalo: 2s) con transición suave de desvanecimiento (cross-fade). Incluye flechas izquierda/derecha como burbujas flotantes con backdrop-blur para navegación manual, e indicadores de progreso en la parte inferior: puntito `●` para las inactivas y línea larga `━` para la imagen activa. El auto-avance se pausa al hacer hover sobre cualquier control.
 - **Props:**
   - `sizes: string` — Definición de tamaños responsivos para Next.js Image.
   - `priority?: boolean` — Si se debe priorizar la carga de la primera imagen.
