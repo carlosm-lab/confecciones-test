@@ -32,7 +32,7 @@ const REAL_GOOGLE_REVIEWS_FALLBACK: GoogleReview[] = [
   {
     id: "d9e8f7a6-b5c4-4a3b-9a2c-8d1e0f9a8b7c",
     author_name: "Erick Salvador",
-    comment: "Excelente atención y calidad en la confección de uniformes.",
+    comment: null,
     rating: 5,
     author_avatar: null,
     created_at: "2026-06-20T15:15:00.000Z",
