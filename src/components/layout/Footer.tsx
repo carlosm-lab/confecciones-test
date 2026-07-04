@@ -498,39 +498,8 @@ export function Footer() {
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              {[
-                {
-                  href: siteConfig.links.instagram,
-                  icon: SiInstagram,
-                  color: "hover:text-[#E1306C]",
-                  label: "Instagram",
-                },
-                {
-                  href: siteConfig.links.facebook,
-                  icon: SiFacebook,
-                  color: "hover:text-[#1877F2]",
-                  label: "Facebook",
-                },
-                {
-                  href: siteConfig.links.tiktok,
-                  icon: SiTiktok,
-                  color: "hover:text-white",
-                  label: "TikTok",
-                },
-                {
-                  href: siteConfig.links.youtube,
-                  icon: SiYoutube,
-                  color: "hover:text-[#FF0000]",
-                  label: "YouTube",
-                },
-                {
-                  href: siteConfig.links.googleMaps,
-                  icon: SiGooglemaps,
-                  color: "hover:text-[#4285F4]",
-                  label: "Google Maps",
-                },
-              ].map((social, idx) => (
+            <div className="flex flex-wrap items-center gap-3">
+              {socialBubbles.map((social, idx) => (
                 <a
                   key={idx}
                   href={social.href}
@@ -539,7 +508,10 @@ export function Footer() {
                   aria-label={social.label}
                   className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
                 >
-                  <social.icon className="text-lg" />
+                  <SocialIcon
+                    id={social.svgKey}
+                    className="h-[1.125rem] w-[1.125rem]"
+                  />
                 </a>
               ))}
             </div>

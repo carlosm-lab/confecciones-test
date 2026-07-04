@@ -438,18 +438,23 @@ export const geoRestoPais = {
 
 export const socialLinks = [
   {
-    red: "Facebook",
-    url: "https://www.facebook.com/confeccionliss/",
-    icon: "facebook",
-  },
-  {
     red: "Instagram",
-    url: "https://www.instagram.com/confeccionliss/",
+    url: "https://www.instagram.com/confeccionliss",
     icon: "photo_camera",
   },
   {
+    red: "Facebook",
+    url: "https://www.facebook.com/confeccionliss",
+    icon: "facebook",
+  },
+  {
+    red: "Facebook Admin",
+    url: "https://web.facebook.com/confeccionliss.admin/",
+    icon: "person",
+  },
+  {
     red: "TikTok",
-    url: "https://www.tiktok.com/@confeccionessliss",
+    url: "https://www.tiktok.com/@confeccionliss",
     icon: "videocam",
   },
   {
@@ -459,7 +464,37 @@ export const socialLinks = [
   },
   {
     red: "Google Maps",
-    url: "https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7",
+    url: "https://maps.app.goo.gl/UmJdZgoYD7pgC88GA",
     icon: "map",
+  },
+  {
+    red: "WhatsApp",
+    url: "https://wa.me/50373317181",
+    icon: "chat",
+  },
+  {
+    red: "Threads",
+    url: "https://www.threads.net/@confeccionliss",
+    icon: "alternate_email",
+  },
+  {
+    red: "Twitter",
+    url: "https://x.com/confeccionliss",
+    icon: "close",
+  },
+  {
+    red: "LinkedIn",
+    url: "https://www.linkedin.com/company/confeccionliss",
+    icon: "business",
+  },
+  {
+    red: "Pinterest",
+    url: "https://www.pinterest.com/confeccionliss",
+    icon: "bookmark",
+  },
+  {
+    red: "MarketPlace",
+    url: "https://web.facebook.com/marketplace/profile/61556619779863/",
+    icon: "storefront",
   },
 ];
