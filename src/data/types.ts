@@ -202,4 +202,11 @@ export interface ServicePage {
   institutionLogos?: GalleryItem[];
   applicationCategories?: ApplicationCategory[];
   categoryDetails?: CategoryDetail[];
+  sizeComparison?: ComparisonPoint[];
+}
+
+export interface ComparisonPoint {
+  garment: string;
+  standard: string;
+  medida: string;
 }

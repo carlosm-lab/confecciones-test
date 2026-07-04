@@ -406,59 +406,142 @@ export const SERVICE_PAGES: ServicePage[] = [
     seoDescription:
       "¿No encuentras tu talla? En Confecciones Liss tomamos tus medidas exactas y creamos prendas perfectas para tu cuerpo. Plus size y petite.",
     description:
-      "Olvídate de comprar uniformes estándar que no te favorecen. Visita nuestro taller en Barrio La Merced; tomamos más de 12 medidas anatómicas para crear una prenda que se adapta perfectamente a tus curvas, altura y complexión, brindando un entalle profesional incomparable.",
+      "Olvídate de comprar ropa estándar que no te favorece. Visita nuestro taller en Barrio La Merced; tomamos más de 12 medidas anatómicas para crear una prenda que se adapta a tu cuerpo real, sin importar tu talla.",
     cardDescription:
-      "Confección a medida en nuestro taller. Tomamos 12 medidas anatómicas para lograr una prenda con un entalle profesional incomparable.",
+      "Confección a medida con más de 12 medidas anatómicas, para un entalle que la ropa de talla estándar no puede ofrecer.",
     heroGradient: "bg-pink-900 text-white",
     cardImage: "/images/servicios/confeccion.png",
     heroFeatures: [
-      { icon: "accessibility", text: "Tallas inclusivas" },
+      { icon: "accessibility_new", text: "Sin límite de talla" },
       { icon: "cut", text: "Entalle perfecto" },
-      { icon: "face_retouching_natural", text: "Realza tu figura" },
+      { icon: "content_cut", text: "Hecho a la medida" },
     ],
     ctaBanner: {
       title: "Haz tu cita para toma de medidas",
       description:
-        "Visítanos en nuestro taller y descubre el placer de usar ropa hecha solo para ti.",
-      ctaText: "Agendar visita",
+        "Visítanos en nuestro taller y descubre la diferencia de usar ropa hecha exclusivamente para tu cuerpo.",
+      ctaText: "Agendar Visita",
       ctaHref: siteConfig.links.whatsappDirect,
     },
     sections: [
       {
         heading: "¿Por qué elegir confección a la medida?",
-        body: "La ropa de talla estándar está diseñada para un cuerpo promedio que no existe. Cada persona tiene proporciones únicas: largo de torso, ancho de hombros, contorno de cadera. Cuando una prenda se confecciona con tus medidas exactas, se nota inmediatamente: la silueta se estiliza, la comodidad aumenta y la imagen profesional se transforma por completo.",
+        body: "La ropa de talla estándar está diseñada para un cuerpo promedio que en la práctica casi nadie tiene. Cada persona tiene proporciones distintas: largo de torso, ancho de hombros, contorno de cadera. Cuando una prenda se confecciona con tus medidas exactas, la diferencia se nota de inmediato: mejor caída, más comodidad y una imagen más cuidada, sea para uso profesional o personal.",
+      },
+      {
+        heading: "Uniformes de trabajo y ropa personal, ambos a la medida",
+        body: "Este servicio no se limita a uniformes. Confeccionamos a la medida tanto ropa de trabajo (scrubs, uniformes escolares, camisas corporativas) como prendas personales: vestidos, camisas de vestir, pantalones formales y faldas. Si una prenda estándar no te queda como esperas, la solución es la misma sin importar si es para el trabajo o para tu clóset personal.",
       },
       {
         heading: "Nuestro proceso de toma de medidas",
-        body: "En nuestro taller tomamos un mínimo de 12 medidas anatómicas: contorno de pecho, cintura, cadera, largo de manga, largo de torso, ancho de espalda, contorno de cuello, largo de pantalón, entrepierna, contorno de muslo, contorno de rodilla y contorno de tobillo. Con esas medidas creamos un patrón personalizado que garantiza un entalle perfecto.",
+        body: "En nuestro taller tomamos un mínimo de 12 medidas anatómicas: contorno de pecho, cintura, cadera, largo de manga, largo de torso, ancho de espalda, contorno de cuello, largo de pantalón, entrepierna, contorno de muslo, contorno de rodilla y contorno de tobillo. Con esas medidas creamos un patrón personalizado para tu cuerpo.",
       },
       {
-        heading: "Tallas inclusivas: Plus size y petite",
-        body: "No discriminamos por talla. Confeccionamos desde tallas XS hasta 5XL y más. Si eres de complexión petite y toda la ropa te queda grande, o si eres plus size y las opciones comerciales no te satisfacen, nuestro servicio a la medida es la solución. Cada prenda se adapta a tu cuerpo, no al revés.",
+        heading: "Sin límite fijo de talla",
+        body: "No trabajamos con un rango de tallas predefinido. Si eres de complexión petite y la ropa comercial siempre te queda grande, o si tu talla no se consigue en el mercado convencional, evaluamos tu caso directamente en el taller. La confección a la medida se adapta a tu cuerpo, no al revés.",
       },
       {
-        heading: "¿Qué tipo de prendas confeccionamos a medida?",
-        body: "Scrubs y batas médicas, uniformes corporativos, camisas de vestir, pantalones formales, vestidos, faldas, gabachas, batas de laboratorio y uniformes escolares. Básicamente cualquier prenda que necesites con un entalle superior al estándar comercial.",
+        heading: "Confección a la medida vs. tabla de tallas",
+        body: "Es importante aclarar la diferencia: si prefieres no visitar el taller, puedes pedir tu prenda usando nuestra tabla de tallas estándar del catálogo. Sin embargo, ese pedido ya no se considera confección a la medida y no incluye los beneficios de este servicio (toma de las 12 medidas anatómicas ni el patrón personalizado). La confección a la medida requiere la toma de medidas real, ya sea en el taller o coordinada directamente con nuestro equipo.",
+      },
+      {
+        heading: "Tiempos de entrega",
+        body: "La confección a la medida toma entre 5 y 10 días hábiles desde la toma de medidas. Este tiempo puede variar según la temporada, el volumen de pedidos y los días feriados o asuetos del calendario nacional. Te confirmamos una fecha estimada exacta al momento de tomar tus medidas.",
+      },
+    ],
+    sizeComparison: [
+      {
+        garment: "Ajuste general",
+        standard: "Aproximado, talla genérica",
+        medida: "Exacto, según tus 12 medidas",
+      },
+      {
+        garment: "Disponibilidad de talla",
+        standard: "Limitada a un rango estándar",
+        medida: "Sin límite fijo, se evalúa tu caso",
+      },
+      {
+        garment: "Comodidad",
+        standard: "Variable según el cuerpo",
+        medida: "Diseñada para tu cuerpo específico",
+      },
+      {
+        garment: "Tiempo de entrega",
+        standard: "Inmediato si hay stock",
+        medida: "5 a 10 días hábiles (según temporada)",
+      },
+    ],
+    applicationCategories: [
+      {
+        icon: "medical_services",
+        title: "Scrubs y batas médicas",
+        examples: "Uniformes clínicos con ajuste anatómico personalizado.",
+      },
+      {
+        icon: "school",
+        title: "Uniformes escolares",
+        examples:
+          "Camisas, pantalones y faldas ajustados a la medida del estudiante.",
+      },
+      {
+        icon: "business_center",
+        title: "Camisas y uniformes corporativos",
+        examples: "Camisas de vestir y gabachas para uso profesional.",
+      },
+      {
+        icon: "checkroom",
+        title: "Vestidos y ropa formal",
+        examples: "Vestidos y prendas de ocasión hechas a tu medida.",
+      },
+    ],
+    processSteps: [
+      {
+        step: "1",
+        title: "Visita",
+        description: "Agenda tu cita y visita el taller en Barrio La Merced.",
+      },
+      {
+        step: "2",
+        title: "Medición",
+        description:
+          "Tomamos tus 12 medidas anatómicas para crear tu patrón personalizado.",
+      },
+      {
+        step: "3",
+        title: "Confección",
+        description:
+          "Confeccionamos tu prenda a la medida en 5 a 10 días hábiles.",
       },
     ],
     faqs: [
       {
         question: "¿Cuánto tarda la confección a medida?",
         answer:
-          "Dependiendo de la complejidad, entre 5 y 10 días hábiles desde la toma de medidas. Para pedidos urgentes podemos acelerar el proceso.",
+          "Entre 5 y 10 días hábiles desde la toma de medidas. Este tiempo puede variar según la temporada, la demanda del taller y los días feriados o asuetos nacionales.",
       },
       {
         question: "¿Tengo que ir al taller para las medidas?",
         answer:
-          "Lo recomendamos para mayor precisión. Sin embargo, si estás fuera de San Miguel, puedes enviarnos tus medidas siguiendo nuestra guía de auto-medición que te compartimos por WhatsApp.",
+          "Sí, para que tu prenda cuente como confección a la medida es necesario tomar tus 12 medidas anatómicas en el taller o coordinarlas directamente con nuestro equipo. Si prefieres no visitar el taller, puedes usar nuestra tabla de tallas del catálogo, pero ese pedido no incluye los beneficios de la confección a la medida.",
       },
       {
         question: "¿Cuesta más que la ropa de talla estándar?",
         answer:
-          "El costo es ligeramente mayor porque cada prenda se corta y cose individualmente. Sin embargo, la diferencia en comodidad y durabilidad justifica ampliamente la inversión.",
+          "El costo varía según la prenda y se confirma con una cotización directa, ya que cada pieza se corta y confecciona de forma individual.",
+      },
+      {
+        question: "¿Solo hacen uniformes a la medida, o también ropa personal?",
+        answer:
+          "Ambos. Confeccionamos a la medida tanto uniformes de trabajo (scrubs, uniformes escolares, camisas corporativas) como ropa personal: vestidos, camisas de vestir, pantalones y faldas.",
+      },
+      {
+        question: "¿Hay un límite de talla para la confección a la medida?",
+        answer:
+          "No manejamos un límite fijo. Evaluamos cada caso directamente en el taller, sin importar si tu talla está fuera del rango que ofrecen las tiendas convencionales.",
       },
     ],
   },
+
   {
     slug: "mano-de-obra",
     navLabel: "Mano de Obra",

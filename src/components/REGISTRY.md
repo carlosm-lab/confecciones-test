@@ -597,3 +597,11 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
 - **Ruta:** `src/components/empresa/ProcesoDeConfeccionClient.tsx`
 - **Descripción:** Experiencia de usuario inmersiva para descubrir el flujo de trabajo del taller de Confecciones Liss a lo largo de 10 etapas asimétricas. Cuenta con una cabecera con ilustración abstracta vectorial SVG, barra superior flotante interactiva sincronizada con el scroll para marcar el progreso, cuadrículas Bento para el análisis del proyecto, bloques editoriales alternantes, y una Mesa de Trabajo técnica conectada interactivamente al equipo de costura.
 - **Props:** No recibe props.
+
+### ServicioSastreriaDetalle
+
+- **Ruta:** `src/components/servicios/ServicioSastreriaDetalle.tsx`
+- **Descripción:** Componente de vista detallada para el servicio de Confección y Sastrería a la Medida (`/servicios/confeccion-a-medida`). Consume datos dinámicos centralizados de `ServicePage` (`services.ts`), renderizando hero con badges, lista de 12 medidas anatómicas, sección inclusiva de tallas (sin límite fijo), cuadrícula de artículos de valor SEO, tabla comparativa de confección a la medida vs. tabla de tallas estándar, proceso en 3 pasos, categorías de aplicaciones y acordeón de FAQs.
+- **Props:**
+  - `service: ServicePage` — Datos completos de la página de servicio cargados desde `src/data/services.ts`.
+- **Ejemplo:** `<ServicioSastreriaDetalle service={service} />`

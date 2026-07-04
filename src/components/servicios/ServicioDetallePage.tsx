@@ -23,7 +23,7 @@ export function ServicioDetallePage({ service }: ServicioDetallePageProps) {
   }
 
   if (service.slug === "confeccion-a-medida") {
-    return <ServicioSastreriaDetalle />;
+    return <ServicioSastreriaDetalle service={service} />;
   }
 
   if (service.slug === "mano-de-obra") {

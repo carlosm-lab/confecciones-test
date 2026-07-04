@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { heroTrustBadges } from "@/lib/seo-data";
+import { ServicePage } from "@/data/types";
 
 // Background grid texture for the entire page
 const pageGridTextureStyle = {
@@ -59,8 +59,16 @@ function FAQItem({ question, answer }: FAQItemProps) {
   );
 }
 
-export function ServicioSastreriaDetalle() {
-  const whatsappUrl = siteConfig.links.whatsappDirect;
+interface ServicioSastreriaDetalleProps {
+  service: ServicePage;
+}
+
+export function ServicioSastreriaDetalle({
+  service,
+}: ServicioSastreriaDetalleProps) {
+  const whatsappUrl =
+    service.ctaBanner.ctaHref || siteConfig.links.whatsappDirect;
+  const sec = (i: number) => service.sections?.[i];
 
   return (
     <div className="min-h-screen w-full" style={pageGridTextureStyle}>
@@ -71,7 +79,7 @@ export function ServicioSastreriaDetalle() {
             <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
               <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-[32px] leading-tight font-bold md:mb-10 md:flex md:flex-col md:items-center md:text-[48px] lg:mb-6 lg:block lg:text-left">
                 <span className="block w-full text-center lg:text-left">
-                  Confección y Sastrería a la Medida
+                  {service.title}
                 </span>
               </h1>
 
@@ -89,7 +97,10 @@ export function ServicioSastreriaDetalle() {
                         fill
                         alt="Medición y sastrería profesional"
                         className="rounded-xl object-cover object-center"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqWKImQOmvghJ9sTWz-PPSR-X6p3OJFCZ7SQy2ujL63JLQJhDVp_ao4QQikgLRZ9UI4MBKUWjF09De_7XStyh4MfrvbLSO9lR3mO9ZINHCrHZu7r-UaAxfdatm6nJFfqeFHw0jVB3VqlyVzFBV56Dt_axkoPyM-dwx8aeG4bC5j5giSjFqtHuvigtbJxcul23soXhglEB-BqZRJ5VOrMsxKpbhP_Hq1F99zIo3yEF_yl6wDObNg_q1c_H8XyUlyhl2hXyVSK4jCPfq"
+                        src={
+                          service.cardImage ||
+                          "/images/servicios/confeccion.png"
+                        }
                         sizes="(max-width:768px) 80vw, 40vw"
                         priority
                       />
@@ -103,17 +114,10 @@ export function ServicioSastreriaDetalle() {
                     className="animate-fade-in-up text-on-surface-variant mb-6 w-full font-sans text-lg leading-relaxed"
                     style={{ animationDelay: "150ms" }}
                   >
-                    Olvídate de uniformes estándar que no te favorecen. Tomamos
-                    más de 12 medidas anatómicas para crear una prenda que se
-                    adapta perfectamente a tu cuerpo.
+                    {service.description}
                   </p>
-                  <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
-                    {[
-                      { icon: "accessibility_new", text: "Tallas inclusivas" },
-                      { icon: "checkroom", text: "Entalle perfecto" },
-                      { icon: "auto_fix_high", text: "Realza tu figura" },
-                      { icon: "content_cut", text: "Hecho a la medida" },
-                    ].map((b, index) => (
+                  <div className="mb-8 grid w-full grid-cols-1 gap-x-3 gap-y-2.5 sm:grid-cols-3">
+                    {service.heroFeatures.map((b, index) => (
                       <div
                         key={b.text}
                         className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
@@ -159,7 +163,9 @@ export function ServicioSastreriaDetalle() {
                     fill
                     alt="Medición y sastrería profesional"
                     className="rounded-xl object-cover object-center"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqWKImQOmvghJ9sTWz-PPSR-X6p3OJFCZ7SQy2ujL63JLQJhDVp_ao4QQikgLRZ9UI4MBKUWjF09De_7XStyh4MfrvbLSO9lR3mO9ZINHCrHZu7r-UaAxfdatm6nJFfqeFHw0jVB3VqlyVzFBV56Dt_axkoPyM-dwx8aeG4bC5j5giSjFqtHuvigtbJxcul23soXhglEB-BqZRJ5VOrMsxKpbhP_Hq1F99zIo3yEF_yl6wDObNg_q1c_H8XyUlyhl2hXyVSK4jCPfq"
+                    src={
+                      service.cardImage || "/images/servicios/confeccion.png"
+                    }
                     sizes="40vw"
                     priority
                   />
@@ -214,17 +220,15 @@ export function ServicioSastreriaDetalle() {
           </div>
         </section>
 
-        {/* Inclusive Sizing */}
+        {/* Sin límite fijo de talla */}
         <section className="w-full px-5 py-14 md:px-8 md:py-20">
           <div className="mx-auto max-w-screen-2xl">
             <div className="bg-surface-container-low border-primary/10 rounded-xl border p-12 text-center shadow-sm">
               <h2 className="text-primary mb-6 font-serif text-2xl font-bold md:text-3xl">
-                Sin importar tu talla
+                {sec(3)?.heading || "Sin límite fijo de talla"}
               </h2>
               <p className="text-on-surface-variant mx-auto mb-10 max-w-2xl font-sans text-lg leading-relaxed">
-                Creemos que la ropa debe adaptarse a ti, no al revés. Trabajamos
-                con todo tipo de cuerpos, desde petite hasta plus size,
-                asegurando comodidad y estilo en cada prenda.
+                {sec(3)?.body}
               </p>
               <div className="flex flex-wrap items-center justify-center gap-2 font-sans text-xs font-semibold tracking-wider uppercase md:gap-4">
                 {["XS", "S", "M"].map((size) => (
@@ -239,7 +243,7 @@ export function ServicioSastreriaDetalle() {
                 <span className="bg-primary border-primary/30 flex h-12 w-12 scale-110 items-center justify-center rounded-full border font-bold text-white shadow-md">
                   L
                 </span>
-                {["XL", "2XL", "3XL+"].map((size) => (
+                {["XL", "2XL"].map((size) => (
                   <span
                     key={size}
                     className="text-on-surface-variant border-primary/10 flex h-10 w-10 items-center justify-center rounded-full border bg-white shadow-sm"
@@ -247,143 +251,207 @@ export function ServicioSastreriaDetalle() {
                     {size}
                   </span>
                 ))}
+                <span className="border-secondary text-primary flex h-10 items-center justify-center rounded-full border bg-white px-4 font-bold shadow-sm">
+                  y más...
+                </span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Articles Grid */}
+        {/* Articles Grid (2 Columnas) */}
         <section className="w-full px-5 py-14 md:px-8 md:py-20">
           <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-12 md:grid-cols-2">
-            {/* Article A */}
-            <div className="space-y-4">
-              <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
-                ¿Por qué elegir confección a la medida?
-              </h3>
-              <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                La ropa a medida no solo se ve mejor, sino que dura más. Al
-                invertir en una prenda hecha para ti, garantizas calidad en los
-                materiales y un ajuste que realza tu figura, proyectando una
-                imagen profesional impecable.
-              </p>
-            </div>
+            {/* Section 0: ¿Por qué elegir confección a la medida? */}
+            {sec(0) && (
+              <div className="space-y-4">
+                <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
+                  {sec(0)?.heading}
+                </h3>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sec(0)?.body}
+                </p>
+              </div>
+            )}
 
-            {/* Article B */}
-            <div className="space-y-6">
-              <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
-                Nuestro proceso de toma de medidas
-              </h3>
-              <div className="flex items-center gap-4 text-center">
-                <div className="border-primary/10 flex-1 rounded-lg border bg-white p-4 shadow-sm">
-                  <span
-                    className="material-symbols-outlined text-primary mb-2 text-[28px]"
-                    aria-hidden="true"
-                  >
-                    calendar_today
-                  </span>
-                  <div className="text-on-surface font-sans text-xs font-semibold tracking-wider uppercase">
-                    Visita
-                  </div>
-                </div>
-                <span
-                  className="material-symbols-outlined text-secondary"
-                  aria-hidden="true"
-                >
-                  arrow_forward
-                </span>
-                <div className="border-primary/10 flex-1 rounded-lg border bg-white p-4 shadow-sm">
-                  <span
-                    className="material-symbols-outlined text-primary mb-2 text-[28px]"
-                    aria-hidden="true"
-                  >
-                    straighten
-                  </span>
-                  <div className="text-on-surface font-sans text-xs font-semibold tracking-wider uppercase">
-                    Medición
-                  </div>
-                </div>
-                <span
-                  className="material-symbols-outlined text-secondary"
-                  aria-hidden="true"
-                >
-                  arrow_forward
-                </span>
-                <div className="border-primary/10 flex-1 rounded-lg border bg-white p-4 shadow-sm">
-                  <span
-                    className="material-symbols-outlined text-primary mb-2 text-[28px]"
-                    aria-hidden="true"
-                  >
-                    cut
-                  </span>
-                  <div className="text-on-surface font-sans text-xs font-semibold tracking-wider uppercase">
-                    Confección
-                  </div>
+            {/* Section 1: Uniformes de trabajo y ropa personal, ambos a la medida */}
+            {sec(1) && (
+              <div className="space-y-4">
+                <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
+                  {sec(1)?.heading}
+                </h3>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sec(1)?.body}
+                </p>
+              </div>
+            )}
+
+            {/* Section 2: Nuestro proceso de toma de medidas */}
+            {sec(2) && (
+              <div className="space-y-6">
+                <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
+                  {sec(2)?.heading}
+                </h3>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sec(2)?.body}
+                </p>
+              </div>
+            )}
+
+            {/* Section 4: Confección a la medida vs. tabla de tallas */}
+            {sec(4) && (
+              <div className="space-y-4">
+                <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
+                  {sec(4)?.heading}
+                </h3>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sec(4)?.body}
+                </p>
+              </div>
+            )}
+
+            {/* Section 5: Tiempos de entrega */}
+            {sec(5) && (
+              <div className="space-y-4 md:col-span-2">
+                <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
+                  {sec(5)?.heading}
+                </h3>
+                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                  {sec(5)?.body}
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Tabla Comparativa: Confección a la medida vs. Talla estándar */}
+        {service.sizeComparison && service.sizeComparison.length > 0 && (
+          <section className="w-full px-5 py-14 md:px-8 md:py-20">
+            <div className="mx-auto max-w-screen-2xl">
+              <h2 className="text-primary mb-8 text-center font-serif text-2xl font-bold md:text-3xl">
+                Confección a la medida vs. Tabla de tallas estándar
+              </h2>
+              <div className="border-primary/10 overflow-hidden rounded-xl border bg-white shadow-sm">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left font-sans text-sm md:text-base">
+                    <thead>
+                      <tr className="bg-primary font-serif text-white">
+                        <th className="px-6 py-4 font-bold">Característica</th>
+                        <th className="px-6 py-4 font-bold">
+                          Tabla de Tallas Estándar
+                        </th>
+                        <th className="px-6 py-4 font-bold">
+                          Confección a la Medida
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-primary/10 divide-y">
+                      {service.sizeComparison.map((row, index) => (
+                        <tr
+                          key={row.garment}
+                          className={
+                            index % 2 === 0
+                              ? "bg-white"
+                              : "bg-surface-container-low/40"
+                          }
+                        >
+                          <td className="text-primary px-6 py-4 font-medium">
+                            {row.garment}
+                          </td>
+                          <td className="text-on-surface-variant px-6 py-4">
+                            {row.standard}
+                          </td>
+                          <td className="text-primary px-6 py-4 font-semibold">
+                            {row.medida}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
+          </section>
+        )}
 
-            {/* Article C */}
-            <div className="space-y-4">
-              <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
-                Tallas inclusivas: Plus size y petite
-              </h3>
-              <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                Entendemos los retos de encontrar ropa profesional adecuada en
-                el mercado masivo. Nuestra sastrería resuelve problemas comunes
-                como mangas largas, entalles incómodos o largos inadecuados.
-              </p>
-            </div>
-
-            {/* Article D */}
-            <div className="space-y-4">
-              <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
-                ¿Qué tipo de prendas confeccionamos?
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "Scrubs",
-                  "Batas",
-                  "Uniformes",
-                  "Vestidos",
-                  "Camisas",
-                  "Gabachas",
-                  "Faldas",
-                  "Pantalones",
-                ].map((prenda) => (
-                  <span
-                    key={prenda}
-                    className="text-on-surface border-primary/10 rounded border bg-white px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm"
+        {/* Process Steps Section (Visita -> Medición -> Confección) */}
+        {service.processSteps && service.processSteps.length > 0 && (
+          <section className="w-full px-5 py-14 md:px-8 md:py-20">
+            <div className="mx-auto max-w-screen-2xl">
+              <h2 className="text-primary mb-10 text-center font-serif text-2xl font-bold md:text-3xl">
+                Nuestro proceso en 3 pasos
+              </h2>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                {service.processSteps.map((step) => (
+                  <div
+                    key={step.step}
+                    className="border-primary/10 relative flex flex-col items-center rounded-xl border bg-white p-8 text-center shadow-sm"
                   >
-                    {prenda}
-                  </span>
+                    <div className="bg-primary mb-4 flex h-12 w-12 items-center justify-center rounded-full font-serif text-xl font-bold text-white shadow-md">
+                      {step.step}
+                    </div>
+                    <h3 className="text-primary mb-2 font-serif text-xl font-bold">
+                      {step.title}
+                    </h3>
+                    <p className="text-on-surface-variant font-sans text-sm leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
+
+        {/* Application Categories / Categorías de Prendas */}
+        {service.applicationCategories &&
+          service.applicationCategories.length > 0 && (
+            <section className="w-full px-5 py-14 md:px-8 md:py-20">
+              <div className="mx-auto max-w-screen-2xl">
+                <h2 className="text-primary mb-10 text-center font-serif text-2xl font-bold md:text-3xl">
+                  ¿Qué tipo de prendas confeccionamos a la medida?
+                </h2>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                  {service.applicationCategories.map((cat) => (
+                    <div
+                      key={cat.title}
+                      className="border-primary/10 flex flex-col rounded-xl border bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+                    >
+                      <span className="material-symbols-outlined text-primary mb-4 text-[36px]">
+                        {cat.icon}
+                      </span>
+                      <h3 className="text-primary mb-2 font-serif text-lg font-bold">
+                        {cat.title}
+                      </h3>
+                      <p className="text-on-surface-variant font-sans text-sm leading-relaxed">
+                        {cat.examples}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
 
         {/* FAQ Section */}
-        <section className="w-full px-5 py-14 md:px-8 md:py-20">
-          <div className="mx-auto max-w-screen-2xl">
-            <h2 className="text-primary mb-10 text-center font-serif text-2xl font-bold md:text-3xl">
-              Preguntas Frecuentes
-            </h2>
-            <div className="mx-auto max-w-3xl space-y-4">
-              <FAQItem
-                question="¿Cuánto tarda la confección a medida?"
-                answer="El tiempo de entrega estándar es de 2 a 3 semanas tras la toma de medidas, dependiendo de la complejidad de la prenda y nuestra carga de trabajo actual."
-              />
-              <FAQItem
-                question="¿Tengo que ir al taller para las medidas?"
-                answer="Sí, recomendamos visitar nuestro taller para una medición precisa. Sin embargo, para clientes corporativos o grupos grandes, podemos organizar visitas a sus instalaciones."
-              />
-              <FAQItem
-                question="¿Cuesta más que la ropa de talla estándar?"
-                answer="La confección a medida es una inversión en calidad y ajuste. Aunque la inversión inicial puede ser ligeramente superior a las opciones genéricas de baja calidad, la durabilidad y el entalle perfecto compensan con creces el costo."
-              />
+        {service.faqs && service.faqs.length > 0 && (
+          <section className="w-full px-5 py-14 md:px-8 md:py-20">
+            <div className="mx-auto max-w-screen-2xl">
+              <h2 className="text-primary mb-10 text-center font-serif text-2xl font-bold md:text-3xl">
+                Preguntas Frecuentes
+              </h2>
+              <div className="mx-auto max-w-3xl space-y-4">
+                {service.faqs.map((faq) => (
+                  <FAQItem
+                    key={faq.question}
+                    question={faq.question}
+                    answer={faq.answer}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* CTA Banner */}
         <section className="w-full px-5 py-14 md:px-8 md:py-20">
@@ -394,9 +462,12 @@ export function ServicioSastreriaDetalle() {
                 style={ctaBannerTextureStyle}
               />
               <div className="relative z-10">
-                <h2 className="mx-auto mb-8 max-w-2xl font-serif text-2xl leading-tight font-bold text-white md:text-[36px]">
-                  Haz tu cita para toma de medidas
+                <h2 className="mx-auto mb-4 max-w-2xl font-serif text-2xl leading-tight font-bold text-white md:text-[36px]">
+                  {service.ctaBanner.title}
                 </h2>
+                <p className="mx-auto mb-8 max-w-xl font-sans text-base leading-relaxed text-white/90">
+                  {service.ctaBanner.description}
+                </p>
                 <a
                   href={whatsappUrl}
                   target="_blank"
@@ -409,7 +480,7 @@ export function ServicioSastreriaDetalle() {
                   >
                     chat
                   </span>
-                  Contactar vía WhatsApp
+                  {service.ctaBanner.ctaText}
                 </a>
               </div>
             </div>
