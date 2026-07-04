@@ -240,7 +240,7 @@ export function Footer() {
                       </Link>
                     </li>
                   ))}
-                  <li className="mt-3 pt-2">
+                  <li>
                     <Link
                       href="/legal"
                       className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
@@ -462,7 +462,7 @@ export function Footer() {
                       </Link>
                     </li>
                   ))}
-                  <li className="mt-3 pt-2">
+                  <li>
                     <Link
                       href="/legal"
                       className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
@@ -621,7 +621,7 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li className="mt-3 pt-2">
+              <li>
                 <Link
                   href="/legal"
                   className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
