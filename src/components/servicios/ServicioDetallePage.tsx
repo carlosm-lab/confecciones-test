@@ -31,7 +31,7 @@ export function ServicioDetallePage({ service }: ServicioDetallePageProps) {
   }
 
   if (service.slug === "ropa-general") {
-    return <ServicioRopaCasualDetalle />;
+    return <ServicioRopaCasualDetalle service={service} />;
   }
 
   return <ServicioDetalleGeneric service={service} />;

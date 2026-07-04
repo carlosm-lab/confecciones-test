@@ -485,8 +485,10 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
 ### ServicioRopaCasualDetalle
 
 - **Ruta:** `src/components/servicios/ServicioRopaCasualDetalle.tsx`
-- **Descripción:** Vista detallada y específica del servicio de Confección de Ropa Casual y de Vestir. Recrea exactamente los elementos del prototipo: Hero con disposición de imagen a la derecha, flujo secuencial de 4 pasos ("De tu foto a tu prenda") con iconos informativos y flechas horizontales, galería de prendas confeccionadas estructurada mediante Bento Grid de 3 elementos interactivos con efectos de zoom y degradados, sección especial para marcas locales con barra lateral e insignia decorativa, y banner de llamada a la acción.
-- **Props:** No recibe props.
+- **Descripción:** Componente de vista detallada para el servicio de Confección de Ropa Casual y de Vestir (`/servicios/ropa-general`). Consume datos dinámicos centralizados de `ServicePage` (`services.ts`), renderizando hero con badges, sección "Más que uniformes: moda personalizada", muestra bento visual acompañada del catálogo completo de 10 categorías reales de prendas (vestidos, faldas, pantalones de vestir, blusas, crop tops, enterizos, conjuntos, ropa infantil, camisas de hombre y pijamas), flujo secuencial de 4 pasos ("De tu foto a tu prenda"), tarjeta destacada con tiempos de entrega (5 a 12 días hábiles con salvedades por temporada y feriados), sección de evaluación individual para marcas de ropa, acordeón interactivo de 5 FAQs y banner de CTA.
+- **Props:**
+  - `service: ServicePage` — Datos completos de la página de servicio cargados desde `src/data/services.ts`.
+- **Ejemplo:** `<ServicioRopaCasualDetalle service={service} />`
 
 ### ServicioHero
 

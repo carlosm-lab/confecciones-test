@@ -629,56 +629,70 @@ export const SERVICE_PAGES: ServicePage[] = [
     seoDescription:
       "Confección de vestidos, faldas, crop tops, pantalones de vestir y blusas para damas, niños y caballeros. Taller de costura en San Miguel, El Salvador.",
     description:
-      "Además de uniformes corporativos, fabricamos moda casual y de fiesta a la medida. Tráenos una foto de Pinterest o Instagram del vestido, falda, enterizo o crop top que deseas, y nosotros lo replicamos ajustado perfectamente a tu silueta.",
+      "Además de uniformes, confeccionamos ropa casual y de fiesta a la medida. Tráenos una foto de referencia del vestido, falda, enterizo o crop top que deseas, y lo confeccionamos ajustado a tu silueta.",
     cardDescription:
-      "Confección de toda tu ropa casual y de fiesta a medida. Replicamos vestidos, faldas y conjuntos a partir de tus fotos de referencia.",
+      "Confección de ropa casual y de fiesta a medida. Replicamos vestidos, faldas y conjuntos a partir de tus fotos de referencia.",
     heroGradient: "bg-fuchsia-900 text-white",
     cardImage: "/images/servicios/ropa-general.png",
     heroFeatures: [
-      { icon: "styler", text: "Diseño libre" },
-      { icon: "imagesmode", text: "Copiamos de fotos" },
-      { icon: "diversity_3", text: "Toda la familia" },
+      { icon: "draw", text: "Diseño libre" },
+      { icon: "photo_camera", text: "Copiamos de fotos" },
+      { icon: "family_restroom", text: "Toda la familia" },
     ],
     ctaBanner: {
       title: "¿Tienes un diseño en mente?",
       description:
-        "Envíanos la foto de referencia por WhatsApp y te decimos cómo hacerlo realidad.",
-      ctaText: "Enviar diseño",
+        "Envíanos tu idea, boceto o foto de referencia y cotiza sin compromiso.",
+      ctaText: "Contáctanos por WhatsApp",
       ctaHref: siteConfig.links.whatsappDirect,
     },
     sections: [
       {
         heading: "Más que uniformes: moda personalizada",
-        body: "Aunque somos conocidos por nuestros uniformes, nuestro taller tiene la capacidad de confeccionar cualquier tipo de prenda. Desde vestidos de graduación y blusas elegantes hasta ropa casual del día a día. Si puedes soñarlo, probablemente podemos coserlo.",
+        body: "Aunque somos conocidos por nuestros uniformes, nuestro taller tiene la capacidad de confeccionar cualquier tipo de prenda: vestidos, faldas, pantalones de vestir, blusas, crop tops, enterizos, conjuntos, ropa infantil, camisas de hombre y pijamas.",
       },
       {
         heading: "¿Cómo funciona el proceso?",
-        body: "Envíanos por WhatsApp la foto de la prenda que deseas (de cualquier tienda online, Pinterest o Instagram). Nuestro equipo analiza el diseño, selecciona la tela más adecuada, te cotiza el precio y, una vez aprobado, confeccionamos la prenda ajustada a tus medidas exactas. El resultado es una réplica personalizada que se adapta a tu cuerpo.",
+        body: "Envíanos por WhatsApp la foto de la prenda que deseas. Nuestro equipo analiza el diseño, te asesora sobre la tela más adecuada, cotiza el precio y, una vez aprobado, confeccionamos la prenda ajustada a tus medidas.",
       },
       {
         heading: "Prendas que confeccionamos",
-        body: "Vestidos de noche y coctel, faldas, pantalones de vestir, blusas, crop tops, enterizos, conjuntos de dos piezas, ropa infantil, camisas de hombre, pijamas y más. Trabajamos tanto prendas individuales como colecciones completas para emprendedores de moda.",
+        body: "Vestidos de noche y coctel, faldas, pantalones de vestir, blusas, crop tops, enterizos, conjuntos de dos piezas, ropa infantil, camisas de hombre y pijamas.",
       },
       {
-        heading: "Ideal para emprendedores de moda",
-        body: "Si tienes una marca de ropa en crecimiento y necesitas un taller de producción confiable, podemos ser tu aliado. Ofrecemos producción por lotes con precios competitivos, consistencia en calidad y la flexibilidad de ajustar diseños entre tandas sin los mínimos exigidos por fábricas grandes.",
+        heading: "Tiempos de entrega",
+        body: "Entre 5 y 12 días hábiles dependiendo de la complejidad del diseño. Prendas simples como blusas suelen estar listas en 5 días; vestidos elaborados pueden tomar hasta 12. Este tiempo puede variar según la temporada, el volumen de pedidos y los días feriados o asuetos.",
+      },
+      {
+        heading: "¿Tienes una marca de ropa?",
+        body: "Si tienes un proyecto de moda y necesitas producir varias piezas, cuéntanos tu caso. Evaluamos cada proyecto de forma individual para definir volumen, tiempos y condiciones según tus necesidades.",
       },
     ],
     faqs: [
       {
         question: "¿Puedo pedir una sola prenda?",
         answer:
-          "Sí. No hay pedido mínimo para ropa personalizada. Confeccionamos desde una pieza.",
+          "Sí. No hay pedido mínimo para ropa personalizada. Confeccionamos desde una sola pieza.",
       },
       {
         question: "¿Incluyen la tela en el precio?",
         answer:
-          "Sí, generalmente cotizamos con tela incluida. Si prefieres traer tu propia tela, aplicamos tarifa de solo mano de obra, que es más económica.",
+          "Sí, generalmente cotizamos con tela incluida. Si prefieres traer tu propia tela, aplicamos la tarifa de solo mano de obra, que es más económica.",
       },
       {
         question: "¿Cuánto tiempo tarda una prenda personalizada?",
         answer:
-          "Entre 5 y 12 días hábiles dependiendo de la complejidad del diseño. Prendas simples como blusas pueden estar listas en 5 días; vestidos elaborados pueden tomar hasta 12.",
+          "Entre 5 y 12 días hábiles según la complejidad del diseño. Este tiempo puede variar según temporada, demanda y días feriados o asuetos.",
+      },
+      {
+        question: "¿Hacen ropa para toda la familia?",
+        answer:
+          "Sí, confeccionamos ropa casual y de vestir para damas, caballeros y niños, incluyendo ropa infantil y camisas de hombre.",
+      },
+      {
+        question: "¿Producen ropa para mi marca en lotes?",
+        answer:
+          "Si tienes un proyecto de moda, cuéntanos los detalles y evaluamos tu caso de forma individual para definir volumen, tiempos y condiciones.",
       },
     ],
   },
