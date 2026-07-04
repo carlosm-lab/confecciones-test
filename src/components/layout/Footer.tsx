@@ -160,7 +160,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-white transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
                 >
                   <SocialIcon
                     id={social.svgKey}
@@ -242,7 +242,7 @@ export function Footer() {
                   <li className="mt-3 border-t border-[#1e2d4a] pt-2">
                     <Link
                       href="/legal"
-                      className="inline-flex items-center gap-1 font-semibold text-[#e8cbb5] transition-colors duration-200 hover:text-white hover:underline"
+                      className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
                     >
                       Más
                       <span className="material-symbols-outlined text-[16px]">
@@ -327,7 +327,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-white transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
+                className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
               >
                 <SocialIcon
                   id={social.svgKey}
@@ -463,7 +463,7 @@ export function Footer() {
                   <li className="mt-3 border-t border-[#1e2d4a] pt-2">
                     <Link
                       href="/legal"
-                      className="inline-flex items-center gap-1 font-semibold text-[#e8cbb5] transition-colors duration-200 hover:text-white hover:underline"
+                      className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
                     >
                       Más
                       <span className="material-symbols-outlined text-[16px]">
@@ -506,7 +506,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-white transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
                 >
                   <SocialIcon
                     id={social.svgKey}
@@ -664,7 +664,7 @@ export function Footer() {
               href="/legal"
               className="transition-colors duration-200 hover:text-white"
             >
-              Documentos
+              Legal
             </Link>
           </div>
         </div>

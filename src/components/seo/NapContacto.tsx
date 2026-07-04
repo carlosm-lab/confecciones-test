@@ -159,7 +159,7 @@ export function NapContacto() {
             {socialLinks.map((s, index) => {
               const entry = socialIconMap[s.red];
               if (!entry) return null;
-              const { Icon, color } = entry;
+              const { Icon } = entry;
               return (
                 <a
                   key={s.red}
@@ -168,8 +168,7 @@ export function NapContacto() {
                   rel="noopener noreferrer"
                   aria-label={`Seguir Confecciones Liss en ${s.red}`}
                   title={`Confecciones Liss en ${s.red}`}
-                  className="flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-110 active:scale-90"
-                  style={{ color }}
+                  className="text-on-surface-variant flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-110 active:scale-90"
                 >
                   <Icon className="text-2xl" aria-hidden="true" />
                 </a>
