@@ -477,8 +477,10 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
 ### ServicioManoObraDetalle
 
 - **Ruta:** `src/components/servicios/ServicioManoObraDetalle.tsx`
-- **Descripción:** Vista detallada y específica del servicio de Solo Mano de Obra. Recrea exactamente los elementos del prototipo: Hero con disposición de imagen a la izquierda, flujo asimétrico de 3 pasos ("¿Cómo funciona?") con conectores visuales y flechas, barra deslizante de telas aceptadas, artículos editoriales de costura y empaque con imágenes detalladas, y el acordeón de preguntas frecuentes.
-- **Props:** No recibe props.
+- **Descripción:** Componente de vista detallada para el servicio de Solo Mano de Obra (`/servicios/mano-de-obra`). Consume datos dinámicos centralizados de `ServicePage` (`services.ts`), renderizando hero con badges, flujo de 3 pasos ("¿Cómo funciona?"), sección "Tú eliges la tela" (comunicando elección abierta de tela y variación de precio), confirmación de metraje por patrón de prenda, sección para quién es ideal, checklist de lo que incluye la mano de obra, reglas reales de precios por volumen (colegios desde 6 uniformes, empresas desde 12 piezas/modelo) y acordeón de FAQs.
+- **Props:**
+  - `service: ServicePage` — Datos completos de la página de servicio cargados desde `src/data/services.ts`.
+- **Ejemplo:** `<ServicioManoObraDetalle service={service} />`
 
 ### ServicioRopaCasualDetalle
 

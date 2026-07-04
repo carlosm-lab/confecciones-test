@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { heroTrustBadges } from "@/lib/seo-data";
+import { ServicePage } from "@/data/services";
 
 // Background texture for the entire page
 const pageWovenTextureStyle = {
@@ -62,8 +62,29 @@ function FAQItem({ question, answer }: FAQItemProps) {
   );
 }
 
-export function ServicioManoObraDetalle() {
-  const whatsappUrl = siteConfig.links.whatsappDirect;
+interface ServicioManoObraDetalleProps {
+  service: ServicePage;
+}
+
+export function ServicioManoObraDetalle({
+  service,
+}: ServicioManoObraDetalleProps) {
+  const whatsappUrl =
+    service.ctaBanner?.ctaHref || siteConfig.links.whatsappDirect;
+
+  // Features combinadas con fallback para asegurar 4 badges en la cuadrícula hero
+  const heroFeatures = [
+    ...(service.heroFeatures || []),
+    { icon: "verified", text: "Acabado profesional" },
+  ].slice(0, 4);
+
+  // Mapeo de secciones por conveniencia
+  const secComoFunciona = service.sections?.[0];
+  const secTuEligesTela = service.sections?.[1];
+  const secCuantaTela = service.sections?.[2];
+  const secParaQuien = service.sections?.[3];
+  const secQueIncluye = service.sections?.[4];
+  const secPrecioVolumen = service.sections?.[5];
 
   return (
     <div className="min-h-screen w-full" style={pageWovenTextureStyle}>
@@ -74,7 +95,7 @@ export function ServicioManoObraDetalle() {
             <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
               <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-[32px] leading-tight font-bold md:mb-10 md:flex md:flex-col md:items-center md:text-[48px] lg:mb-6 lg:block lg:text-left">
                 <span className="block w-full text-center lg:text-left">
-                  Servicio de Solo Mano de Obra
+                  {service.title}
                 </span>
               </h1>
 
@@ -106,17 +127,10 @@ export function ServicioManoObraDetalle() {
                     className="animate-fade-in-up text-on-surface-variant mb-6 w-full font-sans text-lg leading-relaxed"
                     style={{ animationDelay: "150ms" }}
                   >
-                    Tú pones la tela, nosotros ponemos el talento. Trae tu
-                    material y confeccionamos tu prenda cobrando exclusivamente
-                    la mano de obra.
+                    {service.description}
                   </p>
                   <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
-                    {[
-                      { icon: "savings", text: "Súper económico" },
-                      { icon: "design_services", text: "Tus propios diseños" },
-                      { icon: "checkroom", text: "Aceptamos toda tela" },
-                      { icon: "verified", text: "Acabado profesional" },
-                    ].map((b, index) => (
+                    {heroFeatures.map((b, index) => (
                       <div
                         key={b.text}
                         className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
@@ -177,11 +191,11 @@ export function ServicioManoObraDetalle() {
           <div className="mx-auto max-w-screen-2xl">
             <div className="mb-12 text-center">
               <h2 className="text-primary mb-4 font-serif text-2xl font-bold md:text-3xl">
-                ¿Cómo funciona?
+                {secComoFunciona?.heading || "¿Cómo funciona?"}
               </h2>
-              <p className="text-on-surface-variant mx-auto max-w-2xl font-sans text-base">
-                Un proceso sencillo en tres pasos para transformar tus telas en
-                prendas perfectas.
+              <p className="text-on-surface-variant mx-auto max-w-2xl font-sans text-base leading-relaxed">
+                {secComoFunciona?.body ||
+                  "Es simple: tú traes la tela que elegiste, y nosotros nos encargamos de cortarla, coserla y entregarla como una prenda terminada."}
               </p>
             </div>
             <div className="relative grid grid-cols-1 items-stretch gap-8 md:grid-cols-3">
@@ -218,7 +232,8 @@ export function ServicioManoObraDetalle() {
                   Trae tu tela
                 </h3>
                 <p className="text-on-surface-variant font-sans text-sm leading-relaxed">
-                  Cualquier material, cualquier tienda textil.
+                  Cualquier material de tu elección (algodón, seda, poliéster,
+                  etc.).
                 </p>
               </div>
 
@@ -236,7 +251,8 @@ export function ServicioManoObraDetalle() {
                   Nosotros confeccionamos
                 </h3>
                 <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                  Corte, costura, planchado y empaque industrial.
+                  Trazado de patrón, corte profesional, costura industrial y
+                  planchado.
                 </p>
               </div>
 
@@ -254,172 +270,213 @@ export function ServicioManoObraDetalle() {
                   Retiras tu prenda
                 </h3>
                 <p className="text-on-surface-variant font-sans text-sm leading-relaxed">
-                  Lista para usar. Calidad garantizada.
+                  Lista para usar con acabado impecable y empaque industrial.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Fabric Types Section */}
-        <section className="w-full px-5 py-14 md:px-8 md:py-20">
+        {/* Fabric Choice Section (Replacing closed fabric list with client choice message) */}
+        <section className="w-full px-5 py-10 md:px-8 md:py-16">
           <div className="mx-auto max-w-screen-2xl">
-            <div className="bg-surface-container-low border-primary/5 rounded-2xl border p-8 shadow-sm md:p-12">
-              <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
-                <div className="space-y-4 lg:col-span-5">
+            <div className="bg-surface-container-low border-primary/10 rounded-2xl border p-8 shadow-sm md:p-12">
+              <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                <div className="max-w-3xl space-y-4">
+                  <div className="bg-primary/10 text-primary inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-sans text-xs font-semibold">
+                    <span className="material-symbols-outlined text-sm">
+                      category
+                    </span>
+                    Flexibilidad total de materiales
+                  </div>
                   <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
-                    ¿Qué telas aceptamos?
+                    {secTuEligesTela?.heading || "Tú eliges la tela"}
                   </h2>
                   <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                    Trabajamos con una amplia variedad de materiales. Nuestro
-                    equipo cuenta con maquinaria especializada para manejar
-                    desde tejidos ligeros hasta telas de alta densidad con la
-                    máxima precisión.
+                    {secTuEligesTela?.body}
                   </p>
                 </div>
-                <div className="overflow-hidden lg:col-span-7">
-                  {/* Scrollable pills */}
-                  <div className="hide-scrollbar flex snap-x gap-3 overflow-x-auto scroll-smooth px-2 pt-2 pb-4">
-                    {[
-                      "Algodón",
-                      "Poliéster",
-                      "Lino",
-                      "Gabardina",
-                      "Denim",
-                      "Dry-Fit",
-                      "Popelina",
-                      "Oxford",
-                      "Twill",
-                    ].map((tela) => (
-                      <span
-                        key={tela}
-                        className="border-primary/12 text-primary hover:border-primary/40 shrink-0 cursor-default snap-start rounded-full border bg-white px-5 py-2.5 font-sans text-sm font-semibold shadow-sm transition-colors"
-                      >
-                        {tela}
-                      </span>
-                    ))}
-                  </div>
+                <div className="border-primary/10 text-primary flex shrink-0 items-center justify-center rounded-xl border bg-white p-6 shadow-xs">
+                  <span className="material-symbols-outlined text-secondary text-5xl">
+                    stitch
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Article Sections (Alternate Layout) */}
-        <section className="w-full px-5 py-14 md:px-8 md:py-20">
+        {/* Quantities & Article Sections */}
+        <section className="w-full px-5 py-10 md:px-8 md:py-16">
           <div className="mx-auto max-w-screen-2xl space-y-16">
-            {/* Block A */}
-            <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-16">
-              <div className="border-primary/12 relative aspect-[4/3] w-full overflow-hidden rounded-xl border shadow-sm">
-                <Image
-                  alt="Mesa de taller con telas y rollos"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD_SWjOmXDFSUx5KtdPujQxD0sZhdDccWkPILtdFuRfKoLZ0VY2gHFBmyRwc3acfvtZZugyjnFZvKwok6F20GW0qqv3xwPP2LAH382Ts20N1QhlfoumB-LH52ct8zeDKsoPtCcsadn37l8-tV9cruww5Q-Fo-f1iZGN9inaEpzY-Up74d3FHlt_jGB2XV6kaiBTvWXbjJniY2uy6HxjGGHuWpyPxe16-BINZ5yhhUXAcs7Ne2MnNfbnXaiPDAeVDTjBVUDu8QdJSDI"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
+            {/* Fabric Quantity Needed (New Section) */}
+            {secCuantaTela && (
+              <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-16">
+                <div className="border-primary/12 relative aspect-[4/3] w-full overflow-hidden rounded-xl border shadow-sm">
+                  <Image
+                    alt="Medición y patrones en taller"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD_SWjOmXDFSUx5KtdPujQxD0sZhdDccWkPILtdFuRfKoLZ0VY2gHFBmyRwc3acfvtZZugyjnFZvKwok6F20GW0qqv3xwPP2LAH382Ts20N1QhlfoumB-LH52ct8zeDKsoPtCcsadn37l8-tV9cruww5Q-Fo-f1iZGN9inaEpzY-Up74d3FHlt_jGB2XV6kaiBTvWXbjJniY2uy6HxjGGHuWpyPxe16-BINZ5yhhUXAcs7Ne2MnNfbnXaiPDAeVDTjBVUDu8QdJSDI"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="space-y-4">
+                  <div className="bg-secondary/10 text-secondary inline-flex items-center gap-2 rounded-full px-3 py-1 font-sans text-xs font-semibold">
+                    <span className="material-symbols-outlined text-sm">
+                      straighten
+                    </span>
+                    Confirmación de metraje
+                  </div>
+                  <h2 className="text-primary font-serif text-xl font-bold md:text-2xl">
+                    {secCuantaTela.heading}
+                  </h2>
+                  <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                    {secCuantaTela.body}
+                  </p>
+                </div>
               </div>
-              <div className="space-y-4">
-                <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
-                  ¿Para quién es ideal este servicio?
-                </h3>
-                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                  Este servicio está diseñado para emprendedores de moda,
-                  diseñadores independientes, colegios, empresas que necesitan
-                  uniformes corporativos, o personas que buscan una confección a
-                  medida de alta calidad aportando su propio material. Es la
-                  solución perfecta para quienes tienen un proveedor de telas
-                  preferido pero requieren mano de obra experta.
-                </p>
-              </div>
-            </div>
+            )}
 
-            {/* Block B */}
-            <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-16">
-              <div className="order-2 space-y-6 md:order-1">
-                <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
-                  ¿Qué incluye la mano de obra?
-                </h3>
-                <p className="text-on-surface-variant font-sans text-base leading-relaxed">
-                  Nuestro servicio abarca el proceso completo de manufactura
-                  para asegurar que recibas una prenda terminada lista para su
-                  uso o comercialización.
-                </p>
-                <ul className="text-on-surface space-y-3 font-sans text-base">
-                  {[
-                    {
-                      title: "Trazado",
-                      desc: "Adaptación de patrones a tu tela.",
-                    },
-                    {
-                      title: "Corte",
-                      desc: "Precisión para optimizar el material.",
-                    },
-                    {
-                      title: "Costura industrial",
-                      desc: "Acabados duraderos y profesionales.",
-                    },
-                    {
-                      title: "Planchado",
-                      desc: "Vaporizado industrial para un acabado impecable.",
-                    },
-                    {
-                      title: "Empaque",
-                      desc: "Listo para entregar o vender.",
-                    },
-                  ].map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="border-primary/5 flex items-start gap-3 rounded-lg border bg-white p-3 shadow-sm"
-                    >
-                      <span
-                        className="material-symbols-outlined text-primary text-lg font-bold"
-                        aria-hidden="true"
+            {/* Block A: Ideal For */}
+            {secParaQuien && (
+              <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-16">
+                <div className="order-2 space-y-4 md:order-1">
+                  <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
+                    {secParaQuien.heading}
+                  </h3>
+                  <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                    {secParaQuien.body}
+                  </p>
+                </div>
+                <div className="border-primary/12 relative order-1 aspect-[4/3] w-full overflow-hidden rounded-xl border shadow-sm md:order-2">
+                  <Image
+                    alt="Mesa de taller con patrones y corte"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_v6uvPdvBr72T31ypBxldO0Blt-kmkqGj6smZJcX-wlXeIbtObJU9u8LEbRpFAsGQHE7JjuLFzHlOaonpivh8uQGaW9CKFJEwUvIk6w7NiOWuQO8iMBfl7V6DDfH747RoudJap9JbqWOrpW-bpKskFgPgXUYVUlRxRJqQTWfuvOG6Ju5nsyOv2UnCZ4HAmTP_pOPooJ4eO9CIdXIcsMAC2XMmhzaX_hmUou96YtODyZzbb-xHRYJ3pOjRVgu2t5MXkCvHVVS18SQH"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Block B: What is Included */}
+            {secQueIncluye && (
+              <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-16">
+                <div className="space-y-6">
+                  <h3 className="text-primary font-serif text-xl font-bold md:text-2xl">
+                    {secQueIncluye.heading}
+                  </h3>
+                  <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                    {secQueIncluye.body}
+                  </p>
+                  <ul className="text-on-surface space-y-3 font-sans text-base">
+                    {[
+                      {
+                        title: "Trazado",
+                        desc: "Diseño y estructuración del patrón según la prenda.",
+                      },
+                      {
+                        title: "Corte",
+                        desc: "Corte preciso del material para optimizar la tela.",
+                      },
+                      {
+                        title: "Costura industrial",
+                        desc: "Costura con máquinas rectas, overlock y de acabado.",
+                      },
+                      {
+                        title: "Planchado",
+                        desc: "Vaporizado industrial para un acabado listo para usar.",
+                      },
+                      {
+                        title: "Empaque",
+                        desc: "Empaque cuidadoso e insumos menores (hilos) incluidos.",
+                      },
+                    ].map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="border-primary/5 flex items-start gap-3 rounded-lg border bg-white p-3 shadow-sm"
                       >
-                        check_circle
-                      </span>
-                      <span>
-                        <strong>{item.title}:</strong> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                        <span
+                          className="material-symbols-outlined text-primary text-lg font-bold"
+                          aria-hidden="true"
+                        >
+                          check_circle
+                        </span>
+                        <span>
+                          <strong>{item.title}:</strong> {item.desc}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="border-primary/10 rounded-2xl border bg-white p-8 shadow-sm">
+                  {/* Volume Pricing block if present */}
+                  {secPrecioVolumen ? (
+                    <div className="space-y-4">
+                      <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 font-sans text-xs font-semibold text-amber-900">
+                        <span className="material-symbols-outlined text-sm">
+                          groups
+                        </span>
+                        Condiciones de Mayoreo
+                      </div>
+                      <h3 className="text-primary font-serif text-xl font-bold">
+                        {secPrecioVolumen.heading}
+                      </h3>
+                      <p className="text-on-surface-variant font-sans text-base leading-relaxed">
+                        {secPrecioVolumen.body}
+                      </p>
+                      <div className="border-primary/10 mt-4 space-y-3 border-t pt-4 font-sans text-sm">
+                        <div className="bg-surface-container-low flex items-center justify-between rounded-lg p-3">
+                          <span className="text-primary font-medium">
+                            Colegios / Estudiantes
+                          </span>
+                          <span className="text-secondary font-bold">
+                            Desde 6 uniformes
+                          </span>
+                        </div>
+                        <div className="bg-surface-container-low flex items-center justify-between rounded-lg p-3">
+                          <span className="text-primary font-medium">
+                            Empresas e Instituciones
+                          </span>
+                          <span className="text-secondary font-bold">
+                            Desde 12 piezas/modelo
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-on-surface-variant font-sans text-sm">
+                      Aceptamos desde una sola prenda con atención
+                      personalizada.
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="border-primary/12 relative order-1 aspect-[4/3] w-full overflow-hidden rounded-xl border shadow-sm md:order-2">
-                <Image
-                  alt="Tailor packaging folded shirt"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_v6uvPdvBr72T31ypBxldO0Blt-kmkqGj6smZJcX-wlXeIbtObJU9u8LEbRpFAsGQHE7JjuLFzHlOaonpivh8uQGaW9CKFJEwUvIk6w7NiOWuQO8iMBfl7V6DDfH747RoudJap9JbqWOrpW-bpKskFgPgXUYVUlRxRJqQTWfuvOG6Ju5nsyOv2UnCZ4HAmTP_pOPooJ4eO9CIdXIcsMAC2XMmhzaX_hmUou96YtODyZzbb-xHRYJ3pOjRVgu2t5MXkCvHVVS18SQH"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            </div>
+            )}
           </div>
         </section>
 
         {/* FAQ Section */}
-        <section className="w-full px-5 py-14 md:px-8 md:py-20">
-          <div className="mx-auto max-w-screen-2xl">
-            <h2 className="text-primary mb-8 text-center font-serif text-2xl font-bold md:text-3xl">
-              Preguntas Frecuentes
-            </h2>
-            <div className="mx-auto max-w-3xl space-y-4">
-              <FAQItem
-                question="¿Cuánta tela necesito para una prenda?"
-                answer="La cantidad de tela depende del diseño, la talla y el ancho del rollo (generalmente de 1.10m a 1.50m). Te recomendamos contactarnos con tu diseño para darte un estimado preciso antes de que compres el material."
-              />
-              <FAQItem
-                question="¿Puedo traer un diseño de referencia?"
-                answer="¡Por supuesto! Puedes traer una prenda física que te guste para usarla como molde, o imágenes de referencia. Nuestro equipo de patronaje se encargará de interpretar tu idea."
-              />
-              <FAQItem
-                question="¿Hay pedido mínimo?"
-                answer="Trabajamos tanto pedidos individuales (desde 1 pieza) como producciones en serie para empresas. Los precios de mano de obra varían según el volumen; contáctanos para una cotización escalonada."
-              />
+        {service.faqs && service.faqs.length > 0 && (
+          <section className="w-full px-5 py-14 md:px-8 md:py-20">
+            <div className="mx-auto max-w-screen-2xl">
+              <h2 className="text-primary mb-8 text-center font-serif text-2xl font-bold md:text-3xl">
+                Preguntas Frecuentes
+              </h2>
+              <div className="mx-auto max-w-3xl space-y-4">
+                {service.faqs.map((faq, idx) => (
+                  <FAQItem
+                    key={idx}
+                    question={faq.question}
+                    answer={faq.answer}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </div>
 
       {/* CTA Banner – full width background */}
@@ -430,10 +487,11 @@ export function ServicioManoObraDetalle() {
         />
         <div className="relative z-10 mx-auto flex w-full max-w-screen-2xl flex-col items-center space-y-6 text-center">
           <h2 className="font-serif text-2xl font-bold text-white md:text-3xl">
-            ¿Ya tienes tu tela?
+            {service.ctaBanner?.title || "¿Ya tienes tu tela?"}
           </h2>
           <p className="max-w-xl font-sans text-lg leading-relaxed text-white/80">
-            Hablemos sobre tu proyecto y empecemos a confeccionar.
+            {service.ctaBanner?.description ||
+              "Cuéntanos qué prenda deseas confeccionar y cuánta tela tienes disponible. Te cotizamos solo la mano de obra."}
           </p>
           <a
             href={whatsappUrl}
@@ -448,7 +506,7 @@ export function ServicioManoObraDetalle() {
             >
               chat
             </span>
-            Contactar por WhatsApp
+            {service.ctaBanner?.ctaText || "Cotizar Costura"}
           </a>
         </div>
       </section>

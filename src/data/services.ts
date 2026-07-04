@@ -552,56 +552,69 @@ export const SERVICE_PAGES: ServicePage[] = [
     seoDescription:
       "Tú pones la tela, nosotros ponemos el talento. Cobramos únicamente la mano de obra por la confección de tu prenda o uniforme. San Miguel, El Salvador.",
     description:
-      "¿Compraste una tela espectacular pero no sabes coserla? Trae tu material a nuestro taller. Aplicamos nuestra técnica y patrones comprobados para confeccionar tu prenda, cobrando exclusivamente el valor de la mano de obra. Una opción económica y flexible.",
+      "¿Compraste una tela y no sabes coserla? Trae tu material a nuestro taller. Aplicamos patrones profesionales para confeccionar tu prenda, cobrando exclusivamente el valor de la mano de obra.",
     cardDescription:
-      "Trae tu propia tela y la confeccionamos con patrones profesionales, cobrando solo mano de obra. Una opción muy económica y flexible.",
+      "Trae tu propia tela y la confeccionamos con patrones profesionales, cobrando solo mano de obra.",
     heroGradient: "bg-amber-900 text-white",
     cardImage: "/images/servicios/mano-obra.png",
     heroFeatures: [
-      { icon: "savings", text: "Súper económico" },
+      { icon: "savings", text: "Pagas solo la confección" },
       { icon: "design_services", text: "Tus propios diseños" },
-      { icon: "category", text: "Aceptamos toda tela" },
+      { icon: "category", text: "Tú eliges la tela" },
     ],
     ctaBanner: {
       title: "¿Ya tienes tu tela?",
       description:
-        "Dinos cuántas yardas tienes y qué prenda deseas confeccionar. Te cotizamos solo la mano de obra.",
-      ctaText: "Cotizar costura",
+        "Cuéntanos qué prenda deseas confeccionar y cuánta tela tienes disponible. Te cotizamos solo la mano de obra.",
+      ctaText: "Cotizar Costura",
       ctaHref: siteConfig.links.whatsappDirect,
     },
     sections: [
       {
         heading: "¿Cómo funciona el servicio de mano de obra?",
-        body: "Es simple: tú compras la tela que más te guste en cualquier tienda textil, la traes a nuestro taller, y nosotros nos encargamos de cortarla, coserla y entregarla como una prenda terminada. Solo te cobramos el valor del trabajo manual, lo que reduce significativamente el costo total de tu uniforme o prenda.",
+        body: "Es simple: tú traes la tela que elegiste, y nosotros nos encargamos de cortarla, coserla y entregarla como una prenda terminada. Solo te cobramos el valor del trabajo, lo que puede reducir el costo total frente a comprar una prenda ya confeccionada con tela incluida.",
       },
       {
-        heading: "¿Qué tipo de telas aceptamos?",
-        body: "Trabajamos con todo tipo de telas: algodón, poliéster, lino, gabardina, denim, seda, telas deportivas (dry-fit), popelina, oxford, twill y más. Nuestras costureras tienen experiencia con materiales delicados y con telas pesadas por igual. Si tienes dudas sobre si tu tela es apta, tráela y la evaluamos sin compromiso.",
+        heading: "Tú eliges la tela",
+        body: "Trabajamos con la tela que el cliente elija, sin importar si es un material estándar o uno más particular como la seda. Como la tela la aporta el cliente, el costo final de tu prenda puede variar según el tipo y precio de la tela que traigas, ya que eso influye en el trazado, corte y manejo del material durante la confección.",
+      },
+      {
+        heading: "¿Cuánta tela necesito?",
+        body: "La cantidad de tela necesaria depende del patrón específico de la prenda que quieras confeccionar, de tu talla y del ancho de la tela que elijas. Te confirmamos la cantidad exacta una vez definamos juntos qué prenda vas a confeccionar.",
       },
       {
         heading: "¿Para quién es ideal este servicio?",
-        body: "Es perfecto para quienes compran tela al por mayor y buscan reducir costos, para diseñadores independientes que necesitan un taller de producción, para instituciones que ya tienen su proveedor de tela y solo necesitan la confección, y para cualquier persona que encontró la tela perfecta y quiere convertirla en una prenda única.",
+        body: "Es ideal para quienes ya compraron su tela y buscan reducir costos, para diseñadores independientes que necesitan un taller de producción, y para instituciones o empresas que ya tienen su proveedor de tela y solo necesitan la confección.",
       },
       {
         heading: "¿Qué incluye la mano de obra?",
-        body: "Incluye el trazado del patrón, el corte de la tela, la costura completa con máquinas industriales (recta, overlock, collaretera según se necesite), el pegado de botones o cierres si aplica, el planchado final y el empaque. El hilo y los insumos menores están incluidos; botones especiales, cierres o etiquetas personalizadas se cotizan aparte.",
+        body: "Incluye el trazado del patrón, el corte de la tela, la costura completa con máquinas industriales, el planchado final y el empaque. El hilo y los insumos menores están incluidos; botones especiales, cierres o etiquetas personalizadas se cotizan aparte.",
+      },
+      {
+        heading: "Precio por volumen",
+        body: "Aceptamos pedidos desde una sola prenda. Para grupos de colegio, manejamos precio de mayoreo a partir de 6 uniformes. Para empresas, el precio de volumen aplica desde 12 piezas por modelo. En ambos casos, el precio final se acuerda previamente y puede negociarse según el tamaño del pedido.",
       },
     ],
     faqs: [
       {
-        question: "¿Cuánta tela necesito para una prenda?",
+        question: "¿Cuánta tela necesito para mi prenda?",
         answer:
-          "Depende de la prenda y tu talla. Como regla general: una camisa requiere ~1.5 yardas, un pantalón ~1.5 yardas, un scrub completo ~3 yardas. Te damos la cantidad exacta una vez nos digas qué quieres confeccionar.",
+          "Depende del patrón de la prenda, tu talla y el ancho de la tela que elijas. Te confirmamos la cantidad exacta una vez definamos qué quieres confeccionar.",
+      },
+      {
+        question: "¿Puedo traer cualquier tipo de tela, incluida seda?",
+        answer:
+          "Sí, trabajamos con la tela que elijas. Ten en cuenta que el costo final de la confección puede variar según el tipo de tela, ya que algunos materiales requieren mayor cuidado en el corte y la costura.",
       },
       {
         question: "¿Puedo traer un diseño de referencia?",
         answer:
-          "¡Claro! Puedes traer una foto de Pinterest, Instagram o incluso una prenda que quieras replicar. La usamos como guía para el corte y la confección.",
+          "Sí. Puedes traer una foto o incluso una prenda que quieras replicar. La usamos como guía para el corte y la confección.",
       },
       {
         question: "¿Hay pedido mínimo?",
         answer:
-          "No. Aceptamos desde una sola prenda. Sin embargo, el costo por unidad baja considerablemente en pedidos de 10+ piezas.",
+          "Aceptamos desde una sola prenda. Para colegios, el precio de mayoreo aplica desde 6 uniformes; para empresas, desde 12 piezas por modelo. El precio de volumen se acuerda previamente y puede negociarse según tu pedido.",
       },
     ],
   },

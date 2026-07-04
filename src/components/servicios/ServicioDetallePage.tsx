@@ -27,7 +27,7 @@ export function ServicioDetallePage({ service }: ServicioDetallePageProps) {
   }
 
   if (service.slug === "mano-de-obra") {
-    return <ServicioManoObraDetalle />;
+    return <ServicioManoObraDetalle service={service} />;
   }
 
   if (service.slug === "ropa-general") {
