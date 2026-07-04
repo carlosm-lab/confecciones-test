@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { universities } from "@/lib/seo-data";
 
@@ -34,8 +35,23 @@ export function UniversidadesCoverage() {
               className="animate-fade-in-up bg-surface-container-lowest ambient-shadow rounded-xl p-6 text-center"
               style={{ animationDelay: `${index * 40 + 200}ms` }}
             >
-              <div className="bg-primary text-on-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold">
-                {u.sigla.substring(0, 2)}
+              {/* Logo real o fallback con iniciales */}
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center">
+                {u.logo ? (
+                  <div className="relative h-14 w-14">
+                    <Image
+                      src={u.logo}
+                      alt={`Logo ${u.sigla}`}
+                      fill
+                      className="object-contain"
+                      sizes="56px"
+                    />
+                  </div>
+                ) : (
+                  <div className="bg-primary text-on-primary flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold">
+                    {u.sigla.substring(0, 2)}
+                  </div>
+                )}
               </div>
               <div className="text-primary mb-1 text-lg font-bold">
                 {u.sigla}

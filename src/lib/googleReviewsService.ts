@@ -37,6 +37,56 @@ const REAL_GOOGLE_REVIEWS_FALLBACK: GoogleReview[] = [
     author_avatar: null,
     created_at: "2026-06-20T15:15:00.000Z",
   },
+  {
+    id: "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+    author_name: "Carlitos",
+    comment: "Excelente trabajo y calidad en las telas",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2026-07-02T12:00:00.000Z",
+  },
+  {
+    id: "b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e",
+    author_name: "Gerardo Vargas",
+    comment: "buena atención y exelente trabajo.",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2026-07-02T12:00:00.000Z",
+  },
+  {
+    id: "c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f",
+    author_name: "Manuel Godoy",
+    comment:
+      "Excelente , uniformes a la medida confecciones segun los gustos personalizados y tela de alta calidad y confeccion",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2026-07-01T12:00:00.000Z",
+  },
+  {
+    id: "d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f9a",
+    author_name: "Damaris Navarrete",
+    comment: "Excelente atención y calidad en las confecciones",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2026-07-01T12:00:00.000Z",
+  },
+  {
+    id: "e5f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a0b",
+    author_name: "ツツ",
+    comment:
+      "¡Excelente servicio en Confección Liss! El trabajo que hacen es de primera calidad, con acabados impecables y mucha atención al detalle. Además, la atención al cliente es muy amable y cumplen con los tiempos de entrega. Totalmente recomendados.",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2026-07-01T12:00:00.000Z",
+  },
+  {
+    id: "f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f9a0b1c",
+    author_name: "Erick Josue fuentes",
+    comment: "Buenos trabajos",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2026-07-01T12:00:00.000Z",
+  },
 ];
 
 function createServerClient() {

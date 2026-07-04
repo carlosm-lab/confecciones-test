@@ -89,28 +89,47 @@ export const whyItems = [
 ];
 
 export const universities = [
-  { sigla: "UNIVO", nombre: "Universidad de Oriente", ciudad: "San Miguel" },
+  {
+    sigla: "UNIVO",
+    nombre: "Universidad de Oriente",
+    ciudad: "San Miguel",
+    logo: "/logos/univo.png",
+  },
   {
     sigla: "UNAB",
     nombre: "Universidad Dr. Andrés Bello",
     ciudad: "San Miguel",
+    logo: "/logos/unab.png",
   },
-  { sigla: "UGB", nombre: "Universidad Gerardo Barrios", ciudad: "San Miguel" },
-  { sigla: "UMA", nombre: "Universidad Modular Abierta", ciudad: "San Miguel" },
+  {
+    sigla: "UGB",
+    nombre: "Universidad Gerardo Barrios",
+    ciudad: "San Miguel",
+    logo: "/logos/ugb-2.png",
+  },
+  {
+    sigla: "UMA",
+    nombre: "Universidad Modular Abierta",
+    ciudad: "San Miguel",
+    logo: "/logos/uma.png",
+  },
   {
     sigla: "IEPROES",
     nombre: "Instituto Especializado de Prof. de la Salud",
     ciudad: "San Miguel",
+    logo: "/logos/ieproes.png",
   },
   {
     sigla: "UES",
     nombre: "Universidad de El Salvador",
     ciudad: "El Salvador",
+    logo: "/logos/ues.png",
   },
   {
     sigla: "UEES",
     nombre: "Universidad Evangélica de El Salvador",
     ciudad: "El Salvador",
+    logo: null,
   },
 ];
 
