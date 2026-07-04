@@ -63,30 +63,33 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
           </h2>
           <div className="bg-tertiary mt-4 h-1 w-16 rounded-full" />
 
-          <div className="mt-4 flex items-center gap-2">
-            <span className="text-xl font-bold text-slate-800">4.8</span>
-            <div
-              className="flex text-amber-400"
-              aria-label="4.8 de 5 estrellas"
-            >
-              {[1, 2, 3, 4].map((s) => (
+          {/* Rating: stacks on mobile, single row on sm+ */}
+          <div className="mt-4 flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-bold text-slate-800">4.8</span>
+              <div
+                className="flex text-amber-400"
+                aria-label="4.8 de 5 estrellas"
+              >
+                {[1, 2, 3, 4].map((s) => (
+                  <span
+                    key={s}
+                    className="material-symbols-outlined font-fill-1 text-lg leading-none"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
+                    star
+                  </span>
+                ))}
                 <span
-                  key={s}
                   className="material-symbols-outlined font-fill-1 text-lg leading-none"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                 >
-                  star
+                  star_half
                 </span>
-              ))}
-              <span
-                className="material-symbols-outlined font-fill-1 text-lg leading-none"
-                style={{ fontVariationSettings: "'FILL' 1" }}
-              >
-                star_half
-              </span>
+              </div>
             </div>
-            <span className="text-sm text-slate-500">
-              (4.8 de 5 estrellas · 21 reseñas)
+            <span className="rounded-full bg-slate-100 px-3 py-0.5 font-sans text-xs font-medium text-slate-500">
+              4.8 de 5 &middot; 21 reseñas
             </span>
           </div>
         </div>
@@ -171,9 +174,11 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
           </div>
         </div>
 
-        {/* Desktop: single horizontal scroll row */}
+        {/* Desktop: single horizontal scroll row.
+             -mt-3 + py-3 trick: overflow-x-auto clips vertically too, so we give
+             extra vertical padding so hover lift + shadow are never cut off. */}
         <div className="hidden lg:block">
-          <div className="scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4">
+          <div className="scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent -mt-3 flex snap-x snap-mandatory gap-6 overflow-x-auto py-3 pb-5">
             {[...reviews]
               .sort((a, b) => {
                 const hasCommentA = a.comment ? 1 : 0;
