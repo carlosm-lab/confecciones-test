@@ -229,6 +229,7 @@ export function Footer() {
                     },
                     { href: "/legal/garantia", label: "Garantía de Producto" },
                     { href: "/legal/mayoreo", label: "Ventas al Mayoreo" },
+                    { href: "/legal/cookies", label: "Política de Cookies" },
                   ].map((link, idx) => (
                     <li key={idx}>
                       <Link
@@ -239,12 +240,12 @@ export function Footer() {
                       </Link>
                     </li>
                   ))}
-                  <li className="mt-3 border-t border-[#1e2d4a] pt-2">
+                  <li className="mt-3 pt-2">
                     <Link
                       href="/legal"
                       className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
                     >
-                      Más
+                      Leer Más
                       <span className="material-symbols-outlined text-[16px]">
                         arrow_right_alt
                       </span>
@@ -450,6 +451,7 @@ export function Footer() {
                     },
                     { href: "/legal/garantia", label: "Garantía de Producto" },
                     { href: "/legal/mayoreo", label: "Ventas al Mayoreo" },
+                    { href: "/legal/cookies", label: "Política de Cookies" },
                   ].map((link, idx) => (
                     <li key={idx}>
                       <Link
@@ -460,12 +462,12 @@ export function Footer() {
                       </Link>
                     </li>
                   ))}
-                  <li className="mt-3 border-t border-[#1e2d4a] pt-2">
+                  <li className="mt-3 pt-2">
                     <Link
                       href="/legal"
                       className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
                     >
-                      Más
+                      Leer Más
                       <span className="material-symbols-outlined text-[16px]">
                         arrow_right_alt
                       </span>
@@ -608,6 +610,7 @@ export function Footer() {
                 },
                 { href: "/legal/garantia", label: "Garantía de Producto" },
                 { href: "/legal/mayoreo", label: "Ventas al Mayoreo" },
+                { href: "/legal/cookies", label: "Política de Cookies" },
               ].map((link, idx) => (
                 <li key={idx}>
                   <Link
@@ -618,12 +621,12 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li className="mt-3 border-t border-[#1e2d4a] pt-2">
+              <li className="mt-3 pt-2">
                 <Link
                   href="/legal"
                   className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
                 >
-                  Ver todos los documentos
+                  Leer Más
                   <span className="material-symbols-outlined text-[16px]">
                     arrow_right_alt
                   </span>
