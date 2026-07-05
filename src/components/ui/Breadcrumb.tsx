@@ -25,7 +25,7 @@ export function Breadcrumb({
     <nav
       aria-label="Breadcrumb"
       className={cn(
-        "font-body flex text-sm",
+        "font-body flex max-w-full min-w-0 text-sm",
         isLight
           ? "text-white/70"
           : isPrimary
@@ -34,13 +34,16 @@ export function Breadcrumb({
         className
       )}
     >
-      <ol className="flex items-center space-x-2">
+      <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1 leading-normal">
         {items.map((item, index) => (
-          <li key={item.label} className="flex items-center">
+          <li
+            key={`${item.label}-${index}`}
+            className="inline-flex min-w-0 items-center"
+          >
             {index > 0 && (
               <span
                 className={cn(
-                  "material-symbols-outlined mx-1 text-sm",
+                  "material-symbols-outlined mx-0.5 shrink-0 text-sm",
                   isLight
                     ? "text-white/40"
                     : isPrimary
@@ -56,7 +59,7 @@ export function Breadcrumb({
               <Link
                 href={item.href}
                 className={cn(
-                  "transition-colors",
+                  "text-xs break-words transition-colors sm:text-sm",
                   isLight
                     ? "hover:text-white"
                     : isPrimary
@@ -75,6 +78,7 @@ export function Breadcrumb({
             ) : (
               <span
                 className={cn(
+                  "text-xs break-words sm:text-sm",
                   index === items.length - 1
                     ? isLight
                       ? "font-medium text-white"

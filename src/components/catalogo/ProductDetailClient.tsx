@@ -411,40 +411,42 @@ export function ProductDetailClient({
           style={{ animationDelay: "200ms" }}
         >
           {/* 1 ── Breadcrumb + Compartir */}
-          <div className="flex items-center justify-between">
-            <Breadcrumb
-              items={
-                sector === "universitario"
-                  ? [
-                      { label: "Inicio", href: "/" },
-                      { label: "Catálogo", href: "/catalogo" },
-                      {
-                        label: "Universidades",
-                        href: "/catalogo/universidades",
-                      },
-                      {
-                        label: config.subtitle,
-                        href: `/catalogo/universidades/${
-                          typeof product.category === "string"
-                            ? product.category.split("-")[0]
-                            : sector
-                        }`,
-                      },
-                    ]
-                  : [
-                      { label: "Inicio", href: "/" },
-                      { label: "Catálogo", href: "/catalogo" },
-                      {
-                        label: config.subtitle,
-                        href: `/catalogo/${sector}`,
-                      },
-                    ]
-              }
-            />
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0 flex-1">
+              <Breadcrumb
+                items={
+                  sector === "universitario"
+                    ? [
+                        { label: "Inicio", href: "/" },
+                        { label: "Catálogo", href: "/catalogo" },
+                        {
+                          label: "Universidades",
+                          href: "/catalogo/universidades",
+                        },
+                        {
+                          label: config.subtitle,
+                          href: `/catalogo/universidades/${
+                            typeof product.category === "string"
+                              ? product.category.split("-")[0]
+                              : sector
+                          }`,
+                        },
+                      ]
+                    : [
+                        { label: "Inicio", href: "/" },
+                        { label: "Catálogo", href: "/catalogo" },
+                        {
+                          label: config.subtitle,
+                          href: `/catalogo/${sector}`,
+                        },
+                      ]
+                }
+              />
+            </div>
             <button
               type="button"
               onClick={handleCopy}
-              className="text-primary shrink-0 cursor-pointer transition-transform hover:scale-110 active:scale-95"
+              className="text-primary mt-0.5 shrink-0 cursor-pointer transition-transform hover:scale-110 active:scale-95"
               title="Compartir"
               aria-label="Compartir este producto"
             >
