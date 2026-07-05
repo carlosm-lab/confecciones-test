@@ -159,13 +159,9 @@ export function Navbar() {
     typeof window !== "undefined" ? window.scrollY : 0
   );
 
-  const BLOCKED_ROUTES = ["/servicios", "/catalogo", "/carrito", "/cuenta"];
-
   const navLinks = isHomeOnly
     ? NAV_LINKS.filter((link) => link.href === "/")
-    : process.env.NODE_ENV === "production"
-      ? NAV_LINKS.filter((link) => !BLOCKED_ROUTES.includes(link.href))
-      : NAV_LINKS;
+    : NAV_LINKS;
 
   const closeMenu = () => setIsMenuOpen(false);
   const openSearch = () => {

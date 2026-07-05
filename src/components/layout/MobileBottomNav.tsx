@@ -26,12 +26,7 @@ export function MobileBottomNav() {
   const { cartCount, setIsCartOpen } = useCart();
   const { user, showAuthModal } = useAuth();
 
-  /* In production, these routes are blocked by middleware — hide from nav */
-  const PROD_BLOCKED = ["/catalogo", "/servicios", "/carrito", "/cuenta"];
-  const visibleItems = ITEMS.filter(
-    (item) =>
-      process.env.NODE_ENV !== "production" || !PROD_BLOCKED.includes(item.href)
-  );
+  const visibleItems = ITEMS;
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
