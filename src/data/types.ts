@@ -114,6 +114,7 @@ export interface CtaBanner {
 export interface CategoryConfig {
   sector: Sector;
   title: string;
+  seoTitle?: string;
   subtitle: string;
   description: string;
   seoDescription: string;
@@ -143,6 +144,7 @@ export interface ProcessStep {
 export interface GalleryItem {
   image: string;
   label: string;
+  imageAlt?: string;
 }
 
 export interface PricingCard {
@@ -155,6 +157,8 @@ export interface PricingCard {
 export interface ServiceSection {
   heading: string;
   body: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 export interface ApplicationCategory {

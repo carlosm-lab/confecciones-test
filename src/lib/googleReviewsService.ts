@@ -105,7 +105,7 @@ const REAL_GOOGLE_REVIEWS_FALLBACK: GoogleReview[] = [
   },
   {
     id: "999c8d29-7498-454f-b859-8be5c17f7b9e",
-    author_name: "Jackeline Lisseth Molina Villacorta",
+    author_name: "Jackelline Lisseth Molina Villacorta",
     comment: null,
     rating: 5,
     author_avatar: null,

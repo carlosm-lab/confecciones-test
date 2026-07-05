@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function CertificacionesClient() {
   const blockVariants = {
@@ -233,13 +234,18 @@ export default function CertificacionesClient() {
               ></div>
 
               <div className="relative z-10 space-y-4">
-                {/* Monograma de alta costura */}
-                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-[#143067] font-serif text-3xl font-bold text-white shadow-md">
-                  LM
+                {/* Foto de la directora */}
+                <div className="relative mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#143067] shadow-md">
+                  <Image
+                    src="/images/equipo/iris-villacorta.png"
+                    alt="Lisseth Molina"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <div className="space-y-1">
                   <h3 className="font-serif text-xl font-bold text-[#143067]">
-                    Lisseth Molina
+                    Iris Lisseth Villacorta de Molina
                   </h3>
                   <p className="font-mono text-xs font-bold font-semibold tracking-wider text-[#143067] uppercase">
                     Directora General y Fundadora
@@ -377,7 +383,7 @@ export default function CertificacionesClient() {
                 Dirección General
               </span>
               <h3 className="font-serif text-lg font-bold text-[#143067]">
-                Lisseth Molina
+                Iris Lisseth Villacorta de Molina
               </h3>
               <p className="mt-1 font-sans text-xs text-[#444650]">
                 Patronaje, corte general y supervisión de calidad.
@@ -429,7 +435,8 @@ export default function CertificacionesClient() {
                   Tecnología e Imagen
                 </span>
                 <h3 className="mb-2 font-serif text-base font-bold text-[#143067]">
-                  Carlos José Molina · Jackeline · Liam
+                  Carlos José Molina Villacorta · Jackelline Lisseth Molina
+                  Villacorta · Liam Alejandro
                 </h3>
                 <p className="text-xs leading-relaxed text-[#444650]">
                   Desarrollo web, posicionamiento digital e imagen institucional

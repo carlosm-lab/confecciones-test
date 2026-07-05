@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { siteConfig } from "@/config/site";
+import { getSupabaseClient } from "@/lib/supabaseClient";
 
 // ── Logos disponibles (PNG limpios) ──────────────────────────────────────────
 const LOGO_SRCS = [
@@ -270,53 +271,47 @@ const MOBILE_COLLAGE = buildMobileCollage();
 
 // ── Universidad data ──────────────────────────────────────────────────────────
 
-const UNIVERSIDADES = [
+const UNIVERSIDADES_BASE = [
   {
     slug: "univo",
     sigla: "UNIVO",
     nombre: "Universidad de Oriente",
-    carreras: ["Enfermería", "Medicina", "Odontología"],
-    modelos: 12,
+    carreras: ["Enfermería", "Etc..."],
     logo: "/logos/univo.png",
   },
   {
     slug: "ieproes",
     sigla: "IEPROES",
     nombre: "Instituto Especializado de Profesionales de la Salud",
-    carreras: ["Enfermería", "Fisioterapia"],
-    modelos: 8,
+    carreras: ["Enfermería", "Etc..."],
     logo: "/logos/ieproes.png",
   },
   {
     slug: "ugb",
     sigla: "UGB",
     nombre: "Universidad Gerardo Barrios",
-    carreras: ["Enfermería", "Laboratorio Clínico"],
-    modelos: 9,
+    carreras: ["Enfermería", "Etc..."],
     logo: "/logos/ugb-1.png",
   },
   {
     slug: "unab",
     sigla: "UNAB",
     nombre: "Universidad Andrés Bello",
-    carreras: ["Enfermería", "Ciencias de la Salud"],
-    modelos: 7,
+    carreras: ["Enfermería", "Etc..."],
     logo: "/logos/unab.png",
   },
   {
     slug: "ues",
     sigla: "UES",
     nombre: "Universidad de El Salvador",
-    carreras: ["Medicina", "Enfermería", "Farmacia"],
-    modelos: 14,
+    carreras: ["Medicina", "Etc..."],
     logo: "/logos/ues.png",
   },
   {
     slug: "uma",
     sigla: "UMA",
     nombre: "Universidad Modular Abierta",
-    carreras: ["Enfermería", "Salud"],
-    modelos: 5,
+    carreras: ["Enfermería", "Etc..."],
     logo: "/logos/uma.png",
   },
 ] as const;
@@ -327,7 +322,7 @@ function UnivTile({
   size,
   className = "",
 }: {
-  univ: (typeof UNIVERSIDADES)[number];
+  univ: (typeof UNIVERSIDADES_BASE)[number] & { modelos: number };
   size: "large" | "medium" | "small";
   className?: string;
 }) {
@@ -460,11 +455,45 @@ function UnivTile({
   );
 }
 
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
+
 // ── Página ────────────────────────────────────────────────────────────────────
 export default function PruebaHubBlancoPage() {
   const gridRef = useRef<HTMLElement>(null);
   const heroH1Ref = useRef<HTMLHeadingElement>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [modelCounts, setModelCounts] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    async function fetchCounts() {
+      const supabase = getSupabaseClient();
+      const { data, error } = await supabase
+        .from("products")
+        .select("category")
+        .eq("sector", "universitario")
+        .eq("is_active", true);
+
+      if (!error && data) {
+        const counts: Record<string, number> = {};
+        data.forEach((p) => {
+          if (!p.category) return;
+          const cat = p.category.toLowerCase();
+          UNIVERSIDADES_BASE.forEach((u) => {
+            if (cat.includes(u.slug)) {
+              counts[u.slug] = (counts[u.slug] || 0) + 1;
+            }
+          });
+        });
+        setModelCounts(counts);
+      }
+    }
+    fetchCounts();
+  }, []);
+
+  const universidades = UNIVERSIDADES_BASE.map((u) => ({
+    ...u,
+    modelos: modelCounts[u.slug] || 0,
+  }));
 
   // ── Fluid title: dos líneas, cada una llena el 100% del ancho disponible ──
   //    ALGORITMO:
@@ -684,6 +713,17 @@ export default function PruebaHubBlancoPage() {
         className="relative flex min-h-[calc(100dvh-56px)] flex-col items-center justify-center overflow-hidden lg:h-[calc(100dvh-56px)]"
         style={{ backgroundColor: "#f0f4f8" }}
       >
+        {/* ── BREADCRUMB ──────────────────────────────────────────────────────── */}
+        <div className="absolute top-6 right-0 left-0 z-30 mx-auto w-full max-w-screen-2xl px-5 md:px-8">
+          <Breadcrumb
+            variant="primary"
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Catálogo", href: "/catalogo" },
+              { label: "Universitarios" },
+            ]}
+          />
+        </div>
         {/* ── CAPA 1A: Stickers DESKTOP (≥ 1024px) — cuadrícula hexagonal 10×7 ── */}
         <div
           className="pointer-events-none absolute inset-0 hidden overflow-hidden lg:block"
@@ -1037,23 +1077,23 @@ export default function PruebaHubBlancoPage() {
           {/* Row 1: UNIVO (2/3) + IEPROES (1/3) */}
           <div className="mb-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
             <div className="sm:col-span-2">
-              <UnivTile univ={UNIVERSIDADES[0]} size="large" />
+              <UnivTile univ={universidades[0]} size="large" />
             </div>
             <div>
-              <UnivTile univ={UNIVERSIDADES[1]} size="medium" />
+              <UnivTile univ={universidades[1]} size="medium" />
             </div>
           </div>
 
           {/* Row 2: UGB + UNAB + UES */}
           <div className="mb-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
-            <UnivTile univ={UNIVERSIDADES[2]} size="medium" />
-            <UnivTile univ={UNIVERSIDADES[3]} size="medium" />
+            <UnivTile univ={universidades[2]} size="medium" />
+            <UnivTile univ={universidades[3]} size="medium" />
             {/* UES sube hasta topar con IEPROES con gap-2 = 8px entre ellas.
                 sm: (320-240)+8 - 8gap = 80px  →  -mt-[80px]  + !min-h-[320px]
                 lg: (380-280)+8 - 8gap = 100px →  -mt-[100px] + !min-h-[380px] */}
             <div className="sm:-mt-[80px] lg:-mt-[100px]">
               <UnivTile
-                univ={UNIVERSIDADES[4]}
+                univ={universidades[4]}
                 size="medium"
                 className="sm:!min-h-[320px] lg:!min-h-[380px]"
               />
@@ -1063,7 +1103,7 @@ export default function PruebaHubBlancoPage() {
           {/* Row 3: UMA (1/2) + CTA slot (1/2) — ladrillo desfasado respecto al row anterior */}
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <div>
-              <UnivTile univ={UNIVERSIDADES[5]} size="small" />
+              <UnivTile univ={universidades[5]} size="small" />
             </div>
             <Link
               href={siteConfig.links.whatsappDirect}

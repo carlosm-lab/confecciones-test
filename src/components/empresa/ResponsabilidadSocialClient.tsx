@@ -16,7 +16,7 @@ export default function ResponsabilidadSocialClient() {
   };
 
   return (
-    <div className="overflow-x-hidden bg-[#f8f9fb] font-sans text-[#191c1e] antialiased selection:bg-[#143067]/10 selection:text-[#143067]">
+    <div className="bg-[#f8f9fb] font-sans text-[#191c1e] antialiased selection:bg-[#143067]/10 selection:text-[#143067]">
       {/* ──────────────────────────────────────────────────────── */}
       {/* PORTADA (Hero Editorial) */}
       {/* ──────────────────────────────────────────────────────── */}
@@ -61,20 +61,16 @@ export default function ResponsabilidadSocialClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
-          {/* Imagen Grayscale */}
           <div className="lg:col-span-6">
-            <div className="border-primary/35 relative aspect-[4/3] w-full overflow-hidden rounded border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+            <div className="border-primary/35 relative aspect-[4/3] w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDql6RAV4sbPJQGYiXijV7KHGzjJUep7ygJh0aamJxp9_KY2wPDDgZuqgHyZ2hSX5FHdJ0_zeDOOcmveyy3URfYQuwBDOHHaeKJnJtwfHT8R4APNmQ4dC5IeR89-M-GRnMhKL3Mrmz4RIrW6UfXKZPfojqoPElzWRv7xPnZzlzYWzxpMNKA05CvKHF38tVCtOs7SaFpaAbA0baMp_63_ivw10zgiOvHS0bReDbkD2_GAibQocZlAk9zBix5wNco3k5Ph_kMGvT35cY"
+                src="/images/responsabilidad/nuestro-origen.jpg"
                 alt="Taller tradicional de costura y confección"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover object-center grayscale transition-all duration-700 hover:grayscale-0"
+                className="object-cover object-center"
               />
             </div>
-            <span className="mt-2 block text-left font-mono text-[10px] text-[#444650]">
-              Mesa de trabajo del taller en Barrio La Merced.
-            </span>
           </div>
 
           {/* Texto del capítulo */}
@@ -117,9 +113,9 @@ export default function ResponsabilidadSocialClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="border-t border-b border-[#e1e2e5] bg-white">
         <div className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-10 lg:gap-16">
             {/* Header del capítulo */}
-            <div className="sticky top-8 space-y-4 lg:col-span-4">
+            <div className="space-y-4 lg:sticky lg:top-32 lg:col-span-6">
               <span className="font-mono text-xs font-bold text-[#143067]">
                 Nuestro equipo
               </span>
@@ -148,7 +144,7 @@ export default function ResponsabilidadSocialClient() {
             </div>
 
             {/* Timeline de Empleo */}
-            <div className="ml-4 space-y-12 border-l border-[#143067]/20 pl-6 md:pl-12 lg:col-span-8">
+            <div className="ml-4 space-y-12 border-l border-[#143067]/20 pl-6 md:pl-12 lg:col-span-4">
               {/* Hito 2005 */}
               <div className="relative space-y-2">
                 <div className="absolute top-1 -left-[31px] h-3 w-3 rounded-full border-2 border-[#143067] bg-white md:-left-[55px]"></div>
@@ -311,60 +307,23 @@ export default function ResponsabilidadSocialClient() {
       {/* ──────────────────────────────────────────────────────── */}
       <section className="border-t border-b border-[#e1e2e5] bg-white">
         <div className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
-            {/* Mockup de plano digital (SVG) */}
-            <div className="order-2 flex justify-center lg:order-1 lg:col-span-6">
-              <div className="relative flex aspect-square w-full max-w-md flex-col justify-between overflow-hidden rounded bg-[#143067] p-6">
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-[0.05]"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)",
-                    backgroundSize: "16px 16px",
-                  }}
-                ></div>
-
-                <div className="mb-2 flex justify-between font-mono text-[9px] tracking-wider text-[#dae2ff] uppercase">
-                  <span>Plataforma web institucional</span>
-                </div>
-
-                {/* SVG Blueprint de interfaz */}
-                <svg
-                  className="my-4 h-auto w-full fill-none stroke-current stroke-[0.8] text-[#dae2ff]/40"
-                  viewBox="0 0 100 60"
-                  aria-hidden="true"
-                >
-                  {/* Browser frame */}
-                  <rect x="5" y="5" width="90" height="50" rx="2" />
-                  <line x1="5" y1="12" x2="95" y2="12" />
-
-                  {/* Dots representing browser buttons */}
-                  <circle cx="9" cy="8" r="1.2" />
-                  <circle cx="13" cy="8" r="1.2" />
-                  <circle cx="17" cy="8" r="1.2" />
-
-                  {/* Layout grid lines */}
-                  <rect x="10" y="16" width="30" height="32" />
-                  <rect x="45" y="16" width="45" height="14" />
-                  <rect x="45" y="34" width="45" height="14" />
-
-                  {/* Micro lines (representing text) */}
-                  <line x1="49" y1="20" x2="81" y2="20" strokeWidth="0.5" />
-                  <line x1="49" y1="24" x2="73" y2="24" strokeWidth="0.5" />
-
-                  <line x1="49" y1="38" x2="81" y2="38" strokeWidth="0.5" />
-                  <line x1="49" y1="42" x2="65" y2="42" strokeWidth="0.5" />
-                </svg>
-
-                <div className="z-10 flex items-end justify-between border-t border-white/20 pt-4 font-mono text-[9px] text-[#dae2ff]">
-                  <span>SITIO WEB OFICIAL</span>
-                  <span className="font-bold text-white">100% RESPONSIVE</span>
-                </div>
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-10 lg:gap-16">
+            {/* Imagen del sitio web */}
+            <div className="order-2 flex w-full justify-center lg:order-1 lg:col-span-7">
+              <div className="border-primary/35 relative w-full overflow-hidden rounded-lg border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+                <Image
+                  src="/images/responsabilidad/transformacion-digital.png"
+                  alt="Plataforma web institucional"
+                  width={1920}
+                  height={1080}
+                  sizes="(max-width: 1024px) 100vw, 70vw"
+                  className="h-auto w-full object-contain"
+                />
               </div>
             </div>
 
             {/* Texto descriptivo */}
-            <div className="order-1 space-y-6 lg:order-2 lg:col-span-6">
+            <div className="order-1 space-y-6 lg:order-2 lg:col-span-3">
               <div className="space-y-2">
                 <span className="font-mono text-xs font-bold text-[#143067]">
                   Transformación digital

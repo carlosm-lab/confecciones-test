@@ -310,12 +310,13 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
   },
   lenceria: {
     sector: "lenceria",
-    title: "Lencería Fina y Ropa Íntima",
+    title: "Lencería Blanca Discreta Para Personal de Salud",
+    seoTitle: "Lencería Blanca Discreta Masculina y Femenina",
     subtitle: "Lencería",
     description:
-      "Lencería fina y ropa íntima blanca para hombres y mujeres, confeccionada con telas suaves de algodón premium y encajes delicados.",
+      "Lencería blanca discreta para mujer y hombre. Invisible bajo prendas blancas o transparentes, ideal para personal de salud.",
     seoDescription:
-      "Lencería blanca para hombres y mujeres confeccionada a mano. Prendas íntimas finas de algodón premium y encaje en El Salvador.",
+      "Lencería blanca discreta para mujer y hombre. Invisible bajo prendas blancas o transparentes, ideal para personal de salud. Confecciones Liss | San Miguel Sv",
     icon: "favorite",
     heroGradient:
       "bg-gradient-to-br from-rose-950 via-pink-900 to-rose-900 text-white",
@@ -486,12 +487,13 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
   },
   limpiapipas: {
     sector: "limpiapipas",
-    title: "Artesanías y Flores de Limpiapipas",
+    title: "Manualidades y Detalles de Limpiapipas",
+    seoTitle: "Manualidades y Detalles de Limpiapipas",
     subtitle: "Limpiapipas",
     description:
       "Flores, ramos y decoraciones artesanales hechas a mano con limpiapipas, ideales para regalos y eventos especiales.",
     seoDescription:
-      "Flores y ramos de limpiapipas hechos a mano en El Salvador. Regalos creativos de limpiapipas para San Valentín, cumpleaños, aniversarios.",
+      "Descubre manualidades y detalles de limpiapipas hechos a mano. Regalos originales para San Valentín, cumpleaños, aniversarios y más. Confeccions Liss | SM",
     icon: "eco",
     heroGradient:
       "bg-gradient-to-br from-emerald-950 via-teal-900 to-emerald-900 text-white",

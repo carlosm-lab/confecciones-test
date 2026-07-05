@@ -157,9 +157,9 @@ export default function FilosofiaClient() {
                   <div className="border-primary/35 relative aspect-[4/5] w-full overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-auto md:h-full md:w-full">
                     <Image
                       fill
-                      src="/images/empresa/filosofia/vintage_sewing_machine.png"
+                      src="/images/empresa/filosofia/hero.jpg"
                       alt="La primera máquina de coser en nuestro taller"
-                      className="rounded-2xl object-cover object-center grayscale"
+                      className="rounded-2xl object-cover object-center"
                       sizes="(max-width:768px) 80vw, 40vw"
                       priority
                     />
@@ -170,7 +170,7 @@ export default function FilosofiaClient() {
               {/* COLUMNA DE TEXTO Y ACCIONES */}
               <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
                 <div
-                  className="animate-fade-in-up text-on-surface-variant mb-6 w-full space-y-4 font-sans text-base leading-relaxed"
+                  className="animate-fade-in-up text-on-surface-variant font-body mb-6 w-full space-y-4 text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl"
                   style={{ animationDelay: "150ms" }}
                 >
                   <p>
@@ -193,9 +193,9 @@ export default function FilosofiaClient() {
               <div className="relative h-full w-full overflow-hidden rounded-2xl">
                 <Image
                   fill
-                  src="/images/empresa/filosofia/vintage_sewing_machine.png"
+                  src="/images/empresa/filosofia/hero.jpg"
                   alt="La primera máquina de coser en nuestro taller"
-                  className="rounded-2xl object-cover object-center grayscale"
+                  className="rounded-2xl object-cover object-center"
                   sizes="40vw"
                   priority
                 />
@@ -221,12 +221,12 @@ export default function FilosofiaClient() {
                 className="absolute inset-x-0 -top-12 -bottom-12"
               >
                 <Image
-                  src="/images/empresa/filosofia/vintage_sewing_machine.png"
+                  src="/images/empresa/filosofia/no-fabricamos-prendas.avif"
                   alt="La primera máquina de coser en nuestro taller"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover grayscale"
+                  className="object-cover"
                 />
               </motion.div>
             </div>
@@ -598,11 +598,11 @@ export default function FilosofiaClient() {
               className="border-primary/35 relative min-h-[350px] overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:col-span-1 md:row-span-2 md:min-h-full"
             >
               <Image
-                src="/images/empresa/filosofia/textile_workshop.png"
+                src="/images/empresa/filosofia/mision-vision.jpg"
                 alt="Maquinaria y costura profesional en nuestro taller"
                 fill
                 sizes="(max-width: 768px) 100vw, 30vw"
-                className="object-cover grayscale transition-transform duration-700 hover:scale-105"
+                className="object-cover transition-transform duration-700 hover:scale-105"
               />
             </motion.div>
 
@@ -671,11 +671,11 @@ export default function FilosofiaClient() {
             <div className="group border-primary/35 relative aspect-[16/9] w-full overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-[21/9]">
               <div className="absolute inset-0 z-10 bg-[#001946]/35 transition-colors duration-500 group-hover:bg-[#001946]/25" />
               <Image
-                src="/images/empresa/filosofia/artisan_working.png"
+                src="/images/empresa/filosofia/las-decisiones.png"
                 alt="Artesano textil trabajando en taller"
                 fill
                 sizes="100vw"
-                className="object-cover grayscale transition-transform duration-700 hover:scale-102"
+                className="object-cover transition-transform duration-700 hover:scale-102"
               />
               <div className="absolute inset-0 z-20 flex items-center justify-center p-6">
                 <span className="max-w-xl text-center font-serif text-2xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
@@ -688,11 +688,11 @@ export default function FilosofiaClient() {
             <div className="group border-primary/35 relative aspect-[16/9] w-full overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-[21/9]">
               <div className="absolute inset-0 z-10 bg-[#001946]/35 transition-colors duration-500 group-hover:bg-[#001946]/25" />
               <Image
-                src="/images/empresa/filosofia/sewing_stitch_detail.png"
+                src="/images/empresa/filosofia/cada-detalle-importa.png"
                 alt="Macro detalle de costura de precisión"
                 fill
                 sizes="100vw"
-                className="object-cover grayscale transition-transform duration-700 hover:scale-102"
+                className="object-cover transition-transform duration-700 hover:scale-102"
               />
               <div className="absolute inset-0 z-20 flex items-center justify-center p-6">
                 <span className="max-w-xl text-center font-serif text-2xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
@@ -705,11 +705,11 @@ export default function FilosofiaClient() {
             <div className="group border-primary/35 relative aspect-[16/9] w-full overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-[21/9]">
               <div className="absolute inset-0 z-10 bg-[#001946]/35 transition-colors duration-500 group-hover:bg-[#001946]/25" />
               <Image
-                src="/images/empresa/filosofia/quality_control_inspection.png"
+                src="/images/empresa/filosofia/la-calidad-comienza.png"
                 alt="Inspección detallada de control de calidad"
                 fill
                 sizes="100vw"
-                className="object-cover grayscale transition-transform duration-700 hover:scale-102"
+                className="object-cover transition-transform duration-700 hover:scale-102"
               />
               <div className="absolute inset-0 z-20 flex items-center justify-center p-6">
                 <span className="max-w-2xl text-center font-serif text-2xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">

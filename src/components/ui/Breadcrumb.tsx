@@ -11,7 +11,7 @@ interface BreadcrumbItem {
 interface BreadcrumbProps {
   items: BreadcrumbItem[];
   className?: string;
-  variant?: "default" | "light";
+  variant?: "default" | "light" | "primary";
 }
 
 export function Breadcrumb({
@@ -20,12 +20,17 @@ export function Breadcrumb({
   variant = "default",
 }: BreadcrumbProps) {
   const isLight = variant === "light";
+  const isPrimary = variant === "primary";
   return (
     <nav
       aria-label="Breadcrumb"
       className={cn(
         "font-body flex text-sm",
-        isLight ? "text-white/70" : "text-gray-500",
+        isLight
+          ? "text-white/70"
+          : isPrimary
+            ? "text-primary/90"
+            : "text-gray-500",
         className
       )}
     >
@@ -36,7 +41,11 @@ export function Breadcrumb({
               <span
                 className={cn(
                   "material-symbols-outlined mx-1 text-sm",
-                  isLight ? "text-white/40" : "text-gray-400"
+                  isLight
+                    ? "text-white/40"
+                    : isPrimary
+                      ? "text-primary/50"
+                      : "text-gray-400"
                 )}
                 aria-hidden="true"
               >
@@ -48,7 +57,11 @@ export function Breadcrumb({
                 href={item.href}
                 className={cn(
                   "transition-colors",
-                  isLight ? "hover:text-white" : "hover:text-primary",
+                  isLight
+                    ? "hover:text-white"
+                    : isPrimary
+                      ? "hover:text-primary font-medium"
+                      : "hover:text-primary",
                   index === items.length - 1
                     ? isLight
                       ? "font-medium text-white"
@@ -65,10 +78,12 @@ export function Breadcrumb({
                   index === items.length - 1
                     ? isLight
                       ? "font-medium text-white"
-                      : "text-primary font-medium"
+                      : "text-primary font-bold"
                     : isLight
                       ? "text-white/70"
-                      : "text-gray-500"
+                      : isPrimary
+                        ? "text-primary font-medium"
+                        : "text-gray-500"
                 )}
                 aria-current={index === items.length - 1 ? "page" : undefined}
               >

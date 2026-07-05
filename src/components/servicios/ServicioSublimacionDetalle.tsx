@@ -106,9 +106,9 @@ export function ServicioSublimacionDetalle({
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
                     <Image
                       fill
-                      alt="Objetos y ropa sublimados"
+                      alt={service.seoTitle || service.title}
                       className="rounded-xl object-cover object-center"
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
+                      src={service.cardImage}
                       sizes="(max-width:768px) 80vw, 40vw"
                       priority
                     />
@@ -168,9 +168,9 @@ export function ServicioSublimacionDetalle({
               <div className="relative h-full w-full overflow-hidden rounded-xl">
                 <Image
                   fill
-                  alt="Objetos y ropa sublimados"
+                  alt={service.seoTitle || service.title}
                   className="rounded-xl object-cover object-center"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
+                  src={service.cardImage}
                   sizes="40vw"
                   priority
                 />

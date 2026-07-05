@@ -24,7 +24,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Bordado computarizado de alta precisión para escudos, logotipos y nombres sobre uniformes y prendas individuales.",
     heroGradient: "bg-indigo-900 text-white",
-    cardImage: "/images/servicios/bordados.png",
+    cardImage: "/images/servicios/bordados-personalizados/hero.png",
     heroFeatures: [
       { icon: "verified", text: "Alta precisión" },
       { icon: "design_services", text: "Digitalización gratis*" },
@@ -41,6 +41,9 @@ export const SERVICE_PAGES: ServicePage[] = [
       {
         heading: "¿Qué es el bordado computarizado?",
         body: "Es el proceso de reproducir un diseño digital mediante hilos sobre una prenda textil, utilizando máquinas de coser industriales controladas por computadora. El hilo queda físicamente integrado a la prenda, lo que garantiza una durabilidad excepcional frente a lavados y fricción constante.",
+        image:
+          "/images/servicios/bordados-personalizados/Qué es el bordado computarizado.png",
+        imageAlt: "Qué es el bordado computarizado en San Miguel",
       },
       {
         heading:
@@ -50,6 +53,9 @@ export const SERVICE_PAGES: ServicePage[] = [
       {
         heading: "¿Bordado, sublimación o estampado?",
         body: "El bordado computarizado es la opción más duradera para logos institucionales: el hilo queda integrado a la tela y resiste años de lavado sin perder color ni forma. Para diseños fotográficos a color completo sobre poliéster, la sublimación textil suele ser más adecuada. Si tienes dudas sobre cuál técnica conviene a tu proyecto, cuéntanos el uso que le darás a la prenda y te recomendamos la opción correcta.",
+        image:
+          "/images/servicios/bordados-personalizados/bordado sublimación o estampado.png",
+        imageAlt: "Diferencia entre bordado, sublimación o estampado",
       },
       {
         heading: "Proceso de digitalización",
@@ -81,23 +87,33 @@ export const SERVICE_PAGES: ServicePage[] = [
       },
     ],
     garmentGallery: [
-      // TODO: reemplazar con fotografías reales de bordados propios del taller en cuanto estén disponibles.
-      // Cada entrada debe mostrar el PROCESO (máquina bordando, hilos, texturas) — nunca logos de marcas inventadas.
       {
-        image: "/images/servicios/bordados.png",
+        image:
+          "/images/servicios/bordados-personalizados/uniformes escolares.png",
         label: "Uniformes Escolares",
+        imageAlt:
+          "Bordado computarizado en uniformes escolares para colegios de San Miguel",
       },
       {
-        image: "/images/servicios/bordados.png",
+        image:
+          "/images/servicios/bordados-personalizados/uniformes médicos.png",
         label: "Uniformes Médicos",
+        imageAlt:
+          "Bordado de logos en scrubs y uniformes médicos para hospitales y clínicas",
       },
       {
-        image: "/images/servicios/bordados.png",
+        image:
+          "/images/servicios/bordados-personalizados/uniformes empresariales.png",
         label: "Uniformes Empresariales",
+        imageAlt:
+          "Bordado de logotipos corporativos en camisas y uniformes empresariales",
       },
       {
-        image: "/images/servicios/bordados.png",
+        image:
+          "/images/servicios/bordados-personalizados/gorras y accesorios.png",
         label: "Gorras y Accesorios",
+        imageAlt:
+          "Servicio de bordado de alta precisión en gorras y accesorios textiles",
       },
     ],
     institutionLogos: [
@@ -164,7 +180,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Sublimación full color sobre ropa, tazas, termos y artículos promocionales, desde una sola pieza.",
     heroGradient: "bg-purple-900 text-white",
-    cardImage: "/images/servicios/sublimacion.png",
+    cardImage: "/images/servicios/sublimacion/hero.png",
     heroFeatures: [
       { icon: "palette", text: "Full color" },
       { icon: "shopping_bag", text: "Sin pedido mínimo" },
@@ -410,7 +426,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Confección a medida con más de 12 medidas anatómicas, para un entalle que la ropa de talla estándar no puede ofrecer.",
     heroGradient: "bg-pink-900 text-white",
-    cardImage: "/images/servicios/confeccion.png",
+    cardImage: "/images/servicios/confeccion-a-medida/hero.jpg",
     heroFeatures: [
       { icon: "accessibility_new", text: "Sin límite de talla" },
       { icon: "cut", text: "Entalle perfecto" },
@@ -556,7 +572,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Trae tu propia tela y la confeccionamos con patrones profesionales, cobrando solo mano de obra.",
     heroGradient: "bg-amber-900 text-white",
-    cardImage: "/images/servicios/mano-obra.png",
+    cardImage: "/images/servicios/mano-de-obra/hero.jpg",
     heroFeatures: [
       { icon: "savings", text: "Pagas solo la confección" },
       { icon: "design_services", text: "Tus propios diseños" },
@@ -581,10 +597,16 @@ export const SERVICE_PAGES: ServicePage[] = [
       {
         heading: "¿Cuánta tela necesito?",
         body: "La cantidad de tela necesaria depende del patrón específico de la prenda que quieras confeccionar, de tu talla y del ancho de la tela que elijas. Te confirmamos la cantidad exacta una vez definamos juntos qué prenda vas a confeccionar.",
+        image: "/images/servicios/mano-de-obra/cuanta tela necesito.png",
+        imageAlt: "Medición y patrones de costura en taller de confección",
       },
       {
         heading: "¿Para quién es ideal este servicio?",
         body: "Es ideal para quienes ya compraron su tela y buscan reducir costos, para diseñadores independientes que necesitan un taller de producción, y para instituciones o empresas que ya tienen su proveedor de tela y solo necesitan la confección.",
+        image:
+          "/images/servicios/mano-de-obra/Para quien es ideal este servicio.jpg",
+        imageAlt:
+          "Mesa de taller con tela, patrones y tijeras de corte profesional",
       },
       {
         heading: "¿Qué incluye la mano de obra?",
@@ -633,7 +655,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Confección de ropa casual y de fiesta a medida. Replicamos vestidos, faldas y conjuntos a partir de tus fotos de referencia.",
     heroGradient: "bg-fuchsia-900 text-white",
-    cardImage: "/images/servicios/ropa-general.png",
+    cardImage: "/images/servicios/ropa-general/hero.png",
     heroFeatures: [
       { icon: "draw", text: "Diseño libre" },
       { icon: "photo_camera", text: "Copiamos de fotos" },

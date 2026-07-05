@@ -111,12 +111,9 @@ export function ServicioSastreriaDetalle({
                     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
                       <Image
                         fill
-                        alt="Medición y sastrería profesional"
+                        alt={service.seoTitle || service.title}
                         className="rounded-xl object-cover object-center"
-                        src={
-                          service.cardImage ||
-                          "/images/servicios/confeccion.png"
-                        }
+                        src={service.cardImage}
                         sizes="(max-width:768px) 80vw, 40vw"
                         priority
                       />
@@ -177,11 +174,9 @@ export function ServicioSastreriaDetalle({
                 <div className="relative h-full w-full overflow-hidden rounded-xl">
                   <Image
                     fill
-                    alt="Medición y sastrería profesional"
+                    alt={service.seoTitle || service.title}
                     className="rounded-xl object-cover object-center"
-                    src={
-                      service.cardImage || "/images/servicios/confeccion.png"
-                    }
+                    src={service.cardImage}
                     sizes="40vw"
                     priority
                   />

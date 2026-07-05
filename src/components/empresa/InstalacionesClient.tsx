@@ -34,7 +34,7 @@ const stations: Station[] = [
     accentWord: "Corte",
     narrative:
       "En esta área se reciben y revisan los rollos de tela antes de iniciar el proceso de corte. Cada pieza se traza siguiendo el patronaje correspondiente al uniforme solicitado, ya sea en serie para instituciones o a la medida para pedidos individuales. El objetivo es aprovechar el material y asegurar que cada pieza mantenga las proporciones exactas antes de pasar a confección.",
-    image: "/images/servicios/ropa-general.png",
+    image: "/images/instalaciones/Área de Corte.jpg",
     technicalSpecs: [
       { label: "Insumo", value: "Telas seleccionadas por tipo de uniforme" },
       {
@@ -53,7 +53,8 @@ const stations: Station[] = [
     accentWord: "Confección",
     narrative:
       "Esta es el área donde las piezas cortadas se transforman en prendas terminadas. El equipo de confección, con experiencia que en algunos casos supera los veinte años, ensambla cada sección de la prenda utilizando maquinaria industrial. Las costuras se revisan durante el proceso para evitar defectos antes de pasar al área de bordado o control de calidad.",
-    image: "/images/servicios/confeccion.png",
+    image:
+      "/images/instalaciones/area de corte y confeccion imagen horizontal formato 16-9.jpg",
     technicalSpecs: [
       { label: "Equipo", value: "Máquinas de coser industriales" },
       { label: "Enfoque", value: "Costuras reforzadas en zonas de mayor uso" },
@@ -69,7 +70,7 @@ const stations: Station[] = [
     accentWord: "Bordado",
     narrative:
       "En esta área se borda la identidad de cada cliente: escudos escolares, logotipos empresariales o insignias institucionales. El trabajo se realiza con bordadora especializada, cuidando que el resultado final sea consistente en color, tamaño y posición en cada prenda del mismo lote.",
-    image: "/images/servicios/bordados.png",
+    image: "/images/instalaciones/area de bordado.png",
     technicalSpecs: [
       { label: "Equipo", value: "Bordadora especializada" },
       {
@@ -88,7 +89,7 @@ const stations: Station[] = [
     accentWord: "Calidad",
     narrative:
       "René Alfonso Méndez, responsable de control de calidad, revisa todas las costuras, pliegues y bordados de cada prenda antes de su entrega. Se verifica que las costuras soporten estiramiento y temperatura, y que los bordados no se deshilachen con el uso o el roce. Además se realizan pruebas de desgarre, planchado y lavado para confirmar que la prenda cumple con el estándar esperado.",
-    image: "/images/servicios/mano-obra.png",
+    image: "/images/instalaciones/control de calidad.jpg",
     technicalSpecs: [
       { label: "Revisión", value: "Costuras, pliegues y bordados" },
       { label: "Pruebas", value: "Desgarre, planchado y lavado" },
@@ -104,7 +105,7 @@ const stations: Station[] = [
     accentWord: "Empaque",
     narrative:
       "Una vez aprobada en control de calidad, cada prenda pasa al área de planchado manual para asegurar mejor presentación. Después se empaca y se notifica al cliente para su retiro en el taller. También ofrecemos la opción de envío a domicilio, con el saldo pendiente pagadero contra entrega.",
-    image: "/images/servicios/sublimacion.png",
+    image: "/images/instalaciones/empaque y entrega.jpg",
     technicalSpecs: [
       { label: "Planchado", value: "Manual" },
       { label: "Empaque", value: "Individual por prenda" },
@@ -270,7 +271,7 @@ function StationConfeccion({ station }: { station: Station }) {
             style={{ width: "30%", aspectRatio: "3/4" }}
           >
             <Image
-              src={station.image}
+              src="/images/instalaciones/area de corte y confeccion imagen vertical formato 9-16.jpg"
               alt={station.title}
               fill
               className="object-cover"
@@ -283,7 +284,7 @@ function StationConfeccion({ station }: { station: Station }) {
             style={{ aspectRatio: "16/9" }}
           >
             <Image
-              src={station.image}
+              src="/images/instalaciones/area de corte y confeccion imagen horizontal formato 16-9.jpg"
               alt={station.title}
               fill
               className="object-cover object-center"
@@ -300,7 +301,7 @@ function StationConfeccion({ station }: { station: Station }) {
             style={{ width: "20%", aspectRatio: "1/1" }}
           >
             <Image
-              src={station.image}
+              src="/images/instalaciones/area de corte y confeccion imagen cuadrada formato 1-1.jpg"
               alt={station.title}
               fill
               className="object-cover object-top"
@@ -801,7 +802,7 @@ export default function InstalacionesClient() {
             </motion.h1>
             <motion.p
               variants={fadeIn}
-              className="max-w-[42ch] font-serif text-xl text-white/60 italic"
+              className="max-w-[42ch] font-serif text-base text-white/60 italic md:text-lg lg:text-xl"
             >
               Confecciones Liss opera como un taller de confección especializado
               en uniformes escolares, empresariales y médicos, donde cada
@@ -809,7 +810,7 @@ export default function InstalacionesClient() {
             </motion.p>
             <motion.p
               variants={fadeIn}
-              className="max-w-[55ch] font-sans text-sm leading-relaxed text-white/40"
+              className="max-w-[55ch] font-sans text-base leading-relaxed text-white/40 md:text-lg lg:text-xl"
             >
               Te invitamos a conocer las áreas de trabajo donde se construye
               cada prenda, desde el corte de la tela hasta la entrega final al

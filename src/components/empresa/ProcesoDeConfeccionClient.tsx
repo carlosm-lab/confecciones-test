@@ -184,7 +184,7 @@ export default function ProcesoDeConfeccionClient() {
                 <div className="relative h-full w-full overflow-hidden rounded-2xl">
                   <Image
                     fill
-                    src="/images/servicios/mano-obra.png"
+                    src="/images/proceso/hero.jpg"
                     alt="Proceso de Confección - Confecciones Liss"
                     className="object-cover object-center"
                     sizes="(max-width: 1024px) 100vw, 40vw"
@@ -248,7 +248,7 @@ export default function ProcesoDeConfeccionClient() {
             <div className="flex justify-center md:col-span-6">
               <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
-                  src="/images/servicios/mano-obra.png"
+                  src="/images/proceso/primer-contacto.jpg"
                   alt="Cliente siendo atendido en Confecciones Liss"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
@@ -383,7 +383,7 @@ export default function ProcesoDeConfeccionClient() {
             <div className="order-2 flex justify-center md:order-1">
               <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
-                  src="/images/servicios/ropa-general.png"
+                  src="/images/proceso/toma-de-medidas.jpg"
                   alt="Toma de medidas anatómicas en Confecciones Liss"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
@@ -525,7 +525,7 @@ export default function ProcesoDeConfeccionClient() {
             <div className="flex justify-center">
               <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
-                  src="/images/servicios/confeccion.png"
+                  src="/images/proceso/corte.jpg"
                   alt="Área de corte de Confecciones Liss"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
@@ -560,7 +560,7 @@ export default function ProcesoDeConfeccionClient() {
             <div className="border-primary/35 relative overflow-hidden rounded-[24px] border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-[#edf1f7]">
                 <Image
-                  src="/images/servicios/confeccion.png"
+                  src="/images/proceso/confeccion.jpg"
                   alt="Taller de confección industrial de Confecciones Liss"
                   fill
                   sizes="(max-width: 1200px) 100vw, 80vw"
@@ -787,7 +787,7 @@ export default function ProcesoDeConfeccionClient() {
             <div className="flex justify-center">
               <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
-                  src="/images/servicios/sublimacion.png"
+                  src="/images/proceso/empaque.jpg"
                   alt="Preparación y empaque de uniformes en Confecciones Liss"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
@@ -859,7 +859,7 @@ export default function ProcesoDeConfeccionClient() {
             <div className="flex justify-center">
               <div className="border-primary/35 relative aspect-[4/3] w-full max-w-[500px] overflow-hidden rounded-[16px] border bg-white p-2 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
-                  src="/images/servicios/mano-obra.png"
+                  src="/images/proceso/entrega.jpg"
                   alt="Cliente de Confecciones Liss recibiendo sus uniformes"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"

@@ -38,7 +38,7 @@ export async function generateMetadata({
   const PAGE_URL = `${siteConfig.url}/catalogo/${sector}`;
 
   return {
-    title: config.title,
+    title: config.seoTitle ?? config.title,
     description: config.seoDescription,
     alternates: { canonical: PAGE_URL },
     openGraph: {

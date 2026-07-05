@@ -127,9 +127,9 @@ export function ServicioManoObraDetalle({
                     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
                       <Image
                         fill
-                        alt="Manos costurando a máquina en taller"
+                        alt={service.seoTitle || service.title}
                         className="rounded-xl object-cover object-center"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIOK8UY5TesvxqjgC-Hwzg1ChKEulzHNqCG0kzVs_ttKJCHxUqdEdMLD9L6yLQY_4CZ3SpSURhaA-teMGZlRDHSf54LpLg09zvPPvI3G17Qv2B3ha0XpAczn8Z9ePBV_aU1qq0iOLby22hSdzlVYdDOHJJ79fZECSwenAOvf12ZViI69T3CxsPQ1PlsKOShnHhZk4WRDodUOsCknVFOqWsxCcv4SUiMv-8Wl0u-q-p2XxtTP3wMOohB9ndCnWWERpi7f7fa4dO2RR3"
+                        src={service.cardImage}
                         sizes="(max-width:768px) 80vw, 40vw"
                         priority
                       />
@@ -190,9 +190,9 @@ export function ServicioManoObraDetalle({
                 <div className="relative h-full w-full overflow-hidden rounded-xl">
                   <Image
                     fill
-                    alt="Manos costurando a máquina en taller"
+                    alt={service.seoTitle || service.title}
                     className="rounded-xl object-cover object-center"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIOK8UY5TesvxqjgC-Hwzg1ChKEulzHNqCG0kzVs_ttKJCHxUqdEdMLD9L6yLQY_4CZ3SpSURhaA-teMGZlRDHSf54LpLg09zvPPvI3G17Qv2B3ha0XpAczn8Z9ePBV_aU1qq0iOLby22hSdzlVYdDOHJJ79fZECSwenAOvf12ZViI69T3CxsPQ1PlsKOShnHhZk4WRDodUOsCknVFOqWsxCcv4SUiMv-8Wl0u-q-p2XxtTP3wMOohB9ndCnWWERpi7f7fa4dO2RR3"
+                    src={service.cardImage}
                     sizes="40vw"
                     priority
                   />
@@ -314,7 +314,7 @@ export function ServicioManoObraDetalle({
                 </div>
                 <div className="border-primary/10 text-primary flex shrink-0 items-center justify-center rounded-xl border bg-white p-6 shadow-xs">
                   <span className="material-symbols-outlined text-secondary text-5xl">
-                    stitch
+                    texture
                   </span>
                 </div>
               </div>
@@ -330,8 +330,8 @@ export function ServicioManoObraDetalle({
               <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-16">
                 <div className="border-primary/12 relative aspect-[4/3] w-full overflow-hidden rounded-xl border shadow-sm">
                   <Image
-                    alt="Medición y patrones en taller"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD_SWjOmXDFSUx5KtdPujQxD0sZhdDccWkPILtdFuRfKoLZ0VY2gHFBmyRwc3acfvtZZugyjnFZvKwok6F20GW0qqv3xwPP2LAH382Ts20N1QhlfoumB-LH52ct8zeDKsoPtCcsadn37l8-tV9cruww5Q-Fo-f1iZGN9inaEpzY-Up74d3FHlt_jGB2XV6kaiBTvWXbjJniY2uy6HxjGGHuWpyPxe16-BINZ5yhhUXAcs7Ne2MnNfbnXaiPDAeVDTjBVUDu8QdJSDI"
+                    alt={secCuantaTela.imageAlt || secCuantaTela.heading}
+                    src={secCuantaTela.image!}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
@@ -367,8 +367,8 @@ export function ServicioManoObraDetalle({
                 </div>
                 <div className="border-primary/12 relative order-1 aspect-[4/3] w-full overflow-hidden rounded-xl border shadow-sm md:order-2">
                   <Image
-                    alt="Mesa de taller con patrones y corte"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_v6uvPdvBr72T31ypBxldO0Blt-kmkqGj6smZJcX-wlXeIbtObJU9u8LEbRpFAsGQHE7JjuLFzHlOaonpivh8uQGaW9CKFJEwUvIk6w7NiOWuQO8iMBfl7V6DDfH747RoudJap9JbqWOrpW-bpKskFgPgXUYVUlRxRJqQTWfuvOG6Ju5nsyOv2UnCZ4HAmTP_pOPooJ4eO9CIdXIcsMAC2XMmhzaX_hmUou96YtODyZzbb-xHRYJ3pOjRVgu2t5MXkCvHVVS18SQH"
+                    alt={secParaQuien.imageAlt || secParaQuien.heading}
+                    src={secParaQuien.image!}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"

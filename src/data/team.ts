@@ -11,6 +11,7 @@ export interface TeamMember {
   avatarBg: string;
   tags: string[];
   subtitle?: string;
+  image?: string;
 }
 
 export const teamData: TeamMember[] = [
@@ -33,6 +34,7 @@ export const teamData: TeamMember[] = [
       "Patronaje",
       "Maquinaria Industrial",
     ],
+    image: "/images/equipo/iris villacorta.png",
   },
   {
     slug: "lilian-romero",
@@ -46,6 +48,7 @@ export const teamData: TeamMember[] = [
     experience: "Desde marzo de 2021",
     avatarBg: "bg-[#b43024]",
     tags: ["Uniformes escolares", "Acabados textiles", "Producción en serie"],
+    image: "/images/equipo/lilian romero.png",
   },
   {
     slug: "nubia-vazquez",
@@ -59,6 +62,7 @@ export const teamData: TeamMember[] = [
     experience: "Desde 2021",
     avatarBg: "bg-[#444650]",
     tags: ["Confección de prendas", "Ensamblaje", "Control de acabados"],
+    image: "/images/equipo/nuvia vasquez.png",
   },
   {
     slug: "blanca-martinez",
@@ -72,6 +76,7 @@ export const teamData: TeamMember[] = [
     experience: "Desde 2023",
     avatarBg: "bg-[#d7dffc] text-[#143067]",
     tags: ["Costura industrial", "Producción", "Preparación de piezas"],
+    image: "/images/equipo/Blanca Martinez.png",
   },
   {
     slug: "rene-mendez",
@@ -91,6 +96,7 @@ export const teamData: TeamMember[] = [
       "Pruebas de calidad",
       "Revisión final",
     ],
+    image: "/images/equipo/René Alfonso Méndez.png",
   },
   {
     slug: "carlos-molina",
@@ -110,6 +116,7 @@ export const teamData: TeamMember[] = [
       "Distribución",
       "Entregas a domicilio",
     ],
+    image: "/images/equipo/Carlos Antonio.jpg",
   },
   {
     slug: "carlos-jose-molina",
@@ -117,7 +124,7 @@ export const teamData: TeamMember[] = [
     role: "Director de Transformación Digital",
     initials: "CJ",
     subtitle: "Estrategia digital · SEO · Arquitectura web",
-    bio: "Técnico en Computación certificado en Inteligencia y Contrainteligencia Digital y en Técnicas de Recolección y Análisis de Datos. Estudiante de Licenciatura en Psicología de la Salud en IEPROES (Regional San Miguel). Con su incorporación en enero de 2026 se diseñó la plataforma web institucional y se implementó una estrategia de posicionamiento orgánico para la región oriental de El Salvador, basada en inteligencia competitiva, análisis de comportamiento del usuario y arquitectura de contenidos bajo estándares E-E-A-T de Google.",
+    bio: "Técnico en Computación certificado en Técnicas de Inteligencia Recolección y Análisis de Datos de Fuentes Abiertas. Estudiante de Licenciatura en Psicología de la Salud en IEPROES (Regional San Miguel). Con su incorporación en enero de 2026 se diseñó la plataforma web institucional y se implementó una estrategia de posicionamiento orgánico para la región oriental de El Salvador, basada en inteligencia competitiva, análisis de comportamiento del usuario y arquitectura de contenidos bajo estándares E-E-A-T de Google.",
     quote:
       "La costura es física, pero la confianza del cliente comienza desde su primera interacción en la pantalla.",
     details: "",
@@ -130,10 +137,11 @@ export const teamData: TeamMember[] = [
       "Desarrollo web",
       "Análisis de datos",
     ],
+    image: "/images/equipo/carlos jose molina villacorta.jpeg",
   },
   {
-    slug: "jackeline-molina",
-    name: "Jackeline Lisseth Molina Villacorta",
+    slug: "jackelline-molina",
+    name: "Jackelline Lisseth Molina Villacorta",
     role: "Modelo institucional",
     initials: "JM",
     bio: "Representa la imagen de marca en uniformes y prendas para el sector salud y empresarial. Su participación garantiza que las fotografías institucionales reflejen con precisión el ajuste, acabado y presentación real de cada prenda confeccionada.",
@@ -147,10 +155,11 @@ export const teamData: TeamMember[] = [
       "Uniformes médicos",
       "Representación de marca",
     ],
+    image: "/images/equipo/jackelline lisseth.jpeg",
   },
   {
     slug: "liam-alejandro",
-    name: "Liam Alejandro Molina Villacorta",
+    name: "Liam Alejandro",
     role: "Modelo institucional",
     initials: "LA",
     bio: "Colabora en la representación visual de productos para segmentos infantiles y escolares, aportando autenticidad a la presentación fotográfica de uniformes escolares.",
@@ -160,5 +169,6 @@ export const teamData: TeamMember[] = [
     experience: "",
     avatarBg: "bg-[#d7dffc] text-[#143067]",
     tags: ["Imagen institucional", "Uniformes escolares"],
+    image: "/images/equipo/liam alejandro.jpg",
   },
 ];

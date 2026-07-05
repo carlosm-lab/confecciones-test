@@ -551,11 +551,11 @@ export default function TransparenciaClient() {
                 <div className="space-y-3">
                   <div className="relative aspect-[4/3] w-full overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb]">
                     <Image
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-G2wJz71AP5vwCDp3t359I7x2kSZWb9W7SHnNgNThWNfLM7fMGzA0y5M1GjR6pDnLljfIYHiihui8K68JiUD61l1KTSZN1A_Oo_XYoUlopyn2KmLs-ATCrchByg932AMdkhGYxkz2-QJc41OYMvs5KMFq3BuohZHD_x0PQnYgjNgxZmdeVpUJnQX1nbkXpev54ppZsOzALWst7M23heLgF9ER-lEwexccB4aD4cpnHF9CP4YW-nLRvjo2GTw9BzKMAp4XF9tpZeY"
+                      src="/images/transparencia/preparacion-de-pedidos.jpg"
                       alt="Operario empacando prendas de calidad"
                       fill
                       sizes="(max-width: 1024px) 100vw, 30vw"
-                      className="object-cover object-center grayscale"
+                      className="object-cover object-center"
                     />
                   </div>
                   <span className="block font-mono text-[9px] text-[#444650]">
@@ -604,7 +604,7 @@ export default function TransparenciaClient() {
             >
               <Image
                 fill
-                src="/images/servicios/mano-obra.png"
+                src="/images/transparencia/imagen-lateral.png"
                 alt="Transparencia y honestidad en el taller"
                 className="object-cover object-center"
                 sizes="(max-width: 1024px) 100vw, 30vw"

@@ -12,6 +12,7 @@ interface TeamMember {
   description: string;
   specialties: string[];
   initials: string;
+  image: string;
 }
 
 const team: TeamMember[] = [
@@ -27,6 +28,7 @@ const team: TeamMember[] = [
       "Producción en serie",
     ],
     initials: "LR",
+    image: "/images/equipo/lilian romero.png",
   },
   {
     name: "Nubia Vázquez",
@@ -36,6 +38,7 @@ const team: TeamMember[] = [
       "Especialista en confección y ensamblaje de prendas. Su incorporación reforzó la consistencia del proceso productivo, garantizando uniformidad en acabados y rendimiento estable en producción continua.",
     specialties: ["Confección de prendas", "Ensamblaje", "Control de acabados"],
     initials: "NV",
+    image: "/images/equipo/nuvia vasquez.png",
   },
   {
     name: "Carlos Antonio Molina",
@@ -45,6 +48,7 @@ const team: TeamMember[] = [
       "Responsable de la coordinación de entregas, atención directa al cliente y distribución de pedidos. Gestiona la relación con clientes institucionales y empresariales, asegurando que cada entrega llegue en tiempo y forma.",
     specialties: ["Logística", "Atención al cliente", "Distribución"],
     initials: "CM",
+    image: "/images/equipo/Carlos Antonio.jpg",
   },
   {
     name: "Blanca Martínez",
@@ -54,6 +58,7 @@ const team: TeamMember[] = [
       "Operaria de producción especializada en costura industrial. Su incorporación amplió la capacidad del taller para absorber pedidos de mayor volumen sin comprometer los plazos de entrega.",
     specialties: ["Costura industrial", "Producción", "Preparación de piezas"],
     initials: "BM",
+    image: "/images/equipo/Blanca Martinez.png",
   },
   {
     name: "René Alfonso Méndez",
@@ -67,6 +72,7 @@ const team: TeamMember[] = [
       "Auditoría de costuras",
     ],
     initials: "RM",
+    image: "/images/equipo/René Alfonso Méndez.png",
   },
 ];
 
@@ -166,7 +172,7 @@ export default function SobreNosotrosClient() {
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl md:aspect-auto md:h-full md:w-full">
                     <Image
                       fill
-                      src="/images/servicios/mano-obra.png"
+                      src="/images/sobre-nosotros/hero.jpg"
                       alt="Máquina de coser tradicional en taller familiar"
                       className="rounded-xl object-cover object-center"
                       sizes="(max-width:768px) 80vw, 40vw"
@@ -179,7 +185,7 @@ export default function SobreNosotrosClient() {
               {/* COLUMNA DE TEXTO Y ACCIONES */}
               <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
                 <div
-                  className="animate-fade-in-up text-on-surface-variant mb-6 w-full space-y-4 font-sans text-base leading-relaxed"
+                  className="animate-fade-in-up text-on-surface-variant font-body mb-6 w-full space-y-4 text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl"
                   style={{ animationDelay: "150ms" }}
                 >
                   <p>
@@ -205,7 +211,7 @@ export default function SobreNosotrosClient() {
               <div className="relative h-full w-full overflow-hidden rounded-2xl">
                 <Image
                   fill
-                  src="/images/servicios/mano-obra.png"
+                  src="/images/sobre-nosotros/hero.jpg"
                   alt="Máquina de coser tradicional en taller familiar"
                   className="rounded-xl object-cover object-center"
                   sizes="40vw"
@@ -231,7 +237,7 @@ export default function SobreNosotrosClient() {
                 <div className="relative h-full w-full overflow-hidden rounded-2xl">
                   <Image
                     fill
-                    src="/images/servicios/mano-obra.png"
+                    src="/images/sobre-nosotros/el valor de la palabra dada.jpg"
                     alt="Reputación y recomendación en el taller"
                     className="object-cover object-center"
                     sizes="(max-width: 1024px) 100vw, 40vw"
@@ -369,7 +375,7 @@ export default function SobreNosotrosClient() {
             >
               <div className="border-primary/35 relative aspect-[4/5] w-full overflow-hidden rounded-3xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
-                  src="/images/servicios/confeccion.png"
+                  src="/images/sobre-nosotros/Producción industrial la etapa de las maquilas.jpg"
                   alt="Confección y costura en taller industrial de San Miguel"
                   fill
                   className="object-cover"
@@ -560,9 +566,15 @@ export default function SobreNosotrosClient() {
                 viewport={{ once: true, margin: "-100px" }}
                 variants={fadeIn}
               >
-                {/* Viñeta con iniciales */}
-                <div className="absolute top-0 -left-[43px] flex h-10 w-10 items-center justify-center rounded-full border-4 border-[#f8f9fb] bg-[#143067] font-serif text-xs font-bold text-white shadow-md md:-left-[67px] md:h-12 md:w-12 md:text-sm">
-                  {member.initials}
+                {/* Viñeta con iniciales / foto */}
+                <div className="absolute top-0 -left-[43px] flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-4 border-[#f8f9fb] bg-[#143067] font-serif text-xs font-bold text-white shadow-md md:-left-[67px] md:h-12 md:w-12 md:text-sm">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-cover"
+                    sizes="48px"
+                  />
                 </div>
 
                 <div className="border-primary/35 space-y-3 rounded-3xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-8">
@@ -620,17 +632,15 @@ export default function SobreNosotrosClient() {
                 Transformación digital desde 2026
               </h2>
               <p className="font-sans text-base leading-relaxed text-[#444650]">
-                En enero de 2026 se incorporó Carlos José Molina Villacorta,
-                Técnico en Computación, certificado en Técnicas de Inteligencia,
-                Recolección y Análisis de Datos, con estudios en curso de
-                Licenciatura en Psicología de la Salud en EL Instituto
-                Especializado de Profesionales de la Salud (IEPROES - Centro
-                Regional San Miguel). Con su incorporación se diseñó la
-                plataforma web institucional y se implementó una estrategia de
-                posicionamiento orgánico orientada a la región oriental de El
-                Salvador. La estrategia combina inteligencia competitiva,
-                análisis de comportamiento del usuario y arquitectura de
-                contenidos estructurada según los estándares E-E-A-T de Google.
+                Carlos José Molina Villacorta es Técnico en Computación
+                certificado en Técnicas de Inteligencia Recolección y Análisis
+                de Datos de Fuentes Abiertas. Estudiante de Licenciatura en
+                Psicología de la Salud en IEPROES (Regional San Miguel). Con su
+                incorporación en enero de 2026 se diseñó la plataforma web
+                institucional y se implementó una estrategia de posicionamiento
+                orgánico para la región oriental de El Salvador, basada en
+                inteligencia competitiva, análisis de comportamiento del usuario
+                y arquitectura de contenidos bajo estándares E-E-A-T de Google.
               </p>
             </motion.div>
 
@@ -726,22 +736,34 @@ export default function SobreNosotrosClient() {
           {/* Modelos Institucionales y Cierre */}
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 pt-8 md:grid-cols-2">
             <div className="border-primary/35 rounded-3xl border bg-white p-6 text-center shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
-              <span className="material-symbols-outlined mb-2 text-4xl text-[#143067]">
-                account_circle
-              </span>
+              <div className="mx-auto mb-3 h-16 w-16 overflow-hidden rounded-full border-2 border-[#f8f9fb] shadow-md">
+                <Image
+                  src="/images/equipo/jackelline lisseth.jpeg"
+                  alt="Jackelline Lisseth Molina"
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-cover"
+                />
+              </div>
               <h4 className="font-serif text-base font-bold text-[#143067]">
-                Jackeline Lisseth Molina
+                Jackelline Lisseth Molina
               </h4>
               <p className="mt-1 font-sans text-xs text-[#444650]">
                 Modelo institucional
               </p>
             </div>
             <div className="border-primary/35 rounded-3xl border bg-white p-6 text-center shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
-              <span className="material-symbols-outlined mb-2 text-4xl text-[#143067]">
-                account_circle
-              </span>
+              <div className="mx-auto mb-3 h-16 w-16 overflow-hidden rounded-full border-2 border-[#f8f9fb] shadow-md">
+                <Image
+                  src="/images/equipo/liam alejandro.jpg"
+                  alt="Liam Alejandro"
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-cover"
+                />
+              </div>
               <h4 className="font-serif text-base font-bold text-[#143067]">
-                Liam Alejandro Molina
+                Liam Alejandro
               </h4>
               <p className="mt-1 font-sans text-xs text-[#444650]">
                 Modelo institucional

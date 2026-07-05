@@ -267,7 +267,7 @@ export default function EmpresaPage() {
                         fill
                         alt="Nuestra Identidad - Confecciones Liss"
                         className="animate-fade-in rounded-xl object-cover object-center"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-G2wJz71AP5vwCDp3t359I7x2kSZWb9W7SHnNgNThWNfLM7fMGzA0y5M1GjR6pDnLljfIYHiihui8K68JiUD61l1KTSZN1A_Oo_XYoUlopyn2KmLs-ATCrchByg932AMdkhGYxkz2-QJc41OYMvs5KMFq3BuohZHD_x0PQnYgjNgxZmdeVpUJnQX1nbkXpev54ppZsOzALWst7M23heLgF9ER-lEwexccB4aD4cpnHF9CP4YW-nLRvjo2GTw9BzKMAp4XF9tpZeY"
+                        src="/images/empresa-hero.png"
                         sizes="(max-width:768px) 80vw, 40vw"
                         priority
                       />
@@ -278,7 +278,7 @@ export default function EmpresaPage() {
                 {/* COLUMNA DE TEXTO Y ACCIONES */}
                 <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
                   <div
-                    className="animate-fade-in-up text-on-surface-variant mb-6 w-full space-y-4 font-sans text-base leading-relaxed md:text-base lg:mb-6"
+                    className="animate-fade-in-up text-on-surface-variant font-body mb-6 w-full space-y-4 text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl"
                     style={{ animationDelay: "150ms" }}
                   >
                     <p>
@@ -306,7 +306,7 @@ export default function EmpresaPage() {
                     fill
                     alt="Nuestra Identidad - Confecciones Liss"
                     className="rounded-xl object-cover object-center"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-G2wJz71AP5vwCDp3t359I7x2kSZWb9W7SHnNgNThWNfLM7fMGzA0y5M1GjR6pDnLljfIYHiihui8K68JiUD61l1KTSZN1A_Oo_XYoUlopyn2KmLs-ATCrchByg932AMdkhGYxkz2-QJc41OYMvs5KMFq3BuohZHD_x0PQnYgjNgxZmdeVpUJnQX1nbkXpev54ppZsOzALWst7M23heLgF9ER-lEwexccB4aD4cpnHF9CP4YW-nLRvjo2GTw9BzKMAp4XF9tpZeY"
+                    src="/images/empresa-hero.png"
                     sizes="40vw"
                     priority
                   />
@@ -342,65 +342,120 @@ export default function EmpresaPage() {
               <div className="gap-gutter flex flex-col md:col-span-7">
                 {/* Sobre Nosotros */}
                 <Link
-                  className="group border-primary/35 hover:border-primary/55 relative block h-[400px] overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
+                  className="group border-primary hover:border-primary/80 relative flex h-[400px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                   href="/empresa/sobre-nosotros"
                 >
-                  <div className="absolute inset-0 z-10 bg-[#001b4a]/5 transition-colors duration-500 group-hover:bg-[#001b4a]/0"></div>
                   <Image
-                    className="object-cover opacity-80 grayscale transition-opacity duration-500 group-hover:opacity-100"
-                    alt="Sobre Nosotros"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDql6RAV4sbPJQGYiXijV7KHGzjJUep7ygJh0aamJxp9_KY2wPDDgZuqgHyZ2hSX5FHdJ0_zeDOOcmveyy3URfYQuwBDOHHaeKJnJtwfHT8R4APNmQ4dC5IeR89-M-GRnMhKL3Mrmz4RIrW6UfXKZPfojqoPElzWRv7xPnZzlzYWzxpMNKA05CvKHF38tVCtOs7SaFpaAbA0baMp_63_ivw10zgiOvHS0bReDbkD2_GAibQocZlAk9zBix5wNco3k5Ph_kMGvT35cY"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    src="/logo.png"
+                    alt="Logo Liss"
+                    width={80}
+                    height={40}
+                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
                   />
-                  <div className="absolute inset-0 z-20 flex flex-col justify-end bg-gradient-to-t from-[#001b4a]/90 via-[#001b4a]/30 to-transparent p-8">
-                    <h2 className="font-headline-md text-headline-md mb-2 text-white transition-transform duration-300 group-hover:-translate-y-2">
-                      Sobre Nosotros
-                    </h2>
-                    <p className="font-body-md text-body-md font-sans text-white/80 opacity-0 transition-all duration-300 group-hover:-translate-y-2 group-hover:opacity-100">
+                  <div
+                    className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
+                    style={{
+                      fontSize: "clamp(5rem,11vw,11rem)",
+                      letterSpacing: "-0.04em",
+                    }}
+                  >
+                    NOSOTROS
+                  </div>
+                  <div className="relative">
+                    <span className="font-serif text-[clamp(2.5rem,4vw,4rem)] leading-none font-black tracking-tight text-[#0d1a38]">
+                      Sobre
+                      <br />
+                      Nosotros
+                    </span>
+                  </div>
+                  <div className="relative mt-8">
+                    <div className="mb-3 h-0.5 w-5 rounded-full bg-slate-300 transition-all duration-300 group-hover:w-8" />
+                    <p className="font-body text-sm leading-snug font-medium text-slate-500">
                       La historia y visión detrás de nuestro legacy textil.
                     </p>
+                    <div className="mt-4 flex justify-end">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#143067"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="opacity-35 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100"
+                      >
+                        <path d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
+                    </div>
                   </div>
                 </Link>
                 <div className="gap-gutter grid h-auto grid-cols-1 sm:h-[250px] sm:grid-cols-2">
                   {/* Filosofía */}
                   <Link
-                    className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex flex-col justify-between rounded-2xl border p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
+                    className="group border-primary hover:border-primary/80 relative flex flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                     href="/empresa/filosofia"
                   >
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#001b4a]/10 text-[#001b4a]">
-                      <span className="material-symbols-outlined">
-                        auto_awesome
+                    <Image
+                      src="/logo.png"
+                      alt="Logo Liss"
+                      width={80}
+                      height={40}
+                      className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
+                      style={{
+                        fontSize: "clamp(3.5rem,7vw,8rem)",
+                        letterSpacing: "-0.04em",
+                      }}
+                    >
+                      FILOSOFÍA
+                    </div>
+                    <div className="relative">
+                      <span className="font-serif text-[clamp(2rem,3vw,3rem)] leading-none font-black tracking-tight text-[#0d1a38]">
+                        Filosofía
                       </span>
                     </div>
-                    <div>
-                      <h3 className="font-headline-sm text-headline-sm group-hover:text-secondary mb-2 text-[#001b4a] transition-colors">
-                        Filosofía
-                      </h3>
-                      <p className="font-body-sm text-on-surface-variant font-sans">
+                    <div className="relative mt-8">
+                      <div className="mb-3 h-0.5 w-5 rounded-full bg-slate-300 transition-all duration-300 group-hover:w-8" />
+                      <p className="font-body text-sm leading-snug font-medium text-slate-500">
                         El detalle como norma, la calidad como hábito.
                       </p>
                     </div>
                   </Link>
                   {/* Equipo */}
                   <Link
-                    className="group border-primary/35 hover:border-primary/55 relative block h-[200px] overflow-hidden rounded-2xl border bg-[#001b4a] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] sm:h-full"
+                    className="group border-primary hover:border-primary/80 relative flex h-[200px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] sm:h-full"
                     href="/empresa/equipo"
                   >
+                    <Image
+                      src="/logo.png"
+                      alt="Logo Liss"
+                      width={80}
+                      height={40}
+                      className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
+                    />
                     <div
-                      className="absolute inset-0 opacity-20 mix-blend-luminosity transition-opacity duration-500 group-hover:opacity-40"
+                      className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
                       style={{
-                        backgroundImage:
-                          "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQfuCw9iFMcAepWqQzYxvk_deGCTp3Sd_jtBmvgXVVurewLIaQrmqPhJbgTVGbSfnmy6RC2LeLmJWSCBNhbirYqs2oO3odK-T6MTipYU99fX9SjPCglW2voe02jvIoNrJVSx8NQWmY30jpe40cXPSrh006tQQmoXI7rwi1VJ8JoCiBA2IK9qZ4nGtWSZoYST8L1aIlSx1ScBYPuK_yT5akxRP7VH6KdjXxSZWRUQBC02LggCNY2R4ix-7wuNHKeW_qHFzmZdsJ_5E')",
-                        backgroundSize: "cover",
+                        fontSize: "clamp(4rem,9vw,9rem)",
+                        letterSpacing: "-0.04em",
                       }}
-                    ></div>
-                    <div className="absolute inset-0 z-20 flex flex-col justify-end p-8">
-                      <h3 className="font-headline-sm text-headline-sm mb-2 text-white">
-                        Nuestro Equipo
-                      </h3>
-                      <p className="font-body-sm font-sans text-white/80">
-                        Los artesanos detrás de la maquinaria.
+                    >
+                      EQUIPO
+                    </div>
+                    <div className="relative">
+                      <span className="font-serif text-[clamp(2rem,3vw,3rem)] leading-none font-black tracking-tight text-[#0d1a38]">
+                        Nuestro
+                        <br />
+                        Equipo
+                      </span>
+                    </div>
+                    <div className="relative mt-8">
+                      <div className="mb-3 h-0.5 w-5 rounded-full bg-slate-300 transition-all duration-300 group-hover:w-8" />
+                      <p className="font-body text-sm leading-snug font-medium text-slate-500">
+                        Los expertos detrás de la maquinaria.
                       </p>
                     </div>
                   </Link>
@@ -410,35 +465,55 @@ export default function EmpresaPage() {
               <div className="gap-gutter flex flex-col md:col-span-5">
                 {/* Instalaciones */}
                 <Link
-                  className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex h-[250px] flex-col justify-between overflow-hidden rounded-2xl border p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
+                  className="group border-primary hover:border-primary/80 relative flex h-[250px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                   href="/empresa/instalaciones"
                 >
-                  <div className="flex items-start justify-between">
-                    <h3 className="font-headline-sm text-headline-sm group-hover:text-secondary text-[#001b4a] transition-colors">
+                  <Image
+                    src="/logo.png"
+                    alt="Logo Liss"
+                    width={80}
+                    height={40}
+                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
+                    style={{
+                      fontSize: "clamp(3.5rem,7vw,8rem)",
+                      letterSpacing: "-0.04em",
+                    }}
+                  >
+                    INSTALACIONES
+                  </div>
+                  <div className="relative">
+                    <span className="font-serif text-[clamp(2rem,3vw,3rem)] leading-none font-black tracking-tight text-[#0d1a38]">
                       Instalaciones
-                    </h3>
-                    <span className="material-symbols-outlined text-[#001b4a] transition-transform group-hover:translate-x-1">
-                      arrow_forward
                     </span>
                   </div>
-                  <p className="font-body-md text-on-surface-variant font-sans">
-                    Un recorrido por nuestro centro de producción de vanguardia.
-                  </p>
+                  <div className="relative mt-8">
+                    <div className="mb-3 h-0.5 w-5 rounded-full bg-slate-300 transition-all duration-300 group-hover:w-8" />
+                    <p className="font-body text-sm leading-snug font-medium text-slate-500">
+                      Un recorrido por nuestro centro de producción de
+                      vanguardia.
+                    </p>
+                  </div>
                 </Link>
                 {/* Icon Grid for Processes */}
-                <div className="bg-surface-container-lowest border-primary/35 hover:border-primary/55 grid flex-grow grid-cols-1 gap-4 rounded-2xl border p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]">
+                <div className="group border-primary hover:border-primary/80 relative grid flex-grow grid-cols-1 gap-4 overflow-hidden rounded-2xl border-2 border-dashed bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]">
+                  <Image
+                    src="/logo.png"
+                    alt="Logo Liss"
+                    width={80}
+                    height={40}
+                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
+                  />
                   <Link
                     className="hover:bg-surface-container-low group flex items-center gap-4 rounded p-4 transition-colors"
                     href="/empresa/proceso-de-confeccion"
                   >
-                    <div className="bg-surface flex h-16 w-16 shrink-0 items-center justify-center rounded">
-                      <Image
-                        alt="Proceso"
-                        className="opacity-80 mix-blend-multiply transition-opacity group-hover:opacity-100"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD6YmAqb_zdTS9DKq81gxmcNQo1DbwvhW0Hzx0Ug6Bpw2z5h0oX6HOvVncd_AyuAPhlSGNRjspP5eKzd0YrjawC1Zw5EZGdXCK4CzUAaXl_SCI3Xl0OLUWMFb1dIjHXKfAbr6dLdFCvviIwVei4lHZFkRHWv0Jpe2Wh0nnlPPfVR8fnMD7MFGLRWE_PcG0XUYqm9Ug69qoEd5pWrq5gn_wCbwu1Qnmq6T6ngDTkGFN-TerIsO0BbuTebPXct0Je4DKVjzFErMGvQ0"
-                        width={40}
-                        height={40}
-                      />
+                    <div className="bg-surface flex h-16 w-16 shrink-0 items-center justify-center rounded text-[#001b4a]">
+                      <span className="material-symbols-outlined text-3xl">
+                        factory
+                      </span>
                     </div>
                     <div>
                       <h4 className="font-title-lg text-title-lg text-[#001b4a]">
@@ -492,9 +567,25 @@ export default function EmpresaPage() {
               {/* Bottom Typography Cards (Span 12) */}
               <div className="gap-gutter grid grid-cols-1 md:col-span-12 md:grid-cols-3">
                 <Link
-                  className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex h-[160px] flex-col justify-between rounded-2xl border p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
+                  className="group border-primary hover:border-primary/80 relative flex h-[160px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
                   href="/empresa/responsabilidad-social"
                 >
+                  <Image
+                    src="/logo.png"
+                    alt="Logo Liss"
+                    width={80}
+                    height={40}
+                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
+                    style={{
+                      fontSize: "clamp(3rem,6vw,7rem)",
+                      letterSpacing: "-0.04em",
+                    }}
+                  >
+                    COMPROMISO
+                  </div>
                   <div>
                     <span className="font-label-sm text-label-sm text-secondary mb-2 block font-sans tracking-widest uppercase">
                       Compromiso
@@ -511,9 +602,25 @@ export default function EmpresaPage() {
                 </Link>
 
                 <Link
-                  className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex h-[160px] flex-col justify-between rounded-2xl border p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
+                  className="group border-primary hover:border-primary/80 relative flex h-[160px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
                   href="/empresa/transparencia"
                 >
+                  <Image
+                    src="/logo.png"
+                    alt="Logo Liss"
+                    width={80}
+                    height={40}
+                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
+                    style={{
+                      fontSize: "clamp(3.5rem,7vw,8rem)",
+                      letterSpacing: "-0.04em",
+                    }}
+                  >
+                    ÉTICA
+                  </div>
                   <div>
                     <span className="font-label-sm text-label-sm text-secondary mb-2 block font-sans tracking-widest uppercase">
                       Ética
@@ -530,9 +637,25 @@ export default function EmpresaPage() {
                 </Link>
 
                 <Link
-                  className="group border-primary/35 hover:border-primary/55 bg-surface-container-lowest relative block flex h-[160px] flex-col justify-between rounded-2xl border p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
+                  className="group border-primary hover:border-primary/80 relative flex h-[160px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
                   href="/empresa/media-kit"
                 >
+                  <Image
+                    src="/logo.png"
+                    alt="Logo Liss"
+                    width={80}
+                    height={40}
+                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
+                    style={{
+                      fontSize: "clamp(3.5rem,7vw,8rem)",
+                      letterSpacing: "-0.04em",
+                    }}
+                  >
+                    PRENSA
+                  </div>
                   <div>
                     <span className="font-label-sm text-label-sm text-secondary mb-2 block font-sans tracking-widest uppercase">
                       Prensa

@@ -96,7 +96,7 @@ export function ServicioBordadosDetalle({
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
                     <Image
                       fill
-                      alt={service.title}
+                      alt={service.seoTitle || service.title}
                       className="rounded-xl object-cover object-center"
                       src={service.cardImage}
                       sizes="(max-width:768px) 80vw, 40vw"
@@ -162,7 +162,7 @@ export function ServicioBordadosDetalle({
               <div className="relative h-full w-full overflow-hidden rounded-xl">
                 <Image
                   fill
-                  alt={service.title}
+                  alt={service.seoTitle || service.title}
                   className="rounded-xl object-cover object-center"
                   src={service.cardImage}
                   sizes="40vw"
@@ -187,8 +187,8 @@ export function ServicioBordadosDetalle({
                   style={fabricTextureStyle}
                 />
                 <Image
-                  src={service.cardImage}
-                  alt={sections[0].heading}
+                  src={sections[0].image || service.cardImage}
+                  alt={sections[0].imageAlt || sections[0].heading}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="absolute inset-0 z-0 object-cover"
@@ -246,7 +246,7 @@ export function ServicioBordadosDetalle({
                       <div className="relative mb-2 aspect-[4/3] w-full overflow-hidden rounded-lg">
                         <Image
                           src={item.image}
-                          alt={item.label}
+                          alt={item.imageAlt || item.label}
                           fill
                           sizes="(max-width: 768px) 50vw, 25vw"
                           className="object-cover"
@@ -325,25 +325,35 @@ export function ServicioBordadosDetalle({
                   className="absolute inset-0 opacity-30"
                   style={fabricTextureStyle}
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="grid grid-cols-3 gap-3 p-6">
-                    {["draw", "palette", "local_laundry_service"].map(
-                      (icon) => (
-                        <div
-                          key={icon}
-                          className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-full"
-                        >
-                          <span
-                            className="material-symbols-outlined text-primary text-[28px]"
-                            aria-hidden="true"
+                {sections[2].image ? (
+                  <Image
+                    src={sections[2].image}
+                    alt={sections[2].imageAlt || sections[2].heading}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="absolute inset-0 z-0 object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="grid grid-cols-3 gap-3 p-6">
+                      {["draw", "palette", "local_laundry_service"].map(
+                        (icon) => (
+                          <div
+                            key={icon}
+                            className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-full"
                           >
-                            {icon}
-                          </span>
-                        </div>
-                      )
-                    )}
+                            <span
+                              className="material-symbols-outlined text-primary text-[28px]"
+                              aria-hidden="true"
+                            >
+                              {icon}
+                            </span>
+                          </div>
+                        )
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           )}

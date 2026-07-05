@@ -2,6 +2,7 @@
 
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { teamData, TeamMember } from "@/data/team";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
@@ -88,9 +89,19 @@ export default function EquipoClient() {
             {/* Visual Frame - Retrato Grande */}
             <div className="flex justify-center lg:col-span-5">
               <div className="group relative flex aspect-[4/5] w-full max-w-md items-center justify-center overflow-hidden rounded-[32px] bg-[#143067] shadow-xl select-none">
-                <span className="absolute font-serif text-9xl font-bold text-white/10 select-none">
-                  {founder.initials}
-                </span>
+                {founder.image ? (
+                  <Image
+                    src={founder.image}
+                    alt={founder.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
+                ) : (
+                  <span className="absolute font-serif text-9xl font-bold text-white/10 select-none">
+                    {founder.initials}
+                  </span>
+                )}
                 {/* Visual Overlay Design */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#143067]/60 via-transparent to-transparent opacity-80" />
                 <div className="absolute right-8 bottom-8 left-8 space-y-2 text-white">
@@ -162,8 +173,18 @@ export default function EquipoClient() {
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#143067] font-serif text-2xl font-bold text-white shadow-sm select-none">
-                      {member.initials}
+                    <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-[#143067] font-serif text-2xl font-bold text-white shadow-sm select-none">
+                      {member.image ? (
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          className="object-cover"
+                          sizes="64px"
+                        />
+                      ) : (
+                        member.initials
+                      )}
                     </div>
                     <span className="font-mono text-xs font-bold font-semibold tracking-wider text-[#143067] uppercase">
                       {member.experience}
@@ -214,8 +235,18 @@ export default function EquipoClient() {
             variants={fadeIn}
           >
             <div className="flex flex-col items-center space-y-4 text-center lg:col-span-4 lg:items-start lg:text-left">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#143067] font-serif text-3xl font-bold text-white shadow-md select-none">
-                {quality.initials}
+              <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-[#143067] font-serif text-3xl font-bold text-white shadow-md select-none">
+                {quality.image ? (
+                  <Image
+                    src={quality.image}
+                    alt={quality.name}
+                    fill
+                    className="object-cover"
+                    sizes="80px"
+                  />
+                ) : (
+                  quality.initials
+                )}
               </div>
               <span className="font-mono text-xs font-bold font-semibold tracking-[0.25em] text-[#143067] uppercase">
                 CONTROL DE CALIDAD
@@ -302,8 +333,18 @@ export default function EquipoClient() {
             </div>
 
             <div className="order-1 flex flex-col items-center space-y-4 text-center lg:order-2 lg:col-span-4 lg:items-end lg:text-right">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#143067] font-serif text-3xl font-bold text-white shadow-md select-none">
-                {logistics.initials}
+              <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-[#143067] font-serif text-3xl font-bold text-white shadow-md select-none">
+                {logistics.image ? (
+                  <Image
+                    src={logistics.image}
+                    alt={logistics.name}
+                    fill
+                    className="object-cover"
+                    sizes="80px"
+                  />
+                ) : (
+                  logistics.initials
+                )}
               </div>
               <h3 className="font-serif text-3xl leading-none font-bold text-[#143067]">
                 {logistics.name}
@@ -335,22 +376,26 @@ export default function EquipoClient() {
           >
             {/* Visual Technical Panel */}
             <div className="order-2 flex justify-center lg:order-1 lg:col-span-5">
-              <div className="relative flex aspect-square w-full max-w-md flex-col justify-between rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-xs">
-                <div className="flex items-start justify-between">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#143067] font-serif text-xl font-bold text-white select-none">
-                    {strategy.initials}
+              <div className="relative flex aspect-square w-full max-w-md flex-col justify-end overflow-hidden rounded-[32px] border border-white/10 bg-[#001b4a] shadow-xl">
+                {strategy.image && (
+                  <Image
+                    src={strategy.image}
+                    alt={strategy.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
+                )}
+
+                <div className="relative z-10 p-8">
+                  <div className="w-fit max-w-[90%] space-y-3">
+                    <div className="font-mono text-[10px] font-bold text-white drop-shadow-md">
+                      SYSTEMS_INTEGRATION_LOG
+                    </div>
+                    <pre className="overflow-hidden rounded-xl border border-white/30 bg-white/10 p-4 font-mono text-[10.5px] leading-relaxed text-white shadow-lg backdrop-blur-md select-none">
+                      {`$ npm run build:seo\n> Generating metadata...\n> Ingesting schema.org data\n> Optimized routes: 80/80\n> Estudiante: Psicología en IEPROES`}
+                    </pre>
                   </div>
-                  <span className="rounded-full bg-white/10 px-3 py-1 font-mono text-[10px] tracking-wider text-slate-400 uppercase">
-                    {strategy.experience}
-                  </span>
-                </div>
-                <div className="space-y-4">
-                  <div className="font-mono text-xs font-bold text-[#143067]">
-                    SYSTEMS_INTEGRATION_LOG
-                  </div>
-                  <pre className="overflow-hidden font-mono text-[11px] leading-normal text-slate-300 select-none">
-                    {`$ npm run build:seo\n> Generating metadata...\n> Ingesting schema.org data\n> Optimized routes: 80/80\n> CUM: 9.32 (IEPROES)`}
-                  </pre>
                 </div>
               </div>
             </div>
@@ -429,10 +474,22 @@ export default function EquipoClient() {
                 <div className="space-y-6">
                   {/* Photo Frame */}
                   <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[24px] bg-[#143067] shadow-inner select-none">
-                    <span className="absolute font-serif text-6xl font-bold text-white/10 transition-all duration-500 group-hover:text-white/20">
-                      {member.initials}
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#143067]/40 via-transparent to-transparent opacity-60" />
+                    {member.image ? (
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 400px"
+                      />
+                    ) : (
+                      <>
+                        <span className="absolute font-serif text-6xl font-bold text-white/10 transition-all duration-500 group-hover:text-white/20">
+                          {member.initials}
+                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#143067]/40 via-transparent to-transparent opacity-60" />
+                      </>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <h3 className="font-serif text-2xl font-bold text-[#143067]">

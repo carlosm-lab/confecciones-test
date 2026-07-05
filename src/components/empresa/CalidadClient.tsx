@@ -126,7 +126,7 @@ export default function CalidadClient() {
                 <div className="relative h-full w-full overflow-hidden rounded-2xl">
                   <Image
                     fill
-                    src="/images/servicios/mano-obra.png"
+                    src="/images/calidad/hero.jpg"
                     alt="Control de Calidad - Confecciones Liss"
                     className="object-cover object-center"
                     sizes="(max-width: 1024px) 100vw, 40vw"
@@ -248,11 +248,11 @@ export default function CalidadClient() {
 
               <div className="border-primary/35 relative aspect-[4/3] w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDql6RAV4sbPJQGYiXijV7KHGzjJUep7ygJh0aamJxp9_KY2wPDDgZuqgHyZ2hSX5FHdJ0_zeDOOcmveyy3URfYQuwBDOHHaeKJnJtwfHT8R4APNmQ4dC5IeR89-M-GRnMhKL3Mrmz4RIrW6UfXKZPfojqoPElzWRv7xPnZzlzYWzxpMNKA05CvKHF38tVCtOs7SaFpaAbA0baMp_63_ivw10zgiOvHS0bReDbkD2_GAibQocZlAk9zBix5wNco3k5Ph_kMGvT35cY"
+                  src="/images/calidad/verificacion-de-medidas.jpg"
                   alt="Verificación de medidas de patrones"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-center grayscale transition-all duration-700 hover:grayscale-0"
+                  className="object-cover object-center"
                 />
               </div>
             </motion.div>
@@ -268,11 +268,11 @@ export default function CalidadClient() {
               <div className="order-2 lg:order-1 lg:col-span-5">
                 <div className="border-primary/35 relative aspect-square w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                   <Image
-                    src="/images/servicios/ropa-general.png"
+                    src="/images/calidad/inspeccion-del-corte.jpg"
                     alt="Inspección detallada del corte textil"
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover object-center grayscale transition-all duration-700 hover:grayscale-0"
+                    className="object-cover object-center"
                   />
                 </div>
               </div>
@@ -363,39 +363,15 @@ export default function CalidadClient() {
                   <span>Revisión de costura</span>
                 </div>
 
-                {/* SVG Seam Diagram */}
-                <svg
-                  className="my-2 h-auto w-full fill-none stroke-current stroke-1 text-white"
-                  viewBox="0 0 100 40"
-                  aria-hidden="true"
-                >
-                  {/* Fabric layer 1 */}
-                  <path
-                    d="M 10,15 L 90,15"
-                    stroke="rgba(255,255,255,0.4)"
-                    strokeWidth="4"
+                <div className="relative my-2 aspect-[16/9] w-full overflow-hidden rounded-xl border border-white/10">
+                  <Image
+                    src="/images/calidad/revision-de-costuras.jpg"
+                    alt="Revisión de costuras"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover object-center"
                   />
-                  {/* Fabric layer 2 */}
-                  <path
-                    d="M 10,21 L 90,21"
-                    stroke="rgba(255,255,255,0.4)"
-                    strokeWidth="4"
-                  />
-
-                  {/* Needle thread (upper loop) */}
-                  <path
-                    d="M 15,10 C 15,15 20,23 25,18 C 30,13 35,15 35,10 C 35,15 40,23 45,18 C 50,13 55,15 55,10 C 55,15 60,23 65,18 C 70,13 75,15 75,10 C 75,15 80,23 85,18"
-                    stroke="rgba(255,255,255,0.7)"
-                    strokeWidth="1.5"
-                  />
-
-                  {/* Bobbin thread (lower loop interlocking) */}
-                  <path
-                    d="M 15,26 C 15,22 20,13 25,18 C 30,23 35,22 35,26 C 35,22 40,13 45,18 C 50,23 55,22 55,26 C 55,22 60,13 65,18 C 70,23 75,22 75,26 C 75,22 80,13 85,18"
-                    stroke="#ffffff"
-                    strokeWidth="1.2"
-                  />
-                </svg>
+                </div>
 
                 <p className="mt-4 font-mono text-[9px] leading-normal text-[#dae2ff]">
                   Cada costura se revisa de forma individual para confirmar que
@@ -437,11 +413,11 @@ export default function CalidadClient() {
 
               <div className="border-primary/35 relative aspect-[4/3] w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:order-1">
                 <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD6YmAqb_zdTS9DKq81gxmcNQo1DbwvhW0Hzx0Ug6Bpw2z5h0oX6HOvVncd_AyuAPhlSGNRjspP5eKzd0YrjawC1Zw5EZGdXCK4CzUAaXl_SCI3Xl0OLUWMFb1dIjHXKfAbr6dLdFCvviIwVei4lHZFkRHWv0Jpe2Wh0nnlPPfVR8fnMD7MFGLRWE_PcG0XUYqm9Ug69qoEd5pWrq5gn_wCbwu1Qnmq6T6ngDTkGFN-TerIsO0BbuTebPXct0Je4DKVjzFErMGvQ0"
+                  src="/images/calidad/control-del-bordado.jpg"
                   alt="Control de calidad del bordado computarizado"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-center grayscale transition-all duration-700 hover:grayscale-0"
+                  className="object-cover object-center"
                 />
               </div>
             </motion.div>
@@ -572,11 +548,11 @@ export default function CalidadClient() {
             >
               <div className="border-primary/35 relative order-2 aspect-[16/10] w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:order-1 lg:col-span-7">
                 <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-G2wJz71AP5vwCDp3t359I7x2kSZWb9W7SHnNgNThWNfLM7fMGzA0y5M1GjR6pDnLljfIYHiihui8K68JiUD61l1KTSZN1A_Oo_XYoUlopyn2KmLs-ATCrchByg932AMdkhGYxkz2-QJc41OYMvs5KMFq3BuohZHD_x0PQnYgjNgxZmdeVpUJnQX1nbkXpev54ppZsOzALWst7M23heLgF9ER-lEwexccB4aD4cpnHF9CP4YW-nLRvjo2GTw9BzKMAp4XF9tpZeY"
+                  src="/images/calidad/preparacion-para-entrega.jpg"
                   alt="Preparación final y empaque de uniformes"
                   fill
                   sizes="(max-width: 1024px) 100vw, 60vw"
-                  className="object-cover object-center grayscale transition-all duration-700 hover:grayscale-0"
+                  className="object-cover object-center"
                 />
               </div>
 

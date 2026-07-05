@@ -22,7 +22,7 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
     "Erick Josue fuentes": "https://maps.app.goo.gl/uE69PX9vMeScfMpG7",
     "Antonio Guzmán": "https://maps.app.goo.gl/uEUxsbKsHyEA5tLN6",
     "José Menéndez": "https://maps.app.goo.gl/k6YCbZWJPNZFT3Xj8",
-    "Jackeline Lisseth Molina Villacorta":
+    "Jackelline Lisseth Molina Villacorta":
       "https://maps.app.goo.gl/mi32DKS3RNQ8fwiaA",
     "Carlos Molina": "https://maps.app.goo.gl/2JE4ZcQsBSpMyKxEA",
     "Karla Vanessa Perla Blanco": "https://maps.app.goo.gl/cEv8V53TqZMUKPbq6",

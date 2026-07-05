@@ -698,7 +698,7 @@ export function Navbar() {
                         >
                           update
                         </span>
-                        Updates
+                        Actualizaciones
                       </Link>
                     </li>
                   </ul>

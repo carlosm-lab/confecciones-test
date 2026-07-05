@@ -172,9 +172,9 @@ export function ServicioRopaCasualDetalle({
                     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
                       <Image
                         fill
-                        alt="Studio de sastreria y confeccion de ropa"
+                        alt={service.seoTitle || service.title}
                         className="rounded-xl object-cover object-center"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWTRZx5W-uPd8adEBbgLS5OehCkntY8Bct6jTW9MgSskNd10j1uWakL7Oo83OZdMVDjFuz1Vy_P9Q9cklYhvoXwIL3AACQ6vjMya8ncZSiVisb8lZ2BgLAp-0WEXPp6QOw4sNw9qhbgyBqp45lMV8Iyx6iyTZJM_ocAYEujXc-XGbScd_JOFP9Oxz5Iqheh6IZd8sU4M4AxLzkC2BH31Qrep2lmjWFezjyyTKnUPDnIoQtsC9BLgeQd_L_756dG-2pI-mHX-F1o1Xr"
+                        src={service.cardImage}
                         sizes="(max-width:768px) 80vw, 40vw"
                         priority
                       />
@@ -235,9 +235,9 @@ export function ServicioRopaCasualDetalle({
                 <div className="relative h-full w-full overflow-hidden rounded-xl">
                   <Image
                     fill
-                    alt="Studio de sastreria y confeccion de ropa"
+                    alt={service.seoTitle || service.title}
                     className="rounded-xl object-cover object-center"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWTRZx5W-uPd8adEBbgLS5OehCkntY8Bct6jTW9MgSskNd10j1uWakL7Oo83OZdMVDjFuz1Vy_P9Q9cklYhvoXwIL3AACQ6vjMya8ncZSiVisb8lZ2BgLAp-0WEXPp6QOw4sNw9qhbgyBqp45lMV8Iyx6iyTZJM_ocAYEujXc-XGbScd_JOFP9Oxz5Iqheh6IZd8sU4M4AxLzkC2BH31Qrep2lmjWFezjyyTKnUPDnIoQtsC9BLgeQd_L_756dG-2pI-mHX-F1o1Xr"
+                    src={service.cardImage}
                     sizes="40vw"
                     priority
                   />
@@ -286,7 +286,7 @@ export function ServicioRopaCasualDetalle({
               <div className="group border-primary/12 relative row-span-2 overflow-hidden rounded-xl border shadow-sm md:col-span-2">
                 <Image
                   alt="Vestido de coctel elegante a medida en maniqui"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2h6_Y40etDu2UCUYM9V_4xetxyO0wG5Ul76jsUPMc54cQfhK1pFjx2Q-k6L5qCP4jrlsM48xkzhiBL-lhkXPuaxmpwpUWuHcqND870uk6Z0m9YSzjTgG0PQC3O5QH3bScbplXHdRWFLcUU83VSazSgYsIMrxPgA7yYWvk2tAetm5ROrnqbwwCeLDzWl1H1EwEI3m7q0dwu-4-VmGiVw0xT-6kLw9ttdmjlNbVF55Uz6grB4_nDujZHRi5yfyPwWehHJ1-iySO4KTx"
+                  src="/images/servicios/ropa-general/Ropa de fiesta y coctel.jpg"
                   fill
                   sizes="(max-width: 768px) 100vw, 66vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -307,7 +307,7 @@ export function ServicioRopaCasualDetalle({
               <div className="group border-primary/12 relative overflow-hidden rounded-xl border shadow-sm">
                 <Image
                   alt="Ropa infantil tejida en algodon natural"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTOhNbtMYAd1keZz2Yalaki8FDh4Ovy8N6TGiMbr8DTKNqpeYDNmT4-61uL7Np9nyDwWClp9K6d1_7U1BKwuAGB33XJdBOoq55pGXqeG2sQQHtVWcOAUQpmCH8iFzrB_JPoQPAuSFB9_aLrKCuk_hyPoaRHlnVGHsYRHdkcGOiwMEx3b8sLT1KrSVJmU_rt1yWjK2lOsGI2d1RVY-_DfUcRX5Becu0gQ6XjFwhkqCovQU6r7P_tZh3vQ6PSmDeho8My2JI_Y5orw-y"
+                  src="/images/servicios/ropa-general/Ropa infantil.png"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -324,7 +324,7 @@ export function ServicioRopaCasualDetalle({
               <div className="group border-primary/12 relative overflow-hidden rounded-xl border shadow-sm">
                 <Image
                   alt="Blusa y pantalones a medida colgados en perchero"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtxfffutYVC3ZtUp2FEG7VO7qlHNvOLa8K34BfbqBARNYiJFFqpnyCTZ9uXonNBuLRTxhFTx62bhpZ3QciCRuXL0b9vgLYlIEi6g6J002UvkuIX3IMtELvTgmU2S5mXnGpodVDd5upqKXKryaPaqmJy_0jaxUjog9jXg9qaRJuecqI7mtuNvSWByAVOHXaBJAAxX1wszc6egCINYtBVIr1psy9uNupyGRil-Rfa-xSE85iYFV-0aeZTXRx15z04fofbcEp_hJMy7ts"
+                  src="/images/servicios/ropa-general/Conjuntos y blusas.png"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"

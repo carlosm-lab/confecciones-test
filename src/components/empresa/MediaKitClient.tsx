@@ -266,11 +266,11 @@ export default function MediaKitClient() {
 
             <div className="border-primary/35 relative aspect-[16/9] w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDql6RAV4sbPJQGYiXijV7KHGzjJUep7ygJh0aamJxp9_KY2wPDDgZuqgHyZ2hSX5FHdJ0_zeDOOcmveyy3URfYQuwBDOHHaeKJnJtwfHT8R4APNmQ4dC5IeR89-M-GRnMhKL3Mrmz4RIrW6UfXKZPfojqoPElzWRv7xPnZzlzYWzxpMNKA05CvKHF38tVCtOs7SaFpaAbA0baMp_63_ivw10zgiOvHS0bReDbkD2_GAibQocZlAk9zBix5wNco3k5Ph_kMGvT35cY"
+                src="/images/media-kit/biografia-oficial.jpg"
                 alt="Taller de confección textil"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover object-center grayscale"
+                className="object-cover object-center"
               />
             </div>
           </div>
@@ -554,39 +554,15 @@ export default function MediaKitClient() {
             </div>
           </div>
 
-          {/* Placeholder Fotografía */}
-          <div className="border-primary/35 relative flex aspect-[16/10] w-full flex-col justify-between overflow-hidden rounded-2xl border bg-[#f8f9fb] p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.03]"
-              style={{
-                backgroundImage:
-                  "radial-gradient(#143067 1px, transparent 1px)",
-                backgroundSize: "16px 16px",
-              }}
-            ></div>
-
-            <div className="flex items-center justify-between font-mono text-[9px] text-[#444650]">
-              <span>Fotografía de Taller Industrial</span>
-              <span className="font-bold text-[#143067]">PLACEHOLDER</span>
-            </div>
-
-            <div className="my-auto flex flex-col items-center justify-center py-8 text-[#143067]/40">
-              <svg
-                className="mb-2 h-12 w-12 fill-none stroke-current stroke-1"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path d="M 3,7 L 3,19 L 21,19 L 21,7 L 17,7 L 15,4 L 9,4 L 7,7 Z" />
-                <circle cx="12" cy="13" r="4" />
-              </svg>
-              <span className="font-mono text-[10px] text-[#444650]">
-                [Placeholder — pendiente de fotografía oficial]
-              </span>
-            </div>
-
-            <div className="text-right font-mono text-[9px] text-[#444650]/60">
-              Dimensiones: 1920px x 1200px
-            </div>
+          {/* Fotografía Oficial */}
+          <div className="border-primary/35 relative flex aspect-[16/10] w-full flex-col justify-between overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+            <Image
+              src="/images/media-kit/taller-industrial.jpg"
+              alt="Fotografía de Taller Industrial"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center"
+            />
           </div>
         </div>
       </section>
@@ -608,44 +584,52 @@ export default function MediaKitClient() {
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
           {[
             {
-              name: "Lisseth Molina",
+              name: "Iris Villacorta",
               role: "Directora General",
               spec: "Diseño y patronaje",
+              image: "/images/equipo/iris-villacorta.png",
+            },
+            {
+              name: "Carlos Antonio",
+              role: "Logística",
+              spec: "Despacho y entregas",
+              image: "/images/equipo/Carlos Antonio.jpg",
+            },
+            {
+              name: "Carlos Molina",
+              role: "Estrategia Digital",
+              spec: "Ecosistema digital",
+              image: "/images/equipo/carlos jose molina villacorta.jpeg",
+            },
+            {
+              name: "Jackelline Molina",
+              role: "Modelo Institucional",
+              spec: "Imagen de marca",
+              image: "/images/equipo/jackelline lisseth.jpeg",
+            },
+            {
+              name: "Liam Antonio",
+              role: "Modelo Institucional",
+              spec: "Imagen de marca",
+              image: "/images/equipo/liam alejandro.jpg",
             },
             {
               name: "Lilian Romero",
               role: "Especialista en Confección",
               spec: "Confección de uniformes",
+              image: "/images/equipo/lilian romero.png",
             },
             {
               name: "Nubia Vázquez",
               role: "Especialista en Confección",
               spec: "Confección de prendas",
-            },
-            {
-              name: "Carlos Antonio Molina",
-              role: "Logística",
-              spec: "Despacho y entregas",
+              image: "/images/equipo/nuvia vasquez.png",
             },
             {
               name: "René Alfonso Méndez",
               role: "Control de Calidad",
               spec: "Toma de medidas e inspección",
-            },
-            {
-              name: "Carlos José Molina",
-              role: "Estrategia Digital",
-              spec: "Ecosistema digital",
-            },
-            {
-              name: "Jackeline Lisseth",
-              role: "Modelo Institucional",
-              spec: "Imagen de marca",
-            },
-            {
-              name: "Liam Alejandro",
-              role: "Modelo Institucional",
-              spec: "Imagen de marca",
+              image: "/images/equipo/René Alfonso Méndez.png",
             },
           ].map((member, index) => (
             <div
@@ -653,11 +637,20 @@ export default function MediaKitClient() {
               className="border-primary/35 hover:border-primary/55 flex min-h-[160px] flex-col justify-between rounded-2xl border bg-white p-4 text-center shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
             >
               <div className="space-y-2">
-                <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#143067]/10 font-serif text-xs font-bold text-[#143067]">
-                  {member.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
+                <div className="relative mx-auto flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#143067]/10 font-serif text-xs font-bold text-[#143067]">
+                  {member.image ? (
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover object-center"
+                    />
+                  ) : (
+                    member.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                  )}
                 </div>
                 <div>
                   <h3 className="font-serif text-xs leading-tight font-bold text-[#143067]">
