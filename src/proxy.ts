@@ -8,8 +8,7 @@
  *    bloquear todo excepto / y /links → redirigir a /mantenimiento.
  *    Caché en memoria con TTL de 30s para no agregar latencia en cada request.
  * 2. HOME_ONLY mode: bloquear todo excepto / y /links
- * 3. BLOCKED_ROUTES: bloquear rutas no listas en producción
- * 4. SEC-002: Protección server-side de rutas /admin
+ * 3. SEC-002: Protección server-side de rutas /admin
  *    - Patrón oficial Supabase SSR: https://supabase.com/docs/guides/auth/server-side/creating-a-client
  *    - Usa getUser() (valida contra Supabase Auth Server, no confía en cookies sin verificar)
  *    - Verifica app_metadata.role del JWT (inmutable por el usuario)
@@ -19,11 +18,6 @@ import { createServerClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import { env } from "@/env";
-
-/**
- * Rutas bloqueadas en producción (no listas para acceso público aún).
- */
-const BLOCKED_ROUTES = ["/cuenta"];
 
 // ── Killswitch: caché en memoria con TTL de 30 segundos ──────────
 // Patrón stale-while-revalidate: se sirve el valor cacheado inmediatamente
@@ -93,18 +87,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // ── 2. BLOCKED_ROUTES (solo en producción) ───────────────────
-  if (env.NODE_ENV === "production") {
-    const isBlocked = BLOCKED_ROUTES.some(
-      (route) => pathname === route || pathname.startsWith(`${route}/`)
-    );
-    if (isBlocked) {
-      url.pathname = "/";
-      return NextResponse.redirect(url, 307);
-    }
-  }
-
-  // ── 3. SEC-002: Protección server-side de /admin ─────────────
+  // ── 2. PROTECCIÓN SERVER-SIDE DE /ADMIN ──────────────────────
   const isAdminLoginPage = pathname === "/admin/login";
   const isAdminRoute = pathname.startsWith("/admin");
 
