@@ -147,18 +147,39 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
         );
 
         if (toInsert.length > 0) {
-          const newRecords = toInsert.map((product_id) => ({
-            user_id: user.id,
-            product_id,
-          }));
-          const { error: insertError } = await supabase
-            .from("user_favorites")
-            .insert(newRecords);
-          if (insertError)
-            logger.error(
-              "Error inserting missing local favorites:",
-              insertError
-            );
+          // Filtrar únicamente los IDs que existen en la tabla products para evitar violaciones de Foreign Key
+          const { data: existingProducts } = await supabase
+            .from("products")
+            .select("id")
+            .in("id", toInsert);
+
+          const validProductIdsInDb = new Set(
+            (existingProducts as { id: string }[] | null)?.map((p) => p.id) ||
+              []
+          );
+
+          const recordsToInsert = toInsert
+            .filter((id) => validProductIdsInDb.has(id))
+            .map((product_id) => ({
+              user_id: user.id,
+              product_id,
+            }));
+
+          if (recordsToInsert.length > 0) {
+            const { error: insertError } = await supabase
+              .from("user_favorites")
+              .upsert(recordsToInsert, {
+                onConflict: "user_id,product_id",
+                ignoreDuplicates: true,
+              });
+
+            if (insertError) {
+              logger.error(
+                "Error inserting missing local favorites:",
+                insertError.message || insertError.details || insertError
+              );
+            }
+          }
         }
 
         // Merge: unión sin duplicados
@@ -239,7 +260,10 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
         } else {
           const { error } = await supabase
             .from("user_favorites")
-            .insert([{ user_id: user.id, product_id: String(productId) }]);
+            .upsert([{ user_id: user.id, product_id: String(productId) }], {
+              onConflict: "user_id,product_id",
+              ignoreDuplicates: true,
+            });
           if (error) throw error;
         }
       } catch (err) {
