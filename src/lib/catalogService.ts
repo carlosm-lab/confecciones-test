@@ -74,10 +74,54 @@ export interface DbProduct {
   is_featured?: boolean;
 }
 
+/**
+ * Convierte cualquier ruta de imagen (relativa, absoluta o de Supabase Storage)
+ * a una URL completa y accesible para el navegador.
+ */
+export function resolveImageUrl(url: string | null | undefined): string {
+  if (!url) return "";
+  const trimmed = url.trim();
+  if (!trimmed) return "";
+
+  // 1. URL HTTP/HTTPS completa
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed;
+  }
+
+  // 2. Data URL o Blob
+  if (trimmed.startsWith("data:") || trimmed.startsWith("blob:")) {
+    return trimmed;
+  }
+
+  // 3. Ruta relativa local que empieza por /
+  if (trimmed.startsWith("/")) {
+    return trimmed;
+  }
+
+  // 4. Ruta relativa almacenada en Supabase Storage (bucket `product-images` o `products`)
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    "https://cvbdqsxjfrbwovzpydng.supabase.co";
+  const cleanPath = trimmed.startsWith("product-images/")
+    ? trimmed.replace("product-images/", "")
+    : trimmed;
+
+  return `${supabaseUrl}/storage/v1/object/public/product-images/${cleanPath}`;
+}
+
 // ── Imagen principal resuelta ─────────────────────────────────
-export function getProductMainImage(product: DbProduct): string | null {
-  if (product.images && product.images.length > 0) return product.images[0];
-  return product.image_path ?? null;
+export function getProductMainImage(product: DbProduct): string {
+  let raw: string | null = null;
+  if (
+    product.images &&
+    Array.isArray(product.images) &&
+    product.images.length > 0
+  ) {
+    raw = product.images[0];
+  } else {
+    raw = product.image_path ?? null;
+  }
+  return resolveImageUrl(raw);
 }
 
 // ── Determinar si el producto tiene oferta activa ─────────────

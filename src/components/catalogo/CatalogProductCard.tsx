@@ -151,9 +151,7 @@ export function CatalogProductCard({
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             priority={priority}
             quality={90}
-            unoptimized={
-              imagen.startsWith("http") && !imagen.includes("supabase.co")
-            }
+            unoptimized
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gray-50">

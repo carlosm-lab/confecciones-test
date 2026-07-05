@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import type { CategoryConfig } from "@/data/types";
 import {
   getProductMainImage,
+  resolveImageUrl,
   isProductOnSale,
   getProductSector,
   type DbProduct,
@@ -54,7 +55,7 @@ export function ProductDetailClient({
   averageRating,
   totalCount,
 }: ProductDetailClientProps) {
-  const allImages: string[] = [
+  const rawImages: string[] = [
     ...(product.images && product.images.length > 0
       ? product.images
       : product.image_path
@@ -62,9 +63,13 @@ export function ProductDetailClient({
         : []),
   ].filter(Boolean);
 
+  const allImages: string[] = rawImages
+    .map(resolveImageUrl)
+    .filter((img) => img.length > 0);
+
   const mainImageFallback = getProductMainImage(product);
   const [mainImg, setMainImg] = useState<string>(
-    allImages[0] ?? mainImageFallback ?? ""
+    allImages[0] || mainImageFallback || ""
   );
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [customNote, setCustomNote] = useState("");
@@ -317,9 +322,7 @@ export function ProductDetailClient({
                   width={96}
                   height={120}
                   className="h-full w-full object-cover object-center"
-                  unoptimized={
-                    img.startsWith("http") && !img.includes("supabase.co")
-                  }
+                  unoptimized
                 />
               </button>
             ))}
@@ -353,10 +356,7 @@ export function ProductDetailClient({
                   className="object-cover object-center"
                   priority
                   quality={90}
-                  unoptimized={
-                    mainImg.startsWith("http") &&
-                    !mainImg.includes("supabase.co")
-                  }
+                  unoptimized
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-300">
