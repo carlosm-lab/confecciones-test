@@ -41,6 +41,7 @@ export const siteConfig = {
     googleMaps: "https://maps.app.goo.gl/UmJdZgoYD7pgC88GA",
     marketplace: "https://web.facebook.com/marketplace/profile/61556619779863/",
   },
+  facebookAppId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || "",
 };
 
 /**

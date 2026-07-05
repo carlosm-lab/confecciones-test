@@ -189,6 +189,11 @@ export async function generateMetadata({
       ...(absoluteImage && { images: [absoluteImage] }),
     },
     robots: robotsDirective,
+    ...(siteConfig.facebookAppId && {
+      facebook: {
+        appId: siteConfig.facebookAppId,
+      },
+    }),
   };
 }
 

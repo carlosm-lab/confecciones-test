@@ -95,6 +95,11 @@ export const metadata = {
     site: siteConfig.twitterHandle,
     images: [`${siteConfig.url}/opengraph-image`],
   },
+  ...(siteConfig.facebookAppId && {
+    facebook: {
+      appId: siteConfig.facebookAppId,
+    },
+  }),
 };
 
 export const viewport = {
