@@ -3,6 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { GlobalModals } from "@/components/layout/GlobalModals";
 import { CookieBanner } from "@/components/ui/CookieBanner";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
 export default function PublicLayout({
   children,
@@ -11,6 +12,7 @@ export default function PublicLayout({
 }) {
   return (
     <>
+      <ScrollToTop />
       <a
         href="#main-content"
         className="focus:bg-primary sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-lg focus:px-4 focus:py-2 focus:text-white focus:shadow-lg"

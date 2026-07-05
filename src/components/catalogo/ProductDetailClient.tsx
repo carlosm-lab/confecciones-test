@@ -932,7 +932,7 @@ export function ProductDetailClient({
 
       {/* Lightbox modal */}
       {isImageModalOpen && mainImg && (
-        <div className="animate-in fade-in fixed inset-0 z-[100] flex items-center justify-center duration-200">
+        <div className="animate-in fade-in fixed inset-0 z-[100] flex items-center justify-center p-4 duration-200">
           <button
             type="button"
             className="absolute inset-0 w-full cursor-default bg-black/90 backdrop-blur-sm"
@@ -942,19 +942,24 @@ export function ProductDetailClient({
           <button
             type="button"
             onClick={() => setIsImageModalOpen(false)}
-            className="absolute top-4 right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-black/20 text-white/60 transition-all hover:bg-black/40 hover:text-white sm:top-6 sm:right-6"
+            className="absolute top-4 right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-black/40 text-white/80 transition-all hover:bg-black/70 hover:text-white sm:top-6 sm:right-6"
             aria-label="Cerrar imagen"
           >
             <span className="material-symbols-outlined text-2xl">close</span>
           </button>
-          <div className="relative z-10 max-h-[90dvh] max-w-[90vw] overflow-hidden rounded-2xl">
-            <Image
+          <div className="relative z-10 flex max-h-[90dvh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={mainImg}
               alt={product.name ?? "Producto"}
-              width={900}
-              height={1125}
-              className="max-h-[90dvh] w-auto object-contain"
-              unoptimized
+              className="max-h-[85dvh] max-w-[90vw] rounded-2xl object-contain shadow-2xl"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                const fallback = getProductMainImage(product);
+                if (fallback && e.currentTarget.src !== fallback) {
+                  e.currentTarget.src = fallback;
+                }
+              }}
             />
           </div>
         </div>
