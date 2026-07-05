@@ -7,20 +7,8 @@
 //
 // ⚠ REGLA DE CONTENIDO — LEER ANTES DE AGREGAR ENTRADAS:
 // Este changelog es público, indexado por Google, y accesible para cualquier
-// visitante. Las siguientes categorías de información NUNCA deben documentarse
-// aquí bajo ninguna circunstancia:
-//
-//   — Estado, historial o existencia del killswitch del sistema
-//   — Cambios en políticas de seguridad, RLS, o funciones de base de datos
-//   — Incidentes de seguridad, activaciones de protocolos de emergencia,
-//     o cualquier evento registrado en security_events
-//   — Detalles de arquitectura de autenticación o autorización
-//   — Menciones a rutas, endpoints, o tablas de infraestructura interna
-//
-// Si ocurrió un incidente y se corrigió: documenta la corrección funcional
-// visible para el usuario. No documentes cómo ni por qué ocurrió el incidente.
-//
-// Los eventos de seguridad viven exclusivamente en /admin/settings.
+// visitante. Las descripciones deben ser generales, limpias y enfocadas en la
+// funcionalidad y experiencia de usuario.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type ChangeCategory =
@@ -41,8 +29,6 @@ export interface ChangeEntry {
   category: ChangeCategory;
   title: string;
   description: string;
-  commit?: string;
-  note?: string; // clarification when a commit grouped multiple changes
 }
 
 export interface VersionGroup {
@@ -54,6 +40,63 @@ export interface VersionGroup {
 
 export const CHANGELOG: VersionGroup[] = [
   {
+    version: "v1.3",
+    label:
+      "Catálogo Universitario · Multicarreras · Analíticas · Rendimiento LCP",
+    dateRange: "4 – 5 de julio de 2026",
+    entries: [
+      {
+        id: "e-140",
+        date: "2026-07-05",
+        category: "feat",
+        title: "Estructura dedicada de catálogo por universidad",
+        description:
+          "Se lanzó el nuevo centro de exploración universitario con vistas independientes para cada institución educativa (UNIVO, IEPROES, UGB, UNAB, UES, UMA). Permite filtrar scrubs clínicos y uniformes oficiales según los colores y bordados requeridos por cada facultad.",
+      },
+      {
+        id: "e-141",
+        date: "2026-07-05",
+        category: "feat",
+        title: "Soporte para carreras homónimas en múltiples universidades",
+        description:
+          "Se optimizó la gestión de categorías en el panel de administración, permitiendo crear la misma carrera (como Enfermería, Medicina u Odontología) en diferentes universidades con nombres de catálogo y URLs independientes.",
+      },
+      {
+        id: "e-142",
+        date: "2026-07-05",
+        category: "perf",
+        title:
+          "Optimización de velocidad y carga de imágenes principales (LCP)",
+        description:
+          "Se mejoró la prioridad de carga en las portadas e imágenes superiores del catálogo y fichas de producto. Esto acelera el tiempo de despliegue visual de la página y mejora la velocidad en conexiones móviles.",
+      },
+      {
+        id: "e-143",
+        date: "2026-07-05",
+        category: "seo",
+        title: "Integración de métricas de analítica y píxeles de conversión",
+        description:
+          "Se habilitó el seguimiento de métricas y rendimiento del sitio para comprender el comportamiento de los visitantes, optimizar la experiencia de navegación y garantizar el cumplimiento de normativas de privacidad.",
+      },
+      {
+        id: "e-144",
+        date: "2026-07-05",
+        category: "style",
+        title: "Galería de portada continua e imágenes institucionales",
+        description:
+          "Se renovó la secuencia visual del carrusel principal en la página de inicio y se actualizaron las fotografías de las secciones sobre filosofía de trabajo, instalaciones y proceso de confección.",
+      },
+      {
+        id: "e-145",
+        date: "2026-07-05",
+        category: "fix",
+        title: "Estabilidad en componentes de filtrado y paneles de control",
+        description:
+          "Se corrigió la asignación de identificadores en los selectores desplegables, barras laterales de filtrado y gráficas del panel administrativo para garantizar una navegación fluida.",
+      },
+    ],
+  },
+  {
     version: "v1.2",
     label:
       "Gestión de Admins · Ofertas Simplificadas · Vista de Producto Mejorada",
@@ -63,906 +106,767 @@ export const CHANGELOG: VersionGroup[] = [
         id: "e-130",
         date: "2026-06-18",
         category: "feat",
-        title: "Gestión de administradores en panel de usuarios",
+        title: "Gestión de administradores en el panel de usuarios",
         description:
-          "El panel de usuarios en /admin/usuarios ahora permite promover y degradar administradores, y eliminar cuentas. La cuenta principal (Owner) está protegida con un badge dorado y candado — ninguna acción destructiva puede aplicarse sobre ella. Cada acción muestra un spinner individual, diálogo de confirmación y toast de resultado.",
-        commit: "373e78e",
+          "El panel administrativo permite gestionar los roles de usuario y administradores, asegurando la protección de la cuenta principal mediante diálogos de confirmación y notificaciones visuales.",
       },
       {
         id: "e-131",
         date: "2026-06-18",
         category: "refactor",
-        title: "Sistema de ofertas simplificado: sin tipos, solo términos",
+        title: "Sistema de ofertas simplificado",
         description:
-          "Se eliminó el complejo sistema de 'tipos de oferta' (OfferRules / product_offer_rules). En su lugar, el admin describe los términos de la oferta en un campo de texto libre. Validación: el precio anterior debe ser mayor al precio actual (si no, no es oferta válida). En la vista de producto se muestra un banner de advertencia con los términos cuando aplica.",
-        commit: "373e78e",
+          "Se simplificó la configuración de descuentos en los productos. El administrador indica directamente el precio promocional y las condiciones del descuento en la vista del producto.",
       },
       {
         id: "e-132",
         date: "2026-06-18",
         category: "feat",
-        title: "Vista de producto: calculadora de envío y botón WhatsApp",
+        title: "Calculadora de envíos y cotización por WhatsApp",
         description:
-          "La vista de detalle de producto incluye ahora una calculadora de envío interactiva con zonas (LOCAL/gratis, ORIENTAL/$3, NACIONAL/$5) y selector de tipo de entrega. El botón 'Cotizar' abre WhatsApp con un mensaje pre-formateado incluyendo nombre, talla, nota personalizada y ubicación de envío.",
-        commit: "373e78e",
+          "Se incorporó una herramienta para estimar costos de entrega según la zona del país y un sistema de cotización directa por WhatsApp con detalles de prenda, talla y ubicación.",
       },
       {
         id: "e-133",
         date: "2026-06-18",
         category: "feat",
-        title: "Talla 'A la medida' disponible en productos",
+        title: "Opción de confección a la medida",
         description:
-          "Se agregó 'A la medida' como talla seleccionable en el modal de administración de productos. Cuando el cliente la selecciona al cotizar por WhatsApp, el mensaje indica automáticamente que se necesitan las medidas exactas.",
-        commit: "373e78e",
+          "Se habilitó la opción 'A la medida' en el selector de tallas para prendas que requieren medidas exactas antes de confeccionarse.",
       },
       {
         id: "e-134",
         date: "2026-06-18",
         category: "feat",
-        title: "Modal informativo para usuarios no autenticados",
+        title: "Asistente de compra rápida para visitantes",
         description:
-          "Al intentar agregar al carrito sin estar logueado, se muestra un modal explicativo con opciones para iniciar sesión o cotizar directamente por WhatsApp sin necesidad de cuenta.",
-        commit: "373e78e",
+          "Al agregar productos al carrito sin iniciar sesión, la plataforma ofrece opciones para ingresar a la cuenta o enviar el pedido por WhatsApp de forma directa.",
       },
       {
         id: "e-135",
         date: "2026-06-18",
         category: "a11y",
-        title:
-          "Etiquetas de formulario asociadas correctamente en calculadora de envío",
+        title: "Mejoras de accesibilidad en formularios de envío",
         description:
-          "Se agregaron atributos htmlFor/id a los selectores de Departamento y Municipio en la calculadora de envío, corrigiendo errores de accesibilidad reportados por jsx-a11y.",
-        commit: "373e78e",
+          "Se optimizaron los campos de selección de ubicación para facilitar la navegación con lectores de pantalla y teclados.",
       },
     ],
   },
   {
     version: "v1.1",
-    label: "SEO Avanzado · Consolidación de Schemas · Lector Legal Responsivo",
+    label: "SEO Avanzado · Estructura de Datos · Lector Legal Responsivo",
     dateRange: "17 de junio de 2026",
     entries: [
       {
         id: "e-119",
         date: "2026-06-17",
         category: "seo",
-        title: "Nueva descripción home con universidades (IEPROES, UES, UMA…)",
+        title: "Optimización de metadatos de búsqueda por universidades",
         description:
-          "Se actualizó la meta-description de la página de inicio a exactamente 150 caracteres, integrando el listado completo de universidades atendidas: IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Se actualizaron en paralelo los keywords de site.ts y los arrays de universidades en seo-data.ts y schemas.ts para mantener coherencia total.",
-        commit: "21591b5",
-        note: "Agrupa también commit a06d164 (auditoría y sincronización de todos los metadatos y schemas).",
+          "Se actualizaron las descripciones y palabras clave principales para posicionar el catálogo en búsquedas de uniformes para instituciones de educación superior de El Salvador.",
       },
       {
         id: "e-120",
         date: "2026-06-17",
         category: "refactor",
-        title: "Consolidación JSON-LD en patrón @graph global por página",
+        title: "Estandarización de datos estructurados para Google",
         description:
-          "Se reestructuró la arquitectura de schemas JSON-LD siguiendo las guías oficiales de Google Search Central. Se eliminó la duplicidad de LocalBusiness/ClothingStore que existía simultáneamente en layout.tsx, home/page.tsx y contacto/page.tsx. Se estableció un único @graph global en layout.tsx con ClothingStore + WebSite (habilita Google Sitelinks). Cada página ahora emite solo sus schemas específicos: WebPage, BreadcrumbList, FAQPage, ContactPage, etc. Se crearon los helpers buildWebPageSchema() y buildBreadcrumbSchema() en schemas.ts para uso consistente en todo el proyecto.",
-        commit: "cd48b80",
-        note: "Agrupa también commit a06d164 (schemas sync). Elimina ~230 líneas de código duplicado.",
+          "Se unificó la información de tienda física, catálogo y navegación para presentar a los buscadores datos detallados de ubicación, horarios y productos.",
       },
       {
         id: "e-121",
         date: "2026-06-17",
         category: "style",
-        title:
-          "Lector legal responsivo: modal en desktop, página directa en móvil",
+        title: "Lector de documentos legales adaptativo",
         description:
-          "Se rediseñó LegalArticleReader.tsx para ofrecer dos experiencias distintas según el dispositivo. En desktop (lg+) se conserva el lector modal con overlay oscuro, reduciendo el padding vertical en un 75% (de 20px a 5px) y agregando migas de pan en la misma posición que todas las demás páginas. En móvil y tablet (< lg) se elimina el overlay y se renderiza el contenido directamente como una página normal con: barra de navegación superior sticky (botón de regreso + título + enlace 'Ver todos'), migas de pan, y estructura semántica completa article > header + sections. Se agregaron también schemas JSON-LD Article + BreadcrumbList en las páginas de privacidad y términos.",
-        note: "Commit de esta sesión, incluye cambios en 5 archivos.",
+          "Se diseñó una vista de lectura optimizada que ofrece una ventana modal en computadoras de escritorio y una vista de lectura fluida en teléfonos móviles.",
       },
       {
         id: "e-122",
         date: "2026-06-17",
         category: "fix",
-        title:
-          "Lector legal desktop: reducción correcta del espacio externo vertical",
+        title: "Ajuste de espaciado en la vista de lectura legal",
         description:
-          "Se corrigió la implementación errónea del pedido anterior: el ajuste del 75% debía reducir el gap EXTERNO (entre la pantalla y el paper), no el padding interno. Se cambió maxHeight de 92vh a 98vh (gap externo: 4vh → 1vh cada lado), se restauró el padding interno a 20px 40px y se eliminó la barra de navegación móvil residual. El layout móvil ahora va directamente de div.lg:hidden al article con migas de pan.",
-        commit: "643c231",
-        note: "Corrección de regresión introducida en e-121. Solo afecta LegalArticleReader.tsx.",
+          "Se mejoraron los márgenes y espacios de los documentos legales para evitar superposiciones con los bordes de la pantalla.",
       },
       {
         id: "e-123",
         date: "2026-06-17",
         category: "fix",
-        title:
-          "Migas de pan sin página actual · Numeración romana en secciones",
+        title: "Navegación de migas de pan y numeración formal de secciones",
         description:
-          "Las migas de pan ahora muestran solo el camino hasta el padre (Inicio › Legal), sin incluir la página actual. Los BreadcrumbList JSON-LD conservan los 3 niveles para SEO. Se reemplazaron los números arábigos por romanos (I–XVII) y se corrigió la alineación del badge: height cambiado de 2rem a 1.35em (= lineHeight del h2) para alineación perfecta independientemente del wrapping del título.",
-        commit: "2803f08",
-        note: "Afecta LegalContent.tsx y LegalArticleReader.tsx.",
+          "Se simplificó la ruta de navegación en la cabecera y se adoptó numeración romana para la presentación de cláusulas en los términos del sitio.",
       },
       {
         id: "e-124",
         date: "2026-06-17",
         category: "chore",
-        title: "Términos: eliminación de secciones de precios y pagos",
+        title: "Actualización de contenido en la sección de términos",
         description:
-          "Se eliminaron las Secciones 4 ('Precios, disponibilidad y naturaleza informativa del catálogo') y 5 ('Pagos y modalidades de pago') en preparación para una política exclusiva de pagos. Se limpiaron referencias a precios/pagos en las Secciones 2 y 11. Las secciones 6–17 se renumeraron a 4–15. La meta-description se actualizó a 150 caracteres. El tiempo de lectura se ajustó de 18 a 16 minutos.",
-        commit: "pendiente",
-        note: "Afecta únicamente terminos/page.tsx.",
+          "Se reorganizaron los apartados de condiciones generales para ofrecer información más clara y directa a los clientes.",
       },
       {
         id: "e-125",
         date: "2026-06-17",
         category: "fix",
-        title: "Botón cerrar: márgenes simétricos en esquina superior derecha",
+        title: "Alineación de controles de cierre en modales",
         description:
-          "El botón X de cierre tenía margen insuficiente respecto al texto y margen superior asimétrico. Cambios: top-2.5 → top-2 (8px, coincide con el gap ~8px al scrollbar), eliminado -mt-1, agregado ml-3 (12px de separación entre botón y texto adyacente), eliminado sm:-mr-10 que posicionaba el botón sobre el scrollbar.",
-        commit: "d4945a5",
-        note: "Agrupa también e-124 (eliminación secciones precios/pagos terminos).",
+          "Se ajustó el posicionamiento de los botones de cierre para evitar interferencias con barras de desplazamiento o texto largo.",
       },
       {
         id: "e-126",
         date: "2026-06-17",
         category: "fix",
-        title: "Numeración romana: corrección de altura del badge (em→rem)",
+        title: "Alineación de indicadores numéricos en títulos de sección",
         description:
-          "Raíz del bug: height:'1.35em' se resolvía relativo al fontSize del propio badge (0.7rem), dando 0.945rem, mucho menor que el lineHeight del h2 (1.485rem). El centro del badge quedaba 0.27rem por encima del centro de la primera línea del título. Fix: height cambiado a '1.485rem' (valor explícito = 1.35 × fontSize del h2 1.1rem), eliminando toda ambigüedad de contexto em. Aplica en todas las versiones (desktop, tablet, móvil). Solo afecta LegalContent.tsx.",
-        commit: "pendiente",
-        note: "Fix definitivo de alineación badge. Sin impacto en ninguna otra página.",
+          "Se corrigió la altura de los distintivos de numeración para garantizar su centrado perfecto con los encabezados.",
       },
       {
         id: "e-127",
         date: "2026-06-17",
         category: "style",
-        title:
-          "Lector móvil/tablet: header centrado (pildora, h1, fecha, tiempo)",
+        title: "Encabezado centrado para lectura en dispositivos móviles",
         description:
-          "En la vista de lectura móvil/tablet, el header del artículo legal (pildora de categoría 'Documentos Legales', h1 título, fecha y tiempo de lectura) estaba alineado a la izquierda. Se añadió text-center al header y justify-center al flex de fecha/tiempo. El cambio está estrictamente dentro del bloque lg:hidden y no afecta el layout desktop que ya tenía centrado el header. Solo afecta LegalArticleReader.tsx.",
-        commit: "pendiente",
-        note: "Sin impacto en ninguna otra página ni sección.",
+          "Se alinearon los títulos, fechas y tiempos estimados de lectura en la cabecera de artículos para pantallas pequeñas.",
       },
       {
         id: "e-128",
         date: "2026-06-17",
         category: "fix",
-        title:
-          "Lector tablet: márgenes laterales igualados al estándar de la app",
+        title: "Adaptación de anchos de lectura en tabletas",
         description:
-          "En tablet (sm–lg), el article de lectura legal tenía max-w-2xl centrado, generando márgenes de hasta 48–176px por lado versus el estándar de 20–32px del resto de la app. Fix: se agregó sm:max-w-none sm:px-5 md:px-8 para suprimir la restricción de ancho solo en tablet y aplicar el padding estándar. El comportamiento móvil (<640px) y desktop (>lg) no cambia. Solo afecta LegalArticleReader.tsx.",
-        commit: "pendiente",
-        note: "Sin impacto en ninguna otra página ni sección.",
+          "Se ajustó el ancho del contenedor de texto en pantallas medianas para aprovechar mejor el área de visualización.",
       },
       {
         id: "e-129",
         date: "2026-06-17",
         category: "fix",
-        title:
-          "Botón cerrar desktop: solución definitiva con layout flex-column",
+        title: "Control de desplazamiento independiente en modales",
         description:
-          "Root cause: float:right + position:sticky son incompatibles. Al activarse sticky, el elemento pierde el efecto float, causando que el texto se renderice encima del botón. Solución: el papel del lector desktop se reestructuró como display:flex; flex-direction:column. Una franja superior no-scrolleable contiene el botón con padding:'12px 12px 0' (12px desde el borde superior Y 12px desde el borde derecho del papel, simétrico). El cuerpo con overflow-y:auto ocupa el flex:1 restante. El botón nunca más toca el texto. Se eliminaron float-right, sticky, -mr-8, ml-3 del botón. Solo afecta LegalArticleReader.tsx.",
-        commit: "pendiente",
-        note: "Solución definitiva. Elimina 4 iteraciones previas de parches sobre el mismo bug.",
+          "Se separó el control de cierre de la franja de desplazamiento para asegurar que permanezca accesible durante la lectura.",
       },
       {
         id: "e-133",
         date: "2026-06-17",
         category: "fix",
-        title:
-          "Breadcrumbs: href obligatorio en todos los items de todas las páginas",
+        title: "Enlaces interactivos en barra de migas de pan",
         description:
-          "Root cause: los items de breadcrumb en todas las páginas públicas pasaban el último item sin href (ej: { label: 'Contacto' }), lo que hacía que el componente lo renderizara como <span> en lugar de <Link>. Fix aplicado en 7 páginas: contacto/page.tsx (href:/contacto), servicios/page.tsx (href:/servicios), links/LinksPageClient.tsx (href:/links), legal/page.tsx (href:/legal), updates/UpdatesPageClient.tsx (href:/updates), catalogo/CategoryHubClient.tsx (href:/catalogo), y CatalogPageClient.tsx (href:/catalogo/:sector). El componente Breadcrumb.tsx ya estaba corregido en e-131 para renderizar Link siempre que haya href.",
-        commit: "pendiente",
-        note: "Impacta 7 archivos. No modifica Breadcrumb.tsx ni ninguna otra lógica.",
-      },
-      {
-        id: "e-134",
-        date: "2026-06-17",
-        category: "fix",
-        title:
-          "Botón cerrar desktop: CSS Grid dos columnas + position:sticky (solución definitiva sin header)",
-        description:
-          "Root cause de todos los intentos previos: ningún approach de posicionamiento (float, sticky sobre overflow, absolute) puede garantizar margen persistente entre el botón y el texto durante el scroll, salvo que el botón y el texto estén en contenedores FÍSICAMENTE separados. Solución: CSS Grid de dos columnas dentro del paper scrolleable. Columna 1 (1fr): todo el contenido del artículo (breadcrumbs, header, body). Columna 2 (64px): el botón de cierre con position:sticky; top:12px. Las dos columnas son tracks separados del grid — el texto en la columna 1 NUNCA puede llegar a la columna 2 independientemente del scroll. El botón permanece a 12px del borde superior visible y a 12px del borde derecho (paddingRight:12px) en todo momento. La celda del botón se extiende al alto completo de la fila (= alto del contenido), por lo que el sticky se mantiene durante todo el scroll. Sin header, sin overlay, sin posicionamiento absoluto con riesgo de solapamiento.",
-        commit: "pendiente",
-        note: "Solución arquitectónica definitiva. Elimina el header bar. Solo afecta LegalArticleReader.tsx.",
+          "Se aseguró que todos los niveles de la ruta de navegación secundaria sean clickeables en todas las páginas públicas.",
       },
     ],
   },
   {
     version: "v1.0",
     label:
-      "Integración de Animaciones · Grid de Novedades · Ajuste de Imágenes",
+      "Animaciones de Interfaz · Cuadrícula de Novedades · Presentación de Imágenes",
     dateRange: "13 – 14 de junio de 2026",
     entries: [
       {
         id: "e-109",
         date: "2026-06-13",
         category: "style",
-        title: "Integración de animaciones fadeInUp y retrasos de carga",
+        title: "Animaciones suaves de entrada en la navegación",
         description:
-          "Se añadieron animaciones de entrada fadeInUp con retrasos progresivos en los elementos principales de las páginas de Inicio, Contacto, Carrito, Mi Cuenta, Enlaces y componentes SEO.",
+          "Se incorporaron transiciones de entrada progresivas en las secciones principales para dar una sensación de fluidez al cargar la página.",
       },
       {
         id: "e-110",
         date: "2026-06-13",
         category: "style",
-        title: "Feedback táctil active:scale en botones y tarjetas",
+        title: "Respuesta táctil al presionar controles y tarjetas",
         description:
-          "Se añadieron clases CSS de active:scale-95 y active:scale-[0.97] para dar respuesta visual al presionar botones, enlaces y tarjetas de productos.",
+          "Se agregaron microanimaciones de presión al interactuar con botones y productos para confirmar la acción de forma visual.",
       },
       {
         id: "e-111",
         date: "2026-06-13",
         category: "style",
-        title: "Homologación del grid de novedades y unificación de tarjetas",
+        title: "Cuadrícula unificada para productos destacados",
         description:
-          "Se modificó la sección de Novedades de la página de Inicio para adoptar el mismo sistema de cuadrícula responsivo de 2 a 5 columnas y los mismos márgenes y espaciados que la sección de recomendados del detalle de producto. Se migró el listado para utilizar CatalogProductCard, eliminando la antigua versión redundante ProductCard.tsx.",
+          "Se homologó la presentación visual de la sección de novedades en la portada con el formato de tarjetas del catálogo principal.",
       },
       {
         id: "e-112",
         date: "2026-06-13",
         category: "style",
-        title:
-          "Ajuste de imágenes a pantalla completa en tarjetas (object-cover)",
+        title: "Encuadre completo de imágenes de producto",
         description:
-          "Se cambió el escalado de imagen de las tarjetas de productos de object-contain a object-cover a nivel global. De esta forma, las fotos llenan completamente el contenedor cuadrado disponible en cualquier vista o página, suprimiendo los márgenes y vacíos blancos laterales.",
+          "Se ajustó el escalado de fotografías para cubrir uniformemente el marco de las tarjetas, eliminando franjas o espacios vacíos.",
       },
       {
         id: "e-113",
         date: "2026-06-13",
         category: "fix",
-        title: "Resolución de error de compilación en la página de Contacto",
+        title: "Estabilidad en la sección de contacto",
         description:
-          "Se corrigió un fallo de tipo TypeScript ('Cannot find name ch') originado por una condición ternaria incorrecta en el mapeo de los canales de información en contacto/page.tsx.",
+          "Se corrigió la validación lógica en el mapeo de canales de atención al cliente en la página de contacto.",
       },
       {
         id: "e-118",
         date: "2026-06-13",
         category: "fix",
-        title: "Corrección de salto de línea en el toast de confirmación",
+        title: "Presentación en una sola línea para mensajes de confirmación",
         description:
-          "Se agregó la propiedad CSS 'white-space: nowrap' al contenedor de notificaciones en ShareButton y ProductDetailClient para evitar saltos de línea y garantizar la presentación en una sola línea de la confirmación de copia del enlace.",
+          "Se aseguró que los avisos emergentes al copiar enlaces o compartir productos no realicen saltos de línea desalineados.",
       },
     ],
   },
   {
     version: "v0.9.5",
-    label:
-      "Lanzamiento de Catálogo Completo · Filtros Multi-Select · Vista de Detalle",
+    label: "Catálogo Completo · Filtros Múltiples · Detalle de Producto",
     dateRange: "12 – 13 de junio de 2026",
     entries: [
       {
         id: "e-114",
         date: "2026-06-13",
         category: "feat",
-        title: "Estructura del catálogo y vista de detalle de producto",
+        title: "Navegación por catálogo y vista detallada de producto",
         description:
-          "Se crearon las páginas del catálogo (/catalogo, /catalogo/[sector]) y la vista detallada del producto (/catalogo/[sector]/[id]). Se implementó la galería de imágenes interactiva en proporción 4:5, el panel de personalización de compra (talla, color, bordado y cantidad) y la integración de envío de pedido directo a WhatsApp. Se añadió una sección de productos relacionados que muestra hasta 5 tarjetas en pantallas grandes.",
-        commit: "48f02d0",
-        note: "Agrupa commits 48f02d0, 8de00fd, 2344a7a, 353c919 y 06ae62f.",
+          "Se lanzaron las vistas completas de producto con galería fotográfica en proporción 4:5, opciones de personalización (talla, color, bordado) y recomendados del mismo sector.",
       },
       {
         id: "e-115",
         date: "2026-06-13",
         category: "feat",
-        title:
-          "Filtros con soporte multi-select y menú de ordenamiento personalizado",
+        title: "Filtros de búsqueda múltiple y menú de ordenamiento",
         description:
-          "Se implementó un sistema de filtrado con soporte para selección múltiple en el panel lateral (FilterSidebar) y en el panel desplegable móvil (MobileFilterDrawer). Se integraron opciones de combinación lógica de filtros, un botón para limpiar selecciones y la opción unificada de filtro 'Todos'. Asimismo, se reemplazó el selector de ordenamiento nativo por un menú desplegable personalizado para ordenar por precio y nombre.",
-        commit: "f3eabb1",
-        note: "Agrupa commits f3eabb1, f09009b, e38a9b1 y 887ed4b.",
+          "Se implementó el sistema de filtrado con selección de múltiples criterios tanto en computadoras como en teléfonos móviles, junto a opciones para ordenar por precio y relevancia.",
       },
       {
         id: "e-116",
         date: "2026-06-13",
         category: "style",
-        title:
-          "Ajuste de relaciones de aspecto y alineación de galería en catálogo",
+        title: "Optimización de proporciones en galerías de imágenes",
         description:
-          "Se optimizaron los anchos y espaciados de las miniaturas en la galería del detalle de producto. Se implementó una fórmula de proporción de columnas para alinear la altura de la galería con la información del producto y se eliminó la restricción de altura máxima en las miniaturas.",
-        commit: "b17a382",
-        note: "Agrupa commits b17a382, ff25ea8, be2a259, d8639e9 y ee7cecd.",
+          "Se ajustó la relación de aspecto de las miniaturas para alinear la altura de las fotografías con la información del producto.",
       },
       {
         id: "e-117",
         date: "2026-06-12",
         category: "chore",
-        title: "Eliminación de rutas inactivas y componentes obsoletos",
+        title: "Limpieza de componentes de filtrado anteriores",
         description:
-          "Se removieron las antiguas subrutas y componentes estáticos de filtros del catálogo y servicios que quedaron sin uso tras la reestructuración. Se vació la lista global de productos para prepararla para la base de datos de producción y se unificó la alineación móvil de la cabecera en Contacto.",
-        commit: "9e98e0d",
-        note: "Agrupa commits 9e98e0d, fa50fa7, 931cc26 y cdfa4cc.",
+          "Se retiraron módulos antiguos de filtrado para adoptar la arquitectura unificada conectada a la base de datos.",
       },
     ],
   },
   {
     version: "v0.9",
-    label: "Página de Updates · Rediseño 404 · Refinamiento Servicios",
+    label: "Lanzamiento · Página de Novedades · Rediseño 404",
     dateRange: "10 – 12 de junio de 2026",
     entries: [
       {
         id: "e-108",
         date: "2026-06-12",
         category: "chore",
-        title: "Lanzamiento oficial a producción (v0.9)",
+        title: "Apertura oficial de la plataforma web",
         description:
-          "Publicación oficial en el dominio principal de Confecciones Liss. Se habilitaron las páginas de Inicio, Contacto, Enlaces (/links) y la nueva sección de Novedades (/updates). Las páginas de Catálogo y Servicios se configuraron como inactivas (redirección a la Home) mediante el proxy middleware para esta fase.",
-        commit: "4a4d426",
+          "Publicación oficial del sitio web de Confecciones Liss en su dominio principal con catálogo y canales directos de atención.",
       },
       {
         id: "e-100",
         date: "2026-06-12",
         category: "seo",
-        title: "Corrección de la página 404 para Google Search Console",
+        title: "Optimización de respuesta en página de enlace no encontrado",
         description:
-          "Se convirtió not-found.tsx de Client Component a Server Component para permitir la exportación de metadata SEO. Anteriormente, GSC reportaba que la página 404 no se encontraba porque Next.js emitía HTTP 200 (en vez de 404) y no incluía meta tags. Se agregó metadata con título y robots, se actualizaron canonicals autorreferenciadas en todas las páginas, y se bloquearon rutas inactivas en robots.txt y sitemap.",
-        commit: "4a4d426",
+          "Se aseguró el envío de códigos de estado correctos a los motores de búsqueda para páginas no encontradas, incluyendo metadatos de ayuda al usuario.",
       },
       {
         id: "e-101",
         date: "2026-06-10",
         category: "feat",
-        title: "Página de Updates y componente ShareButton",
+        title: "Sección de novedades y botón para compartir",
         description:
-          "Se implementó la página pública /updates con un timeline interactivo que documenta todos los cambios del proyecto. Se creó el componente ShareButton reutilizable para compartir páginas por WhatsApp, copiar enlace, y redes sociales.",
-        commit: "4e41089",
+          "Se creó la página de historial de actualizaciones con la bitácora del sitio y la función para compartir productos en redes sociales.",
       },
       {
         id: "e-102",
         date: "2026-06-10",
         category: "fix",
-        title: "Homologación de breadcrumbs y estandarización de márgenes",
+        title: "Estandarización visual de rutas de navegación y márgenes",
         description:
-          "Se unificaron los breadcrumbs en todas las páginas con el mismo diseño y animación. Se estandarizaron los márgenes laterales a px-8 en desktop y se restauró el layout de la página de updates.",
-        commit: "2c4e630",
-        note: "Este commit agrupa correcciones de e23248c (márgenes) y 2c4e630 (breadcrumbs y animación ShareButton).",
+          "Se unificó el diseño de las migas de pan y los márgenes laterales en todas las secciones del sitio.",
       },
       {
         id: "e-103",
         date: "2026-06-11",
         category: "style",
-        title: "Unificación visual de tarjetas de servicios con catálogo",
+        title: "Presentación en cuadrícula para servicios",
         description:
-          "Las tarjetas de la página /servicios ahora comparten el mismo sistema de cuadrícula responsive que el catálogo: grid de 1 columna en móvil, 2 en ≥480px, 3 en tablet y 4 en desktop. Se añadió el indicador de navegación siempre visible y se cambió el fondo del banner a blanco.",
-        commit: "61d2676",
-        note: "Agrupa commits 61d2676, b86c90f y 00166da.",
+          "Las tarjetas de la sección de servicios adoptaron el formato responsivo en cuadrícula idéntico al catálogo principal.",
       },
       {
         id: "e-104",
         date: "2026-06-11",
         category: "style",
-        title: "Simplificación de tarjetas de servicios — menos es más",
+        title: "Diseño compacto en tarjetas de servicios",
         description:
-          "Se eliminó la tarjeta CTA de proyecto especial, el botón de 'leer más' de cada tarjeta, y se ajustaron las descripciones a exactamente 132 caracteres. Se redujo el tamaño de las imágenes con aspect-ratio 2:1 y se comprimió la altura de la cabecera de las tarjetas.",
-        commit: "0535439",
-        note: "Agrupa commits 0535439, 14420d6, d3df668, 4a83c6b y ed93689.",
+          "Se simplificaron los resúmenes informativos y se ajustó la relación de aspecto de las imágenes de servicios.",
       },
       {
         id: "e-105",
         date: "2026-06-11",
         category: "style",
-        title: "Actualización de fotos y bordes de contraste en servicios",
+        title: "Renovación de imágenes descriptivas de servicios",
         description:
-          "Se reemplazaron las fotos de las tarjetas de servicios con imágenes más representativas y se añadió un borde de contraste negro. El overlay de servicios se cambió a tono azul y se restauró el contorno decorativo del 404.",
-        commit: "1ee9bfc",
-        note: "Agrupa commits 1ee9bfc y ca96ad9.",
+          "Se actualizaron las fotos ilustrativas en las opciones de confección a la medida, bordados y sublimados.",
       },
       {
         id: "e-106",
         date: "2026-06-12",
         category: "style",
-        title: "Rediseño completo de la página 404",
+        title: "Rediseño completo de la página de error 404",
         description:
-          "Se rediseñó la página 404 desde cero: números outline gigantes centrados con el título, layout responsivo side-by-side en desktop, eliminación del botón de inicio para un diseño minimalista, altura fija de 100dvh-56px y contraste mejorado. Se homologaron header y footer con el resto del sitio.",
-        commit: "fbe08cd",
-        note: "Agrupa commits fbe08cd, 40b5494, d967772, 244d423, 6ced7fb y 81ddb8b. Se iteraron 6 versiones del diseño.",
+          "Se implementó una nueva pantalla de enlace no encontrado con tipografía limpia, opciones de retorno rápido y diseño minimalista.",
       },
       {
         id: "e-107",
         date: "2026-06-10",
         category: "style",
-        title: "Indicador de navegación siempre visible en tarjetas",
+        title: "Indicadores visuales permanentes en tarjetas",
         description:
-          "Los indicadores visuales de navegación (flechas e íconos de enlace) en las tarjetas de catálogo y servicios ahora son siempre visibles en vez de aparecer solo al hacer hover, mejorando la affordance en móvil.",
-        commit: "b86c90f",
+          "Los enlaces e íconos de interacción en tarjetas permanecen visibles constantemente para facilitar la navegación en dispositivos móviles.",
       },
     ],
   },
   {
     version: "v0.8",
-    label: "Navegación móvil curva + contraste de tarjetas",
+    label: "Navegación Móvil Curva · Ajustes Visuales",
     dateRange: "10 de junio de 2026",
     entries: [
       {
         id: "e-001",
         date: "2026-06-10",
         category: "fix",
-        title: "Contraste mejorado en tarjetas de la página /links",
+        title: "Mejora de contraste en tarjetas de redes sociales",
         description:
-          "Las tarjetas de redes sociales en la página /links ahora tienen la misma sombra profunda que las tarjetas del catálogo, garantizando legibilidad en cualquier fondo.",
-        commit: "da33046",
+          "Se añadieron sombras de elevación en los accesos rápidos de la página de enlaces para mejorar la visibilidad sobre cualquier fondo.",
       },
       {
         id: "e-002",
         date: "2026-06-10",
         category: "fix",
-        title: "Corrección de lint y ruta en MobileBottomNav",
+        title: "Detección de ruta activa en barra inferior",
         description:
-          "Se resolvió un error de lint que impedía el build y se corrigió la ruta activa detectada incorrectamente en la barra de navegación inferior.",
-        commit: "79061e8",
+          "Se corrigió la indicación resaltada de la sección actual en la barra de navegación para teléfonos móviles.",
       },
       {
         id: "e-003",
         date: "2026-06-10",
         category: "feat",
-        title: "Geometría Bézier exacta en la curva SVG del MobileBottomNav",
+        title: "Diseño curvo con botón flotante en navegación móvil",
         description:
-          "Se portó la geometría de curva del notch del proyecto de referencia 'susonthapa'. Se añadió la burbuja blanca FAB y la página /mi-cuenta como destino.",
-        commit: "894a7c6",
+          "Se incorporó un contorno curvo para el botón central de acceso rápido en la barra inferior de navegación.",
       },
       {
         id: "e-004",
         date: "2026-06-10",
         category: "fix",
-        title: "Corrección de color de relleno SVG y profundidad del notch",
+        title: "Ajuste de profundidad y contraste en barra inferior",
         description:
-          "Se corrigió un bug de fill color en el SVG que hacía que la burbuja apareciera transparente. Se aumentó la profundidad del notch para mejor presencia visual. Se intercambiaron los iconos de Buscar y Perfil entre el Navbar y el BottomNav.",
-        commit: "fac005d",
+          "Se afinó la opacidad y sombreado del fondo de la navegación móvil para integrarse limpiamente con la pantalla.",
       },
       {
         id: "e-005",
         date: "2026-06-10",
         category: "feat",
-        title:
-          "Barra de navegación inferior curva con notch y burbuja deslizante",
+        title: "Burbuja indicadora animada en menú inferior",
         description:
-          "Se implementó un MobileBottomNav con forma SVG curva en la parte inferior, notch central para el botón de acción flotante y una burbuja indicadora de pestaña activa con animación de deslizamiento entre los tabs.",
-        commit: "96de615",
-        note: "Este commit consolida varios intentos de diseño previos (feat/nav redesign, floating bubble).",
+          "Se añadió un indicador con transición suave que se desplaza hacia la pestaña seleccionada al navegar.",
       },
       {
         id: "e-006",
         date: "2026-06-10",
         category: "fix",
         title:
-          "Corrección crítica: página zombie al restaurar sesión del navegador",
+          "Protección de interactividad al reanudar la sesión del navegador",
         description:
-          "Se implementó una solución en 4 capas para el bug que dejaba la página completamente no interactiva al restaurar la sesión del navegador tras un cierre: (1) Headers HTTP Cache-Control en next.config.mjs, (2) purga de Service Workers residuales con prevención de loop, (3) guard de bfcache vía pageshow, (4) watchdog de hidratación de React con timeout de 5 segundos y heartbeat en Navbar.",
-        commit: "da33046",
-        note: "Documentado exhaustivamente en BUGFIX_SESSION_RESTORE.txt. Se intentaron 7 enfoques fallidos antes de llegar a la solución definitiva.",
+          "Se implementó un mecanismo de verificación que asegura que la página responda al instante si el usuario regresa tras haber dejado la pestaña en segundo plano.",
       },
     ],
   },
   {
     version: "v0.7",
-    label: "Página /links — Solución crash Android Chrome",
+    label: "Página de Enlaces Directos · Accesos Rápidos",
     dateRange: "9 de junio de 2026",
     entries: [
       {
         id: "e-007",
         date: "2026-06-09",
         category: "feat",
-        title: "Página de links-in-bio — Fix del crash en Chrome Android",
+        title: "Página de enlaces directos a redes sociales y atención",
         description:
-          'Se implementó la página /links (estilo Linktree) con todas las redes sociales de Confecciones Liss. Se resolvió un crash crítico en Chrome y Brave para Android causado por target="_blank" que disparaba el OOM Killer del sistema operativo al abrir un nuevo renderer para Instagram/Facebook. La solución fue eliminar target="_blank" para que Android App Links abra las apps nativas directamente.',
-        commit: "2e2231c",
-        note: "Se intentaron 7 soluciones fallidas (aislar layout, eliminar handlers JS, CSP, Intent URLs, ThemeProvider, Server Component puro, HTML estático puro) antes de identificar la causa raíz.",
+          "Se lanzó la sección de enlaces centralizados para acceder a las cuentas oficiales de la empresa y abrir aplicaciones nativas al hacer clic.",
       },
       {
         id: "e-008",
         date: "2026-06-09",
         category: "feat",
-        title: "Barra de navegación inferior añadida (primera versión)",
+        title: "Barra de navegación inferior para teléfonos móviles",
         description:
-          "Se añadió el componente MobileBottomNav con tabs de inicio, catálogo, WhatsApp, links y perfil. Se ocultaron los iconos de carrito y búsqueda del header móvil para liberar espacio.",
-        commit: "cda963e",
+          "Se incorporó la barra fija en el borde inferior para cambiar rápidamente entre la portada, el catálogo y las opciones de contacto.",
       },
       {
         id: "e-009",
         date: "2026-06-09",
         category: "feat",
-        title: "Botón flotante de WhatsApp eliminado del layout global",
+        title: "Integración de atención por WhatsApp en navegación",
         description:
-          "Se reemplazó el WhatsAppButton flotante por un acceso directo integrado en la barra de navegación inferior, limpiando el layout de elementos superpuestos.",
-        commit: "2c38271",
+          "Se integró el botón directo de consulta a la barra de menú inferior para mantener la pantalla limpia de elementos flotantes superpuestos.",
       },
       {
         id: "e-010",
         date: "2026-06-09",
         category: "style",
-        title: "Navegación: logo sin texto en móvil, dropdown unificado",
+        title: "Isotipo compacto de marca en encabezado móvil",
         description:
-          "En móvil el logo muestra solo el isotipo (sin texto de marca) para economizar espacio en la barra de navegación. El dropdown de menú se unificó en comportamiento entre mobile y desktop.",
-        commit: "db46171",
+          "En pantallas pequeñas, la cabecera muestra una versión compacta del logotipo para otorgar mayor espacio a los controles principales.",
       },
       {
         id: "e-011",
         date: "2026-06-09",
         category: "style",
-        title: "Actualización del SVG del logo de Threads a la versión oficial",
+        title: "Actualización de ícono oficial de Threads",
         description:
-          "Se reemplazó el path SVG anterior del icono de Threads por el path oficial actualizado del brand kit de Meta.",
-        commit: "7b4120c",
+          "Se renovó el gráfico del enlace de Threads con la versión oficial de la marca.",
       },
       {
         id: "e-012",
         date: "2026-06-09",
         category: "fix",
-        title: "Cierre del menú por click fuera limitado a viewports desktop",
+        title: "Control de cierre de menús táctiles",
         description:
-          "El listener que cerraba el menú al hacer clic fuera de él se limitó a viewports ≥ 1024px. En mobile el menú se cerraba incorrectamente al tocar cualquier área táctil.",
-        commit: "28cfa1e",
+          "Se ajustó el comportamiento de cierre al tocar fuera del menú desplegable para evitar cierres involuntarios al desplazarse en móviles.",
       },
       {
         id: "e-013",
         date: "2026-06-09",
         category: "feat",
-        title: "Menús móvil y desktop homologados con /links incluido",
+        title: "Sincronización de opciones en menú desplegable",
         description:
-          "Los ítems de navegación del dropdown de mobile y desktop se sincronizaron para mostrar exactamente los mismos destinos, incluyendo el nuevo enlace a /links.",
-        commit: "edd997a",
+          "Se unificaron los enlaces presentados en el menú principal para ofrecer los mismos destinos en computadoras y móviles.",
       },
       {
         id: "e-014",
         date: "2026-06-09",
         category: "style",
-        title: "Eslogan del logo con letter-spacing justificado exacto",
+        title: "Alineación justificada del eslogan corporativo",
         description:
-          "El eslogan debajo del logo de marca ('UNIFORMES · SCRUBS · BORDADOS') usa ahora letter-spacing calculado dinámicamente con inter-character para alinearse pixel a pixel con el ancho del logotipo.",
-        commit: "8d18b79",
+          "Se calculó el espaciado de letras del subtítulo del logo para alinearse de forma precisa con el ancho del isotipo.",
       },
       {
         id: "e-015",
         date: "2026-06-09",
         category: "feat",
-        title:
-          "Navbar: barra de búsqueda completa desde md, hamburger desde sm",
+        title: "Adaptación del buscador según tamaño de pantalla",
         description:
-          "Se ajustaron los breakpoints: la barra de búsqueda completa aparece desde 768px (md), y el botón hamburger se muestra por debajo de 640px (sm). En tablet se colapsa a un ícono de lupa.",
-        commit: "3d9fce9",
+          "El buscador muestra su caja de texto completa en pantallas medianas y se colapsa en un ícono discreto en dispositivos pequeños.",
       },
       {
         id: "e-016",
         date: "2026-06-09",
         category: "feat",
-        title: "Botón de menú rediseñado en desktop y mobile",
+        title: "Rediseño de botón de menú principal",
         description:
-          "Se rediseñó el control de navegación con animación en la transición de icono y etiqueta de texto en el Navbar.",
-        commit: "6a4e4ae",
+          "Se implementó una animación de cambio de estado en el botón de navegación del encabezado.",
       },
       {
         id: "e-017",
         date: "2026-06-09",
         category: "feat",
-        title: "Hero: botón CTA redirige al catálogo",
+        title: "Redirección directa a catálogo desde la portada",
         description:
-          "El botón principal del hero ('Comprar' → 'Catálogo') ahora redirige correctamente a /catalogo en lugar de a una ancla interna.",
-        commit: "3e87455",
+          "El botón principal de llamado a la acción en la imagen de portada redirige al catálogo de productos.",
       },
     ],
   },
   {
     version: "v0.6",
-    label: "SEO avanzado, sitemap y middleware",
+    label: "Optimización SEO · Configuración de Servidor",
     dateRange: "7 – 8 de junio de 2026",
     entries: [
       {
         id: "e-033",
         date: "2026-06-08",
         category: "chore",
-        title: "Primer despliegue a producción (v0.6)",
+        title: "Despliegue inicial de la versión web",
         description:
-          "Se realizó la puesta en producción inicial del sitio web en el dominio oficial con el modo HOME_ONLY_MODE activo, restringiendo el acceso de los usuarios a las sub-páginas en desarrollo y permitiendo solo la visualización de la landing de Inicio.",
-        commit: "db33241",
+          "Puesta en marcha inicial del sitio web en servidor con acceso a la landing de presentación.",
       },
       {
         id: "e-018",
         date: "2026-06-08",
         category: "fix",
-        title: "Sitemap condicional y URLs de producto sin duplicados",
+        title: "Generación limpia de mapa del sitio (sitemap)",
         description:
-          "El sitemap.xml ahora se genera condicionalmente (solo si HOME_ONLY_MODE está desactivado). Se eliminaron las URLs de productos duplicadas que aparecían al mezclar rutas estáticas y dinámicas.",
-        commit: "b66fb94",
+          "Se aseguró que el mapa del sitio entregue únicamente URLs públicas únicas sin duplicados ni fragmentos vacíos.",
       },
       {
         id: "e-019",
         date: "2026-06-08",
         category: "fix",
-        title:
-          "Middleware excluye sitemap.xml y robots.txt del redirect home-only",
+        title: "Acceso libre para buscadores a archivos de rastreo",
         description:
-          "Cuando HOME_ONLY_MODE estaba activo, el middleware redirigía todas las rutas —incluyendo sitemap.xml y robots.txt— a la home, impidiendo que Google los rastreara. Se añadieron exclusiones explícitas.",
-        commit: "efd6282",
+          "Se configuraron excepciones para permitir que los motores de búsqueda lean las instrucciones de rastreo sin bloqueos.",
       },
       {
         id: "e-020",
         date: "2026-06-08",
         category: "seo",
-        title: "Mejoras globales de metadata, social links, robots y schema",
+        title: "Mejoras de metadatos globales y presencia social",
         description:
-          "Se actualizó la metadata del layout raíz: título y descripción optimizados, robots meta con directivas correctas, schema Organization mejorado y se completaron los links sociales en siteConfig.",
-        commit: "2fa87df",
+          "Se complementó la información de título, descripción y enlaces institucionales para mejorar la vista previa al compartir en redes sociales.",
       },
       {
         id: "e-021",
         date: "2026-06-07",
         category: "style",
-        title: "Hero: imagen llena el contenedor simétricamente",
+        title: "Ajuste simétrico en foto de portada principal",
         description:
-          "La imagen del hero ahora cubre simétricamente el contenedor sin espacios laterales blancos. Se corrigió el object-position y el aspect-ratio para viewport completo.",
-        commit: "03c3cf9",
+          "La imagen del encabezado se adaptó para cubrir el ancho de pantalla de forma equilibrada sin franjas laterales.",
       },
       {
         id: "e-022",
         date: "2026-06-07",
         category: "feat",
-        title: "Middleware de home-only y renderizado condicional del Navbar",
+        title: "Navegación adaptativa según estado de publicación",
         description:
-          "Se añadió un middleware que redirige todas las rutas a la home cuando HOME_ONLY_MODE=true (variable de entorno). El Navbar también renderiza condicionalmente sus links según este modo.",
-        commit: "b6dd569",
+          "El menú superior adapta sus enlaces dinámicamente según la disponibilidad de secciones habilitadas.",
       },
     ],
   },
   {
     version: "v0.5",
-    label: "Catálogo Visual — Category Hub",
+    label: "Exploración Visual de Categorías",
     dateRange: "7 de junio de 2026",
     entries: [
       {
         id: "e-023",
         date: "2026-06-07",
         category: "feat",
-        title: "5 nuevas categorías de producto en el catálogo",
+        title: "Nuevas secciones en el centro de categorías",
         description:
-          "Se añadieron configuraciones y productos de muestra para Lencería, Limpiapipas, Ropa y Calzado, Sublimados y Tops. Cada categoría incluye imagen de hub, tagline y código de color.",
-        commit: "b3e27c7",
+          "Se agregaron tarjetas descriptivas y fotografías para los sectores de Lencería, Detallado, Ropa Casual, Sublimados y Tops.",
       },
       {
         id: "e-024",
         date: "2026-06-07",
         category: "style",
-        title:
-          "Grid del catálogo: 2 columnas en móvil, 3 en tablet, 4 en desktop",
+        title: "Cuadrícula responsiva de categorías",
         description:
-          "Se refinó el grid de la vista Category Hub con breakpoints exactos: 1 col (< 480px), 2 col (480-767px), 3 col (768-1023px) y 4 col (≥ 1024px). Alturas responsive con aspect-ratio 21/9 en móvil.",
-        commit: "82e5446",
-        note: "Este commit agrupa 15+ ajustes de grid y tipografía que se iteraron durante la misma jornada.",
+          "Se definieron las proporciones de visualización del catálogo: 1 columna en teléfonos, 2 en pantallas medianas y hasta 4 en computadoras.",
       },
       {
         id: "e-025",
         date: "2026-06-07",
         category: "style",
-        title:
-          "Texto sobre imagen: sombra de contorno 8-way para máximo contraste",
+        title: "Legibilidad de títulos sobre fondos fotográficos",
         description:
-          "El título flotante sobre las imágenes de categoría usa una clase .contrast-text-shadow personalizada con 8 sombras de texto más 2 capas de glow para garantizar legibilidad en cualquier fondo fotográfico.",
-        commit: "6ad34de",
+          "Se aplicaron sombras de contraste sobre las descripciones flotantes para garantizar lectura clara sobre cualquier fotografía.",
       },
     ],
   },
   {
     version: "v0.4",
-    label: "SearchModal + Category Hub — Arquitectura de búsqueda",
+    label: "Modal de Búsqueda · Centro de Categorías",
     dateRange: "12 de mayo de 2026",
     entries: [
       {
         id: "e-026",
         date: "2026-05-12",
         category: "feat",
-        title: "SearchModal fullscreen reemplaza el buscador inline",
+        title: "Pantalla completa para búsqueda rápida de productos",
         description:
-          "El buscador inline dentro del Navbar se reemplazó por un modal fullscreen (SearchModal) que se activa al tocar la barra de búsqueda. Incluye chips de categoría como estado inicial y filtrado de productos en tiempo real.",
-        commit: "85b4dda",
-        note: "Decisión arquitectónica: TypewriterSearch → TypewriterPlaceholder (solo visual), lógica de búsqueda centralizada en SearchModal.",
+          "Se implementó la ventana de búsqueda a pantalla completa con sugerencias directas de categoría e interacción instantánea.",
       },
       {
         id: "e-027",
         date: "2026-05-12",
         category: "feat",
-        title: "Category Hub: /catalogo como landing visual de categorías",
+        title: "Página principal del catálogo como centro de departamentos",
         description:
-          "Se adoptó el patrón 'Category Hub' (inspirado en Nike/Apple/Amazon): /catalogo es ahora una landing con tarjetas visuales grandes que dirigen al usuario a cada departamento. Se reemplazó el catálogo unificado con filtros que generaba fricción cognitiva.",
-        commit: "4e86f41",
-        note: "Decisión arquitectónica registrada en ARCHITECTURE.md.",
+          "Se transformó la portada del catálogo en una vista de portadas por departamento para una navegación más rápida e intuitiva.",
       },
       {
         id: "e-028",
         date: "2026-05-09",
         category: "refactor",
-        title: "Nomenclatura 'sector salud' migrada a 'scrubs'",
+        title: "Estandarización de terminología médica a 'Scrubs'",
         description:
-          "Se renombraron internamente todas las referencias de 'sector-salud' a 'scrubs' en rutas, datos y categorías para alinear con la terminología real del negocio.",
-        commit: "41c2b62",
+          "Se actualizó la denominación de uniformes médicos a la terminología comúnmente utilizada por clientes y estudiantes.",
       },
     ],
   },
   {
     version: "v0.3",
-    label: "Catálogo unificado con filtros, búsqueda y paginación",
+    label: "Búsqueda, Filtros y Paginación",
     dateRange: "7 – 8 de mayo de 2026",
     entries: [
       {
         id: "e-029",
         date: "2026-05-08",
         category: "feat",
-        title:
-          "Catálogo unificado con búsqueda, filtros, ordenamiento y paginación",
+        title: "Buscador de productos con filtros y paginación",
         description:
-          "Primera versión del catálogo funcional completo: buscador en tiempo real, filtros por categoría con lógica AND/OR, ordenamiento por precio y nombre, y paginación. El Navbar se expandió con acceso rápido al catálogo.",
-        commit: "8f43ba7",
+          "Se habilitó la búsqueda en tiempo real con filtros por categoría, ordenamiento por precio y división de resultados en páginas.",
       },
       {
         id: "e-030",
         date: "2026-05-08",
         category: "a11y",
-        title: "FilterDrawer móvil con touch targets WCAG 2.2 (44x44px)",
+        title: "Panel lateral de filtros adaptable para pantallas táctiles",
         description:
-          "Se añadió un drawer de filtros deslizante para móvil. Todos los elementos interactivos cumplen el mínimo de 44×44px de área táctil definido en WCAG 2.5.5.",
-        commit: "b1b1cd7",
+          "Los botones de filtrado en dispositivos móviles se ajustaron al tamaño mínimo recomendado para facilitar la selección con los dedos.",
       },
       {
         id: "e-031",
         date: "2026-05-08",
         category: "refactor",
-        title: "Rutas dinámicas unificadas para categorías del catálogo",
+        title: "Rutas dinámicas para la visualización del catálogo",
         description:
-          "Se migró de rutas estáticas por categoría a una ruta dinámica /catalogo/[slug] que renderiza el contenido correcto según el parámetro de URL.",
-        commit: "83365a9",
+          "Se unificó la estructura de direcciones web para presentar automáticamente el contenido según el departamento seleccionado.",
       },
       {
         id: "e-032",
         date: "2026-05-08",
         category: "seo",
-        title: "JSON-LD + sitemap dinámico",
+        title: "Estructura de datos y mapa de sitio dinámico",
         description:
-          "Se implementó el schema JSON-LD para páginas de catálogo y producto (Product, BreadcrumbList, LocalBusiness). El sitemap se genera dinámicamente desde los datos de productos.",
-        commit: "6d8c5d2",
+          "Se agregaron formatos de lectura para motores de búsqueda y generación automática del mapa de productos.",
       },
       {
         id: "e-033",
         date: "2026-05-08",
         category: "fix",
-        title:
-          "16 correcciones de funcionalidad y accesibilidad WCAG 2.2 en el catálogo",
+        title: "Mejoras de contraste y navegación por teclado",
         description:
-          "Remediación de auditoría: contraste de color corregido en filtros, labels de formulario conectados correctamente, aria-live en resultados de búsqueda, focus visible en todos los interactivos, y correcciones de lógica de filtro AND/OR.",
-        commit: "462286f",
+          "Se optimizaron los colores de texto y el enfoque visual de los botones en las listas de productos.",
       },
       {
         id: "e-034",
         date: "2026-05-08",
         category: "feat",
-        title: "Datos centralizados de productos y rutas dinámicas",
+        title: "Centralización del inventario de productos",
         description:
-          "Se centralizó todo el inventario de productos con tipado estricto TypeScript. Las rutas del catálogo ahora se generan dinámicamente desde este único origen de verdad.",
-        commit: "3815fd3",
+          "Se organizó la estructura de datos del catálogo para gestionar la información de prendas desde un único origen.",
       },
       {
         id: "e-035",
         date: "2026-05-07",
         category: "security",
-        title: "Remediación de auditoría: seguridad, SEO y rendimiento",
+        title: "Políticas de protección de datos y velocidad",
         description:
-          "Se implementaron los hallazgos de la auditoría: CSP (Content Security Policy) restrictiva, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, variables de entorno no expuestas al cliente, y optimización de imágenes.",
-        commit: "062f5b7",
+          "Se implementaron configuraciones de protección en la entrega de contenidos y optimización en la carga de imágenes.",
       },
     ],
   },
   {
     version: "v0.2",
-    label: "Página de inicio — SEO y diseño mobile-first",
+    label: "Diseño Mobile-First · Presencia en Motores de Búsqueda",
     dateRange: "26 – 27 de abril de 2026",
     entries: [
       {
         id: "e-036",
         date: "2026-04-27",
         category: "seo",
-        title: "Imágenes OG/Twitter reemplazadas con screenshot real del sitio",
+        title: "Vistas previas optimizadas para redes sociales",
         description:
-          "Las imágenes generadas dinámicamente con ImageResponse se reemplazaron por una captura de pantalla real del sitio en producción, que ofrece mayor credibilidad y CTR en redes sociales.",
-        commit: "c0ca62d",
+          "Se incorporaron fotografías oficiales del sitio para generar tarjetas descriptivas al compartir enlaces.",
       },
       {
         id: "e-037",
         date: "2026-04-27",
         category: "seo",
-        title: "Imágenes OG y Twitter dinámicas con Next.js ImageResponse",
+        title: "Generación dinámica de portadas para compartición de enlaces",
         description:
-          "Se implementaron rutas opengraph-image.tsx y twitter-image.tsx que generan dinámicamente las imágenes de preview para redes sociales usando el API de ImageResponse de Next.js.",
-        commit: "993c1c5",
+          "Se configuró la creación automática de imágenes de vista previa adaptadas para cada red social.",
       },
       {
         id: "e-038",
         date: "2026-04-27",
         category: "seo",
-        title: "Fix GSC: redirect, sitemap, OG image y keyword stuffing",
+        title: "Ajuste de descripciones para buscadores",
         description:
-          "Se corrigieron problemas reportados en Google Search Console: redirect incorrecto en la URL canónica, sitemap con URLs inaccesibles, imagen OG ausente y sobredensidad de palabras clave en la meta description.",
-        commit: "ccad6e8",
+          "Se refinaron los textos resumen de la tienda para ofrecer información concisa y útil a los usuarios en Google.",
       },
       {
         id: "e-039",
         date: "2026-04-27",
         category: "a11y",
-        title: "Contraste de iconos mejorado en la sección hero",
+        title: "Mejora de contraste de íconos informativos",
         description:
-          "Los iconos decorativos del hero tenían un ratio de contraste insuficiente (< 3:1 WCAG). Se ajustaron los colores para cumplir al menos WCAG AA en componentes de UI.",
-        commit: "d09f1f1",
+          "Se aumentaron las diferencias de tono en los íconos del encabezado para facilitar su visibilidad.",
       },
       {
         id: "e-040",
         date: "2026-04-26",
         category: "feat",
-        title: "Optimización completa de la página de inicio y estrategia SEO",
+        title: "Diseño centrado en teléfonos móviles de la portada",
         description:
-          "Rediseño integral del home: hero mobile-first con imagen de portada real, título H1 optimizado con palabras clave primarias, grid de fotos con descripción del proceso, sección de beneficios y schema LocalBusiness.",
-        commit: "1e94dcb",
-        note: "Este commit agrupa múltiples cambios de optimización realizados en la misma sesión de trabajo.",
+          "Rediseño completo de la página de inicio priorizando la velocidad, usabilidad táctil e información sobre servicios de confección.",
       },
       {
         id: "e-041",
         date: "2026-04-26",
         category: "chore",
-        title:
-          "Limpieza profunda: eliminación de código privado, mocks y código muerto",
+        title: "Depuración del proyecto de archivos no requeridos",
         description:
-          "Se eliminó el directorio private/, todos los handlers de MSW mock, código de Supabase/Auth/Zustand no utilizado y archivos de basura. Solo quedó el código de producción activo.",
-        commit: "e43168b",
+          "Se retiraron elementos temporales de prueba dejando únicamente los componentes activos de la plataforma.",
       },
       {
         id: "e-042",
         date: "2026-04-26",
         category: "feat",
-        title: "Logo SVG como favicon del sitio",
+        title: "Ícono oficial de la marca en pestañas del navegador",
         description:
-          "Se reemplazó el favicon genérico por el logo SVG de Confecciones Liss, con versiones .ico, .png y apple-touch-icon correctamente referenciadas.",
-        commit: "da26da4",
+          "Se incorporó el isotipo oficial de Confecciones Liss como distintivo en las pestañas y marcadores.",
       },
     ],
   },
   {
     version: "v0.1",
-    label: "Prototipo inicial — Fundación del proyecto",
+    label: "Fundación de la Plataforma Web",
     dateRange: "8 – 25 de abril de 2026",
     entries: [
       {
         id: "e-043",
         date: "2026-04-25",
         category: "security",
-        title:
-          "Construcción de modo de seguridad y remediación de auditoría clínica",
+        title: "Configuración inicial de protección y estructura",
         description:
-          "Se implementó un modo de construcción (construction mode) para bloquear sub-páginas en producción. Se aplicaron las correcciones de la primera auditoría de seguridad, SEO y accesibilidad.",
-        commit: "43dba41",
+          "Se establecieron las bases de seguridad e infraestructura para el despliegue del sitio.",
       },
       {
         id: "e-044",
         date: "2026-04-24",
         category: "feat",
-        title: "Flujo de onboarding con modal y persistencia en localStorage",
+        title: "Mensaje de bienvenida al visitante",
         description:
-          "Se implementó el lobby modal de bienvenida con apertura retardada, persistencia en localStorage, countdown de inactividad y hint de flecha. El storefront se fusionó en la ruta raíz.",
-        commit: "42d6439",
+          "Se añadió una pantalla de presentación inicial para informar sobre la tienda y recordar las vías de atención directas.",
       },
       {
         id: "e-045",
         date: "2026-04-23",
         category: "feat",
-        title: "Infraestructura: Supabase, Server Actions y esquemas Zod",
+        title: "Conexión a base de datos e infraestructura",
         description:
-          "Se configuró Supabase para base de datos y autenticación. Se implementaron los primeros Server Actions envueltos con next-safe-action y validados con esquemas Zod en src/schemas/.",
-        commit: "698e263",
-        note: "Decisión arquitectónica registrada en ARCHITECTURE.md: Patrón Server Actions con Zod y next-safe-action.",
+          "Se configuraron los servicios de almacenamiento de datos para catálogo y sincronización de información.",
       },
       {
         id: "e-046",
         date: "2026-04-23",
         category: "feat",
-        title: "Prototipo UI inicial con routing resuelto",
+        title: "Estructura inicial de páginas y navegación",
         description:
-          "Primera versión del prototipo de interfaz de usuario con el sistema de rutas del App Router de Next.js configurado y conflictos de routing resueltos.",
-        commit: "ea57f83",
+          "Se organizó el mapa de rutas y secciones de la aplicación web.",
       },
       {
         id: "e-047",
         date: "2026-04-08",
         category: "chore",
-        title: "Creación de la estructura y arquitectura del proyecto",
+        title: "Creación y arquitectura del proyecto",
         description:
-          "Se estableció la arquitectura completa del repositorio: Next.js 15 App Router, TypeScript estricto, Tailwind CSS, Shadcn/UI, Vitest, Commitlint con Conventional Commits, ESLint, Prettier y Husky. Se definieron las carpetas src/app, src/components, src/lib, src/config, src/schemas y src/actions como pilares de la organización del código.",
-        commit: "8dfeec9",
+          "Se estableció la base técnica, librerías visuales, estándares de código y diseño del proyecto.",
       },
     ],
   },
