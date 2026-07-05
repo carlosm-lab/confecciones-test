@@ -65,6 +65,16 @@ export const metadata = {
     siteName: siteConfig.name,
     locale: "es_SV",
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/opengraph-image`,
+        secureUrl: `${siteConfig.url}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Confecciones Liss — Scrubs y Uniformes Médicos en San Miguel, El Salvador",
+        type: "image/png",
+      },
+    ],
   },
   robots: {
     index: true,
@@ -82,6 +92,8 @@ export const metadata = {
     title: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Liss",
     description: siteConfig.description,
     creator: siteConfig.twitterHandle,
+    site: siteConfig.twitterHandle,
+    images: [`${siteConfig.url}/opengraph-image`],
   },
 };
 

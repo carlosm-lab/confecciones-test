@@ -166,7 +166,17 @@ export async function generateMetadata({
       type: "website",
       ...(absoluteImage && {
         images: [
-          { url: absoluteImage, width: 800, height: 800, alt: product.name },
+          {
+            url: absoluteImage,
+            secureUrl: absoluteImage,
+            // 1200×630 es el estándar recomendado para Facebook, Instagram,
+            // LinkedIn, Pinterest y X. La imagen del producto es cuadrada (1:1)
+            // y se recortará en las previsualizaciones — esto es normal.
+            width: 1200,
+            height: 630,
+            alt: product.name,
+            type: "image/webp",
+          },
         ],
       }),
     },
@@ -175,6 +185,8 @@ export async function generateMetadata({
       title: product.seo_title?.trim() || product.name,
       description: seoDescription ?? undefined,
       creator: siteConfig.twitterHandle,
+      site: siteConfig.twitterHandle,
+      ...(absoluteImage && { images: [absoluteImage] }),
     },
     robots: robotsDirective,
   };
