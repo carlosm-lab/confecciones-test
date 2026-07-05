@@ -411,8 +411,9 @@ export function ProductDetailClient({
           style={{ animationDelay: "200ms" }}
         >
           {/* 1 ── Breadcrumb + Compartir */}
-          <div className="flex items-start justify-between gap-4">
-            <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-start gap-x-3 gap-y-1">
+            {/* Breadcrumb: full-width on mobile so it never fights with share button */}
+            <div className="w-full min-w-0 sm:w-auto sm:flex-1">
               <Breadcrumb
                 items={
                   sector === "universitario"
@@ -446,7 +447,7 @@ export function ProductDetailClient({
             <button
               type="button"
               onClick={handleCopy}
-              className="text-primary mt-0.5 shrink-0 cursor-pointer transition-transform hover:scale-110 active:scale-95"
+              className="text-primary shrink-0 cursor-pointer self-start transition-transform hover:scale-110 active:scale-95"
               title="Compartir"
               aria-label="Compartir este producto"
             >
