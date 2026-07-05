@@ -31,6 +31,8 @@ export const env = createEnv({
       .string()
       .min(1)
       .default("placeholder_vapid"),
+    NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().optional(),
+    NEXT_PUBLIC_META_PIXEL_ID: z.string().optional(),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -42,6 +44,8 @@ export const env = createEnv({
     NEXT_PUBLIC_HOME_ONLY: process.env.NEXT_PUBLIC_HOME_ONLY,
     NEXT_PUBLIC_GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
     NEXT_PUBLIC_VAPID_PUBLIC_KEY: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+    NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+    NEXT_PUBLIC_META_PIXEL_ID: process.env.NEXT_PUBLIC_META_PIXEL_ID,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });

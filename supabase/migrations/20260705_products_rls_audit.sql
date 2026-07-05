@@ -1,0 +1,33 @@
+-- ============================================================
+-- Migración Audit / RLS Check: tabla public.products
+-- Fecha: 2026-07-05
+-- ============================================================
+-- AUDITORÍA DE SEGURIDAD RLS REALIZADA EL 2026-07-05:
+-- 
+-- Consulta ejecutada en Supabase SQL Editor:
+--   SELECT relrowsecurity FROM pg_class WHERE relname = 'products';
+--   Result: relrowsecurity = true (RLS habilitado).
+-- 
+--   SELECT schemaname, tablename, policyname, roles, cmd, qual, with_check 
+--   FROM pg_policies WHERE tablename = 'products';
+-- 
+-- Políticas activas confirmadas en la base de datos de producción:
+--   1. "products_admin_all":
+--      Roles: {authenticated}
+--      Cmd: ALL (SELECT, INSERT, UPDATE, DELETE)
+--      USING: ((auth.jwt() -> 'app_metadata'::text) ->> 'role'::text) = 'admin'::text
+--      WITH CHECK: ((auth.jwt() -> 'app_metadata'::text) ->> 'role'::text) = 'admin'::text
+-- 
+--   2. "products_public_read":
+--      Roles: {public}
+--      Cmd: SELECT
+--      USING: (is_active = true)
+-- 
+-- CONCLUSIÓN:
+-- La tabla `public.products` ya se encuentra correctamente protegida con Row Level Security (RLS).
+-- Lectura pública disponible únicamente para productos donde `is_active = true`.
+-- Operaciones de administración (creación, modificación, eliminación) restringidas a usuarios autenticados con rol `admin` en app_metadata.
+-- ============================================================
+
+-- Asegurar idempotencia de activación de RLS en entornos replicados o locales
+ALTER TABLE IF EXISTS public.products ENABLE ROW LEVEL SECURITY;

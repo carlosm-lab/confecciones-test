@@ -44,7 +44,8 @@ const publicSans = Public_Sans({
 });
 
 import { siteConfig } from "@/config/site";
-import "@/env";
+import { env } from "@/env";
+import { AnalyticsScripts } from "@/components/analytics/AnalyticsScripts";
 
 export const metadata = {
   title: {
@@ -291,6 +292,10 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col antialiased">
         <Providers>{children}</Providers>
+        <AnalyticsScripts
+          gaId={env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+          pixelId={env.NEXT_PUBLIC_META_PIXEL_ID}
+        />
       </body>
     </html>
   );

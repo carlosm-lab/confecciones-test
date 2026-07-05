@@ -621,7 +621,7 @@ export const AYUDA_CATEGORIES: AyudaCategory[] = [
         n: 75,
         question: "¿Dan descuento por pedidos grupales?",
         answer:
-          "Sí. Tanto grupos de estudiantes/personas naturales organizadas como empresas e instituciones acceden a tarifa preferencial al cumplir el volumen mínimo (8 unidades para grupos/estudiantes, 12 para empresas e instituciones).",
+          "Sí. Tanto grupos de colegios/estudiantes como empresas e instituciones acceden a tarifa preferencial al cumplir el volumen mínimo (6 uniformes para colegios, 12 piezas por modelo para empresas).",
       },
       {
         id: "faq-76",
@@ -982,7 +982,7 @@ export const AYUDA_CATEGORIES: AyudaCategory[] = [
         question:
           "¿Cuál es la cantidad mínima para un pedido grupal de estudiantes o personas organizadas?",
         answer:
-          "8 conjuntos completos de uniforme (o prendas equivalentes) por modelo.",
+          "Para colegios, el precio de mayoreo aplica desde 6 uniformes. Para empresas, el precio de volumen aplica desde 12 piezas por modelo. En ambos casos, el precio final se acuerda previamente y puede negociarse según el tamaño del pedido.",
       },
       {
         id: "faq-120",

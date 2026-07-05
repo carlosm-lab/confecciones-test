@@ -276,17 +276,23 @@ export default function PoliticaCookiesPage() {
             de confección que el Taller ofrece.
           </P>
           <P>
-            2.2 En coherencia con este principio, la Plataforma no implementa,
-            no integra ni utiliza ninguna de las siguientes tecnologías, de
-            forma expresa y declarada:
+            2.2 En coherencia con este principio, la Plataforma únicamente
+            cargará herramientas analíticas u opcionales (tales como Google
+            Analytics 4 y Meta Pixel) cuando el Usuario haya otorgado de forma
+            explícita su consentimiento a través del banner de cookies de la
+            Plataforma. En ausencia de dicho consentimiento, dichas tecnologías
+            se mantendrán completamente desactivadas.
+          </P>
+          <P>
+            De forma predeterminada (o en caso de rechazo), la Plataforma NO
+            utiliza:
           </P>
           <Ul
             items={[
-              "Cookies publicitarias o de segmentación de ningún tipo, ya sea de primera parte o de terceros.",
-              "Píxeles de seguimiento de redes publicitarias, incluyendo sin limitarse a Meta Pixel (Facebook/Instagram Ads), Google Ads Tag, TikTok Pixel, Snap Pixel, Pinterest Tag ni ningún otro píxel de retargeting o seguimiento publicitario.",
-              "Herramientas de análisis de comportamiento del Usuario dentro de la Plataforma, tales como Google Analytics, Google Tag Manager, Hotjar, Clarity, Mixpanel, Segment, Amplitude ni ninguna herramienta analítica similar que registre sesiones, mapas de calor, grabaciones de pantalla o flujos de navegación individualizados.",
-              "Cookies de terceros con fines de seguimiento entre sitios web o de construcción de perfiles de Usuario fuera de la Plataforma.",
-              'Scripts de carga de redes sociales que impliquen seguimiento del Usuario, tales como botones de "Me gusta" o widgets de feed social que recopilen datos de comportamiento.',
+              "Cookies publicitarias o de segmentación por defecto.",
+              "Herramientas de análisis de comportamiento o píxeles sin el consentimiento explícito del Usuario.",
+              "Cookies de terceros con fines de seguimiento entre sitios web o de construcción de perfiles fuera de la Plataforma.",
+              "Scripts de carga de redes sociales que impliquen seguimiento no autorizado.",
             ]}
           />
           <P>

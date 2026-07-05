@@ -33,6 +33,7 @@ export function CookieBanner() {
   const accept = () => {
     try {
       localStorage.setItem(STORAGE_KEY, "accepted");
+      window.dispatchEvent(new Event("liss_cookie_consent_updated"));
     } catch {
       // noop
     }
@@ -42,6 +43,7 @@ export function CookieBanner() {
   const decline = () => {
     try {
       localStorage.setItem(STORAGE_KEY, "declined");
+      window.dispatchEvent(new Event("liss_cookie_consent_updated"));
     } catch {
       // noop
     }

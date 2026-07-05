@@ -475,7 +475,7 @@ export default function PruebaHubBlancoPage() {
 
       if (!error && data) {
         const counts: Record<string, number> = {};
-        data.forEach((p) => {
+        data.forEach((p: { category: string | null }) => {
           if (!p.category) return;
           const cat = p.category.toLowerCase();
           UNIVERSIDADES_BASE.forEach((u) => {

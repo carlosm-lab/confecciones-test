@@ -614,7 +614,36 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
 ### ServicioSastreriaDetalle
 
 - **Ruta:** `src/components/servicios/ServicioSastreriaDetalle.tsx`
-- **Descripción:** Componente de vista detallada para el servicio de Confección y Sastrería a la Medida (`/servicios/confeccion-a-medida`). Consume datos dinámicos centralizados de `ServicePage` (`services.ts`), renderizando hero con badges, lista de 12 medidas anatómicas, sección inclusiva de tallas (sin límite fijo), cuadrícula de artículos de valor SEO, tabla comparativa de confección a la medida vs. tabla de tallas estándar, proceso en 3 pasos, categorías de aplicaciones y acordeón de FAQs.
+- **Descripción:** Componente de vista detallada para el servicio de Confección y Sastrería a la Medida (`/servicios/confeccion-a-medida`). Consume datos dinámicos centralizados de `ServicePage` (`services.ts`), renderizando hero with badges, lista de 12 medidas anatómicas, sección inclusiva de tallas (sin límite fijo), cuadrícula de artículos de valor SEO, tabla comparativa de confección a la medida vs. tabla de tallas estándar, proceso en 3 pasos, categorías de aplicaciones y acordeón de FAQs.
 - **Props:**
   - `service: ServicePage` — Datos completos de la página de servicio cargados desde `src/data/services.ts`.
 - **Ejemplo:** `<ServicioSastreriaDetalle service={service} />`
+
+---
+
+## Analytics Components
+
+### GoogleAnalytics
+
+- **Ruta:** `src/components/analytics/GoogleAnalytics.tsx`
+- **Descripción:** Componente cliente que inyecta la etiqueta de Google Analytics 4 (gtag.js) usando `next/script` con `strategy="afterInteractive"`.
+- **Props:**
+  - `gaId?: string` — Measurement ID de GA4 (ej. `G-XXXXXXXXXX`). Si no se provee, no renderiza nada.
+- **Ejemplo:** `<GoogleAnalytics gaId="G-XXXXXXXXXX" />`
+
+### MetaPixel
+
+- **Ruta:** `src/components/analytics/MetaPixel.tsx`
+- **Descripción:** Componente cliente que inyecta el script oficial de Meta Pixel (fbevents.js) e inicializa el evento `PageView` usando `next/script` con `strategy="afterInteractive"`.
+- **Props:**
+  - `pixelId?: string` — Pixel ID de Meta (ej. `1234567890`). Si no se provee, no renderiza nada.
+- **Ejemplo:** `<MetaPixel pixelId="1234567890" />`
+
+### AnalyticsScripts
+
+- **Ruta:** `src/components/analytics/AnalyticsScripts.tsx`
+- **Descripción:** Gestor cliente que envuelve `GoogleAnalytics` y `MetaPixel`. Condiciona la inyección de ambos scripts al consentimiento explícito otorgado en el banner de cookies (`localStorage.__liss_cookie_consent__ === "accepted"`). Escucha el evento en tiempo real `liss_cookie_consent_updated` para cargar los scripts inmediatamente tras la aceptación sin recargar la página.
+- **Props:**
+  - `gaId?: string` — Measurement ID opcional de Google Analytics.
+  - `pixelId?: string` — Pixel ID opcional de Meta.
+- **Ejemplo:** `<AnalyticsScripts gaId={env.NEXT_PUBLIC_GA_MEASUREMENT_ID} pixelId={env.NEXT_PUBLIC_META_PIXEL_ID} />`
