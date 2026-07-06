@@ -20,7 +20,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath, updateTag, refresh } from "next/cache";
 import { cookies } from "next/headers";
 import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
@@ -71,7 +71,10 @@ export async function revalidateAfterProductSave({
   }
 
   // Siempre: hub principal y home (tanto ruta como data cache)
-  revalidateTag(HOMEPAGE_PRODUCTS_TAG, { expire: 0 });
+  // updateTag: invalida INMEDIATAMENTE el cache "use cache" de getRecentProducts.
+  // refresh(): limpia el Router Cache del cliente para que el browser vea los cambios.
+  updateTag(HOMEPAGE_PRODUCTS_TAG);
+  refresh();
   revalidatePath("/catalogo");
   revalidatePath("/");
 

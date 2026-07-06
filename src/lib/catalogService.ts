@@ -6,7 +6,6 @@
 // NO importar en Client Components — usar el hook useProducts.ts.
 // ──────────────────────────────────────────────────────────────
 import { createClient } from "@supabase/supabase-js";
-import { unstable_cache } from "next/cache";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
 import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
@@ -342,8 +341,11 @@ export async function getProductBySlug(
   return (data ?? null) as unknown as DbProduct | null;
 }
 
-// Helper interno que hace la consulta directa a Supabase (sin caché)
-async function fetchRecentProductsFromDb(limit = 10): Promise<DbProduct[]> {
+// Helper exportado que hace la consulta directa a Supabase (sin caché)
+// Exportado para ser usado por homeProducts.ts (archivo server-only con "use cache")
+export async function fetchRecentProductsFromDb(
+  limit = 10
+): Promise<DbProduct[]> {
   const supabase = createServerClient();
 
   // 1. Obtener todos los productos fijados activos
@@ -401,25 +403,13 @@ async function fetchRecentProductsFromDb(limit = 10): Promise<DbProduct[]> {
   return [...featuredList, ...recentsList];
 }
 
-// Wrapper de unstable_cache para producción
-const getCachedRecentProducts = unstable_cache(
-  async (limit: number) => fetchRecentProductsFromDb(limit),
-  ["recent-products-list"],
-  { tags: [HOMEPAGE_PRODUCTS_TAG] }
-);
-
 // ── Obtener productos para la sección Novedades del home ─────
-// Lógica: primero los fijados (is_featured=true), luego los más
-// recientes activos hasta completar el límite.
-// Evita el caché en desarrollo local para ver cambios de inmediato,
-// y usa unstable_cache en producción para compilar como SSG.
+// Llama directamente a fetchRecentProductsFromDb (sin caché aquí).
+// El caché y la invalidación con updateTag viven en src/lib/homeProducts.ts
+// para evitar que las APIs server-only (cacheTag, cacheLife) rompan los
+// Client Components que importan catalogService (CartDrawer, Navbar, etc.).
 export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
-  if (process.env.NODE_ENV === "development") {
-    // En desarrollo local, consulta directa para no lidiar con caches en memoria de next dev
-    return fetchRecentProductsFromDb(limit);
-  }
-  // En producción, utiliza unstable_cache para soportar SSG + Revalidation On-Demand
-  return getCachedRecentProducts(limit);
+  return fetchRecentProductsFromDb(limit);
 }
 
 // ── Obtener conteo de productos activos por sector ────────────

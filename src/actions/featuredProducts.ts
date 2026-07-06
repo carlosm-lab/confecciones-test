@@ -9,7 +9,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath, updateTag, refresh } from "next/cache";
 import { cookies } from "next/headers";
 import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
@@ -138,9 +138,14 @@ export async function toggleFeaturedProduct(
     console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
   }
 
-  // Invalidar el Data Cache de Next.js para los productos del home
-  // (unstable_cache en getRecentProducts usa este tag)
-  revalidateTag(HOMEPAGE_PRODUCTS_TAG, { expire: 0 });
+  // Invalidar el Data Cache de Next.js para los productos del home.
+  // updateTag: invalida INMEDIATAMENTE (read-your-own-writes semantics).
+  // Solo funciona en Server Actions — pará exactamente con "use cache" + cacheTag.
+  updateTag(HOMEPAGE_PRODUCTS_TAG);
+
+  // Refrescar el Client Router Cache para que el browser vea los cambios
+  // sin necesidad de hacer un hard refresh (Ctrl+F5).
+  refresh();
 
   // Invalidar las rutas afectadas en la caché de Next.js
   revalidatePath("/", "page");

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import ProductTable from "@/components/admin/ProductTable";
 import ProductModal from "@/components/admin/ProductModal";
@@ -28,6 +29,7 @@ export default function AdminProductsPage() {
   const [isTogglingFeatured, setIsTogglingFeatured] = useState<string | null>(
     null
   );
+  const router = useRouter();
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok });
@@ -364,6 +366,9 @@ export default function AdminProductsPage() {
             p.id === product.id ? { ...p, is_featured: result.is_featured } : p
           )
         );
+        // Limpiar el Router Cache del cliente para que el home refleje
+        // los cambios inmediatamente sin necesidad de un hard refresh.
+        router.refresh();
         showToast(
           result.is_featured
             ? "Producto fijado en el home."
