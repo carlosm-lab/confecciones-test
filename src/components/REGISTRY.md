@@ -274,7 +274,7 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### CartDrawer
 
 - **Ruta:** `src/components/cart/CartDrawer.tsx`
-- **Descripción:** Drawer deslizante desde la derecha con flujo de checkout de 4 pasos: `cart` → `shipping` → `confirm` → `sent`. Revalida precios al abrirse. Integra selección de departamento/municipio de El Salvador con cálculo de costo de envío por zona. Genera mensaje de WhatsApp en párrafo natural mediante la RPC `generate_whatsapp_message` (SECURITY DEFINER, anti-tampering). Usa `react-focus-lock` para accesibilidad.
+- **Descripción:** Drawer deslizante desde la derecha con flujo de checkout de 4 pasos: `cart` → `shipping` → `confirm` → `sent`. Revalida precios al abrirse. Integra selección de departamento/municipio de El Salvador con cálculo de costo de envío por zona. Genera mensaje de WhatsApp en párrafo natural mediante la RPC `generate_whatsapp_message` (SECURITY DEFINER, anti-tampering) con fallback resiliente client-side (`buildCartWhatsAppMessage`). Usa `react-focus-lock` para accesibilidad.
 - **Props:** No recibe props (todo el estado viene de `useCart()`).
 - **Estado interno:** `step: DrawerStep`, `isGeneratingMessage`, `selectedDept`, `selectedMunicipality`
 - **Hooks usados:** `useCart`, `useBodyScrollLock`, `useCallback`, `useMemo`

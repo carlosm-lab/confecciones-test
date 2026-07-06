@@ -168,3 +168,76 @@ export function buildQuoteUrl(
   );
   return url;
 }
+
+// ──────────────────────────────────────────────────────────────
+// GENERADOR DE MENSAJES DE CARRITO (FALLBACK CLIENT-SIDE)
+// ──────────────────────────────────────────────────────────────
+
+interface CartMessageItem {
+  product: {
+    name: string;
+    price: number;
+  };
+  quantity: number;
+  color?: string | null;
+  note?: string | null;
+  productSize?: string | null;
+}
+
+interface CartMessageShippingInfo {
+  department?: string | null;
+  municipality?: string | null;
+  cost?: number;
+  label?: string | null;
+}
+
+interface CartMessageOptions {
+  items: CartMessageItem[];
+  shippingInfo?: CartMessageShippingInfo | null;
+}
+
+/**
+ * Genera el mensaje formateado del carrito en cliente como alternativa de alta disponibilidad
+ * cuando la RPC server-side de Supabase no está accesible o falla por incompatibilidad de esquema.
+ */
+export function buildCartWhatsAppMessage(opts: CartMessageOptions): string {
+  const { items, shippingInfo } = opts;
+  if (!items || items.length === 0) return "";
+
+  const lines: string[] = ["¡Hola! Quisiera realizar el siguiente pedido:"];
+  let subtotal = 0;
+
+  items.forEach((item) => {
+    const unitPrice = item.product.price || 0;
+    const itemTotal = unitPrice * item.quantity;
+    subtotal += itemTotal;
+
+    let line = `• ${item.quantity}x ${item.product.name} ($${unitPrice.toFixed(2)} c/u)`;
+    const details: string[] = [];
+    if (item.productSize) details.push(`Talla: ${item.productSize}`);
+    if (item.color) details.push(`Color: ${item.color}`);
+    if (item.note?.trim()) details.push(`Nota: ${item.note.trim()}`);
+
+    if (details.length > 0) {
+      line += ` - ${details.join(", ")}`;
+    }
+    lines.push(line);
+  });
+
+  lines.push(`\nSubtotal: $${subtotal.toFixed(2)}`);
+
+  const shippingCost = shippingInfo?.cost ?? 0;
+  if (shippingInfo?.department) {
+    const loc = shippingInfo.municipality
+      ? `${shippingInfo.department}, ${shippingInfo.municipality}`
+      : shippingInfo.department;
+    lines.push(`Envío (${loc}): $${shippingCost.toFixed(2)}`);
+  } else if (shippingInfo?.label) {
+    lines.push(`Envío (${shippingInfo.label}): $${shippingCost.toFixed(2)}`);
+  }
+
+  const total = subtotal + shippingCost;
+  lines.push(`*Total a pagar: $${total.toFixed(2)}*`);
+
+  return lines.join("\n");
+}

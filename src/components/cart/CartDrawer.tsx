@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/formatPrice";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
-import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { buildWhatsAppUrl, buildCartWhatsAppMessage } from "@/lib/whatsapp";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
@@ -178,15 +178,39 @@ export function CartDrawer() {
         }
       );
 
-      if (error) throw error;
-      rawMessage = serverMessage as string;
+      if (error) {
+        logger.warn(
+          "RPC generate_whatsapp_message falló en servidor, usando generador local fallback:",
+          error
+        );
+        rawMessage = buildCartWhatsAppMessage({
+          items: cartItems.map((item) => ({
+            product: item.product,
+            quantity: item.quantity,
+            color: item.color,
+            note: item.note,
+            productSize: item.product.selectedSize,
+          })),
+          shippingInfo,
+        });
+      } else {
+        rawMessage = serverMessage as string;
+      }
     } catch (err) {
-      logger.error("Error generando mensaje seguro:", err);
-      toast.error("Error al generar el pedido. Intenta nuevamente.", {
-        duration: 5000,
+      logger.warn(
+        "Excepción al invocar generate_whatsapp_message, usando fallback local:",
+        err
+      );
+      rawMessage = buildCartWhatsAppMessage({
+        items: cartItems.map((item) => ({
+          product: item.product,
+          quantity: item.quantity,
+          color: item.color,
+          note: item.note,
+          productSize: item.product.selectedSize,
+        })),
+        shippingInfo,
       });
-      if (whatsappWindow) whatsappWindow.close();
-      return;
     } finally {
       setIsGeneratingMessage(false);
     }
