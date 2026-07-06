@@ -139,12 +139,12 @@ export async function toggleFeaturedProduct(
 
   // Paso 1: invalidar el HTML cacheado del home (Full Route Cache).
   // revalidatePath marca la pagina como obsoleta. La siguiente request la regenera.
-  revalidatePath("/", "page");
-  revalidatePath("/catalogo", "page");
+  revalidatePath("/");
+  revalidatePath("/catalogo");
   // Paso 2: invalidar el Client Router Cache del browser.
   // Sin esto, el usuario ve el HTML viejo si navega via <Link> sin recargar.
   refresh();
-  revalidatePath("/admin/products", "page");
+  revalidatePath("/admin/products");
 
   return { success: true, is_featured: newValue };
 }
