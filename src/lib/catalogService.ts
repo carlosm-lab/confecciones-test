@@ -206,7 +206,15 @@ export function getProductUrl(
 function createServerClient() {
   const url = env.NEXT_PUBLIC_SUPABASE_URL;
   const key = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return createClient(url, key);
+  return createClient(url, key, {
+    global: {
+      fetch: (input, init) =>
+        fetch(input, {
+          ...init,
+          cache: "no-store",
+        }),
+    },
+  });
 }
 
 // ── Selects reutilizables ─────────────────────────────────
