@@ -377,24 +377,42 @@ export function ProductDetailClient({
               </span>
             )}
 
-            {/* Favorite button */}
-            <button
-              type="button"
-              onClick={handleToggleFavorite}
-              className="absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition hover:scale-110 active:scale-95"
-              aria-label={
-                isFavorited ? "Quitar de favoritos" : "Agregar a favoritos"
-              }
-            >
-              <span
-                className="material-symbols-outlined text-[22px] text-red-500"
-                style={{
-                  fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0",
-                }}
+            {/* Action buttons overlay (Top Right) */}
+            <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+              {/* Favorite button */}
+              <button
+                type="button"
+                onClick={handleToggleFavorite}
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition hover:scale-110 active:scale-95"
+                aria-label={
+                  isFavorited ? "Quitar de favoritos" : "Agregar a favoritos"
+                }
               >
-                favorite
-              </span>
-            </button>
+                <span
+                  className="material-symbols-outlined text-[22px] text-red-500"
+                  style={{
+                    fontVariationSettings: isFavorited
+                      ? "'FILL' 1"
+                      : "'FILL' 0",
+                  }}
+                >
+                  favorite
+                </span>
+              </button>
+
+              {/* Share button (Mobile only) */}
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="text-primary flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition hover:scale-110 active:scale-95 sm:hidden"
+                title="Compartir"
+                aria-label="Compartir este producto"
+              >
+                <span className="material-symbols-outlined text-[20px]">
+                  share
+                </span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -415,7 +433,7 @@ export function ProductDetailClient({
         >
           {/* 1 ── Breadcrumb + Compartir */}
           <div className="flex flex-wrap items-start gap-x-3 gap-y-1">
-            {/* Breadcrumb: full-width on mobile so it never fights with share button */}
+            {/* Breadcrumb */}
             <div className="w-full min-w-0 sm:w-auto sm:flex-1">
               <Breadcrumb
                 items={
@@ -450,7 +468,7 @@ export function ProductDetailClient({
             <button
               type="button"
               onClick={handleCopy}
-              className="text-primary shrink-0 cursor-pointer self-start transition-transform hover:scale-110 active:scale-95"
+              className="text-primary hidden shrink-0 cursor-pointer self-start transition-transform hover:scale-110 active:scale-95 sm:block"
               title="Compartir"
               aria-label="Compartir este producto"
             >
