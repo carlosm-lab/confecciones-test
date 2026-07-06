@@ -207,11 +207,8 @@ export function getProductUrl(
 // Acepta tags opcionales de Next.js para cache on-demand revalidation.
 // Cuando se pasan tags, Next.js puede invalidarlos con revalidateTag().
 function createServerClient(tags?: string[]) {
-  const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL;
-  const key =
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const url = env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (tags && tags.length > 0) {
     return createClient(url, key, {
@@ -219,6 +216,7 @@ function createServerClient(tags?: string[]) {
         fetch: (input: RequestInfo | URL, init?: RequestInit) =>
           fetch(input, {
             ...init,
+            cache: "force-cache",
             next: { tags } as NextFetchRequestConfig,
           } as RequestInit),
       },

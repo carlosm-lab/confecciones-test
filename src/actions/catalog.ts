@@ -20,7 +20,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, revalidateTag, refresh } from "next/cache";
+import { revalidatePath, updateTag, refresh } from "next/cache";
 import { cookies } from "next/headers";
 import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
@@ -70,10 +70,8 @@ export async function revalidateAfterProductSave({
     }
   }
 
-  // Siempre: hub principal y home
-  // revalidateTag: invalida el Data Cache del Supabase fetch.
-  // {} satisface el tipo CacheLifeConfig (todos los campos opcionales) sin stale behavior.
-  revalidateTag(HOMEPAGE_PRODUCTS_TAG, {});
+  // updateTag: invalida el Data Cache del Supabase fetch de forma síncrona en Next.js 16.
+  updateTag(HOMEPAGE_PRODUCTS_TAG);
   refresh();
   revalidatePath("/catalogo");
   revalidatePath("/");
