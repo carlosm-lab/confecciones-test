@@ -9,8 +9,9 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
+import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/catalogService";
 
 const MAX_FEATURED = 10;
 
@@ -136,6 +137,10 @@ export async function toggleFeaturedProduct(
     // Si falla el log de auditoría, no bloquear la operación de negocio
     console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
   }
+
+  // Invalidar el Data Cache de Next.js para los productos del home
+  // (unstable_cache en getRecentProducts usa este tag)
+  revalidateTag(HOMEPAGE_PRODUCTS_TAG);
 
   // Invalidar las rutas afectadas en la caché de Next.js
   revalidatePath("/", "page");

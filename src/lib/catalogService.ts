@@ -6,8 +6,12 @@
 // NO importar en Client Components — usar el hook useProducts.ts.
 // ──────────────────────────────────────────────────────────────
 import { createClient } from "@supabase/supabase-js";
+import { unstable_cache } from "next/cache";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
+
+/** Tag que identifica el caché de los productos del home para revalidación on-demand */
+export const HOMEPAGE_PRODUCTS_TAG = "homepage-products";
 
 // ── Tipo de producto proveniente de la base de datos ─────────
 
@@ -322,65 +326,71 @@ export async function getProductBySlug(
 // ── Obtener productos para la sección Novedades del home ─────
 // Lógica: primero los fijados (is_featured=true), luego los más
 // recientes activos hasta completar el límite.
-export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
-  const supabase = createServerClient();
+// Envuelto en unstable_cache con tag HOMEPAGE_PRODUCTS_TAG para que
+// revalidateTag() en las Server Actions invalide exactamente este dato.
+export const getRecentProducts = unstable_cache(
+  async (limit = 10): Promise<DbProduct[]> => {
+    const supabase = createServerClient();
 
-  // 1. Obtener todos los productos fijados activos
-  const { data: featured, error: featuredError } = await supabase
-    .from("products")
-    .select(PRODUCT_SELECT)
-    .eq("is_active", true)
-    .eq("is_featured", true)
-    .order("updated_at", { ascending: false })
-    .limit(limit);
+    // 1. Obtener todos los productos fijados activos
+    const { data: featured, error: featuredError } = await supabase
+      .from("products")
+      .select(PRODUCT_SELECT)
+      .eq("is_active", true)
+      .eq("is_featured", true)
+      .order("updated_at", { ascending: false })
+      .limit(limit);
 
-  if (featuredError) {
-    logger.error(
-      "[catalogService] getRecentProducts (featured) error:",
-      featuredError
-    );
-    return [];
-  }
+    if (featuredError) {
+      logger.error(
+        "[catalogService] getRecentProducts (featured) error:",
+        featuredError
+      );
+      return [];
+    }
 
-  const featuredList = (featured ?? []) as unknown as DbProduct[];
+    const featuredList = (featured ?? []) as unknown as DbProduct[];
 
-  // Si ya tenemos suficientes fijados, retornar directo
-  if (featuredList.length >= limit) {
-    return featuredList.slice(0, limit);
-  }
+    // Si ya tenemos suficientes fijados, retornar directo
+    if (featuredList.length >= limit) {
+      return featuredList.slice(0, limit);
+    }
 
-  // 2. Completar con los más recientes que NO estén fijados
-  const remaining = limit - featuredList.length;
-  const featuredIds = featuredList.map((p) => p.id).filter(Boolean);
+    // 2. Completar con los más recientes que NO estén fijados
+    const remaining = limit - featuredList.length;
+    const featuredIds = featuredList.map((p) => p.id).filter(Boolean);
 
-  let recentsQuery = supabase
-    .from("products")
-    .select(PRODUCT_SELECT)
-    .eq("is_active", true)
-    .order("created_at", { ascending: false })
-    .limit(remaining);
+    let recentsQuery = supabase
+      .from("products")
+      .select(PRODUCT_SELECT)
+      .eq("is_active", true)
+      .order("created_at", { ascending: false })
+      .limit(remaining);
 
-  // Excluir los fijados que ya obtuvimos en el paso 1 (soporta is_featured = false o NULL)
-  if (featuredIds.length > 0) {
-    recentsQuery = recentsQuery.not("id", "in", `(${featuredIds.join(",")})`);
-  }
+    // Excluir los fijados que ya obtuvimos en el paso 1 (soporta is_featured = false o NULL)
+    if (featuredIds.length > 0) {
+      recentsQuery = recentsQuery.not("id", "in", `(${featuredIds.join(",")})`);
+    }
 
-  const { data: recents, error: recentsError } = await recentsQuery;
+    const { data: recents, error: recentsError } = await recentsQuery;
 
-  if (recentsError) {
-    logger.error(
-      "[catalogService] getRecentProducts (recents) error:",
-      recentsError
-    );
-    // Fallback: retornar solo los fijados disponibles
-    return featuredList;
-  }
+    if (recentsError) {
+      logger.error(
+        "[catalogService] getRecentProducts (recents) error:",
+        recentsError
+      );
+      // Fallback: retornar solo los fijados disponibles
+      return featuredList;
+    }
 
-  const recentsList = (recents ?? []) as unknown as DbProduct[];
+    const recentsList = (recents ?? []) as unknown as DbProduct[];
 
-  // Combinar: fijados primero, luego recientes
-  return [...featuredList, ...recentsList];
-}
+    // Combinar: fijados primero, luego recientes
+    return [...featuredList, ...recentsList];
+  },
+  ["getRecentProducts"],
+  { tags: [HOMEPAGE_PRODUCTS_TAG] }
+);
 
 // ── Obtener conteo de productos activos por sector ────────────
 export async function getProductCountsBySector(): Promise<
