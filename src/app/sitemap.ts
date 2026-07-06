@@ -3,6 +3,7 @@ import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 import { getAllProductsForSitemap } from "@/lib/catalogService";
 import { CATEGORIES } from "@/data/categories";
+import { SERVICE_PAGES } from "@/data/services";
 import type { Sector } from "@/data/types";
 import { logger } from "@/lib/logger";
 
@@ -331,8 +332,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
+  // Páginas de detalle de servicios (desde SERVICE_PAGES)
+  const serviceDetailPages: MetadataRoute.Sitemap = SERVICE_PAGES.map(
+    (service) => ({
+      url: `${siteConfig.url}/servicios/${service.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })
+  );
+
   return [
     ...staticPages,
+    ...serviceDetailPages,
     ...sectorPages,
     ...universidadesPages,
     ...universityProductPages,
