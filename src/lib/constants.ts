@@ -35,3 +35,8 @@ export const STORAGE_CART_KEY = "liss_cart";
 export const STORAGE_CART_TIMESTAMP_KEY = "liss_cart_timestamp";
 export const STORAGE_CART_EXPIRED_KEY = "liss_cart_was_expired";
 export const STORAGE_FAVORITES_KEY = "liss_favorites";
+
+// ── Cache Tags (Next.js On-Demand Revalidation) ──────────────
+// Usados con unstable_cache + revalidateTag para invalidar el
+// Data Cache de Next.js sin caer en SSR.
+export const HOMEPAGE_PRODUCTS_TAG = "homepage-products";

@@ -9,9 +9,7 @@ import { createClient } from "@supabase/supabase-js";
 import { unstable_cache } from "next/cache";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
-
-/** Tag que identifica el caché de los productos del home para revalidación on-demand */
-export const HOMEPAGE_PRODUCTS_TAG = "homepage-products";
+import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
 // ── Tipo de producto proveniente de la base de datos ─────────
 

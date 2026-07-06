@@ -11,7 +11,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/catalogService";
+import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
 const MAX_FEATURED = 10;
 
