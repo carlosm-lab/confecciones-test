@@ -20,9 +20,8 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, updateTag, refresh } from "next/cache";
+import { revalidatePath, refresh } from "next/cache";
 import { cookies } from "next/headers";
-import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
 interface RevalidateProductParams {
   /** Sector del producto tal como está en la BD (e.g. "scrubs", "universitario") */
@@ -70,11 +69,10 @@ export async function revalidateAfterProductSave({
     }
   }
 
-  // updateTag: invalida el Data Cache del Supabase fetch de forma síncrona en Next.js 16.
-  updateTag(HOMEPAGE_PRODUCTS_TAG);
-  refresh();
-  revalidatePath("/catalogo");
+  // ISR on-demand: marcar home y catalogo como obsoletos.
+  // La siguiente request regenerara el HTML con datos frescos de Supabase.
   revalidatePath("/");
+  refresh();
 
   if (sector === "universitario") {
     // Hub universitario

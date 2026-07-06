@@ -8,7 +8,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
-import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
 // ── Tipo de producto proveniente de la base de datos ─────────
 
@@ -203,33 +202,11 @@ export function getProductUrl(
   return `/catalogo/${sector}/${slug}`;
 }
 
-// ── Crear cliente Supabase sin "use client" (para RSC) ────────
-// Acepta tags opcionales de Next.js para cache on-demand revalidation.
-// Cuando se pasan tags, Next.js puede invalidarlos con revalidateTag().
-function createServerClient(tags?: string[]) {
+// -- Crear cliente Supabase sin "use client" (para RSC) --------
+function createServerClient() {
   const url = env.NEXT_PUBLIC_SUPABASE_URL;
   const key = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (tags && tags.length > 0) {
-    return createClient(url, key, {
-      global: {
-        fetch: (input: RequestInfo | URL, init?: RequestInit) =>
-          fetch(input, {
-            ...init,
-            cache: "force-cache",
-            next: { tags } as NextFetchRequestConfig,
-          } as RequestInit),
-      },
-    });
-  }
-
   return createClient(url, key);
-}
-
-// Tipo extendido de Next.js para el fetch con tags
-interface NextFetchRequestConfig {
-  tags?: string[];
-  revalidate?: number | false;
 }
 
 // ── Selects reutilizables ─────────────────────────────────
@@ -339,13 +316,12 @@ export async function getProductBySlug(
   return (data ?? null) as unknown as DbProduct | null;
 }
 
-// Helper exportado que hace la consulta directa a Supabase (sin caché)
-// Exportado para ser usado por otros módulos
-export async function fetchRecentProductsFromDb(
-  limit = 10,
-  tags?: string[]
-): Promise<DbProduct[]> {
-  const supabase = createServerClient(tags);
+// -- Obtener productos para la seccion Novedades del home (ISR on-demand) -----
+// La revalidacion funciona via revalidatePath("/") en los Server Actions.
+// Next.js 15/16: fetch no usa cache por defecto (no-store), por lo que
+// cada regeneracion de ISR siempre obtiene datos frescos de Supabase.
+export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
+  const supabase = createServerClient();
 
   // 1. Obtener todos los productos fijados activos
   const { data: featured, error: featuredError } = await supabase
@@ -358,7 +334,7 @@ export async function fetchRecentProductsFromDb(
 
   if (featuredError) {
     logger.error(
-      "[catalogService] fetchRecentProductsFromDb (featured) error:",
+      "[catalogService] getRecentProducts (featured) error:",
       featuredError
     );
     return [];
@@ -366,12 +342,10 @@ export async function fetchRecentProductsFromDb(
 
   const featuredList = (featured ?? []) as unknown as DbProduct[];
 
-  // Si ya tenemos suficientes fijados, retornar directo
   if (featuredList.length >= limit) {
     return featuredList.slice(0, limit);
   }
 
-  // 2. Completar con los más recientes que NO estén fijados
   const remaining = limit - featuredList.length;
   const featuredIds = featuredList.map((p) => p.id).filter(Boolean);
 
@@ -382,7 +356,6 @@ export async function fetchRecentProductsFromDb(
     .order("created_at", { ascending: false })
     .limit(remaining);
 
-  // Excluir los fijados que ya obtuvimos en el paso 1 (soporta is_featured = false o NULL)
   if (featuredIds.length > 0) {
     recentsQuery = recentsQuery.not("id", "in", `(${featuredIds.join(",")})`);
   }
@@ -391,27 +364,13 @@ export async function fetchRecentProductsFromDb(
 
   if (recentsError) {
     logger.error(
-      "[catalogService] fetchRecentProductsFromDb (recents) error:",
+      "[catalogService] getRecentProducts (recents) error:",
       recentsError
     );
     return featuredList;
   }
 
-  const recentsList = (recents ?? []) as unknown as DbProduct[];
-
-  return [...featuredList, ...recentsList];
-}
-
-// ── Obtener productos para la sección Novedades del home ─────
-// Sin data-level cache local, pero con tags para Next.js Data Cache.
-// La invalidación funciona a tres niveles:
-//   1. revalidateTag(HOMEPAGE_PRODUCTS_TAG) → invalida el Next.js Data Cache (Supabase fetches).
-//   2. revalidatePath("/", "page") → invalida el Full Route Cache (HTML del servidor).
-//      Siguiente request al home regenera el HTML con datos frescos de Supabase.
-//   3. refresh() de next/cache  → invalida el Client Router Cache del browser,
-//      evitando que el usuario vea el RSC payload cacheado del home al navegar.
-export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
-  return fetchRecentProductsFromDb(limit, [HOMEPAGE_PRODUCTS_TAG]);
+  return [...featuredList, ...((recents ?? []) as unknown as DbProduct[])];
 }
 
 // ── Obtener conteo de productos activos por sector ────────────

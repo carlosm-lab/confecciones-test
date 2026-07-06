@@ -9,9 +9,8 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, updateTag, refresh } from "next/cache";
+import { revalidatePath, refresh } from "next/cache";
 import { cookies } from "next/headers";
-import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
 const MAX_FEATURED = 10;
 
@@ -138,20 +137,13 @@ export async function toggleFeaturedProduct(
     console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
   }
 
-  // Invalidar el Data Cache de la consulta de Supabase del home de forma inmediata.
-  // En Next.js 16, updateTag fuerza la invalidación síncrona inmediata en Server Actions.
-  updateTag(HOMEPAGE_PRODUCTS_TAG);
-
-  // Invalidar el Full Route Cache del servidor (HTML cacheado de /)
-  // + el Client Router Cache del browser para que el usuario vea cambios
-  // sin necesidad de hacer un hard refresh (Ctrl+F5).
-  refresh();
-
-  // Invalidar las rutas afectadas en la caché de Next.js
+  // Paso 1: invalidar el HTML cacheado del home (Full Route Cache).
+  // revalidatePath marca la pagina como obsoleta. La siguiente request la regenera.
   revalidatePath("/", "page");
-  revalidatePath("/", "layout");
   revalidatePath("/catalogo", "page");
-  revalidatePath("/catalogo", "layout");
+  // Paso 2: invalidar el Client Router Cache del browser.
+  // Sin esto, el usuario ve el HTML viejo si navega via <Link> sin recargar.
+  refresh();
   revalidatePath("/admin/products", "page");
 
   return { success: true, is_featured: newValue };
