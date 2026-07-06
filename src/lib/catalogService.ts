@@ -155,6 +155,33 @@ export function getProductSector(product: DbProduct): string {
   );
 }
 
+const VALID_UNIVERSITY_SLUGS = new Set([
+  "univo",
+  "ieproes",
+  "ugb",
+  "unab",
+  "ues",
+  "uma",
+]);
+
+export function getProductUniversity(
+  product: Pick<DbProduct, "category" | "categories">
+): string | null {
+  if (
+    product.categories?.catalog &&
+    VALID_UNIVERSITY_SLUGS.has(product.categories.catalog)
+  ) {
+    return product.categories.catalog;
+  }
+  if (product.category) {
+    const prefix = product.category.split("-")[0];
+    if (VALID_UNIVERSITY_SLUGS.has(prefix)) {
+      return prefix;
+    }
+  }
+  return null;
+}
+
 // ── Resolver la URL de un producto ───────────────────────────
 export function getProductUrl(
   product: Pick<DbProduct, "id" | "slug" | "sector" | "category" | "categories">
@@ -168,27 +195,7 @@ export function getProductUrl(
   }
 
   if (sector === "universitario") {
-    const VALID_UNIVERSITY_SLUGS = new Set([
-      "univo",
-      "ieproes",
-      "ugb",
-      "unab",
-      "ues",
-      "uma",
-    ]);
-
-    let universitySlug = "univo";
-    if (
-      product.categories?.catalog &&
-      VALID_UNIVERSITY_SLUGS.has(product.categories.catalog)
-    ) {
-      universitySlug = product.categories.catalog;
-    } else if (product.category) {
-      const prefix = product.category.split("-")[0];
-      if (VALID_UNIVERSITY_SLUGS.has(prefix)) {
-        universitySlug = prefix;
-      }
-    }
+    const universitySlug = getProductUniversity(product) ?? "univo";
     return `/catalogo/universidades/${universitySlug}/${slug}`;
   }
 

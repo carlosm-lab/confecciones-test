@@ -6,6 +6,7 @@ import {
   getProductBySlug,
   getRelatedProducts,
   getProductMainImage,
+  getProductUniversity,
 } from "@/lib/catalogService";
 import { getProductReviews } from "@/lib/reviewsService";
 import { testimonials } from "@/lib/seo-data";
@@ -124,6 +125,9 @@ export async function generateMetadata({
   const product = await getProductBySlug(id);
   if (!product) return { title: "Producto no encontrado" };
 
+  const productUniv = getProductUniversity(product);
+  if (productUniv !== universidad) return { title: "Producto no encontrado" };
+
   const config = CATEGORIES["universitario" as Sector];
   const PAGE_URL = `${siteConfig.url}/catalogo/universidades/${universidad}/${id}`;
   const autoTitle = `${product.name} | ${config?.subtitle ?? "Uniformes Universitarios"}`;
@@ -207,6 +211,11 @@ export default async function UniversityProductDetailPage({
   const config = CATEGORIES["universitario" as Sector];
 
   if (!product || !config) notFound();
+
+  const productUniv = getProductUniversity(product);
+  if (productUniv !== universidad) {
+    notFound();
+  }
 
   const [relatedProducts, reviewData] = await Promise.all([
     getRelatedProducts("universitario", id, 6),

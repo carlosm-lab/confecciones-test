@@ -120,6 +120,11 @@ export async function generateMetadata({
     return { title: "Producto no encontrado" };
   }
 
+  const productSector = getProductSector(product);
+  if (productSector !== sector || sector === "universitario") {
+    return { title: "Producto no encontrado" };
+  }
+
   const config = CATEGORIES[sector as Sector];
   const PAGE_URL = `${siteConfig.url}/catalogo/${sector}/${id}`;
 
@@ -213,8 +218,12 @@ export default async function ProductDetailPage({
     notFound();
   }
 
-  // Fetch related products AND real reviews in parallel (no waterfall)
   const productSector = getProductSector(product);
+  if (productSector !== sector) {
+    notFound();
+  }
+
+  // Fetch related products AND real reviews in parallel (no waterfall)
   const [relatedProducts, reviewData] = await Promise.all([
     getRelatedProducts(productSector, id, 6),
     getProductReviews(product.id),
