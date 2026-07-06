@@ -404,10 +404,14 @@ export async function fetchRecentProductsFromDb(
 }
 
 // ── Obtener productos para la sección Novedades del home ─────
-// Llama directamente a fetchRecentProductsFromDb (sin caché aquí).
-// El caché y la invalidación con updateTag viven en src/lib/homeProducts.ts
-// para evitar que las APIs server-only (cacheTag, cacheLife) rompan los
-// Client Components que importan catalogService (CartDrawer, Navbar, etc.).
+// Sin data-level cache. La invalidación funciona a dos niveles:
+//   1. revalidatePath("/", "page") → invalida el Full Route Cache (HTML del servidor).
+//      Siguiente request al home regenera el HTML con datos frescos de Supabase.
+//   2. refresh() de next/cache  → invalida el Client Router Cache del browser,
+//      evitando que el usuario vea el RSC payload cacheado del home al navegar.
+//
+// En desarrollo: Next.js siempre re-renderiza las páginas → datos siempre frescos.
+// En producción: ISR on-demand vía revalidatePath (no ISR por tiempo).
 export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
   return fetchRecentProductsFromDb(limit);
 }

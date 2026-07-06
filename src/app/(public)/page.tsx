@@ -15,7 +15,7 @@ import { NapContacto } from "@/components/seo/NapContacto";
 import { KeywordsSeoFooter } from "@/components/seo/KeywordsSeoFooter";
 import { CatalogProductCard } from "@/components/catalogo/CatalogProductCard";
 import { siteConfig } from "@/config/site";
-import { getHomepageProducts } from "@/lib/homeProducts";
+import { getRecentProducts } from "@/lib/catalogService";
 import { GoogleReviews } from "@/components/seo/GoogleReviews";
 import { getGoogleReviews } from "@/lib/googleReviewsService";
 
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
-  const recentProducts = await getHomepageProducts(10);
+  const recentProducts = await getRecentProducts(10);
   // Fetch dynamic Google Reviews from Supabase / fallback service
   const reviews = await getGoogleReviews();
   return (

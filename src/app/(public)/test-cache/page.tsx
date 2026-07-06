@@ -1,9 +1,9 @@
-import { getHomepageProducts } from "@/lib/homeProducts";
+import { getRecentProducts } from "@/lib/catalogService";
 
 export const dynamic = "force-dynamic"; // Esta ruta siempre es dinámica para testing en vivo
 
 export default async function TestCachePage() {
-  const products = await getHomepageProducts(10);
+  const products = await getRecentProducts(10);
 
   return (
     <div style={{ padding: "40px", fontFamily: "monospace" }}>
