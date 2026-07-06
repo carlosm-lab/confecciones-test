@@ -48,9 +48,12 @@ export const metadata: Metadata = {
   },
 };
 
-// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
-// No ISR por tiempo. Se regenera vía revalidatePath('/') desde src/actions/catalog.ts
-// cuando el admin guarda o elimina un producto.
+// ── ISR con revalidacion on-demand + tiempo de seguridad ──────────────────
+// Se regenera inmediatamente via revalidatePath('/') cuando el admin
+// guarda/elimina/fija un producto. El revalidate=30 es red de seguridad:
+// garantiza que en maximo 30s la pagina muestra los datos frescos, incluso
+// si el CDN/edge no respeta la purga on-demand de Next.js.
+export const revalidate = 30;
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
