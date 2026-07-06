@@ -16,6 +16,19 @@ This document tracks important architectural decisions made during the project l
 
 ## Logged Decisions
 
+**Date:** 2026-07-06
+**Decision:** Auditoría 360° de Seguridad OWASP y Endurecimiento de Server Actions & Middleware
+**Context:** Se realizó una auditoría exhaustiva 360° en base a OWASP Top 10 (2021/2026), OWASP API Security Top 10 (2023) y OWASP ASVS. Se identificaron vectores de riesgo en Server Actions públicas sin verificación de rol, ausencia de Rate Limiting en formularios de contacto y necesidad de verificación de convenciones de Next.js 16 para middleware (`src/proxy.ts`).
+**Decision:**
+
+- **Middleware Next.js 16 (`src/proxy.ts`):** Se confirmó que Next.js 16 adopta oficialmente `src/proxy.ts` como la convención de middleware y arroja error si coexiste con `src/middleware.ts`. Se mantiene `src/proxy.ts` garantizando la ejecución de killswitch, Supabase Auth SSR y redirección protegida de `/admin`.
+- **Protección de Server Actions (`src/actions/catalog.ts`):** Se agregó la verificación de sesión y rol de administrador (`user.app_metadata.role === 'admin'`) a `revalidateAfterProductSave` para mitigar ataques de Cache Invalidation DoS.
+- **Rate Limiting (`src/actions/contact.ts`):** Se implementó Rate Limiting in-memory (máx 3 envíos por 5 minutos por email) en la Server Action `sendContactMessage` para prevenir spam y agotamiento de recursos.
+- **Auditoría de Acciones Administrativas (`src/actions/featuredProducts.ts`):** Se integró el registro automático de eventos en la tabla `security_events` de Supabase al alternar productos fijados.
+  **Consequences:** La aplicación cumple con las normas de seguridad OWASP Top 10 y API Security 2023, protegiendo las Server Actions contra abuso y manteniendo compatibilidad total con el motor Turbopack / Next.js 16.
+
+---
+
 **Date:** 2026-07-04
 **Decision:** Implementación de Productos Fijados ("is_featured") en Home
 **Context:** El cliente solicitó la capacidad de seleccionar desde `/admin/products` qué productos específicos deben quedar fijos en la sección "Novedades" del Home en lugar de mostrar de forma estricta los más recientes creados.

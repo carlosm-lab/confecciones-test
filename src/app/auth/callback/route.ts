@@ -8,14 +8,18 @@ import { createServerClient } from "@supabase/ssr";
 // La cookie de sesión se fija en el redirect response correctamente.
 // ─────────────────────────────────────────────────────────────
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = new URL(request.url);
-  const code = searchParams.get("code");
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get("code");
+  const nextParam = requestUrl.searchParams.get("next");
+
+  // Validar origin para prevenir Host Header Tampering / Open Redirect
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  const baseUrl = siteUrl ? new URL(siteUrl).origin : requestUrl.origin;
 
   if (code) {
-    // Creamos el redirect a /admin/login como fallback mutable
-    // Se sobreescribe si el intercambio tiene éxito
+    // Fallback inicial en caso de error
     const redirectFallback = NextResponse.redirect(
-      `${origin}/admin/login?error=auth_callback_failed`
+      `${baseUrl}/admin/login?error=auth_callback_failed`
     );
 
     const supabase = createServerClient(
@@ -27,8 +31,6 @@ export async function GET(request: NextRequest) {
             return request.cookies.getAll();
           },
           setAll(cookiesToSet) {
-            // Escribimos las cookies de sesión en el fallback response
-            // Si el intercambio tiene éxito, crearemos un nuevo redirect con las mismas cookies
             cookiesToSet.forEach(({ name, value, options }) =>
               redirectFallback.cookies.set(name, value, options)
             );
@@ -40,13 +42,19 @@ export async function GET(request: NextRequest) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error && data.user) {
-      // Determinar destino según el rol del usuario
-      // Usamos app_metadata.role del JWT — fuente inamovible por el usuario
       const userRole = data.user.app_metadata?.role;
-      const redirectTo = userRole === "admin" ? "/admin" : "/";
+      let redirectTo = userRole === "admin" ? "/admin" : "/";
 
-      // Crear el redirect final y copiar las cookies de sesión
-      const successResponse = NextResponse.redirect(`${origin}${redirectTo}`);
+      // Validar si viene un parámetro 'next' seguro (relativo sin //)
+      if (
+        nextParam &&
+        nextParam.startsWith("/") &&
+        !nextParam.startsWith("//")
+      ) {
+        redirectTo = nextParam;
+      }
+
+      const successResponse = NextResponse.redirect(`${baseUrl}${redirectTo}`);
       redirectFallback.cookies.getAll().forEach(({ name, value, ...rest }) => {
         successResponse.cookies.set(name, value, rest);
       });
@@ -57,8 +65,7 @@ export async function GET(request: NextRequest) {
     return redirectFallback;
   }
 
-  // Sin código → redirigir al login
   return NextResponse.redirect(
-    `${origin}/admin/login?error=auth_callback_failed`
+    `${baseUrl}/admin/login?error=auth_callback_failed`
   );
 }

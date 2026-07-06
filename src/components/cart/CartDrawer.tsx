@@ -656,7 +656,7 @@ export function CartDrawer() {
                             src={
                               item.product.image_path ||
                               item.product.images?.[0] ||
-                              "https://placehold.co/200x240?text=Sin+Imagen"
+                              "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='125' viewBox='0 0 100 125'><rect width='100' height='125' fill='%23f1f5f9'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-size='11'>Sin Imagen</text></svg>"
                             }
                             alt={item.product.name}
                             width={100}

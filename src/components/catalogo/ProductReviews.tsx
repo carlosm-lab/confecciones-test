@@ -19,6 +19,8 @@ import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import toast from "react-hot-toast";
 import { logger } from "@/lib/logger";
 
+import { sanitizeUrl } from "@/lib/sanitize";
+
 interface ProductReviewsProps {
   productId: string;
   initialReviews: DbReview[];
@@ -118,12 +120,13 @@ function Avatar({
   size?: number;
 }) {
   const [failed, setFailed] = useState(false);
+  const safeSrc = sanitizeUrl(src);
 
-  if (src && !failed) {
+  if (safeSrc && !failed) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={src}
+        src={safeSrc}
         alt={name}
         width={size}
         height={size}

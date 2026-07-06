@@ -19,7 +19,9 @@
  *   - /catalogo/universidades/[category]/[slug] (detalle universitario)
  */
 
+import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 interface RevalidateProductParams {
   /** Sector del producto tal como está en la BD (e.g. "scrubs", "universitario") */
@@ -39,6 +41,34 @@ export async function revalidateAfterProductSave({
   slug,
   category,
 }: RevalidateProductParams): Promise<void> {
+  // SEC-005 Fix: Verificar autenticación de admin antes de revalidar caché
+  const cookieStore = await cookies();
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (url && key) {
+    const supabase = createServerClient(url, key, {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll() {},
+      },
+    });
+
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error || !user || user.app_metadata?.role !== "admin") {
+      console.warn(
+        "[revalidateAfterProductSave] Intento de revalidación no autorizado."
+      );
+      return;
+    }
+  }
+
   // Siempre: hub principal y home
   revalidatePath("/catalogo");
   revalidatePath("/");

@@ -29,83 +29,117 @@ export default function ImageUploader({
     };
   }, []);
 
-  const acceptedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+  const acceptedTypes = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/webp",
+    "image/gif",
+    "image/heic",
+    "image/heif",
+  ];
   const maxCompressedSize = 4 * 1024 * 1024; // 4MB post-compresión (calidad prioritaria)
 
   /**
    * Comprime la imagen y elimina metadata EXIF (privacidad).
-   * El canvas strip automáticamente toda la info de ubicación GPS.
+   * Usa createImageBitmap de forma asíncrona para mayor compatibilidad y velocidad,
+   * con fallback a HTMLImageElement y fallback final al archivo original si la compresión falla.
    */
-  const compressImage = (file: File): Promise<File> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.src = URL.createObjectURL(file);
-      img.onload = async () => {
-        URL.revokeObjectURL(img.src);
-        let { width, height } = img;
-        const maxDim = 1600;
+  const compressImage = async (file: File): Promise<File> => {
+    try {
+      let width = 0;
+      let height = 0;
+      let drawSource: CanvasImageSource | null = null;
+      let cleanup: (() => void) | null = null;
 
-        if (width > height) {
-          if (width > maxDim) {
-            height = Math.round((height * maxDim) / width);
-            width = maxDim;
-          }
-        } else {
-          if (height > maxDim) {
-            width = Math.round((width * maxDim) / height);
-            height = maxDim;
-          }
-        }
-
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext("2d");
-        ctx!.drawImage(img, 0, 0, width, height);
-
-        // Calidad alta fija — el tamaño del archivo original no justifica degradar la imagen
-        const quality = 0.9;
-
-        const tryCompress = (q: number): Promise<Blob | null> =>
-          new Promise((res) =>
-            canvas.toBlob((blob) => res(blob), "image/webp", q)
-          );
-
+      if (typeof window !== "undefined" && "createImageBitmap" in window) {
         try {
-          let blob = await tryCompress(quality);
-          let currentQuality = quality;
-          while (
-            blob &&
-            blob.size > maxCompressedSize &&
-            currentQuality > 0.65
-          ) {
-            currentQuality -= 0.05;
-            blob = await tryCompress(currentQuality);
-          }
-          if (!blob) {
-            reject(new Error("Canvas is empty"));
-            return;
-          }
-
-          const compressedFile = new File(
-            [blob],
-            file.name.replace(/\.[^/.]+$/, "") + ".webp",
-            { type: "image/webp", lastModified: Date.now() }
-          );
-          resolve(compressedFile);
-        } catch (err) {
-          reject(err);
+          const bitmap = await createImageBitmap(file);
+          width = bitmap.width;
+          height = bitmap.height;
+          drawSource = bitmap;
+          cleanup = () => bitmap.close();
+        } catch {
+          // Si createImageBitmap no soporta el formato específico, pasa al fallback HTMLImageElement
         }
-      };
-      img.onerror = () =>
-        reject(new Error("Error loading image for compression"));
-    });
+      }
+
+      if (!drawSource) {
+        const img = new Image();
+        const objectUrl = URL.createObjectURL(file);
+        await new Promise<void>((resolve, reject) => {
+          img.onload = () => resolve();
+          img.onerror = () =>
+            reject(new Error("No se pudo cargar la imagen para compresión"));
+          img.src = objectUrl;
+        });
+        width = img.width;
+        height = img.height;
+        drawSource = img;
+        cleanup = () => URL.revokeObjectURL(objectUrl);
+      }
+
+      const maxDim = 1600;
+      if (width > height) {
+        if (width > maxDim) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        }
+      } else {
+        if (height > maxDim) {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Contexto de Canvas 2D no disponible");
+      ctx.drawImage(drawSource, 0, 0, width, height);
+
+      if (cleanup) cleanup();
+
+      const quality = 0.9;
+      const tryCompress = (q: number): Promise<Blob | null> =>
+        new Promise((res) =>
+          canvas.toBlob((blob) => res(blob), "image/webp", q)
+        );
+
+      let blob = await tryCompress(quality);
+      let currentQuality = quality;
+      while (blob && blob.size > maxCompressedSize && currentQuality > 0.65) {
+        currentQuality -= 0.05;
+        blob = await tryCompress(currentQuality);
+      }
+
+      if (!blob) {
+        return file;
+      }
+
+      return new File([blob], file.name.replace(/\.[^/.]+$/, "") + ".webp", {
+        type: "image/webp",
+        lastModified: Date.now(),
+      });
+    } catch (err) {
+      logger.warn(
+        "[compressImage] Fallback al archivo original debido a:",
+        err
+      );
+      return file;
+    }
   };
 
   const processFile = async (file: File) => {
     setError(null);
 
-    if (!acceptedTypes.includes(file.type)) {
+    const fileType = file.type.toLowerCase();
+    const isAcceptedType =
+      acceptedTypes.includes(fileType) ||
+      /\.(jpe?g|png|webp|gif|heic|heif)$/i.test(file.name);
+
+    if (!isAcceptedType) {
       setError("Formato no soportado. Usa JPG, PNG, WEBP o GIF.");
       return;
     }

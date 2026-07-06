@@ -120,6 +120,23 @@ export async function toggleFeaturedProduct(
     };
   }
 
+  // Auditoría OWASP A09: Registrar acción administrativa en security_events
+  try {
+    await supabase.from("security_events").insert({
+      event_type: "admin_featured_product_toggle",
+      payload: {
+        product_id: productId,
+        new_is_featured: newValue,
+        user_id: user.id,
+        user_email: user.email,
+      },
+      url: "/admin/products",
+    });
+  } catch (auditErr) {
+    // Si falla el log de auditoría, no bloquear la operación de negocio
+    console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
+  }
+
   // Invalidar el home para reflejar el cambio inmediatamente
   revalidatePath("/");
 
