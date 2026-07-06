@@ -209,7 +209,12 @@ function createServerClient() {
   const key =
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return createClient(url, key);
+  return createClient(url, key, {
+    auth: { persistSession: false },
+    global: {
+      fetch: (input, init) => fetch(input, { ...init, cache: "no-store" }),
+    },
+  });
 }
 
 // ── Selects reutilizables ─────────────────────────────────
@@ -357,11 +362,10 @@ export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
     .from("products")
     .select(PRODUCT_SELECT)
     .eq("is_active", true)
-    .eq("is_featured", false)
     .order("created_at", { ascending: false })
     .limit(remaining);
 
-  // Excluir los fijados si los hay (aunque con is_featured=false ya no debería solaparse)
+  // Excluir los fijados que ya obtuvimos en el paso 1 (soporta is_featured = false o NULL)
   if (featuredIds.length > 0) {
     recentsQuery = recentsQuery.not("id", "in", `(${featuredIds.join(",")})`);
   }

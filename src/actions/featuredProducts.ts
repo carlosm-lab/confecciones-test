@@ -137,8 +137,12 @@ export async function toggleFeaturedProduct(
     console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
   }
 
-  // Invalidar el home para reflejar el cambio inmediatamente
-  revalidatePath("/");
+  // Invalidar las rutas afectadas en la caché de Next.js
+  revalidatePath("/", "page");
+  revalidatePath("/", "layout");
+  revalidatePath("/catalogo", "page");
+  revalidatePath("/catalogo", "layout");
+  revalidatePath("/admin/products", "page");
 
   return { success: true, is_featured: newValue };
 }
