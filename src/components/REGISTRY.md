@@ -811,3 +811,14 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
   ```tsx
   <BlogIndexClient publishedPosts={getPublishedBlogPosts()} />
   ```
+
+### StaticHeroImage
+
+- **Ruta:** `src/components/ui/StaticHeroImage.tsx`
+- **Descripción:** Server Component de alto rendimiento para el elemento LCP (Largest Contentful Paint) del hero. Sirve imágenes WebP y AVIF preoptimizadas con decodificación síncrona (`decoding="sync"`), carga ansiosa (`loading="eager"`), prioridad alta (`fetchPriority="high"`) y dimensiones fijas para eliminar por completo el retardo de renderizado y el layout shift (CLS).
+- **Props:**
+  - `sizes?: string` — Atributo sizes opcional para consultas de contenedor.
+- **Ejemplo:**
+  ```tsx
+  <StaticHeroImage sizes="(max-width:768px) 80vw, 40vw" />
+  ```

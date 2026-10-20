@@ -22,7 +22,6 @@ const notoSerif = Noto_Serif({
 import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 import { AnalyticsScripts } from "@/components/analytics/AnalyticsScripts";
-import { MaterialSymbolsLoader } from "@/components/layout/MaterialSymbolsLoader";
 import { buildWebSiteSchema } from "@/lib/schemas";
 
 export const metadata = {
@@ -261,8 +260,6 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-screen w-full max-w-full flex-col overflow-x-clip antialiased">
-        {/* Material Symbols: carga async post-hidratación, no bloquea LCP/FCP */}
-        <MaterialSymbolsLoader />
         <Providers>{children}</Providers>
         <AnalyticsScripts
           gaId={env.NEXT_PUBLIC_GA_MEASUREMENT_ID}

@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ['lucide-react', 'framer-motion', '@tanstack/react-query', 'zod'],
   },
   turbopack: {
     // Fija el workspace root explícitamente para evitar que Turbopack
@@ -93,17 +93,17 @@ const nextConfig = {
             },
           ]),
       {
-        // 2. Imágenes públicas — cachear 7 días
+        // 2. Imágenes públicas — cachear 1 año inmutable
         source: '/images/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       {
-        // 3. Iconos y fuentes públicas — cachear 30 días
+        // 3. Iconos y fuentes públicas — cachear 1 año inmutable
         source: '/(icons|fonts)/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=2592000, immutable' },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       {
