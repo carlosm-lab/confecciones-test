@@ -42,6 +42,47 @@ export interface VersionGroup {
 
 export const CHANGELOG: VersionGroup[] = [
   {
+    version: "v1.4.4",
+    label:
+      "Aceleración de LCP Móvil · Optimización de Imágenes Hero · Políticas de Caché",
+    dateRange: "20 de octubre de 2026",
+    entries: [
+      {
+        id: "e-174",
+        date: "2026-10-20",
+        category: "perf",
+        title: "Eliminación del retardo de renderizado en LCP móvil",
+        description:
+          "Se configuró la decodificación síncrona en la imagen del hero (decoding='sync') junto con dimensiones explícitas (440x550px) y precarga directa en el encabezado HTTP Link, eliminando más de 2,000 ms de latencia en la pintura inicial en dispositivos móviles.",
+      },
+      {
+        id: "e-175",
+        date: "2026-10-20",
+        category: "perf",
+        title: "Entrega mobile-first y compresión de alta eficiencia en Hero",
+        description:
+          "Se reestructuraron las fuentes del elemento <picture> priorizando la versión de 440px en pantallas móviles y reduciendo el peso de transferencia a 50.8 KB, alineando las solicitudes del navegador para evitar transferencias duplicadas.",
+      },
+      {
+        id: "e-176",
+        date: "2026-10-20",
+        category: "perf",
+        title:
+          "Fallbacks de fuentes del sistema y políticas de almacenamiento en caché",
+        description:
+          "Se vincularon las fuentes corporativas a fallbacks nativos del sistema para evitar bloqueos de renderizado (FOUT/FOIT) y se estableció la directiva Cache-Control a 1 año inmutable para todas las imágenes, fuentes e iconos públicos.",
+      },
+      {
+        id: "e-177",
+        date: "2026-10-20",
+        category: "refactor",
+        title: "Depuración de fuentes no utilizadas y optimización de paquetes",
+        description:
+          "Se eliminaron selectores CSS y componentes no utilizados de fuentes de iconos antiguas, optimizando el tree-shaking en tiempo de compilación con soporte ampliado en next.config.mjs.",
+      },
+    ],
+  },
+  {
     version: "v1.4.3",
     label:
       "Animación de Cálculo Localizada · Reordenación de Campos · Enlaces de WhatsApp",
