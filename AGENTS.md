@@ -49,7 +49,7 @@ Revisa cuidadosamente lo siguiente para NO reinventar la rueda:
 - **Variables de Entorno Estrictas**: Cualquier variable nueva debe declararse en `.env.example` y obligatoriamente integrarse en `src/env.ts` para validarla con Zod y @t3-oss/env-nextjs antes de poder usarla.
 - **Formateo**: El proyecto se rige por `.prettierrc`. **No cambies su configuración**.
 - **Tests Automatizados**: Tienes `Vitest` y `@testing-library/react` instalados. Estás alentado a utilizar TDD (Test-Driven Development) escribiendo tests si sientes que facilita asegurar la calidad del componente.
-- **Commits**: DEBES obligatoriamente usar la convención _Conventional Commits_ en tu registro de código. Commitlint lo verificará mediante Husky al guardar el git log.
+- **Commits y Pushes a Desarrollo**: DEBES obligatoriamente usar la convención _Conventional Commits_ en tu registro de código. Todo commit y push va OBLIGATORIAMENTE al repositorio de desarrollo (`desarrollo` -> `confecciones-test`). Queda TERMINANTEMENTE PROHIBIDO tocar o hacer push a producción (`origin` / `produccion` -> `confeccionesliss`), salvo indicación explícita con doble confirmación del usuario.
 
 ## 7. Protocolos Puros de IAs (Obligatorio)
 
