@@ -54,3 +54,4 @@ next-env.d.ts
 .gemini/
 pagespeed-*.json
 AUDITORIA_CODIGO_COMPLETO.txt
+scratch/
