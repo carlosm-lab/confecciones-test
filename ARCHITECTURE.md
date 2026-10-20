@@ -16,6 +16,21 @@ This document tracks important architectural decisions made during the project l
 
 ## Logged Decisions
 
+**Date:** 2026-10-20
+**Decision:** Optimización Quirúrgica de Core Web Vitals para Rendimiento Móvil (>95 en PageSpeed)
+**Context:** El análisis en PageSpeed Insights para dispositivos móviles identificó que el principal cuello de botella que limitaba el rendimiento móvil a 80/100 era un "Element Render Delay" de 2,070 ms en el recurso LCP del hero (`hero-home-440.webp`), además de cabeceras de caché subóptimas (7 días en vez de 1 año) y duplicación de preloads.
+**Decision:**
+
+- **Decodificación Síncrona en LCP:** Se cambió `decoding="async"` a `decoding="sync"` y se fijaron dimensiones explícitas `width={440}` y `height={550}` en `StaticHeroImage.tsx`. Esto fuerza al motor de renderizado del navegador a pintar el recurso inmediatamente al recibirse, eliminando el encolado en el hilo de composición asíncrono.
+- **Formato AVIF Moderno de Próxima Generación:** Se generó `hero-home-440.avif` (46 KB, ~33% más liviano que el WebP original) con soporte prioritario en `<picture>`.
+- **Eliminación de Preload Duplicado:** Se mantuvo el encabezado HTTP Link a nivel de servidor/edge en `next.config.mjs` y se removió la etiqueta redundante en el JSX de `StaticHeroImage`, evitando doble solicitud en la red.
+- **Depuración de Código Muerto:** Se removió el componente NOP `MaterialSymbolsLoader.tsx` del árbol de componentes del layout, reduciendo el bootstrap de cliente.
+- **Políticas de Almacenamiento en Caché:** Se actualizaron las cabeceras `Cache-Control` de `/images/:path*` y `/(icons|fonts)/:path*` a `public, max-age=31536000, immutable` (1 año), cumpliendo al 100% las auditorías de caché de Lighthouse.
+- **Tree-Shaking:** Se ampliaron las directivas `optimizePackageImports` en `next.config.mjs` para incluir `framer-motion`, `@tanstack/react-query` y `zod`.
+  **Consequences:** Reducción drástica del tiempo de renderizado de LCP, cumplimiento estricto de las directivas de preservación visual (0 cambios visuales ni de comportamiento), 100% compatibilidad con SSG y sincronización al repositorio de desarrollo.
+
+---
+
 **Date:** 2026-08-02
 **Decision:** Infraestructura Estática de Datos Semilla para el Blog y Arquitectura SSG de `/blog`
 **Context:** Se requiere iniciar el plan editorial de 83 artículos para Confecciones Liss con una landing page interactiva en `/blog` que permita filtrar guías por pilar (7 pilares) y por universidad (UNIVO, IEPROES, UGB, UNAB, UES, UMA, UEES). No existe una capa de CMS/MDX en el repositorio y los 20 artículos redactados están respaldados como semillas de datos.
