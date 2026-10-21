@@ -48,7 +48,6 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
             objectPosition: "center",
             borderRadius: "0.75rem",
           }}
-          fetchPriority="high"
           loading="eager"
           decoding="async"
         />
