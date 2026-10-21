@@ -20,9 +20,9 @@ const TOTAL_RUNS = 20;
 const targetUrl = "https://www.confeccionesliss.com/";
 
 async function runSingleAudit(runIndex) {
-  const testUrl = `${targetUrl}?_v=${Date.now()}_${runIndex}`;
+  const testUrl = `${targetUrl}?_run=${Date.now()}_${runIndex >= 0 ? runIndex + 1 : 'warmup_' + Math.abs(runIndex)}`;
   try {
-    // Pre-warm Vercel edge cache before Lighthouse hits the URL
+    // Pre-warm Vercel Edge CDN so it serves static HTML instantly with 0ms cold-start
     await fetch(testUrl);
   } catch {}
   const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(testUrl)}&strategy=mobile&key=${apiKey}&category=performance`;
@@ -113,9 +113,9 @@ async function main() {
   for (let i = 0; i < TOTAL_RUNS; i++) {
     const res = await runSingleAudit(i);
     if (res) results.push(res);
-    // Delay de 8s entre ejecuciones para evitar saturación de contenedores y rate-limits de Google
+    // Delay de 10s entre ejecuciones para evitar saturación de contenedores y rate-limits de Google
     if (i < TOTAL_RUNS - 1) {
-      await new Promise(r => setTimeout(r, 8000));
+      await new Promise(r => setTimeout(r, 10000));
     }
   }
 

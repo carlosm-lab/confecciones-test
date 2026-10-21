@@ -1,26 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
-const GlobalModals = dynamic(
-  () =>
-    import("@/components/layout/GlobalModals").then((mod) => mod.GlobalModals),
-  { ssr: false }
+const GlobalModals = lazy(() =>
+  import("@/components/layout/GlobalModals").then((mod) => ({
+    default: mod.GlobalModals,
+  }))
 );
 
-const CookieBanner = dynamic(
-  () => import("@/components/ui/CookieBanner").then((mod) => mod.CookieBanner),
-  { ssr: false }
+const CookieBanner = lazy(() =>
+  import("@/components/ui/CookieBanner").then((mod) => ({
+    default: mod.CookieBanner,
+  }))
 );
 
-const MobileBottomNav = dynamic(
-  () =>
-    import("@/components/layout/MobileBottomNav").then(
-      (mod) => mod.MobileBottomNav
-    ),
-  { ssr: false }
+const MobileBottomNav = lazy(() =>
+  import("@/components/layout/MobileBottomNav").then((mod) => ({
+    default: mod.MobileBottomNav,
+  }))
 );
 
 /**
@@ -29,8 +27,8 @@ const MobileBottomNav = dynamic(
  * Agrupa los componentes interactivos globales no esenciales que no deben bloquear
  * el renderizado inicial del servidor (SSR) ni la descarga de bundles críticos
  * para First Contentful Paint (FCP) y Largest Contentful Paint (LCP).
- * Se difiere el montaje de modales, cookies y barra inferior hasta la primera
- * interacción del usuario para eliminar long tasks de TBT y contención de red en el inicio.
+ * Se difiere la carga de chunks via React.lazy hasta la primera interacción del usuario,
+ * evitando que Next.js solicite los chunks durante la carga inicial crítica.
  */
 export function ClientLayoutWidgets() {
   const [mounted, setMounted] = useState(false);
@@ -69,11 +67,11 @@ export function ClientLayoutWidgets() {
     <>
       <ScrollToTop />
       {mounted && (
-        <>
+        <Suspense fallback={null}>
           <GlobalModals />
           <CookieBanner />
           <MobileBottomNav />
-        </>
+        </Suspense>
       )}
     </>
   );

@@ -31,9 +31,17 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### ClientLayoutWidgets
 
 - **Ruta:** `src/components/layout/ClientLayoutWidgets.tsx`
-- **Descripción:** Componente cliente que agrupa los widgets interactivos globales de baja prioridad (ScrollToTop, GlobalModals con CartDrawer/LoginModal, y CookieBanner) con dynamic imports (`ssr: false`) para sacarlos del bundle crítico inicial del servidor y evitar bloqueos en el hilo principal durante FCP y LCP.
+- **Descripción:** Componente cliente que agrupa los widgets interactivos globales de baja prioridad (`ScrollToTop`, `GlobalModals` con CartDrawer/LoginModal, `CookieBanner` y `MobileBottomNav`) con `React.lazy` y `Suspense` condicionados al primer evento de interacción del usuario (o temporizador idle), evitando que Next.js precargue los bundles en el inicio crítico para maximizar FCP, LCP y eliminar TBT.
 - **Props:** No recibe props.
 - **Ejemplo:** `<ClientLayoutWidgets />`
+
+### StaticHeroImage
+
+- **Ruta:** `src/components/ui/StaticHeroImage.tsx`
+- **Descripción:** Componente visual crítico para el Largest Contentful Paint (LCP) de la página de inicio. Inyecta preload de alta prioridad en el `<head>` vía React 19 y renderiza una etiqueta `<picture>` con responsive `srcset` y `sizes` con decodificación asíncrona (`decoding="async"`) para eliminar contención en el hilo principal.
+- **Props:**
+  - `sizes?: string` — Atributo sizes opcional.
+- **Ejemplo:** `<StaticHeroImage />`
 
 ## AI & Protocol Components
 
