@@ -18,11 +18,6 @@ async function check() {
   console.log("Is logo-41.webp live?", hasLogo41 ? "YES ✅" : "NO ❌ (Deployment still pending)");
   const fontPreloads = html.match(/<link[^>]+as="font"[^>]*>/g) || [];
   console.log("Live font preloads found:", fontPreloads.length);
-  fontPreloads.forEach(f => console.log("  Live:", f));
-  console.log("decoding=\"async\" live?", html.includes('decoding="async"'));
-  const heroPreload = html.includes('rel="preload"') && html.includes('hero-home-440.webp');
-  console.log("hero-home-440.webp preload live?", heroPreload ? "YES ✅" : "NO ❌");
-  console.log("Date header:", res.headers.get("date"));
 }
 
 check();
