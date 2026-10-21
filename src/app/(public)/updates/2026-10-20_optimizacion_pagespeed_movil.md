@@ -96,6 +96,25 @@
 
 ---
 
+## TASK-006: Eliminación de Runtime React-Query y Carga Dinámica de Analíticas
+
+### Archivos modificados
+
+- `src/providers/index.tsx`
+- `src/components/analytics/AnalyticsScripts.tsx`
+- `next.config.mjs`
+- `package.json`
+
+### Cambios realizados
+
+- Se removió `@tanstack/react-query` del árbol de providers (`QueryClientProvider`), ya que el proyecto utiliza Server Components, hooks nativos y Zustand (cero instancias de `useQuery`), ahorrando más de 35 KB de JavaScript parseado en el hilo principal móvil.
+- Se convirtieron los scripts de `GoogleAnalytics`, `MetaPixel` y `GoogleMerchantWidget` a importación dinámica bajo demanda (`next/dynamic` con `ssr: false`), eliminando el chunk de 31 KB del critical path inicial para visitantes que aún no han otorgado consentimiento de cookies.
+- Se desinstaló la dependencia huérfana `@tanstack/react-query` y se limpiaron los encabezados de caché redundantes en `next.config.mjs`.
+
+### Estado: COMPLETO ✓
+
+---
+
 ## Resultados Finales Auditados (Google PageSpeed Insights)
 
 ### Rendimiento Móvil

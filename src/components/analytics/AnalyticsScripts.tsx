@@ -1,9 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { GoogleAnalytics } from "./GoogleAnalytics";
-import { MetaPixel } from "./MetaPixel";
-import { GoogleMerchantWidget } from "./GoogleMerchantWidget";
+import dynamic from "next/dynamic";
+
+const GoogleAnalytics = dynamic(
+  () => import("./GoogleAnalytics").then((m) => m.GoogleAnalytics),
+  { ssr: false }
+);
+const MetaPixel = dynamic(
+  () => import("./MetaPixel").then((m) => m.MetaPixel),
+  { ssr: false }
+);
+const GoogleMerchantWidget = dynamic(
+  () => import("./GoogleMerchantWidget").then((m) => m.GoogleMerchantWidget),
+  { ssr: false }
+);
 
 interface AnalyticsScriptsProps {
   gaId?: string;
