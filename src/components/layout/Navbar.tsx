@@ -745,13 +745,17 @@ export function Navbar() {
       </header>
 
       {/* ── Global Search Modal ── */}
-      <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
+      {isSearchOpen && (
+        <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
+      )}
 
       {/* ── Favorites Modal ── */}
-      <FavoritesModal
-        isOpen={isFavoritesOpen}
-        onClose={() => setIsFavoritesOpen(false)}
-      />
+      {isFavoritesOpen && (
+        <FavoritesModal
+          isOpen={isFavoritesOpen}
+          onClose={() => setIsFavoritesOpen(false)}
+        />
+      )}
     </>
   );
 }

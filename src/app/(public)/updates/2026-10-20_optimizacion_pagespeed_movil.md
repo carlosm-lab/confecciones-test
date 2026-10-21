@@ -46,3 +46,28 @@
 - Se añadieron `framer-motion`, `@tanstack/react-query` y `zod` a `optimizePackageImports` en la configuración de Turbopack/Next.js.
 
 ### Estado: COMPLETO ✓
+
+---
+
+## TASK-004: Purga de JavaScript no utilizado y carga bajo demanda de modales
+
+### Archivos modificados
+
+- `src/components/cart/CartDrawer.tsx`
+- `src/components/cart/FavoritesModal.tsx`
+- `src/components/layout/SearchModal.tsx`
+- `src/components/layout/Navbar.tsx`
+- `src/components/layout/GlobalModals.tsx`
+- `src/context/ConfirmContext.tsx`
+- `src/providers/DeferredProviders.tsx`
+- `src/components/ui/StaticHeroImage.tsx`
+
+### Cambios realizados
+
+- Se eliminó el import estático de `@/lib/supabaseClient` en `CartDrawer`, `FavoritesModal` y `SearchModal`, cargándolo dinámicamente (`await import`) únicamente durante las acciones del usuario.
+- Se condicionó el montaje de `SearchModal` y `FavoritesModal` en el `Navbar` para que solo se descarguen al abrirse (`isSearchOpen` / `isFavoritesOpen`).
+- Se pospuso el montaje del chunk `CartDrawer` en `GlobalModals` hasta que el usuario interactúa con el carrito, manteniéndose activo para preservar transiciones fluidas.
+- Se cargó `Toaster` (`react-hot-toast`) dinámicamente y se aisló `ConfirmDialog` de la renderización inicial.
+- Se introdujo `preload` de `react-dom` en el Server Component `StaticHeroImage` para precarga síncrona en `<head>` para móviles.
+
+### Estado: COMPLETO ✓

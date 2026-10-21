@@ -9,8 +9,10 @@
 // Se monta una sola vez en (public)/layout.tsx para que estén
 // disponibles en TODAS las páginas sin duplicar la instancia.
 // ──────────────────────────────────────────────────────────────
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 
 const CartDrawer = dynamic(
   () => import("@/components/cart/CartDrawer").then((mod) => mod.CartDrawer),
@@ -24,15 +26,25 @@ const LoginModal = dynamic(
 
 export function GlobalModals() {
   const { authModalContext, hideAuthModal } = useAuth();
+  const { isCartOpen } = useCart();
+  const [hasOpenedCart, setHasOpenedCart] = useState(false);
+
+  if (isCartOpen && !hasOpenedCart) {
+    setHasOpenedCart(true);
+  }
+
+  const shouldRenderCart = isCartOpen || hasOpenedCart;
 
   return (
     <>
-      <CartDrawer />
-      <LoginModal
-        isOpen={authModalContext !== null}
-        onClose={hideAuthModal}
-        context={authModalContext ?? "generic"}
-      />
+      {shouldRenderCart && <CartDrawer />}
+      {authModalContext !== null && (
+        <LoginModal
+          isOpen={authModalContext !== null}
+          onClose={hideAuthModal}
+          context={authModalContext ?? "generic"}
+        />
+      )}
     </>
   );
 }

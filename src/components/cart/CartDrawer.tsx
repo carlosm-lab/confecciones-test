@@ -8,7 +8,6 @@ import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/formatPrice";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { buildWhatsAppUrl, buildCartWhatsAppMessage } from "@/lib/whatsapp";
-import { getSupabaseClient } from "@/lib/supabaseClient";
 import { clientEnv } from "@/lib/clientEnv";
 import { logger } from "@/lib/logger";
 import toast from "react-hot-toast";
@@ -174,6 +173,7 @@ export function CartDrawer() {
       typeof window !== "undefined" ? window.location.origin : "";
 
     try {
+      const { getSupabaseClient } = await import("@/lib/supabaseClient");
       const supabase = getSupabaseClient();
       const { data: serverMessage, error } = await supabase.rpc(
         "generate_whatsapp_message",

@@ -21,7 +21,12 @@
 // los componentes que usan estos hooks ven los valores por defecto.
 // ──────────────────────────────────────────────────────────────
 import { ReactNode } from "react";
-import { Toaster } from "react-hot-toast";
+import dynamic from "next/dynamic";
+
+const Toaster = dynamic(
+  () => import("react-hot-toast").then((mod) => mod.Toaster),
+  { ssr: false }
+);
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { FavoritesProvider } from "@/context/FavoritesContext";

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Icon } from "@/components/ui/icons/Icon";
 import { useEffect, useState, useCallback, useRef } from "react";
@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useFavorites } from "@/context/FavoritesContext";
-import { getSupabaseClient } from "@/lib/supabaseClient";
 import { formatPrice } from "@/lib/formatPrice";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useModal } from "@/hooks/useModal";
@@ -58,6 +57,7 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
     });
 
     try {
+      const { getSupabaseClient } = await import("@/lib/supabaseClient");
       const supabase = getSupabaseClient();
       const { data, error } = await supabase
         .from("products")

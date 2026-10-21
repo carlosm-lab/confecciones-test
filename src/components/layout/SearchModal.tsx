@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
-import { getSupabaseClient } from "@/lib/supabaseClient";
 import {
   getProductMainImage,
   getProductSector,
@@ -141,31 +140,33 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     const timer = setTimeout(() => {
       startTransition(() => {
         setIsLoading(true);
-        const supabase = getSupabaseClient();
-        supabase
-          .from("products")
-          .select(
-            `id, name, description, short_description, price, old_price,
+        import("@/lib/supabaseClient").then(({ getSupabaseClient }) => {
+          const supabase = getSupabaseClient();
+          supabase
+            .from("products")
+            .select(
+              `id, name, description, short_description, price, old_price,
              image_path, images, slug, sector, category,
              categories(name, catalog)`
-          )
-          .eq("is_active", true)
-          .ilike("name", `%${query}%`)
-          .limit(8)
-          .then(
-            ({
-              data,
-              error,
-            }: {
-              data: unknown[] | null;
-              error: { message: string } | null;
-            }) => {
-              if (!error && data) {
-                setResults(data as unknown as DbProduct[]);
+            )
+            .eq("is_active", true)
+            .ilike("name", `%${query}%`)
+            .limit(8)
+            .then(
+              ({
+                data,
+                error,
+              }: {
+                data: unknown[] | null;
+                error: { message: string } | null;
+              }) => {
+                if (!error && data) {
+                  setResults(data as unknown as DbProduct[]);
+                }
+                setIsLoading(false);
               }
-              setIsLoading(false);
-            }
-          );
+            );
+        });
       });
     }, 300);
 
