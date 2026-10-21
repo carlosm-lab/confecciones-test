@@ -199,22 +199,32 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
+    // Si el usuario ya está autenticado, sincronizar inmediatamente
+    if (user?.id) {
+      setHasInteracted(true);
+      return;
+    }
+
     const handleInteraction = () => {
       setHasInteracted(true);
+      cleanup();
     };
 
-    window.addEventListener("touchstart", handleInteraction, { passive: true });
-    window.addEventListener("mouseover", handleInteraction, { passive: true });
-    window.addEventListener("scroll", handleInteraction, { passive: true });
-    window.addEventListener("keydown", handleInteraction, { passive: true });
-
-    return () => {
-      window.removeEventListener("touchstart", handleInteraction);
-      window.removeEventListener("mouseover", handleInteraction);
-      window.removeEventListener("scroll", handleInteraction);
-      window.removeEventListener("keydown", handleInteraction);
+    const cleanup = () => {
+      window.removeEventListener("click", handleInteraction);
+      clearTimeout(timer);
     };
-  }, []);
+
+    window.addEventListener("click", handleInteraction, { passive: true });
+
+    // En segundo plano tras 10s cuando la página esté completamente inactiva y pintada
+    const timer = setTimeout(() => {
+      setHasInteracted(true);
+      cleanup();
+    }, 10000);
+
+    return cleanup;
+  }, [user?.id]);
 
   const toastRef = useRef<any>(null);
   const realtimeRef = useRef<RealtimeChannel | null>(null);

@@ -20,7 +20,7 @@
 // Durante la ventana de carga (<100ms post-hidratación de React),
 // los componentes que usan estos hooks ven los valores por defecto.
 // ──────────────────────────────────────────────────────────────
-import { ReactNode } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 const Toaster = dynamic(
@@ -37,6 +37,55 @@ interface DeferredProvidersProps {
   children: ReactNode;
 }
 
+function LazyToaster() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const handleInteraction = () => {
+      setMounted(true);
+      cleanup();
+    };
+
+    const cleanup = () => {
+      window.removeEventListener("click", handleInteraction);
+      clearTimeout(timer);
+    };
+
+    window.addEventListener("click", handleInteraction, { passive: true });
+
+    const timer = setTimeout(() => {
+      setMounted(true);
+      cleanup();
+    }, 8000);
+
+    return cleanup;
+  }, []);
+
+  if (!mounted) return null;
+
+  return (
+    <Toaster
+      position="bottom-center"
+      toastOptions={{
+        duration: 3000,
+        style: {
+          borderRadius: "12px",
+          background: "#1e293b",
+          color: "#f8fafc",
+          fontSize: "14px",
+          fontFamily: "var(--font-sans, Manrope, sans-serif)",
+        },
+        success: {
+          iconTheme: {
+            primary: "#143067",
+            secondary: "#ffffff",
+          },
+        },
+      }}
+    />
+  );
+}
+
 export function DeferredProviders({ children }: DeferredProvidersProps) {
   return (
     <AuthProvider>
@@ -45,25 +94,7 @@ export function DeferredProviders({ children }: DeferredProvidersProps) {
           <FavoritesProvider>
             <ConfirmProvider>
               {children}
-              <Toaster
-                position="bottom-center"
-                toastOptions={{
-                  duration: 3000,
-                  style: {
-                    borderRadius: "12px",
-                    background: "#1e293b",
-                    color: "#f8fafc",
-                    fontSize: "14px",
-                    fontFamily: "var(--font-sans, Manrope, sans-serif)",
-                  },
-                  success: {
-                    iconTheme: {
-                      primary: "#143067",
-                      secondary: "#ffffff",
-                    },
-                  },
-                }}
-              />
+              <LazyToaster />
             </ConfirmProvider>
           </FavoritesProvider>
         </CartProvider>
