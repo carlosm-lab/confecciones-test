@@ -19,7 +19,7 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
 
   return (
     <div className="absolute inset-0 overflow-hidden rounded-xl">
-      <picture>
+      <picture className="block h-full w-full">
         <source
           media="(min-width: 1025px)"
           srcSet="/images/hero/hero-home.webp"
