@@ -103,9 +103,9 @@ async function main() {
   // Fase de calentamiento para asegurar que Vercel Edge y los contenedores de Google PSI estén calientes
   console.log(">> Ejecutando fase de calentamiento (2 ejecuciones previas)...");
   await runSingleAudit(-2);
-  await new Promise(r => setTimeout(r, 6000));
+  await new Promise(r => setTimeout(r, 10000));
   await runSingleAudit(-1);
-  await new Promise(r => setTimeout(r, 6000));
+  await new Promise(r => setTimeout(r, 10000));
   console.log(">> Calentamiento completado. Iniciando 20 ejecuciones oficiales...\n");
 
   const results = [];
@@ -113,9 +113,9 @@ async function main() {
   for (let i = 0; i < TOTAL_RUNS; i++) {
     const res = await runSingleAudit(i);
     if (res) results.push(res);
-    // Delay de 10s entre ejecuciones para evitar saturación de contenedores y rate-limits de Google
+    // Delay de 15s entre ejecuciones para evitar saturación de contenedores y rate-limits de Google
     if (i < TOTAL_RUNS - 1) {
-      await new Promise(r => setTimeout(r, 10000));
+      await new Promise(r => setTimeout(r, 15000));
     }
   }
 
