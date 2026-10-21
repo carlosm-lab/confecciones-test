@@ -860,7 +860,7 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
 ### ClientLayoutWidgets
 
 - **Ruta:** `src/components/layout/ClientLayoutWidgets.tsx`
-- **Descripción:** Coordinador de widgets interactivos globales de cliente (ScrollToTop directo, GlobalModals, CookieBanner y MobileBottomNav) que asegura que ningún widget no esencial compita con el camino crítico de renderizado FCP/LCP.
+- **Descripción:** Coordinador de widgets interactivos globales de cliente (ScrollToTop directo, GlobalModals, CookieBanner y MobileBottomNav) con activación diferida a la primera interacción del usuario o 6s timeout, eliminando contención de red y long tasks de TBT durante la carga crítica del FCP/LCP.
 - **Props:** Ninguna.
 - **Ejemplo:**
   ```tsx
