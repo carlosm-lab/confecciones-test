@@ -25,16 +25,9 @@
 //   useAuth() → AUTH_GUEST_DEFAULT, useCart() → CART_EMPTY_DEFAULT, etc.
 // ──────────────────────────────────────────────────────────────
 import * as React from "react";
-import dynamic from "next/dynamic";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "./theme-provider";
-
-// Carga LAZY — excluye Supabase, react-hot-toast y todos los
-// contextos pesados del bundle crítico del homepage.
-const DeferredProviders = dynamic(
-  () => import("./DeferredProviders").then((mod) => mod.DeferredProviders),
-  { ssr: false, loading: () => null }
-);
+import { DeferredProviders } from "./DeferredProviders";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = React.useState(
@@ -49,23 +42,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
       })
   );
 
-  // Retrasa el montaje de DeferredProviders hasta tiempo de idle del browser.
-  // requestIdleCallback asegura que el chunk no se ejecuta durante la ventana
-  // del LCP. Fallback de 200ms para browsers sin soporte (Safari <17).
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => {
-    if (typeof window === "undefined") return;
-    if ("requestIdleCallback" in window) {
-      (window as Window & typeof globalThis).requestIdleCallback(
-        () => setMounted(true),
-        { timeout: 1500 }
-      );
-    } else {
-      const id = setTimeout(() => setMounted(true), 200);
-      return () => clearTimeout(id);
-    }
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider
@@ -74,7 +50,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         enableSystem={false}
         disableTransitionOnChange
       >
-        {mounted ? <DeferredProviders>{children}</DeferredProviders> : children}
+        <DeferredProviders>{children}</DeferredProviders>
       </ThemeProvider>
     </QueryClientProvider>
   );

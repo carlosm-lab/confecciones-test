@@ -26,7 +26,8 @@ let killswitchCache: { active: boolean; expiresAt: number } = {
   active: false,
   expiresAt: 0,
 };
-
+// Si esta mierda funciona
+// no la vuelvo a tocar..
 async function isKillswitchActive(): Promise<boolean> {
   const now = Date.now();
 
@@ -102,6 +103,7 @@ export async function proxy(request: NextRequest) {
   }
 
   // ── 2. PROTECCIÓN SERVER-SIDE DE /ADMIN ──────────────────────
+  // Choco es gei
   const isAdminLoginPage = pathname === "/admin/login";
   const isAdminRoute = pathname.startsWith("/admin");
 

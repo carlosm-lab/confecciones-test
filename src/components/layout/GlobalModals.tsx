@@ -9,9 +9,18 @@
 // Se monta una sola vez en (public)/layout.tsx para que estén
 // disponibles en TODAS las páginas sin duplicar la instancia.
 // ──────────────────────────────────────────────────────────────
-import { CartDrawer } from "@/components/cart/CartDrawer";
-import { LoginModal } from "@/components/cart/LoginModal";
+import dynamic from "next/dynamic";
 import { useAuth } from "@/context/AuthContext";
+
+const CartDrawer = dynamic(
+  () => import("@/components/cart/CartDrawer").then((mod) => mod.CartDrawer),
+  { ssr: false }
+);
+
+const LoginModal = dynamic(
+  () => import("@/components/cart/LoginModal").then((mod) => mod.LoginModal),
+  { ssr: false }
+);
 
 export function GlobalModals() {
   const { authModalContext, hideAuthModal } = useAuth();

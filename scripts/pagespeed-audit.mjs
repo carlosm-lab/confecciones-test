@@ -115,6 +115,10 @@ async function runAudit(url, strat) {
 
   const data = await res.json();
   const lhr = data.lighthouseResult;
+  try {
+    const fs = await import("fs");
+    fs.writeFileSync(`pagespeed-${strat}-latest.json`, JSON.stringify(lhr, null, 2));
+  } catch {}
   const cats = lhr.categories;
   const audits = lhr.audits;
 
