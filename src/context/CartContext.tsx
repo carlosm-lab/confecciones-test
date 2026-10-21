@@ -165,10 +165,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { addLocalNotification } = useNotifications();
   const toastRef = useRef<any>(null);
 
-  useEffect(() => {
-    import("react-hot-toast").then((mod) => {
-      toastRef.current = mod.toast;
-    });
+  const getToast = useCallback(async () => {
+    if (!toastRef.current) {
+      const { default: toast } = await import("react-hot-toast");
+      toastRef.current = toast;
+    }
+    return toastRef.current;
   }, []);
 
   // ── Inicialización desde localStorage ────────────────────────
@@ -519,13 +521,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
 
       if (itemsRemovedFlag) {
-        toastRef.current?.(
-          "Un producto en tu carrito se ha agotado o desactivado.",
-          {
+        void getToast().then((toast) => {
+          toast("Un producto en tu carrito se ha agotado o desactivado.", {
             icon: "⚠️",
             duration: 5000,
-          }
-        );
+          });
+        });
       }
 
       setConsecutiveRefreshFailures(0);
@@ -588,9 +589,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       if (existing) {
         if (existing.quantity + quantity > MAX_CART_QUANTITY) {
-          toastRef.current?.error(
-            `Límite máximo por producto: ${MAX_CART_QUANTITY} unidades`
-          );
+          void getToast().then((toast) => {
+            toast.error(
+              `Límite máximo por producto: ${MAX_CART_QUANTITY} unidades`
+            );
+          });
           return prev;
         }
         return prev.map((item) =>
@@ -601,16 +604,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
 
       if (quantity > MAX_CART_QUANTITY) {
-        toastRef.current?.error(
-          `Límite máximo por producto: ${MAX_CART_QUANTITY} unidades`
-        );
+        void getToast().then((toast) => {
+          toast.error(
+            `Límite máximo por producto: ${MAX_CART_QUANTITY} unidades`
+          );
+        });
         return prev;
       }
 
       if (prev.length >= MAX_TOTAL_ITEMS) {
-        toastRef.current?.error(
-          `Límite máximo en el carrito: ${MAX_TOTAL_ITEMS} productos diferentes`
-        );
+        void getToast().then((toast) => {
+          toast.error(
+            `Límite máximo en el carrito: ${MAX_TOTAL_ITEMS} productos diferentes`
+          );
+        });
         return prev;
       }
 
@@ -640,13 +647,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
     }
 
-    toastRef.current?.success(
-      `${quantity}x ${product.name} agregado al carrito`,
-      {
+    void getToast().then((toast) => {
+      toast.success(`${quantity}x ${product.name} agregado al carrito`, {
         id: "cart-add-toast",
         icon: "🛍️",
-      }
-    );
+      });
+    });
   };
 
   const removeFromCart = (itemId: string) => {
@@ -659,9 +665,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return;
     }
     if (quantity > MAX_CART_QUANTITY) {
-      toastRef.current?.error(
-        `Límite máximo por producto es ${MAX_CART_QUANTITY} unidades`
-      );
+      void getToast().then((toast) => {
+        toast.error(
+          `Límite máximo por producto es ${MAX_CART_QUANTITY} unidades`
+        );
+      });
       return;
     }
     setCartItems((prev) =>

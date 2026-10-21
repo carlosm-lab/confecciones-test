@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Icon } from "@/components/ui/icons/Icon";
 /**
@@ -400,7 +400,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
     const timer = setTimeout(() => {
       triggerToast();
-    }, 3000);
+    }, 7000);
 
     return () => clearTimeout(timer);
   }, [mounted]);
