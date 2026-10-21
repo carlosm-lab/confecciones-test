@@ -28,6 +28,13 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Descripción:** Pie de página principal que incluye información de contacto, logo optimizado, y enlaces a recursos legales.
 - **Props:** No recibe props.
 
+### ClientLayoutWidgets
+
+- **Ruta:** `src/components/layout/ClientLayoutWidgets.tsx`
+- **Descripción:** Componente cliente que agrupa los widgets interactivos globales de baja prioridad (ScrollToTop, GlobalModals con CartDrawer/LoginModal, y CookieBanner) con dynamic imports (`ssr: false`) para sacarlos del bundle crítico inicial del servidor y evitar bloqueos en el hilo principal durante FCP y LCP.
+- **Props:** No recibe props.
+- **Ejemplo:** `<ClientLayoutWidgets />`
+
 ## AI & Protocol Components
 
 ### WebMCPRegistration

@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/layout/Navbar";
+import { ClientLayoutWidgets } from "@/components/layout/ClientLayoutWidgets";
 import dynamic from "next/dynamic";
 
 const Footer = dynamic(() =>
@@ -11,18 +12,6 @@ const MobileBottomNav = dynamic(() =>
   )
 );
 
-const GlobalModals = dynamic(() =>
-  import("@/components/layout/GlobalModals").then((mod) => mod.GlobalModals)
-);
-
-const CookieBanner = dynamic(() =>
-  import("@/components/ui/CookieBanner").then((mod) => mod.CookieBanner)
-);
-
-const ScrollToTop = dynamic(() =>
-  import("@/components/layout/ScrollToTop").then((mod) => mod.ScrollToTop)
-);
-
 export default function PublicLayout({
   children,
 }: {
@@ -30,7 +19,6 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      <ScrollToTop />
       <a
         href="#main-content"
         className="focus:bg-primary sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-lg focus:px-4 focus:py-2 focus:text-white focus:shadow-lg"
@@ -49,11 +37,8 @@ export default function PublicLayout({
       {/* Mobile bottom nav — only renders on < sm viewports */}
       <MobileBottomNav />
 
-      {/* Global modals: CartDrawer + LoginModal - se montan una sola vez */}
-      <GlobalModals />
-
-      {/* Cookie consent banner */}
-      <CookieBanner />
+      {/* Global interactive client-only widgets (ScrollToTop, Modals, CookieBanner) */}
+      <ClientLayoutWidgets />
     </>
   );
 }
