@@ -25,7 +25,7 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth, hasStoredAuth } from "@/context/AuthContext";
 import { clientEnv } from "@/lib/clientEnv";
 import { logger } from "@/lib/logger";
 import { STORAGE_FAVORITES_KEY, STORAGE_CART_KEY } from "@/lib/constants";
@@ -417,7 +417,9 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   // ── Notificaciones DB en tiempo real ──────────────────────────
   useEffect(() => {
-    if (!hasInteracted) return;
+    // Para visitantes anónimos sin sesión guardada, omitir completamente
+    // la descarga de Supabase y la suscripción realtime para mantener el critical path limpio.
+    if (!hasInteracted || (!user?.id && !hasStoredAuth())) return;
 
     let mounted = true;
     let channel: RealtimeChannel | null = null;

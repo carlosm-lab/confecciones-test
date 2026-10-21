@@ -15,7 +15,6 @@ const notoSerif = Noto_Serif({
   variable: "--font-serif",
   display: "swap",
   weight: ["400", "700"],
-  style: ["normal", "italic"],
   preload: false,
 });
 

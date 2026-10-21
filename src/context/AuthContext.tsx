@@ -86,7 +86,7 @@ const checkCacheValidity = (): boolean => {
   }
 };
 
-const hasStoredAuth = (): boolean => {
+export const hasStoredAuth = (): boolean => {
   if (typeof window === "undefined") return false;
   try {
     if (document.cookie.includes("sb-")) return true;
