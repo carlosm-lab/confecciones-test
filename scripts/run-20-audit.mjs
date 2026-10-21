@@ -21,6 +21,10 @@ const targetUrl = "https://www.confeccionesliss.com/";
 
 async function runSingleAudit(runIndex) {
   const testUrl = `${targetUrl}?_v=${Date.now()}_${runIndex}`;
+  try {
+    // Pre-warm Vercel edge cache before Lighthouse hits the URL
+    await fetch(testUrl);
+  } catch {}
   const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(testUrl)}&strategy=mobile&key=${apiKey}&category=performance&category=accessibility&category=best-practices&category=seo`;
   
   const startTime = Date.now();
