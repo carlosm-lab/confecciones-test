@@ -9,19 +9,20 @@
 // Se monta una sola vez en (public)/layout.tsx para que estén
 // disponibles en TODAS las páginas sin duplicar la instancia.
 // ──────────────────────────────────────────────────────────────
-import { useState } from "react";
-import dynamic from "next/dynamic";
+import { useState, lazy, Suspense } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 
-const CartDrawer = dynamic(
-  () => import("@/components/cart/CartDrawer").then((mod) => mod.CartDrawer),
-  { ssr: false }
+const CartDrawer = lazy(() =>
+  import("@/components/cart/CartDrawer").then((mod) => ({
+    default: mod.CartDrawer,
+  }))
 );
 
-const LoginModal = dynamic(
-  () => import("@/components/cart/LoginModal").then((mod) => mod.LoginModal),
-  { ssr: false }
+const LoginModal = lazy(() =>
+  import("@/components/cart/LoginModal").then((mod) => ({
+    default: mod.LoginModal,
+  }))
 );
 
 export function GlobalModals() {
@@ -36,7 +37,7 @@ export function GlobalModals() {
   const shouldRenderCart = isCartOpen || hasOpenedCart;
 
   return (
-    <>
+    <Suspense fallback={null}>
       {shouldRenderCart && <CartDrawer />}
       {authModalContext !== null && (
         <LoginModal
@@ -45,6 +46,6 @@ export function GlobalModals() {
           context={authModalContext ?? "generic"}
         />
       )}
-    </>
+    </Suspense>
   );
 }

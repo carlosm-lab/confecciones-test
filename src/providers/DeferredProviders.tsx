@@ -20,36 +20,31 @@
 // Durante la ventana de carga (<100ms post-hidratación de React),
 // los componentes que usan estos hooks ven los valores por defecto.
 // ──────────────────────────────────────────────────────────────
-import { ReactNode, useState, useEffect } from "react";
-import dynamic from "next/dynamic";
+import { ReactNode, useState, useEffect, lazy, Suspense } from "react";
 
-const Toaster = dynamic(
-  () => import("react-hot-toast").then((mod) => mod.Toaster),
-  { ssr: false }
+const Toaster = lazy(() =>
+  import("react-hot-toast").then((mod) => ({ default: mod.Toaster }))
 );
-const AuthProvider = dynamic(
-  () => import("@/context/AuthContext").then((mod) => mod.AuthProvider),
-  { ssr: false }
+const AuthProvider = lazy(() =>
+  import("@/context/AuthContext").then((mod) => ({ default: mod.AuthProvider }))
 );
-const CartProvider = dynamic(
-  () => import("@/context/CartContext").then((mod) => mod.CartProvider),
-  { ssr: false }
+const CartProvider = lazy(() =>
+  import("@/context/CartContext").then((mod) => ({ default: mod.CartProvider }))
 );
-const FavoritesProvider = dynamic(
-  () =>
-    import("@/context/FavoritesContext").then((mod) => mod.FavoritesProvider),
-  { ssr: false }
+const FavoritesProvider = lazy(() =>
+  import("@/context/FavoritesContext").then((mod) => ({
+    default: mod.FavoritesProvider,
+  }))
 );
-const ConfirmProvider = dynamic(
-  () => import("@/context/ConfirmContext").then((mod) => mod.ConfirmProvider),
-  { ssr: false }
+const ConfirmProvider = lazy(() =>
+  import("@/context/ConfirmContext").then((mod) => ({
+    default: mod.ConfirmProvider,
+  }))
 );
-const NotificationProvider = dynamic(
-  () =>
-    import("@/context/NotificationContext").then(
-      (mod) => mod.NotificationProvider
-    ),
-  { ssr: false }
+const NotificationProvider = lazy(() =>
+  import("@/context/NotificationContext").then((mod) => ({
+    default: mod.NotificationProvider,
+  }))
 );
 
 interface DeferredProvidersProps {
@@ -83,25 +78,27 @@ function LazyToaster() {
   if (!mounted) return null;
 
   return (
-    <Toaster
-      position="bottom-center"
-      toastOptions={{
-        duration: 3000,
-        style: {
-          borderRadius: "12px",
-          background: "#1e293b",
-          color: "#f8fafc",
-          fontSize: "14px",
-          fontFamily: "var(--font-sans, Manrope, sans-serif)",
-        },
-        success: {
-          iconTheme: {
-            primary: "#143067",
-            secondary: "#ffffff",
+    <Suspense fallback={null}>
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            borderRadius: "12px",
+            background: "#1e293b",
+            color: "#f8fafc",
+            fontSize: "14px",
+            fontFamily: "var(--font-sans, Manrope, sans-serif)",
           },
-        },
-      }}
-    />
+          success: {
+            iconTheme: {
+              primary: "#143067",
+              secondary: "#ffffff",
+            },
+          },
+        }}
+      />
+    </Suspense>
   );
 }
 
@@ -146,17 +143,19 @@ export function DeferredProviders({ children }: DeferredProvidersProps) {
   }
 
   return (
-    <AuthProvider>
-      <NotificationProvider>
-        <CartProvider>
-          <FavoritesProvider>
-            <ConfirmProvider>
-              {children}
-              <LazyToaster />
-            </ConfirmProvider>
-          </FavoritesProvider>
-        </CartProvider>
-      </NotificationProvider>
-    </AuthProvider>
+    <Suspense fallback={children}>
+      <AuthProvider>
+        <NotificationProvider>
+          <CartProvider>
+            <FavoritesProvider>
+              <ConfirmProvider>
+                {children}
+                <LazyToaster />
+              </ConfirmProvider>
+            </FavoritesProvider>
+          </CartProvider>
+        </NotificationProvider>
+      </AuthProvider>
+    </Suspense>
   );
 }

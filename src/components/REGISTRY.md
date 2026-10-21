@@ -38,7 +38,7 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### StaticHeroImage
 
 - **Ruta:** `src/components/ui/StaticHeroImage.tsx`
-- **Descripción:** Componente visual crítico para el Largest Contentful Paint (LCP) de la página de inicio. Inyecta preload de alta prioridad en el `<head>` vía React 19 para `hero-home-440.webp` y renderiza una etiqueta `<picture>` con fuentes adaptativas por media queries y decodificación síncrona (`decoding="sync"`) para garantizar que en móviles se descargue estrictamente la variante de 34KB y se pinte inmediatamente junto al First Contentful Paint.
+- **Descripción:** Componente visual crítico para el Largest Contentful Paint (LCP) de la página de inicio. Renderiza una etiqueta `<picture>` con fuentes adaptativas por media queries y decodificación síncrona (`decoding="sync"`), `loading="eager"` y `fetchPriority="high"`, permitiendo que las hojas de estilo críticas en `<head>` descarguen sin contención de ancho de banda y que en móviles se descargue estrictamente la variante de 34KB (`hero-home-440.webp`).
 - **Props:**
   - `sizes?: string` — Atributo sizes opcional.
 - **Ejemplo:** `<StaticHeroImage />`
