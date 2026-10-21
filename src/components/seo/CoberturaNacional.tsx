@@ -1,11 +1,8 @@
 import { geoZonaOriental, geoRestoPais } from "@/lib/seo-data";
 
-function MuniList({ items, prefix }: { items: string[]; prefix: string }) {
+function MuniList({ items }: { items: string[] }) {
   return (
-    <ul
-      className="text-on-surface-variant space-y-1 text-xs"
-      aria-label={`${prefix} en: ${items.join(", ")}`}
-    >
+    <ul className="text-on-surface-variant space-y-1 text-xs">
       {items.map((m) => (
         <li key={m}>{m}</li>
       ))}
@@ -42,31 +39,25 @@ export function CoberturaNacional() {
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 San Miguel (Oficina central)
               </h4>
-              <MuniList
-                items={geoZonaOriental.sanMiguel}
-                prefix="Uniformes y scrubs en"
-              />
+              <MuniList items={geoZonaOriental.sanMiguel} />
             </div>
             <div>
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Usulután
               </h4>
-              <MuniList
-                items={geoZonaOriental.usulutan}
-                prefix="Uniformes en"
-              />
+              <MuniList items={geoZonaOriental.usulutan} />
             </div>
             <div>
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 La Unión
               </h4>
-              <MuniList items={geoZonaOriental.laUnion} prefix="Scrubs en" />
+              <MuniList items={geoZonaOriental.laUnion} />
             </div>
             <div>
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Morazán
               </h4>
-              <MuniList items={geoZonaOriental.morazan} prefix="Uniformes en" />
+              <MuniList items={geoZonaOriental.morazan} />
             </div>
           </div>
         </div>
@@ -81,40 +72,31 @@ export function CoberturaNacional() {
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 San Salvador
               </h4>
-              <MuniList
-                items={geoRestoPais.sanSalvador}
-                prefix="Uniformes en"
-              />
+              <MuniList items={geoRestoPais.sanSalvador} />
             </div>
             <div>
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 La Libertad
               </h4>
-              <MuniList items={geoRestoPais.laLibertad} prefix="Scrubs en" />
+              <MuniList items={geoRestoPais.laLibertad} />
             </div>
             <div>
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Santa Ana
               </h4>
-              <MuniList items={geoRestoPais.santaAna} prefix="Uniformes en" />
+              <MuniList items={geoRestoPais.santaAna} />
             </div>
             <div>
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Sonsonate / La Paz
               </h4>
-              <MuniList
-                items={geoRestoPais.sonsonateLaPaz}
-                prefix="Uniformes en"
-              />
+              <MuniList items={geoRestoPais.sonsonateLaPaz} />
             </div>
             <div>
               <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Resto del país
               </h4>
-              <MuniList
-                items={geoRestoPais.resto}
-                prefix="Scrubs y uniformes en"
-              />
+              <MuniList items={geoRestoPais.resto} />
             </div>
           </div>
         </div>
