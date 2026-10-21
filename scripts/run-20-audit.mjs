@@ -25,7 +25,7 @@ async function runSingleAudit(runIndex) {
     // Pre-warm Vercel edge cache before Lighthouse hits the URL
     await fetch(testUrl);
   } catch {}
-  const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(testUrl)}&strategy=mobile&key=${apiKey}&category=performance&category=accessibility&category=best-practices&category=seo`;
+  const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(testUrl)}&strategy=mobile&key=${apiKey}&category=performance`;
   
   const startTime = Date.now();
   console.log(`[Run ${runIndex + 1}/${TOTAL_RUNS}] Iniciando análisis móvil...`);
@@ -105,9 +105,9 @@ async function main() {
   for (let i = 0; i < TOTAL_RUNS; i++) {
     const res = await runSingleAudit(i);
     if (res) results.push(res);
-    // Pequeño delay de 2s entre ejecuciones para no saturar rate limit
+    // Delay de 5s entre ejecuciones para evitar saturación de contenedores y rate-limits de Google
     if (i < TOTAL_RUNS - 1) {
-      await new Promise(r => setTimeout(r, 2000));
+      await new Promise(r => setTimeout(r, 5000));
     }
   }
 

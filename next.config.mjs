@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion', 'zod'],
+    optimizePackageImports: ['lucide-react', 'framer-motion', 'zod', 'react-icons'],
   },
   turbopack: {
     // Fija el workspace root explícitamente para evitar que Turbopack
