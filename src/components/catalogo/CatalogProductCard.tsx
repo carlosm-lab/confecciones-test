@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { Icon } from "@/components/ui/icons/Icon";
 /**
  * CatalogProductCard — Confecciones Liss
@@ -28,6 +29,32 @@ export function CatalogProductCard({
   product,
   priority = false,
 }: CatalogProductCardProps) {
+  const [isIntersecting, setIsIntersecting] = useState(priority);
+  const imgContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (priority || isIntersecting) return;
+    const el = imgContainerRef.current;
+    if (!el) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      const timer = setTimeout(() => setIsIntersecting(true), 150);
+      return () => clearTimeout(timer);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsIntersecting(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [priority, isIntersecting]);
   const imagen = getProductMainImage(product);
   const onSale = isProductOnSale(product);
   const sector = getProductSector(product);
@@ -118,8 +145,11 @@ export function CatalogProductCard({
       </button>
 
       {/* Imagen — aspect-ratio 4/5 para uniformes (retrato natural) */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-white">
-        {imagen ? (
+      <div
+        ref={imgContainerRef}
+        className="relative aspect-[4/5] overflow-hidden bg-white"
+      >
+        {imagen && isIntersecting ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={imagen}
@@ -128,7 +158,7 @@ export function CatalogProductCard({
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           />
-        ) : (
+        ) : !imagen ? (
           <div className="flex h-full w-full items-center justify-center bg-gray-50">
             <Icon
               name="checkroom"
@@ -137,6 +167,8 @@ export function CatalogProductCard({
               aria-hidden="true"
             />
           </div>
+        ) : (
+          <div className="h-full w-full bg-slate-100/50" />
         )}
       </div>
 
