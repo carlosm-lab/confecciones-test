@@ -1,7 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { clientEnv } from "@/lib/clientEnv";
 import { Icon } from "@/components/ui/icons/Icon";
-import Image from "next/image";
 import Link from "next/link";
 import {
   SiFacebook,
@@ -144,12 +143,14 @@ export function Footer() {
           <div className="flex flex-col items-center">
             {/* 1. Centra el logo */}
             <Link href="/" className="mb-6 inline-block">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/logo-footer.png"
                 alt="Confecciones Liss"
                 width={144}
                 height={144}
-                sizes="72px"
+                loading="lazy"
+                decoding="async"
                 className="h-[72px] w-auto brightness-0 invert"
               />
             </Link>
@@ -321,12 +322,14 @@ export function Footer() {
           {/* 1. Centra el logo en todo el ancho del footer en la parte superior */}
           <div className="mb-6 flex justify-center">
             <Link href="/">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/logo-footer.png"
                 alt="Confecciones Liss"
                 width={144}
                 height={144}
-                sizes="72px"
+                loading="lazy"
+                decoding="async"
                 className="h-[72px] w-auto brightness-0 invert"
               />
             </Link>
@@ -503,12 +506,14 @@ export function Footer() {
           <div className="flex flex-col justify-between space-y-6 lg:col-span-4">
             <div>
               <Link href="/" className="mb-6 inline-block">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src="/logo-footer.png"
                   alt="Confecciones Liss"
                   width={96}
                   height={96}
-                  sizes="48px"
+                  loading="lazy"
+                  decoding="async"
                   className="h-12 w-auto brightness-0 invert"
                 />
               </Link>

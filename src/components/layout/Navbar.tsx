@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
@@ -595,14 +594,14 @@ export function Navbar() {
                       className="border-primary/10 flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 dark:bg-slate-800"
                     >
                       {isMounted && user?.user_metadata?.avatar_url ? (
-                        <Image
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
                           src={user.user_metadata.avatar_url as string}
                           alt="Avatar"
                           width={40}
                           height={40}
                           className="h-full w-full object-cover"
                           referrerPolicy="no-referrer"
-                          quality={70}
                         />
                       ) : (
                         <Icon
