@@ -86,6 +86,23 @@ const checkCacheValidity = (): boolean => {
   }
 };
 
+const hasStoredAuth = (): boolean => {
+  if (typeof window === "undefined") return false;
+  try {
+    if (document.cookie.includes("sb-")) return true;
+    if (sessionStorage.getItem(USER_CACHE_KEY)) return true;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && (key.startsWith("sb-") || key.includes("supabase.auth"))) {
+        return true;
+      }
+    }
+  } catch {
+    return false;
+  }
+  return false;
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(() => {
     try {
@@ -121,29 +138,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [loading, setLoading] = useState<boolean>(() => {
     try {
+      if (!hasStoredAuth()) return false;
       return !sessionStorage.getItem(USER_CACHE_KEY);
     } catch {
-      return true;
+      return false;
     }
   });
 
   const [profileLoading, setProfileLoading] = useState<boolean>(() => {
     try {
+      if (!hasStoredAuth()) return false;
       return !(
         checkCacheValidity() && sessionStorage.getItem(PROFILE_CACHE_KEY)
       );
     } catch {
-      return true;
+      return false;
     }
   });
 
   const currentUserIdRef = useRef<string | null>(null);
+  const initSessionRef = useRef<(() => Promise<void>) | null>(null);
 
   // ── Auth Modal ──────────────────────────────────────────────────
   const [authModalContext, setAuthModalContext] = useState<string | null>(null);
 
   const showAuthModal = useCallback((context = "generic") => {
     setAuthModalContext(context);
+    void initSessionRef.current?.();
   }, []);
 
   const hideAuthModal = useCallback(() => {
@@ -389,6 +410,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (mounted) setLoading(false);
       }
     };
+
+    initSessionRef.current = initSession;
+
+    // Si el visitante es un invitado anónimo sin credenciales previas,
+    // evitamos descargar supabase-js en la carga inicial de la página.
+    if (!hasStoredAuth()) {
+      setLoading(false);
+      setProfileLoading(false);
+      return;
+    }
 
     initSession();
 
