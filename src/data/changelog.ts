@@ -97,6 +97,15 @@ export const CHANGELOG: VersionGroup[] = [
         description:
           "Se logró un puntaje de rendimiento de 97/100 en móviles (FCP 1.4s, LCP 2.4s, TBT 0ms, CLS 0.001) y 99/100 en escritorio certificado por Google Lighthouse v12.",
       },
+      {
+        id: "e-180",
+        date: "2026-10-20",
+        category: "perf",
+        title:
+          "Aislamiento de suscripciones en tiempo real y optimización de render en Hero",
+        description:
+          "Se condicionó la inicialización de canales en tiempo real exclusivamente para usuarios autenticados, postergando Toasters e hidrataciones secundarias, y se estructuró el contenedor de imagen principal con display de bloque para estabilizar de forma consistente un puntaje móvil de 96/100 con 0 ms de TBT.",
+      },
     ],
   },
   {
