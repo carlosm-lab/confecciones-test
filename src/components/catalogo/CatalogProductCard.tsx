@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import { Icon } from "@/components/ui/icons/Icon";
 /**
  * CatalogProductCard — Confecciones Liss
@@ -8,7 +7,6 @@ import { Icon } from "@/components/ui/icons/Icon";
  * Compatible con el catálogo dinámico conectado a la BD.
  */
 
-import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useFavorites } from "@/context/FavoritesContext";
@@ -30,33 +28,6 @@ export function CatalogProductCard({
   product,
   priority = false,
 }: CatalogProductCardProps) {
-  const [isIntersecting, setIsIntersecting] = useState(priority);
-  const imgContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (priority || isIntersecting) return;
-    const el = imgContainerRef.current;
-    if (!el) return;
-
-    if (typeof IntersectionObserver === "undefined") {
-      const timer = setTimeout(() => setIsIntersecting(true), 150);
-      return () => clearTimeout(timer);
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsIntersecting(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "300px" }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [priority, isIntersecting]);
-
   const imagen = getProductMainImage(product);
   const onSale = isProductOnSale(product);
   const sector = getProductSector(product);
@@ -147,21 +118,17 @@ export function CatalogProductCard({
       </button>
 
       {/* Imagen — aspect-ratio 4/5 para uniformes (retrato natural) */}
-      <div
-        ref={imgContainerRef}
-        className="relative aspect-[4/5] overflow-hidden bg-white"
-      >
-        {imagen && isIntersecting ? (
-          <Image
+      <div className="relative aspect-[4/5] overflow-hidden bg-white">
+        {imagen ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
             src={imagen}
             alt={product.name}
-            fill
-            sizes="(max-width: 480px) 50vw, (max-width: 768px) 40vw, (max-width: 1280px) 30vw, 320px"
-            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-            priority={priority}
-            quality={75}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           />
-        ) : !imagen ? (
+        ) : (
           <div className="flex h-full w-full items-center justify-center bg-gray-50">
             <Icon
               name="checkroom"
@@ -170,7 +137,7 @@ export function CatalogProductCard({
               aria-hidden="true"
             />
           </div>
-        ) : null}
+        )}
       </div>
 
       {/* Contenido — solo título y precio */}

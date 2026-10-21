@@ -13,11 +13,7 @@ const CookieBanner = dynamic(
   { ssr: false }
 );
 
-const ScrollToTop = dynamic(
-  () =>
-    import("@/components/layout/ScrollToTop").then((mod) => mod.ScrollToTop),
-  { ssr: false }
-);
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
 const MobileBottomNav = dynamic(
   () =>

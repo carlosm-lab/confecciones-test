@@ -844,3 +844,25 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
     alt="Confección de scrubs médicos a la medida"
   />
   ```
+
+### CatalogProductCard
+
+- **Ruta:** `src/components/catalogo/CatalogProductCard.tsx`
+- **Descripción:** Tarjeta de producto de alto rendimiento para el catálogo y la sección de novedades. Utiliza etiquetas `<img>` nativas con `loading="lazy"` y `decoding="async"` para evitar la sobrecarga del runtime de `next/image` en el bundle cliente inicial y mantener aspecto 4:5 responsivo idéntico.
+- **Props:**
+  - `product: DbProduct` — Entidad del producto desde la base de datos Supabase.
+  - `priority?: boolean` — Si es true, usa carga eager (por defecto `false`).
+- **Ejemplo:**
+  ```tsx
+  <CatalogProductCard product={product} priority={false} />
+  ```
+
+### ClientLayoutWidgets
+
+- **Ruta:** `src/components/layout/ClientLayoutWidgets.tsx`
+- **Descripción:** Coordinador de widgets interactivos globales de cliente (ScrollToTop directo, GlobalModals, CookieBanner y MobileBottomNav) que asegura que ningún widget no esencial compita con el camino crítico de renderizado FCP/LCP.
+- **Props:** Ninguna.
+- **Ejemplo:**
+  ```tsx
+  <ClientLayoutWidgets />
+  ```
