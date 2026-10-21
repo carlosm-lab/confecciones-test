@@ -15,7 +15,17 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
         rel="preload"
         as="image"
         href="/images/hero/hero-home-440.webp"
+        type="image/webp"
         fetchPriority="high"
+        media="(max-width: 480px)"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/images/hero/hero-home.webp"
+        type="image/webp"
+        fetchPriority="high"
+        media="(min-width: 481px)"
       />
       <div
         className="absolute inset-0 overflow-hidden rounded-xl"
@@ -58,6 +68,7 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
               objectFit: "cover",
               objectPosition: "center",
               borderRadius: "0.75rem",
+              aspectRatio: "4 / 5",
             }}
             fetchPriority="high"
             loading="eager"

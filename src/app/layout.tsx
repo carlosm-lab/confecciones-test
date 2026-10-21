@@ -80,26 +80,17 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: "/isotipo-simplificado-white.svg",
-        type: "image/svg+xml",
-      },
-      {
         url: "/favicon.ico",
         sizes: "32x32",
         type: "image/x-icon",
       },
       {
-        url: "/icons/favicon.svg",
+        url: "/isotipo-simplificado-white.svg",
         type: "image/svg+xml",
       },
     ],
     shortcut: "/favicon.ico",
     apple: [
-      {
-        url: "/isotipo-simplificado.png",
-        sizes: "512x512",
-        type: "image/png",
-      },
       {
         url: "/icons/apple-icon-light.png",
         sizes: "180x180",

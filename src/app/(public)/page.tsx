@@ -194,7 +194,10 @@ export default async function HomePage() {
           <div className="order-2 mx-auto flex w-full max-w-md self-center justify-self-center sm:max-w-lg md:order-3 md:col-span-1 md:h-full md:max-w-none md:self-stretch lg:order-none lg:col-span-5 lg:row-span-2 lg:h-full lg:items-center">
             <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
               <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
-              <div className="relative aspect-[4/5] w-full rounded-xl md:aspect-auto md:h-full md:w-full">
+              <div
+                className="relative aspect-[4/5] w-full rounded-xl md:aspect-auto md:h-full md:w-full"
+                style={{ aspectRatio: "4 / 5" }}
+              >
                 <StaticHeroImage sizes="(max-width:768px) 80vw, 40vw" />
               </div>
             </div>
