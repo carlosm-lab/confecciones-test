@@ -75,7 +75,7 @@ function LazyToaster() {
     const timer = setTimeout(() => {
       setMounted(true);
       cleanup();
-    }, 8000);
+    }, 20000);
 
     return cleanup;
   }, []);

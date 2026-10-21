@@ -100,14 +100,22 @@ async function main() {
   console.log(`  URL: ${targetUrl}`);
   console.log("============================================================\n");
 
+  // Fase de calentamiento para asegurar que Vercel Edge y los contenedores de Google PSI estén calientes
+  console.log(">> Ejecutando fase de calentamiento (2 ejecuciones previas)...");
+  await runSingleAudit(-2);
+  await new Promise(r => setTimeout(r, 6000));
+  await runSingleAudit(-1);
+  await new Promise(r => setTimeout(r, 6000));
+  console.log(">> Calentamiento completado. Iniciando 20 ejecuciones oficiales...\n");
+
   const results = [];
-  
+
   for (let i = 0; i < TOTAL_RUNS; i++) {
     const res = await runSingleAudit(i);
     if (res) results.push(res);
-    // Delay de 5s entre ejecuciones para evitar saturación de contenedores y rate-limits de Google
+    // Delay de 6s entre ejecuciones para evitar saturación de contenedores y rate-limits de Google
     if (i < TOTAL_RUNS - 1) {
-      await new Promise(r => setTimeout(r, 5000));
+      await new Promise(r => setTimeout(r, 6000));
     }
   }
 

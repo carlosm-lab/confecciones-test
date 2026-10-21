@@ -24,6 +24,10 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
         style={{ display: "block", width: "100%", height: "100%" }}
       >
         <source
+          media="(max-width: 480px)"
+          srcSet="/images/hero/hero-home-440.webp"
+        />
+        <source
           media="(min-width: 1025px)"
           srcSet="/images/hero/hero-home.webp"
         />
