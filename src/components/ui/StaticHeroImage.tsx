@@ -35,8 +35,8 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
         <img
           src="/images/hero/hero-home-440.webp"
           alt="Uniformes médicos y universitarios de Confecciones Liss, empresa de uniformes en San Miguel, El Salvador"
-          width={400}
-          height={500}
+          width={380}
+          height={475}
           className="h-full w-full rounded-xl object-cover object-center"
           fetchPriority="high"
           loading="eager"
