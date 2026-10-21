@@ -16,7 +16,6 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
         as="image"
         href="/images/hero/hero-home-440.webp"
         type="image/webp"
-        fetchPriority="high"
         media="(max-width: 480px)"
       />
       <link
@@ -24,7 +23,6 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
         as="image"
         href="/images/hero/hero-home.webp"
         type="image/webp"
-        fetchPriority="high"
         media="(min-width: 481px)"
       />
       <div
