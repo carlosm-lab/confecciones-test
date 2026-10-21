@@ -128,12 +128,13 @@ export default function RootLayout({
       className={`${manrope.variable} ${notoSerif.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        {/*
-         * Preload explícito del hero image (LCP) — emitido desde StaticHeroImage.tsx
-         * (Server Component) usando ReactDOM.preload() para evitar aplicarlo globalmente.
-         */}
-
+      <head />
+      <body className="flex min-h-screen w-full max-w-full flex-col overflow-x-clip antialiased">
+        <Providers>{children}</Providers>
+        <AnalyticsScripts
+          gaId={env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+          pixelId={env.NEXT_PUBLIC_META_PIXEL_ID}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -257,13 +258,6 @@ export default function RootLayout({
               ],
             }).replace(/</g, "\\u003c"),
           }}
-        />
-      </head>
-      <body className="flex min-h-screen w-full max-w-full flex-col overflow-x-clip antialiased">
-        <Providers>{children}</Providers>
-        <AnalyticsScripts
-          gaId={env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
-          pixelId={env.NEXT_PUBLIC_META_PIXEL_ID}
         />
       </body>
     </html>

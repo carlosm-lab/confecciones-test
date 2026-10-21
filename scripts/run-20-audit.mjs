@@ -68,7 +68,7 @@ async function runSingleAudit(runIndex) {
 
     const lcpElement = audits["largest-contentful-paint-element"]?.details?.items?.[0]?.node?.nodeLabel || "N/A";
 
-    console.log(`[Run ${runIndex + 1}/${TOTAL_RUNS}] ⏱️ ${duration}s -> Score: ${perfScore >= 95 ? '🟢 ' : '🔴 '}${perfScore}/100 | FCP: ${fcp} | LCP: ${lcp} | TBT: ${tbt} | CLS: ${cls} | TTFB: ${ttfb}`);
+    console.log(`[Run ${runIndex + 1}/${TOTAL_RUNS}] ⏱️ ${duration}s -> Score: ${perfScore >= 95 ? '🟢 ' : '🔴 '}${perfScore}/100 | FCP: ${fcp} | LCP: ${lcp} | SI: ${si} | TBT: ${tbt} | CLS: ${cls} | TTFB: ${ttfb}`);
 
     return {
       runIndex: runIndex + 1,
