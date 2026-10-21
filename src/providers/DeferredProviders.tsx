@@ -27,11 +27,30 @@ const Toaster = dynamic(
   () => import("react-hot-toast").then((mod) => mod.Toaster),
   { ssr: false }
 );
-import { AuthProvider } from "@/context/AuthContext";
-import { CartProvider } from "@/context/CartContext";
-import { FavoritesProvider } from "@/context/FavoritesContext";
-import { ConfirmProvider } from "@/context/ConfirmContext";
-import { NotificationProvider } from "@/context/NotificationContext";
+const AuthProvider = dynamic(
+  () => import("@/context/AuthContext").then((mod) => mod.AuthProvider),
+  { ssr: false }
+);
+const CartProvider = dynamic(
+  () => import("@/context/CartContext").then((mod) => mod.CartProvider),
+  { ssr: false }
+);
+const FavoritesProvider = dynamic(
+  () =>
+    import("@/context/FavoritesContext").then((mod) => mod.FavoritesProvider),
+  { ssr: false }
+);
+const ConfirmProvider = dynamic(
+  () => import("@/context/ConfirmContext").then((mod) => mod.ConfirmProvider),
+  { ssr: false }
+);
+const NotificationProvider = dynamic(
+  () =>
+    import("@/context/NotificationContext").then(
+      (mod) => mod.NotificationProvider
+    ),
+  { ssr: false }
+);
 
 interface DeferredProvidersProps {
   children: ReactNode;
