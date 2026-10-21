@@ -30,18 +30,18 @@ export function CatalogProductCard({
   product,
   priority = false,
 }: CatalogProductCardProps) {
-  const [isIntersecting, setIsIntersecting] = useState(
-    () =>
-      priority ||
-      typeof window === "undefined" ||
-      typeof IntersectionObserver === "undefined"
-  );
+  const [isIntersecting, setIsIntersecting] = useState(priority);
   const imgContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (priority || isIntersecting) return;
     const el = imgContainerRef.current;
     if (!el) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      const timer = setTimeout(() => setIsIntersecting(true), 150);
+      return () => clearTimeout(timer);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -50,7 +50,7 @@ export function CatalogProductCard({
           observer.disconnect();
         }
       },
-      { rootMargin: "250px" }
+      { rootMargin: "300px" }
     );
 
     observer.observe(el);
