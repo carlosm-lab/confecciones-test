@@ -368,14 +368,18 @@ export function Navbar() {
               className="flex items-center gap-3"
               onClick={closeMenu}
             >
-              <Image
-                src="/logo.svg"
-                alt="Confecciones Liss"
-                width={41}
-                height={41}
-                sizes="41px"
-                className="h-[41px] w-auto"
-              />
+              <picture className="flex items-center">
+                <source srcSet="/logo-41.webp" type="image/webp" />
+                <img
+                  src="/logo-41.png"
+                  alt="Confecciones Liss"
+                  width={41}
+                  height={41}
+                  className="h-[41px] w-auto"
+                  loading="eager"
+                  decoding="sync"
+                />
+              </picture>
               {/* Texto del logo — siempre en DOM para SEO; visible en sm+ */}
               <span className="sr-only">
                 Confecciones Liss — Uniformes y Scrubs a la medida

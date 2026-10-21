@@ -14,6 +14,7 @@ import {
   GoogleMerchantWidget,
   type GoogleMerchantWidgetProps,
 } from "@/components/analytics/GoogleMerchantWidget";
+import { ServiceImage } from "@/components/seo/ServiceImage";
 
 interface MatchingProduct {
   id: string;
@@ -281,6 +282,19 @@ export default function SandboxPage() {
                 />
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Sección de prueba: ServiceImage con IntersectionObserver */}
+        <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-md">
+          <h2 className="mb-4 text-xl font-bold tracking-tight text-slate-800">
+            Prueba de ServiceImage (Diferimiento con IntersectionObserver)
+          </h2>
+          <div className="max-w-sm overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+            <ServiceImage
+              src="/images/categorias/scrubs.webp"
+              alt="Scrubs Médicos de prueba en Sandbox"
+            />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ServiceImage } from "./ServiceImage";
 import { services } from "@/lib/seo-data";
 import { siteConfig } from "@/config/site";
 
@@ -37,15 +37,7 @@ export function ServiciosPrincipales() {
               className="animate-fade-in-up bg-surface-container-lowest border-surface-variant ambient-shadow group flex flex-col overflow-hidden rounded-xl border"
               style={{ animationDelay: `${index * 75 + 200}ms` }}
             >
-              <div className="bg-primary/5 relative h-44 sm:h-48">
-                <Image
-                  src={s.imgSrc}
-                  alt={s.imgAlt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
+              <ServiceImage src={s.imgSrc} alt={s.imgAlt} />
               <div className="flex flex-col p-6">
                 <h3 className="text-primary mb-3 font-serif text-xl font-bold">
                   {s.title}

@@ -822,3 +822,18 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
   ```tsx
   <StaticHeroImage sizes="(max-width:768px) 80vw, 40vw" />
   ```
+
+### ServiceImage
+
+- **Ruta:** `src/components/seo/ServiceImage.tsx`
+- **Descripción:** Client Component de alto rendimiento para las tarjetas de servicios de la homepage. Utiliza un `IntersectionObserver` con margen raíz de 300px para diferir la carga de imágenes bajo el pliegue (`scrubs.webp`, `universitarios.webp`, `escolares.webp`), evitando la contención de red móvil durante la ventana crítica del FCP y LCP.
+- **Props:**
+  - `src: string` — Ruta de la imagen.
+  - `alt: string` — Texto descriptivo alternativo para accesibilidad y SEO.
+- **Ejemplo:**
+  ```tsx
+  <ServiceImage
+    src="/images/categorias/scrubs.webp"
+    alt="Confección de scrubs médicos a la medida"
+  />
+  ```
