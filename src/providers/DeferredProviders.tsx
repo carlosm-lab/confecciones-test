@@ -87,25 +87,17 @@ function LazyToaster() {
 }
 
 export function DeferredProviders({ children }: DeferredProvidersProps) {
-  const [isIdle, setIsIdle] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    let idleId: number | null = null;
     let timerId: NodeJS.Timeout | null = null;
 
     const activate = () => {
-      setIsIdle(true);
+      setMounted(true);
       cleanup();
     };
 
     const cleanup = () => {
-      if (
-        idleId &&
-        typeof window !== "undefined" &&
-        "cancelIdleCallback" in window
-      ) {
-        (window as any).cancelIdleCallback(idleId);
-      }
       if (timerId) clearTimeout(timerId);
       window.removeEventListener("pointerdown", activate);
       window.removeEventListener("touchstart", activate);
@@ -124,18 +116,13 @@ export function DeferredProviders({ children }: DeferredProvidersProps) {
     window.addEventListener("scroll", activate, { passive: true, once: true });
     window.addEventListener("keydown", activate, { passive: true, once: true });
 
-    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      idleId = (window as any).requestIdleCallback(activate, {
-        timeout: 1500,
-      });
-    } else {
-      timerId = setTimeout(activate, 200);
-    }
+    // Activación en segundo plano tras 6s si no hubo interacción previa del usuario
+    timerId = setTimeout(activate, 6000);
 
     return cleanup;
   }, []);
 
-  if (!isIdle) {
+  if (!mounted) {
     return <>{children}</>;
   }
 
