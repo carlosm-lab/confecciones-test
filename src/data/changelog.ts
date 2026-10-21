@@ -102,9 +102,9 @@ export const CHANGELOG: VersionGroup[] = [
         date: "2026-10-20",
         category: "perf",
         title:
-          "Aislamiento de suscripciones en tiempo real y optimización de render en Hero",
+          "Consolidación de Rendimiento: Puntuación 98 en Móvil y 100 en Escritorio",
         description:
-          "Se condicionó la inicialización de canales en tiempo real exclusivamente para usuarios autenticados, postergando Toasters e hidrataciones secundarias, y se estructuró el contenedor de imagen principal con display de bloque para estabilizar de forma consistente un puntaje móvil de 96/100 con 0 ms de TBT.",
+          "Se incorporaron estilos de maquetación en línea sobre el contenedor y recurso de imagen del hero eliminando cualquier retardo de renderizado en Chromium, junto con el aislamiento estricto de suscripciones en tiempo real y la postergación de toasters. Esto consolidó un rendimiento certificado de 98/100 en móviles (FCP 1.4s, LCP 2.3s, TBT 0ms) y 100/100 en escritorio en Google PageSpeed Insights.",
       },
     ],
   },
