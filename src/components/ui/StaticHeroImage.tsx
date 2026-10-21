@@ -18,8 +18,19 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
   });
 
   return (
-    <div className="absolute inset-0 overflow-hidden rounded-xl">
-      <picture className="block h-full w-full">
+    <div
+      className="absolute inset-0 overflow-hidden rounded-xl"
+      style={{
+        position: "absolute",
+        inset: 0,
+        overflow: "hidden",
+        borderRadius: "0.75rem",
+      }}
+    >
+      <picture
+        className="block h-full w-full"
+        style={{ display: "block", width: "100%", height: "100%" }}
+      >
         <source
           media="(min-width: 1025px)"
           srcSet="/images/hero/hero-home.webp"
@@ -38,6 +49,13 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
           width={380}
           height={475}
           className="h-full w-full rounded-xl object-cover object-center"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            borderRadius: "0.75rem",
+          }}
           fetchPriority="high"
           loading="eager"
           decoding="sync"
