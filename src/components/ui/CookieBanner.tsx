@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect } from "react";
@@ -83,6 +83,7 @@ export function CookieBanner() {
           Al aceptar, nos ayudas a entender como usas el sitio.{" "}
           <Link
             href="/legal/cookies"
+            prefetch={false}
             className="text-primary underline underline-offset-2 hover:opacity-80"
           >
             Política de cookies

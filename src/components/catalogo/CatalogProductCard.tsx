@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { Icon } from "@/components/ui/icons/Icon";
 /**
  * CatalogProductCard — Confecciones Liss
@@ -29,6 +30,33 @@ export function CatalogProductCard({
   product,
   priority = false,
 }: CatalogProductCardProps) {
+  const [isIntersecting, setIsIntersecting] = useState(
+    () =>
+      priority ||
+      typeof window === "undefined" ||
+      typeof IntersectionObserver === "undefined"
+  );
+  const imgContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (priority || isIntersecting) return;
+    const el = imgContainerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsIntersecting(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "250px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [priority, isIntersecting]);
+
   const imagen = getProductMainImage(product);
   const onSale = isProductOnSale(product);
   const sector = getProductSector(product);
@@ -119,8 +147,11 @@ export function CatalogProductCard({
       </button>
 
       {/* Imagen — aspect-ratio 4/5 para uniformes (retrato natural) */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-white">
-        {imagen ? (
+      <div
+        ref={imgContainerRef}
+        className="relative aspect-[4/5] overflow-hidden bg-white"
+      >
+        {imagen && isIntersecting ? (
           <Image
             src={imagen}
             alt={product.name}
@@ -130,7 +161,7 @@ export function CatalogProductCard({
             priority={priority}
             quality={75}
           />
-        ) : (
+        ) : !imagen ? (
           <div className="flex h-full w-full items-center justify-center bg-gray-50">
             <Icon
               name="checkroom"
@@ -139,7 +170,7 @@ export function CatalogProductCard({
               aria-hidden="true"
             />
           </div>
-        )}
+        ) : null}
       </div>
 
       {/* Contenido — solo título y precio */}
