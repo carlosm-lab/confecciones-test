@@ -20,7 +20,11 @@ const FavoritesModal = dynamic(
     ),
   { ssr: false }
 );
-import { GuestBell } from "@/components/ui/GuestBell";
+
+const GuestBell = dynamic(
+  () => import("@/components/ui/GuestBell").then((mod) => mod.GuestBell),
+  { ssr: false }
+);
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
