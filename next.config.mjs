@@ -65,20 +65,6 @@ const nextConfig = {
 
     return [
       {
-        // 0. HTTP Link preload para imagen LCP del hero en homepage.
-        // Este header llega al navegador ANTES del HTML, activando la descarga
-        // del recurso al primer byte de la conexión TCP, sin dependencia del
-        // preload scanner ni del comportamiento de React 19.
-        source: '/',
-        headers: [
-          {
-            key: 'Link',
-            value:
-              '</images/hero/hero-home-440.webp>; rel=preload; as=image; fetchpriority=high',
-          },
-        ],
-      },
-      {
         // 2. Imágenes públicas — cachear 1 año inmutable
         source: '/images/:path*',
         headers: [
