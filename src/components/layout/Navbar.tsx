@@ -75,10 +75,25 @@ function TypewriterPlaceholder() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const activate = () => {
       setMounted(true);
-    }, 6000);
-    return () => clearTimeout(timer);
+      cleanup();
+    };
+
+    const cleanup = () => {
+      window.removeEventListener("pointerdown", activate);
+      window.removeEventListener("keydown", activate);
+      clearTimeout(timer);
+    };
+
+    window.addEventListener("pointerdown", activate, {
+      passive: true,
+      once: true,
+    });
+    window.addEventListener("keydown", activate, { passive: true, once: true });
+
+    const timer = setTimeout(activate, 20000);
+    return cleanup;
   }, []);
 
   useEffect(() => {

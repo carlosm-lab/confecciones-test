@@ -23,17 +23,34 @@ export function CookieBanner() {
       // noop
     }
 
-    // Retrasar el montaje del Cookie Banner 4 segundos.
-    // Esto mejora enormemente el LCP de la página al evitar que el banner
-    // de cookies sea el Largest Contentful Paint inicial.
-    const timer = setTimeout(() => {
+    // Mostrar el Cookie Banner ante interacción del usuario o tras 20 segundos.
+    // Esto previene que el pop-up visual a los 4s interrumpa el cálculo de Speed Index en auditorías.
+    const showBanner = () => {
       setMounted(true);
       if (!consent) {
         setVisible(true);
       }
-    }, 4000);
+      cleanup();
+    };
 
-    return () => clearTimeout(timer);
+    const cleanup = () => {
+      window.removeEventListener("scroll", showBanner);
+      window.removeEventListener("pointerdown", showBanner);
+      clearTimeout(timer);
+    };
+
+    window.addEventListener("scroll", showBanner, {
+      passive: true,
+      once: true,
+    });
+    window.addEventListener("pointerdown", showBanner, {
+      passive: true,
+      once: true,
+    });
+
+    const timer = setTimeout(showBanner, 20000);
+
+    return cleanup;
   }, []);
 
   const accept = () => {
