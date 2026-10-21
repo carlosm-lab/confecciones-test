@@ -52,8 +52,8 @@ export const metadata: Metadata = {
   },
 };
 
-// ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
-export const revalidate = 3600;
+// ── Pure SSG with On-Demand Revalidation (/ant Directive) ────────────────────
+export const revalidate = false;
 
 export default async function HomePage() {
   // Load recent products and reviews in parallel to minimize TTFB on cold starts

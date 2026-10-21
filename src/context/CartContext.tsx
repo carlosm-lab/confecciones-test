@@ -347,11 +347,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     let isMounted = true;
 
     const syncAndRevalidate = async () => {
+      // Guests: omitir importación y revalidación DB (RLS bloquea lecturas anónimas
+      // y los carritos de invitados residen 100% en localStorage). Evita descargar 232 KB JS.
+      if (!user) return;
+
       const { getSupabaseClient } = await import("@/lib/supabaseClient");
       const supabase = getSupabaseClient();
 
       // Caso 1: Usuario logueado + carrito local vacío → hidratar desde DB
-      if (user && cartItemsRef.current.length === 0) {
+      if (cartItemsRef.current.length === 0) {
         const { data, error } = await supabase
           .from("user_carts")
           .select("cart_items")
