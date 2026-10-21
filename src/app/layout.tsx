@@ -15,7 +15,7 @@ const notoSerif = Noto_Serif({
   variable: "--font-serif",
   display: "swap",
   weight: ["700"],
-  preload: false,
+  preload: true,
 });
 
 import { siteConfig } from "@/config/site";

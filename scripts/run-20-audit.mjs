@@ -20,7 +20,8 @@ const TOTAL_RUNS = 20;
 const targetUrl = "https://www.confeccionesliss.com/";
 
 async function runSingleAudit(runIndex) {
-  const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(targetUrl)}&strategy=mobile&key=${apiKey}&category=performance&category=accessibility&category=best-practices&category=seo`;
+  const testUrl = `${targetUrl}?_v=${Date.now()}_${runIndex}`;
+  const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(testUrl)}&strategy=mobile&key=${apiKey}&category=performance&category=accessibility&category=best-practices&category=seo`;
   
   const startTime = Date.now();
   console.log(`[Run ${runIndex + 1}/${TOTAL_RUNS}] Iniciando análisis móvil...`);
