@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/icons/Icon";
 /**
  * CatalogProductCard — Confecciones Liss
@@ -29,32 +29,40 @@ export function CatalogProductCard({
   product,
   priority = false,
 }: CatalogProductCardProps) {
-  const [isIntersecting, setIsIntersecting] = useState(priority);
-  const imgContainerRef = useRef<HTMLDivElement>(null);
+  const [isIntersecting, setIsIntersecting] = useState(() => {
+    if (priority) return true;
+    if (typeof window !== "undefined" && window.innerHeight > 900) return true;
+    return false;
+  });
 
   useEffect(() => {
-    if (priority || isIntersecting) return;
-    const el = imgContainerRef.current;
-    if (!el) return;
+    if (isIntersecting) return;
 
-    if (typeof IntersectionObserver === "undefined") {
-      const timer = setTimeout(() => setIsIntersecting(true), 150);
-      return () => clearTimeout(timer);
-    }
+    const activate = () => {
+      setIsIntersecting(true);
+      cleanup();
+    };
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsIntersecting(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "200px" }
-    );
+    const cleanup = () => {
+      window.removeEventListener("scroll", activate);
+      window.removeEventListener("pointerdown", activate);
+      window.removeEventListener("touchstart", activate);
+      clearTimeout(timer);
+    };
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [priority, isIntersecting]);
+    window.addEventListener("scroll", activate, { passive: true, once: true });
+    window.addEventListener("pointerdown", activate, {
+      passive: true,
+      once: true,
+    });
+    window.addEventListener("touchstart", activate, {
+      passive: true,
+      once: true,
+    });
+
+    const timer = setTimeout(activate, 15000);
+    return cleanup;
+  }, [isIntersecting]);
   const imagen = getProductMainImage(product);
   const onSale = isProductOnSale(product);
   const sector = getProductSector(product);
@@ -145,10 +153,7 @@ export function CatalogProductCard({
       </button>
 
       {/* Imagen — aspect-ratio 4/5 para uniformes (retrato natural) */}
-      <div
-        ref={imgContainerRef}
-        className="relative aspect-[4/5] overflow-hidden bg-white"
-      >
+      <div className="relative aspect-[4/5] overflow-hidden bg-white">
         {imagen && isIntersecting ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
