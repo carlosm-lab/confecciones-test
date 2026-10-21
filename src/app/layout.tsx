@@ -7,14 +7,14 @@ import "./globals.css";
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "optional",
+  display: "swap",
   preload: false,
 });
 
 const notoSerif = Noto_Serif({
   subsets: ["latin"],
   variable: "--font-serif",
-  display: "optional",
+  display: "swap",
   weight: ["700"],
   preload: false,
 });
