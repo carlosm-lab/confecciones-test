@@ -113,9 +113,9 @@ async function main() {
   for (let i = 0; i < TOTAL_RUNS; i++) {
     const res = await runSingleAudit(i);
     if (res) results.push(res);
-    // Delay de 6s entre ejecuciones para evitar saturación de contenedores y rate-limits de Google
+    // Delay de 8s entre ejecuciones para evitar saturación de contenedores y rate-limits de Google
     if (i < TOTAL_RUNS - 1) {
-      await new Promise(r => setTimeout(r, 6000));
+      await new Promise(r => setTimeout(r, 8000));
     }
   }
 

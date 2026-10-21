@@ -135,8 +135,8 @@ export function DeferredProviders({ children }: DeferredProvidersProps) {
     window.addEventListener("scroll", activate, { passive: true, once: true });
     window.addEventListener("keydown", activate, { passive: true, once: true });
 
-    // Activación en segundo plano tras 15s si no hubo interacción previa del usuario
-    timerId = setTimeout(activate, 15000);
+    // Activación en segundo plano tras 30s si no hubo interacción previa del usuario
+    timerId = setTimeout(activate, 30000);
 
     return cleanup;
   }, []);
