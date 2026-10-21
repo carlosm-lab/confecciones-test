@@ -238,9 +238,9 @@ async function fetchGoogleReviews(): Promise<GoogleReview[]> {
   }
 }
 
-// Cache Google reviews for 24h — revalidate on demand via revalidateTag('reviews')
+// Cache Google reviews — revalidate on demand via revalidateTag('reviews')
 export const getGoogleReviews = unstable_cache(
   fetchGoogleReviews,
   ["google-reviews"],
-  { revalidate: 86400, tags: ["reviews"] }
+  { revalidate: false, tags: ["reviews"] }
 );

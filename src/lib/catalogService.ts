@@ -207,7 +207,7 @@ const _fetchRecentProducts = unstable_cache(
   },
   ["recent-products"],
   {
-    revalidate: 300, // 5 minutos — suficiente frescura para novedades
+    revalidate: false, // Pure SSG on-demand — revalidado via revalidatePath('/') en Server Actions
     tags: ["recent-products"],
   }
 );
