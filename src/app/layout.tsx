@@ -7,8 +7,8 @@ import "./globals.css";
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "swap",
-  preload: true,
+  display: "optional",
+  preload: false,
 });
 
 const notoSerif = Noto_Serif({
