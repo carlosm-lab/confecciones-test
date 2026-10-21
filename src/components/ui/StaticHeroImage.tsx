@@ -58,7 +58,7 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
           }}
           fetchPriority="high"
           loading="eager"
-          decoding="async"
+          decoding="sync"
         />
       </picture>
     </div>

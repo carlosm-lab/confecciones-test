@@ -106,6 +106,15 @@ export const CHANGELOG: VersionGroup[] = [
         description:
           "Se incorporaron estilos de maquetación en línea sobre el contenedor y recurso de imagen del hero eliminando cualquier retardo de renderizado en Chromium, junto con el aislamiento estricto de suscripciones en tiempo real y la postergación de toasters. Esto consolidó un rendimiento certificado de 98/100 en móviles (FCP 1.4s, LCP 2.3s, TBT 0ms) y 100/100 en escritorio en Google PageSpeed Insights.",
       },
+      {
+        id: "e-181",
+        date: "2026-10-20",
+        category: "perf",
+        title:
+          "Purga de runtime no utilizado y carga bajo demanda de analíticas",
+        description:
+          "Se removió el proveedor de React Query del bundle inicial al no ser requerido por la arquitectura de Server Components, y se configuró la carga diferida de los scripts de analítica hasta la obtención del consentimiento del usuario, aligerando el hilo principal en dispositivos móviles.",
+      },
     ],
   },
   {

@@ -115,6 +115,22 @@
 
 ---
 
+## TASK-007: Eliminación de Element Render Delay en Hero LCP y Reducción de Fuentes Noto Serif
+
+### Archivos modificados
+
+- `src/components/ui/StaticHeroImage.tsx`
+- `src/app/layout.tsx`
+
+### Cambios realizados
+
+- Se cambió `decoding="async"` a `decoding="sync"` en la imagen del hero LCP en `StaticHeroImage.tsx`. La decodificación asíncrona postergaba la composición del frame del LCP en Chrome móvil por casi 2 segundos (`elementRenderDelay = 1,978 ms`) mientras el hilo principal evaluaba JavaScript. Al hacerlo síncrono, la imagen se pinta inmediatamente junto con el First Contentful Paint.
+- Se optimizó la declaración de la fuente `Noto_Serif` en `src/app/layout.tsx` para cargar únicamente el peso `weight: ["700"]` (usado exclusivamente en títulos `font-bold`), eliminando el peso `400` que no se utilizaba en ningún elemento serif y reduciendo a la mitad las reglas `@font-face` generadas.
+
+### Estado: COMPLETO ✓
+
+---
+
 ## Resultados Finales Auditados (Google PageSpeed Insights)
 
 ### Rendimiento Móvil

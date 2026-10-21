@@ -14,7 +14,7 @@ const notoSerif = Noto_Serif({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
-  weight: ["400", "700"],
+  weight: ["700"],
   preload: false,
 });
 
