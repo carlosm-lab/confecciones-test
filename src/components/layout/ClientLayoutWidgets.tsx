@@ -19,6 +19,14 @@ const ScrollToTop = dynamic(
   { ssr: false }
 );
 
+const MobileBottomNav = dynamic(
+  () =>
+    import("@/components/layout/MobileBottomNav").then(
+      (mod) => mod.MobileBottomNav
+    ),
+  { ssr: false }
+);
+
 /**
  * ClientLayoutWidgets — Client Component
  *
@@ -32,6 +40,7 @@ export function ClientLayoutWidgets() {
       <ScrollToTop />
       <GlobalModals />
       <CookieBanner />
+      <MobileBottomNav />
     </>
   );
 }

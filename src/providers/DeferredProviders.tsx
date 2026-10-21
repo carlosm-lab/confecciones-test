@@ -87,6 +87,58 @@ function LazyToaster() {
 }
 
 export function DeferredProviders({ children }: DeferredProvidersProps) {
+  const [isIdle, setIsIdle] = useState(false);
+
+  useEffect(() => {
+    let idleId: number | null = null;
+    let timerId: NodeJS.Timeout | null = null;
+
+    const activate = () => {
+      setIsIdle(true);
+      cleanup();
+    };
+
+    const cleanup = () => {
+      if (
+        idleId &&
+        typeof window !== "undefined" &&
+        "cancelIdleCallback" in window
+      ) {
+        (window as any).cancelIdleCallback(idleId);
+      }
+      if (timerId) clearTimeout(timerId);
+      window.removeEventListener("pointerdown", activate);
+      window.removeEventListener("touchstart", activate);
+      window.removeEventListener("scroll", activate);
+      window.removeEventListener("keydown", activate);
+    };
+
+    window.addEventListener("pointerdown", activate, {
+      passive: true,
+      once: true,
+    });
+    window.addEventListener("touchstart", activate, {
+      passive: true,
+      once: true,
+    });
+    window.addEventListener("scroll", activate, { passive: true, once: true });
+    window.addEventListener("keydown", activate, { passive: true, once: true });
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      idleId = (window as any).requestIdleCallback(activate, {
+        timeout: 1500,
+      });
+    } else {
+      timerId = setTimeout(activate, 200);
+    }
+
+    return cleanup;
+  }, []);
+
+  if (!isIdle) {
+    return <>{children}</>;
+  }
+
   return (
     <AuthProvider>
       <NotificationProvider>

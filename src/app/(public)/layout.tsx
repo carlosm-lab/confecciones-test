@@ -1,16 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { ClientLayoutWidgets } from "@/components/layout/ClientLayoutWidgets";
-import dynamic from "next/dynamic";
-
 import { Footer } from "@/components/layout/Footer";
-
-const MobileBottomNav = dynamic(
-  () =>
-    import("@/components/layout/MobileBottomNav").then(
-      (mod) => mod.MobileBottomNav
-    ),
-  { ssr: false }
-);
 
 export default function PublicLayout({
   children,
@@ -34,10 +24,7 @@ export default function PublicLayout({
       </main>
       <Footer />
 
-      {/* Mobile bottom nav — only renders on < sm viewports */}
-      <MobileBottomNav />
-
-      {/* Global interactive client-only widgets (ScrollToTop, Modals, CookieBanner) */}
+      {/* Global interactive client-only widgets (ScrollToTop, Modals, CookieBanner, MobileBottomNav) */}
       <ClientLayoutWidgets />
     </>
   );
