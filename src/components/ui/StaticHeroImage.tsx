@@ -1,3 +1,5 @@
+import ReactDOM from "react-dom";
+
 interface StaticHeroImageProps {
   sizes?: string;
 }
@@ -9,6 +11,13 @@ interface StaticHeroImageProps {
  * y cumplimiento de Core Web Vitals (LCP estático sin JavaScript).
  */
 export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
+  // Preload the mobile hero image specifically for mobile devices to achieve LCP = FCP
+  ReactDOM.preload("/images/hero/hero-home-440.webp", {
+    as: "image",
+    type: "image/webp",
+    fetchPriority: "high",
+    media: "(max-width: 480px)",
+  });
   return (
     <div
       className="absolute inset-0 overflow-hidden rounded-xl"
