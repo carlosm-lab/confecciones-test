@@ -8,7 +8,6 @@ const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-  preload: false,
 });
 
 const notoSerif = Noto_Serif({
