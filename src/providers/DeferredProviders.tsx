@@ -29,10 +29,12 @@ const AuthProvider = lazy(() =>
   import("@/context/AuthContext").then((mod) => ({ default: mod.AuthProvider }))
 );
 const CartProvider = lazy(() =>
-  import("@/context/CartContext").then((mod) => ({ default: mod.CartProvider }))
+  import("@/context/CartProvider").then((mod) => ({
+    default: mod.CartProvider,
+  }))
 );
 const FavoritesProvider = lazy(() =>
-  import("@/context/FavoritesContext").then((mod) => ({
+  import("@/context/FavoritesProvider").then((mod) => ({
     default: mod.FavoritesProvider,
   }))
 );

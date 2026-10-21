@@ -1,0 +1,599 @@
+{
+  "networkRequests": {
+    "id": "network-requests",
+    "title": "Network Requests",
+    "description": "Lists the network requests that were made during page load.",
+    "score": 1,
+    "scoreDisplayMode": "informative",
+    "details": {
+      "headings": [
+        {
+          "key": "url",
+          "valueType": "url",
+          "label": "URL"
+        },
+        {
+          "valueType": "text",
+          "label": "Protocol",
+          "key": "protocol"
+        },
+        {
+          "label": "Network Request Time",
+          "key": "networkRequestTime",
+          "granularity": 1,
+          "valueType": "ms"
+        },
+        {
+          "valueType": "ms",
+          "label": "Network End Time",
+          "key": "networkEndTime",
+          "granularity": 1
+        },
+        {
+          "granularity": 1,
+          "label": "Transfer Size",
+          "displayUnit": "kb",
+          "valueType": "bytes",
+          "key": "transferSize"
+        },
+        {
+          "granularity": 1,
+          "valueType": "bytes",
+          "key": "resourceSize",
+          "displayUnit": "kb",
+          "label": "Resource Size"
+        },
+        {
+          "key": "statusCode",
+          "label": "Status Code",
+          "valueType": "text"
+        },
+        {
+          "key": "mimeType",
+          "valueType": "text",
+          "label": "MIME Type"
+        },
+        {
+          "valueType": "text",
+          "label": "Resource Type",
+          "key": "resourceType"
+        }
+      ],
+      "items": [
+        {
+          "cache": "none",
+          "resourceType": "Document",
+          "networkEndTime": 133.93699999898672,
+          "rendererStartTime": 0,
+          "mimeType": "text/html",
+          "networkRequestTime": 1.063000001013279,
+          "transferSize": 48375,
+          "sessionTargetType": "page",
+          "priority": "VeryHigh",
+          "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+          "entity": "confeccionesliss.com",
+          "protocol": "h2",
+          "finished": true,
+          "experimentalFromMainFrame": true,
+          "resourceSize": 517037,
+          "statusCode": 200
+        },
+        {
+          "isLinkPreload": true,
+          "statusCode": 200,
+          "experimentalFromMainFrame": true,
+          "finished": true,
+          "entity": "confeccionesliss.com",
+          "protocol": "h2",
+          "resourceSize": 15252,
+          "priority": "High",
+          "networkRequestTime": 153.07900000363588,
+          "networkEndTime": 236.45799999684095,
+          "sessionTargetType": "page",
+          "resourceType": "Font",
+          "mimeType": "font/woff2",
+          "cache": "none",
+          "rendererStartTime": 152.10999999940395,
+          "url": "https://www.confeccionesliss.com/_next/static/media/69d6ef502243698c-s.p.2797-r317aeq2.woff2",
+          "transferSize": 15849
+        },
+        {
+          "protocol": "h2",
+          "cache": "none",
+          "finished": true,
+          "isLinkPreload": true,
+          "resourceSize": 24576,
+          "statusCode": 200,
+          "networkRequestTime": 153.1739999949932,
+          "resourceType": "Font",
+          "mimeType": "font/woff2",
+          "transferSize": 25173,
+          "networkEndTime": 254.64000000059605,
+          "entity": "confeccionesliss.com",
+          "url": "https://www.confeccionesliss.com/_next/static/media/a343f882a40d2cc9-s.p.1sj6eobyi31rd.woff2",
+          "rendererStartTime": 152.50899999588728,
+          "experimentalFromMainFrame": true,
+          "sessionTargetType": "page",
+          "priority": "High"
+        },
+        {
+          "cache": "none",
+          "resourceSize": 34196,
+          "networkEndTime": 231.679000005126,
+          "statusCode": 200,
+          "finished": true,
+          "protocol": "h2",
+          "url": "https://www.confeccionesliss.com/images/hero/hero-home-440.webp",
+          "isLinkPreload": true,
+          "priority": "High",
+          "resourceType": "Image",
+          "transferSize": 34744,
+          "experimentalFromMainFrame": true,
+          "networkRequestTime": 153.24800000339746,
+          "mimeType": "image/webp",
+          "sessionTargetType": "page",
+          "entity": "confeccionesliss.com",
+          "rendererStartTime": 152.69500000029802
+        },
+        {
+          "statusCode": 200,
+          "networkRequestTime": 153.31700000166893,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/3-oh1k_xr0edi.css",
+          "mimeType": "text/css",
+          "resourceType": "Stylesheet",
+          "cache": "none",
+          "priority": "VeryHigh",
+          "transferSize": 2017,
+          "entity": "confeccionesliss.com",
+          "protocol": "h2",
+          "finished": true,
+          "networkEndTime": 234.61500000208616,
+          "experimentalFromMainFrame": true,
+          "rendererStartTime": 152.82400000095367,
+          "sessionTargetType": "page",
+          "resourceSize": 5164
+        },
+        {
+          "resourceSize": 232893,
+          "networkRequestTime": 153.44200000166893,
+          "priority": "VeryHigh",
+          "experimentalFromMainFrame": true,
+          "mimeType": "text/css",
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/2pq_vg7902d8y.css",
+          "statusCode": 200,
+          "transferSize": 34034,
+          "cache": "none",
+          "resourceType": "Stylesheet",
+          "networkEndTime": 239.51699999719858,
+          "finished": true,
+          "rendererStartTime": 152.93400000035763,
+          "entity": "confeccionesliss.com",
+          "sessionTargetType": "page",
+          "protocol": "h2"
+        },
+        {
+          "isLinkPreload": true,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/3kmih27565ygz.js",
+          "mimeType": "application/javascript",
+          "sessionTargetType": "page",
+          "rendererStartTime": 153.02399999648333,
+          "resourceSize": 6549,
+          "experimentalFromMainFrame": true,
+          "priority": "Low",
+          "networkEndTime": 299.4589999988675,
+          "cache": "none",
+          "finished": true,
+          "protocol": "h2",
+          "entity": "confeccionesliss.com",
+          "resourceType": "Script",
+          "transferSize": 2999,
+          "networkRequestTime": 159.1359999999404,
+          "statusCode": 200
+        },
+        {
+          "cache": "none",
+          "mimeType": "application/javascript",
+          "entity": "confeccionesliss.com",
+          "sessionTargetType": "page",
+          "networkEndTime": 277.0950000062585,
+          "rendererStartTime": 153.097999997437,
+          "priority": "Low",
+          "resourceSize": 27779,
+          "finished": true,
+          "protocol": "h2",
+          "resourceType": "Script",
+          "statusCode": 200,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/0ha4m18glnjqn.js",
+          "networkRequestTime": 159.59400000423193,
+          "experimentalFromMainFrame": true,
+          "transferSize": 9687
+        },
+        {
+          "networkRequestTime": 159.64800000190735,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/2tkdu08d_kxzl.js",
+          "transferSize": 10117,
+          "entity": "confeccionesliss.com",
+          "priority": "Low",
+          "resourceType": "Script",
+          "mimeType": "application/javascript",
+          "cache": "none",
+          "sessionTargetType": "page",
+          "rendererStartTime": 153.1630000025034,
+          "resourceSize": 32373,
+          "networkEndTime": 235.05000000447035,
+          "experimentalFromMainFrame": true,
+          "protocol": "h2",
+          "finished": true,
+          "statusCode": 200
+        },
+        {
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/1cen2hy1jq49y.js",
+          "priority": "Low",
+          "experimentalFromMainFrame": true,
+          "statusCode": 200,
+          "networkEndTime": 246.17800000309944,
+          "mimeType": "application/javascript",
+          "resourceType": "Script",
+          "entity": "confeccionesliss.com",
+          "transferSize": 30652,
+          "cache": "none",
+          "sessionTargetType": "page",
+          "networkRequestTime": 159.70199999958277,
+          "rendererStartTime": 153.2170000001788,
+          "protocol": "h2",
+          "finished": true,
+          "resourceSize": 110022
+        },
+        {
+          "cache": "none",
+          "statusCode": 200,
+          "resourceType": "Script",
+          "networkEndTime": 311.78999999910593,
+          "transferSize": 10170,
+          "finished": true,
+          "protocol": "h2",
+          "priority": "Low",
+          "entity": "confeccionesliss.com",
+          "networkRequestTime": 159.7609999999404,
+          "experimentalFromMainFrame": true,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/3j-detos6fs1x.js",
+          "sessionTargetType": "page",
+          "resourceSize": 44081,
+          "rendererStartTime": 153.2910000011325,
+          "mimeType": "application/javascript"
+        },
+        {
+          "mimeType": "application/javascript",
+          "cache": "none",
+          "entity": "confeccionesliss.com",
+          "priority": "Low",
+          "experimentalFromMainFrame": true,
+          "resourceType": "Script",
+          "transferSize": 72675,
+          "networkEndTime": 248.55099999904633,
+          "finished": true,
+          "networkRequestTime": 159.81899999827147,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/2xz_e36l79mfx.js",
+          "protocol": "h2",
+          "statusCode": 200,
+          "rendererStartTime": 153.34100000560284,
+          "sessionTargetType": "page",
+          "resourceSize": 226426
+        },
+        {
+          "cache": "none",
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/turbopack-35whjvn_taadz.js",
+          "networkEndTime": 245.58300000429153,
+          "entity": "confeccionesliss.com",
+          "finished": true,
+          "protocol": "h2",
+          "statusCode": 200,
+          "resourceSize": 11250,
+          "priority": "Low",
+          "rendererStartTime": 153.4260000064969,
+          "experimentalFromMainFrame": true,
+          "sessionTargetType": "page",
+          "resourceType": "Script",
+          "mimeType": "application/javascript",
+          "transferSize": 5208,
+          "networkRequestTime": 159.9079999998212
+        },
+        {
+          "networkRequestTime": 159.97600000351667,
+          "protocol": "h2",
+          "finished": true,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/3apeh2ywh2e8y.js",
+          "entity": "confeccionesliss.com",
+          "resourceSize": 24993,
+          "cache": "none",
+          "sessionTargetType": "page",
+          "rendererStartTime": 153.47699999809265,
+          "mimeType": "application/javascript",
+          "statusCode": 200,
+          "networkEndTime": 359.8020000010729,
+          "transferSize": 9970,
+          "priority": "Low",
+          "resourceType": "Script",
+          "experimentalFromMainFrame": true
+        },
+        {
+          "resourceType": "Script",
+          "finished": true,
+          "protocol": "h2",
+          "cache": "none",
+          "transferSize": 7506,
+          "sessionTargetType": "page",
+          "rendererStartTime": 153.527000002563,
+          "networkEndTime": 323.2960000038147,
+          "entity": "confeccionesliss.com",
+          "experimentalFromMainFrame": true,
+          "mimeType": "application/javascript",
+          "resourceSize": 20010,
+          "priority": "Low",
+          "statusCode": 200,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/3dtizkpdq54w5.js",
+          "networkRequestTime": 160.0410000011325
+        },
+        {
+          "rendererStartTime": 153.59800000488758,
+          "experimentalFromMainFrame": true,
+          "sessionTargetType": "page",
+          "finished": true,
+          "cache": "none",
+          "protocol": "h2",
+          "resourceType": "Script",
+          "networkRequestTime": 160.11200000345707,
+          "networkEndTime": 298.15300000458956,
+          "transferSize": 12934,
+          "priority": "Low",
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/44z_0-zflrflw.js",
+          "entity": "confeccionesliss.com",
+          "mimeType": "application/javascript",
+          "resourceSize": 36354,
+          "statusCode": 200
+        },
+        {
+          "priority": "Low",
+          "entity": "confeccionesliss.com",
+          "resourceType": "Script",
+          "networkRequestTime": 160.17799999564886,
+          "transferSize": 14157,
+          "mimeType": "application/javascript",
+          "statusCode": 200,
+          "cache": "none",
+          "experimentalFromMainFrame": true,
+          "networkEndTime": 249.41499999910593,
+          "rendererStartTime": 153.66400000452995,
+          "sessionTargetType": "page",
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/1k9b87_rxq3ix.js",
+          "finished": true,
+          "resourceSize": 55830,
+          "protocol": "h2"
+        },
+        {
+          "sessionTargetType": "page",
+          "rendererStartTime": 153.72700000554323,
+          "statusCode": 200,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/01sf59sovicbz.js",
+          "entity": "confeccionesliss.com",
+          "networkEndTime": 220.8179999962449,
+          "resourceSize": 870,
+          "finished": true,
+          "protocol": "h2",
+          "priority": "Low",
+          "cache": "none",
+          "resourceType": "Script",
+          "networkRequestTime": 160.41799999773502,
+          "experimentalFromMainFrame": true,
+          "transferSize": 1445,
+          "mimeType": "application/javascript"
+        },
+        {
+          "networkEndTime": 306,
+          "sessionTargetType": "page",
+          "rendererStartTime": 153.78099999576807,
+          "resourceSize": 27044,
+          "protocol": "h2",
+          "finished": true,
+          "entity": "confeccionesliss.com",
+          "statusCode": 200,
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/0orhvmbfy6nk-.js",
+          "networkRequestTime": 160.50199999660254,
+          "cache": "none",
+          "transferSize": 9152,
+          "mimeType": "application/javascript",
+          "experimentalFromMainFrame": true,
+          "resourceType": "Script",
+          "priority": "Low"
+        },
+        {
+          "finished": true,
+          "transferSize": 18642,
+          "protocol": "h2",
+          "cache": "none",
+          "networkEndTime": 229.17999999970198,
+          "resourceType": "Script",
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/3gs-uqv9clssx.js",
+          "networkRequestTime": 160.57500000298023,
+          "resourceSize": 57301,
+          "mimeType": "application/javascript",
+          "entity": "confeccionesliss.com",
+          "experimentalFromMainFrame": true,
+          "priority": "Low",
+          "sessionTargetType": "page",
+          "statusCode": 200,
+          "rendererStartTime": 153.83300000429153
+        },
+        {
+          "priority": "Low",
+          "cache": "none",
+          "rendererStartTime": 153.88399999588728,
+          "mimeType": "application/javascript",
+          "sessionTargetType": "page",
+          "networkRequestTime": 160.6460000053048,
+          "resourceSize": 6011,
+          "entity": "confeccionesliss.com",
+          "statusCode": 200,
+          "networkEndTime": 230.25,
+          "protocol": "h2",
+          "url": "https://www.confeccionesliss.com/_next/static/chunks/0t2ts48z-y60_.js",
+          "transferSize": 3091,
+          "finished": true,
+          "resourceType": "Script",
+          "experimentalFromMainFrame": true
+        },
+        {
+          "resourceType": "Image",
+          "priority": "Low",
+          "transferSize": 3662,
+          "networkRequestTime": 160.7170000001788,
+          "statusCode": 200,
+          "entity": "confeccionesliss.com",
+          "mimeType": "image/webp",
+          "url": "https://www.confeccionesliss.com/logo-41.webp",
+          "cache": "none",
+          "sessionTargetType": "page",
+          "rendererStartTime": 153.93299999833107,
+          "resourceSize": 3140,
+          "networkEndTime": 253.07999999821186,
+          "finished": true,
+          "protocol": "h2",
+          "experimentalFromMainFrame": true
+        }
+      ],
+      "debugData": {
+        "networkStartTimeTs": 34277183261,
+        "initiators": [
+          {
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "type": "parser",
+            "lineNumber": 0,
+            "columnNumber": 356
+          },
+          {
+            "columnNumber": 488,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "lineNumber": 0,
+            "type": "parser"
+          },
+          {
+            "type": "parser",
+            "columnNumber": 598,
+            "lineNumber": 0,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086"
+          },
+          {
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "type": "parser",
+            "lineNumber": 0,
+            "columnNumber": 691
+          },
+          {
+            "lineNumber": 0,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "type": "parser",
+            "columnNumber": 784
+          },
+          {
+            "type": "parser",
+            "columnNumber": 882,
+            "lineNumber": 0,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086"
+          },
+          {
+            "columnNumber": 943,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "lineNumber": 0,
+            "type": "parser"
+          },
+          {
+            "type": "parser",
+            "columnNumber": 1013,
+            "lineNumber": 0,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086"
+          },
+          {
+            "columnNumber": 1083,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "type": "parser",
+            "lineNumber": 0
+          },
+          {
+            "type": "parser",
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "lineNumber": 0,
+            "columnNumber": 1153
+          },
+          {
+            "columnNumber": 1223,
+            "lineNumber": 0,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "type": "parser"
+          },
+          {
+            "lineNumber": 0,
+            "columnNumber": 1303,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "type": "parser"
+          },
+          {
+            "lineNumber": 0,
+            "columnNumber": 1373,
+            "type": "parser",
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086"
+          },
+          {
+            "type": "parser",
+            "lineNumber": 0,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "columnNumber": 1443
+          },
+          {
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "type": "parser",
+            "columnNumber": 1513,
+            "lineNumber": 0
+          },
+          {
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "lineNumber": 0,
+            "columnNumber": 1583,
+            "type": "parser"
+          },
+          {
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "columnNumber": 1653,
+            "lineNumber": 0,
+            "type": "parser"
+          },
+          {
+            "lineNumber": 0,
+            "type": "parser",
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "columnNumber": 1723
+          },
+          {
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "type": "parser",
+            "lineNumber": 0,
+            "columnNumber": 1793
+          },
+          {
+            "columnNumber": 1863,
+            "lineNumber": 0,
+            "type": "parser",
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086"
+          },
+          {
+            "type": "parser",
+            "lineNumber": 0,
+            "url": "https://www.confeccionesliss.com/?_t=1792560067086",
+            "columnNumber": 9925
+          }
+        ],
+        "type": "debugdata"
+      },
+      "type": "table"
+    }
+  }
+}
