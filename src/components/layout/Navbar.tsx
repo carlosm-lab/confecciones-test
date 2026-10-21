@@ -1,28 +1,26 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import dynamic from "next/dynamic";
 
-const SearchModal = dynamic(
-  () =>
-    import("@/components/layout/SearchModal").then((mod) => mod.SearchModal),
-  { ssr: false }
+const SearchModal = lazy(() =>
+  import("@/components/layout/SearchModal").then((mod) => ({
+    default: mod.SearchModal,
+  }))
 );
 
-const FavoritesModal = dynamic(
-  () =>
-    import("@/components/cart/FavoritesModal").then(
-      (mod) => mod.FavoritesModal
-    ),
-  { ssr: false }
+const FavoritesModal = lazy(() =>
+  import("@/components/cart/FavoritesModal").then((mod) => ({
+    default: mod.FavoritesModal,
+  }))
 );
 
-const GuestBell = dynamic(
-  () => import("@/components/ui/GuestBell").then((mod) => mod.GuestBell),
-  { ssr: false }
+const GuestBell = lazy(() =>
+  import("@/components/ui/GuestBell").then((mod) => ({
+    default: mod.GuestBell,
+  }))
 );
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
@@ -560,7 +558,11 @@ export function Navbar() {
                     onMouseDown={(e) => e.stopPropagation()}
                   >
                     {/* Notifications */}
-                    {isMounted && <GuestBell />}
+                    {isMounted && (
+                      <Suspense fallback={null}>
+                        <GuestBell />
+                      </Suspense>
+                    )}
 
                     {/* Cart */}
                     <button
@@ -768,15 +770,19 @@ export function Navbar() {
 
       {/* ── Global Search Modal ── */}
       {isSearchOpen && (
-        <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
+        <Suspense fallback={null}>
+          <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
+        </Suspense>
       )}
 
       {/* ── Favorites Modal ── */}
       {isFavoritesOpen && (
-        <FavoritesModal
-          isOpen={isFavoritesOpen}
-          onClose={() => setIsFavoritesOpen(false)}
-        />
+        <Suspense fallback={null}>
+          <FavoritesModal
+            isOpen={isFavoritesOpen}
+            onClose={() => setIsFavoritesOpen(false)}
+          />
+        </Suspense>
       )}
     </>
   );

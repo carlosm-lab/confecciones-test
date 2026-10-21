@@ -7,14 +7,8 @@ import {
   buildBreadcrumbSchema,
 } from "@/lib/schemas";
 import { heroTrustBadges, whyItems, processSteps } from "@/lib/seo-data";
-import dynamic from "next/dynamic";
 import { siteConfig } from "@/config/site";
-
-const CatalogProductCard = dynamic(() =>
-  import("@/components/catalogo/CatalogProductCard").then(
-    (m) => m.CatalogProductCard
-  )
-);
+import { CatalogProductCard } from "@/components/catalogo/CatalogProductCard";
 import { getRecentProducts } from "@/lib/catalogService";
 import { getGoogleReviews } from "@/lib/googleReviewsService";
 import { ServiciosPrincipales } from "@/components/seo/ServiciosPrincipales";

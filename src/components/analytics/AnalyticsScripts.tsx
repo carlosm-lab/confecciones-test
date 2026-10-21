@@ -1,19 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useState, lazy, Suspense } from "react";
 
-const GoogleAnalytics = dynamic(
-  () => import("./GoogleAnalytics").then((m) => m.GoogleAnalytics),
-  { ssr: false }
+const GoogleAnalytics = lazy(() =>
+  import("./GoogleAnalytics").then((m) => ({ default: m.GoogleAnalytics }))
 );
-const MetaPixel = dynamic(
-  () => import("./MetaPixel").then((m) => m.MetaPixel),
-  { ssr: false }
+const MetaPixel = lazy(() =>
+  import("./MetaPixel").then((m) => ({ default: m.MetaPixel }))
 );
-const GoogleMerchantWidget = dynamic(
-  () => import("./GoogleMerchantWidget").then((m) => m.GoogleMerchantWidget),
-  { ssr: false }
+const GoogleMerchantWidget = lazy(() =>
+  import("./GoogleMerchantWidget").then((m) => ({
+    default: m.GoogleMerchantWidget,
+  }))
 );
 
 interface AnalyticsScriptsProps {
@@ -53,7 +51,7 @@ export function AnalyticsScripts({ gaId, pixelId }: AnalyticsScriptsProps) {
   if (!hasConsent) return null;
 
   return (
-    <>
+    <Suspense fallback={null}>
       <GoogleAnalytics gaId={gaId} />
       <MetaPixel pixelId={pixelId} />
       <GoogleMerchantWidget
@@ -61,6 +59,6 @@ export function AnalyticsScripts({ gaId, pixelId }: AnalyticsScriptsProps) {
         position="BOTTOM_RIGHT"
         region="SV"
       />
-    </>
+    </Suspense>
   );
 }

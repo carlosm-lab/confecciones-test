@@ -7,7 +7,7 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### Navbar
 
 - **Ruta:** `src/components/layout/Navbar.tsx`
-- **Descripción:** Barra de navegación principal con logo, enlaces de catálogo (Salud, Universitario, Escolar, Corporativo), búsqueda y menú hamburguesa para mobile.
+- **Descripción:** Barra de navegación principal con logo, enlaces de catálogo (Salud, Universitario, Escolar, Corporativo), búsqueda y menú hamburguesa para mobile. Utiliza `React.lazy` y `Suspense` para `SearchModal`, `FavoritesModal` y `GuestBell`, evitando descargas y preloads de chunks durante la carga inicial crítica.
 - **Props:** No recibe props.
 
 ### MobileBottomNav
