@@ -2,14 +2,14 @@ import { Navbar } from "@/components/layout/Navbar";
 import { ClientLayoutWidgets } from "@/components/layout/ClientLayoutWidgets";
 import dynamic from "next/dynamic";
 
-const Footer = dynamic(() =>
-  import("@/components/layout/Footer").then((mod) => mod.Footer)
-);
+import { Footer } from "@/components/layout/Footer";
 
-const MobileBottomNav = dynamic(() =>
-  import("@/components/layout/MobileBottomNav").then(
-    (mod) => mod.MobileBottomNav
-  )
+const MobileBottomNav = dynamic(
+  () =>
+    import("@/components/layout/MobileBottomNav").then(
+      (mod) => mod.MobileBottomNav
+    ),
+  { ssr: false }
 );
 
 export default function PublicLayout({
