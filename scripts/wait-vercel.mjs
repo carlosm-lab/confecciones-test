@@ -1,6 +1,8 @@
+import { execSync } from "child_process";
+
 async function poll() {
-  console.log("Polling GitHub deployments for c87c35d...");
-  const targetSha = "c87c35d";
+  const targetSha = (process.argv[2] || execSync("git rev-parse --short HEAD").toString().trim()).slice(0, 7);
+  console.log(`Polling GitHub deployments for target SHA: ${targetSha}...`);
   for (let i = 1; i <= 60; i++) {
     try {
       const res = await fetch("https://api.github.com/repos/carlosm-lab/confeccionesliss/deployments");
@@ -9,7 +11,7 @@ async function poll() {
         const latest = data[0];
         console.log(`[${i}/60] Latest deployment SHA: ${latest.sha.slice(0, 7)} (Target: ${targetSha})`);
         if (latest.sha.startsWith(targetSha)) {
-          console.log("SUCCESS! c87c35d is deployed!");
+          console.log(`SUCCESS! ${targetSha} is deployed!`);
           return;
         }
       }
@@ -18,7 +20,7 @@ async function poll() {
     }
     await new Promise((r) => setTimeout(r, 10000));
   }
-  console.log("Timed out waiting for c87c35d deployment.");
+  console.log(`Timed out waiting for ${targetSha} deployment.`);
 }
 
 poll();

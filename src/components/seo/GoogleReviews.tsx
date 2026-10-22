@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { Icon } from "@/components/ui/icons/Icon";
 import type { GoogleReview } from "@/lib/googleReviewsService";
@@ -79,12 +78,14 @@ export function GoogleReviews({ reviews: rawReviews }: GoogleReviewsProps) {
       <div className="mx-auto max-w-screen-2xl">
         <div className="mb-12 flex flex-col items-center text-center">
           <div className="mb-3 flex items-center gap-2">
-            <Image
+            <img
               src="/icons/google.svg"
               alt="Google"
               width={24}
               height={24}
               className="h-6 w-auto"
+              loading="lazy"
+              decoding="async"
             />
             <span className="font-sans text-sm font-semibold tracking-wider text-slate-500 uppercase">
               Opiniones en Google Maps
@@ -164,12 +165,14 @@ export function GoogleReviews({ reviews: rawReviews }: GoogleReviewsProps) {
                         ))}
                       </div>
                       <span className="group-hover:text-primary text-slate-300 transition-colors">
-                        <Image
+                        <img
                           src="/icons/google.svg"
                           alt="Google"
                           width={16}
                           height={16}
                           className="h-4 w-auto opacity-60 group-hover:opacity-100"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </span>
                     </div>

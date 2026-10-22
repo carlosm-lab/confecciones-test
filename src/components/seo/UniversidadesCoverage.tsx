@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { universities } from "@/lib/seo-data";
 
@@ -38,13 +37,15 @@ export function UniversidadesCoverage() {
               {/* Logo real o fallback con iniciales */}
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center">
                 {u.logo ? (
-                  <div className="relative h-14 w-14">
-                    <Image
+                  <div className="relative flex h-14 w-14 items-center justify-center">
+                    <img
                       src={u.logo}
                       alt={`Logo ${u.sigla}`}
-                      fill
-                      className="object-contain"
-                      sizes="56px"
+                      width={56}
+                      height={56}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-14 w-14 object-contain"
                     />
                   </div>
                 ) : (
