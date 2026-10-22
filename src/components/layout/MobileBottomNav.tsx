@@ -5,9 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { clientEnv } from "@/lib/clientEnv";
 import { cn } from "@/lib/utils";
-import { useCart } from "@/context/CartContext";
-import { useAuth } from "@/context/AuthContext";
-
 import { Icon } from "@/components/ui/icons/Icon";
 
 const ITEMS = [
@@ -22,18 +19,9 @@ export function MobileBottomNav() {
   const pathname = usePathname();
   const [scrollVisible, setScrollVisible] = useState(true);
   const lastScrollY = useRef(0);
-  const [isMounted, setIsMounted] = useState(false);
   const isHomeOnly = clientEnv.NEXT_PUBLIC_HOME_ONLY === "true";
 
-  const { cartCount, setIsCartOpen } = useCart();
-  const { user, showAuthModal } = useAuth();
-
-  const visibleItems = ITEMS;
-
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsMounted(true);
-
     lastScrollY.current = window.scrollY;
 
     const handleScroll = () => {
@@ -74,30 +62,16 @@ export function MobileBottomNav() {
       aria-label="Navegación principal móvil"
     >
       <div className="flex h-16 items-center justify-around">
-        {visibleItems.map((item) => {
+        {ITEMS.map((item) => {
           const isActive =
             item.href === "/"
               ? !pathname || pathname === "/" || pathname === ""
               : pathname?.startsWith(item.href);
 
-          const isCartTab = (item.href as string) === "/carrito";
-          const isProfileTab = (item.href as string) === "/cuenta";
-
-          const handleTabClick = (e: React.MouseEvent) => {
-            if (isCartTab) {
-              e.preventDefault();
-              setIsCartOpen(true);
-            } else if (isProfileTab && !user) {
-              e.preventDefault();
-              showAuthModal("account");
-            }
-          };
-
           return (
             <Link
               key={item.href}
               href={item.href}
-              onClick={handleTabClick}
               prefetch={false}
               aria-label={item.label}
               aria-current={isActive ? "page" : undefined}
@@ -120,11 +94,6 @@ export function MobileBottomNav() {
                     : "scale-100 text-slate-600 opacity-40 hover:opacity-80"
                 )}
               />
-              {isCartTab && isMounted && cartCount > 0 && (
-                <span className="bg-primary absolute top-1.5 right-1/2 flex h-4 w-4 translate-x-4 items-center justify-center rounded-full text-[8px] font-bold text-white">
-                  {cartCount > 99 ? "99+" : cartCount}
-                </span>
-              )}
               <span aria-hidden="true" className="text-[10px] font-semibold">
                 {item.label}
               </span>

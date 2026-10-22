@@ -1,6 +1,6 @@
 async function poll() {
-  console.log("Polling GitHub deployments for 0d3cc36...");
-  const targetSha = "0d3cc36";
+  console.log("Polling GitHub deployments for 5cc97e2...");
+  const targetSha = "5cc97e2";
   for (let i = 1; i <= 60; i++) {
     try {
       const res = await fetch("https://api.github.com/repos/carlosm-lab/confeccionesliss/deployments");
@@ -9,7 +9,7 @@ async function poll() {
         const latest = data[0];
         console.log(`[${i}/60] Latest deployment SHA: ${latest.sha.slice(0, 7)} (Target: ${targetSha})`);
         if (latest.sha.startsWith(targetSha)) {
-          console.log("SUCCESS! 0d3cc36 is deployed!");
+          console.log("SUCCESS! 5cc97e2 is deployed!");
           return;
         }
       }
@@ -18,7 +18,7 @@ async function poll() {
     }
     await new Promise((r) => setTimeout(r, 10000));
   }
-  console.log("Timed out waiting for 0d3cc36 deployment.");
+  console.log("Timed out waiting for 5cc97e2 deployment.");
 }
 
 poll();

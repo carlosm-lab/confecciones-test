@@ -8,6 +8,31 @@ interface GoogleReviewsProps {
   reviews: GoogleReview[];
 }
 
+function StarSvg({
+  size = 14,
+  className = "text-amber-400",
+}: {
+  size?: number;
+  className?: string;
+}) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  );
+}
+
 export function GoogleReviews({ reviews: rawReviews }: GoogleReviewsProps) {
   const reviews =
     rawReviews && rawReviews.length > 0
@@ -135,13 +160,7 @@ export function GoogleReviews({ reviews: rawReviews }: GoogleReviewsProps) {
                         aria-label={`${r.rating} estrellas`}
                       >
                         {Array.from({ length: r.rating }).map((_, i) => (
-                          <Icon
-                            name="star"
-                            key={i}
-                            size={14}
-                            fill
-                            className="text-amber-400"
-                          />
+                          <StarSvg key={i} />
                         ))}
                       </div>
                       <span className="group-hover:text-primary text-slate-300 transition-colors">
