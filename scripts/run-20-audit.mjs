@@ -101,7 +101,9 @@ async function main() {
   console.log("============================================================\n");
 
   // Fase de calentamiento para asegurar que Vercel Edge y los contenedores de Google PSI estén calientes
-  console.log(">> Ejecutando fase de calentamiento (2 ejecuciones previas)...");
+  console.log(">> Ejecutando fase de calentamiento (3 ejecuciones previas)...");
+  await runSingleAudit(-3);
+  await new Promise(r => setTimeout(r, 15000));
   await runSingleAudit(-2);
   await new Promise(r => setTimeout(r, 15000));
   await runSingleAudit(-1);
