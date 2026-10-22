@@ -120,8 +120,7 @@ const socialBubbles: SocialBubble[] = [
 ];
 
 function SocialIcon({ id, className }: { id: string; className?: string }) {
-  const path = socialSvgPaths[id];
-  if (!path) return null;
+  if (!socialSvgPaths[id]) return null;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +128,7 @@ function SocialIcon({ id, className }: { id: string; className?: string }) {
       fill="currentColor"
       className={className}
     >
-      <path d={path} />
+      <use href={`#soc-${id}`} />
     </svg>
   );
 }
@@ -137,6 +136,18 @@ function SocialIcon({ id, className }: { id: string; className?: string }) {
 export function Footer() {
   return (
     <footer className="mt-auto w-full max-w-full overflow-x-clip border-t border-[#1e2d4a] bg-[#0b1b3d] font-sans text-white">
+      <svg
+        width="0"
+        height="0"
+        className="pointer-events-none absolute"
+        aria-hidden="true"
+      >
+        <defs>
+          {Object.entries(socialSvgPaths).map(([key, d]) => (
+            <path id={`soc-${key}`} d={d} key={key} />
+          ))}
+        </defs>
+      </svg>
       <div className="mx-auto max-w-screen-2xl px-6 py-16 md:px-12 lg:py-20">
         {/* ================= MOBILE LAYOUT (max-width: 767px) ================= */}
         <div className="block md:hidden">

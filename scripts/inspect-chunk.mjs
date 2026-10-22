@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 
-const content = readFileSync('.next/static/chunks/2xz_e36l79mfx.js', 'utf8');
+const content = readFileSync('.next/static/chunks/43ay7jk9rst7c.js', 'utf8');
 const matches = new Set();
 const regex = /node_modules\/([^\/\"]+)/g;
 let m;
