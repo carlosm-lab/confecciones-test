@@ -39,11 +39,14 @@ async function run() {
         tbt,
         lcpDetails: audits["largest-contentful-paint-element"]?.details?.items,
         networkRequests: net.map(r => ({
-          url: r.url,
+          url: r.url.split('/').pop(),
           mimeType: r.mimeType,
           transferSize: r.transferSize,
           resourceType: r.resourceType,
-          statusCode: r.statusCode
+          reqStart: Math.round(r.networkRequestTime),
+          end: Math.round(r.networkEndTime),
+          dur: Math.round(r.networkEndTime - r.networkRequestTime),
+          priority: r.priority
         })),
         thumbnails: thumbs.map(t => ({ timing: t.timing }))
       };

@@ -135,7 +135,7 @@ function SocialIcon({ id, className }: { id: string; className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="mt-auto w-full max-w-full overflow-x-clip border-t border-[#1e2d4a] bg-[#0b1b3d] font-sans text-white">
+    <footer className="lazy-section mt-auto w-full max-w-full overflow-x-clip border-t border-[#1e2d4a] bg-[#0b1b3d] font-sans text-white">
       <svg
         width="0"
         height="0"
