@@ -147,26 +147,6 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ═══ JSON-LD STRUCTURED DATA ═══ */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": [
-              buildWebPageSchema({
-                url: siteConfig.url,
-                name: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Confecciones Liss",
-                description:
-                  "Taller de confección de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs a la medida para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
-              }),
-              buildBreadcrumbSchema([{ name: "Inicio", item: siteConfig.url }]),
-              schemaFAQ,
-            ],
-          }).replace(/</g, "\\u003c"),
-        }}
-      />
-
       {/* ═══ HERO ═══ */}
       <section className="bg-surface @max-h-[750px]:h-auto @max-h-[750px]:min-h-[calc(100dvh-56px)] @max-h-[750px]:overflow-visible @max-h-[750px]:py-8 relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:overflow-hidden lg:pb-4">
         <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:gap-y-0">
@@ -423,6 +403,26 @@ export default async function HomePage() {
 
       {/* ═══ KEYWORDS SEO FOOTER ═══ */}
       <KeywordsSeoFooter />
+
+      {/* ═══ JSON-LD STRUCTURED DATA ═══ */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              buildWebPageSchema({
+                url: siteConfig.url,
+                name: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Confecciones Liss",
+                description:
+                  "Taller de confección de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs a la medida para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
+              }),
+              buildBreadcrumbSchema([{ name: "Inicio", item: siteConfig.url }]),
+              schemaFAQ,
+            ],
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
     </>
   );
 }
