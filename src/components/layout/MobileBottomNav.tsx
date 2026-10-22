@@ -34,20 +34,10 @@ export function MobileBottomNav() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
 
-    let ready = false;
     lastScrollY.current = window.scrollY;
-
-    const readyTimer = setTimeout(() => {
-      lastScrollY.current = window.scrollY;
-      ready = true;
-    }, 1500);
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (!ready) {
-        lastScrollY.current = currentScrollY;
-        return;
-      }
 
       if (currentScrollY <= 10) {
         setScrollVisible(true);
@@ -56,12 +46,6 @@ export function MobileBottomNav() {
       }
 
       const delta = currentScrollY - lastScrollY.current;
-
-      if (Math.abs(delta) > 100) {
-        lastScrollY.current = currentScrollY;
-        setScrollVisible(true);
-        return;
-      }
 
       if (delta > 10) {
         setScrollVisible(false);
@@ -74,7 +58,6 @@ export function MobileBottomNav() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
-      readyTimer && clearTimeout(readyTimer);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);

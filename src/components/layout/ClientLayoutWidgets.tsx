@@ -15,12 +15,6 @@ const CookieBanner = lazy(() =>
   }))
 );
 
-const MobileBottomNav = lazy(() =>
-  import("@/components/layout/MobileBottomNav").then((mod) => ({
-    default: mod.MobileBottomNav,
-  }))
-);
-
 /**
  * ClientLayoutWidgets — Client Component
  *
@@ -70,7 +64,6 @@ export function ClientLayoutWidgets() {
         <Suspense fallback={null}>
           <GlobalModals />
           <CookieBanner />
-          <MobileBottomNav />
         </Suspense>
       )}
     </>

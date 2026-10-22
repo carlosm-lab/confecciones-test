@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/layout/Navbar";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { ClientLayoutWidgets } from "@/components/layout/ClientLayoutWidgets";
 import { Footer } from "@/components/layout/Footer";
 
@@ -23,8 +24,9 @@ export default function PublicLayout({
         {children}
       </main>
       <Footer />
+      <MobileBottomNav />
 
-      {/* Global interactive client-only widgets (ScrollToTop, Modals, CookieBanner, MobileBottomNav) */}
+      {/* Global interactive client-only widgets (ScrollToTop, Modals, CookieBanner) */}
       <ClientLayoutWidgets />
     </>
   );
