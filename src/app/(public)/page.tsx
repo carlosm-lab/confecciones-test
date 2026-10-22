@@ -386,7 +386,7 @@ export default async function HomePage() {
       {/* ═══ CTA INSTITUCIONAL ═══ */}
       <section
         aria-labelledby="institucional-heading"
-        className="bg-primary lazy-section px-5 py-14 text-white md:px-8 md:py-20"
+        className="bg-primary px-5 py-14 text-white md:px-8 md:py-20"
       >
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-8 md:flex-row">
           <div className="animate-fade-in-up md:w-2/3">
