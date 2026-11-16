@@ -38,17 +38,7 @@ export const metadata: Metadata = {
       "Política de cotizaciones de Confecciones Liss: vigencia de precios, tallas especiales, tiempos de entrega, condiciones de pago y anticipos requeridos.",
     creator: siteConfig.twitterHandle,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: { index: false, follow: true },
   other: {
     publisher: siteConfig.name,
   },

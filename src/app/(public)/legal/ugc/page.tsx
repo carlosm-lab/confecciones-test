@@ -31,17 +31,7 @@ export const metadata: Metadata = {
       "Política de Contenido Generado por el Usuario en Confecciones Liss: derechos de uso, moderación de reseñas, conductas prohibidas y sus reclamos de autor.",
     creator: siteConfig.twitterHandle,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: { index: false, follow: true },
   other: {
     publisher: siteConfig.name,
   },

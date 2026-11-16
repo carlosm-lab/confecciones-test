@@ -126,6 +126,13 @@ const nextConfig = {
           ...securityHeaders,
         ],
       },
+      {
+        // 6. Endpoints dinámicos de OpenGraph Images (evitar que Googlebot Web los indexe como páginas HTML)
+        source: '/(.*)opengraph-image(.*)',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        ],
+      },
     ];
   },
   async redirects() {

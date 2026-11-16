@@ -32,7 +32,7 @@ export async function generateMetadata({
   const config = CATEGORIES[sector as Sector];
 
   if (!config) {
-    return { title: "Catálogo no encontrado" };
+    notFound();
   }
 
   const PAGE_URL = `${siteConfig.url}/catalogo/${sector}`;

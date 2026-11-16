@@ -37,17 +37,7 @@ export const metadata: Metadata = {
       "Política de Cookies de Confecciones Liss: uso de cookies funcionales, localStorage, tecnologías de rastreo, gestión y derechos del usuario sobre su uso.",
     creator: siteConfig.twitterHandle,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: { index: false, follow: true },
   other: {
     publisher: siteConfig.name,
   },

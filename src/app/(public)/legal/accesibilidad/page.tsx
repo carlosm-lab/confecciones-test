@@ -39,17 +39,7 @@ export const metadata: Metadata = {
       "Declaración de accesibilidad web de Confecciones Liss: conozca nuestro compromiso WCAG 2.1 AA, medidas aplicadas y todos los canales oficiales de reporte.",
     creator: siteConfig.twitterHandle,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: { index: false, follow: true },
   other: {
     publisher: siteConfig.name,
   },

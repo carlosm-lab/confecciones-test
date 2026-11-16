@@ -16,7 +16,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const service = SERVICE_PAGES.find((s) => s.slug === slug);
-  if (!service) return {};
+  if (!service) notFound();
   const pageUrl = `${siteConfig.url}/servicios/${slug}`;
   return {
     title: { absolute: service.seoTitle },

@@ -87,7 +87,7 @@ export async function generateMetadata({
   const { universidad } = await params;
   const config = UNIVERSITY_CONFIG[universidad];
 
-  if (!config) return { title: "Universidad no encontrada" };
+  if (!config) notFound();
 
   const PAGE_URL = `${siteConfig.url}/catalogo/universidades/${universidad}`;
 

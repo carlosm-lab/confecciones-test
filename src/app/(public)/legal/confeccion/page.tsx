@@ -38,17 +38,7 @@ export const metadata: Metadata = {
       "Política de confección de Confecciones Liss: modalidades por talla y medida, toma de medidas, garantías, anticipos de pago y plazos de entrega vigentes.",
     creator: siteConfig.twitterHandle,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: { index: false, follow: true },
   other: {
     publisher: siteConfig.name,
   },

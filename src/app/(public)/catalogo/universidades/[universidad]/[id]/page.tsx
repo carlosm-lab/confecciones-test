@@ -70,17 +70,23 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { universidad, id } = await params;
   const product = await getProductBySlug(id);
-  if (!product) return { title: "Producto no encontrado" };
+  if (!product) notFound();
 
   const productUniv = getProductUniversity(product);
-  if (productUniv && productUniv !== universidad)
-    return { title: "Producto no encontrado" };
+  if (productUniv && productUniv !== universidad) {
+    notFound();
+  }
 
   const config = CATEGORIES["universitario" as Sector];
   const PAGE_URL = `${siteConfig.url}/catalogo/universidades/${universidad}/${id}`;
   const autoTitle = `${product.name} | ${config?.subtitle ?? "Uniformes Universitarios"}`;
+  const isPlaceholderShortDesc =
+    product.short_description?.toLowerCase().includes("no disponible") ||
+    product.short_description?.toLowerCase().includes("características");
   const autoDescription =
-    product.short_description ?? product.description ?? product.name;
+    (!isPlaceholderShortDesc && product.short_description) ||
+    product.description ||
+    product.name;
   const imageUrl = getProductMainImage(product);
   const absoluteImage = imageUrl
     ? imageUrl.startsWith("http")
@@ -171,8 +177,13 @@ export default async function UniversityProductDetailPage({
   ]);
 
   const PAGE_URL = `${siteConfig.url}/catalogo/universidades/${universidad}/${id}`;
+  const isPlaceholderShortDesc =
+    product.short_description?.toLowerCase().includes("no disponible") ||
+    product.short_description?.toLowerCase().includes("características");
   const description =
-    product.short_description ?? product.description ?? product.name;
+    (!isPlaceholderShortDesc && product.short_description) ||
+    product.description ||
+    product.name;
   const imageUrl = getProductMainImage(product);
   const productImageAbsolute = imageUrl
     ? imageUrl.startsWith("http")

@@ -34,17 +34,7 @@ export const metadata: Metadata = {
       "Requisitos, derechos y condiciones de contratación en Confecciones Liss: trabajo a destajo por temporada y toda la colaboración profesional independiente.",
     creator: siteConfig.twitterHandle,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: { index: false, follow: true },
   other: {
     publisher: siteConfig.name,
   },

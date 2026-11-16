@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description: PAGE_DESCRIPTION,
     creator: siteConfig.twitterHandle,
   },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
 };
 
 export default function CalidadPage() {

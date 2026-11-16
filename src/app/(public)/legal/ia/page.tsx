@@ -38,17 +38,7 @@ export const metadata: Metadata = {
       "Política de Inteligencia Artificial de Confecciones Liss: uso de imágenes IA, modelo Liam Alejandro, transparencia en contenidos y derechos de imagen.",
     creator: siteConfig.twitterHandle,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: { index: false, follow: true },
   other: {
     publisher: siteConfig.name,
   },

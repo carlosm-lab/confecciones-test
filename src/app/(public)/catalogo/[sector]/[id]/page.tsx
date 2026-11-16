@@ -51,12 +51,12 @@ export async function generateMetadata({
   const product = await getProductBySlug(id);
 
   if (!product) {
-    return { title: "Producto no encontrado" };
+    notFound();
   }
 
   const productSector = getProductSector(product);
   if (productSector !== sector || sector === "universitario") {
-    return { title: "Producto no encontrado" };
+    notFound();
   }
 
   const config = CATEGORIES[sector as Sector];
@@ -64,8 +64,13 @@ export async function generateMetadata({
 
   // ── Valores automáticos (comportamiento pre-existente) ──
   const autoTitle = `${product.name} | ${config?.subtitle ?? "Catálogo"}`;
+  const isPlaceholderShortDesc =
+    product.short_description?.toLowerCase().includes("no disponible") ||
+    product.short_description?.toLowerCase().includes("características");
   const autoDescription =
-    product.short_description ?? product.description ?? product.name;
+    (!isPlaceholderShortDesc && product.short_description) ||
+    product.description ||
+    product.name;
   const imageUrl = getProductMainImage(product);
   const absoluteImage = imageUrl
     ? imageUrl.startsWith("http")
@@ -164,8 +169,13 @@ export default async function ProductDetailPage({
   ]);
 
   const PAGE_URL = `${siteConfig.url}/catalogo/${sector}/${id}`;
+  const isPlaceholderShortDesc =
+    product.short_description?.toLowerCase().includes("no disponible") ||
+    product.short_description?.toLowerCase().includes("características");
   const description =
-    product.short_description ?? product.description ?? product.name;
+    (!isPlaceholderShortDesc && product.short_description) ||
+    product.description ||
+    product.name;
   const imageUrl = getProductMainImage(product);
   const productImageAbsolute = imageUrl
     ? imageUrl.startsWith("http")
