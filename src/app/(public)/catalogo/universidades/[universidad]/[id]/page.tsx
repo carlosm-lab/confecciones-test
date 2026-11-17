@@ -15,7 +15,8 @@ import type { Sector } from "@/data/types";
 
 // ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
 // No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
-export const dynamicParams = true;
+// ── dynamicParams: false — rutas no pre-generadas retornan 404 real a nivel de router ──
+export const dynamicParams = false;
 
 // ── Static params: pre-genera páginas de detalle para cada universidad ─────────
 // Una sola query a Supabase en lugar de 6. Deriva la universidad del slug

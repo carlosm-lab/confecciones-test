@@ -13,6 +13,8 @@ import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 // ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
 // No ISR por tiempo. Las páginas se regeneran on-demand vía revalidatePath()
 // en src/actions/catalog.ts cuando el admin guarda o elimina un producto.
+// dynamicParams = false garantiza HTTP 404 real a nivel de routing para sectores inexistentes.
+export const dynamicParams = false;
 
 // ── Static params: genera una página por sector ───────────────────────────────
 // "universitario" se excluye: la ruta fue eliminada, ahora existe /catalogo/universidades.

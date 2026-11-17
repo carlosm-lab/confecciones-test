@@ -17,6 +17,22 @@ This document tracks important architectural decisions made during the project l
 ## Logged Decisions
 
 **Date:** 2026-11-17
+**Decision:** Erradicación Absoluta de Streaming Soft 404 mediante `dynamicParams = false` y Eliminación de Skeletons Prematuros en Fichas de Producto
+**Context:** En la auditoría de códigos de estado HTTP en producción, se descubrió que URLs dinámicas inexistentes (ej. `/catalogo/scrubs/producto-falso`, `/catalogo/sector-falso`, `/catalogo/universidades/universidad-falsa`) devolvían **HTTP 200 OK** a Googlebot con el contenido de la página de error. La causa raíz técnica radicaba en que:
+
+1. `dynamicParams = true` (por defecto) forzaba a Next.js a intentar renderizado on-demand en el servidor para cualquier parámetro no previsto.
+2. La presencia de `loading.tsx` en `[id]` envolvía la ruta en un límite Suspense que transmitía inmediatamente las cabeceras HTTP 200 (streaming contract de React) antes de que `page.tsx` o `generateMetadata()` pudieran verificar el slug con Supabase y lanzar `notFound()`.
+3. `src/app/(public)/not-found.tsx` carecía de metadata explícita y de directiva `robots: { index: false }`.
+   **Decision:**
+
+- **`dynamicParams = false` en Segmentos de Catálogo:** Se configuró explícitamente `export const dynamicParams = false;` en `src/app/(public)/catalogo/[sector]/page.tsx`, `src/app/(public)/catalogo/[sector]/[id]/page.tsx`, `src/app/(public)/catalogo/universidades/[universidad]/page.tsx`, `src/app/(public)/catalogo/universidades/[universidad]/[id]/page.tsx` y `src/app/(public)/servicios/[slug]/page.tsx`. Esto instruye a Next.js a rechazar cualquier parámetro inexistente a nivel de router, emitiendo HTTP 404 inmediato.
+- **Eliminación de Skeletons Prematuros en `[id]`:** Se removieron los archivos `loading.tsx` de las rutas `[id]` para permitir que Next.js evalúe síncronamente la ruta en el servidor antes de emitir las cabeceras HTTP.
+- **Metadata en `(public)/not-found.tsx`:** Se exportó metadata con `title: { absolute: "404 — Página no encontrada | Confecciones Liss" }` y `robots: { index: false, follow: true }`.
+- **Verificación Local:** Confirmado en servidor de producción local que el 100% de las rutas inválidas retornan **HTTP 404** y los 202 productos estáticos retornan **HTTP 200**.
+
+---
+
+**Date:** 2026-11-17
 **Decision:** Endurecimiento del Flujo del Carrito, Validación de Envíos y Arquitectura de Conversión con Preservación de Tallas
 **Context:** Durante las pruebas en vivo del subagente QA y la auditoría estática del checkout, se identificaron vulnerabilidades funcionales en el carrito de compras:
 

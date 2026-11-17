@@ -17,9 +17,8 @@ import { SHIPPING_DETAILS_SV, MERCHANT_RETURN_POLICY } from "@/lib/schemas";
 // ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
 // No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
 
-// ── dynamicParams: true (default) — productos nuevos post-build se generan
-// on-demand la primera vez y luego se cachean como estáticos (SSG diferido) ──
-export const dynamicParams = true;
+// ── dynamicParams: false — rutas no pre-generadas retornan 404 real a nivel de router ──
+export const dynamicParams = false;
 
 // ── generateStaticParams: pre-genera TODAS las páginas de producto en build ──
 // Google recibe HTML pre-construido → SSG real, sin SSR on-demand

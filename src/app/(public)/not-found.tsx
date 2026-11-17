@@ -1,5 +1,13 @@
 ﻿import { Icon } from "@/components/ui/icons/Icon";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: { absolute: "404 — Página no encontrada | Confecciones Liss" },
+  description:
+    "La página que buscas no existe o fue movida. Vuelve al catálogo de Confecciones Liss para encontrar scrubs, uniformes y servicios de confección en San Miguel.",
+  robots: { index: false, follow: true },
+};
 
 export default function PublicNotFound() {
   return (

@@ -9,6 +9,9 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+// dynamicParams = false garantiza HTTP 404 real a nivel de routing para servicios inexistentes.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return SERVICE_PAGES.map((s) => ({ slug: s.slug }));
 }
