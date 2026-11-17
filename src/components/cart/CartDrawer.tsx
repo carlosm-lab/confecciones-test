@@ -362,16 +362,19 @@ export function CartDrawer() {
       }
     }
 
-    // ── Agregar enlaces de producto al final del mensaje ──────────
-    // El RPC no incluye URLs de producto. Los construimos aquí desde item.product.slug.
+    // ── Agregar enlaces de producto canónicos al final del mensaje ──────────
+    // Resuelve la URL canónica correcta evitando 404s en productos universitarios
     const storeOrigin =
       typeof window !== "undefined" ? window.location.origin : "";
     const productLinks = cartItems
-      .filter((item) => item.product.slug)
-      .map(
-        (item) =>
-          `• ${item.product.name}: ${storeOrigin}/catalogo/${item.product.slug}`
-      )
+      .filter((item) => item.product.slug || item.product.id)
+      .map((item) => {
+        const canonicalUrl = getProductUrl(item.product as any);
+        const sizeInfo = item.product.selectedSize
+          ? ` (Talla ${item.product.selectedSize})`
+          : "";
+        return `• ${item.product.name}${sizeInfo}: ${storeOrigin}${canonicalUrl}`;
+      })
       .join("\n");
 
     if (productLinks) {
@@ -760,8 +763,15 @@ export function CartDrawer() {
                                 <Icon name="delete" />
                               </button>
                             </div>
-                            {(item.color || item.note) && (
+                            {(item.product.selectedSize ||
+                              item.color ||
+                              item.note) && (
                               <div className="mt-1 space-y-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
+                                {item.product.selectedSize && (
+                                  <p className="font-semibold text-[var(--color-primary)]">
+                                    Talla: {item.product.selectedSize}
+                                  </p>
+                                )}
                                 {item.color && <p>Color: {item.color}</p>}
                                 {item.note && (
                                   <p className="line-clamp-1 italic">

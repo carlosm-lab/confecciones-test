@@ -158,6 +158,26 @@ export function DeliveryForm({
       return;
     }
 
+    // Validación estricta para envío a domicilio
+    if (form.deliveryMethod === "domicilio") {
+      if (!form.department) {
+        toast.error("Por favor selecciona el departamento de entrega.");
+        return;
+      }
+      if (!form.municipality) {
+        toast.error("Por favor selecciona el municipio de entrega.");
+        return;
+      }
+      if (!form.addressColonia.trim()) {
+        toast.error("Por favor ingresa la colonia o residencial.");
+        return;
+      }
+      if (!form.addressStreet.trim()) {
+        toast.error("Por favor ingresa la calle o avenida.");
+        return;
+      }
+    }
+
     // Datos comunes del destinatario/cliente
     if (!form.recipientName.trim()) {
       toast.error("Por favor ingresa el nombre completo.");
@@ -212,16 +232,9 @@ export function DeliveryForm({
   const previewInfo = useMemo(() => {
     if (!form.deliveryMethod) return null;
     // Para taller/punto_medio: tarifa fija, mostrar siempre.
-    // Para domicilio: mostrar SOLO cuando la dirección está COMPLETA.
+    // Para domicilio: mostrar tan pronto se elijan departamento y municipio.
     if (form.deliveryMethod === "domicilio") {
-      const addressComplete =
-        form.department &&
-        form.municipality &&
-        form.addressColonia.trim() &&
-        form.addressStreet.trim() &&
-        form.addressNumber.trim() &&
-        form.addressReference.trim();
-      if (!addressComplete) return null;
+      if (!form.department || !form.municipality) return null;
     }
     return getShippingInfo(
       form.department || "San Miguel",
@@ -232,15 +245,7 @@ export function DeliveryForm({
         ? form.deliveryMethod
         : "domicilio"
     );
-  }, [
-    form.department,
-    form.municipality,
-    form.deliveryMethod,
-    form.addressColonia,
-    form.addressStreet,
-    form.addressNumber,
-    form.addressReference,
-  ]);
+  }, [form.department, form.municipality, form.deliveryMethod]);
 
   // Disparar animación de precio cuando previewInfo aparece por primera vez.
   useEffect(() => {

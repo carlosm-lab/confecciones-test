@@ -17,6 +17,24 @@ This document tracks important architectural decisions made during the project l
 ## Logged Decisions
 
 **Date:** 2026-11-17
+**Decision:** Endurecimiento del Flujo del Carrito, Validación de Envíos y Arquitectura de Conversión con Preservación de Tallas
+**Context:** Durante las pruebas en vivo del subagente QA y la auditoría estática del checkout, se identificaron vulnerabilidades funcionales en el carrito de compras:
+
+1. `DeliveryFormModal.tsx`: Permitía confirmar pedidos con entrega a domicilio dejando departamento, municipio y dirección en blanco, asignando erróneamente tarifa nacional de $6.00 y permitiendo pedidos vacíos.
+2. `CartDrawer.tsx`: Generaba enlaces rotos 404 para productos universitarios en los pedidos enviados a WhatsApp al forzar el prefijo `/catalogo/${slug}` en lugar de su ruta canónica (`/catalogo/universidades/[universidad]/[id]`).
+3. `CartContext.tsx`: La revalidación de precios con Supabase (`refreshCartPrices` y `syncAndRevalidate`) asignaba el precio base `fresh.price` sobrescribiendo los precios especiales configurados por talla en `price_by_size` (ej. tallas XL/XXL o a la medida).
+4. El drawer del carrito no exponía visualmente la talla seleccionada por el cliente.
+   **Decision:**
+
+- **Validación Estricta de Domicilio:** Se añadieron validaciones de campo obligatorio para departamento, municipio, colonia/residencial y calle/avenida en `DeliveryFormModal.tsx` antes de invocar `onConfirm`. Se optimizó `previewInfo` para calcular la tarifa inmediatamente al elegir departamento y municipio.
+- **URLs Canónicas en WhatsApp:** Se adoptó `getProductUrl(item.product as any)` tanto en `CartDrawer.tsx` como en el flujo directo de compra, garantizando que el enlace enviado por el cliente a la vendedora abra la ficha correcta del producto sin errores 404.
+- **Preservación de Tallas y Precios Dinámicos:** Se expandieron los modelos `CartProduct` y `CART_SELECT_COLUMNS` con `price_by_size` y `offer_by_size`. Durante la sincronización periódica con Supabase, se calcula dinámicamente el precio real evaluando la talla elegida (`item.product.selectedSize`), preservando el valor exacto de la prenda. Se mejoró la igualdad de ítems en `addToCart` considerando talla y modo de precio.
+- **Insignia de Talla en Carrito:** Se agregó la insignia clara de la talla seleccionada en el desglose de cada prenda en `CartDrawer.tsx`.
+- **Cumplimiento Inviolable de `/ant`:** Todos los cambios son 100% compatibles con la renderización estática SSG de Next.js, sin mutaciones de diseño ni degradación de animaciones o estilos.
+
+---
+
+**Date:** 2026-11-17
 **Decision:** Remediación Integral y Permanente de Seguridad Forense (OWASP Top 10, Supabase RLS, Server Actions, Edge Functions, CSP y Redirecciones)
 **Context:** La auditoría forense de seguridad (`.agents/teamwork/auditor_security/handoff.md`) identificó 16 hallazgos (2 Críticos, 5 Altos, 5 Medios, 4 Bajos) incluyendo borrado arbitrario en `push_subscriptions`, falta de autenticación en la Edge Function `send-push`, inyección de filtros PostgREST en catálogos universitarios, Server Actions de revalidación expuestos sin comprobación de rol de admin, riesgos de bypass en formularios de contacto y dependencias obsoletas (`groq-sdk`).
 **Decision:**

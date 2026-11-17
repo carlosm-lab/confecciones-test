@@ -16,7 +16,7 @@ export const MAX_TOTAL_ITEMS = 50;
 // Solo lo mínimo necesario para actualizar CartItem.product.
 // No incluye el JOIN de categories — no se necesita para el carrito.
 export const CART_SELECT_COLUMNS =
-  "id, name, price, old_price, images, image_path, slug, is_active, offer_starts_at, offer_ends_at, sector, category, categories(name, catalog)";
+  "id, name, price, old_price, images, image_path, slug, is_active, offer_starts_at, offer_ends_at, sector, category, price_by_size, offer_by_size, categories(name, catalog)";
 
 // ── Columnas SELECT para FavoritesModal ─────────────────────────
 // Coincide con la interfaz FavoriteProduct del modal.

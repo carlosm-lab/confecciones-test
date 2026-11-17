@@ -65,6 +65,8 @@ interface CartProduct {
   selectedSize?: string | null;
   /** Modo de precio: 'normal' | 'wholesale' | 'labor' */
   priceMode?: "normal" | "wholesale" | "labor";
+  price_by_size?: Record<string, number> | null;
+  offer_by_size?: Record<string, number> | null;
 }
 
 interface CartItem {
@@ -376,18 +378,36 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 .filter((i) => pMap[i.product.id]?.is_active)
                 .map((i) => {
                   const fresh = pMap[i.product.id];
+                  let freshPrice = fresh.price;
+                  if (
+                    i.product.selectedSize &&
+                    fresh.price_by_size &&
+                    typeof fresh.price_by_size === "object"
+                  ) {
+                    const sizePrice =
+                      fresh.price_by_size[i.product.selectedSize];
+                    if (typeof sizePrice === "number") {
+                      freshPrice = sizePrice;
+                    }
+                  }
+                  if (i.product.selectedSize === "A la medida") {
+                    freshPrice = 0;
+                  }
+
                   return {
                     ...i,
                     product: {
                       ...i.product,
                       name: fresh.name,
-                      price: fresh.price,
+                      price: freshPrice,
                       old_price: fresh.old_price,
                       offer_ends_at: fresh.offer_ends_at,
                       offer_starts_at: fresh.offer_starts_at,
                       image_path: fresh.image_path,
                       images: fresh.images,
                       slug: fresh.slug,
+                      price_by_size: fresh.price_by_size,
+                      offer_by_size: fresh.offer_by_size,
                     },
                   };
                 });
@@ -485,10 +505,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
           .map((item) => {
             const fresh = productMap[item.product.id];
             if (!fresh) return item; // Sin datos frescos → mantener precio cacheado
+
+            // Resolver precio respetando la talla seleccionada
+            let freshPrice = fresh.price;
+            if (
+              item.product.selectedSize &&
+              fresh.price_by_size &&
+              typeof fresh.price_by_size === "object"
+            ) {
+              const sizePrice = fresh.price_by_size[item.product.selectedSize];
+              if (typeof sizePrice === "number") {
+                freshPrice = sizePrice;
+              }
+            }
+            if (item.product.selectedSize === "A la medida") {
+              freshPrice = 0;
+            }
+
             // Detectar si algún campo cambió para activar la flag
             if (
               fresh.name !== item.product.name ||
-              fresh.price !== item.product.price ||
+              freshPrice !== item.product.price ||
               fresh.old_price !== item.product.old_price ||
               fresh.image_path !== item.product.image_path ||
               fresh.slug !== item.product.slug
@@ -500,13 +537,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
               product: {
                 ...item.product,
                 name: fresh.name,
-                price: fresh.price,
+                price: freshPrice,
                 old_price: fresh.old_price,
                 offer_ends_at: fresh.offer_ends_at,
                 offer_starts_at: fresh.offer_starts_at,
                 image_path: fresh.image_path,
                 images: fresh.images,
                 slug: fresh.slug,
+                price_by_size: fresh.price_by_size,
+                offer_by_size: fresh.offer_by_size,
               },
             };
           });
@@ -582,6 +621,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const existing = prev.find(
         (item) =>
           item.product.id === product.id &&
+          item.product.selectedSize === product.selectedSize &&
+          item.product.priceMode === product.priceMode &&
           item.color === color &&
           item.note === note
       );

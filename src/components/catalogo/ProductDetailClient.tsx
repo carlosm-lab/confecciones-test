@@ -291,6 +291,7 @@ export function ProductDetailClient({
         },
       ],
       shippingInfo: {
+        deliveryMethod: info.deliveryMethod,
         department: info.department,
         municipality: info.municipality,
         cost: info.cost,
