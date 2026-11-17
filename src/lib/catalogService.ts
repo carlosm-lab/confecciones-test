@@ -374,6 +374,15 @@ export async function getCategoriesForSector(
 }
 
 // ── Obtener productos del sector universitario filtrados por universidad ──────
+const ALLOWED_UNIVERSITIES = new Set([
+  "univo",
+  "ieproes",
+  "ugb",
+  "unab",
+  "ues",
+  "uma",
+]);
+
 /**
  * Devuelve los productos activos del sector "universitario" cuya `category`
  * coincide (parcialmente, case-insensitive) con el slug de la universidad.
@@ -382,13 +391,23 @@ export async function getCategoriesForSector(
 export async function getProductsByUniversity(
   universidad: string
 ): Promise<DbProduct[]> {
+  const cleanUni = String(universidad || "")
+    .toLowerCase()
+    .trim();
+  if (!ALLOWED_UNIVERSITIES.has(cleanUni)) {
+    logger.warn(
+      `[catalogService] Identificador universitario inválido: ${universidad}`
+    );
+    return [];
+  }
+
   const supabase = createServerClient(["products", "categories"]);
 
-  // 1. Obtener los IDs de categoría pertenecientes a esta universidad (catalog = universidad)
+  // 1. Obtener los IDs de categoría pertenecientes a esta universidad (catalog = cleanUni)
   const { data: catData, error: catErr } = await supabase
     .from("categories")
     .select("id")
-    .eq("catalog", universidad);
+    .eq("catalog", cleanUni);
 
   if (catErr) {
     logger.error(
@@ -424,8 +443,8 @@ export async function getProductsByUniversity(
     .from("products")
     .select(PRODUCT_SELECT)
     .eq("is_active", true)
-    .or(`sector.eq.universitario,sector.eq.${universidad}`)
-    .ilike("category", `%${universidad}%`)
+    .or(`sector.eq.universitario,sector.eq.${cleanUni}`)
+    .ilike("category", `%${cleanUni}%`)
     .order("created_at", { ascending: false });
 
   if (errDirect) {

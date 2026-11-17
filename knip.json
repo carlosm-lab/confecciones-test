@@ -8,8 +8,7 @@
     "server-only",
     "zustand",
     "@testing-library/react",
-    "sharp",
-    "groq-sdk"
+    "sharp"
   ],
   "ignore": [
     ".agents/**",

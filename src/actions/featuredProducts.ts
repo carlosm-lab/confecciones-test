@@ -113,6 +113,16 @@ export async function toggleFeaturedProduct(
     .eq("id", productId);
 
   if (updateError) {
+    if (
+      updateError.message?.includes(
+        "Maximum limit of 10 featured products reached"
+      )
+    ) {
+      return {
+        success: false,
+        error: `Máximo ${MAX_FEATURED} productos pueden estar fijados en el home. Desfija uno primero.`,
+      };
+    }
     return {
       success: false,
       error: "Error al actualizar el producto. Intenta de nuevo.",

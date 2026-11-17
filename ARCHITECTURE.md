@@ -16,6 +16,19 @@ This document tracks important architectural decisions made during the project l
 
 ## Logged Decisions
 
+**Date:** 2026-11-17
+**Decision:** Remediación Integral y Permanente de Seguridad Forense (OWASP Top 10, Supabase RLS, Server Actions, Edge Functions, CSP y Redirecciones)
+**Context:** La auditoría forense de seguridad (`.agents/teamwork/auditor_security/handoff.md`) identificó 16 hallazgos (2 Críticos, 5 Altos, 5 Medios, 4 Bajos) incluyendo borrado arbitrario en `push_subscriptions`, falta de autenticación en la Edge Function `send-push`, inyección de filtros PostgREST en catálogos universitarios, Server Actions de revalidación expuestos sin comprobación de rol de admin, riesgos de bypass en formularios de contacto y dependencias obsoletas (`groq-sdk`).
+**Decision:**
+
+- **Supabase RLS & Base de Datos:** Se revocó la política permisiva `USING (true)` en `push_subscriptions` y se crearon políticas estrictas para usuarios autenticados y anónimos (validando header de endpoint). Se expandió el CHECK constraint de `security_events` y se implementó el trigger `trg_limit_featured_products` en PostgreSQL para erradicar carreras de concurrencia al fijar productos.
+- **Server Actions & Edge Functions:** Se aseguró `send-push` requiriendo JWT de admin (`authClient.auth.getUser()`). Se protegieron `revalidateAfterCategorySave()` y `revalidateAfterProductSave()` con validación estricta de sesión/rol admin en arquitectura fail-closed.
+- **Sanitización e Inyecciones:** Se encapsuló la consulta universitaria con una lista blanca `ALLOWED_UNIVERSITIES` en `catalogService.ts`. Se implementó `isValidRelativeUrl()` contra ataques de redirección abierta con secuencias backslash.
+- **Headers & Rutas API:** Se adaptó la CSP en `next.config.mjs` con dominios legítimos (Meta Pixel, Google Merchant) y directivas `object-src 'none'`, `base-uri 'self'`. Se migró `/api/revalidate` a verificación con `crypto.timingSafeEqual` y soporte Bearer POST. Se desacopló `groq-sdk` del árbol de dependencias.
+- **Preservación Inviolable:** Ningún cambio alteró la experiencia de usuario ni la interfaz visual; el sitio mantiene 100% de páginas generadas en SSG estático y revalidación bajo demanda.
+
+---
+
 **Date:** 2026-08-02
 **Decision:** Infraestructura Estática de Datos Semilla para el Blog y Arquitectura SSG de `/blog`
 **Context:** Se requiere iniciar el plan editorial de 83 artículos para Confecciones Liss con una landing page interactiva en `/blog` que permita filtrar guías por pilar (7 pilares) y por universidad (UNIVO, IEPROES, UGB, UNAB, UES, UMA, UEES). No existe una capa de CMS/MDX en el repositorio y los 20 artículos redactados están respaldados como semillas de datos.

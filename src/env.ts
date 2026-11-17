@@ -8,10 +8,15 @@ export const env = createEnv({
       .default("development"),
     VAPID_PRIVATE_KEY: z.string().min(1).default("placeholder_vapid_private"),
     VAPID_SUBJECT: z.string().default("mailto:contacto@confeccionesliss.com"),
-    REVALIDATE_SECRET: z
-      .string()
-      .min(16)
-      .default("dev_revalidate_secret_local"),
+    REVALIDATE_SECRET:
+      process.env.NODE_ENV === "production"
+        ? z
+            .string()
+            .min(
+              16,
+              "REVALIDATE_SECRET must be at least 16 chars in production"
+            )
+        : z.string().min(16).default("dev_revalidate_secret_local_only"),
     // PageSpeed Insights API key (server-side only — nunca exponer al cliente)
     PAGESPEED_API_KEY: z.string().optional(),
   },

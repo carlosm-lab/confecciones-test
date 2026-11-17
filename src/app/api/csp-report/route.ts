@@ -34,8 +34,9 @@ interface CspReport {
 }
 
 function getClientIp(req: NextRequest): string {
+  // SEC-11: Priorizar encabezados de proxy confiables (Vercel) para evitar spoofing
   return (
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() ??
     req.headers.get("x-real-ip") ??
     "unknown"
   );

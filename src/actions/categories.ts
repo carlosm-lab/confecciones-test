@@ -9,7 +9,10 @@
  * públicas afectadas.
  */
 
+import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { env } from "@/env";
 
 /**
  * Invalida las rutas de Next.js afectadas por la creación, edición o eliminación
@@ -17,6 +20,31 @@ import { revalidatePath } from "next/cache";
  * en la tabla `categories`.
  */
 export async function revalidateAfterCategorySave(): Promise<void> {
+  const cookieStore = await cookies();
+  const supabase = createServerClient(
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll() {},
+      },
+    }
+  );
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user || user.app_metadata?.role !== "admin") {
+    throw new Error(
+      "Unauthorized: Admin privileges required to revalidate categories."
+    );
+  }
+
   // Invalidar Full Route Cache de las rutas que muestran categorías.
   revalidatePath("/");
   revalidatePath("/catalogo");

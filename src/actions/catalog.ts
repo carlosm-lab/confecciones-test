@@ -41,32 +41,35 @@ export async function revalidateAfterProductSave({
   slug,
   category,
 }: RevalidateProductParams): Promise<void> {
-  // SEC-005 Fix: Verificar autenticación de admin antes de revalidar caché
+  // SEC-12: Verificación estricta fail-closed de admin antes de revalidar caché
   const cookieStore = await cookies();
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (url && key) {
-    const supabase = createServerClient(url, key, {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll();
-        },
-        setAll() {},
+  if (!url || !key) {
+    throw new Error(
+      "Configuration Error: Missing Supabase environment variables."
+    );
+  }
+
+  const supabase = createServerClient(url, key, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll();
       },
-    });
+      setAll() {},
+    },
+  });
 
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
 
-    if (error || !user || user.app_metadata?.role !== "admin") {
-      console.warn(
-        "[revalidateAfterProductSave] Intento de revalidación no autorizado."
-      );
-      return;
-    }
+  if (error || !user || user.app_metadata?.role !== "admin") {
+    throw new Error(
+      "Unauthorized: Admin privileges required to revalidate products."
+    );
   }
 
   // Invalidar Full Route Cache de las páginas principales.

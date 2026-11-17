@@ -99,6 +99,42 @@ serve(async (req) => {
     });
   }
 
+  // ── Enforce Admin Authentication (SEC-02) ──────────────────────────
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return new Response(
+      JSON.stringify({ error: "Missing or invalid authorization header" }),
+      {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
+  const token = authHeader.replace("Bearer ", "").trim();
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const supabaseAnonKey =
+    Deno.env.get("SUPABASE_ANON_KEY") ||
+    Deno.env.get("NEXT_PUBLIC_SUPABASE_ANON_KEY")!;
+
+  const authClient = createClient(supabaseUrl, supabaseAnonKey, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+  });
+  const {
+    data: { user },
+    error: authErr,
+  } = await authClient.auth.getUser();
+
+  if (authErr || !user || user.app_metadata?.role !== "admin") {
+    return new Response(
+      JSON.stringify({ error: "Forbidden: Admin privileges required" }),
+      {
+        status: 403,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
   try {
     const { notification_id } = (await req.json()) as {
       notification_id: string;

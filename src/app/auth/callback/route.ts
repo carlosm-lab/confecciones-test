@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { isValidRelativeUrl } from "@/lib/sanitize";
 
 // ─────────────────────────────────────────────────────────────
 // /auth/callback — Intercambia el ?code= de OAuth por una sesión
@@ -45,12 +46,8 @@ export async function GET(request: NextRequest) {
       const userRole = data.user.app_metadata?.role;
       let redirectTo = userRole === "admin" ? "/admin" : "/";
 
-      // Validar si viene un parámetro 'next' seguro (relativo sin //)
-      if (
-        nextParam &&
-        nextParam.startsWith("/") &&
-        !nextParam.startsWith("//")
-      ) {
+      // Validar si viene un parámetro 'next' seguro (SEC-13)
+      if (nextParam && isValidRelativeUrl(nextParam)) {
         redirectTo = nextParam;
       }
 
